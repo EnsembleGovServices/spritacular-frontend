@@ -12,16 +12,37 @@ function counter() {
       <Container>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
-            <div className="left-image"></div>
-            <div className="right-counter">1</div>
+            <div className="counter-inner">
+              <div className="left-image">
+                <img src={user} alt="Users" />
+              </div>
+              <div className="right-counter">
+                <h3>22,500</h3>
+                <p>Storm chasers</p>
+              </div>
+            </div>
           </Grid>
           <Grid item xs={12} md={4}>
-            <div className="left-image"></div>
-            <div className="right-counter">2</div>
+            <div className="counter-inner">
+              <div className="left-image">
+                <img src={user} alt="user" />
+              </div>
+              <div className="right-counter">
+                <h3>22,500</h3>
+                <p>Storm chasers</p>
+              </div>
+            </div>
           </Grid>
           <Grid item xs={12} md={4}>
-            <div className="left-image"></div>
-            <div className="right-counter">3</div>
+            <div className="counter-inner">
+              <div className="left-image">
+                <img src={country} alt="country" />
+              </div>
+              <div className="right-counter">
+                <h3>22,500</h3>
+                <p>Storm chasers</p>
+              </div>
+            </div>
           </Grid>
         </Grid>
       </Container>
