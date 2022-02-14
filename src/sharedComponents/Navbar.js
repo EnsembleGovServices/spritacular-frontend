@@ -10,6 +10,7 @@ import DrawerComponent from "./DrawerComponent";
 function Navbar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  console.log(isMobile);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar style={{ background: "#2E3B55" }} position="static">
