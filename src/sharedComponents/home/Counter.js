@@ -28,8 +28,8 @@ function counter() {
                 <img src={user} alt="user" />
               </div>
               <div className="right-counter">
-                <h3>22,500</h3>
-                <p>Storm chasers</p>
+                <h3>5,678,910</h3>
+                <p>Images Submitted</p>
               </div>
             </div>
           </Grid>
@@ -39,8 +39,8 @@ function counter() {
                 <img src={country} alt="country" />
               </div>
               <div className="right-counter">
-                <h3>22,500</h3>
-                <p>Storm chasers</p>
+                <h3>250</h3>
+                <p>Countries Participated</p>
               </div>
             </div>
           </Grid>
