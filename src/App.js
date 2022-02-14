@@ -12,7 +12,7 @@ function App() {
     <Router>
       <Header />
       <Banner />
-
+      <Counter />
       <div className="App">
         <Routess />
       </div>
