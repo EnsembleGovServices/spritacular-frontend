@@ -1,11 +1,4 @@
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import { Link } from "react-router-dom";
-import IconButton from "@mui/material/IconButton";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import DrawerComponent from "./DrawerComponent";
+import React from "react";
 
 function Navbar() {
   const theme = useTheme();
