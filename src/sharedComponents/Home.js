@@ -5,7 +5,6 @@ import HowItWorks from "./home/HowItWorks";
 function Home() {
   return (
     <div>
-      Home
       <HowItWorks />
       <Footer />
     </div>

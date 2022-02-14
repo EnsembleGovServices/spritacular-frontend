@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,7 +13,6 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "@mui/material/Link";
 import Logo from "../assets/images/logo.svg";
-
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -34,6 +32,20 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  useEffect(() => {
+    document.addEventListener("scroll", () => {
+      let scroll = window.pageYOffset || document.documentElement.scrollTop,
+        navbarEl = document.querySelector(".custome-header");
+
+      if (scroll > 80) {
+        navbarEl.classList.add("bg-color-menu");
+      } else {
+        navbarEl.classList.remove("bg-color-menu");
+      }
+    });
+  }, []);
+
   return (
     <AppBar className="custome-header">
       <Container>
