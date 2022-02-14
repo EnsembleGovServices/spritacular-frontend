@@ -67,7 +67,7 @@ body {
         }
         .explore-btn{
             background-color: #fff;
-            padding: 15px 25px;
+            padding: 12px 25px;
             color: #990000;
             font-size: 18px;
             line-height: 26px;
@@ -77,6 +77,14 @@ body {
             display: block;
             margin: 0 auto;
             margin-top: 70px;
+            border:1px solid #fff;
+            transition: all 0.3s ease 0s;
+            &:hover{
+                background-color: #990000;
+                color: #fff;
+                color: #fff;
+
+            }
         }
         }
 
