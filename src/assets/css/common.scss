@@ -33,6 +33,18 @@ a{
 .custome-header{
     background-color: transparent !important;
     box-shadow: none !important;
+    transition: all 0.3s ease 0s;
+    &.bg-color-menu{
+        background-color:#990000 !important;
+        .register {
+            &:hover{
+                background-color: #fff !important;
+                color: #990000 !important;
+                border: 1px solid #fff;
+            }
+        }
+        
+    }
 }
 .custom-menu-main{
     display: flex !important;
@@ -97,3 +109,4 @@ a{
         }
     }
 }
+
