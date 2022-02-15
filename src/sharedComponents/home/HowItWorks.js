@@ -68,7 +68,7 @@ function HowItWorks() {
                   sprite. This is intended to make sure your observation inline
                   with our standards.
                 </p>
-                <Button>View Tutorial</Button>
+                <Button className="common-btn">View Tutorial</Button>
                 <div className="observe-polygon">
                   <img src={observepolygon} alt="" />
                 </div>
