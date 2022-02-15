@@ -1,24 +1,22 @@
-import "./App.css";
-import { BrowserRouter as Router } from "react-router-dom";
-import Header from "./sharedComponents/Header";
-import Navbar from "./sharedComponents/Navbar";
-import Banner from "./sharedComponents/home/Banner";
-import Counter from "./sharedComponents/home/Counter";
-import Routess from "./Routess";
-import "./assets/css/style.scss";
-import "./assets/css/common.scss";
+import { Routes, Route } from "react-router-dom";
+import "./assets/scss/framework/framework.scss";
+import "./assets/scss/styles/style.scss";
+import routesList from "./routes/MainRoute";
+import Master from "./Layouts/Master";
+import Error from "./pages/Error";
 
-function App() {
-  return (
-    <Router>
-      <Navbar />
-      <Banner />
-      <Counter />
-      <div className="App">
-        <Routess />
-      </div>
-    </Router>
-  );
+
+const App = () => {
+    return(
+        <Routes>
+            <Route element={<Master />}>
+                {routesList.map((route, index) => (
+                    <Route key={index} path={route.path} element={route.element}/>
+                ))}
+            </Route>
+            <Route path="*" element={<Error />} />
+        </Routes>
+    )
 }
 
 export default App;

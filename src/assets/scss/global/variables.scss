@@ -1,0 +1,24 @@
+// Overriding defaults
+$enable-shadows: true;
+$link-decoration: none;
+
+// Colors
+$dark: #0f0f0f;
+
+// Body
+$body-bg: #ccc;
+
+// Box shadow
+
+$box-shadow-md: 0px 2px 6px rgba(0, 0, 0, 0.2);
+$box-shadow-popup: 0px 2px 5px rgba(0, 0, 0, 0.1);
+
+
+// Modal
+$modal-fade-transform: scale(0.5);
+$modal-show-transform: none;
+$modal-transition: transform 0.2s ease-out;
+$modal-scale-transform: scale(1.02);
+$modal-content-box-shadow-sm-up: $box-shadow-popup;
+$modal-backdrop-bg: transparentize($dark, 0.1);
+$modal-content-border-width: 0;

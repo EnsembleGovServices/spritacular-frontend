@@ -1,0 +1,22 @@
+@mixin vspace {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin vcenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin vstart {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@mixin vtop {
+  display: flex;
+  justify-content: flex-start;
+}
