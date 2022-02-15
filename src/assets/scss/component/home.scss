@@ -1,0 +1,103 @@
+.hero-banner{
+    background-image: url(../../images/homePage.png);
+    background-size: cover;
+    background-position: center center;
+    height: 530px;
+    background-repeat: no-repeat;
+    transform: skew(0deg, 0deg);
+    margin-top: -40px;
+    position: relative;
+    &::before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: $white;
+        clip-path: polygon(100% 80%, 0% 100%, 100% 100%);
+      }
+      .container{
+        position: relative;
+      }
+      .hero-banner-inner{
+        padding: 160px 0px 60px;
+        .border-line{
+            &::after{
+                content: "";
+                background-image: url(../../images/banner-line.png);
+                background-repeat: no-repeat;
+                position: absolute;
+                height: 200px;
+                width: 230px;
+                top: 40px;
+                left:0;
+                background-size: 100%;
+            }
+    }
+    .banner-text{
+        max-width: 645px;
+        margin: 0 auto;
+        h2{
+            font-size: 48px;
+            line-height: 56px;
+            color: $white;
+            font-weight: 700;
+            margin: 0px;
+        }
+        p{
+            color: $white;
+            font-size:18px;
+            line-height: 24px;
+            margin: 20px 0px 0px 0px;
+        }
+        .explore-btn{
+            background-color:$white;
+            padding: 12px 25px;
+            color: #990000;
+            font-size: 18px;
+            line-height: 26px;
+ 
+            text-transform: capitalize;
+            max-width: 161px;
+            display: block;
+            margin: 0 auto;
+            margin-top: 70px;
+            border:1px solid $white;
+            transition: all 0.3s ease 0s;
+            &:hover{
+                background-color: #990000;
+                color: $white;
+
+            }
+        }
+        }
+
+    }
+  }
+
+  .counter-inner{
+    display: flex;
+    padding-top: 25px;
+    .left-image{
+        img{
+            max-width: 48px;
+        }
+    }
+    .right-counter{
+        margin-left: 20px;
+        h3{
+            margin: 0px;
+            font-weight: 900;
+            font-size: 42px;
+            line-height: 49px;
+        }
+        p{
+            font-size: 16px;
+            line-height: 26px;
+            margin: 0px;
+            color: #555555;
+        }
+    }
+}

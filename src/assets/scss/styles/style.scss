@@ -10,6 +10,8 @@ body {
   padding: 0;
   scroll-behavior: smooth;
   position: relative;
+  font-family: $FontFamily;
+  background-color: $white;
 }
 
 // Import any component file here

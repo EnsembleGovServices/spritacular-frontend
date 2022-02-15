@@ -9,15 +9,29 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import { useEffect } from "react";
 import Images from "../../static/images";
 
 const Header = () => {
+  useEffect(() => {
+    document.addEventListener("scroll", () => {
+      let scroll = window.pageYOffset || document.documentElement.scrollTop,
+        navbarEl = document.querySelector(".custome-header");
+
+      if (scroll > 80) {
+        navbarEl.classList.add("bg-color-menu");
+      } else {
+        navbarEl.classList.remove("bg-color-menu");
+      }
+    });
+  }, []);
   return (
     <>
       <div>
-        <Navbar color="light" expand="md" light>
+        <Navbar container expand="md" className="custome-header">
           <NavbarBrand href="/">
-            <img src={Images.Logo} alt="Logo" />
+            <img src={Images.Logo} alt="Logo" className="logo" />
+            <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo" />
           </NavbarBrand>
           <NavbarToggler onClick={function noRefCheck() {}} />
           <Collapse navbar>
@@ -40,8 +54,10 @@ const Header = () => {
             </Nav>
           </Collapse>
           <div className="right-menu">
-            <Badge href="#">Register</Badge>
-            <Badge href="#">Login</Badge>
+            <NavLink href="#" className="register btn btn-link">
+              Register
+            </NavLink>
+            <NavLink href="#">Login</NavLink>
           </div>
         </Navbar>
       </div>

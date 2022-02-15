@@ -4,9 +4,15 @@ $link-decoration: none;
 
 // Colors
 $dark: #0f0f0f;
+$grey: #181818;
+$primary:#C11E37;
+$secondary : #990000;
 
 // Body
 $body-bg: #ccc;
+
+// Project FontFamily
+$FontFamily: 'Roboto', sans-serif;
 
 // Box shadow
 
@@ -22,3 +28,7 @@ $modal-scale-transform: scale(1.02);
 $modal-content-box-shadow-sm-up: $box-shadow-popup;
 $modal-backdrop-bg: transparentize($dark, 0.1);
 $modal-content-border-width: 0;
+
+
+// Button
+$btn-border-radius: 25px;

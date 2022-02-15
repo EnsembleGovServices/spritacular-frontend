@@ -1,0 +1,124 @@
+.custome-header{
+    padding: 0px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 999;
+    @include transition();
+    .on-scroll-logo{
+        display: none
+    }
+    .navbar-nav{
+        @include vcenter;
+        width: 100%;
+        .nav-link{
+            color: $white;
+            padding: 10px 24px !important;
+            font-size: 15px;
+            line-height: 18px;
+            font-weight: 500;
+        }
+        
+    }
+    .right-menu{
+        display: inline-flex;
+        justify-content: end;
+        align-items: center;
+        .register{
+            background-color: transparent !important;
+            color: $white;
+            font-size: 14px;
+            line-height: 18px;
+            padding: 10px 25px;
+            border:1px solid $white;
+            font-weight: 500;
+        }
+        a{
+            color: $white;
+            font-size: 14px;
+            line-height: 18px;
+            background-color: transparent !important;
+            padding: 0px 24px;
+            font-weight: 500;
+        }
+    }
+    &.bg-color-menu{
+        background-color: $white;
+        .on-scroll-logo{
+            display: inline-block;
+        }
+        .logo{
+            display: none;
+        }
+        .navbar-nav{
+            .nav-link{
+                color: $grey;
+                position: relative;
+                &:after{
+                    content: "";
+                    background-color:transparent;
+                    position: absolute;
+                    width: 25px;
+                    height: 3px;
+                    border-radius: 10px;
+                    bottom: 0px;
+                    display: block;
+                    left: 0px;
+                    right: 0px;
+                    margin: 0 auto;
+                }
+                &:hover,&.active{
+                    color: $secondary;
+                    &::after{
+                        background-color:$secondary; 
+                    }
+                }
+            }
+            
+        }
+        .right-menu{
+            .register{
+                background-color: transparent !important;
+                color: $grey;
+                border:1px solid $grey;
+                &::after{
+                    display: none;
+                }
+                &:hover{
+                    background-color:$secondary !important;
+                    color: $white;
+                    border-color: $secondary;
+                }
+            }
+            a{
+                color: $grey;
+                position: relative;
+                &:after{
+                    content: "";
+                    background-color:transparent;
+                    position: absolute;
+                    width: 25px;
+                    height: 3px;
+                    border-radius: 10px;
+                    bottom: 0px;
+                    display: block;
+                    left: 0px;
+                    right: 0px;
+                    margin: 0 auto;
+                    padding: 10px 24px;
+                    
+                }
+                &:hover{
+                    color: $secondary;
+                    &::after{
+                       display: none;
+                    }
+                }
+                
+                
+                
+            }
+        }
+
+    }
+}
