@@ -1,10 +1,8 @@
 import {
-  Badge,
   Collapse,
   Nav,
   Navbar,
   NavbarBrand,
-  NavbarText,
   NavbarToggler,
   NavItem,
   NavLink,
