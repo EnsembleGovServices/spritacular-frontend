@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
 import routesList from "./routes/MainRoute";
