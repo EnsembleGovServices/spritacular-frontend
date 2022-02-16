@@ -9,6 +9,12 @@ import Catholic from "../assets/images/catholic.png";
 import Facebook from "../assets/images/facebook.png";
 import Linkedin from "../assets/images/linkedin.png";
 import Twitter from "../assets/images/twitter.png";
+import card1 from "../assets/images/card1.png";
+import card2 from "../assets/images/card2.png";
+import Profile from "../assets/images/profile.png";
+import Sprite from "../assets/images/sprite.png";
+import Map from "../assets/images/map.png";
+import Flag from "../assets/images/flag.png";
 
 const Images = {
   Logo,
@@ -22,5 +28,11 @@ const Images = {
   Facebook,
   Linkedin,
   Twitter,
+  card1,
+  card2,
+  Profile,
+  Sprite,
+  Map,
+  Flag
 };
 export default Images;
