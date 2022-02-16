@@ -1,5 +1,6 @@
 import { Button, Col, Container, Row } from "reactstrap";
 import Images from "../static/images";
+import ObservationCard from "./ObservationCard";
 
 const Home = () => {
   return (
@@ -59,6 +60,32 @@ const Home = () => {
           </Row>
         </Container>
       </div>
+      {/* ----- Map Section Start----- */}
+      <div className="map_section">
+        <div className="bg-black map_inner">
+          <Container>
+            <div className="position-relative">
+              <div className="obervation-card_wrapper">
+                  <Row>
+                      <Col lg={3}>
+                          <ObservationCard/>
+                      </Col>
+                      <Col lg={3}>
+                          <ObservationCard/>
+                      </Col>
+                      <Col lg={3}>
+                          <ObservationCard/>
+                      </Col>
+                      <Col lg={3}>
+                          <ObservationCard/>
+                      </Col>
+                  </Row>
+              </div>
+            </div>
+          </Container>
+        </div>
+      </div>
+      {/* ----- Map Section End----- */}
       <div className="how-it-works-section">
         <div className="top-polygone">
           <img src={Images.Topimage} alt="" />

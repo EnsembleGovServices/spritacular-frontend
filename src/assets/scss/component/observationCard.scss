@@ -1,0 +1,78 @@
+.observation_card{
+    background: $white;
+    border: 0;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    z-index: 11;
+    position: relative;
+    .observation_country {
+        position: absolute;
+        right: 0;
+        top: 0;
+        .badge{
+            padding: 4px 6px;
+            background: rgba(0, 0, 0, 0.64);
+            border-radius: 0px 6px 0px 8px;
+        }
+        img{
+            width: 20px;
+        }
+    }
+    .observation-card_body{
+        padding: 15px 11px 11px;
+        .observation_type{
+            top: -15px;
+            box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
+        }
+        .card_desc{
+            .card-title{
+                font-weight: bold;
+                font-size: 14px;
+                line-height: 16px;
+                @media (max-width: 1200px){
+                    font-size: 13px;
+                    line-height: 16px;
+                }
+            }
+            .card-subtitle{
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 14px;
+                .badge{
+                    font-weight: 500;
+                    font-size: 10px;
+                    line-height: 12px;
+                    margin-left: 4px;
+                }
+            }
+        }
+        .card-details{
+            .card-user_details{
+                h6{
+                    font-size: 12px;
+                    line-height: 14px;
+                    font-weight: 400;
+                    width: calc(100% - 30px);
+                    margin-right: 2px;
+                }
+                .profile-icon{
+                    width: 30px;
+                    height: 30px;
+                }
+                .profile-text{
+                    width: 30px;
+                    height: 30px;
+                    font-style: normal;
+                    font-size: 13px;
+                    line-height: 17px;
+                    font-weight: 700;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+            
+        }   
+    }
+}
