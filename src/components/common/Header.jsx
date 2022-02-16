@@ -42,7 +42,7 @@ const Header = () => {
   return (
     <>
       <div>
-        <Navbar container expand="md" className="custome-header">
+        <Navbar container expand="md" className="custome-header" light>
           <NavbarBrand href="/">
             <img src={Images.Logo} alt="Logo" className="logo" />
             <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo" />
@@ -65,9 +65,19 @@ const Header = () => {
               <NavItem>
                 <NavLink href="#">Verify</NavLink>
               </NavItem>
+              <NavItem className="d-md-none d-xs-block">
+                <NavLink href="#" className="register btn btn-link">
+                  Register
+                </NavLink>
+              </NavItem>
+              <NavItem className="d-md-none d-xs-block">
+                <NavLink href="#" className="register btn btn-link">
+                  Login
+                </NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
-          <div className="right-menu">
+          <div className="right-menu ">
             <NavLink href="#" className="register btn btn-link">
               Register
             </NavLink>
