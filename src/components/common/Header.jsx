@@ -29,6 +29,7 @@ const Header = () => {
 
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isRegisterModal, setIsRegisterModal] = useState(false);
+  const [showmenu, setShowMenu] = useState(false);
 
   const handleLoginModal = () => {
     setIsLoginModal(!isLoginModal);
@@ -37,17 +38,19 @@ const Header = () => {
   const handleRegisterModal = () => {
     setIsRegisterModal(!isRegisterModal);
   }
-
+  const menuToggle = () => {
+    setShowMenu(!showmenu);
+  }
   return (
       <>
         <div>
-          <Navbar container expand="md" className="custome-header">
+          <Navbar container expand="md" className="custome-header" light>
             <NavbarBrand href="/">
               <img src={Images.Logo} alt="Logo" className="logo" />
               <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo" />
             </NavbarBrand>
-            <NavbarToggler onClick={function noRefCheck() {}} />
-            <Collapse navbar>
+            <NavbarToggler onClick={()=>menuToggle()} />
+            <Collapse navbar isOpen={showmenu}>
               <Nav className="" navbar>
                 <NavItem>
                   <NavLink href="">About Us</NavLink>

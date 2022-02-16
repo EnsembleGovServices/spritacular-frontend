@@ -67,16 +67,16 @@ const Home = () => {
             <div className="position-relative">
               <div className="obervation-card_wrapper">
                 <Row>
-                  <Col sm={3}>
+                  <Col className="col-6 col-md-3">
                     <ObservationCard />
                   </Col>
-                  <Col sm={3}>
+                  <Col className="col-6 col-md-3">
                     <ObservationCard />
                   </Col>
-                  <Col sm={3}>
+                  <Col className="col-6 col-md-3">
                     <ObservationCard />
                   </Col>
-                  <Col sm={3}>
+                  <Col className="col-6 col-md-3">
                     <ObservationCard />
                   </Col>
                 </Row>
