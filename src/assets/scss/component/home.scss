@@ -55,7 +55,7 @@
         .explore-btn{
             background-color:$white;
             padding: 12px 25px;
-            color: #990000;
+            color: $secondary;
             font-size: 18px;
             line-height: 26px;
  
@@ -67,8 +67,9 @@
             border:1px solid $white;
             transition: all 0.3s ease 0s;
             &:hover{
-                background-color: #990000;
+                background-color: $secondary;
                 color: $white;
+                border: 1px solid $secondary;
 
             }
         }
@@ -77,27 +78,207 @@
     }
   }
 
-  .counter-inner{
-    display: flex;
-    padding-top: 25px;
-    .left-image{
+.counter-main{
+    padding-bottom: 270px;
+    @media (max-width: 1200px){
+        padding-bottom: 170px;
+    }
+    .counter-inner{
+      display: flex;
+      padding-top: 25px;
+      .left-image{
+          img{
+              max-width: 48px;
+          }
+      }
+      .right-counter{
+          margin-left: 20px;
+          h3{
+              margin: 0px;
+              font-weight: 900;
+              font-size: 42px;
+              line-height: 49px;
+          }
+          p{
+              font-size: 16px;
+              line-height: 26px;
+              margin: 0px;
+              color: #555555;
+          }
+      }
+    }
+}
+.how-it-works-section{
+    padding: 110px 0px 140px;
+    position: relative;
+    &::before{
+      content: "";
+      position: absolute;
+      background-image: url(../../images/left-dot.png);
+      background-repeat: no-repeat;
+      width: 240px;
+      height: 140px;
+      position: absolute;
+      left: 0px;
+      top: 8%;
+    }
+    img{
+        z-index: 9;
+        position: relative;
+    }    
+    h2{
+        text-align: center;
+        margin-bottom: 75px;
+        font-size: 48px;
+        line-height: 56px;
+        color: #181818;
+        
+    }
+    .top-polygone{
         img{
-            max-width: 48px;
+            position: absolute;
+            right: 0px;
+            top: 0px;
         }
     }
-    .right-counter{
-        margin-left: 20px;
+    .bottom-polygone{
+      img{
+          position: absolute;
+          left: 0px;
+          bottom: 0px;
+      }
+  }
+    .how-it-work-text-info{
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         h3{
-            margin: 0px;
-            font-weight: 900;
-            font-size: 42px;
-            line-height: 49px;
+          font-size: 42px;
+          line-height: 49px;
+          color: #000000;
+          font-weight: 700;
+          margin: 0px;
+          display: flex;
+          align-items: center;
+          
+          span{
+              background-color: #C11E37;
+              height: 46px;
+              width: 46px;
+              border-radius: 50%;
+              font-size: 24px;
+              font-weight: normal;
+              display: inline-block;
+              color: #fff;
+              text-align: center;
+              margin-right: 18px;
+          }
+          
         }
         p{
-            font-size: 16px;
-            line-height: 26px;
-            margin: 0px;
-            color: #555555;
+          color: #666;
+          font-size: 18px;
+          line-height: 26px;
+          margin: 24px 0px 0px 0px;
+      }
+      .register-polygon{
+          right: 10px;
+          position: absolute;
+         
+      }
+      .observe-polygon{
+          right: 0px;
+          height: 130px;
+          width: 130px;
+          position: absolute;
+          
+      }
+      .share-polygon{
+          left: -50%;
+          width: 100px;
+          height: 100px;
+          position: absolute;
+          top: -90px;
+      }
+      .engage-polygon{
+          right: 70px;
+          height: 100px;
+          width: 100px;
+          bottom: -200px;
+          position: absolute; 
+      }
+      .view-tutorial{
+          width: 146px;
+          margin-top: 24px;
+          height: 50px;
+          background-color: transparent;
+          color: $secondary;
+          &:hover{
+              background-color: $secondary;
+              color: $white;
+          }
+      }
+    }
+}
+
+// Map section css start 
+.map_section{
+    position: relative;
+    .map_inner{
+        // padding-top: 3%;
+        background: url("../../images/map.png") no-repeat center;
+        background-size: contain;
+        height: 690px;
+        @media (max-width: 1200px){
+            height: 400px;
+        }
+    }
+    img{
+        width: 100%;
+    }
+    &::before{
+        content: "";
+        display: block;
+        background: $black;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: -65px;
+        -webkit-clip-path: polygon(0 0, 100% 9%, 100% 10%, 0 10%);
+        clip-path: polygon(0 0, 100% 9%, 100% 10%, 0 10%);
+        z-index: 10;
+        @media (max-width: 1200px){
+            top: -38px;
+        }
+    }
+    &::after{
+        content: "";
+        display: block;
+        background: $black;
+        width: 100%;
+        height: 100%;
+        -webkit-clip-path: polygon(0 92%, 100% 92%, 100% 100%, 0 93%);
+        clip-path: polygon(0 92%, 100% 92%, 100% 100%, 0 93%);
+        position: absolute;
+        bottom: -52px;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        @media (max-width: 1200px){
+            bottom: -30px;
         }
     }
 }
+.obervation-card_wrapper{
+    position: relative;
+    top: -210px;
+    left: 0;
+    right: 0;
+    z-index: 11;
+    @media (max-width: 1200px){
+        top: -150px;
+    }
+}
+// Map section css end 

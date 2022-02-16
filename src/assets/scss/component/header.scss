@@ -44,6 +44,7 @@
     }
     &.bg-color-menu{
         background-color: $white;
+        @include box-shadow($box-shadow);
         .on-scroll-logo{
             display: inline-block;
         }

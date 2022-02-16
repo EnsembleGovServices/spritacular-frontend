@@ -1,13 +1,22 @@
 import {
+  Button,
+  Col,
   Collapse,
+  FormText,
+  Label,
+  Modal,
+  ModalBody,
+  ModalHeader,
   Nav,
   Navbar,
   NavbarBrand,
   NavbarToggler,
   NavItem,
   NavLink,
+  Row,
 } from "reactstrap";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Form, FormGroup, Input } from "reactstrap";
 import Images from "../../static/images";
 
 const Header = () => {
@@ -23,6 +32,13 @@ const Header = () => {
       }
     });
   }, []);
+
+  const [open, setOpen] = useState(false);
+
+  const openModal = () => {
+    setOpen(!open);
+  };
+
   return (
     <>
       <div>
@@ -55,10 +71,91 @@ const Header = () => {
             <NavLink href="#" className="register btn btn-link">
               Register
             </NavLink>
-            <NavLink href="#">Login</NavLink>
+            <NavLink href="#" onClick={() => openModal(true)}>
+              Login
+            </NavLink>
           </div>
         </Navbar>
       </div>
+
+      <Modal isOpen={open} centered className="comman-modal">
+        {/*<ModalHeader>
+          Login
+          <Button className="close-icon" onClick={() => openModal(false)}>
+            <img src={Images.Modalcloseicon} alt="close-icon" />
+          </Button>
+        </ModalHeader>*/}
+        <ModalHeader>
+          Sign up
+          <Button className="close-icon" onClick={() => openModal(false)}>
+            <img src={Images.Modalcloseicon} alt="close-icon" />
+          </Button>
+          {/*<p>Explore, observe, learn and engage with our community</p>*/}
+        </ModalHeader>
+        <ModalBody>
+          {/*<Form>
+            <FormGroup>
+              <Input type="email" name="email" placeholder="Email address" />
+            </FormGroup>
+            <FormGroup>
+              <Input type="password" name="password" placeholder="Password" />
+            </FormGroup>
+            <FormText className="forgot-password">
+              <a href="#">Forgot Password?</a>
+            </FormText>
+            <FormGroup>
+              <Button className="modal-btn" disabled>
+                Login
+              </Button>
+            </FormGroup>
+          </Form>*/}
+          <Form>
+            <Row>
+              <Col sm={6}>
+                <FormGroup>
+                  <Input
+                    type="text"
+                    name="First Name"
+                    placeholder="First name"
+                  />
+                </FormGroup>
+              </Col>
+              <Col sm={6} className="">
+                <FormGroup>
+                  <Input type="text" name="Last name" placeholder="Last name" />
+                </FormGroup>
+              </Col>
+            </Row>
+
+            <FormGroup>
+              <Input type="email" name="email" placeholder="Email address" />
+            </FormGroup>
+            <FormGroup>
+              <Input type="password" name="password" placeholder="Password" />
+            </FormGroup>
+            <FormGroup>
+              <Input type="select" name="select" id="exampleSelect">
+                <option>Location</option>
+                <option>Ahmedabad</option>
+                <option>Pune</option>
+                <option>Bombay</option>
+              </Input>
+            </FormGroup>
+            <FormGroup check>
+              <Label check>
+                <Input type="checkbox" /> Creating an account means you agree
+                with our with our <a href="#">Privacy Policy</a> and{" "}
+                <a href="#">Terms.</a>
+              </Label>
+            </FormGroup>
+            <FormGroup>
+              <Button className="modal-btn" disabled>
+                Create Account
+              </Button>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+      </Modal>
     </>
   );
 };

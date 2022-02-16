@@ -1,5 +1,6 @@
 import { Button, Col, Container, Row } from "reactstrap";
 import Images from "../static/images";
+import ObservationCard from "./ObservationCard";
 
 const Home = () => {
   return (
@@ -53,6 +54,127 @@ const Home = () => {
                 <div className="right-counter">
                   <h3>250</h3>
                   <p>Countries Participated</p>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+      {/* ----- Map Section Start----- */}
+      <div className="map_section">
+        <div className="bg-black map_inner">
+          <Container>
+            <div className="position-relative">
+              <div className="obervation-card_wrapper">
+                  <Row>
+                      <Col lg={3}>
+                          <ObservationCard/>
+                      </Col>
+                      <Col lg={3}>
+                          <ObservationCard/>
+                      </Col>
+                      <Col lg={3}>
+                          <ObservationCard/>
+                      </Col>
+                      <Col lg={3}>
+                          <ObservationCard/>
+                      </Col>
+                  </Row>
+              </div>
+            </div>
+          </Container>
+        </div>
+      </div>
+      {/* ----- Map Section End----- */}
+      <div className="how-it-works-section">
+        <div className="top-polygone">
+          <img src={Images.Topimage} alt="" />
+        </div>
+        <div className="bottom-polygone">
+          <img src={Images.Bottompolygon} alt="" />
+        </div>
+        <Container>
+          <h2>How it works</h2>
+          <Row className="gy-5">
+            <Col xs={6}>
+              <div className="how-it-work-text-info">
+                <h3>
+                  <span>1</span>Register
+                </h3>
+                <p>
+                  Create an account to become a Spritacular Citizen Scientist.
+                </p>
+                <div className="register-polygon">
+                  <img src={Images.Registerpolygon} alt="" />
+                </div>
+              </div>
+            </Col>
+            <Col xs={6}>
+              <img
+                src={Images.Register}
+                alt="Register/SignUp demo"
+                className="w-100"
+              />
+            </Col>
+
+            <Col xs={6}>
+              <img
+                src={Images.HowitworksSecond}
+                alt="How it works under Register"
+                className="w-100"
+              />
+            </Col>
+            <Col xs={6}>
+              <div className="how-it-work-text-info">
+                <h3>
+                  <span>2</span>Learn & Observe
+                </h3>
+                <p>
+                  Complete the observation tutorial before starting to observe a
+                  sprite. This is intended to make sure your observation inline
+                  with our standards.
+                </p>
+                <Button className="view-tutorial">View Tutorial</Button>
+                <div className="observe-polygon">
+                  <img src={Images.Observepolygon} alt="" className="w-100" />
+                </div>
+              </div>
+            </Col>
+
+            <Col xs={6}>
+              <div className="how-it-work-text-info">
+                <h3>
+                  <span>3</span>Share
+                </h3>
+                <p>
+                  Upload your observation images and choose the appropriate
+                  observation category(sprite, elve, gigantic jet, blue jet, or
+                  other). You need to complete other details as well such as
+                  location, date, time, and your camera details.
+                </p>
+                <div className="share-polygon">
+                  <img src={Images.Sharepolygon} alt="" />
+                </div>
+              </div>
+            </Col>
+            <Col xs={6}>
+              <img src={Images.Dragdrop} alt="Share" className="w-100" />
+            </Col>
+
+            <Col xs={6}>
+              <img src={Images.Jet} alt="Share" className="w-100" />
+            </Col>
+            <Col xs={6}>
+              <div className="how-it-work-text-info">
+                <h3>
+                  <span>4</span>Engage
+                </h3>
+                <p>
+                  Review and left comment on other citizen scientist
+                  observations.
+                </p>
+                <div className="engage-polygon">
+                  <img src={Images.Engagepolygon} alt="Share" />
                 </div>
               </div>
             </Col>

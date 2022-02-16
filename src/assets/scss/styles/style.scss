@@ -13,6 +13,20 @@ body {
   font-family: $FontFamily;
   background-color: $white;
 }
+::-webkit-input-placeholder { 
+  color: #000;
+  opacity: 0.32;
+}
+
+:-ms-input-placeholder { 
+  color: #000;
+  opacity: 0.32;
+}
+
+::placeholder {
+  color: #000;
+  opacity: 0.32;
+}
 
 // Import any component file here
 
