@@ -23,6 +23,9 @@
       }
       .hero-banner-inner{
         padding: 160px 0px 60px;
+        @media(max-width:480px){
+            padding: 120px 0px 60px;
+        }
         .border-line{
             &::after{
                 content: "";
@@ -40,25 +43,35 @@
         max-width: 645px;
         margin: 0 auto;
         h2{
-            font-size: 48px;
-            line-height: 56px;
+            // font-size: 48px;
+            // line-height: 56px;
+            @include xl-title;
             color: $white;
             font-weight: 700;
             margin: 0px;
+            
+            @media(max-width:1023px){
+                // font-size: 36px;
+                // line-height: 40px;
+            }
         }
         p{
+            @include xl-text;
             color: $white;
-            font-size:18px;
-            line-height: 24px;
+            // font-size:18px;
+            // line-height: 24px;
             margin: 20px 0px 0px 0px;
+            @media(max-width:1023px){
+                // font-size: 15px;
+            }
         }
         .explore-btn{
             background-color:$white;
             padding: 12px 25px;
             color: $secondary;
-            font-size: 18px;
-            line-height: 26px;
- 
+            // font-size: 18px;
+            // line-height: 26px;
+            @include xl-text;
             text-transform: capitalize;
             max-width: 161px;
             display: block;
@@ -66,6 +79,10 @@
             margin-top: 70px;
             border:1px solid $white;
             transition: all 0.3s ease 0s;
+            font-weight: 600;
+            @media(max-width:1023px){
+                margin-top: 40px;
+            }
             &:hover{
                 background-color: $secondary;
                 color: $white;
@@ -96,14 +113,23 @@
           h3{
               margin: 0px;
               font-weight: 900;
-              font-size: 42px;
-              line-height: 49px;
+            //   font-size: 42px;
+            //   line-height: 49px;
+              @include lg-title;
+              @media(max-width:1023px){
+                //   font-size: 32px;
+                //   line-height: 35px;
+              }
           }
           p{
-              font-size: 16px;
-              line-height: 26px;
+              @include lg-text;
+            //   font-size: 16px;
+            //   line-height: 26px;
               margin: 0px;
               color: #555555;
+              @media(max-width:1023px){
+                // font-size: 14px;
+            }
           }
       }
     }
@@ -121,17 +147,29 @@
       position: absolute;
       left: 0px;
       top: 8%;
+      @media(max-width:1023px){
+          width: 140px;
+          height: 80px;
+          background-size: 100%;
+      }
     }
     img{
-        z-index: 9;
+        z-index: -1;
         position: relative;
     }    
     h2{
         text-align: center;
         margin-bottom: 75px;
-        font-size: 48px;
-        line-height: 56px;
+        // font-size: 48px;
+        // line-height: 56px;
+        font-weight: bold;
+        @include xl-title;
         color: #181818;
+        @media(max-width:1023px){
+            // font-size: 36px;
+            // line-height: 40px;
+        }
+      
         
     }
     .top-polygone{
@@ -139,6 +177,9 @@
             position: absolute;
             right: 0px;
             top: 0px;
+            @media(max-width:1150px){
+                width: 40%;
+            }
         }
     }
     .bottom-polygone{
@@ -146,8 +187,18 @@
           position: absolute;
           left: 0px;
           bottom: 0px;
+          @media(max-width:1450px){
+              width: 40%;
+              z-index: -9;
+          }
       }
-  }
+    }
+    .works-gap{
+        margin-bottom: 90px;
+        @media(max-width:1023px){
+            margin-bottom: 35px;
+        }
+    }
     .how-it-work-text-info{
         position: relative;
         height: 100%;
@@ -155,44 +206,69 @@
         flex-direction: column;
         justify-content: center;
         h3{
-          font-size: 42px;
-          line-height: 49px;
+        //   font-size: 42px;
+        //   line-height: 49px;
+          @include lg-title;
           color: #000000;
           font-weight: 700;
           margin: 0px;
           display: flex;
           align-items: center;
+          @media(max-width:1023px){
+            //   font-size: 30px;
+            //   line-height: 35px;
+          }
           
           span{
               background-color: #C11E37;
               height: 46px;
               width: 46px;
               border-radius: 50%;
-              font-size: 24px;
+              @include vcenter;
+            //   font-size: 24px;
+              @include sm-title;
               font-weight: normal;
-              display: inline-block;
               color: #fff;
               text-align: center;
               margin-right: 18px;
+              @media(max-width:1023px){
+                height: 35px;
+                width: 35px;
+                // font-size: 16px;
+                margin-right: 10px;
+            }
           }
           
         }
         p{
           color: #666;
-          font-size: 18px;
-          line-height: 26px;
+        //   font-size: 18px;
+        //   line-height: 26px;
+          @include xl-text;
           margin: 24px 0px 0px 0px;
+          @media(max-width:1023px){
+            //   font-size: 15px;
+            //   margin-top: 15px;
+          }
       }
       .register-polygon{
-          right: 10px;
+          right: 20%;
+          bottom: 5%;
           position: absolute;
+          @media(max-width:991px){
+              display: none;
+          }
          
       }
       .observe-polygon{
           right: 0px;
+          bottom: 0px;
           height: 130px;
           width: 130px;
           position: absolute;
+          @media(max-width:991px){
+            display: none;
+        }
           
       }
       .share-polygon{
@@ -201,20 +277,48 @@
           height: 100px;
           position: absolute;
           top: -90px;
+          @media(max-width:1820px){
+            left: -40%;
+          }
+          @media(max-width:1700px){
+            left: -30%;
+          }
+          @media(max-width:1600px){
+            left: -18%;
+          }
+          @media(max-width:1500px){
+            left: -17%;
+          }
+          @media(max-width:1380px){
+            left: -26%;
+          }
+          @media(max-width:1280px){
+            left: -15%;
+          }
+          
+          @media(max-width:991px){
+            display: none;
+         }
       }
       .engage-polygon{
-          right: 70px;
-          height: 100px;
-          width: 100px;
-          bottom: -200px;
-          position: absolute; 
+        right: 50%;
+        height: 100px;
+        width: 100px;
+        bottom: -35px;
+        position: absolute;
+        @media(max-width:991px){
+            display: none;
+        }
       }
       .view-tutorial{
-          width: 146px;
           margin-top: 24px;
-          height: 50px;
+          padding: 13px 26px;
           background-color: transparent;
           color: $secondary;
+          @include lg-text;
+          font-weight: 500;
+          max-width: fit-content;
+          border-radius: 99px;
           &:hover{
               background-color: $secondary;
               color: $white;
@@ -234,6 +338,10 @@
         @media (max-width: 1200px){
             height: 400px;
         }
+        @media (max-width: 767px){
+            height: auto;
+            padding: 0 0;
+        }
     }
     img{
         width: 100%;
@@ -245,13 +353,16 @@
         width: 100%;
         height: 100%;
         position: absolute;
-        top: -65px;
+        top: -9.5%;
         -webkit-clip-path: polygon(0 0, 100% 9%, 100% 10%, 0 10%);
         clip-path: polygon(0 0, 100% 9%, 100% 10%, 0 10%);
         z-index: 10;
-        @media (max-width: 1200px){
-            top: -38px;
-        }
+        // @media (max-width: 1200px){
+        //     top: -38px;
+        // }
+        // @media (max-width: 767px){
+        //     top: -55px;
+        // }
     }
     &::after{
         content: "";
@@ -262,13 +373,16 @@
         -webkit-clip-path: polygon(0 92%, 100% 92%, 100% 100%, 0 93%);
         clip-path: polygon(0 92%, 100% 92%, 100% 100%, 0 93%);
         position: absolute;
-        bottom: -52px;
+        bottom: -7.5%;
         left: 0;
         right: 0;
         z-index: 10;
-        @media (max-width: 1200px){
-            bottom: -30px;
-        }
+        // @media (max-width: 1200px){
+        //     bottom: -30px;
+        // }
+        // @media (max-width: 767px){
+        //     bottom: -42px;
+        // }
     }
 }
 .obervation-card_wrapper{
@@ -279,6 +393,25 @@
     z-index: 11;
     @media (max-width: 1200px){
         top: -150px;
+    }
+    @media (max-width: 767px){
+        top: -90px;
+    }
+    .observation_card{
+        .card-img-top{
+            height: 180px;
+            object-fit: cover;
+            object-position: bottom;
+            @media (max-width: 991px){
+                height: 120px;
+            }
+            @media (max-width: 767px){
+                height: 160px;
+            }
+            @media (max-width: 474px){
+                height: 100px;
+            }
+        }
     }
 }
 // Map section css end 

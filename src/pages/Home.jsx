@@ -3,6 +3,49 @@ import Images from "../static/images";
 import ObservationCard from "./ObservationCard";
 
 const Home = () => {
+  const observationCards=[
+    {
+      img: "image",
+      imgCategory: "imagepath",
+      date:"17 June 2022",
+      time: "5:23:00",
+      username:"John Doe",
+      userProfile: "imagepath",
+      userCountryName: "Trieben, AT",
+      userCountryIcon: "imagepath"
+    },
+    {
+      img: "image",
+      imgCategory: "imagepath",
+      date:"17 June 2022",
+      time: "5:23:00",
+      username:"John Doe",
+      userProfile: "imagepath",
+      userCountryName: "Trieben, AT",
+      userCountryIcon: "imagepath"
+    },
+    {
+      img: "image",
+      imgCategory: "imagepath",
+      date:"17 June 2022",
+      time: "5:23:00",
+      username:"John Doe",
+      userProfile: "imagepath",
+      userCountryName: "Trieben, AT",
+      userCountryIcon: "imagepath"
+    },
+    {
+      img: "image",
+      imgCategory: "imagepath",
+      date:"17 June 2022",
+      time: "5:23:00",
+      username:"John Doe",
+      userProfile: "imagepath",
+      userCountryName: "Trieben, AT",
+      userCountryIcon: "imagepath"
+    },
+  ]
+  
   return (
     <>
       <div className="hero-banner">
@@ -24,7 +67,7 @@ const Home = () => {
       <div className="counter-main">
         <Container>
           <Row>
-            <Col>
+            <Col md={4} xs={12}>
               <div className="counter-inner">
                 <div className="left-image">
                   <img src={Images.User} alt="Users" />
@@ -35,7 +78,7 @@ const Home = () => {
                 </div>
               </div>
             </Col>
-            <Col>
+            <Col md={4} xs={12}>
               <div className="counter-inner">
                 <div className="left-image">
                   <img src={Images.Submit} alt="user" />
@@ -46,7 +89,7 @@ const Home = () => {
                 </div>
               </div>
             </Col>
-            <Col>
+            <Col md={4} xs={12}>
               <div className="counter-inner">
                 <div className="left-image">
                   <img src={Images.Country} alt="country" />
@@ -66,20 +109,14 @@ const Home = () => {
           <Container>
             <div className="position-relative">
               <div className="obervation-card_wrapper">
-                  <Row>
-                      <Col lg={3}>
-                          <ObservationCard/>
+                <Row>
+                  {observationCards && observationCards.map((cardItems)=>{
+                    return (
+                      <Col className="col-6 col-md-3 mb-3 mb-md-0">
+                        <ObservationCard cardItems={cardItems} />
                       </Col>
-                      <Col lg={3}>
-                          <ObservationCard/>
-                      </Col>
-                      <Col lg={3}>
-                          <ObservationCard/>
-                      </Col>
-                      <Col lg={3}>
-                          <ObservationCard/>
-                      </Col>
-                  </Row>
+                  );})}
+                </Row>
               </div>
             </div>
           </Container>
@@ -95,8 +132,8 @@ const Home = () => {
         </div>
         <Container>
           <h2>How it works</h2>
-          <Row className="gy-5">
-            <Col xs={6}>
+          <Row>
+            <Col md={6} xs={12} className="works-gap">
               <div className="how-it-work-text-info">
                 <h3>
                   <span>1</span>Register
@@ -109,22 +146,23 @@ const Home = () => {
                 </div>
               </div>
             </Col>
-            <Col xs={6}>
+            <Col md={6} xs={12} className="works-gap">
               <img
                 src={Images.Register}
                 alt="Register/SignUp demo"
                 className="w-100"
               />
             </Col>
-
-            <Col xs={6}>
+          </Row>
+          <Row>
+            <Col md={6} xs={12} className="works-gap order-2 order-md-1">
               <img
                 src={Images.HowitworksSecond}
                 alt="How it works under Register"
                 className="w-100"
               />
             </Col>
-            <Col xs={6}>
+            <Col md={6} xs={12} className="works-gap order-1 order-md-2">
               <div className="how-it-work-text-info">
                 <h3>
                   <span>2</span>Learn & Observe
@@ -140,8 +178,9 @@ const Home = () => {
                 </div>
               </div>
             </Col>
-
-            <Col xs={6}>
+          </Row>
+          <Row>
+            <Col md={6} xs={12} className="works-gap">
               <div className="how-it-work-text-info">
                 <h3>
                   <span>3</span>Share
@@ -157,14 +196,19 @@ const Home = () => {
                 </div>
               </div>
             </Col>
-            <Col xs={6}>
-              <img src={Images.Dragdrop} alt="Share" className="w-100" />
+            <Col md={6} xs={12} className="works-gap">
+              <div className="shadow-lg shadow-sm p-3  bg-white rounded">
+                <img src={Images.Dragdrop} alt="Share" className="w-100" />
+              </div>
             </Col>
-
-            <Col xs={6}>
-              <img src={Images.Jet} alt="Share" className="w-100" />
+          </Row>
+          <Row>
+            <Col md={6} xs={12} className="works-gap order-2 order-md-1">
+              <div className="shadow-lg shadow-sm p-3  bg-white rounded ">
+                <img src={Images.Jet} alt="jet" className="w-100" />
+              </div>
             </Col>
-            <Col xs={6}>
+            <Col md={6} xs={12} className="works-gap order-1 order-md-2">
               <div className="how-it-work-text-info">
                 <h3>
                   <span>4</span>Engage
