@@ -15,6 +15,17 @@ import Profile from "../assets/images/profile.png";
 import Sprite from "../assets/images/sprite.png";
 import Map from "../assets/images/map.png";
 import Flag from "../assets/images/flag.png";
+import Register from "../assets/images/Register.png";
+import Dragdrop from "../assets/images/drag-drop.jpg";
+import Jet from "../assets/images/jet.jpg";
+import HowitworksSecond from "../assets/images/Howitworks_second.png";
+import Topimage from "../assets/images/how-it-works-top.png";
+import Registerpolygon from "../assets/images/register-polygon.png";
+import Observepolygon from "../assets/images/Learn-observe-polygon.png";
+import Sharepolygon from "../assets/images/share-polygon.png";
+import Engagepolygon from "../assets/images/engage-polygon.png";
+import Bottompolygon from "../assets/images/bottom-polygon.png";
+import Modalcloseicon from "../assets/images/close-icon.svg";
 
 const Images = {
   Logo,
@@ -33,6 +44,17 @@ const Images = {
   Profile,
   Sprite,
   Map,
-  Flag
+  Flag,
+  Register,
+  Dragdrop,
+  Jet,
+  HowitworksSecond,
+  Topimage,
+  Registerpolygon,
+  Observepolygon,
+  Sharepolygon,
+  Engagepolygon,
+  Bottompolygon,
+  Modalcloseicon,
 };
 export default Images;
