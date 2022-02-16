@@ -22,15 +22,17 @@ footer{
                 height: 250px;
             }
         }
-        img{
-            width: 100%;
-        }
         .footer-links{
             max-width: 110px;
             width: 100%;
             margin: 0 0 0 auto;
             @media (max-width: 575px){
                 margin: 0 auto;
+            }
+            a{
+                @media (max-width: 767px){
+                    margin-bottom: 15px !important;
+                }
             }
         }
         .footer-social-links{
@@ -39,13 +41,16 @@ footer{
     }
     .footer-brand{
         text-align: center;
+        max-width: 160px;
+        width: 100%;
+        margin: 0 auto;
         @media (max-width: 1200px){
-            max-width: 160px;
-            width: 100%;
-            margin: 0 auto;
         }
         @media (max-width: 575px){
             margin: 0 auto 15px;
+        }
+        img{
+            max-width: 100%;
         }
     }
     .nasa-img{
@@ -66,8 +71,9 @@ footer{
         }
     }
     a{
-        font-size: 14px;
-        line-height: 16px;
+        // font-size: 14px;
+        // line-height: 16px;
+        @include md-text;
         color: $white;
         z-index: 2;
         &:hover{
@@ -75,8 +81,9 @@ footer{
         }
     }
     p{
-        font-size: 12px;
-        line-height: 14px;
+        // font-size: 12px;
+        // line-height: 14px;
+        @include sm-text;
         opacity: 0.7;
         text-align: left;
         margin: 0;

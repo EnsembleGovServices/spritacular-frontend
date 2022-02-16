@@ -8,14 +8,14 @@ const Footer = () => {
       <footer className="footer bg-black position-relative">
         <div className="footer-wrapper position-relative">
           <Container>
-            <Row className="gy-3">
+            <Row className="gy-2 gy-md-3">
               <Col lg={12}>
                 <Link
                   to={"/"}
                   title="Spritacular"
                   className="d-inline-block mb-3"
                 >
-                  <img src={Images.spritacularWhite} alt="spritacular" />{" "}
+                  <img src={Images.spritacularWhite} alt="spritacular" />
                 </Link>
               </Col>
               <Col lg={4}>
