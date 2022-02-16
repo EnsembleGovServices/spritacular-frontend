@@ -3,6 +3,9 @@ footer{
     .footer-wrapper{
         overflow: hidden;
         padding: 20px 0 37px;
+        @media (max-width: 1200px){
+            text-align: center;
+        }
         &::after{
             content: "";
             display: block;
@@ -10,9 +13,39 @@ footer{
             height: 400px;
             position: absolute;
             right: -3%;
-            bottom: -70px;
+            top: 0;
             background: url("../../images/footer-line.png") no-repeat center;
             background-size: contain;
+            z-index: 0;
+            @media (max-width: 767px){
+                width: 250px;
+                height: 250px;
+            }
+        }
+        img{
+            width: 100%;
+        }
+        .footer-links{
+            max-width: 110px;
+            width: 100%;
+            margin: 0 0 0 auto;
+            @media (max-width: 575px){
+                margin: 0 auto;
+            }
+        }
+        .footer-social-links{
+            z-index: 1;
+        }
+    }
+    .footer-brand{
+        text-align: center;
+        @media (max-width: 1200px){
+            max-width: 160px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        @media (max-width: 575px){
+            margin: 0 auto 15px;
         }
     }
     .nasa-img{
@@ -23,16 +56,20 @@ footer{
             width: 1px;
             height: 80%;
             position: absolute;
-            right: 5px;
+            right: -6px;
             display: block;
             top: 10%;
             bottom: 0;
+            @media (max-width: 575px){
+                display: none;
+            }
         }
     }
     a{
         font-size: 14px;
         line-height: 16px;
         color: $white;
+        z-index: 2;
         &:hover{
             color: $primary;
         }
@@ -41,8 +78,22 @@ footer{
         font-size: 12px;
         line-height: 14px;
         opacity: 0.7;
+        text-align: left;
+        margin: 0;
+        @media (max-width: 575px){
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    }
+    .footer-social-links{
+        justify-content: flex-end;
+        @media (max-width: 575px){
+            justify-content: center;
+        }
     }
     ul{
+        position: relative;
+        z-index: 1;
         li{
             line-height: 0;
         }

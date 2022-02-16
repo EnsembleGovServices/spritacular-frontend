@@ -8,7 +8,7 @@ const Footer = () => {
       <footer className="footer bg-black position-relative">
         <div className="footer-wrapper position-relative">
           <Container>
-            <Row>
+            <Row className="gy-3">
               <Col lg={12}>
                 <Link
                   to={"/"}
@@ -19,23 +19,27 @@ const Footer = () => {
                 </Link>
               </Col>
               <Col lg={4}>
-                <Row className="mb-5 align-items-center">
-                  <Col lg={6} className="nasa-img">
-                    <img src={Images.Nasa} alt="spritacular" />
+                <Row className="mb-2 mb-md-5 align-items-center">
+                  <Col className="nasa-img col-12 col-sm-6">
+                    <div className="footer-brand">
+                      <img src={Images.Nasa} alt="spritacular" />
+                    </div>
                   </Col>
-                  <Col lg={6}>
-                    <img src={Images.Catholic} alt="spritacular" />
+                  <Col className="col-12 col-sm-6">
+                    <div className="footer-brand">
+                      <img src={Images.Catholic} alt="spritacular" />
+                    </div>
                   </Col>
                 </Row>
               </Col>
               <Col lg={8}>
-                <Row className="mb-5">
-                  <Col>
-                    <List type="unstyled">
+                <Row className="mb-2 mb-md-5 ">
+                  <Col className="col-12 col-sm-4">
+                    <List type="unstyled" className="footer-links">
                       <li>
                         <Link
                           to={"/"}
-                          className="d-block mb-4"
+                          className="d-inline-block mb-4"
                           title="Discover Now"
                         >
                           Discover Now{" "}
@@ -44,39 +48,39 @@ const Footer = () => {
                       <li>
                         <Link
                           to={"/"}
-                          className="d-block mb-4"
+                          className="d-inline-block mb-4"
                           title="Our Story"
                         >
                           Our Story{" "}
                         </Link>
                       </li>
                       <li>
-                        <Link to={"/"} className="d-block mb-4" title="FAQ">
+                        <Link to={"/"} className="d-inline-block mb-4" title="FAQ">
                           FAQ{" "}
                         </Link>
                       </li>
                     </List>
                   </Col>
-                  <Col>
-                    <List type="unstyled">
+                  <Col className="col-12 col-sm-4">
+                    <List type="unstyled" className="footer-links">
                       <li>
                         <Link
                           to={"/"}
-                          className="d-block mb-4"
+                          className="d-inline-block mb-4"
                           title="About Us"
                         >
                           About Us{" "}
                         </Link>
                       </li>
                       <li>
-                        <Link to={"/"} className="d-block mb-4" title="Gallery">
+                        <Link to={"/"} className="d-inline-block mb-4" title="Gallery">
                           Gallery{" "}
                         </Link>
                       </li>
                       <li>
                         <Link
                           to={"/"}
-                          className="d-block mb-4"
+                          className="d-inline-block mb-4"
                           title="Tutorial"
                         >
                           Tutorial{" "}
@@ -84,22 +88,22 @@ const Footer = () => {
                       </li>
                     </List>
                   </Col>
-                  <Col>
-                    <List type="unstyled">
+                  <Col className="col-12 col-sm-4">
+                    <List type="unstyled" className="footer-links">
                       <li>
-                        <Link to={"/"} className="d-block mb-4" title="Blog">
+                        <Link to={"/"} className="d-inline-block mb-4" title="Blog">
                           Blog{" "}
                         </Link>
                       </li>
                       <li>
-                        <Link to={"/"} className="d-block mb-4" title="Verify">
+                        <Link to={"/"} className="d-inline-block mb-4" title="Verify">
                           Verify{" "}
                         </Link>
                       </li>
                       <li>
                         <Link
                           to={"/"}
-                          className="d-block mb-4"
+                          className="d-inline-block mb-4"
                           title="Register"
                         >
                           Register{" "}
@@ -111,15 +115,15 @@ const Footer = () => {
               </Col>
               <Col lg={12}>
                 <Row className="align-items-center">
-                  <Col lg={6}>
-                    <p className="mb-0 text-white">
+                  <Col className="col-12 col-sm-6">
+                    <p className="text-white">
                       © 2022 Spritacular. All rights reserved.
                     </p>
                   </Col>
-                  <Col lg={6}>
+                  <Col className="col-12 col-sm-6">
                     <List
                       type="unstyled"
-                      className="d-flex justify-content-end m-0"
+                      className="d-flex m-0 footer-social-links"
                     >
                       <li>
                         <Link

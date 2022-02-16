@@ -234,6 +234,10 @@
         @media (max-width: 1200px){
             height: 400px;
         }
+        @media (max-width: 767px){
+            height: auto;
+            padding: 0 0;
+        }
     }
     img{
         width: 100%;
@@ -245,13 +249,16 @@
         width: 100%;
         height: 100%;
         position: absolute;
-        top: -65px;
+        top: -9.5%;
         -webkit-clip-path: polygon(0 0, 100% 9%, 100% 10%, 0 10%);
         clip-path: polygon(0 0, 100% 9%, 100% 10%, 0 10%);
         z-index: 10;
-        @media (max-width: 1200px){
-            top: -38px;
-        }
+        // @media (max-width: 1200px){
+        //     top: -38px;
+        // }
+        // @media (max-width: 767px){
+        //     top: -55px;
+        // }
     }
     &::after{
         content: "";
@@ -262,13 +269,16 @@
         -webkit-clip-path: polygon(0 92%, 100% 92%, 100% 100%, 0 93%);
         clip-path: polygon(0 92%, 100% 92%, 100% 100%, 0 93%);
         position: absolute;
-        bottom: -52px;
+        bottom: -7.5%;
         left: 0;
         right: 0;
         z-index: 10;
-        @media (max-width: 1200px){
-            bottom: -30px;
-        }
+        // @media (max-width: 1200px){
+        //     bottom: -30px;
+        // }
+        // @media (max-width: 767px){
+        //     bottom: -42px;
+        // }
     }
 }
 .obervation-card_wrapper{
@@ -279,6 +289,9 @@
     z-index: 11;
     @media (max-width: 1200px){
         top: -150px;
+    }
+    @media (max-width: 767px){
+        top: -90px;
     }
 }
 // Map section css end 
