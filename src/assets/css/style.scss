@@ -6,6 +6,17 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
 }
+::-webkit-input-placeholder { /* Edge */
+    color: #000000;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #000000;
+  }
+  
+  ::placeholder {
+    color: #000000;
+  }
 
 .hero-banner{
     background-image: url(../images/homePage.png);
