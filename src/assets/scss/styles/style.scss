@@ -28,6 +28,10 @@ body {
   opacity: 0.32;
 }
 
+body.modal-open {
+  padding-right: 0 !important;
+}
+
 // Import any component file here
 
-@import "../component/index.scss"
+@import "../component/index.scss";
