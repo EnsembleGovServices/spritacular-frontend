@@ -23,6 +23,9 @@
       }
       .hero-banner-inner{
         padding: 160px 0px 60px;
+        @media(max-width:480px){
+            padding: 120px 0px 60px;
+        }
         .border-line{
             &::after{
                 content: "";
@@ -45,12 +48,19 @@
             color: $white;
             font-weight: 700;
             margin: 0px;
+            @media(max-width:1023px){
+                font-size: 36px;
+                line-height: 40px;
+            }
         }
         p{
             color: $white;
             font-size:18px;
             line-height: 24px;
             margin: 20px 0px 0px 0px;
+            @media(max-width:1023px){
+                font-size: 15px;
+            }
         }
         .explore-btn{
             background-color:$white;
@@ -66,6 +76,9 @@
             margin-top: 70px;
             border:1px solid $white;
             transition: all 0.3s ease 0s;
+            @media(max-width:1023px){
+                margin-top: 40px;
+            }
             &:hover{
                 background-color: $secondary;
                 color: $white;
@@ -98,12 +111,19 @@
               font-weight: 900;
               font-size: 42px;
               line-height: 49px;
+              @media(max-width:1023px){
+                  font-size: 32px;
+                  line-height: 35px;
+              }
           }
           p{
               font-size: 16px;
               line-height: 26px;
               margin: 0px;
               color: #555555;
+              @media(max-width:1023px){
+                font-size: 14px;
+            }
           }
       }
     }
@@ -121,6 +141,11 @@
       position: absolute;
       left: 0px;
       top: 8%;
+      @media(max-width:1023px){
+          width: 140px;
+          height: 80px;
+          background-size: 100%;
+      }
     }
     img{
         z-index: 9;
@@ -132,6 +157,11 @@
         font-size: 48px;
         line-height: 56px;
         color: #181818;
+        @media(max-width:1023px){
+            font-size: 36px;
+            line-height: 40px;
+        }
+      
         
     }
     .top-polygone{
@@ -139,6 +169,9 @@
             position: absolute;
             right: 0px;
             top: 0px;
+            @media(max-width:1150px){
+                width: 40%;
+            }
         }
     }
     .bottom-polygone{
@@ -146,8 +179,18 @@
           position: absolute;
           left: 0px;
           bottom: 0px;
+          @media(max-width:1450px){
+              width: 40%;
+              z-index: -9;
+          }
       }
-  }
+    }
+    .works-gap{
+        margin-bottom: 90px;
+        @media(max-width:1023px){
+            margin-bottom: 35px;
+        }
+    }
     .how-it-work-text-info{
         position: relative;
         height: 100%;
@@ -162,6 +205,10 @@
           margin: 0px;
           display: flex;
           align-items: center;
+          @media(max-width:1023px){
+              font-size: 30px;
+              line-height: 35px;
+          }
           
           span{
               background-color: #C11E37;
@@ -174,6 +221,12 @@
               color: #fff;
               text-align: center;
               margin-right: 18px;
+              @media(max-width:1023px){
+                height: 35px;
+                width: 35px;
+                font-size: 16px;
+                margin-right: 10px;
+            }
           }
           
         }
@@ -182,17 +235,29 @@
           font-size: 18px;
           line-height: 26px;
           margin: 24px 0px 0px 0px;
+          @media(max-width:1023px){
+              font-size: 15px;
+              margin-top: 15px;
+          }
       }
       .register-polygon{
-          right: 10px;
+          right: 20%;
+          bottom: 5%;
           position: absolute;
+          @media(max-width:991px){
+              display: none;
+          }
          
       }
       .observe-polygon{
           right: 0px;
+          bottom: 0px;
           height: 130px;
           width: 130px;
           position: absolute;
+          @media(max-width:991px){
+            display: none;
+        }
           
       }
       .share-polygon{
@@ -201,13 +266,38 @@
           height: 100px;
           position: absolute;
           top: -90px;
+          @media(max-width:1820px){
+            left: -40%;
+          }
+          @media(max-width:1700px){
+            left: -30%;
+          }
+          @media(max-width:1600px){
+            left: -18%;
+          }
+          @media(max-width:1500px){
+            left: -17%;
+          }
+          @media(max-width:1380px){
+            left: -26%;
+          }
+          @media(max-width:1280px){
+            left: -15%;
+          }
+          
+          @media(max-width:991px){
+            display: none;
+         }
       }
       .engage-polygon{
-          right: 70px;
-          height: 100px;
-          width: 100px;
-          bottom: -200px;
-          position: absolute; 
+        right: 50%;
+        height: 100px;
+        width: 100px;
+        bottom: -35px;
+        position: absolute;
+        @media(max-width:991px){
+            display: none;
+        }
       }
       .view-tutorial{
           width: 146px;

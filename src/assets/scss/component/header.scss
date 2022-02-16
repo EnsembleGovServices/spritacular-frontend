@@ -17,13 +17,26 @@
             font-size: 15px;
             line-height: 18px;
             font-weight: 500;
+            @media(max-width:1023px){
+                padding: 10px 12px !important; 
+            }
         }
         
     }
+    .navbar-toggler{
+        @media(max-width:767px){
+            border:none;
+            color: $white;
+            box-shadow: none;
+        }
+    }
     .right-menu{
         display: inline-flex;
-        justify-content: end;
+        justify-content: flex-end;
         align-items: center;
+        @media(max-width:767px){
+            display: none;
+        }
         .register{
             background-color: transparent !important;
             color: $white;
@@ -38,7 +51,7 @@
             font-size: 14px;
             line-height: 18px;
             background-color: transparent !important;
-            padding: 0px 24px;
+            padding: 0px 10px;
             font-weight: 500;
         }
     }
