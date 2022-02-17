@@ -121,7 +121,7 @@ const LoginPopup = (props) => {
             />
           </FormGroup>
           <FormText className="forgot-password">
-            <a onClick={() => handleForgotPasswordModal()}>Forgot Password?</a>
+            <Button onClick={() => handleForgotPasswordModal()}>Forgot Password?</Button>
           </FormText>
           <FormGroup>
             <Button type="submit" className="modal-btn" disabled={!(user?.email && user?.password)}>

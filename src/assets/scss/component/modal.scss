@@ -49,11 +49,15 @@
                 }
             }
             .forgot-password{
-                a{
+                button{
                     color: $black;
                     font-size: 13px;
                     line-height: 16px;
                     cursor: pointer;
+                    background: transparent;
+                    border: 0;
+                    padding: 0;
+                    box-shadow: none;
                     &:hover{
                         color: $secondary;
                     }
@@ -168,9 +172,13 @@
                 font-size: 14px;
                 color: $black;
                 margin-top: 17px;
-                a{
+                button{
                     font-weight: 700;
                     color: $black;
+                    background: transparent;
+                    border: 0;
+                    padding: 0;
+                    box-shadow: none;
                     &:hover{
                         color: $secondary;
                     }
