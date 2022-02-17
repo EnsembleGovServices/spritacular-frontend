@@ -1,3 +1,4 @@
+@import "../global/config.scss";
 .common-modal{
     max-width: 418px;
     @media(max-width:580px){
@@ -14,16 +15,18 @@
             padding: 0px;
             margin-bottom: 25px;
             .modal-title{
-                font-size: 30px;
-                line-height: 35px;
+                // font-size: 30px;
+                // line-height: 35px;
+                @include md-title;
                 font-weight: 700;
             }
             p{
-                font-size: 13px;
+                // font-size: 13px;
+                @include md-text;
                 color: $black;
                 opacity: 0.6;
                 font-weight: 400;
-                line-height: 16px;
+                // line-height: 16px;
                 margin-top: 5px;
             }
             .close-icon{
@@ -51,8 +54,9 @@
             .forgot-password{
                 button{
                     color: $black;
-                    font-size: 13px;
-                    line-height: 16px;
+                    // font-size: 13px;
+                    // line-height: 16px;
+                    @include md-text;
                     cursor: pointer;
                     background: transparent;
                     border: 0;
@@ -72,7 +76,8 @@
             
             .modal-btn{
                 color: $white;
-                font-size: 14px;
+                // font-size: 14px;
+                @include md-text;
                 width: 100%;
                 box-shadow: none;
                 margin-top: 20px;
@@ -87,7 +92,8 @@
             }
             .form-check{
                 .form-check-label{
-                    font-size: 14px;
+                    // font-size: 14px;
+                    @include md-text;
                     color: $black;
                     opacity: 0.6;
                     a{
@@ -118,7 +124,8 @@
                         background-color: #F4F5F6;
                         border:1px dashed #cccccc;
                         color: $black;
-                        font-size: 14px;
+                        // font-size: 14px;
+                        @include md-text;
                         text-align: center;
                         display: flex;
                         align-items: center;
@@ -133,24 +140,28 @@
                 padding-top: 20px;
                 p{
                     margin-bottom: 0px;
-                    font-size: 11px;
+                    // font-size: 11px;
+                    @include sm-text;
                     color: $grey;
                 }
                 h4{
                     margin-bottom: 0px;
                     color: $grey;
-                    font-size: 15px;
+                    // font-size: 15px;
+                    @include md-text;
                     font-weight: 600;
                 }
                 .form-text{
                     color: $grey;
-                    font-size: 13px;
+                    // font-size: 13px;
+                    @include sm-text;
                 }
                 .user-country{
                     margin-top: 18px;
                     p{
                         color: $grey;
-                        font-size: 14px;
+                        // font-size: 14px;
+                        @include md-text;
                         font-weight: 500;
                         padding-left: 10px;
                     }
@@ -160,8 +171,9 @@
             .bg-modal-btn{
                 background-color: $secondary;
                 color: $white;
-                font-size: 14px;
-                line-height: 18px;
+                // font-size: 14px;
+                // line-height: 18px;
+                @include md-text;
                 font-weight: 500;
                 padding: 12px 35px;
                 border-radius: 25px;
@@ -169,11 +181,13 @@
                 
             }
             .modal-bottom-text{
-                font-size: 14px;
+                // font-size: 14px;
+                @include md-text;
                 color: $black;
                 margin-top: 17px;
                 button{
                     font-weight: 700;
+                    @include md-text;
                     color: $black;
                     background: transparent;
                     border: 0;

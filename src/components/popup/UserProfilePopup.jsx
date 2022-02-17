@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import Images from "../../static/images";
 import PropTypes from "prop-types";
+import "../../assets/scss/component/modal.scss";
 
 const UserProfilePopup = (props) => {
   const { open, handleClose, modalClass } = props;

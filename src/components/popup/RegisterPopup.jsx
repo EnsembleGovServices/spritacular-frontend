@@ -1,10 +1,24 @@
-import {Button, Col, Form, FormFeedback, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row} from "reactstrap";
+import {
+    Button,
+    Col,
+    Form,
+    FormFeedback,
+    FormGroup,
+    Input,
+    Label,
+    Modal,
+    ModalBody,
+    ModalHeader,
+    Row
+} from "reactstrap";
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import {useState} from "react";
 import axios from "../../api/server";
 import {toast} from "react-hot-toast";
+import "../../assets/scss/component/modal.scss";
 
+const REGISTER_URL = process.env.REACT_APP_API_REGISTER_URL;
 const RegisterPopup = (props) => {
     const {open, handleClose, modalClass} = props;
 
@@ -25,8 +39,8 @@ const RegisterPopup = (props) => {
     }
 
     const handleInput = (e) => {
-        let name = e.target.name;
-        let value = e.target.value;
+        let name = e.target.name,
+            value = e.target.value;
         setUserRegistration({
             ...userRegistration,
             [name]:value
@@ -42,7 +56,7 @@ const RegisterPopup = (props) => {
 
     const createNewUser = async (e) => {
         e.preventDefault();
-        await axios.post('/users/register/', userRegistration)
+        await axios.post(REGISTER_URL, userRegistration)
             .then((response)=> {
                 if (response.status === 201) {
                     setUserRegistration(null)
@@ -58,7 +72,7 @@ const RegisterPopup = (props) => {
             })
             .catch((error)=> {
                 setSuccess(null)
-                if(!error.response) {
+                if(!error?.response) {
                     toast.error('Server error occurred', toastConfig());
                 } else {
                     setError({
@@ -85,12 +99,15 @@ const RegisterPopup = (props) => {
             centered
         >
             <ModalHeader>
-                Sign up
+                <span>Sign Up</span>
                 <Button className="close-icon" onClick={()=> handleClose()}>
                     <img src={Images.Modalcloseicon} alt="close-icon" />
                 </Button>
             </ModalHeader>
             <ModalBody>
+                {success &&
+                    <p className="text-success small mb-4 fw-bolder">Signed up successfully</p>
+                }
                 <Form onSubmit={createNewUser}>
                     <Row>
                         <Col sm={6}>
