@@ -16,6 +16,7 @@ import PropTypes from "prop-types";
 import {useState} from "react";
 import axios from "../../api/server";
 import {toast} from "react-hot-toast";
+import "../../assets/scss/component/modal.scss";
 
 const REGISTER_URL = '/users/register/';
 const RegisterPopup = (props) => {
