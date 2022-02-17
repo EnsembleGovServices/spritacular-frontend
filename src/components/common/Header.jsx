@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import Images from "../../static/images";
 import LoginPopup from "../popup/LoginPopup";
 import RegisterPopup from "../popup/RegisterPopup";
+import routesList from "../../routes/MainRoute";
 
 const Header = () => {
   useEffect(() => {
@@ -52,21 +53,15 @@ const Header = () => {
           <NavbarToggler onClick={() => menuToggle()} />
           <Collapse navbar isOpen={showmenu}>
             <Nav className="" navbar>
-              <NavItem>
-                <NavLink href="">About Us</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="#">Gallery</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="#">Tutorial</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="#">Blog</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="#">Verify</NavLink>
-              </NavItem>
+              {
+                routesList.filter((item) => item.name !== 'home').map((route, index) => {
+                  return (
+                    <NavItem key={index}>
+                        <NavLink href={route.path} title={route.name} className="text-capitalize">{route.name}</NavLink>
+                      </NavItem>
+                  )
+                })
+              }
               <NavItem className="d-md-none d-xs-block">
                 <Button
                   className="register nav-link"
