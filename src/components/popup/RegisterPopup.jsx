@@ -3,6 +3,7 @@ import Images from "../../static/images";
 import PropTypes from "prop-types";
 import {useState} from "react";
 import axios from "../../api/server";
+import {toast} from "react-hot-toast";
 
 const RegisterPopup = (props) => {
     const {open, handleClose, modalClass} = props;
@@ -14,8 +15,12 @@ const RegisterPopup = (props) => {
     });
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
-
-
+    function toastConfig(toastPosition, time) {
+        return {
+            position: toastPosition ?? 'top-right',
+            duration: time ?? 4000,
+        }
+    }
     const handleInput = (e) => {
         let name = e.target.name;
         let value = e.target.value;
@@ -36,26 +41,30 @@ const RegisterPopup = (props) => {
         e.preventDefault();
         await axios.post('/users/register/', userRegistration)
             .then((response)=> {
-                setUserRegistration(null)
-                setError(null)
-                setSuccess({
-                    'status': response.status,
-                    'data': response.data
-                });
-                console.log(response);
+                if (response.status === 201) {
+                    setUserRegistration(null)
+                    setError(null)
+                    setSuccess({
+                        'status': response.status,
+                        'data': response.data
+                    });
+                    toast.success(response?.statusText, toastConfig());
+                }
             })
             .catch((error)=> {
+                toast.error(error?.response?.statusText, toastConfig());
                 setSuccess(null)
                 setError({
                     'status': error.response.status,
                     'message': error.response.statusText,
                     'data': error.response.data
                 })
-                if (error.response) {
+                if (error) {
                     console.log(error.response)
                 }
             })
     }
+
 
     return(
         <Modal
