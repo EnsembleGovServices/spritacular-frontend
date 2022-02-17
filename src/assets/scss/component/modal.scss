@@ -44,6 +44,9 @@
                 border:1px solid $input-bg;
                 box-shadow: none;
                 padding: 12px;
+                &.is-invalid {
+                    border: $border-width solid $danger;
+                }
             }
             .forgot-password{
                 button{
