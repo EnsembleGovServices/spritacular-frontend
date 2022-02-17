@@ -1,173 +1,199 @@
-.custome-header{
-    padding: 0px;
-    position: fixed;
-    top: 0px;
-    width: 100%;
-    z-index: 999;
-    @include transition();
-    .on-scroll-logo{
-        display: none
-    }
-    .navbar-collapse{
-        @media(max-width:767px){
-            background-color: #fff;
-            .navbar-nav{
-                .nav-item{
-                    width: 100%;
-                    text-align: left;
-                    padding: 8px 15px;
-                    border-bottom: 1px solid $dark;
-                    &:last-child{
-                        border-bottom: 0px;
-                    }
-                    .nav-link{
-                        color: $dark;
-                    }
-                    .btn-secondary{
-                        background-color: transparent;
-                        border:none;
-                        box-shadow: none;
-                    }
-                }
-            }
-        }
-        
-    }
-    .navbar-nav{
-        @include vcenter;
-        width: 100%;
-        .nav-link{
-            color: $white;
-            padding: 10px 24px !important;
-            // font-size: 15px;
-            // line-height: 18px;
-            @include lg-text;
-            font-weight: 500;
-            @media(max-width:1023px){
-                padding: 10px 12px !important; 
-            }
-        }
-        
-    }
-    .navbar-toggler{
-        @media(max-width:767px){
-            border:none;
-            color: $white;
-            box-shadow: none;
-        }
-    }
-    .right-menu{
-        display: inline-flex;
-        justify-content: flex-end;
-        align-items: center;
-        @media(max-width:767px){
-            display: none;
-        }
-        .register{
-            background-color: transparent !important;
-            color: $white;
-            // font-size: 14px;
-            // line-height: 18px;
-            @include md-text;
-            padding: 10px 25px;
-            border:1px solid $white;
-            font-weight: 500;
-            &:hover{
-                color: rgba(0, 0, 0, 0.7);
-                border:1px solid rgba(0, 0, 0, 0.7);
-            }
-        }
-        .login-btn{
-            color: $white;
-            // font-size: 14px;
-            // line-height: 18px;
-            @include md-text;
-            background-color: transparent !important;
-            padding: 0px 24px;
-            font-weight: 500;
+.custome-header {
+  padding: 0px;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 999;
+  @include transition();
+  .on-scroll-logo {
+    display: none;
+  }
+  .navbar-collapse {
+    @media (max-width: 767px) {
+      background-color: #fff;
+      .navbar-nav {
+        .nav-item {
+          width: 100%;
+          text-align: left;
+          padding: 8px 15px;
+          border-bottom: 1px solid $dark;
+          &:last-child {
+            border-bottom: 0px;
+          }
+          .nav-link {
+            color: $dark;
+          }
+          .btn-secondary {
+            background-color: transparent;
             border: none;
             box-shadow: none;
-            &:hover{
-                color: rgba(0, 0, 0, 0.7);
-            }
+          }
         }
+      }
     }
-    &.bg-color-menu{
-        background-color: $white;
-        @include box-shadow($box-shadow);
-        .on-scroll-logo{
-            display: inline-block;
+    
+  }
+  .navbar-nav {
+    @include vcenter;
+    width: 100%;
+    .nav-link {
+      color: $white;
+      padding: 10px 24px !important;
+      // font-size: 15px;
+      // line-height: 18px;
+      @include lg-text;
+      font-weight: 500;
+      position: relative;
+      &:hover {
+        color: $white;
+        &:after {
+          content: "";
+          background-color: $white;
+          position: absolute;
+          width: 25px;
+          height: 3px;
+          border-radius: 10px;
+          bottom: 0px;
+          display: block;
+          left: 0px;
+          right: 0px;
+          margin: 0 auto;
         }
-        .logo{
-            display: none;
-        }
-        .navbar-nav{
-            .nav-link{
-                color: $grey;
-                position: relative;
-                &:after{
-                    content: "";
-                    background-color:transparent;
-                    position: absolute;
-                    width: 25px;
-                    height: 3px;
-                    border-radius: 10px;
-                    bottom: 0px;
-                    display: block;
-                    left: 0px;
-                    right: 0px;
-                    margin: 0 auto;
-                }
-                &:hover,&.active{
-                    color: $secondary;
-                    &::after{
-                        background-color:$secondary; 
-                    }
-                }
-            }
-            
-        }
-        .right-menu{
-            .register{
-                background-color: transparent !important;
-                color: $grey;
-                border:1px solid $grey;
-                &::after{
-                    display: none;
-                }
-                &:hover{
-                    background-color:$secondary !important;
-                    color: $white;
-                    border-color: $secondary;
-                }
-            }
-            .login-btn{
-                color: $grey;
-                position: relative;
-                &:after{
-                    content: "";
-                    background-color:transparent;
-                    position: absolute;
-                    width: 25px;
-                    height: 3px;
-                    border-radius: 10px;
-                    bottom: 0px;
-                    display: block;
-                    left: 0px;
-                    right: 0px;
-                    margin: 0 auto;
-                    padding: 10px 24px;
-                    
-                }
-                &:hover{
-                    color: $secondary;
-                    
-                }
-                
-                
-                
-            }
-        }
-
+      }
+      @media (max-width: 1023px) {
+        padding: 10px 12px !important;
+      }
     }
+  }
+  .navbar-toggler {
+    @media (max-width: 767px) {
+      border: none;
+      color: $white;
+      box-shadow: none;
+    }
+  }
+  .right-menu {
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    @media (max-width: 767px) {
+      display: none;
+    }
+    .register {
+      background-color: transparent !important;
+      color: $white;
+      // font-size: 14px;
+      // line-height: 18px;
+      @include md-text;
+      padding: 10px 25px;
+      border: 1px solid $white;
+      font-weight: 500;
+      &:hover {
+        // color: rgba(0, 0, 0, 0.7);
+        //border:1px solid rgba(0, 0, 0, 0.7);
+      }
+    }
+    .login-btn {
+      color: $white;
+      // font-size: 14px;
+      // line-height: 18px;
+      @include md-text;
+      background-color: transparent !important;
+      padding: 0px 24px;
+      font-weight: 500;
+      border: none;
+      box-shadow: none;
+      position: relative;
+      &:hover {
+        // color: rgba(0, 0, 0, 0.7);
+        &:after {
+          content: "";
+          background-color: $white;
+          position: absolute;
+          width: 25px;
+          height: 3px;
+          border-radius: 10px;
+          bottom: -12px;
+          display: block;
+          left: 0px;
+          right: 0px;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+  &.bg-color-menu {
+    background-color: $white;
+    @include box-shadow($box-shadow);
+    .on-scroll-logo {
+      display: inline-block;
+    }
+    .logo {
+      display: none;
+    }
+    .navbar-nav {
+      .nav-link {
+        color: $grey;
+        position: relative;
+        &:after {
+          content: "";
+          background-color: transparent;
+          position: absolute;
+          width: 25px;
+          height: 3px;
+          border-radius: 10px;
+          bottom: 0px;
+          display: block;
+          left: 0px;
+          right: 0px;
+          margin: 0 auto;
+        }
+        &:hover,
+        &.active {
+          color: $secondary;
+          &::after {
+            background-color: $secondary;
+            @media(max-width:767px){
+                display: none;
+            }
+          }
+        }
+      }
+    }
+    .right-menu {
+      .register {
+        background-color: transparent !important;
+        color: $grey;
+        border: 1px solid $grey;
+        &::after {
+          display: none;
+        }
+        &:hover {
+          background-color: $secondary !important;
+          color: $white;
+          border-color: $secondary;
+        }
+      }
+      .login-btn {
+        color: $grey;
+        position: relative;
+        &:hover {
+          color: $secondary;
+          &:after {
+            content: "";
+            background-color: $secondary;
+            position: absolute;
+            width: 25px;
+            height: 3px;
+            border-radius: 10px;
+            bottom: -12px;
+            display: block;
+            left: 0px;
+            right: 0px;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+  }
 }
