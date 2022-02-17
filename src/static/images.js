@@ -27,6 +27,7 @@ import Engagepolygon from "../assets/images/engage-polygon.png";
 import Bottompolygon from "../assets/images/bottom-polygon.png";
 import Modalcloseicon from "../assets/images/close-icon.svg";
 import UsaFlag from "../assets/images/USA.svg";
+import TutorialTitle from "../assets/images/TutorialTitle.png";
 
 const Images = {
   Logo,
@@ -57,6 +58,7 @@ const Images = {
   Engagepolygon,
   Bottompolygon,
   Modalcloseicon,
-  UsaFlag
+  UsaFlag,
+  TutorialTitle,
 };
 export default Images;

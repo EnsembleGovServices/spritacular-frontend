@@ -72,6 +72,14 @@
     line-height: 30px;
   }
 }
+@mixin mds-title {
+  font-size: 26px;
+  line-height: 30px;
+  @media (max-width: 1023px){
+    font-size: 22px;
+    line-height: 26px;
+  }
+}
 @mixin sm-title {
   font-size: 24px;
   line-height: 26px;
