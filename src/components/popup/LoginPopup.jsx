@@ -9,16 +9,78 @@ import {
   ModalHeader,
 } from "reactstrap";
 import { useState } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from "../../api/server";
+import useAuth from "../../hooks/useAuth";
+
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import ForgotPasswordPopup from "../popup/ForgotPasswordPopup";
+import {toast} from "react-hot-toast";
+
+const LOGIN_URL = '/users/token/'
 
 const LoginPopup = (props) => {
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  const [user, setUser] = useState({
+    email: "",
+    password: ""
+  });
+
+  const [error, setError] = useState();
+
   const { open, handleClose, modalClass } = props;
-  const [isForgotPasswordModal, setIsForgotPasswordModal] = useState(false);
+  const [ isForgotPasswordModal, setIsForgotPasswordModal ] = useState(false);
+
   const handleForgotPasswordModal = () => {
     setIsForgotPasswordModal(!isForgotPasswordModal);
   };
+
+  function toastConfig(toastPosition, time) {
+    return {
+      position: toastPosition ?? 'top-right',
+      duration: time ?? 4000,
+    }
+  }
+
+  const handleInput = (e) => {
+    e.preventDefault();
+    let name = e.target.name,
+        value = e.target.value;
+    setUser({
+      ...user,
+      [name]:value
+    })
+  }
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    await axios.post(LOGIN_URL, user)
+        .then((response) => {
+          console.log(response);
+          toast.success('Logged in successfully', toastConfig());
+        })
+        .catch((error) => {
+          setError({
+            'status': error.response.status,
+            'message': error.response.statusText,
+            'data': error.response.data
+          });
+          console.log(error.response);
+          if (!error?.response) {
+            toast.error('Server error occurred', toastConfig());
+          }
+          else {
+            toast.error(error?.response?.statusText, toastConfig());
+          }
+        })
+  }
+
   return (
     <Modal
       className={modalClass ? modalClass : "common-modal"}
@@ -35,18 +97,34 @@ const LoginPopup = (props) => {
         </Button>
       </ModalHeader>
       <ModalBody>
-        <Form>
+        {error?.data &&
+            <p className="text-danger small mb-4 fw-bolder">{error?.data?.detail}</p>
+        }
+        <Form onSubmit={handleLogin}>
           <FormGroup>
-            <Input type="email" name="email" placeholder="Email address" />
+            <Input
+                type="email"
+                name="email"
+                placeholder="Email address"
+                autoComplete="off"
+                required
+                onChange={(e)=>handleInput(e)}
+            />
           </FormGroup>
           <FormGroup>
-            <Input type="password" name="password" placeholder="Password" />
+            <Input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                onChange={(e)=>handleInput(e)}
+            />
           </FormGroup>
           <FormText className="forgot-password">
             <a onClick={() => handleForgotPasswordModal()}>Forgot Password?</a>
           </FormText>
           <FormGroup>
-            <Button className="modal-btn" disabled>
+            <Button type="submit" className="modal-btn" disabled={!(user?.email && user?.password)}>
               Login
             </Button>
           </FormGroup>

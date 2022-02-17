@@ -55,7 +55,7 @@ const ForgotPasswordPopup = (props) => {
             </Col>
             <Col sm={12}>
               <FormGroup className="text-center modal-bottom-text">
-                <a href="#">Back To Login</a>
+                <a href="#" onClick={() => handleClose()}>Back To Login</a>
               </FormGroup>
             </Col>
           </Row>
