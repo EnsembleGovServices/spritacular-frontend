@@ -8,6 +8,31 @@
     .on-scroll-logo{
         display: none
     }
+    .navbar-collapse{
+        @media(max-width:767px){
+            background-color: #fff;
+            .navbar-nav{
+                .nav-item{
+                    width: 100%;
+                    text-align: left;
+                    padding: 8px 15px;
+                    border-bottom: 1px solid $dark;
+                    &:last-child{
+                        border-bottom: 0px;
+                    }
+                    .nav-link{
+                        color: $dark;
+                    }
+                    .btn-secondary{
+                        background-color: transparent;
+                        border:none;
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+        
+    }
     .navbar-nav{
         @include vcenter;
         width: 100%;
@@ -45,14 +70,23 @@
             padding: 10px 25px;
             border:1px solid $white;
             font-weight: 500;
+            &:hover{
+                color: rgba(0, 0, 0, 0.7);
+                border:1px solid rgba(0, 0, 0, 0.7);
+            }
         }
-        a{
+        .login-btn{
             color: $white;
-            font-size: 14px;
+            font-size: 15px;
             line-height: 18px;
             background-color: transparent !important;
-            padding: 0px 10px;
+            padding: 0px 24px;
             font-weight: 500;
+            border: none;
+            box-shadow: none;
+            &:hover{
+                color: rgba(0, 0, 0, 0.7);
+            }
         }
     }
     &.bg-color-menu{
@@ -104,7 +138,7 @@
                     border-color: $secondary;
                 }
             }
-            a{
+            .login-btn{
                 color: $grey;
                 position: relative;
                 &:after{
@@ -124,9 +158,7 @@
                 }
                 &:hover{
                     color: $secondary;
-                    &::after{
-                       display: none;
-                    }
+                    
                 }
                 
                 

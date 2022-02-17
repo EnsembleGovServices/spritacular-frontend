@@ -54,9 +54,13 @@
                 }
                 
             }
-            .modal-btn{
+            .disabled{
                 background-color: $modal-btn;
                 border:1px solid $modal-btn;
+                color: $white;
+            }
+            
+            .modal-btn{
                 color: $white;
                 font-size: 14px;
                 width: 100%;
@@ -84,6 +88,75 @@
                         }
                     }
                 }
+            }
+            .custome-file-upload{
+                .file-upload-inner{
+                    position: relative;
+                    input[type=file]{
+                        opacity: 0;
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        top: 0;
+                        height: 140px;
+                        width: 140px;
+                    }
+                    .form-label{
+                        height: 140px;
+                        width: 140px;
+                        border-radius: 50%;
+                        background-color: #F4F5F6;
+                        border:1px dashed #cccccc;
+                        color: $black;
+                        font-size: 14px;
+                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        cursor: pointer;
+                    }
+                }
+                
+                
+            }
+            .user-info{
+                padding-left: 20px;
+                padding-top: 20px;
+                p{
+                    margin-bottom: 0px;
+                    font-size: 11px;
+                    color: $grey;
+                }
+                h4{
+                    margin-bottom: 0px;
+                    color: $grey;
+                    font-size: 15px;
+                    font-weight: 600;
+                }
+                .form-text{
+                    color: $grey;
+                    font-size: 13px;
+                }
+                .user-country{
+                    margin-top: 18px;
+                    p{
+                        color: $grey;
+                        font-size: 14px;
+                        font-weight: 500;
+                        padding-left: 10px;
+                    }
+                }
+                
+            }
+            .bg-modal-btn{
+                background-color: $secondary;
+                color: $white;
+                font-size: 14px;
+                line-height: 18px;
+                font-weight: 500;
+                padding: 12px 35px;
+                border-radius: 25px;
+                border:1px solid $secondary;
+                
             }
             
         }
