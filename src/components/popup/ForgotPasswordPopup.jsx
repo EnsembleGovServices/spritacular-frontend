@@ -13,6 +13,7 @@ import {
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import LoginPopup from './LoginPopup';
+import "../../assets/scss/component/modal.scss";
 
 const ForgotPasswordPopup = (props) => {
   const { open, handleClose, modalClass } = props;

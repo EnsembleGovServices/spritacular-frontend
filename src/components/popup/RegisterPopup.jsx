@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {useState} from "react";
 import axios from "../../api/server";
 import {toast} from "react-hot-toast";
+import "../../assets/scss/component/modal.scss";
 
 const RegisterPopup = (props) => {
     const {open, handleClose, modalClass} = props;

@@ -12,6 +12,7 @@ import { useState } from "react";
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import ForgotPasswordPopup from "../popup/ForgotPasswordPopup";
+import "../../assets/scss/component/modal.scss";
 
 const LoginPopup = (props) => {
   const { open, handleClose, modalClass } = props;

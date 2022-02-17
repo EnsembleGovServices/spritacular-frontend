@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Col, Container, Row, List } from "reactstrap";
 import Images from "../../static/images";
+import "../../assets/scss/component/footer.scss";
 
 const Footer = () => {
   return (

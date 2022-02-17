@@ -1,6 +1,7 @@
 import Images from "../../static/images";
 import { Card, CardBody, CardTitle, CardImg, CardSubtitle, Row, Col, Badge } from "reactstrap";
 import { Link } from "react-router-dom";
+import "../../assets/scss/component/observationCard.scss";
 
 const ObservationCard = (props) => {
     const {cardItems} = props;

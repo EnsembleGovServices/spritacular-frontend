@@ -13,6 +13,7 @@ import Images from "../../static/images";
 import LoginPopup from "../popup/LoginPopup";
 import RegisterPopup from "../popup/RegisterPopup";
 import routesList from "../../routes/MainRoute";
+import '../../assets/scss/component/header.scss';
 
 const Header = () => {
   useEffect(() => {
@@ -57,8 +58,8 @@ const Header = () => {
                 routesList.filter((item) => item.name !== 'home').map((route, index) => {
                   return (
                     <NavItem key={index}>
-                        <NavLink href={route.path} title={route.name} className="text-capitalize">{route.name}</NavLink>
-                      </NavItem>
+                      <NavLink href={route.path} title={route.name} className="text-capitalize">{route.name}</NavLink>
+                    </NavItem>
                   )
                 })
               }
