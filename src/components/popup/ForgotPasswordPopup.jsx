@@ -12,16 +12,10 @@ import {
 } from "reactstrap";
 import Images from "../../static/images";
 import PropTypes from "prop-types";
-import LoginPopup from './LoginPopup';
 import "../../assets/scss/component/modal.scss";
 
 const ForgotPasswordPopup = (props) => {
   const { open, handleClose, modalClass } = props;
-  const [isLoginModal, setIsLoginModal] = useState(false);
-
-  const handleLoginModal = () => {
-    setIsLoginModal(!isLoginModal);
-  };
 
   return (
     <>
@@ -64,23 +58,13 @@ const ForgotPasswordPopup = (props) => {
               </Col>
               <Col sm={12}>
                 <FormGroup className="text-center modal-bottom-text">
-                  <Button
-                    // className="nav-link login-btn"
-                    onClick={() => handleLoginModal()}
-                  >
-                    Back To Login
-                  </Button>
-                  {/* <a href="#"></a> */}
+                  <Button onClick={() => handleClose()}> Back To Login </Button>
                 </FormGroup>
               </Col>
             </Row>
           </Form>
         </ModalBody>
       </Modal>
-      
-      {isLoginModal && (
-          <LoginPopup open={isLoginModal} handleClose={handleLoginModal} />
-      )}
     </>
   );
 };

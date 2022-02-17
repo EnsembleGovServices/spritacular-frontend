@@ -187,6 +187,7 @@
                 margin-top: 17px;
                 button{
                     font-weight: 700;
+                    @include md-text;
                     color: $black;
                     background: transparent;
                     border: 0;
