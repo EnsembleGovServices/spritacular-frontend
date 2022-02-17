@@ -18,7 +18,7 @@ import axios from "../../api/server";
 import {toast} from "react-hot-toast";
 import "../../assets/scss/component/modal.scss";
 
-const REGISTER_URL = '/users/register/';
+const REGISTER_URL = process.env.REACT_APP_API_REGISTER_URL;
 const RegisterPopup = (props) => {
     const {open, handleClose, modalClass} = props;
 

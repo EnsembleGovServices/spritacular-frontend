@@ -8,7 +8,7 @@ import {
   ModalBody,
   ModalHeader,
 } from "reactstrap";
-import { useState } from "react";
+import {useState} from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "../../api/server";
 import useAuth from "../../hooks/useAuth";
@@ -16,9 +16,10 @@ import useAuth from "../../hooks/useAuth";
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import ForgotPasswordPopup from "../popup/ForgotPasswordPopup";
+
 import {toast} from "react-hot-toast";
 
-const LOGIN_URL = '/users/token/'
+const LOGIN_URL = process.env.REACT_APP_API_TOKEN_URL;
 
 const LoginPopup = (props) => {
   const { setAuth } = useAuth();
@@ -32,7 +33,7 @@ const LoginPopup = (props) => {
     password: ""
   });
 
-  const [error, setError] = useState();
+  const [error, setError] = useState('');
 
   const { open, handleClose, modalClass } = props;
   const [ isForgotPasswordModal, setIsForgotPasswordModal ] = useState(false);
@@ -62,18 +63,32 @@ const LoginPopup = (props) => {
     e.preventDefault();
     await axios.post(LOGIN_URL, user)
         .then((response) => {
+          setError('');
           console.log(response);
+          const access = response?.data?.access,
+                refresh = response?.data?.refresh;
           toast.success('Logged in successfully', toastConfig());
+          setAuth({
+            accessToken: access,
+            refreshToken: refresh,
+          })
+          setUser(null);
+          navigate(from, { replace: true });
         })
         .catch((error) => {
-          setError({
-            'status': error.response.status,
-            'message': error.response.statusText,
-            'data': error.response.data
-          });
-          console.log(error.response);
           if (!error?.response) {
             toast.error('Server error occurred', toastConfig());
+          }
+          else if (error?.response) {
+            toast.error(error?.response?.statusText, toastConfig());
+            setError({
+              'status': error.response.status,
+              'message': error.response.statusText,
+              'data': error.response.data
+            });
+          }
+          else if (error?.response?.status === 401) {
+            toast.error('Unauthorized', toastConfig());
           }
           else {
             toast.error(error?.response?.statusText, toastConfig());
