@@ -43,32 +43,35 @@
         max-width: 645px;
         margin: 0 auto;
         h2{
-            font-size: 48px;
-            line-height: 56px;
+            // font-size: 48px;
+            // line-height: 56px;
+            @include xl-title;
             color: $white;
             font-weight: 700;
             margin: 0px;
+            
             @media(max-width:1023px){
-                font-size: 36px;
-                line-height: 40px;
+                // font-size: 36px;
+                // line-height: 40px;
             }
         }
         p{
+            @include xl-text;
             color: $white;
-            font-size:18px;
-            line-height: 24px;
+            // font-size:18px;
+            // line-height: 24px;
             margin: 20px 0px 0px 0px;
             @media(max-width:1023px){
-                font-size: 15px;
+                // font-size: 15px;
             }
         }
         .explore-btn{
             background-color:$white;
             padding: 12px 25px;
             color: $secondary;
-            font-size: 18px;
-            line-height: 26px;
- 
+            // font-size: 18px;
+            // line-height: 26px;
+            @include xl-text;
             text-transform: capitalize;
             max-width: 161px;
             display: block;
@@ -76,6 +79,7 @@
             margin-top: 70px;
             border:1px solid $white;
             transition: all 0.3s ease 0s;
+            font-weight: 600;
             @media(max-width:1023px){
                 margin-top: 40px;
             }
@@ -109,20 +113,22 @@
           h3{
               margin: 0px;
               font-weight: 900;
-              font-size: 42px;
-              line-height: 49px;
+            //   font-size: 42px;
+            //   line-height: 49px;
+              @include lg-title;
               @media(max-width:1023px){
-                  font-size: 32px;
-                  line-height: 35px;
+                //   font-size: 32px;
+                //   line-height: 35px;
               }
           }
           p{
-              font-size: 16px;
-              line-height: 26px;
+              @include lg-text;
+            //   font-size: 16px;
+            //   line-height: 26px;
               margin: 0px;
               color: #555555;
               @media(max-width:1023px){
-                font-size: 14px;
+                // font-size: 14px;
             }
           }
       }
@@ -148,18 +154,20 @@
       }
     }
     img{
-        z-index: 9;
+        z-index: -1;
         position: relative;
     }    
     h2{
         text-align: center;
         margin-bottom: 75px;
-        font-size: 48px;
-        line-height: 56px;
+        // font-size: 48px;
+        // line-height: 56px;
+        font-weight: bold;
+        @include xl-title;
         color: #181818;
         @media(max-width:1023px){
-            font-size: 36px;
-            line-height: 40px;
+            // font-size: 36px;
+            // line-height: 40px;
         }
       
         
@@ -198,16 +206,17 @@
         flex-direction: column;
         justify-content: center;
         h3{
-          font-size: 42px;
-          line-height: 49px;
+        //   font-size: 42px;
+        //   line-height: 49px;
+          @include lg-title;
           color: #000000;
           font-weight: 700;
           margin: 0px;
           display: flex;
           align-items: center;
           @media(max-width:1023px){
-              font-size: 30px;
-              line-height: 35px;
+            //   font-size: 30px;
+            //   line-height: 35px;
           }
           
           span{
@@ -215,16 +224,17 @@
               height: 46px;
               width: 46px;
               border-radius: 50%;
-              font-size: 24px;
+              @include vcenter;
+            //   font-size: 24px;
+              @include sm-title;
               font-weight: normal;
-              display: inline-block;
               color: #fff;
               text-align: center;
               margin-right: 18px;
               @media(max-width:1023px){
                 height: 35px;
                 width: 35px;
-                font-size: 16px;
+                // font-size: 16px;
                 margin-right: 10px;
             }
           }
@@ -232,12 +242,13 @@
         }
         p{
           color: #666;
-          font-size: 18px;
-          line-height: 26px;
+        //   font-size: 18px;
+        //   line-height: 26px;
+          @include xl-text;
           margin: 24px 0px 0px 0px;
           @media(max-width:1023px){
-              font-size: 15px;
-              margin-top: 15px;
+            //   font-size: 15px;
+            //   margin-top: 15px;
           }
       }
       .register-polygon{
@@ -300,11 +311,14 @@
         }
       }
       .view-tutorial{
-          width: 146px;
           margin-top: 24px;
-          height: 50px;
+          padding: 13px 26px;
           background-color: transparent;
           color: $secondary;
+          @include lg-text;
+          font-weight: 500;
+          max-width: fit-content;
+          border-radius: 99px;
           &:hover{
               background-color: $secondary;
               color: $white;
@@ -382,6 +396,22 @@
     }
     @media (max-width: 767px){
         top: -90px;
+    }
+    .observation_card{
+        .card-img-top{
+            height: 180px;
+            object-fit: cover;
+            object-position: bottom;
+            @media (max-width: 991px){
+                height: 120px;
+            }
+            @media (max-width: 767px){
+                height: 160px;
+            }
+            @media (max-width: 474px){
+                height: 100px;
+            }
+        }
     }
 }
 // Map section css end 

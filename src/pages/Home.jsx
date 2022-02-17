@@ -3,6 +3,49 @@ import Images from "../static/images";
 import ObservationCard from "./ObservationCard";
 
 const Home = () => {
+  const observationCards=[
+    {
+      img: "image",
+      imgCategory: "imagepath",
+      date:"17 June 2022",
+      time: "5:23:00",
+      username:"John Doe",
+      userProfile: "imagepath",
+      userCountryName: "Trieben, AT",
+      userCountryIcon: "imagepath"
+    },
+    {
+      img: "image",
+      imgCategory: "imagepath",
+      date:"17 June 2022",
+      time: "5:23:00",
+      username:"John Doe",
+      userProfile: "imagepath",
+      userCountryName: "Trieben, AT",
+      userCountryIcon: "imagepath"
+    },
+    {
+      img: "image",
+      imgCategory: "imagepath",
+      date:"17 June 2022",
+      time: "5:23:00",
+      username:"John Doe",
+      userProfile: "imagepath",
+      userCountryName: "Trieben, AT",
+      userCountryIcon: "imagepath"
+    },
+    {
+      img: "image",
+      imgCategory: "imagepath",
+      date:"17 June 2022",
+      time: "5:23:00",
+      username:"John Doe",
+      userProfile: "imagepath",
+      userCountryName: "Trieben, AT",
+      userCountryIcon: "imagepath"
+    },
+  ]
+  
   return (
     <>
       <div className="hero-banner">
@@ -67,18 +110,12 @@ const Home = () => {
             <div className="position-relative">
               <div className="obervation-card_wrapper">
                 <Row>
-                  <Col className="col-6 col-md-3">
-                    <ObservationCard />
-                  </Col>
-                  <Col className="col-6 col-md-3">
-                    <ObservationCard />
-                  </Col>
-                  <Col className="col-6 col-md-3">
-                    <ObservationCard />
-                  </Col>
-                  <Col className="col-6 col-md-3">
-                    <ObservationCard />
-                  </Col>
+                  {observationCards && observationCards.map((cardItems)=>{
+                    return (
+                      <Col className="col-6 col-md-3 mb-3 mb-md-0">
+                        <ObservationCard cardItems={cardItems} />
+                      </Col>
+                  );})}
                 </Row>
               </div>
             </div>
@@ -160,14 +197,14 @@ const Home = () => {
               </div>
             </Col>
             <Col md={6} xs={12} className="works-gap">
-              <div className="shadow-lg p-3 mb-5 bg-white rounded">
+              <div className="shadow-lg shadow-sm p-3  bg-white rounded">
                 <img src={Images.Dragdrop} alt="Share" className="w-100" />
               </div>
             </Col>
           </Row>
           <Row>
             <Col md={6} xs={12} className="works-gap order-2 order-md-1">
-              <div className="shadow-lg p-3 mb-5 bg-white rounded ">
+              <div className="shadow-lg shadow-sm p-3  bg-white rounded ">
                 <img src={Images.Jet} alt="jet" className="w-100" />
               </div>
             </Col>
