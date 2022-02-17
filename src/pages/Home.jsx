@@ -1,6 +1,6 @@
 import { Button, Col, Container, Row } from "reactstrap";
 import Images from "../static/images";
-import ObservationCard from "./ObservationCard";
+import ObservationCard from "../components/shared/ObservationCard";
 
 const Home = () => {
   const observationCards=[
@@ -110,9 +110,9 @@ const Home = () => {
             <div className="position-relative">
               <div className="obervation-card_wrapper">
                 <Row>
-                  {observationCards && observationCards.map((cardItems)=>{
+                  {observationCards && observationCards.map((cardItems, index)=>{
                     return (
-                      <Col className="col-6 col-md-3 mb-3 mb-md-0">
+                      <Col key={index} className="col-6 col-md-3 mb-3 mb-md-0">
                         <ObservationCard cardItems={cardItems} />
                       </Col>
                   );})}

@@ -43,7 +43,7 @@ const LoginPopup = (props) => {
             <Input type="password" name="password" placeholder="Password" />
           </FormGroup>
           <FormText className="forgot-password">
-            <a onClick={() => handleForgotPasswordModal()}>Forgot Password?</a>
+            <Button onClick={() => handleForgotPasswordModal()}>Forgot Password?</Button>
           </FormText>
           <FormGroup>
             <Button className="modal-btn" disabled>

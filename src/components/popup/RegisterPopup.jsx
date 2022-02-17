@@ -3,9 +3,11 @@ import Images from "../../static/images";
 import PropTypes from "prop-types";
 import {useState} from "react";
 import axios from "../../api/server";
+import {toast} from "react-hot-toast";
 
 const RegisterPopup = (props) => {
     const {open, handleClose, modalClass} = props;
+
     const [userRegistration, setUserRegistration] = useState({
         first_name: "",
         last_name: "",
@@ -15,6 +17,12 @@ const RegisterPopup = (props) => {
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
 
+    function toastConfig(toastPosition, time) {
+        return {
+            position: toastPosition ?? 'top-right',
+            duration: time ?? 4000,
+        }
+    }
 
     const handleInput = (e) => {
         let name = e.target.name;
@@ -36,26 +44,36 @@ const RegisterPopup = (props) => {
         e.preventDefault();
         await axios.post('/users/register/', userRegistration)
             .then((response)=> {
-                setUserRegistration(null)
-                setError(null)
-                setSuccess({
-                    'status': response.status,
-                    'data': response.data
-                });
-                console.log(response);
+                if (response.status === 201) {
+                    setUserRegistration(null)
+                    setError(null)
+                    setSuccess({
+                        'status': response.status,
+                        'data': response.data
+                    });
+                    toast.success(response?.statusText, toastConfig());
+                } else {
+                    toast.success(response?.statusText, toastConfig());
+                }
             })
             .catch((error)=> {
                 setSuccess(null)
-                setError({
-                    'status': error.response.status,
-                    'message': error.response.statusText,
-                    'data': error.response.data
-                })
-                if (error.response) {
+                if(!error.response) {
+                    toast.error('Server error occurred', toastConfig());
+                } else {
+                    setError({
+                        'status': error.response.status,
+                        'message': error.response.statusText,
+                        'data': error.response.data
+                    })
+                    toast.error(error?.response?.statusText, toastConfig());
+                }
+                if (error) {
                     console.log(error.response)
                 }
             })
     }
+
 
     return(
         <Modal
