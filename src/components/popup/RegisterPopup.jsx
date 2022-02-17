@@ -7,6 +7,7 @@ import {toast} from "react-hot-toast";
 
 const RegisterPopup = (props) => {
     const {open, handleClose, modalClass} = props;
+
     const [userRegistration, setUserRegistration] = useState({
         first_name: "",
         last_name: "",
@@ -15,12 +16,14 @@ const RegisterPopup = (props) => {
     });
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
+
     function toastConfig(toastPosition, time) {
         return {
             position: toastPosition ?? 'top-right',
             duration: time ?? 4000,
         }
     }
+
     const handleInput = (e) => {
         let name = e.target.name;
         let value = e.target.value;
@@ -49,16 +52,22 @@ const RegisterPopup = (props) => {
                         'data': response.data
                     });
                     toast.success(response?.statusText, toastConfig());
+                } else {
+                    toast.success(response?.statusText, toastConfig());
                 }
             })
             .catch((error)=> {
-                toast.error(error?.response?.statusText, toastConfig());
                 setSuccess(null)
-                setError({
-                    'status': error.response.status,
-                    'message': error.response.statusText,
-                    'data': error.response.data
-                })
+                if(!error.response) {
+                    toast.error('Server error occurred', toastConfig());
+                } else {
+                    setError({
+                        'status': error.response.status,
+                        'message': error.response.statusText,
+                        'data': error.response.data
+                    })
+                    toast.error(error?.response?.statusText, toastConfig());
+                }
                 if (error) {
                     console.log(error.response)
                 }
