@@ -156,7 +156,12 @@
     img{
         z-index: -1;
         position: relative;
-    }    
+    }
+    .shadow-lg{
+        img{
+            z-index: 1;
+        }
+    }
     h2{
         text-align: center;
         margin-bottom: 75px;
