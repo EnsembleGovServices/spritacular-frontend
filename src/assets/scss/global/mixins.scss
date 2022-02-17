@@ -46,6 +46,20 @@
     line-height: 35px;
   }
 }
+@mixin slg-title {
+    font-size: 34px;
+    line-height: 40px;
+    font-weight: 900;
+    margin-bottom: 18px;
+    @media (max-width: 1023px){
+      font-size: 26px;
+      line-height: 30px;
+    }
+    @media (max-width: 767px){
+      font-size: 22px;
+      line-height: 26px;
+    }
+}
 @mixin md-title {
   font-size: 30px;
   line-height: 35px;

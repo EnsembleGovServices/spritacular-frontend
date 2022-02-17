@@ -1,0 +1,73 @@
+@import "../global/config.scss";
+
+.about-content {
+  .about-content-inner {
+    padding: 100px 0px 80px;
+    @media (max-width: 767px) {
+      padding: 120px 0px 80px;
+    }
+    h3 {
+      @include slg-title;
+      color: $black;
+    }
+    p {
+      @include lg-text;
+      color: $black;
+    }
+    .about-col {
+      margin-top: 80px;
+      @media (max-width: 767px) {
+        margin-top: 30px;
+      }
+      P {
+        max-width: 286px;
+        width: 100%;
+        @media (max-width: 767px) {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+.comman-banner{
+    .container{
+        position: relative;
+        .about-card {
+            background: linear-gradient(128.5deg, #c01e37 0%, #f052c1 154.21%);
+            border-radius: 6px;
+            padding: 24px;
+            max-width: 406px;
+            z-index: 999;
+            position: absolute;
+            right: 0px;
+            bottom: -46%;
+            @media(max-width:767px){
+                position: relative;
+            }
+            h3 {
+              font-size: 22px;
+              color: $white;
+              margin-bottom: 20px;
+            }
+            p {
+              @include lg-text;
+              color: $white;
+            }
+            .contact-btn {
+              background-color: $white;
+              color: $secondary;
+              @include lg-text;
+              margin-top: 35px;
+              padding: 12px 35px;
+              font-weight: 500;
+              border:1px solid $secondary;
+              box-shadow: none;
+              &:hover{
+                  background-color: $secondary;
+                  color: $white;
+              }
+            }
+          }
+    }
+}
+
