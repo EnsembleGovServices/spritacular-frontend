@@ -65,13 +65,8 @@ const LoginPopup = (props) => {
         .then((response) => {
           setError('');
           console.log(response);
-          const access = response?.data?.access,
-                refresh = response?.data?.refresh;
           toast.success('Logged in successfully', toastConfig());
-          setAuth({
-            accessToken: access,
-            refreshToken: refresh,
-          })
+          setAuth(response?.data)
           setUser(null);
           navigate(from, { replace: true });
         })

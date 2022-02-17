@@ -123,7 +123,7 @@
       }
     }
   }
-  &.bg-color-menu {
+  &.bg-color-menu, &.bg-not-home {
     background-color: $white;
     @include box-shadow($box-shadow);
     .on-scroll-logo {
