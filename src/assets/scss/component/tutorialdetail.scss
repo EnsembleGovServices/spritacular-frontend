@@ -1,0 +1,14 @@
+@import "../global/config.scss";
+
+.tutorial-detail-main{
+    padding: 100px 0px 80px;
+    h2{
+        color: $black;
+        @include lg-title;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    img{
+        width: 100%;
+    }
+}
