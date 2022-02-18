@@ -38,16 +38,6 @@ const routesList = [
     name: "community",
     element: <Community />,
   },
-  {
-    path: "/tutorials",
-    name: "tutorials",
-    element: <Tutorials />,
-  },
-  {
-    path: "/tutorials-detail",
-    name: "tutorialsdetail",
-    element: <TutorialsDetail />,
-  },
 ];
 
 export default routesList;

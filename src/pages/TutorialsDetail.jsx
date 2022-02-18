@@ -26,13 +26,118 @@ const TutorialsDetail = () => {
               <div>
                 <img src={Images.TutorialDetail} alt="TutorialDetail" />
               </div>
-              <h3>Tutorial Title 1 Goes Here</h3>
-              <p>
-                Short description lorem ipsum dolor sit amet conseqtetur
-                adipiscing elit tempor dolor.
+
+              <p className="mt-4">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                quis sapien et lacus dignissim fermentum id quis erat. Duis at
+                sodales sapien, in rhoncus magna. Proin tempor massa ut aliquet
+                vehicula. Duis vulputate massa odio, quis eleifend nunc
+                vulputate sit amet. Cras dui turpis, tincidunt ac nunc at,
+                ullamcorper convallis mauris. Nam accumsan risus sapien, sit
+                amet vulputate magna pulvinar eget. Pellentesque cursus, nisi at
+                sagittis fermentum, magna justo finibus dui, gravida ullamcorper
+                quam mauris in felis. Donec vel commodo leo. Integer quis leo
+                molestie, rutrum arcu eget, vestibulum metus. Nullam eget eros
+                sit amet diam vestibulum condimentum. Sed nec mauris nec nisl
+                consectetur rutrum. In ultrices pellentesque orci, sit amet
+                porta mauris lacinia facilisis.
               </p>
             </Col>
+            <Col md={12}>
+              <h3>Observation Fields</h3>
+            </Col>
           </Row>
+          <div className="border-line">
+            <Row>
+              <Col md={4}>
+                <h4>Location</h4>
+              </Col>
+              <Col md={8}>
+                <p>It will be automatically located by Google plugin</p>
+                <ol>
+                  <li>Country</li>
+                  <li>Geographic Coordinates</li>
+                </ol>
+              </Col>
+            </Row>
+          </div>
+          <div className="border-line">
+            <Row>
+              <Col md={4}>
+                <h4>Observation Time</h4>
+              </Col>
+              <Col md={8}>
+                <p className="mb-0">Data and time of your observation</p>
+              </Col>
+            </Row>
+          </div>
+          <div className="border-line">
+            <Row>
+              <Col md={4}>
+                <h4>Camera Details</h4>
+              </Col>
+              <Col md={8}>
+                <ol>
+                  <li>Camera Type</li>
+                  <li>Frame Rate</li>
+                  <li>ISO</li>
+                  <li>Field-to-view</li>
+                  <li>Shutter Speed</li>
+                  <li>Lens Type</li>
+                </ol>
+              </Col>
+            </Row>
+          </div>
+          <div className="border-line">
+            <Row>
+              <Col md={4}>
+                <h4>Direction/Azimuth</h4>
+              </Col>
+              <Col md={8}>
+                <p className="mb-0">N, S, E, W, NE, SE, SW, NW</p>
+              </Col>
+            </Row>
+          </div>
+          <div className="border-line">
+            <Row>
+              <Col md={4}>
+                <h4>Special Equipments</h4>
+              </Col>
+              <Col md={8}>
+                <p className="mb-0">
+                  If you use any special equipment or filters, please provide
+                  note about that
+                </p>
+              </Col>
+            </Row>
+          </div>
+          <div className="border-line">
+            <Row>
+              <Col md={4}>
+                <h4>Comments</h4>
+              </Col>
+              <Col md={8}>
+                <p className="mb-0">
+                  Describe precisely how you captured your video/image.
+                  (observations set up, camera settings, and steps you take to
+                  capture your observation)
+                </p>
+              </Col>
+            </Row>
+          </div>
+          <div className="border-line">
+            <Row>
+              <Col md={4}>
+                <h4>Image/Video File</h4>
+              </Col>
+              <Col md={8}>
+                <p className="mb-0">
+                  Please make sure to upload your raw (unprocessed) image or
+                  video of your observation.
+                </p>
+              </Col>
+            </Row>
+          </div>
         </Container>
       </section>
     </>
