@@ -1,14 +1,40 @@
 @import "../global/config.scss";
 
-.tutorial-detail-main{
-    padding: 100px 0px 80px;
-    h2{
-        color: $black;
-        @include lg-title;
-        font-weight: 700;
-        margin-bottom: 20px;
+.tutorial-detail-main {
+  padding: 100px 0px 120px;
+  h2 {
+    color: $black;
+    @include lg-title;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  img {
+    width: 100%;
+  }
+  h3 {
+    margin-top: 40px;
+    color: $black;
+    font-weight: 700;
+  }
+  .border-line {
+    padding: 20px 0px;
+    border-top: 1px solid #eaeaea;
+    h4 {
+      color: $grey;
+      @include lg-text;
+      font-weight: 700;
+      margin-bottom: 0px;
     }
-    img{
-        width: 100%;
+    ol {
+      margin-bottom: 0px;
+      li {
+        color: $grey;
+        @include lg-text;
+      }
     }
+    p {
+      color: $grey;
+      @include lg-text;
+    }
+  }
 }
