@@ -5,6 +5,7 @@ import GetStarted from "../pages/GetStarted";
 import Home from "../pages/Home";
 import Resources from "../pages/Resources";
 import Tutorials from "../pages/Tutorials";
+import TutorialsDetail from "../pages/TutorialsDetail";
 
 const routesList = [
   {
@@ -41,6 +42,11 @@ const routesList = [
     path: "/tutorials",
     name: "tutorials",
     element: <Tutorials />,
+  },
+  {
+    path: "/tutorials-detail",
+    name: "tutorialsdetail",
+    element: <TutorialsDetail />,
   },
 ];
 

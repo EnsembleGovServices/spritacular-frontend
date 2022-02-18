@@ -28,6 +28,7 @@ import Bottompolygon from "../assets/images/bottom-polygon.png";
 import Modalcloseicon from "../assets/images/close-icon.svg";
 import UsaFlag from "../assets/images/USA.svg";
 import TutorialTitle from "../assets/images/TutorialTitle.png";
+import TutorialDetail from "../assets/images/Tutorial-Detail.png";
 
 const Images = {
   Logo,
@@ -60,5 +61,6 @@ const Images = {
   Modalcloseicon,
   UsaFlag,
   TutorialTitle,
+  TutorialDetail,
 };
 export default Images;

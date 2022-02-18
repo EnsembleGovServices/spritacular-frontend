@@ -37,3 +37,21 @@
 }
 // comman banner css end
 
+// comman breadcrumb css
+.breadcrumb-main{
+    .breadcrumb{
+        .breadcrumb-item{
+            a{
+                color: $grey;
+                font-weight: 700;
+                @include md-text
+            }
+            &.active{
+                color: $grey;
+                font-weight: 400;
+                @include md-text;
+                line-height: 24px;
+            }
+        }
+    }
+}
