@@ -17,11 +17,14 @@ import {useState} from "react";
 import axios from "../../api/server";
 import {toast} from "react-hot-toast";
 import "../../assets/scss/component/modal.scss";
+import useAuth from "../../hooks/useAuth";
 
 const REGISTER_URL = process.env.REACT_APP_API_REGISTER_URL;
+const LOGIN_URL = process.env.REACT_APP_API_TOKEN_URL;
 const RegisterPopup = (props) => {
-    const {open, handleClose, modalClass} = props;
 
+    const { setAuth, setFirst } = useAuth();
+    const {open, handleClose, modalClass} = props;
     const [userRegistration, setUserRegistration] = useState({
         first_name: "",
         last_name: "",
@@ -59,13 +62,35 @@ const RegisterPopup = (props) => {
         await axios.post(REGISTER_URL, userRegistration)
             .then((response)=> {
                 if (response.status === 201) {
-                    setUserRegistration(null)
+                    toast.success(response?.statusText, toastConfig());
+                    // setUserRegistration(null)
                     setError(null)
                     setSuccess({
                         'status': response.status,
                         'data': response.data
                     });
-                    toast.success(response?.statusText, toastConfig());
+                    const LoginUser = async () => {
+                      await axios.post(LOGIN_URL, {
+                          email: userRegistration.email,
+                          password: userRegistration.password
+                      }).then((response) => {
+                          setAuth(response?.data)
+                          setFirst(response?.data);
+
+                          if (process.env.NODE_ENV === 'development') {
+                              console.group('User Token')
+                              console.log('AccessToken '+JSON.stringify(response.data.access))
+                              console.log('RefreshToken '+JSON.stringify(response.data.refresh))
+                              console.groupEnd()
+                          }
+                          toast.success('Logged in successfully', toastConfig());
+
+                      }).catch((err) => {
+                          console.log(err);
+                          toast.error('Something went wrong', toastConfig());
+                      })
+                    }
+                    LoginUser();
                 } else {
                     toast.success(response?.statusText, toastConfig());
                 }
