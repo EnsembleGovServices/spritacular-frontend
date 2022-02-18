@@ -12,12 +12,43 @@ import {
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
+import {useState} from "react";
+import axios from "../../api/server";
+
+const CHANGE_PASSWORD_URL = process.env.REACT_APP_API_URL;
 
 const ChangePasswordPopup = (props) => {
-  const { open, handleClose, modalClass } = props;
+  const { open, handleClose, modalClass, user } = props;
 
-  const handleChangePassword = () => {
-    
+  const [password, setPassword] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+        await axios.put(CHANGE_PASSWORD_URL+'/users/change-password/'+user?.id+'/', password, {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user?.access}`
+          }
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+  }
+
+  const handleInput = (e) => {
+    e.preventDefault();
+    let name = e.target.name,
+        value = e.target.value;
+    setPassword({
+      ...password,
+      [name]:value
+    })
   }
   
   return (
@@ -42,8 +73,10 @@ const ChangePasswordPopup = (props) => {
               <FormGroup>
                 <Input
                   type="password"
-                  name="password"
-                  placeholder="Current Password"
+                  name="old_password"
+                  placeholder="Old Password"
+                  required
+                  onChange={(e)=>handleInput(e)}
                 />
               </FormGroup>
             </Col>
@@ -51,8 +84,10 @@ const ChangePasswordPopup = (props) => {
               <FormGroup>
                 <Input
                   type="password"
-                  name="password"
+                  name="new_password"
                   placeholder="New Password"
+                  required
+                  onChange={(e)=>handleInput(e)}
                 />
               </FormGroup>
             </Col>
@@ -60,15 +95,17 @@ const ChangePasswordPopup = (props) => {
               <FormGroup>
                 <Input
                   type="password"
-                  name="password"
+                  name="confirm_password"
                   placeholder="Confirm New Password"
+                  required
+                  onChange={(e)=>handleInput(e)}
                 />
               </FormGroup>
             </Col>
             <Col md={12}>
               <FormGroup className="mb-0">
-                <Button type="submit" className="modal-btn" disabled>
-                  Login
+                <Button type="submit" className="modal-btn">
+                  Update Password
                 </Button>
               </FormGroup>
             </Col>
