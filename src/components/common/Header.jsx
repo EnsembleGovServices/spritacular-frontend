@@ -1,6 +1,10 @@
 import {
   Button,
   Collapse,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
   Nav,
   Navbar,
   NavbarToggler,
@@ -14,12 +18,10 @@ import routesList from "../../routes/MainRoute";
 import '../../assets/scss/component/header.scss';
 import {Link, useLocation} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import UserProfilePopup from "../popup/UserProfilePopup";
 const Header = (props) => {
   const { auth } = useAuth();
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isRegisterModal, setIsRegisterModal] = useState(false);
-  const [isUserProfileModal, setIsUserProfileModal] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
   const location = useLocation();
   const homeUrl = location.pathname === '/';
@@ -48,10 +50,6 @@ const Header = (props) => {
   const menuToggle = () => {
     setShowMenu(!showMenu);
   };
-
-  const handleUserProfileModal = () => {
-    setIsUserProfileModal(!isUserProfileModal);
-  }
 
 
   return (
@@ -113,9 +111,26 @@ const Header = (props) => {
                 >
                   Hi, {auth?.first_name}
                 </h5>
-            )}
-          </Navbar>
-        </div>
+            )} */}
+          <div className="after-login-right-menu">
+            <Dropdown
+              className="user-menu"
+              isOpen={showUserMenu}
+              toggle={handleUserMenuDropdown}
+            >
+              <DropdownToggle caret>
+                <img src={Images.UserPlaceholder} alt="UserPlaceholder" /> Carl
+                Nielsen
+              </DropdownToggle>
+              <DropdownMenu container="body">
+                <DropdownItem>Edit Profile</DropdownItem>
+                <DropdownItem>Change Password</DropdownItem>
+                <DropdownItem>Logout</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+        </Navbar>
+      </div>
 
         {isLoginModal && (
             <LoginPopup open={auth ? false: isLoginModal} handleClose={handleLoginModal} />
@@ -127,13 +142,6 @@ const Header = (props) => {
                 handleClose={handleRegisterModal}
             />
         )}
-        {auth && auth.is_first_login &&
-          <UserProfilePopup
-            open={isUserProfileModal}
-            handleClose={handleUserProfileModal}
-            user={auth}
-          />
-        }
       </>
   );
 };
