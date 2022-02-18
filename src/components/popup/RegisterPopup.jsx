@@ -62,7 +62,6 @@ const RegisterPopup = (props) => {
         await axios.post(REGISTER_URL, userRegistration)
             .then((response)=> {
                 if (response.status === 201) {
-                    toast.success(response?.statusText, toastConfig());
                     setError(null)
                     setSuccess({
                         'status': response.status,

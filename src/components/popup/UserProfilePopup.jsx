@@ -1,7 +1,6 @@
 import {
   Button,
   Col,
-  Form,
   FormGroup,
   FormText,
   Input,
@@ -35,7 +34,6 @@ const UserProfilePopup = (props) => {
         <p>Welcome to the Spritacular Team</p>
       </ModalHeader>
       <ModalBody>
-        <Form>
           <Row>
             <Col md={5}>
               <FormGroup className="custome-file-upload">
@@ -66,7 +64,6 @@ const UserProfilePopup = (props) => {
               </FormGroup>
             </Col>
           </Row>
-        </Form>
       </ModalBody>
     </Modal>
   );
