@@ -23,7 +23,7 @@ const REGISTER_URL = process.env.REACT_APP_API_REGISTER_URL;
 const LOGIN_URL = process.env.REACT_APP_API_TOKEN_URL;
 const RegisterPopup = (props) => {
 
-    const { setAuth, setFirst } = useAuth();
+    const { setAuth } = useAuth();
     const {open, handleClose, modalClass} = props;
     const [userRegistration, setUserRegistration] = useState({
         first_name: "",
@@ -63,33 +63,11 @@ const RegisterPopup = (props) => {
             .then((response)=> {
                 if (response.status === 201) {
                     toast.success(response?.statusText, toastConfig());
-                    // setUserRegistration(null)
                     setError(null)
                     setSuccess({
                         'status': response.status,
                         'data': response.data
                     });
-                    const LoginUser = async () => {
-                      await axios.post(LOGIN_URL, {
-                          email: userRegistration.email,
-                          password: userRegistration.password
-                      }).then((response) => {
-                          setAuth(response?.data)
-                          setFirst(response?.data);
-
-                          if (process.env.NODE_ENV === 'development') {
-                              console.group('User Token')
-                              console.log('AccessToken '+JSON.stringify(response.data.access))
-                              console.log('RefreshToken '+JSON.stringify(response.data.refresh))
-                              console.groupEnd()
-                          }
-                          toast.success('Logged in successfully', toastConfig());
-
-                      }).catch((err) => {
-                          console.log(err);
-                          toast.error('Something went wrong', toastConfig());
-                      })
-                    }
                     LoginUser();
                 } else {
                     toast.success(response?.statusText, toastConfig());
@@ -111,6 +89,27 @@ const RegisterPopup = (props) => {
                     console.log(error.response)
                 }
             })
+    }
+
+    const LoginUser = async () => {
+        await axios.post(LOGIN_URL, {
+            email: userRegistration.email,
+            password: userRegistration.password
+        }).then((response) => {
+            setAuth(response?.data)
+
+            if (process.env.NODE_ENV === 'development') {
+                console.group('User Token')
+                console.log('AccessToken '+JSON.stringify(response.data.access))
+                console.log('RefreshToken '+JSON.stringify(response.data.refresh))
+                console.groupEnd()
+            }
+            toast.success(`Welcome, ${response.data.first_name}`, toastConfig());
+            setUserRegistration(null)
+        }).catch((err) => {
+            console.log(err);
+            toast.error('Something went wrong', toastConfig());
+        })
     }
 
 
