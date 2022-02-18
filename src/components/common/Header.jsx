@@ -127,7 +127,7 @@ const Header = (props) => {
                 handleClose={handleRegisterModal}
             />
         )}
-        {auth &&
+        {auth && auth.is_first_login &&
           <UserProfilePopup
             open={isUserProfileModal}
             handleClose={handleUserProfileModal}

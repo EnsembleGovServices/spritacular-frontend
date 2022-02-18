@@ -10,11 +10,16 @@ import {
   Row,
 } from "reactstrap";
 import Images from "../../static/images";
+import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
 
 const ChangePasswordPopup = (props) => {
   const { open, handleClose, modalClass } = props;
 
+  const handleChangePassword = () => {
+    
+  }
+  
   return (
     <Modal
       className={modalClass ? modalClass : "common-modal"}
@@ -31,7 +36,7 @@ const ChangePasswordPopup = (props) => {
         </Button>
       </ModalHeader>
       <ModalBody>
-        <Form onSubmit={handleLogin}>
+        <Form onSubmit={handleChangePassword}>
           <Row>
             <Col md={12}>
               <FormGroup>
