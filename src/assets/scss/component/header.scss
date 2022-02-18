@@ -123,6 +123,28 @@
       }
     }
   }
+  .after-login-right-menu{
+    .user-menu{
+      .dropdown-toggle{
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+        @include md-text;
+        img{
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          margin-right: 8px;
+        }
+
+      }
+      &.show{
+        .dropdown-toggle{
+          
+        }
+      }
+    }
+  }
   &.bg-color-menu, &.bg-not-home {
     background-color: $white;
     @include box-shadow($box-shadow);
@@ -195,6 +217,36 @@
           }
         }
       }
+    }
+    .after-login-right-menu{
+      .user-menu{
+        .dropdown-toggle{
+          color: $grey;
+          img{
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 8px;
+          }
+  
+        }
+        &.show{
+          .dropdown-toggle{
+            color: $secondary;
+          }
+        }
+      }
+    }
+  }
+  
+}
+.dropdown-menu{
+  .dropdown-item{
+    color: $grey;
+    @include md-text;
+    &:hover, &.active{
+      color: $secondary;
+      background-color: $white;
     }
   }
 }
