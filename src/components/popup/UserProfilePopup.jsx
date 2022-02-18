@@ -16,7 +16,7 @@ import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
 
 const UserProfilePopup = (props) => {
-  const { open, handleClose, modalClass } = props;
+  const { open, handleClose, modalClass, user } = props;
 
   return (
     <Modal
@@ -50,11 +50,11 @@ const UserProfilePopup = (props) => {
             <Col md={7}>
               <div className="user-info">
                 <p>90e87d797c5b</p>
-                <h4>Carl Nielsen</h4>
-                <FormText>carlnielsen@email.com</FormText>
+                <h4>{user?.first_name} {user?.last_name}</h4>
+                <FormText>{user?.email}</FormText>
                 <div className="user-country d-flex align-items-center">
                   <img src={Images.UsaFlag} alt="Usa-Flag" />
-                  <p>Edmon, OK, USA</p>
+                  <p>{user?.location}</p>
                 </div>
               </div>
             </Col>

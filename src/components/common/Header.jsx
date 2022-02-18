@@ -14,10 +14,12 @@ import routesList from "../../routes/MainRoute";
 import '../../assets/scss/component/header.scss';
 import {Link, useLocation} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import UserProfilePopup from "../popup/UserProfilePopup";
 const Header = (props) => {
   const { auth } = useAuth();
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isRegisterModal, setIsRegisterModal] = useState(false);
+  const [isUserProfileModal, setIsUserProfileModal] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
   const location = useLocation();
   const homeUrl = location.pathname === '/';
@@ -46,6 +48,10 @@ const Header = (props) => {
   const menuToggle = () => {
     setShowMenu(!showMenu);
   };
+
+  const handleUserProfileModal = () => {
+    setIsUserProfileModal(!isUserProfileModal);
+  }
 
 
   return (
@@ -121,6 +127,13 @@ const Header = (props) => {
                 handleClose={handleRegisterModal}
             />
         )}
+        {auth &&
+          <UserProfilePopup
+            open={isUserProfileModal}
+            handleClose={handleUserProfileModal}
+            user={auth}
+          />
+        }
       </>
   );
 };
