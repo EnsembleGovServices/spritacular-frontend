@@ -13,7 +13,8 @@ import Images from "../../static/images";
 import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
 import {useState} from "react";
-import axios from "../../api/server";
+import axios from "axios";
+import {toast} from "react-hot-toast";
 
 const CHANGE_PASSWORD_URL = process.env.REACT_APP_API_URL;
 
@@ -21,25 +22,35 @@ const ChangePasswordPopup = (props) => {
   const { open, handleClose, modalClass, user } = props;
 
   const [password, setPassword] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [updated, setUpdated] = useState(false);
   const [error, setError] = useState(null);
+
+  function toastConfig(toastPosition, time) {
+    return {
+      position: toastPosition ?? 'top-right',
+      duration: time ?? 4000,
+    }
+  }
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
-        await axios.put(CHANGE_PASSWORD_URL+'/users/change-password/'+user?.id+'/', password, {
-          withCredentials: true,
+    await axios.put(CHANGE_PASSWORD_URL+'/users/change-password/'+user?.id+'/', password, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${user?.access}`
-          }
+          },
+          withCredentials: true,
+    }).then((res) => {
+          console.log(res);
+          setError('');
+          toast.success(res?.data.message, toastConfig());
+        }).catch((err) => {
+          console.error(err.response);
+          toast.error(err?.response?.statusText, toastConfig());
+          setError(err?.response?.data)
         })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-  }
+    }
+  
 
   const handleInput = (e) => {
     e.preventDefault();
@@ -47,14 +58,21 @@ const ChangePasswordPopup = (props) => {
         value = e.target.value;
     setPassword({
       ...password,
-      [name]:value
+      [name]:value,
     })
   }
-  
+
+  const passwordMatchCheck = () => {
+    if (password) {
+      return password.confirm_password !== password.new_password
+    }
+    return true;
+  }
+
   return (
     <Modal
       className={modalClass ? modalClass : "common-modal"}
-      isOpen={open}
+      isOpen={updated ? updated : open}
       toggle={handleClose}
       centered
       backdrop={true}
@@ -67,6 +85,9 @@ const ChangePasswordPopup = (props) => {
         </Button>
       </ModalHeader>
       <ModalBody>
+        {error?.details &&
+            <p className="text-danger small mb-4 fw-bolder">{error?.details}</p>
+        }
         <Form onSubmit={handleChangePassword}>
           <Row>
             <Col md={12}>
@@ -103,11 +124,9 @@ const ChangePasswordPopup = (props) => {
               </FormGroup>
             </Col>
             <Col md={12}>
-              <FormGroup className="mb-0">
-                <Button type="submit" className="modal-btn">
-                  Update Password
-                </Button>
-              </FormGroup>
+              <Button type="submit" className="modal-btn mb-3" disabled={passwordMatchCheck()}>
+                Update Password
+              </Button>
             </Col>
           </Row>
         </Form>
@@ -118,6 +137,7 @@ const ChangePasswordPopup = (props) => {
 ChangePasswordPopup.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func,
+  passwordMatchCheck: PropTypes.bool
 };
 
 export default ChangePasswordPopup;
