@@ -2,7 +2,7 @@ import {
   Button,
   Col,
   FormGroup,
-  FormText,
+  FormText, Input, Label,
   Modal,
   ModalBody,
   ModalHeader,
@@ -11,7 +11,6 @@ import {
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
-import ImageUpload from "../upload/ImageUpload";
 
 const UserProfilePopup = (props) => {
   const { open, handleClose, modalClass, data } = props;
@@ -37,12 +36,12 @@ const UserProfilePopup = (props) => {
             <Col md={5}>
               <FormGroup className="custome-file-upload">
                 <div className="file-upload-inner">
-                  {/*<Label for="profile-update">*/}
-                  {/*  Upload your profile picture*/}
-                  {/*</Label>*/}
-                  {/*<Input type="file" name="file" id="profile-update" />*/}
+                  <Label for="profile-update">
+                    Upload your profile picture
+                  </Label>
+                  <Input type="file" name="file" id="profile-update" />
 
-                  <ImageUpload user={data?.user} token={data?.token?.access} />
+                  {/*<ImageUpload user={data?.user} token={data?.token?.access} />*/}
                 </div>
               </FormGroup>
             </Col>
