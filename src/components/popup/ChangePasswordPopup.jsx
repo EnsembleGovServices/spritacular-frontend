@@ -12,15 +12,14 @@ import {
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
-import {useState} from "react";
+import { useState} from "react";
 import axios from "axios";
 import {toast} from "react-hot-toast";
 
 const CHANGE_PASSWORD_URL = process.env.REACT_APP_API_URL;
 
 const ChangePasswordPopup = (props) => {
-  const { open, handleClose, modalClass, user } = props;
-
+  const { open, handleClose, modalClass, data } = props;
   const [password, setPassword] = useState(null);
   const [updated, setUpdated] = useState(false);
   const [error, setError] = useState(null);
@@ -32,12 +31,13 @@ const ChangePasswordPopup = (props) => {
     }
   }
 
+
   const handleChangePassword = async (e) => {
     e.preventDefault();
-    await axios.put(CHANGE_PASSWORD_URL+'/users/change-password/'+user?.id+'/', password, {
+    await axios.put(CHANGE_PASSWORD_URL+'/users/change-password/'+data?.user?.id+'/', password, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user?.access}`
+            'Authorization': `Bearer ${data?.token?.access}`
           },
           withCredentials: true,
     }).then((res) => {
@@ -48,7 +48,12 @@ const ChangePasswordPopup = (props) => {
     }).catch((err) => {
           console.error(err.response);
           toast.error(err?.response?.statusText, toastConfig());
-          setError(err?.response?.data)
+          setError(prev => {
+            return {
+              ...prev,
+              error: err?.response?.data
+            }
+          });
         })
     }
   
@@ -86,9 +91,17 @@ const ChangePasswordPopup = (props) => {
         </Button>
       </ModalHeader>
       <ModalBody>
-        {error?.details &&
-            <p className="text-danger small mb-4 fw-bolder">{error?.details}</p>
+        {error?.detail &&
+            <p className="text-danger small mb-4 fw-bolder">{error?.detail}</p>
         }
+        {error?.details?.map((error, i) => {
+          return(
+              <div key={i}>
+                <p className="text-danger small mb-4 fw-bolder">{error}</p>
+              </div>
+          )
+        })}
+
         <Form onSubmit={handleChangePassword}>
           <Row>
             <Col md={12}>

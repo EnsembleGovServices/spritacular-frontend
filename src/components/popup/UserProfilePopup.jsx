@@ -13,9 +13,10 @@ import {
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
+import ImageUpload from "../upload/ImageUpload";
 
 const UserProfilePopup = (props) => {
-  const { open, handleClose, modalClass, user } = props;
+  const { open, handleClose, modalClass, data } = props;
 
   return (
     <Modal
@@ -38,21 +39,23 @@ const UserProfilePopup = (props) => {
             <Col md={5}>
               <FormGroup className="custome-file-upload">
                 <div className="file-upload-inner">
-                  <Label for="profile-update">
-                    Upload your profile picture
-                  </Label>
-                  <Input type="file" name="file" id="profile-update" />
+                  {/*<Label for="profile-update">*/}
+                  {/*  Upload your profile picture*/}
+                  {/*</Label>*/}
+                  {/*<Input type="file" name="file" id="profile-update" />*/}
+
+                  <ImageUpload user={data?.user} token={data?.token?.access} />
                 </div>
               </FormGroup>
             </Col>
             <Col md={7}>
               <div className="user-info">
                 <p>90e87d797c5b</p>
-                <h4>{user?.first_name} {user?.last_name}</h4>
-                <FormText>{user?.email}</FormText>
+                <h4>{data?.user?.first_name} {data?.user?.last_name}</h4>
+                <FormText>{data?.user?.email}</FormText>
                 <div className="user-country d-flex align-items-center">
                   <img src={Images.UsaFlag} alt="Usa-Flag" />
-                  <p>{user?.location}</p>
+                  <p>{data?.user?.location}</p>
                 </div>
               </div>
             </Col>

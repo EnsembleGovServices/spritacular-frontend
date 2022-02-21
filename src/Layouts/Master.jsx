@@ -7,18 +7,18 @@ import useRefreshToken from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
 
 
-
 const Master = () => {
     const [isLoading, setIsLoading] = useState(true);
     const refresh = useRefreshToken();
-    const { auth, persist } = useAuth();
+    const { auth } = useAuth();
 
-    localStorage.setItem("persist", persist ? persist : false);
 
     useEffect(() => {
         const verifyRefreshToken = async () => {
             try {
-                await refresh();
+                if (auth) {
+                    await refresh();
+                }
             }
             catch (err) {
                 console.error(err);
@@ -27,16 +27,13 @@ const Master = () => {
                 setIsLoading(false);
             }
         }
-        console.log(isLoading);
 
-        !auth?.access ? verifyRefreshToken() : setIsLoading(false);
-    }, [])
+        if (isLoading && localStorage.getItem('refresh')) {
+            !auth?.token?.access ? verifyRefreshToken() : setIsLoading(false)
+        }
 
-    useEffect(() => {
-        localStorage.setItem('refresh', auth?.refresh)
-        console.log(`aT: ${JSON.stringify(auth?.access)}`)
-        console.log(`rT: ${JSON.stringify(auth?.refresh)}`)
-    }, [auth])
+    }, [auth, isLoading, refresh])
+
 
     return(
         <>

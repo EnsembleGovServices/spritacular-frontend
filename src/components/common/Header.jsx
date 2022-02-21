@@ -19,6 +19,7 @@ import '../../assets/scss/component/header.scss';
 import {Link, useLocation} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import ChangePasswordPopup from "../popup/ChangePasswordPopup";
+import UserProfilePopup from "../popup/UserProfilePopup";
 
 const Header = (props) => {
   const { auth, setAuth } = useAuth();
@@ -27,6 +28,8 @@ const Header = (props) => {
   const [isChangePasswordModal, setIsChangePasswordModal] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showUserProfilePopup, setShowUserProfilePopup] = useState(true);
+  const [showUserManualProfilePopup, setShowUserManualProfilePopup] = useState(false);
   const location = useLocation();
   const homeUrl = location.pathname === '/';
 
@@ -35,7 +38,6 @@ const Header = (props) => {
     localStorage.removeItem('persist');
     localStorage.removeItem('refresh');
     setAuth('');
-    window.location.reload();
   }
 
   useEffect(() => {
@@ -69,6 +71,14 @@ const Header = (props) => {
 
   const handleChangePasswordModal = () => {
     setIsChangePasswordModal(!isChangePasswordModal);
+  }
+
+  const handleUserProfilePopup = () => {
+    setShowUserProfilePopup(!showUserProfilePopup);
+  }
+
+  const handleUserManualProfilePopup = () => {
+    setShowUserManualProfilePopup(!showUserManualProfilePopup);
   }
 
 
@@ -134,10 +144,10 @@ const Header = (props) => {
                 >
                   <DropdownToggle caret>
                     <img src={Images.UserPlaceholder} alt="UserPlaceholder" />
-                    <span>{ auth?.first_name } { auth?.last_name }</span>
+                    <span>{ auth?.user?.first_name } { auth?.user?.last_name }</span>
                   </DropdownToggle>
                   <DropdownMenu container="body">
-                    <DropdownItem>Edit Profile</DropdownItem>
+                    <DropdownItem onClick={()=> handleUserManualProfilePopup()}>Edit Profile</DropdownItem>
                     <DropdownItem onClick={()=> handleChangePasswordModal()}>Change Password</DropdownItem>
                     <DropdownItem onClick={()=> Logout()}>Logout</DropdownItem>
                   </DropdownMenu>
@@ -162,9 +172,28 @@ const Header = (props) => {
             <ChangePasswordPopup
                 open={isChangePasswordModal}
                 handleClose={handleChangePasswordModal}
-                user={auth}
+                data={auth}
             />
         )}
+
+        {auth?.user?.is_first_login && (
+            <UserProfilePopup
+                open={showUserProfilePopup}
+                handleClose={handleUserProfilePopup}
+                data={auth}
+            />
+        )}
+
+
+        {showUserManualProfilePopup && (
+            <UserProfilePopup
+                open={showUserManualProfilePopup}
+                handleClose={handleUserManualProfilePopup}
+                data={auth}
+            />
+        )}
+
+
       </>
   );
 };
