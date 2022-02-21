@@ -3,8 +3,6 @@ import {
   Col,
   FormGroup,
   FormText,
-  Input,
-  Label,
   Modal,
   ModalBody,
   ModalHeader,
