@@ -8,9 +8,9 @@ import {
   ModalBody,
   ModalHeader,
 } from "reactstrap";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from "../../api/server";
+import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 
 import Images from "../../static/images";
@@ -22,21 +22,22 @@ import {toast} from "react-hot-toast";
 const LOGIN_URL = process.env.REACT_APP_API_TOKEN_URL;
 
 const LoginPopup = (props) => {
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
+
   const from = location.state?.from?.pathname || "/";
 
   const [user, setUser] = useState({
     email: "",
     password: ""
   });
-
   const [error, setError] = useState('');
 
   const { open, handleClose, modalClass } = props;
   const [ isForgotPasswordModal, setIsForgotPasswordModal ] = useState(false);
+
 
   const handleForgotPasswordModal = () => {
     setIsForgotPasswordModal(!isForgotPasswordModal);
@@ -64,13 +65,15 @@ const LoginPopup = (props) => {
     await axios.post(LOGIN_URL, user)
         .then((response) => {
           setError('');
-          console.log(response);
-          toast.success('Logged in successfully', toastConfig());
+          setPersist(true);
           setAuth(response?.data)
-          setUser(null);
           navigate(from, { replace: true });
+          toast.success('Logged in successfully', toastConfig());
+          // console.log(response.data);
+          localStorage.setItem('refresh', response?.data?.refresh)
         })
         .catch((error) => {
+          setPersist(false);
           if (!error?.response) {
             toast.error('Server error occurred', toastConfig());
           }
@@ -90,6 +93,12 @@ const LoginPopup = (props) => {
           }
         })
   }
+
+
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist])
 
   return (
     <Modal

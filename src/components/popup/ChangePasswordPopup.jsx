@@ -42,9 +42,10 @@ const ChangePasswordPopup = (props) => {
           withCredentials: true,
     }).then((res) => {
           console.log(res);
+          setUpdated(res?.data);
           setError('');
           toast.success(res?.data.message, toastConfig());
-        }).catch((err) => {
+    }).catch((err) => {
           console.error(err.response);
           toast.error(err?.response?.statusText, toastConfig());
           setError(err?.response?.data)
@@ -72,7 +73,7 @@ const ChangePasswordPopup = (props) => {
   return (
     <Modal
       className={modalClass ? modalClass : "common-modal"}
-      isOpen={updated ? updated : open}
+      isOpen={updated ? false : open}
       toggle={handleClose}
       centered
       backdrop={true}
@@ -121,6 +122,17 @@ const ChangePasswordPopup = (props) => {
                   required
                   onChange={(e)=>handleInput(e)}
                 />
+                {error?.new_password &&
+                    <span className="text-danger small mt-2 d-block">
+                      {error?.new_password?.map((item, i)=> {
+                        return(
+                            <div key={i}>
+                              <span>{item}</span><br/>
+                            </div>
+                        )
+                      })}
+                    </span>
+                }
               </FormGroup>
             </Col>
             <Col md={12}>

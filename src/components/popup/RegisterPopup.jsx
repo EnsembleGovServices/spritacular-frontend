@@ -14,7 +14,7 @@ import {
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import {useState} from "react";
-import axios from "../../api/server";
+import axios from "../../api/axios";
 import {toast} from "react-hot-toast";
 import "../../assets/scss/component/modal.scss";
 import useAuth from "../../hooks/useAuth";

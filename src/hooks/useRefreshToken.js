@@ -1,19 +1,18 @@
-import {axiosPrivate} from '../api/server';
+import axios from '../api/axios';
 import useAuth from './useAuth';
 
 const useRefreshToken = () => {
-    const { setAuth } = useAuth();
+    const { setAuth, persist } = useAuth();
 
     return async () => {
-        const response = await axiosPrivate.post(process.env.REACT_APP_API_TOKEN_URL, {
-            withCredentials: true
-        });
-        setAuth(prev => {
-            console.log(JSON.stringify(prev));
-            console.log(response.data.access);
-            return {...prev, accessToken: response.data.access}
-        });
-        return response.data.access;
+        if (persist) {
+            const response = await axios.post(process.env.REACT_APP_API_REFRESH_URL,{refresh: localStorage.getItem('refresh')}, {
+                withCredentials: true
+            });
+            localStorage.setItem('refresh', response?.data?.refresh);
+            setAuth(response?.data);
+            return response.data;
+        }
     };
 };
 

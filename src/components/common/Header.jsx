@@ -21,7 +21,7 @@ import useAuth from "../../hooks/useAuth";
 import ChangePasswordPopup from "../popup/ChangePasswordPopup";
 
 const Header = (props) => {
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isRegisterModal, setIsRegisterModal] = useState(false);
   const [isChangePasswordModal, setIsChangePasswordModal] = useState(false);
@@ -29,6 +29,14 @@ const Header = (props) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const location = useLocation();
   const homeUrl = location.pathname === '/';
+
+
+  const Logout = () => {
+    localStorage.removeItem('persist');
+    localStorage.removeItem('refresh');
+    setAuth('');
+    window.location.reload();
+  }
 
   useEffect(() => {
 
@@ -62,6 +70,7 @@ const Header = (props) => {
   const handleChangePasswordModal = () => {
     setIsChangePasswordModal(!isChangePasswordModal);
   }
+
 
 
   return (
@@ -130,7 +139,7 @@ const Header = (props) => {
                   <DropdownMenu container="body">
                     <DropdownItem>Edit Profile</DropdownItem>
                     <DropdownItem onClick={()=> handleChangePasswordModal()}>Change Password</DropdownItem>
-                    <DropdownItem>Logout</DropdownItem>
+                    <DropdownItem onClick={()=> Logout()}>Logout</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </div>

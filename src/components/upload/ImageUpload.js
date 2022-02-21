@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import axios from '../../api/server';
+import axios from '../../api/aixos';
 import PropTypes from "prop-types";
 
 const ImageUpload = () => {
