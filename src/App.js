@@ -6,6 +6,7 @@ import Master from "./Layouts/Master";
 import Error from "./pages/Error";
 import {useContext, useEffect, useState} from "react";
 import AuthContext from "./context/AuthProvider";
+import ProfileSetting from "./pages/ProfileSetting";
 
 const App = () => {
     const { setAuth } = useContext(AuthContext);
@@ -27,6 +28,7 @@ const App = () => {
                 {routesList.map((route, index) => (
                     <Route key={index} path={route.path} element={route.element}/>
                 ))}
+                <Route path={'profile'} element={<ProfileSetting />}/>
             </Route>
             <Route path="*" element={<Error />} />
         </Routes>
