@@ -20,17 +20,17 @@ import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import ChangePasswordPopup from "../popup/ChangePasswordPopup";
 import UserProfilePopup from "../popup/UserProfilePopup";
+import { baseURL } from "../../Layouts/Master";
 
 const Header = (props) => {
   const { auth, setAuth } = useAuth();
+  const [user, setUser] = useState(auth?.user);
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isRegisterModal, setIsRegisterModal] = useState(false);
   const [isChangePasswordModal, setIsChangePasswordModal] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showUserProfilePopup, setShowUserProfilePopup] = useState(true);
-  const [showUserManualProfilePopup, setShowUserManualProfilePopup] =
-    useState(true);
   const location = useLocation();
   const homeUrl = location.pathname === "/";
 
@@ -51,7 +51,8 @@ const Header = (props) => {
         navbarEl.classList.remove("bg-color-menu");
       }
     });
-  }, []);
+    setUser(auth?.user);
+  }, [auth?.user]);
 
   const handleLoginModal = () => {
     setIsLoginModal(!isLoginModal);
@@ -74,10 +75,6 @@ const Header = (props) => {
 
   const handleUserProfilePopup = () => {
     setShowUserProfilePopup(!showUserProfilePopup);
-  };
-
-  const handleUserManualProfilePopup = () => {
-    setShowUserManualProfilePopup(!showUserManualProfilePopup);
   };
 
   return (
@@ -151,14 +148,26 @@ const Header = (props) => {
               toggle={handleUserMenuDropdown}
             >
               <DropdownToggle caret>
-                <img src={Images.UserPlaceholder} alt="UserPlaceholder" />
+                {user?.profile_image ? (
+                  <img
+                    className="img-fluid"
+                    src={baseURL.base + user?.profile_image}
+                    alt="UserPlaceholder"
+                  />
+                ) : (
+                  <img
+                    className="img-fluid"
+                    src={Images.UserPlaceholder}
+                    alt="UserPlaceholder"
+                  />
+                )}
                 <span>
-                  {auth?.user?.first_name} {auth?.user?.last_name}
+                  {user?.first_name} {user?.last_name}
                 </span>
               </DropdownToggle>
               <DropdownMenu container="body">
-                <DropdownItem onClick={() => handleUserManualProfilePopup()}>
-                  Edit Profile
+                <DropdownItem>
+                  <Link to="/profile">Edit Profile</Link>
                 </DropdownItem>
                 <DropdownItem onClick={() => handleChangePasswordModal()}>
                   Change Password
@@ -196,14 +205,6 @@ const Header = (props) => {
         <UserProfilePopup
           open={showUserProfilePopup}
           handleClose={handleUserProfilePopup}
-          data={auth}
-        />
-      )}
-
-      {showUserManualProfilePopup && (
-        <UserProfilePopup
-          open={showUserManualProfilePopup}
-          handleClose={handleUserManualProfilePopup}
           data={auth}
         />
       )}

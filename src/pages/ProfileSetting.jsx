@@ -17,8 +17,11 @@ import classnames from "classnames";
 import "../assets/scss/component/camerasettings.scss";
 import { useState } from "react";
 import Images from "../static/images";
+import useAuth from "../hooks/useAuth";
+import {baseURL} from "../Layouts/Master";
 
-const CameraSettings = () => {
+const ProfileSetting = () => {
+  const { auth } = useAuth();
   const [activeTab, setActiveTab] = useState("1");
 
   const toggleTab = (tab) => {
@@ -43,14 +46,14 @@ const CameraSettings = () => {
                 <div className="profile-left-tab">
                   <div className="profile-info">
                     <div className="profile-img">
-                      <img src={Images.UserProfile} alt="" />
+                      <img className="img-fluid" src={baseURL.base+auth?.user?.profile_image} alt={auth?.user?.first_name} />
                     </div>
                     <div className="profile-data text-center">
-                      <h5>Carl Nielsen</h5>
-                      <p>carlnielsen@email.com</p>
+                      <h5>{auth?.user?.first_name} {auth?.user?.last_name}</h5>
+                      <p>{auth?.user?.email}</p>
                       <div className="d-flex align-items-center justify-content-center">
                         <img src={Images.UsaFlag} alt="" />
-                        <span>Edmon, OK, USA</span>
+                        <span>{auth?.user?.location}</span>
                       </div>
                     </div>
                   </div>
@@ -118,8 +121,8 @@ const CameraSettings = () => {
                             <FormGroup>
                               <Label for="exampleSelect">Location</Label>
                               <Input type="select" name="select">
-                                <option disabled selected>
-                                  Please Select Your Location
+                                <option disabled defaultValue>
+                                  Please Select Your Country
                                 </option>
                                 <option>Australia</option>
                                 <option>Bahrain</option>
@@ -297,4 +300,4 @@ const CameraSettings = () => {
     </>
   );
 };
-export default CameraSettings;
+export default ProfileSetting;
