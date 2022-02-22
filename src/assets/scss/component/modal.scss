@@ -1,26 +1,33 @@
 @import "../global/config.scss";
-.common-modal{
+
+.common-modal {
     max-width: 418px;
-    @media(max-width:580px){
+
+    @media(max-width:580px) {
         max-width: 90%;
         margin: 0 auto;
     }
-    .modal-content{
+
+    .modal-content {
         padding: 44px 50px 30px 50px;
         position: relative;
-        @media(max-width:580px){
+
+        @media(max-width:580px) {
             padding: 30px 30px;
         }
-        .modal-header{
+
+        .modal-header {
             padding: 0px;
             margin-bottom: 25px;
-            .modal-title{
+
+            .modal-title {
                 // font-size: 30px;
                 // line-height: 35px;
                 @include md-title;
                 font-weight: 700;
             }
-            p{
+
+            p {
                 // font-size: 13px;
                 @include md-text;
                 color: $black;
@@ -29,7 +36,8 @@
                 // line-height: 16px;
                 margin-top: 5px;
             }
-            .close-icon{
+
+            .close-icon {
                 background-color: transparent;
                 position: absolute;
                 right: 25px;
@@ -39,20 +47,24 @@
                 padding: 0px;
             }
         }
-        
-        .modal-body{
+
+        .modal-body {
             padding: 0px;
-            .form-control, .form-select{
+
+            .form-control,
+            .form-select {
                 background-color: $input-bg !important;
-                border:1px solid $input-bg;
+                border: 1px solid $input-bg;
                 box-shadow: none;
                 padding: 12px;
+
                 &.is-invalid {
                     border: $border-width solid $danger;
                 }
             }
-            .forgot-password{
-                button{
+
+            .forgot-password {
+                button {
                     color: $black;
                     // font-size: 13px;
                     // line-height: 16px;
@@ -62,19 +74,21 @@
                     border: 0;
                     padding: 0;
                     box-shadow: none;
-                    &:hover{
+
+                    &:hover {
                         color: $secondary;
                     }
                 }
-                
+
             }
-            .disabled{
+
+            .disabled {
                 background-color: $modal-btn;
-                border:1px solid $modal-btn;
+                border: 1px solid $modal-btn;
                 color: $white;
             }
-            
-            .modal-btn{
+
+            .modal-btn {
                 color: $white;
                 // font-size: 14px;
                 @include md-text;
@@ -84,79 +98,65 @@
                 padding: 12px 15px;
                 font-weight: 500;
                 letter-spacing: 0.5px;
-                &:hover{
+
+                &:hover {
                     background-color: $secondary;
-                    border:1px solid $secondary;
+                    border: 1px solid $secondary;
                     color: $white;
                 }
             }
-            .form-check{
-                .form-check-label{
+
+            .form-check {
+                .form-check-label {
                     // font-size: 14px;
                     @include md-text;
                     color: $black;
                     opacity: 0.6;
-                    a{
+
+                    a {
                         font-weight: 700;
                         color: $black;
-                        &:hover{
+
+                        &:hover {
                             color: $secondary;
                         }
                     }
                 }
             }
-            .custome-file-upload{
-                .file-upload-inner{
-                    position: relative;
-                    input[type=file]{
-                        opacity: 0;
-                        position: absolute;
-                        left: 0;
-                        right: 0;
-                        top: 0;
-                        height: 140px;
-                        width: 140px;
-                    }
-                    .form-label{
-                        height: 140px;
-                        width: 140px;
-                        border-radius: 50%;
-                        background-color: #F4F5F6;
-                        border:1px dashed #cccccc;
-                        color: $black;
-                        // font-size: 14px;
-                        @include md-text;
-                        text-align: center;
-                        display: flex;
-                        align-items: center;
-                        cursor: pointer;
-                    }
-                }
+
+            .custome-file-upload {
+                .file-upload-inner {}
             }
-            .user-info{
+
+            .user-info {
                 padding-left: 20px;
                 padding-top: 20px;
-                p{
+
+                p {
                     margin-bottom: 0px;
                     // font-size: 11px;
                     @include sm-text;
                     color: $grey;
                 }
-                h4{
+
+                h4 {
                     margin-bottom: 0px;
                     color: $grey;
                     // font-size: 15px;
                     @include md-text;
                     font-weight: 600;
                 }
-                .form-text{
+
+                .form-text {
                     color: $grey;
                     // font-size: 13px;
                     @include sm-text;
                 }
-                .user-country{
+
+                .user-country {
                     margin-top: 18px;
-                    p{
+
+                    p {
                         color: $grey;
                         // font-size: 14px;
                         @include md-text;
@@ -164,9 +164,10 @@
                         padding-left: 10px;
                     }
                 }
-                
+
             }
-            .bg-modal-btn{
+
+            .bg-modal-btn {
                 background-color: $secondary;
                 color: $white;
                 // font-size: 14px;
@@ -175,15 +176,17 @@
                 font-weight: 500;
                 padding: 12px 35px;
                 border-radius: 25px;
-                border:1px solid $secondary;
-                
+                border: 1px solid $secondary;
+
             }
-            .modal-bottom-text{
+
+            .modal-bottom-text {
                 // font-size: 14px;
                 @include md-text;
                 color: $black;
                 margin-top: 17px;
-                button{
+
+                button {
                     font-weight: 700;
                     @include md-text;
                     color: $black;
@@ -191,38 +194,117 @@
                     border: 0;
                     padding: 0;
                     box-shadow: none;
-                    &:hover{
+
+                    &:hover {
                         color: $secondary;
                     }
                 }
             }
-            .bottom-text{
+
+            .bottom-text {
                 color: $black;
                 @include md-text;
                 text-align: center;
                 margin-top: 30px;
                 margin-bottom: 0px;
-                a{
+
+                a {
                     font-weight: 700;
                     cursor: pointer;
-                    &:hover{
+
+                    &:hover {
                         color: $secondary;
                     }
                 }
             }
-            
+
         }
     }
 
 }
-.login-main{
+
+.login-main {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     width: 100%;
     background-color: #E8EAEE;
-    .modal-content{
+
+    .modal-content {
         width: 450px;
     }
 }
+
+.user-profile-upload {
+    position: relative;
+
+    input[type=file] {
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 140px;
+        width: 140px;
+    }
+
+    .form-label {
+        height: 140px;
+        width: 140px;
+        border-radius: 50%;
+        background-color: #F4F5F6;
+        border: 1px dashed #cccccc;
+        color: $black;
+        // font-size: 14px;
+        @include md-text;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        overflow: hidden;
+       
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+.progressBar{
+    .progress{
+        display: none;
+    }
+}
+/*
+.progressBar {
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 200%;
+        border-radius: 50%;
+        background-image: conic-gradient(#9c27b0, #3f51b5 calc(var(--percentage, 0) / 2), #bbb 0);
+        transition: transform .5s ease-in-out;
+        z-index: 1;
+        transform: rotate(270deg);
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        display: block;
+        background: #dddddd;
+        z-index: 2;
+        width: calc(140px - 5px);
+        height: calc(140px - 5px);
+        border-radius: 50%;
+        top: 26px;
+        left: 3px;
+      }
+}
+*/
