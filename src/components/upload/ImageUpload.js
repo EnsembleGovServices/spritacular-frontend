@@ -1,19 +1,17 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import axios from '../../api/axios';
 import PropTypes from "prop-types";
-import {baseURL} from "../../Layouts/Master";
+
 
 const ImageUpload = (props) => {
     const {user, token} = props;
     const [file, setFile] = useState('');
-    const [data, setData] = useState(null);
+    const [data, setData] = useState('');
     const [progress, setProgress] = useState('');
     const [error, setError] = useState(null);
-    const profile_image_upload = useRef();
     const handleChange = (e) => {
         setProgress('0')
         const file = e.target.files[0];
-        console.log(file);
         setFile(file);
         uploadFile();
     }
@@ -34,9 +32,6 @@ const ImageUpload = (props) => {
         }).then(res => {
             setData(res.data)
             setError(null)
-            if (process.env.NODE_ENV === 'development') {
-                console.log(res);
-            }
         }).catch(err => {
             setError(err.response)
         })}, [file, token, user?.id])
@@ -48,18 +43,22 @@ const ImageUpload = (props) => {
     return (
         <>
             <div className="user-profile-upload">
-                <div>
-                    <input type="file" name="profile_image" ref={profile_image_upload} onChange={handleChange} />
-                    <div className="progressBar" style={{ width: progress }}>
-                        {progress}
-                    </div>
-                </div>
-                {data ? (
-                    <img className="img-fluid" src={data.profile_image} alt={user?.first_name} />
+                {data.profile_image !== null ? (
+                    <>
+                        <img className="img-fluid" src={data?.profile_image} alt={user?.first_name} />
+                        <input type="file" name="profile_image"  onChange={handleChange} />
+                    </>
                 ) : (
-                    <img className="img-fluid" src={baseURL.base+user?.profile_image} alt={user?.first_name} />
+                    <>
+                        <div className="progressBar" style={{ width: progress }}>
+                            {progress}
+                        </div>
+                        <input type="file" name="profile_image"  onChange={handleChange} />
+                        <span>Please upload your image</span>
+                    </>
                 )}
             </div>
+
             <div>
                 {error?.data &&
                     error.data.profile_image.map((error, i)=> {

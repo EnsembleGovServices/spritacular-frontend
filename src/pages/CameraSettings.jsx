@@ -118,7 +118,7 @@ const CameraSettings = () => {
                             <FormGroup>
                               <Label for="exampleSelect">Country</Label>
                               <Input type="select" name="select">
-                                <option disabled selected>
+                                <option disabled defaultValue>
                                   Please Select Your Country
                                 </option>
                                 <option>Australia</option>
