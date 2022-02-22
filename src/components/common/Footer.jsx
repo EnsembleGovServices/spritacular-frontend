@@ -23,12 +23,12 @@ const Footer = () => {
                 <Row className="mb-2 mb-md-5 align-items-center">
                   <Col className="nasa-img col-12 col-sm-6">
                     <div className="footer-brand">
-                      <img src={Images.Nasa} alt="spritacular" />
+                      <img src={Images.Catholic} alt="spritacular" />
                     </div>
                   </Col>
                   <Col className="col-12 col-sm-6">
                     <div className="footer-brand">
-                      <img src={Images.Catholic} alt="spritacular" />
+                      <img src={Images.Nasa} alt="spritacular" />
                     </div>
                   </Col>
                 </Row>
@@ -56,7 +56,11 @@ const Footer = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link to={"/"} className="d-inline-block mb-4" title="FAQ">
+                        <Link
+                          to={"/"}
+                          className="d-inline-block mb-4"
+                          title="FAQ"
+                        >
                           FAQ{" "}
                         </Link>
                       </li>
@@ -74,7 +78,11 @@ const Footer = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link to={"/"} className="d-inline-block mb-4" title="Gallery">
+                        <Link
+                          to={"/"}
+                          className="d-inline-block mb-4"
+                          title="Gallery"
+                        >
                           Gallery{" "}
                         </Link>
                       </li>
@@ -92,12 +100,20 @@ const Footer = () => {
                   <Col className="col-12 col-sm-4">
                     <List type="unstyled" className="footer-links">
                       <li>
-                        <Link to={"/"} className="d-inline-block mb-4" title="Blog">
+                        <Link
+                          to={"/"}
+                          className="d-inline-block mb-4"
+                          title="Blog"
+                        >
                           Blog{" "}
                         </Link>
                       </li>
                       <li>
-                        <Link to={"/"} className="d-inline-block mb-4" title="Verify">
+                        <Link
+                          to={"/"}
+                          className="d-inline-block mb-4"
+                          title="Verify"
+                        >
                           Verify{" "}
                         </Link>
                       </li>

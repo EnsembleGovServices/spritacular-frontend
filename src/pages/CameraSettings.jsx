@@ -32,7 +32,7 @@ const CameraSettings = () => {
     <>
       <section className="comman-banner">
         <Container>
-          <div className="banner-inner"/>
+          <div className="banner-inner" />
         </Container>
       </section>
       <section className="setting-main">
@@ -116,10 +116,10 @@ const CameraSettings = () => {
                             </FormGroup>
 
                             <FormGroup>
-                              <Label for="exampleSelect">Country</Label>
+                              <Label for="exampleSelect">Location</Label>
                               <Input type="select" name="select">
                                 <option disabled selected>
-                                  Please Select Your Country
+                                  Please Select Your Location
                                 </option>
                                 <option>Australia</option>
                                 <option>Bahrain</option>
@@ -140,11 +140,150 @@ const CameraSettings = () => {
                           <h4>Camera Settings</h4>
                         </Col>
                       </Row>
+                      <Form>
+                        <Row>
+                          <Col md="12">
+                            <FormGroup>
+                              <h6>Camera Type</h6>
+                              <Input type="select" name="select">
+                                <option disabled selected>
+                                  Please Select Your Camera Type
+                                </option>
+                                <option>Canon</option>
+                                <option>Nikon</option>
+                                <option>Sony</option>
+                                <option>Panasonic</option>
+                              </Input>
+                            </FormGroup>
+                            <div className="border-line"></div>
+                          </Col>
+                          <Col md="12">
+                            <FormGroup>
+                              <h6>Lens Information</h6>
+                            </FormGroup>
+                          </Col>
+                          <Col md="6">
+                            <FormGroup>
+                              <label>Focal Length</label>
+                              <Input
+                                type="text"
+                                name="name"
+                                placeholder="35 mm"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col md="6">
+                            <FormGroup>
+                              <label>Aperture</label>
+                              <Input
+                                type="text"
+                                name="name"
+                                placeholder="35 mm"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col md="12">
+                            <div className="border-line"></div>
+                            <FormGroup>
+                              <h6>Camera Settings</h6>
+                            </FormGroup>
+                          </Col>
+                          <Col md="6">
+                            <FormGroup>
+                              <label>ISO</label>
+                              <Input
+                                type="text"
+                                name="name"
+                                placeholder="100"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col md="6">
+                            <FormGroup>
+                              <label>Shutter Speed (exposure time)</label>
+                              <Input
+                                type="text"
+                                name="name"
+                                placeholder="1/15"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col md="6">
+                            <FormGroup>
+                              <label>Frame Rate (frames per second)</label>
+                              <Input type="text" name="name" placeholder="24" />
+                            </FormGroup>
+                          </Col>
+                          <Col md="12">
+                            <div className="border-line"></div>
+                            <FormGroup>
+                              <h6>How do you generally keep track of time?</h6>
+                              <Input
+                                type="text"
+                                name="name"
+                                placeholder="Camera Time"
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col md="12">
+                            <div className="border-line"></div>
+                            <FormGroup>
+                              <h6>
+                                Do you use any special equipment attached to
+                                your camera (such as a filter)?
+                              </h6>
+                              <Input
+                                type="text"
+                                name="name"
+                                placeholder="Polarizing Filter"
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+
+                        <FormGroup className="profile-bottom-btn ">
+                          <Button className="discard-btn">Discard</Button>
+                          <Button className="save-btn">Save Changes</Button>
+                        </FormGroup>
+                      </Form>
                     </TabPane>
                     <TabPane tabId="3">
                       <Row>
                         <Col sm="12">
                           <h4>Change Password</h4>
+                        </Col>
+                        <Col md="12">
+                          <Form>
+                            <FormGroup>
+                              <Label for="exampleEmail">Old Password</Label>
+                              <Input
+                                type="password"
+                                name="name"
+                                placeholder="Enter Your Old Password"
+                              />
+                            </FormGroup>
+                            <FormGroup>
+                              <Label for="exampleEmail">New Password</Label>
+                              <Input
+                                type="password"
+                                name="name"
+                                placeholder="Enter Your New Password"
+                              />
+                            </FormGroup>
+                            <FormGroup>
+                              <Label for="exampleEmail">
+                                Confirm New Password
+                              </Label>
+                              <Input
+                                type="password"
+                                name="name"
+                                placeholder="Enter Your Confirm New Password"
+                              />
+                            </FormGroup>
+                            <FormGroup className="profile-bottom-btn ">
+                              <Button className="save-btn">Save Changes</Button>
+                            </FormGroup>
+                          </Form>
                         </Col>
                       </Row>
                     </TabPane>

@@ -339,10 +339,14 @@
     .map_inner{
         // padding-top: 3%;
         background: url("../../images/map.png") no-repeat center;
-        background-size: contain;
+        background-size: 63%;
         height: 690px;
+        @media (max-width: 1600px){
+            background-size: 80%;
+        }
         @media (max-width: 1200px){
             height: 400px;
+            background-size: 60%;
         }
         @media (max-width: 767px){
             height: auto;

@@ -5,6 +5,9 @@
     .setting-inner{
         margin-top: -150px;
         position: relative;
+        @media(max-width:767px){
+            margin-top: -100px;
+        }
         .profile-left-tab{
             background: linear-gradient(128.5deg, #C01E37 0%, #F052C1 154.21%);
             border-radius: 8px;
@@ -69,6 +72,10 @@
             box-sizing: border-box;
             border-radius: 8px;
             padding: 50px 60px;
+            @media(max-width:767px){
+                padding: 25px;
+                margin-top: 30px;
+            }
             h4{
                 margin-bottom: 40px;
                 @include md-title;
@@ -80,10 +87,16 @@
                 border-radius: 6px;
                 box-shadow: none;
             }
+            label{
+                color: $black;
+                @include sm-text;
+                margin-bottom: 10px;
+            }
             .profile-bottom-btn{
                 border-top: 1px solid #EAEAEA;
-                padding-top: 25px;
+                padding-top: 30px;
                 margin-bottom: 0px !important;
+                margin-top: 15px;
                 .save-btn{
                     padding: 12px 25px;
                     &:hover{
@@ -91,6 +104,26 @@
                         color: $secondary;
                     }
                 }
+                .discard-btn{
+                    background-color: $white;
+                    color: #3B3B3B;
+                    border: 1px solid #737E96;
+                    padding: 12px 25px;
+                    margin-right: 20px;
+                    &:hover{
+                        background-color: #3B3B3B;
+                        color: $white;
+                    }
+                }
+            }
+            h6{
+                margin-bottom: 10px;
+                @include lg-text;
+                color: $black;
+            }
+            .border-line{
+                border-top: 1px solid #EAEAEA;
+                margin: 30px 0px 30px;
             }
         }
     }

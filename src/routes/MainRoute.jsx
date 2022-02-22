@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Resources from "../pages/Resources";
 import Blog from "../pages/Blog";
 import CameraSettings from "../pages/CameraSettings";
+import Login from "../pages/Login";
 
 const routesList = [
   {
@@ -37,11 +38,11 @@ const routesList = [
     name: "blog",
     element: <Blog />,
   },
-  {
-    path: "/profile",
-    name: "CameraSettings",
-    element: <CameraSettings />,
-  },
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   element: <Login />,
+  // },
 ];
 
 export default routesList;
