@@ -1,5 +1,4 @@
 import About from "../pages/About";
-import Community from "../pages/Community";
 import Gallery from "../pages/Gallery";
 import GetStarted from "../pages/GetStarted";
 import Home from "../pages/Home";

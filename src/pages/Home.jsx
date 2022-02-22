@@ -3,7 +3,6 @@ import HomeBanner from "../components/HomeComponent/HomeBanner";
 import HomeCounter from "../components/HomeComponent/HomeCounter";
 import HomeMapSection from "../components/HomeComponent/HomeMapSection";
 import HomeHowItWorks from "../components/HomeComponent/HomeHowItWorks";
-import GetStarted from "../components/HomeComponent/GetStarted";
 
 const Home = () => {
   return (

@@ -5,10 +5,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Card,
   Button,
-  CardTitle,
-  CardText,
   Row,
   Col,
   Form,
@@ -35,7 +32,7 @@ const CameraSettings = () => {
     <>
       <section className="comman-banner">
         <Container>
-          <div className="banner-inner"></div>
+          <div className="banner-inner"/>
         </Container>
       </section>
       <section className="setting-main">
