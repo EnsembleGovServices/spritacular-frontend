@@ -7,6 +7,11 @@ import useRefreshToken from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
 
 
+export const baseURL = {
+    'base': process.env.REACT_APP_BASE_REMOTE,
+    'api': process.env.REACT_APP_API_URL
+}
+
 const Master = () => {
     const [isLoading, setIsLoading] = useState(true);
     const refresh = useRefreshToken();

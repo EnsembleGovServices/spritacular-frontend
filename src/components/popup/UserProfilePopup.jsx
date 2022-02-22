@@ -2,7 +2,7 @@ import {
   Button,
   Col,
   FormGroup,
-  FormText, Input, Label,
+  FormText,
   Modal,
   ModalBody,
   ModalHeader,
@@ -11,15 +11,20 @@ import {
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
+import ImageUpload from "../upload/ImageUpload";
+import {useEffect, useState} from "react";
 
 const UserProfilePopup = (props) => {
+  const [user, setUser] = useState(props);
   const { open, handleClose, modalClass, data } = props;
 
+  useEffect(()=> {
+    setUser(data?.user);
+  }, [data]);
   return (
     <Modal
       className={modalClass ? modalClass : "common-modal"}
       isOpen={open}
-      toggle={handleClose}
       centered
       backdrop={true}
       keyboard={false}
@@ -35,24 +40,19 @@ const UserProfilePopup = (props) => {
           <Row>
             <Col md={5}>
               <FormGroup className="custome-file-upload">
-                <div className="file-upload-inner">
-                  <Label for="profile-update">
-                    Upload your profile picture
-                  </Label>
-                  <Input type="file" name="file" id="profile-update" />
-
-                  {/*<ImageUpload user={data?.user} token={data?.token?.access} />*/}
+                <div className="file-upload-inners">
+                  <ImageUpload user={data?.user} token={data?.token?.access} />
                 </div>
               </FormGroup>
             </Col>
             <Col md={7}>
               <div className="user-info">
                 <p>90e87d797c5b</p>
-                <h4>{data?.user?.first_name} {data?.user?.last_name}</h4>
-                <FormText>{data?.user?.email}</FormText>
+                <h4>{user?.first_name} {user?.last_name}</h4>
+                <FormText>{user?.email}</FormText>
                 <div className="user-country d-flex align-items-center">
                   <img src={Images.UsaFlag} alt="Usa-Flag" />
-                  <p>{data?.user?.location}</p>
+                  <p>{user?.location}</p>
                 </div>
               </div>
             </Col>

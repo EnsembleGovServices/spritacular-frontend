@@ -64,6 +64,7 @@ const LoginPopup = (props) => {
     e.preventDefault();
     await axios.post(LOGIN_URL, user)
         .then((response) => {
+          console.log(response);
           setError('');
           setAuth({
             token: {
@@ -74,7 +75,7 @@ const LoginPopup = (props) => {
           })
 
           navigate(from, { replace: true });
-          toast.success('Logged in successfully', toastConfig());
+          // toast.success('Logged in successfully', toastConfig());
           localStorage.setItem('refresh', response?.data?.refresh)
         })
         .catch((error) => {

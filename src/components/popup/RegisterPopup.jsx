@@ -82,7 +82,7 @@ const RegisterPopup = (props) => {
             message: error.response.statusText,
             data: error.response.data,
           });
-          toast.error(error?.response?.statusText, toastConfig());
+          // toast.error(error?.response?.statusText, toastConfig());
         }
         if (error) {
           console.log(error.response);
@@ -107,8 +107,9 @@ const RegisterPopup = (props) => {
             user: response?.data
           }
         });
-        toast.success(`Welcome, ${response.data.first_name}`, toastConfig());
+        // toast.success(`Welcome, ${response.data.first_name}`, toastConfig());
         setUserRegistration(null);
+        localStorage.setItem('refresh', response?.data?.refresh)
       })
       .catch((err) => {
         toast.error("Something went wrong", toastConfig());
