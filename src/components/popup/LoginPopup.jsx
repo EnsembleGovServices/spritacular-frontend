@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import {useState} from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from "../../api/server";
+import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 
 import Images from "../../static/images";
@@ -26,17 +26,18 @@ const LoginPopup = (props) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+
   const from = location.state?.from?.pathname || "/";
 
   const [user, setUser] = useState({
     email: "",
     password: ""
   });
-
   const [error, setError] = useState('');
 
   const { open, handleClose, modalClass } = props;
   const [ isForgotPasswordModal, setIsForgotPasswordModal ] = useState(false);
+
 
   const handleForgotPasswordModal = () => {
     setIsForgotPasswordModal(!isForgotPasswordModal);
@@ -64,11 +65,17 @@ const LoginPopup = (props) => {
     await axios.post(LOGIN_URL, user)
         .then((response) => {
           setError('');
-          console.log(response);
-          toast.success('Logged in successfully', toastConfig());
-          setAuth(response?.data)
-          setUser(null);
+          setAuth({
+            token: {
+              access: response?.data?.access,
+              refresh: response?.data?.refresh,
+            },
+            user: response?.data
+          })
+
           navigate(from, { replace: true });
+          toast.success('Logged in successfully', toastConfig());
+          localStorage.setItem('refresh', response?.data?.refresh)
         })
         .catch((error) => {
           if (!error?.response) {
@@ -92,61 +99,64 @@ const LoginPopup = (props) => {
   }
 
   return (
-    <Modal
-      className={modalClass ? modalClass : "common-modal"}
-      isOpen={open}
-      toggle={handleClose}
-      centered
-      backdrop={true}
-      keyboard={false}
-    >
-      <ModalHeader>
-        Login
-        <Button className="close-icon" onClick={() => handleClose()}>
-          <img src={Images.Modalcloseicon} alt="close-icon" />
-        </Button>
-      </ModalHeader>
-      <ModalBody>
-        {error?.data &&
-            <p className="text-danger small mb-4 fw-bolder">{error?.data?.detail}</p>
-        }
-        <Form onSubmit={handleLogin}>
-          <FormGroup>
-            <Input
-                type="email"
-                name="email"
-                placeholder="Email address"
-                autoComplete="off"
-                required
-                onChange={(e)=>handleInput(e)}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Input
-                type="password"
-                name="password"
-                placeholder="Password"
-                required
-                onChange={(e)=>handleInput(e)}
-            />
-          </FormGroup>
-          <FormText className="forgot-password">
-            <Button onClick={() => handleForgotPasswordModal()}>Forgot Password?</Button>
-          </FormText>
-          <FormGroup>
-            <Button type="submit" className="modal-btn" disabled={!(user?.email && user?.password)}>
-              Login
-            </Button>
-          </FormGroup>
-        </Form>
-      </ModalBody>
+    <>
+      <Modal
+          className={modalClass ? modalClass : "common-modal"}
+          isOpen={open}
+          toggle={handleClose}
+          centered
+          backdrop={true}
+          keyboard={false}
+      >
+        <ModalHeader>
+          Login
+          <Button className="close-icon" onClick={() => handleClose()}>
+            <img src={Images.Modalcloseicon} alt="close-icon" />
+          </Button>
+        </ModalHeader>
+        <ModalBody>
+          {error?.data &&
+              <p className="text-danger small mb-4 fw-bolder">{error?.data?.detail}</p>
+          }
+          <Form onSubmit={handleLogin}>
+            <FormGroup>
+              <Input
+                  type="email"
+                  name="email"
+                  placeholder="Email address"
+                  autoComplete="off"
+                  required
+                  onChange={(e)=>handleInput(e)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                  onChange={(e)=>handleInput(e)}
+              />
+            </FormGroup>
+            <FormText className="forgot-password">
+              <Button onClick={() => handleForgotPasswordModal()}>Forgot Password?</Button>
+            </FormText>
+            <FormGroup>
+              <Button type="submit" className="modal-btn" disabled={!(user?.email && user?.password)}>
+                Login
+              </Button>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+      </Modal>
       {isForgotPasswordModal && (
-        <ForgotPasswordPopup
-          open={isForgotPasswordModal}
-          handleClose={handleForgotPasswordModal}
-        />
+          <ForgotPasswordPopup
+              open={isForgotPasswordModal}
+              handleClose={handleForgotPasswordModal}
+          />
       )}
-    </Modal>
+
+    </>
   );
 };
 LoginPopup.propTypes = {

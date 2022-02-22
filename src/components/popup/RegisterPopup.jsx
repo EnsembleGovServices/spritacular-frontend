@@ -4,7 +4,6 @@ import {
   Form,
   FormFeedback,
   FormGroup,
-  FormText,
   Input,
   Label,
   Modal,
@@ -14,13 +13,11 @@ import {
 } from "reactstrap";
 import Images from "../../static/images";
 import PropTypes from "prop-types";
-import { useState } from "react";
-import axios from "../../api/server";
+import {useState} from "react";
+import axios from "../../api/axios";
 import { toast } from "react-hot-toast";
 import "../../assets/scss/component/modal.scss";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom";
-import LoginPopup from "../popup/LoginPopup";
 
 const REGISTER_URL = process.env.REACT_APP_API_REGISTER_URL;
 const LOGIN_URL = process.env.REACT_APP_API_TOKEN_URL;
@@ -100,19 +97,20 @@ const RegisterPopup = (props) => {
         password: userRegistration.password,
       })
       .then((response) => {
-        setAuth(response?.data);
-
-        if (process.env.NODE_ENV === "development") {
-          console.group("User Token");
-          console.log("AccessToken " + JSON.stringify(response.data.access));
-          console.log("RefreshToken " + JSON.stringify(response.data.refresh));
-          console.groupEnd();
-        }
+        setAuth(prev => {
+          return {
+            ...prev,
+            token: {
+              access: response?.data?.access,
+              refresh: response?.data?.refresh
+            },
+            user: response?.data
+          }
+        });
         toast.success(`Welcome, ${response.data.first_name}`, toastConfig());
         setUserRegistration(null);
       })
       .catch((err) => {
-        console.log(err);
         toast.error("Something went wrong", toastConfig());
       });
   };
@@ -233,7 +231,7 @@ const RegisterPopup = (props) => {
           </Button>
         </Form>
         <p className="bottom-text">
-          Already have an account? <a>Login</a>
+          Already have an account? <span className="pointer fw-bold">Login</span>
         </p>
       </ModalBody>
     </Modal>

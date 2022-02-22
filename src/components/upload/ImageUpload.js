@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
-import axios from '../../api/server';
+import axios from '../../api/axios';
 import PropTypes from "prop-types";
 
-const ImageUpload = () => {
+const ImageUpload = (props) => {
+    const {user, token} = props;
     const [file, setFile] = useState('');
     const [data, getFile] = useState({ name: "", path: "" });
     const [progress, setProgress] = useState('');
@@ -16,12 +17,17 @@ const ImageUpload = () => {
     const uploadFile = () => {
         const formData = new FormData();
         formData.append('file', file); // appending file
-        axios.post(process.env.REACT_APP_API_URL, formData, {
+        axios.patch(process.env.REACT_APP_API_URL+'/users/user_profile/'+user?.id+'/', formData, {
             onUploadProgress: (ProgressEvent) => {
                 let progressBar = Math.round(
                     ProgressEvent.loaded / ProgressEvent.total * 100) + '%';
                 setProgress(progressBar);
-            }
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            withCredentials: true,
         }).then(res => {
             console.log(res);
             getFile({ name: res.data.name,
@@ -30,9 +36,11 @@ const ImageUpload = () => {
         }).catch(err => console.log(err))}
     return (
         <div className="file-upload">
-            <input type="file" ref={el} onChange={handleChange} />
-            <div className="progressBar" style={{ width: progress }}>
-                {progress}
+            <div>
+                <input type="file" ref={el} onChange={handleChange} />
+                <div className="progressBar" style={{ width: progress }}>
+                    {progress}
+                </div>
             </div>
             <button onClick={uploadFile} className="upbutton">
                 Upload
