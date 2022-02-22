@@ -4,6 +4,8 @@ import Gallery from "../pages/Gallery";
 import GetStarted from "../pages/GetStarted";
 import Home from "../pages/Home";
 import Resources from "../pages/Resources";
+import Blog from "../pages/Blog";
+import CameraSettings from "../pages/CameraSettings";
 
 const routesList = [
   {
@@ -17,7 +19,7 @@ const routesList = [
     element: <About />,
   },
   {
-    path: "/",
+    path: "/get-started",
     name: "get started",
     element: <GetStarted />,
   },
@@ -32,9 +34,14 @@ const routesList = [
     element: <Resources />,
   },
   {
-    path: "/",
-    name: "community",
-    element: <Community />,
+    path: "/blog",
+    name: "blog",
+    element: <Blog />,
+  },
+  {
+    path: "/profile",
+    name: "CameraSettings",
+    element: <CameraSettings />,
   },
 ];
 

@@ -421,3 +421,48 @@
     }
 }
 // Map section css end 
+
+
+.get-started-section{
+    padding: 150px 0px 150px;
+    position: relative;
+    .top-polygone{
+        img{
+            position: absolute;
+            right: -11px;
+            bottom: -29px;
+            width: 14%;
+            transform: rotate(90deg);
+        }
+    }
+    h3{
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 48px;
+        color: $black;
+    }
+    .get-start{
+        padding: 15px 45px;
+        &:hover{
+            background-color: $white;
+            color: $secondary;
+            border:1px solid $secondary;
+        }
+    }
+    .top-text-polygon{
+        img{
+            position: absolute;
+            max-width: 80px;
+            top: 18%;
+            right: 50%;
+        }
+    }
+    .bottom-text-polygon{
+        img{
+            position: absolute;
+            max-width: 80px;
+            bottom: 25px;
+            left: 30%;
+        }
+    }
+}

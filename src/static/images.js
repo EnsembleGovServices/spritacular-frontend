@@ -30,6 +30,9 @@ import UsaFlag from "../assets/images/USA.svg";
 import TutorialTitle from "../assets/images/TutorialTitle.png";
 import TutorialDetail from "../assets/images/Tutorial-Detail.png";
 import UserPlaceholder from "../assets/images/user-placeholder.png";
+import BlogOne from "../assets/images/Blog-One.png";
+import BlogTwo from "../assets/images/Blog-Two.png";
+import UserProfile from "../assets/images/profile-pic.png";
 
 const Images = {
   Logo,
@@ -64,5 +67,8 @@ const Images = {
   TutorialTitle,
   TutorialDetail,
   UserPlaceholder,
+  BlogOne,
+  BlogTwo,
+  UserProfile,
 };
 export default Images;
