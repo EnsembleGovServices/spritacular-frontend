@@ -21,6 +21,7 @@ const UserProfilePopup = (props) => {
   useEffect(()=> {
     setUser(data?.user);
   }, [data]);
+
   return (
     <Modal
       className={modalClass ? modalClass : "common-modal"}
@@ -60,7 +61,7 @@ const UserProfilePopup = (props) => {
           <Row>
             <Col md={12}>
               <FormGroup className="text-center">
-                <Button className="bg-modal-btn">Continue</Button>
+                <a href="/profile" onClick={()=> handleClose()}  className="bg-modal-btn">Continue</a>
               </FormGroup>
             </Col>
           </Row>

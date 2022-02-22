@@ -4,11 +4,6 @@ import GetStarted from "../pages/GetStarted";
 import Home from "../pages/Home";
 import Resources from "../pages/Resources";
 import Blog from "../pages/Blog";
-<<<<<<< HEAD
-import CameraSettings from "../pages/CameraSettings";
-import Login from "../pages/Login";
-=======
->>>>>>> b79d271625b1fd0669c6d7b34758c63d39afcb6e
 
 const routesList = [
   {

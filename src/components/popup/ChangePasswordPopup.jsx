@@ -31,7 +31,6 @@ const ChangePasswordPopup = (props) => {
     }
   }
 
-
   const handleChangePassword = async (e) => {
     e.preventDefault();
     await axios.put(CHANGE_PASSWORD_URL+'/users/change-password/'+data?.user?.id+'/', password, {

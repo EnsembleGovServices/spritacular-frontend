@@ -11,26 +11,127 @@ import {
   Form,
   FormGroup,
   Label,
-  Input,
+  Input, Alert, FormFeedback,
 } from "reactstrap";
 import classnames from "classnames";
 import "../assets/scss/component/camerasettings.scss";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Images from "../static/images";
 import useAuth from "../hooks/useAuth";
 import {baseURL} from "../Layouts/Master";
+import axios from "../api/axios";
+import {toast} from "react-hot-toast";
+
 
 const ProfileSetting = () => {
   const { auth } = useAuth();
+  const [updateUser, setUpdatedUser] = useState()
+  const [success, setSuccess] = useState();
+  const [error, setError] = useState();
+  const [errorPassword, setErrorPassword] = useState();
+
+  const [password, setPassword] = useState(null);
+
   const [activeTab, setActiveTab] = useState("1");
 
   const toggleTab = (tab) => {
-    console.log("tab", tab);
+    // console.log("tab", tab);
     if (activeTab !== tab) {
-      console.log("tab activeTab", tab, activeTab);
+      // console.log("tab activeTab", tab, activeTab);
       setActiveTab(tab);
     }
   };
+
+  const handleInput = (e) => {
+    e.preventDefault();
+    let name = e.target.name,
+        value = e.target.value;
+    setUpdatedUser({
+      ...updateUser,
+      [name]:value
+    })
+  }
+
+  useEffect(()=> {
+    setUpdatedUser(auth?.user)
+  }, [auth?.user])
+
+
+  function toastConfig(toastPosition, time) {
+    return {
+      position: toastPosition ?? 'top-right',
+      duration: time ?? 4000,
+    }
+  }
+
+
+  const handleProfileUpdate = async (e) => {
+    e.preventDefault();
+    setSuccess('');
+    setError('');
+    await axios.patch(baseURL.api+'/users/user_profile/'+auth?.user?.id+'/', {
+      first_name: updateUser?.first_name,
+      last_name: updateUser?.last_name,
+      email: updateUser?.email,
+      location: updateUser?.location
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${auth?.token?.access}`
+      },
+      withCredentials: true,
+    }).then((success) => {
+      console.log(success);
+      setSuccess(success)
+    }).catch((error) => {
+      console.log(error.response);
+      setError(error.response)
+    })
+  }
+
+
+
+  const CHANGE_PASSWORD_URL = process.env.REACT_APP_API_URL;
+
+
+  const passwordMatchCheck = () => {
+    if (password) {
+      return password.confirm_password !== password.new_password
+    }
+    return true;
+  }
+
+  const handleChangePassword = async (e) => {
+    setErrorPassword('')
+    e.preventDefault();
+    await axios.put(CHANGE_PASSWORD_URL+'/users/change-password/'+auth?.user?.id+'/', password, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${auth?.token?.access}`
+      },
+      withCredentials: true,
+    }).then((res) => {
+      console.log(res);
+      setErrorPassword('');
+      toast.success(res?.data.message, toastConfig());
+    }).catch((err) => {
+      console.error(err.response);
+      toast.error(err?.response?.statusText, toastConfig());
+      setErrorPassword(err?.response);
+    })
+  }
+
+  const handlePasswordInput = (e) => {
+    e.preventDefault();
+    let name = e.target.name,
+        value = e.target.value;
+    setPassword({
+      ...password,
+      [name]:value,
+    })
+  }
+
+
   return (
     <>
       <section className="comman-banner">
@@ -99,39 +200,68 @@ const ProfileSetting = () => {
                         <Col sm="12">
                           <h4>Update Profile</h4>
                         </Col>
+
+                        {success && success?.status === 200 &&
+                            <Col sm="12">
+                              <Alert variant="success">
+                                Profile updated successfully
+                              </Alert>
+                            </Col>
+                        }
+
                         <Col md="12">
-                          <Form>
+                          <Form onSubmit={handleProfileUpdate}>
                             <FormGroup>
-                              <Label for="exampleEmail">Name</Label>
+                              <Label for="first_name">First Name</Label>
                               <Input
                                 type="text"
-                                name="name"
-                                placeholder="Enter Your Name"
+                                name="first_name"
+                                value={updateUser?.first_name ?? ""}
+                                onChange={(e)=>handleInput(e)}
+                                invalid={!!error?.data?.first_name}
+                                placeholder="First Name"
                               />
+                              <FormFeedback>{error?.data?.first_name}</FormFeedback>
                             </FormGroup>
                             <FormGroup>
-                              <Label for="exampleEmail">Email</Label>
+                              <Label for="last_name">Last Name</Label>
+                              <Input
+                                  type="text"
+                                  name="last_name"
+                                  placeholder="Last Name"
+                                  value={updateUser?.last_name ?? ""}
+                                  invalid={!!error?.data?.last_name}
+                                  onChange={(e)=>handleInput(e)}
+                              />
+                              <FormFeedback>{error?.data?.last_name}</FormFeedback>
+                            </FormGroup>
+                            <FormGroup>
+                              <Label for="email">Email</Label>
                               <Input
                                 type="email"
                                 name="email"
                                 placeholder="Enter Your Email"
+                                value={updateUser?.email ?? ""}
+                                invalid={!!error?.data?.email}
+                                onChange={(e)=>handleInput(e)}
                               />
+                              <FormFeedback>{error?.data?.email}</FormFeedback>
                             </FormGroup>
 
                             <FormGroup>
-                              <Label for="exampleSelect">Location</Label>
-                              <Input type="select" name="select">
+                              <Label for="location">Location</Label>
+                              <Input type="select" name="location" onChange={(e)=>handleInput(e)}>
                                 <option disabled defaultValue>
                                   Please Select Your Country
                                 </option>
-                                <option>Australia</option>
-                                <option>Bahrain</option>
-                                <option>Canada</option>
-                                <option>Denmark</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Bahrain">Bahrain</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Denmark">Denmark</option>
                               </Input>
                             </FormGroup>
                             <FormGroup className="profile-bottom-btn ">
-                              <Button className="save-btn">Save Changes</Button>
+                              <Button type="submit" className="save-btn">Save Changes</Button>
                             </FormGroup>
                           </Form>
                         </Col>
@@ -149,7 +279,7 @@ const ProfileSetting = () => {
                             <FormGroup>
                               <h6>Camera Type</h6>
                               <Input type="select" name="select">
-                                <option disabled selected>
+                                <option disabled defaultValue>
                                   Please Select Your Camera Type
                                 </option>
                                 <option>Canon</option>
@@ -158,7 +288,7 @@ const ProfileSetting = () => {
                                 <option>Panasonic</option>
                               </Input>
                             </FormGroup>
-                            <div className="border-line"></div>
+                            <div className="border-line"/>
                           </Col>
                           <Col md="12">
                             <FormGroup>
@@ -186,7 +316,7 @@ const ProfileSetting = () => {
                             </FormGroup>
                           </Col>
                           <Col md="12">
-                            <div className="border-line"></div>
+                            <div className="border-line"/>
                             <FormGroup>
                               <h6>Camera Settings</h6>
                             </FormGroup>
@@ -256,35 +386,46 @@ const ProfileSetting = () => {
                           <h4>Change Password</h4>
                         </Col>
                         <Col md="12">
-                          <Form>
+                          <Form onSubmit={handleChangePassword}>
                             <FormGroup>
-                              <Label for="exampleEmail">Old Password</Label>
+                              <Label for="password">Old Password</Label>
                               <Input
                                 type="password"
-                                name="name"
+                                name="old_password"
                                 placeholder="Enter Your Old Password"
+                                onChange={(e)=>handlePasswordInput(e)}
                               />
                             </FormGroup>
                             <FormGroup>
-                              <Label for="exampleEmail">New Password</Label>
+                              <Label for="mew_password">New Password</Label>
                               <Input
                                 type="password"
-                                name="name"
+                                name="new_password"
                                 placeholder="Enter Your New Password"
+                                onChange={(e)=>handlePasswordInput(e)}
                               />
                             </FormGroup>
                             <FormGroup>
-                              <Label for="exampleEmail">
+                              <Label for="confirm_password">
                                 Confirm New Password
                               </Label>
                               <Input
                                 type="password"
-                                name="name"
+                                name="confirm_password"
                                 placeholder="Enter Your Confirm New Password"
+                                onChange={(e)=>handlePasswordInput(e)}
                               />
                             </FormGroup>
+                            {errorPassword?.data?.details.map((item, index) => {
+                              return(
+                                  <div key={index}>
+                                    <span className="text-danger small">{item}</span> <br/>
+                                  </div>
+                              )
+                            })
+                            }
                             <FormGroup className="profile-bottom-btn ">
-                              <Button className="save-btn">Save Changes</Button>
+                              <Button type="submit" className="save-btn" disabled={passwordMatchCheck()}>Save Changes</Button>
                             </FormGroup>
                           </Form>
                         </Col>
