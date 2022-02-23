@@ -53,7 +53,7 @@ const ImageUpload = (props) => {
       <div className="user-profile-upload">
         {data.profile_image !== null ? (
           <>
-            <label className="form-label">
+            <label className="form-label-border">
               <img
                 className="img-fluid"
                 src={data?.profile_image}
@@ -64,13 +64,23 @@ const ImageUpload = (props) => {
           </>
         ) : (
           <>
-            <div className="progressBar" style={{ width: progress }}>
+            <label className="form-label">
+              <span>Please upload your image</span>
+              <input type="file" name="profile_image" onChange={handleChange} />
+            </label>
+            <div className="progressBar" style={{ ["--percentage"]: progress }}>
+              <span className="progress">
+                <b>{progress}</b>
+                uploading..
+              </span>
+            </div>
+            {/* <div className="progressBar" style={{ width: progress }}>
               <span className="progress">{progress}50%</span>
               <label className="form-label">
                 <span>Please upload your image</span>
               </label>
               <input type="file" name="profile_image" onChange={handleChange} />
-            </div>
+            </div> */}
           </>
         )}
       </div>
