@@ -8,7 +8,7 @@ footer{
             text-align: center;
         }
         &::after{
-            /*content: "";
+            content: "";
             display: block;
             width: 400px;
             height: 400px;
@@ -17,14 +17,14 @@ footer{
             top: 0;
             background: url("../../images/footer-line.png") no-repeat center;
             background-size: contain;
-            z-index: 0;*/
+            z-index: 0;
             @media (max-width: 767px){
                 width: 250px;
                 height: 250px;
             }
         }
         .footer-links{
-            max-width: 110px;
+            max-width: 135px;
             width: 100%;
             margin: 0 0 0 auto;
             @media (max-width: 575px){
@@ -35,6 +35,9 @@ footer{
                     margin-bottom: 15px !important;
                 }
             }
+        &.footer-long-links{
+            max-width: 190px;
+        }
         }
         .footer-social-links{
             z-index: 1;
@@ -119,6 +122,14 @@ footer{
         right: 0;
         top: -70px;
         z-index: 1;
+    }
+
+    h6{
+        margin: 0px 0px 20px 0px;
+        color: $white;
+        opacity: 0.48;
+        @include md-text;
+        text-transform: uppercase;
     }
     
 }

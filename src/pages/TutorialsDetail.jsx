@@ -63,11 +63,16 @@ const TutorialsDetail = () => {
                 <p>It will be automatically located by Google plugin</p>
                 <ol>
                   <li>
-                    Country <Badge color="secondary">Required</Badge>
+                    Country{" "}
+                    <Badge className="badge-required" color="secondary">
+                      Required
+                    </Badge>
                   </li>
                   <li>
                     Geographic Coordinates
-                    <Badge color="secondary">Required</Badge>
+                    <Badge className="badge-required" color="secondary">
+                      Required
+                    </Badge>
                   </li>
                 </ol>
               </Col>
@@ -81,7 +86,9 @@ const TutorialsDetail = () => {
               <Col md={8}>
                 <p className="mb-0">
                   Data and time of your observation
-                  <Badge color="secondary">Required</Badge>
+                  <Badge className="badge-required" color="secondary">
+                    Required
+                  </Badge>
                 </p>
               </Col>
             </Row>
@@ -93,12 +100,22 @@ const TutorialsDetail = () => {
               </Col>
               <Col md={8}>
                 <ol>
-                  <li>Camera Type</li>
+                  <li>
+                    Camera Type
+                    <Badge className="badge-required" color="secondary">
+                      Required
+                    </Badge>
+                  </li>
                   <li>Frame Rate</li>
                   <li>ISO</li>
                   <li>Field-to-view</li>
                   <li>Shutter Speed</li>
-                  <li>Lens Type</li>
+                  <li>
+                    Lens Type
+                    <Badge className="badge-required" color="secondary">
+                      Required
+                    </Badge>
+                  </li>
                 </ol>
               </Col>
             </Row>

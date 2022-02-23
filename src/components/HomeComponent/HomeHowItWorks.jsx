@@ -1,18 +1,18 @@
-import {Container, Row, Col, Button} from 'reactstrap';
-import Images from '../../static/images';
+import { Container, Row, Col, Button } from "reactstrap";
+import Images from "../../static/images";
 
-const HomeHowItWorks = () =>{
-    return(
-        <>
-            <div className="how-it-works-section">
+const HomeHowItWorks = () => {
+  return (
+    <>
+      <div className="how-it-works-section">
         <div className="top-polygone">
-          <img src={Images.Topimage} alt="" />
+          <img src={Images.GetStartedTopImage} alt="" />
         </div>
         <div className="bottom-polygone">
           <img src={Images.Bottompolygon} alt="" />
         </div>
         <Container>
-          <h2>How it works</h2>
+          <h2>Get Started</h2>
           <Row>
             <Col md={6} xs={12} className="works-gap">
               <div className="how-it-work-text-info">
@@ -106,8 +106,8 @@ const HomeHowItWorks = () =>{
           </Row>
         </Container>
       </div>
-        </>
-    )
-}
+    </>
+  );
+};
 
 export default HomeHowItWorks;
