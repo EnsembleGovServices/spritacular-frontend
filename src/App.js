@@ -18,7 +18,6 @@ const App = () => {
                 <Route path="*" element={<Error />} />
 
                 {/*Protected routes*/}
-                {/*<Route element={<PersistLogin />}>*/}
                     <Route element={<RequireAuth />}>
                         <Route path="/profile" element={<ProfileSetting />} />
                     </Route>
