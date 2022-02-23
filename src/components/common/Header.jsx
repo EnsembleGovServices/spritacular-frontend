@@ -20,10 +20,10 @@ import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import ChangePasswordPopup from "../popup/ChangePasswordPopup";
 import UserProfilePopup from "../popup/UserProfilePopup";
-import { baseURL } from "../../Layouts/Master";
+import {baseURL} from "../../helpers/url";
 
 const Header = (props) => {
-  const { auth, setAuth } = useAuth();
+  const { auth, setAuth, persist, setPersist } = useAuth();
   const [user, setUser] = useState(auth?.user);
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isRegisterModal, setIsRegisterModal] = useState(false);
@@ -38,6 +38,7 @@ const Header = (props) => {
     localStorage.removeItem("persist");
     localStorage.removeItem("refresh");
     setAuth("");
+    setPersist(false);
   };
 
   useEffect(() => {
@@ -125,7 +126,7 @@ const Header = (props) => {
             </NavItem>
           </Nav>
         </Collapse>
-        {!auth ? (
+        {!persist ? (
           <div className="right-menu">
             <Button
               className="register nav-link"
@@ -152,7 +153,7 @@ const Header = (props) => {
                   <img
                     className="img-fluid"
                     src={baseURL.base + user?.profile_image}
-                    alt="UserPlaceholder"
+                    alt={user?.first_name}
                   />
                 ) : (
                   <img
@@ -181,14 +182,14 @@ const Header = (props) => {
 
       {isLoginModal && (
         <LoginPopup
-          open={auth ? false : isLoginModal}
+          open={persist ? false : isLoginModal}
           handleClose={handleLoginModal}
         />
       )}
 
       {isRegisterModal && (
         <RegisterPopup
-          open={auth ? false : isRegisterModal}
+          open={persist ? false : isRegisterModal}
           handleClose={handleRegisterModal}
         />
       )}

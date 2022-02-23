@@ -18,9 +18,9 @@ import "../assets/scss/component/camerasettings.scss";
 import {useEffect, useState} from "react";
 import Images from "../static/images";
 import useAuth from "../hooks/useAuth";
-import {baseURL} from "../Layouts/Master";
 import axios from "../api/axios";
 import {toast} from "react-hot-toast";
+import {baseURL} from "../helpers/url";
 
 
 const ProfileSetting = () => {
