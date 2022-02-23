@@ -3,17 +3,18 @@ import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
 import Error from "./pages/Error";
 import Login from "./pages/Login";
-import Layout from "./Layouts/Layout";
 import Home from "./pages/Home";
 import PersistLogin from "./Layouts/PersistLogin";
 import RequireAuth from "./Layouts/RequireAuth";
 import ProfileSetting from "./pages/ProfileSetting";
+import About from "./pages/About";
 
 const App = () => {
     return(
         <Routes>
             <Route element={<PersistLogin />}>
                 <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
                 <Route path="login" element={<Login />} />
                 <Route path="*" element={<Error />} />
 
