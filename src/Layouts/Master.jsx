@@ -1,9 +1,7 @@
 import {Outlet} from "react-router-dom";
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
-import {Toaster} from "react-hot-toast";
 import React, {useEffect, useState} from "react";
-import useRefreshToken from "../hooks/useRefreshToken";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 
@@ -13,41 +11,41 @@ export const baseURL = {
 }
 
 const Master = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const refresh = useRefreshToken();
-    const { auth } = useAuth();
+    const  {auth} = useAuth();
+    const [users, setUsers] = useState();
+    const axiosPrivate = useAxiosPrivate();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-        const verifyRefreshToken = async () => {
+        let isMounted = true;
+        const controller = new AbortController();
+        const getUsers = async () => {
             try {
                 if (auth) {
-                    await refresh();
+                    const response = await axiosPrivate.get(process.env.REACT_APP_API_USER_URL, {
+                        signal: controller.signal,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${auth?.token?.access}`
+                        },
+                        withCredentials: true,
+                    });
+                    console.log(response.data);
+                    isMounted && setUsers(response.data);
                 }
-            }
-            catch (err) {
+            } catch (err) {
                 console.error(err);
             }
-            finally {
-                setIsLoading(false);
-            }
         }
 
-        if (isLoading && localStorage.getItem('refresh')) {
-            !auth?.token?.access ? verifyRefreshToken() : setIsLoading(false)
+        getUsers().then(r => r);
+
+        return () => {
+            isMounted = false;
+            controller.abort();
         }
-
-    }, [auth, isLoading, refresh])
-
-
-    return(
-        <>
-            <Toaster />
-            <Header />
-            <main role="main">
-                <Outlet />
-            </main>
-            <Footer/>
-        </>
-    )
+    }, [auth, axiosPrivate, location, navigate])
+    return <Outlet />;
 }
 export default Master;

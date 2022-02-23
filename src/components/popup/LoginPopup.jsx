@@ -8,7 +8,7 @@ import {
   ModalBody,
   ModalHeader,
 } from "reactstrap";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
@@ -22,7 +22,7 @@ import {toast} from "react-hot-toast";
 const LOGIN_URL = process.env.REACT_APP_API_TOKEN_URL;
 
 const LoginPopup = (props) => {
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -65,6 +65,7 @@ const LoginPopup = (props) => {
     await axios.post(LOGIN_URL, user)
         .then((response) => {
           console.log(response);
+          setPersist(prev => !prev);
           setError('');
           setAuth({
             token: {
@@ -98,6 +99,11 @@ const LoginPopup = (props) => {
           }
         })
   }
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist])
+
 
   return (
     <>
