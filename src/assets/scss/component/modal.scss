@@ -323,6 +323,18 @@
             width: 100%;
         }
     }
+    .wrapper {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        text-align: center;
+        font-size: 12px;
+        padding: 20px;
+        flex-direction: column;
+        @include vcenter;
+    }
     &::before {
         content: "";
         position: absolute;

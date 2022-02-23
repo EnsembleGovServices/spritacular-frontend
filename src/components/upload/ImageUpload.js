@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useLayoutEffect, useState} from "react";
 import axios from "../../api/axios";
 import PropTypes from "prop-types";
 
@@ -6,52 +6,50 @@ const ImageUpload = (props) => {
   const { user, token } = props;
   const [file, setFile] = useState("");
   const [data, setData] = useState("");
-  const [progress, setProgress] = useState("");
+  const [progress, setProgress] = useState("0");
   const [error, setError] = useState(null);
   const handleChange = (e) => {
-    setProgress("0");
     const file = e.target.files[0];
     setFile(file);
-    uploadFile();
+    setProgress('0')
   };
-  const uploadFile = useCallback(() => {
-    const formData = new FormData();
-    formData.append("profile_image", file);
-    axios
-      .patch(
-        process.env.REACT_APP_API_URL + "/users/user_profile/" + user?.id + "/",
-        formData,
-        {
-          onUploadProgress: (ProgressEvent) => {
-            let progressBar =
-              Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) +
-              "%";
-            setProgress(progressBar);
-          },
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const fileUpload = useCallback(async () => {
+        const formData = new FormData();
+        formData.append("profile_image", file);
+        await axios.patch(process.env.REACT_APP_API_URL + "/users/user_profile/" + user?.id + "/", formData, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+            onUploadProgress: (ProgressEvent) => {
+                let progressBar = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) + "%";
+                setProgress(progressBar);
+            },
+        }).then((response) => {
+            console.group('Upload Response')
+            console.log(response);
+            console.groupEnd();
+            setData(response.data);
+        }).catch((error) => {
+            console.group('Upload Error')
+            console.log(error);
+            console.groupEnd();
+            setError(error.response);
+        })
+    });
+
+    useLayoutEffect(() => {
+        if (file) {
+            fileUpload().then(r => r);
         }
-      )
-      .then((res) => {
-        setData(res.data);
-        setError(null);
-      })
-      .catch((err) => {
-        setError(err.response);
-      });
-  }, [file, token, user?.id]);
-
-  useEffect(() => {
-    uploadFile();
-  }, [uploadFile]);
-
+    }, [file])
+    
   return (
     <>
       <div className="user-profile-upload">
-        {data.profile_image !== null ? (
+        {data ? (
           <>
             <label className="form-label-border">
               <img
@@ -64,23 +62,19 @@ const ImageUpload = (props) => {
           </>
         ) : (
           <>
-            <label className="form-label">
-              <span>Please upload your image</span>
-              <input type="file" name="profile_image" onChange={handleChange} />
-            </label>
-            <div className="progressBar" style={{ ["--percentage"]: progress }}>
-              <span className="progress">
-                <b>{progress}</b>
-                uploading..
-              </span>
+            <div className="progressBar" style={{ "--percentage": progress }}>
+                <div className="wrapper">
+                    {progress > "1" ? (
+                        <>
+                            <span>{progress}</span>
+                            <span>uploading..</span>
+                        </>
+                    ) : (
+                        <span>Please upload your image</span>
+                    )}
+                    <input type="file" name="profile_image" onChange={handleChange} />
+                </div>
             </div>
-            {/* <div className="progressBar" style={{ width: progress }}>
-              <span className="progress">{progress}50%</span>
-              <label className="form-label">
-                <span>Please upload your image</span>
-              </label>
-              <input type="file" name="profile_image" onChange={handleChange} />
-            </div> */}
           </>
         )}
       </div>

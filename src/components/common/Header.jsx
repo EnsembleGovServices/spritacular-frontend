@@ -152,7 +152,7 @@ const Header = (props) => {
                 {user?.profile_image ? (
                   <img
                     className="img-fluid"
-                    src={baseURL.base + user?.profile_image}
+                    src={baseURL.remote + user?.profile_image}
                     alt={user?.first_name}
                   />
                 ) : (
