@@ -8,24 +8,33 @@ import Home from "./pages/Home";
 import PersistLogin from "./Layouts/PersistLogin";
 import RequireAuth from "./Layouts/RequireAuth";
 import ProfileSetting from "./pages/ProfileSetting";
+import GetStarted from "./pages/GetStarted";
+import About from "./pages/About";
+import Blog from "./pages/Blog";
+import TutorialsDetail from "./pages/TutorialsDetail";
 
 const App = () => {
-    return(
-        <Routes>
-            <Route element={<PersistLogin />}>
-                <Route path="/" element={<Home />} />
-                <Route path="login" element={<Login />} />
-                <Route path="*" element={<Error />} />
+  return (
+    <Routes>
+      <Route element={<PersistLogin />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/get-started" element={<GetStarted />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/tutorials-detail" element={<TutorialsDetail />} />
 
-                {/*Protected routes*/}
-                    <Route element={<RequireAuth />}>
-                        <Route path="/profile" element={<ProfileSetting />} />
-                    </Route>
-                {/*</Route>*/}
-                <Route path="*" element={<Error />} />
-            </Route>
-        </Routes>
-    )
-}
+        <Route path="login" element={<Login />} />
+        <Route path="*" element={<Error />} />
+
+        {/*Protected routes*/}
+        <Route element={<RequireAuth />}>
+          <Route path="/profile" element={<ProfileSetting />} />
+        </Route>
+        {/*</Route>*/}
+        <Route path="*" element={<Error />} />
+      </Route>
+    </Routes>
+  );
+};
 
 export default App;

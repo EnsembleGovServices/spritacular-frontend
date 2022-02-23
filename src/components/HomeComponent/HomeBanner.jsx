@@ -14,7 +14,7 @@ const HomeBanner = () =>{
                         upload your own observations, and engage with our citizen
                         scientist community.
                     </p>
-                    <Button className="explore-btn">Explore Now</Button>
+                    <Button className="explore-btn">Learn More</Button>
                     </div>
                 </div>
                 </Container>

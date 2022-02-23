@@ -1,4 +1,11 @@
-import { Breadcrumb, BreadcrumbItem, Col, Container, Row } from "reactstrap";
+import {
+  Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  Col,
+  Container,
+  Row,
+} from "reactstrap";
 import "../assets/scss/component/tutorialdetail.scss";
 import Images from "../static/images";
 
@@ -55,8 +62,13 @@ const TutorialsDetail = () => {
               <Col md={8}>
                 <p>It will be automatically located by Google plugin</p>
                 <ol>
-                  <li>Country</li>
-                  <li>Geographic Coordinates</li>
+                  <li>
+                    Country <Badge color="secondary">Required</Badge>
+                  </li>
+                  <li>
+                    Geographic Coordinates
+                    <Badge color="secondary">Required</Badge>
+                  </li>
                 </ol>
               </Col>
             </Row>
@@ -67,7 +79,10 @@ const TutorialsDetail = () => {
                 <h4>Observation Time</h4>
               </Col>
               <Col md={8}>
-                <p className="mb-0">Data and time of your observation</p>
+                <p className="mb-0">
+                  Data and time of your observation
+                  <Badge color="secondary">Required</Badge>
+                </p>
               </Col>
             </Row>
           </div>

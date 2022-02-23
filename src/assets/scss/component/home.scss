@@ -29,7 +29,7 @@
     }
     .border-line {
       &::after {
-        content: "";
+       /* content: "";
         background-image: url(../../images/banner-line.png);
         background-repeat: no-repeat;
         position: absolute;
@@ -38,6 +38,7 @@
         top: 40px;
         left: 0;
         background-size: 100%;
+        */
       }
     }
     .banner-text {
