@@ -147,7 +147,7 @@ const ProfileSetting = () => {
                 <div className="profile-left-tab">
                   <div className="profile-info">
                     <div className="profile-img">
-                      <img className="img-fluid" src={baseURL.base+auth?.user?.profile_image} alt={auth?.user?.first_name} />
+                      <img className="img-fluid" src={baseURL.remote+auth?.user?.profile_image} alt={auth?.user?.first_name} />
                     </div>
                     <div className="profile-data text-center">
                       <h5>{auth?.user?.first_name} {auth?.user?.last_name}</h5>
