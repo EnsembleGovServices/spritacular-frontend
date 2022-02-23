@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import Images from "../../static/images";
 import PropTypes from "prop-types";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "../../api/axios";
 import { toast } from "react-hot-toast";
 import "../../assets/scss/component/modal.scss";
@@ -22,7 +22,7 @@ import useAuth from "../../hooks/useAuth";
 const REGISTER_URL = process.env.REACT_APP_API_REGISTER_URL;
 const LOGIN_URL = process.env.REACT_APP_API_TOKEN_URL;
 const RegisterPopup = (props) => {
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
   const { open, handleClose, modalClass } = props;
   const [userRegistration, setUserRegistration] = useState({
     first_name: "",
@@ -97,6 +97,7 @@ const RegisterPopup = (props) => {
         password: userRegistration.password,
       })
       .then((response) => {
+        setPersist(prev => !prev);
         setAuth(prev => {
           return {
             ...prev,
@@ -115,6 +116,10 @@ const RegisterPopup = (props) => {
         toast.error("Something went wrong", toastConfig());
       });
   };
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist])
 
   return (
     <Modal
