@@ -1,25 +1,31 @@
+import { Suspense, lazy } from 'react';
+
 import "../assets/scss/component/home.scss";
-import HomeBanner from "../components/Home/HomeBanner";
-import HomeCounter from "../components/Home/HomeCounter";
-import HomeMapSection from "../components/Home/HomeMapSection";
-import GetStarted from "../components/Home/GetStarted";
+
+const HomeBanner = lazy(()=> import('../components/Home/HomeBanner'))
+const HomeCounter = lazy(()=> import('../components/Home/HomeCounter'))
+const HomeMapSection = lazy(()=> import('../components/Home/HomeMapSection'))
+const GetStarted = lazy(()=> import('../components/Home/GetStarted'))
 
 const Home = () => {
   return (
     <>
-      {/* ----Home Banner Start---- */}
-      <HomeBanner />
-      {/* ----Home Banner End---- */}
-      {/* ----Home Banner Start---- */}
-      <HomeCounter />
-      {/* ----Home Banner End---- */}
-      {/* ----- Map Section Start----- */}
-      <HomeMapSection />
-      {/* ----- Map Section End----- */}
+        <Suspense fallback={''}>
+            <HomeBanner />
+        </Suspense>
 
-      {/* -----  GetStarted Section Start----- */}
-      <GetStarted />
-      {/* ----- How It Works Section End----- */}
+        <Suspense fallback={''}>
+            <HomeCounter />
+        </Suspense>
+
+        <Suspense fallback={''}>
+            <HomeMapSection />
+        </Suspense>
+
+        <Suspense fallback={''}>
+            <GetStarted />
+        </Suspense>
+
     </>
   );
 };

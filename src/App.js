@@ -1,38 +1,43 @@
 import { Routes, Route } from "react-router-dom";
 import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
-import Error from "./pages/Error";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import PersistLogin from "./Layouts/PersistLogin";
-import RequireAuth from "./Layouts/RequireAuth";
-import ProfileSetting from "./pages/ProfileSetting";
-import About from "./pages/About";
-import GetStarted from "./pages/GetStarted";
-import Blog from "./pages/Blog";
-import TutorialsDetail from "./pages/TutorialsDetail";
-import UploadObservations from "./pages/UploadObservations";
-import UploadObservationsForm from "./pages/UploadObservationForm";
+
+import { Suspense, lazy } from 'react';
+
+const PersistLogin = lazy(()=> import('./layouts/PersistLogin'));
+const RequireAuth = lazy(()=> import('./layouts/RequireAuth'));
+const Home = lazy(()=> import('./pages/Home'));
+const About = lazy(()=> import('./pages/About'));
+const GetStarted = lazy(()=> import('./pages/GetStarted'));
+const Blog = lazy(()=> import('./pages/Blog'));
+const TutorialsDetail = lazy(()=> import('./pages/TutorialsDetail'));
+
+const UploadObservationsForm = lazy(()=> import('./pages/UploadObservationsForm'));
+const UploadObservations = lazy(()=> import('./pages/UploadObservations'));
+const Profile = lazy(()=> import('./pages/Profile'));
+const Error = lazy(()=> import('./components/Error'));
+const LoginPage = lazy(()=> import('./pages/Auth/LoginPage'));
+
 
 const App = () => {
   return (
     <Routes>
-      <Route element={<PersistLogin />}>
-        <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="get-started" element={<GetStarted />} />
-        <Route path="blog" element={<Blog />} />
-        <Route path="tutorials-detail" element={<TutorialsDetail />} />
-        <Route path="upload-observations" element={<UploadObservations />} />
-        <Route path="observations-form" element={<UploadObservationsForm />} />
-        <Route path="login" element={<Login />} />
+      <Route element={<Suspense fallback={''}><PersistLogin /></Suspense>}>
+        <Route path="/" element={<Suspense fallback={''}><Home /></Suspense>} />
+        <Route path="about" element={<Suspense fallback={''}><About /></Suspense>} />
+        <Route path="get-started" element={<Suspense fallback={''}><GetStarted /></Suspense>} />
+        <Route path="blog" element={<Suspense fallback={''}><Blog /></Suspense>} />
+        <Route path="tutorials-detail" element={<Suspense fallback={''}><TutorialsDetail /></Suspense>} />
+        <Route path="observations-form" element={<Suspense fallback={''}><UploadObservationsForm /></Suspense>} />
+        <Route path="upload-observations" element={<Suspense fallback={''}><UploadObservations /></Suspense>} />
+        <Route path="login" element={<Suspense fallback={''}><LoginPage /></Suspense>} />
 
         {/*Protected routes*/}
-        <Route element={<RequireAuth />}>
-          <Route path="profile" element={<ProfileSetting />} />
+        <Route element={<Suspense fallback={''}><RequireAuth /></Suspense>}>
+          <Route path="profile" element={<Suspense fallback={''}><Profile /></Suspense>} />
         </Route>
         {/*</Route>*/}
-        <Route path="*" element={<Error />} />
+        <Route path="*" element={<Suspense fallback={''}><Error /></Suspense>} />
       </Route>
     </Routes>
   );
