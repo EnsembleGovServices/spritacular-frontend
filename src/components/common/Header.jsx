@@ -35,10 +35,10 @@ const Header = (props) => {
   const homeUrl = location.pathname === "/";
 
   const Logout = () => {
-    localStorage.removeItem("persist");
-    localStorage.removeItem("refresh");
     setAuth("");
     setPersist(false);
+    localStorage.removeItem("persist");
+    localStorage.removeItem("refresh");
   };
 
   useEffect(() => {
@@ -182,14 +182,14 @@ const Header = (props) => {
 
       {isLoginModal && (
         <LoginPopup
-          open={persist ? false : isLoginModal}
+          open={persist && auth ? false : isLoginModal}
           handleClose={handleLoginModal}
         />
       )}
 
       {isRegisterModal && (
         <RegisterPopup
-          open={persist ? false : isRegisterModal}
+          open={persist && auth ? false : isRegisterModal}
           handleClose={handleRegisterModal}
         />
       )}
