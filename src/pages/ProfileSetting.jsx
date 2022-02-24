@@ -13,14 +13,16 @@ import {
   Label,
   Input, Alert, FormFeedback,
 } from "reactstrap";
+import { Suspense, lazy } from 'react';
 import classnames from "classnames";
-import "../assets/scss/component/camerasettings.scss";
 import {useEffect, useState} from "react";
 import Images from "../static/images";
 import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
-import {toast} from "react-hot-toast";
 import {baseURL} from "../helpers/url";
+import "../assets/scss/component/camerasettings.scss";
+
+const ChangePassword = lazy(()=> import('../components/Account/ChangePassword'))
 
 
 const ProfileSetting = () => {
@@ -28,10 +30,6 @@ const ProfileSetting = () => {
   const [updateUser, setUpdatedUser] = useState()
   const [success, setSuccess] = useState();
   const [error, setError] = useState();
-  const [errorPassword, setErrorPassword] = useState();
-
-  const [password, setPassword] = useState(null);
-
   const [activeTab, setActiveTab] = useState("1");
 
   const toggleTab = (tab) => {
@@ -55,14 +53,6 @@ const ProfileSetting = () => {
   useEffect(()=> {
     setUpdatedUser(auth?.user)
   }, [auth?.user])
-
-
-  function toastConfig(toastPosition, time) {
-    return {
-      position: toastPosition ?? 'top-right',
-      duration: time ?? 4000,
-    }
-  }
 
 
   const handleProfileUpdate = async (e) => {
@@ -89,47 +79,6 @@ const ProfileSetting = () => {
     })
   }
 
-
-
-  const CHANGE_PASSWORD_URL = process.env.REACT_APP_API_URL;
-
-
-  const passwordMatchCheck = () => {
-    if (password) {
-      return password.confirm_password !== password.new_password
-    }
-    return true;
-  }
-
-  const handleChangePassword = async (e) => {
-    setErrorPassword('')
-    e.preventDefault();
-    await axios.put(CHANGE_PASSWORD_URL+'/users/change-password/'+auth?.user?.id+'/', password, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${auth?.token?.access}`
-      },
-      withCredentials: true,
-    }).then((res) => {
-      console.log(res);
-      setErrorPassword('');
-      toast.success(res?.data.message, toastConfig());
-    }).catch((err) => {
-      console.error(err.response);
-      toast.error(err?.response?.statusText, toastConfig());
-      setErrorPassword(err?.response);
-    })
-  }
-
-  const handlePasswordInput = (e) => {
-    e.preventDefault();
-    let name = e.target.name,
-        value = e.target.value;
-    setPassword({
-      ...password,
-      [name]:value,
-    })
-  }
 
 
   return (
@@ -386,48 +335,9 @@ const ProfileSetting = () => {
                           <h4>Change Password</h4>
                         </Col>
                         <Col md="12">
-                          <Form onSubmit={handleChangePassword}>
-                            <FormGroup>
-                              <Label for="password">Old Password</Label>
-                              <Input
-                                type="password"
-                                name="old_password"
-                                placeholder="Enter Your Old Password"
-                                onChange={(e)=>handlePasswordInput(e)}
-                              />
-                            </FormGroup>
-                            <FormGroup>
-                              <Label for="mew_password">New Password</Label>
-                              <Input
-                                type="password"
-                                name="new_password"
-                                placeholder="Enter Your New Password"
-                                onChange={(e)=>handlePasswordInput(e)}
-                              />
-                            </FormGroup>
-                            <FormGroup>
-                              <Label for="confirm_password">
-                                Confirm New Password
-                              </Label>
-                              <Input
-                                type="password"
-                                name="confirm_password"
-                                placeholder="Enter Your Confirm New Password"
-                                onChange={(e)=>handlePasswordInput(e)}
-                              />
-                            </FormGroup>
-                            {errorPassword?.data?.details.map((item, index) => {
-                              return(
-                                  <div key={index}>
-                                    <span className="text-danger small">{item}</span> <br/>
-                                  </div>
-                              )
-                            })
-                            }
-                            <FormGroup className="profile-bottom-btn ">
-                              <Button type="submit" className="save-btn" disabled={passwordMatchCheck()}>Save Changes</Button>
-                            </FormGroup>
-                          </Form>
+                          <Suspense fallback={<div>Loading...</div>}>
+                            <ChangePassword user={auth} />
+                          </Suspense>
                         </Col>
                       </Row>
                     </TabPane>
