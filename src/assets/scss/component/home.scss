@@ -433,6 +433,7 @@
 .get-started-section {
   padding: 110px 0px 150px;
   position: relative;
+  overflow: hidden;
   .top-polygone {
     img {
       position: absolute;
@@ -452,6 +453,8 @@
   }
   .get-start {
     padding: 15px 45px;
+    box-shadow: 0px 6px 10px rgba(153, 0, 0, 0.16);
+    border-radius: 30px;
     &:hover {
       background-color: $white;
       color: $secondary;

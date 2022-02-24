@@ -12,6 +12,7 @@ import GetStarted from "./pages/GetStarted";
 import Blog from "./pages/Blog";
 import TutorialsDetail from "./pages/TutorialsDetail";
 import UploadObservations from "./pages/UploadObservations";
+import UploadObservationsForm from "./pages/UploadObservationForm";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="blog" element={<Blog />} />
         <Route path="tutorials-detail" element={<TutorialsDetail />} />
         <Route path="upload-observations" element={<UploadObservations />} />
+        <Route path="observations-form" element={<UploadObservationsForm />} />
         <Route path="login" element={<Login />} />
 
         {/*Protected routes*/}

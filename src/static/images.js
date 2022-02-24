@@ -34,6 +34,7 @@ import BlogOne from "../assets/images/Blog-One.png";
 import BlogTwo from "../assets/images/Blog-Two.png";
 import UserProfile from "../assets/images/profile-pic.png";
 import GetStartedTopImage from "../assets/images/how-it-works-page.png";
+import UploadPlaceholder from "../assets/images/UploadPlaceholder.png";
 
 const Images = {
   Logo,
@@ -72,5 +73,6 @@ const Images = {
   BlogTwo,
   UserProfile,
   GetStartedTopImage,
+  UploadPlaceholder,
 };
 export default Images;
