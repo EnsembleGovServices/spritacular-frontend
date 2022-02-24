@@ -24,6 +24,7 @@
       align-items: flex-start;
       .navbar-nav {
         padding: 40px 0;
+        flex-direction: column;
         .nav-item {
           width: 100%;
           text-align: center;
@@ -369,17 +370,7 @@
         color: $grey;
       }
     }
-  }
-  // .navbar-collapse {
-  //   .navbar-nav{
-  //     .dropdown{
-  //       .btn-secondary{
-  //         color: $white;
-  //       }
-  //     }
-  //   }
-  // }
-  
+  } 
 }
 .dropdown-menu{
   .dropdown-item{
@@ -399,6 +390,17 @@
         }
       }
     }
+  }
+  .dropdown-divider{
+    border-color: #EAEAEA;
+  }
+  &.notify-open_menu{
+    padding: 10px;
+    min-width: 230px;
+    border: 1px solid #EAEAEA;
+    box-sizing: border-box;
+    box-shadow: 0px 12px 24px rgb(0 0 0 / 12%);
+    border-radius: 6px;
   }
 }
 body{

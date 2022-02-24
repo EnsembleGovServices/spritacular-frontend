@@ -21,6 +21,7 @@ import "../../assets/scss/component/header.scss";
 import ChangePasswordPopup from "../popup/ChangePasswordPopup";
 import UserProfilePopup from "../popup/UserProfilePopup";
 import { Icon } from "@iconify/react";
+import Loader from "../shared/Loader";
 
 const Header = (props) => {
   const { auth, setAuth, persist, setPersist } = useAuth();
@@ -31,6 +32,11 @@ const Header = (props) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showUserProfilePopup, setShowUserProfilePopup] = useState(true);
+  const [aboutDropdown, setAboutDropdown] = useState(false);
+  const [resourcesDropdown, setResourcesDropdown] = useState(false);
+  const [communityDropdown, setCommunityDropdown] = useState(false);
+  const [notificationDropdown, setNotificationDropdown] = useState(false);
+
   const location = useLocation();
   const homeUrl = location.pathname === "/";
 
@@ -63,7 +69,6 @@ const Header = (props) => {
   };
   const menuToggle = () => {
     let getBody = document.querySelector('body');
-    // console.log("Hi", getBody);
     getBody.classList.add("menu-open");
     setShowMenu(!showMenu);
   };
@@ -96,6 +101,7 @@ const Header = (props) => {
           <img src={Images.Logo} alt="Logo" className="logo" />
           <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo" />
         </Link>
+        {/* <Loader fixContent={false} /> */}
         <NavbarToggler onClick={() => menuToggle()}>
           <Icon icon="eva:menu-outline" />
         </NavbarToggler>
@@ -120,8 +126,8 @@ const Header = (props) => {
             <NavItem>
               <Dropdown
                 className="user-menu"
-                isOpen={showUserMenu}
-                toggle={handleUserMenuDropdown}
+                isOpen={aboutDropdown}
+                toggle={ () => setAboutDropdown(!aboutDropdown)}
               >
                 <DropdownToggle>
                   About <Icon icon="fe:arrow-down" />
@@ -162,8 +168,8 @@ const Header = (props) => {
             <NavItem>
               <Dropdown
                 className="user-menu"
-                isOpen={showUserMenu}
-                toggle={handleUserMenuDropdown}
+                isOpen={resourcesDropdown}
+                toggle={ () => setResourcesDropdown(!resourcesDropdown)}
               >
                 <DropdownToggle>
                   Resources <Icon icon="fe:arrow-down" />
@@ -185,8 +191,8 @@ const Header = (props) => {
             <NavItem>
               <Dropdown
                 className="user-menu"
-                isOpen={showUserMenu}
-                toggle={handleUserMenuDropdown}
+                isOpen={communityDropdown}
+                toggle={ () => setCommunityDropdown(!communityDropdown)}
               >
                 <DropdownToggle>
                   Community <Icon icon="fe:arrow-down" />
@@ -251,20 +257,21 @@ const Header = (props) => {
         ) : (
           <div className="after-login-right-menu">
             {/* Notification Dropdown  */}
-            <Dropdown isOpen={showUserMenu} toggle={handleUserMenuDropdown}>
+            <Dropdown className="notify_menu" isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
               <DropdownToggle className="notification">
                 <Icon icon="ic:baseline-notifications" />
 
                 <span className="notify"></span>
               </DropdownToggle>
-              <DropdownMenu container="body">
+              <DropdownMenu container="body" className="notify-open_menu">
+                <DropdownItem header> Notifications (3) </DropdownItem>
+                <DropdownItem divider />
                 <DropdownItem>
-                  <Link to="/profile">Edit Profile</Link>
+                  {/* <div className="nptify_wrapper">
+                    <i><img src={Images.UserProfile} alt="user Profile"/></i>
+                    <div></div>
+                  </div> */}
                 </DropdownItem>
-                <DropdownItem onClick={() => handleChangePasswordModal()}>
-                  Change Password
-                </DropdownItem>
-                <DropdownItem onClick={() => Logout()}>Logout</DropdownItem>
               </DropdownMenu>
             </Dropdown>
             {/* User Profile Dropdown  */}
