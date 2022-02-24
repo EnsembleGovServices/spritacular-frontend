@@ -14,7 +14,7 @@ const PersistLogin = () => {
         let isMounted = true;
         const verifyRefreshToken = async () => {
             try {
-                if (persist) {
+                if (persist && localStorage.getItem('refresh')) {
                     await refresh();
                 }
             }

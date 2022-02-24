@@ -28,14 +28,14 @@ const ImageUpload = (props) => {
                 setProgress(progressBar);
             },
         }).then((response) => {
-            console.group('Upload Response')
-            console.log(response);
-            console.groupEnd();
+            // console.group('Upload Response')
+            // console.log(response);
+            // console.groupEnd();
             setData(response.data);
         }).catch((error) => {
-            console.group('Upload Error')
-            console.log(error);
-            console.groupEnd();
+            // console.group('Upload Error')
+            // console.log(error);
+            // console.groupEnd();
             setError(error.response);
         })
     });
