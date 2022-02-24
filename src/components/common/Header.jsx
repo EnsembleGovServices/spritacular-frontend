@@ -21,7 +21,6 @@ import "../../assets/scss/component/header.scss";
 import ChangePasswordPopup from "../popup/ChangePasswordPopup";
 import UserProfilePopup from "../popup/UserProfilePopup";
 import { Icon } from "@iconify/react";
-import Loader from "../shared/Loader";
 
 const Header = (props) => {
   const { auth, setAuth, persist, setPersist } = useAuth();
@@ -101,7 +100,6 @@ const Header = (props) => {
           <img src={Images.Logo} alt="Logo" className="logo" />
           <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo" />
         </Link>
-        {/* <Loader fixContent={false} /> */}
         <NavbarToggler onClick={() => menuToggle()}>
           <Icon icon="eva:menu-outline" />
         </NavbarToggler>

@@ -4,6 +4,7 @@ import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
+import Loader from "../components/shared/Loader";
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -36,6 +37,7 @@ const PersistLogin = () => {
         // console.log(`rT: ${JSON.stringify(auth?.token?.refresh)}`)
     }, [auth?.token?.access, auth?.token?.refresh, isLoading])
 
+
     return (
         <>
             {!persist ? (
@@ -44,7 +46,7 @@ const PersistLogin = () => {
                     <Outlet />
                     <Footer/>
                 </>
-            ) : isLoading ? <p>Loading...</p> : (
+            ) : isLoading ? <Loader fixContent={true} /> : (
                 <>
                     <Header />
                     <Outlet />
