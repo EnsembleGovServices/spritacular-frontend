@@ -440,12 +440,14 @@
       bottom: -29px;
       width: 14%;
       transform: rotate(90deg);
+      @media(max-width:767px){
+        display: none;
+      }
     }
   }
   h3 {
-    font-size: 36px;
+    @include slg-title;
     font-weight: 700;
-    line-height: 48px;
     color: $black;
   }
   .get-start {
