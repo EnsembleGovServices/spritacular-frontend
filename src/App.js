@@ -11,6 +11,7 @@ import About from "./pages/About";
 import GetStarted from "./pages/GetStarted";
 import Blog from "./pages/Blog";
 import TutorialsDetail from "./pages/TutorialsDetail";
+import UploadObservations from "./pages/UploadObservations";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="get-started" element={<GetStarted />} />
         <Route path="blog" element={<Blog />} />
         <Route path="tutorials-detail" element={<TutorialsDetail />} />
+        <Route path="upload-observations" element={<UploadObservations />} />
         <Route path="login" element={<Login />} />
 
         {/*Protected routes*/}
