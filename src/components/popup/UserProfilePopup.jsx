@@ -40,7 +40,7 @@ const UserProfilePopup = (props) => {
       <ModalBody>
         <Row>
           <Col md={5}>
-            <FormGroup className="custome-file-upload">
+            <FormGroup className="custom-file-upload">
               <div className="file-upload-inners">
                 <ImageUpload user={data?.user} token={data?.token?.access} />
               </div>

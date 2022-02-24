@@ -37,7 +37,7 @@
 }
 // comman banner css end
 
-// comman breadcrumb css
+// comman breadcrumb css start
 .breadcrumb-main{
     .breadcrumb{
         .breadcrumb-item{
@@ -55,3 +55,16 @@
         }
     }
 }
+// comman breadcrumb css end
+// Dropdown Css Start
+.dropdown-menu{
+    &.show{
+        border: 0;
+        background: #FFFFFF;
+        border: 1px solid #EAEAEA;
+        box-sizing: border-box;
+        box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.32);
+        border-radius: 6px;
+    }
+}
+// Dropdown Css End

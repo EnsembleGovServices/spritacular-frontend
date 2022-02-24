@@ -1,5 +1,5 @@
 @import "../global/config.scss";
-.custome-header {
+.custom-header {
   padding: 0px;
   position: fixed;
   top: 0px;
@@ -10,36 +10,79 @@
     display: none;
   }
   .navbar-collapse {
-    @media (max-width: 767px) {
-      background-color: #fff;
+    @media (max-width: 1023px) {
+      background-color: $secondary;
+      display: flex !important;
+      flex-basis: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      position: fixed;
+      height: 100vh !important;
+      z-index: 999;
+      overflow-y: auto;
+      align-items: flex-start;
       .navbar-nav {
+        padding: 40px 0;
         .nav-item {
           width: 100%;
-          text-align: left;
+          text-align: center;
           padding: 8px 15px;
-          border-bottom: 1px solid $dark;
+          margin: 0;
           &:last-child {
             border-bottom: 0px;
           }
           .nav-link {
-            color: $dark;
+            color: $white;
           }
           .btn-secondary {
             background-color: transparent;
             border: none;
             box-shadow: none;
+            &.register,
+            &.login-btn {
+              @media (max-width: 1023px) {
+                max-width: 100px;
+                width: 100%;
+                margin: 0 auto;
+                background: #fff;
+                color: $secondary;
+                padding: 10px;
+              }
+            }
+          }
+        }
+        .dropdown{
+          .btn-secondary{
+            color: $white;
           }
         }
       }
     }
-    
+    &.collapse:not(.show) {
+      @media (max-width: 1023px) {
+        display: none !important;
+      }
+    }
   }
   .navbar-nav {
     @include vcenter;
     width: 100%;
+    .nav-item{
+      margin-right: 48px;
+      @media (max-width: 1399px) {
+        margin-right: 28px;
+      }
+      @media (max-width: 1199px) {
+        margin-right: 10px;
+      }
+      &:last-child{
+        margin-right: 0;
+      }
+    }
     .nav-link {
       color: $white;
-      padding: 10px 24px !important;
+      padding: 0;
       // font-size: 15px;
       // line-height: 18px;
       @include lg-text;
@@ -61,16 +104,34 @@
           margin: 0 auto;
         }
       }
-      @media (max-width: 1023px) {
-        padding: 10px 12px !important;
+    }
+  }
+  .dropdown{
+    .btn-secondary{
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      color: $white;
+      @include lg-text;
+      font-weight: 500;
+      padding-left: 0;
+      padding-right: 0;
+      &:hover {
+        color: $white;
+      }
+      svg{
+        font-size: 16px;
+        line-height: 26px;
       }
     }
   }
   .navbar-toggler {
-    @media (max-width: 767px) {
+    @media (max-width: 1023px) {
+      display: block;
       border: none;
       color: $white;
       box-shadow: none;
+      font-size: 35px;
     }
   }
   .right-menu {
@@ -123,24 +184,90 @@
       }
     }
   }
+  .close-menu{
+    background: transparent;
+    padding: 0;
+    line-height: 0;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: 0;
+    box-shadow: none;
+    font-size: 30px;
+    display: none;
+    @media (max-width: 1023px) {
+      display: block;
+    }
+  }
   .after-login-right-menu{
+    display: flex;
+    align-items: center;
+    @media (max-width: 1023px) {
+      display: none;
+    }
+    .notification{
+      position: relative;
+      svg{
+        font-size: 23px;
+        line-height: 26px;
+      }
+      .notify{
+        background: $green;
+        width: 6px;
+        height : 6px;
+        border-radius: 50%;
+        position: absolute;
+        top: 10px;
+        right: -4px;
+      }
+    }
     .user-menu{
-      .dropdown-toggle{
-        background-color: transparent;
-        border-color: transparent;
-        box-shadow: none;
+      margin-left: 45px;
+      @media (max-width: 1399px) {
+        margin-left: 25px;
+      }
+      @media (max-width: 1199px) {
+        margin-left: 15px;
+      }
+      .btn-secondary{
         @include md-text;
-        img{
+        display: flex;
+        align-items: center;
+        .profile_img{
           width: 32px;
           height: 32px;
           border-radius: 50%;
           margin-right: 8px;
+          color: $grey;
+          background: #dcdcdc;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 18px;
+          line-height: 18px;
+          overflow: hidden;
+          svg{
+            font-size: 29px;
+            position: relative;
+            bottom: -2px;
+          }
+          img{
+            width: 100%;
+            height: 100%;
+          }
+          .default_icon{
+            color: $light-grey;
+          }
         }
-
-      }
-      &.show{
-        .dropdown-toggle{
-          
+        .profile_text {
+          display: flex;
+          align-items: center;
+          span{
+            text-overflow: ellipsis;
+            max-width: 90px;
+            overflow: hidden;
+            white-space: nowrap;
+          }
         }
       }
     }
@@ -182,6 +309,15 @@
           }
         }
       }
+      .dropdown{
+        .btn-secondary {
+          color: $grey;
+          @media (max-width: 1023px) {
+            color: $white;
+          }
+        }
+      }
+      
     }
     .right-menu {
       .register {
@@ -219,34 +355,54 @@
       }
     }
     .after-login-right-menu{
+      .notification{
+        color: $black;
+      }
       .user-menu{
-        .dropdown-toggle{
+        .btn-secondary{
           color: $grey;
-          img{
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            margin-right: 8px;
-          }
-  
-        }
-        &.show{
-          .dropdown-toggle{
-            color: $secondary;
-          }
         }
       }
     }
+    .navbar-toggler {
+      @media (max-width: 1023px) {
+        color: $grey;
+      }
+    }
   }
+  // .navbar-collapse {
+  //   .navbar-nav{
+  //     .dropdown{
+  //       .btn-secondary{
+  //         color: $white;
+  //       }
+  //     }
+  //   }
+  // }
   
 }
 .dropdown-menu{
   .dropdown-item{
-    color: $grey;
-    @include md-text;
-    &:hover, &.active{
-      color: $secondary;
-      background-color: $white;
+    a{
+      color: $grey;
     }
+    &:hover {
+      color: $secondary;
+      background-color: #ffebeb;
+      a{
+        color: $secondary;
+      }
+      &::after {
+        background-color: $secondary;
+        @media(max-width:767px){
+            display: none;
+        }
+      }
+    }
+  }
+}
+body{
+  &.menu-open {
+    overflow: hidden;
   }
 }

@@ -8,19 +8,19 @@ import {
   Nav,
   Navbar,
   NavbarToggler,
-  NavItem,
+  NavItem
 } from "reactstrap";
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { baseURL } from "../../helpers/url";
 import Images from "../../static/images";
 import LoginPopup from "../popup/LoginPopup";
 import RegisterPopup from "../popup/RegisterPopup";
-import routesList from "../../routes/MainRoute";
 import "../../assets/scss/component/header.scss";
-import { Link, useLocation } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 import ChangePasswordPopup from "../popup/ChangePasswordPopup";
 import UserProfilePopup from "../popup/UserProfilePopup";
-import {baseURL} from "../../helpers/url";
+import { Icon } from "@iconify/react";
 
 const Header = (props) => {
   const { auth, setAuth, persist, setPersist } = useAuth();
@@ -44,8 +44,7 @@ const Header = (props) => {
   useEffect(() => {
     document.addEventListener("scroll", () => {
       let scroll = window.pageYOffset || document.documentElement.scrollTop,
-        navbarEl = document.querySelector(".custome-header");
-
+        navbarEl = document.querySelector(".custom-header");
       if (scroll > 80) {
         navbarEl.classList.add("bg-color-menu");
       } else {
@@ -63,9 +62,16 @@ const Header = (props) => {
     setIsRegisterModal(!isRegisterModal);
   };
   const menuToggle = () => {
+    let getBody = document.querySelector('body');
+    // console.log("Hi", getBody);
+    getBody.classList.add("menu-open");
     setShowMenu(!showMenu);
   };
-
+  const menuClose = () => {
+    const getBody = document.querySelector('body');
+    getBody.classList.remove("menu-open");
+    setShowMenu(false);
+  };
   const handleUserMenuDropdown = () => {
     setShowUserMenu(!showUserMenu);
   };
@@ -83,31 +89,132 @@ const Header = (props) => {
       <Navbar
         container
         expand="md"
-        className={homeUrl ? "custome-header" : "custome-header bg-not-home"}
+        className={homeUrl ? "custom-header" : "custom-header bg-not-home"}
         light
       >
         <Link to="/" className="navbar-brand">
           <img src={Images.Logo} alt="Logo" className="logo" />
           <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo" />
         </Link>
-        <NavbarToggler onClick={() => menuToggle()} />
+        <NavbarToggler onClick={() => menuToggle()}>
+          <Icon icon="eva:menu-outline" />
+        </NavbarToggler>
         <Collapse navbar isOpen={showMenu}>
-          <Nav className="" navbar>
-            {routesList
-              .filter((item) => item.name !== "home")
-              .map((route, index) => {
-                return (
-                  <NavItem key={index}>
-                    <Link
-                      to={route.path}
-                      title={route.name}
-                      className="nav-link text-capitalize"
-                    >
-                      {route.name}
+          <Button className="close-menu" onClick={() => menuClose()}>
+            <Icon icon="ci:close-big" />
+          </Button>
+          <Nav navbar>
+            <>
+              {persist ? (
+                <NavItem>
+                  <Link
+                    to="/"
+                    title="My Observations"
+                    className="nav-link text-capitalize"
+                  >
+                    My Observations
+                  </Link>
+                </NavItem>
+              ) : '' }
+            </>
+            <NavItem>
+              <Dropdown
+                className="user-menu"
+                isOpen={showUserMenu}
+                toggle={handleUserMenuDropdown}
+              >
+                <DropdownToggle>
+                  About <Icon icon="fe:arrow-down" />
+                </DropdownToggle>
+                <DropdownMenu container="body">
+                  <DropdownItem>
+                    <Link to="/about" title="What is Spritacular?">
+                      What is Spritacular?
                     </Link>
-                  </NavItem>
-                );
-              })}
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/" title="Policy">
+                      Policy
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/" title="Code of Conduct">
+                      Code of Conduct
+                    </Link>
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </NavItem>
+            <NavItem>
+              <Link
+                to="get-started"
+                title="Get Started"
+                className="nav-link text-capitalize"
+              >
+                Get Started
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to="/" title="Gallery" className="nav-link text-capitalize">
+                Gallery
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Dropdown
+                className="user-menu"
+                isOpen={showUserMenu}
+                toggle={handleUserMenuDropdown}
+              >
+                <DropdownToggle>
+                  Resources <Icon icon="fe:arrow-down" />
+                </DropdownToggle>
+                <DropdownMenu container="body">
+                  <DropdownItem>
+                    <Link to="/blog" title="Blog">
+                      Blog
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/tutorials" title="Tutorials">
+                      Tutorials
+                    </Link>
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </NavItem>
+            <NavItem>
+              <Dropdown
+                className="user-menu"
+                isOpen={showUserMenu}
+                toggle={handleUserMenuDropdown}
+              >
+                <DropdownToggle>
+                  Community <Icon icon="fe:arrow-down" />
+                </DropdownToggle>
+                <DropdownMenu container="body">
+                  <DropdownItem>
+                    <Link to="/" title="Meet the Teem">
+                      Meet the Teem
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/" title="Volunteer Profile">
+                      Volunteer Profile
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/" title="Become an ambassador">
+                      Become an ambassador
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/" title="Join Spritacular Google Group">
+                      Join Spritacular Google Group
+                    </Link>
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </NavItem>
             <NavItem className="d-md-none d-xs-block">
               <Button
                 className="register nav-link"
@@ -143,27 +250,45 @@ const Header = (props) => {
           </div>
         ) : (
           <div className="after-login-right-menu">
+            {/* Notification Dropdown  */}
+            <Dropdown isOpen={showUserMenu} toggle={handleUserMenuDropdown}>
+              <DropdownToggle className="notification">
+                <Icon icon="ic:baseline-notifications" />
+
+                <span className="notify"></span>
+              </DropdownToggle>
+              <DropdownMenu container="body">
+                <DropdownItem>
+                  <Link to="/profile">Edit Profile</Link>
+                </DropdownItem>
+                <DropdownItem onClick={() => handleChangePasswordModal()}>
+                  Change Password
+                </DropdownItem>
+                <DropdownItem onClick={() => Logout()}>Logout</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            {/* User Profile Dropdown  */}
             <Dropdown
               className="user-menu"
               isOpen={showUserMenu}
               toggle={handleUserMenuDropdown}
             >
-              <DropdownToggle caret>
-                {user?.profile_image ? (
-                  <img
-                    className="img-fluid"
-                    src={baseURL.remote + user?.profile_image}
-                    alt={user?.first_name}
-                  />
-                ) : (
-                  <img
-                    className="img-fluid"
-                    src={Images.UserPlaceholder}
-                    alt="UserPlaceholder"
-                  />
-                )}
-                <span>
-                  {user?.first_name} {user?.last_name}
+              <DropdownToggle>
+                <div className="profile_img">
+                  {user?.profile_image ? (
+                    <img
+                      className="img-fluid"
+                      src={baseURL.base + user?.profile_image}
+                      alt={user?.first_name}
+                    />
+                  ) : (
+                    <Icon icon="entypo:user" />
+                    // <Icon className="default_icon" icon="fa:user" />
+                  )}
+                </div>
+                <span className="profile_text">
+                  <span>{user?.first_name} {user?.last_name}{" "}</span>
+                  <Icon icon="fe:arrow-down" />
                 </span>
               </DropdownToggle>
               <DropdownMenu container="body">
