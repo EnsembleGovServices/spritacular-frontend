@@ -64,7 +64,6 @@ const LoginPopup = (props) => {
     e.preventDefault();
     await axios.post(LOGIN_URL, user)
         .then((response) => {
-          console.log(response);
           setPersist(prev => !prev);
           setError('');
           setAuth({

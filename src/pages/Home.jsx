@@ -1,8 +1,8 @@
 import "../assets/scss/component/home.scss";
-import HomeBanner from "../components/HomeComponent/HomeBanner";
-import HomeCounter from "../components/HomeComponent/HomeCounter";
-import HomeMapSection from "../components/HomeComponent/HomeMapSection";
-import GetStarted from "../components/HomeComponent/GetStarted";
+import HomeBanner from "../components/Home/HomeBanner";
+import HomeCounter from "../components/Home/HomeCounter";
+import HomeMapSection from "../components/Home/HomeMapSection";
+import GetStarted from "../components/Home/GetStarted";
 
 const Home = () => {
   return (
