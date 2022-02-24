@@ -10,19 +10,19 @@ const GetStarted = lazy(()=> import('../components/Home/GetStarted'))
 const Home = () => {
   return (
     <>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={''}>
             <HomeBanner />
         </Suspense>
 
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={''}>
             <HomeCounter />
         </Suspense>
 
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={''}>
             <HomeMapSection />
         </Suspense>
 
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={''}>
             <GetStarted />
         </Suspense>
 

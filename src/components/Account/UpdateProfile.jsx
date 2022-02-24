@@ -39,7 +39,6 @@ const UpdateProfile = (props) => {
             },
             withCredentials: true,
         }).then((success) => {
-            console.log(success);
             setSuccess(success)
         }).catch((error) => {
             console.log(error.response);

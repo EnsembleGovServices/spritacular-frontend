@@ -15,11 +15,11 @@ import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { baseURL } from "../../helpers/url";
 import Images from "../../static/images";
-import LoginPopup from "../popup/LoginPopup";
-import RegisterPopup from "../popup/RegisterPopup";
+import LoginPopup from "../Popup/LoginPopup";
+import RegisterPopup from "../Popup/RegisterPopup";
 import "../../assets/scss/component/header.scss";
-import ChangePasswordPopup from "../popup/ChangePasswordPopup";
-import UserProfilePopup from "../popup/UserProfilePopup";
+import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
+import UserProfilePopup from "../Popup/UserProfilePopup";
 import { Icon } from "@iconify/react";
 
 const Header = (props) => {
@@ -258,8 +258,7 @@ const Header = (props) => {
             <Dropdown className="notify_menu" isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
               <DropdownToggle className="notification">
                 <Icon icon="ic:baseline-notifications" />
-
-                <span className="notify"></span>
+                <span className="notify"/>
               </DropdownToggle>
               <DropdownMenu container="body" className="notify-open_menu">
                 <DropdownItem header> Notifications (3) </DropdownItem>
@@ -283,7 +282,7 @@ const Header = (props) => {
                   {user?.profile_image ? (
                     <img
                       className="img-fluid"
-                      src={baseURL.base + user?.profile_image}
+                      src={baseURL.remote + user?.profile_image}
                       alt={user?.first_name}
                     />
                   ) : (
