@@ -33,9 +33,6 @@ const ImageUpload = (props) => {
                 setProgress(progressBar);
             },
         }).then((response) => {
-            console.group('Upload Response')
-            console.log(response);
-            console.groupEnd();
             setData(response.data);
             setAuth(prev => {
                 return {
@@ -46,19 +43,17 @@ const ImageUpload = (props) => {
                     }
                 }
             });
+            setError('');
         }).catch((error) => {
-            console.group('Upload Error')
-            console.log(error);
-            console.groupEnd();
             setError(error.response);
         })
-    });
+    }, [file]);
 
     useEffect(() => {
         if (file) {
             fileUpload().then(r => r);
         }
-    }, [file]);
+    }, [file, fileUpload]);
 
     const ProfilePreview = () =>{
       return(
@@ -105,7 +100,7 @@ const ImageUpload = (props) => {
       <div className="user-profile-upload">
         {data ? (
           <>
-            {progress > "1" && progress !== "100%" ? (
+            {progress > "1" && !error && progress !== "100%" ? (
               <ProfileLoader />
             ) : (
               <ProfilePreview />
@@ -115,7 +110,7 @@ const ImageUpload = (props) => {
           <>
           {user?.profile_image ? (
             <>
-            {progress > "1" && progress !== "100%" ? (
+            {progress > "1"  && progress !== "100%" ? (
               <ProfileLoader />
             ) : (
               <ProfilePreview />
