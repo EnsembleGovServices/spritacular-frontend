@@ -10,7 +10,7 @@ import "../../assets/scss/component/modal.scss";
 import Register from "../Auth/Register";
 
 const RegisterPopup = (props) => {
-  const { open, handleClose, modalClass } = props;
+  const { open, handleClose, handleLoginModal, modalClass } = props;
   return (
     <Modal
       className={modalClass ? modalClass : "common-modal"}
@@ -27,7 +27,7 @@ const RegisterPopup = (props) => {
         </Button>
       </ModalHeader>
       <ModalBody>
-        <Register />
+        <Register  handleLogin={handleLoginModal} />
       </ModalBody>
     </Modal>
   );
