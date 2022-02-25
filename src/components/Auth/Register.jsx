@@ -5,7 +5,8 @@ import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import {baseURL} from "../../helpers/url";
 
-const Register = () => {
+const Register = (props) => {
+    const { handleLogin } = props;
     const { setAuth, persist, setPersist } = useAuth();
     const [userRegistration, setUserRegistration] = useState({
         first_name: "",
@@ -97,6 +98,9 @@ const Register = () => {
         localStorage.setItem("persist", persist);
     }, [persist])
 
+    const handleLoginModalClick= () => {
+        handleLogin();
+    }
     return(
         <>
             {success && (
@@ -199,7 +203,7 @@ const Register = () => {
                 </Button>
             </Form>
             <p className="bottom-text">
-                Already have an account? <span className="pointer fw-bold">Login</span>
+                Already have an account? <span onClick={() => handleLogin()} className="pointer fw-bold">Login</span>
             </p>
         </>
     )

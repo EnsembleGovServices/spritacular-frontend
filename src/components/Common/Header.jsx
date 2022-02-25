@@ -44,8 +44,8 @@ const Header = (props) => {
     setPersist(false);
     localStorage.removeItem("persist");
     localStorage.removeItem("refresh");
-    setIsLoginModal(false);
     setIsRegisterModal(false);
+    setIsLoginModal(false);
   };
 
   useEffect(() => {
@@ -353,8 +353,8 @@ const Header = (props) => {
       {isRegisterModal && (
         <RegisterPopup
           open={persist && auth ? false : isRegisterModal}
-          handleRegisterClose={handleRegisterModal}
-          handleOpenLogin ={handleLoginModal}
+          handleClose={handleRegisterModal}
+          handleLoginModal={handleLoginModal}
         />
       )}
 
