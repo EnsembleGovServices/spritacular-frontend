@@ -147,3 +147,12 @@
     background: #e4e5e6;
   }
 }
+@mixin btn-bg{
+  background-color: $white;
+  padding: 10px 35px;
+  border-radius: 30px;
+  font-size: 14px;
+  line-height: 18px;
+  color: $black;
+  border:1px solid $admin-btn-bg;
+}

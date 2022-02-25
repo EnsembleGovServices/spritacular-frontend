@@ -1,8 +1,11 @@
-import React, {useCallback, useLayoutEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import axios from "../../api/axios";
 import PropTypes from "prop-types";
+import {baseURL} from "../../helpers/url";
+import useAuth from "../../hooks/useAuth";
 
 const ImageUpload = (props) => {
+  const { setAuth } = useAuth();
   const { user, token } = props;
   const [file, setFile] = useState("");
   const [data, setData] = useState("");
@@ -17,7 +20,7 @@ const ImageUpload = (props) => {
     const fileUpload = useCallback(async () => {
         const formData = new FormData();
         formData.append("profile_image", file);
-        await axios.patch(process.env.REACT_APP_API_URL + "/users/user_profile/" + user?.id + "/", formData, {
+        await axios.patch(baseURL.api + "/users/user_profile/" + user?.id + "/", formData, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
@@ -28,19 +31,28 @@ const ImageUpload = (props) => {
                 setProgress(progressBar);
             },
         }).then((response) => {
-            // console.group('Upload Response')
-            // console.log(response);
-            // console.groupEnd();
+            console.group('Upload Response')
+            console.log(response);
+            console.groupEnd();
             setData(response.data);
+            setAuth(prev => {
+                return {
+                    ...prev,
+                    user: {
+                        ...user,
+                        profile_image: response?.data?.profile_image.replace(baseURL.remote, ""),
+                    }
+                }
+            });
         }).catch((error) => {
-            // console.group('Upload Error')
-            // console.log(error);
-            // console.groupEnd();
+            console.group('Upload Error')
+            console.log(error);
+            console.groupEnd();
             setError(error.response);
         })
     });
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (file) {
             fileUpload().then(r => r);
         }

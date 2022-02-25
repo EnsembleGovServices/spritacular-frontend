@@ -15,13 +15,12 @@ import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { baseURL } from "../../helpers/url";
 import Images from "../../static/images";
-import LoginPopup from "../popup/LoginPopup";
-import RegisterPopup from "../popup/RegisterPopup";
+import LoginPopup from "../Popup/LoginPopup";
+import RegisterPopup from "../Popup/RegisterPopup";
 import "../../assets/scss/component/header.scss";
-import ChangePasswordPopup from "../popup/ChangePasswordPopup";
-import UserProfilePopup from "../popup/UserProfilePopup";
+import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
+import UserProfilePopup from "../Popup/UserProfilePopup";
 import { Icon } from "@iconify/react";
-import Loader from "../shared/Loader";
 
 const Header = (props) => {
   const { auth, setAuth, persist, setPersist } = useAuth();
@@ -101,7 +100,6 @@ const Header = (props) => {
           <img src={Images.Logo} alt="Logo" className="logo" />
           <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo" />
         </Link>
-        {/* <Loader fixContent={false} /> */}
         <NavbarToggler onClick={() => menuToggle()}>
           <Icon icon="eva:menu-outline" />
         </NavbarToggler>
@@ -316,12 +314,11 @@ const Header = (props) => {
                   {user?.profile_image ? (
                     <img
                       className="img-fluid"
-                      src={baseURL.base + user?.profile_image}
+                      src={baseURL.remote + user?.profile_image}
                       alt={user?.first_name}
                     />
                   ) : (
                     <Icon icon="entypo:user" />
-                    // <Icon className="default_icon" icon="fa:user" />
                   )}
                 </div>
                 <span className="profile_text">

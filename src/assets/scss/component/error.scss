@@ -1,0 +1,7 @@
+@import "../global/config.scss";
+
+.error {
+  padding: 60px 0;
+  min-height: calc(100vh - 60px);
+  @include vcenter;
+}

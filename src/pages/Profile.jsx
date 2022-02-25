@@ -10,26 +10,23 @@ import {
   Col,
   Form,
   FormGroup,
-  Label,
-  Input, Alert, FormFeedback,
+  Input
 } from "reactstrap";
 import { Suspense, lazy } from 'react';
 import classnames from "classnames";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Images from "../static/images";
 import useAuth from "../hooks/useAuth";
-import axios from "../api/axios";
-import {baseURL} from "../helpers/url";
 import "../assets/scss/component/camerasettings.scss";
+import ImageUpload from "../components/Upload/ImageUpload";
 
+const UpdateProfile = lazy(()=> import('../components/Account/UpdateProfile'))
 const ChangePassword = lazy(()=> import('../components/Account/ChangePassword'))
 
 
-const ProfileSetting = () => {
+const Profile = () => {
   const { auth } = useAuth();
-  const [updateUser, setUpdatedUser] = useState()
-  const [success, setSuccess] = useState();
-  const [error, setError] = useState();
+
   const [activeTab, setActiveTab] = useState("1");
 
   const toggleTab = (tab) => {
@@ -39,46 +36,6 @@ const ProfileSetting = () => {
       setActiveTab(tab);
     }
   };
-
-  const handleInput = (e) => {
-    e.preventDefault();
-    let name = e.target.name,
-        value = e.target.value;
-    setUpdatedUser({
-      ...updateUser,
-      [name]:value
-    })
-  }
-
-  useEffect(()=> {
-    setUpdatedUser(auth?.user)
-  }, [auth?.user])
-
-
-  const handleProfileUpdate = async (e) => {
-    e.preventDefault();
-    setSuccess('');
-    setError('');
-    await axios.patch(baseURL.api+'/users/user_profile/'+auth?.user?.id+'/', {
-      first_name: updateUser?.first_name,
-      last_name: updateUser?.last_name,
-      email: updateUser?.email,
-      location: updateUser?.location
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${auth?.token?.access}`
-      },
-      withCredentials: true,
-    }).then((success) => {
-      console.log(success);
-      setSuccess(success)
-    }).catch((error) => {
-      console.log(error.response);
-      setError(error.response)
-    })
-  }
-
 
 
   return (
@@ -96,7 +53,7 @@ const ProfileSetting = () => {
                 <div className="profile-left-tab">
                   <div className="profile-info">
                     <div className="profile-img">
-                      <img className="img-fluid" src={baseURL.remote+auth?.user?.profile_image} alt={auth?.user?.first_name} />
+                      <ImageUpload user={auth?.user} token={auth?.token?.access}/>
                     </div>
                     <div className="profile-data text-center">
                       <h5>{auth?.user?.first_name} {auth?.user?.last_name}</h5>
@@ -150,69 +107,10 @@ const ProfileSetting = () => {
                           <h4>Update Profile</h4>
                         </Col>
 
-                        {success && success?.status === 200 &&
-                            <Col sm="12">
-                              <Alert variant="success">
-                                Profile updated successfully
-                              </Alert>
-                            </Col>
-                        }
-
                         <Col md="12">
-                          <Form onSubmit={handleProfileUpdate}>
-                            <FormGroup>
-                              <Label for="first_name">First Name</Label>
-                              <Input
-                                type="text"
-                                name="first_name"
-                                value={updateUser?.first_name ?? ""}
-                                onChange={(e)=>handleInput(e)}
-                                invalid={!!error?.data?.first_name}
-                                placeholder="First Name"
-                              />
-                              <FormFeedback>{error?.data?.first_name}</FormFeedback>
-                            </FormGroup>
-                            <FormGroup>
-                              <Label for="last_name">Last Name</Label>
-                              <Input
-                                  type="text"
-                                  name="last_name"
-                                  placeholder="Last Name"
-                                  value={updateUser?.last_name ?? ""}
-                                  invalid={!!error?.data?.last_name}
-                                  onChange={(e)=>handleInput(e)}
-                              />
-                              <FormFeedback>{error?.data?.last_name}</FormFeedback>
-                            </FormGroup>
-                            <FormGroup>
-                              <Label for="email">Email</Label>
-                              <Input
-                                type="email"
-                                name="email"
-                                placeholder="Enter Your Email"
-                                value={updateUser?.email ?? ""}
-                                invalid={!!error?.data?.email}
-                                onChange={(e)=>handleInput(e)}
-                              />
-                              <FormFeedback>{error?.data?.email}</FormFeedback>
-                            </FormGroup>
-
-                            <FormGroup>
-                              <Label for="location">Location</Label>
-                              <Input type="select" name="location" onChange={(e)=>handleInput(e)}>
-                                <option disabled defaultValue>
-                                  Please Select Your Country
-                                </option>
-                                <option value="Australia">Australia</option>
-                                <option value="Bahrain">Bahrain</option>
-                                <option value="Canada">Canada</option>
-                                <option value="Denmark">Denmark</option>
-                              </Input>
-                            </FormGroup>
-                            <FormGroup className="profile-bottom-btn ">
-                              <Button type="submit" className="save-btn">Save Changes</Button>
-                            </FormGroup>
-                          </Form>
+                          <Suspense fallback={<div>Loading...</div>}>
+                            <UpdateProfile user={auth} />
+                          </Suspense>
                         </Col>
                       </Row>
                     </TabPane>
@@ -351,4 +249,4 @@ const ProfileSetting = () => {
     </>
   );
 };
-export default ProfileSetting;
+export default Profile;

@@ -1,5 +1,5 @@
 import { Row, Col } from 'reactstrap';
-import ObservationCard from '../shared/ObservationCard';
+import ObservationCard from '../Shared/ObservationCard';
 
 const HomeObservationCard = () => {
     const observationCards=[

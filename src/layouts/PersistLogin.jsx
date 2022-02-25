@@ -1,9 +1,11 @@
 import { Outlet } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
+
+const Header = lazy(()=> import('../components/Common/Header'))
+const Footer = lazy(()=> import('../components/Common/Footer'))
+const Loader = lazy(()=> import('../components/Shared/Loader'))
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -36,19 +38,28 @@ const PersistLogin = () => {
         // console.log(`rT: ${JSON.stringify(auth?.token?.refresh)}`)
     }, [auth?.token?.access, auth?.token?.refresh, isLoading])
 
+
     return (
         <>
             {!persist ? (
                 <>
-                    <Header />
+                    <Suspense fallback={''}>
+                        <Header />
+                    </Suspense>
                     <Outlet />
-                    <Footer/>
+                    <Suspense fallback={''}>
+                        <Footer />
+                    </Suspense>
                 </>
-            ) : isLoading ? <p>Loading...</p> : (
+            ) : isLoading ? <Loader fixContent={true} /> : (
                 <>
-                    <Header />
+                    <Suspense fallback={''}>
+                        <Header />
+                    </Suspense>
                     <Outlet />
-                    <Footer/>
+                    <Suspense fallback={''}>
+                        <Footer />
+                    </Suspense>
                 </>
             )}
         </>
