@@ -211,7 +211,12 @@
         width: 450px;
     }
 }
-
+.file-upload-inners{
+    .text-danger{
+        position: absolute;
+        margin-top: 4px;
+    }
+}
 .user-profile-upload {
     position: relative;
     border-radius: 50%;
