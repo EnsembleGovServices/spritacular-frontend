@@ -35,6 +35,13 @@ import BlogTwo from "../assets/images/Blog-Two.png";
 import UserProfile from "../assets/images/profile-pic.png";
 import GetStartedTopImage from "../assets/images/how-it-works-page.png";
 import UploadPlaceholder from "../assets/images/UploadPlaceholder.png";
+import SpriteOb from "../assets/images/sprite-ob.png";
+import Bluejet from "../assets/images/Blue-jet.png";
+import Elev from "../assets/images/Elev.png";
+import Halo from "../assets/images/Halo.png";
+import GiganticJet from "../assets/images/Gigantic-Jet.png";
+import SecondaryJet from "../assets/images/Secondary-Jet.png";
+import ObservationImageOne from "../assets/images/observation-image-one.png";
 
 const Images = {
   Logo,
@@ -74,5 +81,12 @@ const Images = {
   UserProfile,
   GetStartedTopImage,
   UploadPlaceholder,
+  SpriteOb,
+  Bluejet,
+  Elev,
+  Halo,
+  GiganticJet,
+  SecondaryJet,
+  ObservationImageOne,
 };
 export default Images;
