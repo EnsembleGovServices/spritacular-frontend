@@ -58,7 +58,47 @@ const ImageUpload = (props) => {
         if (file) {
             fileUpload().then(r => r);
         }
-    }, [file])
+    }, [file]);
+
+    const ProfilePreview = () =>{
+      return(
+        <>
+          <label className="form-label-border">
+            <img
+              className="img-fluid"
+              src={data ? data?.profile_image : baseURL.remote+user?.profile_image}
+              alt={user?.first_name}
+            />
+          </label>
+          <Button className="edit-btn"><Icon icon="lucide:edit-2" /></Button>
+          <input type="file" name="profile_image" onChange={handleChange} />
+        </>
+      )
+    }
+    const ProfileLoader = () =>{
+      return(
+        <>
+          <div className='progressBar' style={{ "--percentage": progress }}>
+              <div className="wrapper">
+                <b>{progress}</b>
+                <span>uploading..</span>
+              </div>
+          </div>
+        </>
+      )
+    }
+    const ProfileUploadText = () =>{
+      return(
+        <>
+          <div className='form-label'>
+              <div className="wrapper">
+                <span>Please upload your image</span>
+                <input type="file" name="profile_image" onChange={handleChange} />
+              </div>
+          </div>
+        </>
+      )
+    }
     
   return (
     <>
@@ -66,58 +106,30 @@ const ImageUpload = (props) => {
         {data ? (
           <>
             {progress > "1" && progress !== "100%" ? (
-              <div className={progress > "1" ? 'progressBar' : 'form-label'} style={{ "--percentage": progress }}>
-                  <div className="wrapper">
-                          <>
-                              <b>{progress}</b>
-                              <span>uploading..</span>
-                          </>
-                      <input type="file" name="profile_image" onChange={handleChange} />
-                  </div>
-              </div>
+              <ProfileLoader />
             ) : (
-              <>
-                <label className="form-label-border">
-                  <img
-                    className="img-fluid"
-                    src={data?.profile_image}
-                    alt={user?.first_name}
-                  />
-                </label>
-                <Button className="edit-btn"><Icon icon="lucide:edit-2" /></Button>
-                <input type="file" name="profile_image" onChange={handleChange} />
-              </>
+              <ProfilePreview />
             )}
           </>
         ) : (
           <>
           {user?.profile_image ? (
             <>
-            <label className="form-label-border">
-            <img
-              className="img-fluid"
-              src={baseURL.remote+user?.profile_image}
-              alt={user?.first_name}
-            />
-          </label>
-          <Button className="edit-btn"><Icon icon="lucide:edit-2" /></Button>
-          <input type="file" name="profile_image" onChange={handleChange} />
+            {progress > "1" && progress !== "100%" ? (
+              <ProfileLoader />
+            ) : (
+              <ProfilePreview />
+            )}
           </>
           ) : (
             <>
-            <div className={progress > "1" ? 'progressBar' : 'form-label'} style={{ "--percentage": progress }}>
-                <div className="wrapper">
-                    {progress > "1" ? (
-                        <>
-                            <b>{progress}</b>
-                            <span>uploading..</span>
-                        </>
-                    ) : (
-                        <span>Please upload your image</span>
-                    )}
-                    <input type="file" name="profile_image" onChange={handleChange} />
-                </div>
-            </div>
+            {progress > "1" ? (
+              < ProfileLoader />
+            ) : (
+              <ProfileUploadText />
+            )
+
+            }
             </>
           )}
             
@@ -125,7 +137,7 @@ const ImageUpload = (props) => {
         )}
       </div>
 
-      <div>
+      <>
         {error?.data &&
           error.data.profile_image.map((error, i) => {
             return (
@@ -134,7 +146,7 @@ const ImageUpload = (props) => {
               </span>
             );
           })}
-      </div>
+      </>
     </>
   );
 };
