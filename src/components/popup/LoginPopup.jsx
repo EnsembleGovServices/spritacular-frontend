@@ -4,7 +4,7 @@ import {
   ModalBody,
   ModalHeader,
 } from "reactstrap";
-import { useState } from 'react';
+import {useState} from "react";
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 
@@ -38,7 +38,7 @@ const LoginPopup = (props) => {
           </Button>
         </ModalHeader>
         <ModalBody>
-            <Login cp={handleForgotPasswordModal}/>
+            <Login cp={()=> handleForgotPasswordModal()} />
         </ModalBody>
       </Modal>
       {isForgotPasswordModal && (
