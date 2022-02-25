@@ -91,6 +91,20 @@ const ImageUpload = (props) => {
           </>
         ) : (
           <>
+          {user?.profile_image ? (
+            <>
+            <label className="form-label-border">
+            <img
+              className="img-fluid"
+              src={baseURL.remote+user?.profile_image}
+              alt={user?.first_name}
+            />
+          </label>
+          <Button className="edit-btn"><Icon icon="lucide:edit-2" /></Button>
+          <input type="file" name="profile_image" onChange={handleChange} />
+          </>
+          ) : (
+            <>
             <div className={progress > "1" ? 'progressBar' : 'form-label'} style={{ "--percentage": progress }}>
                 <div className="wrapper">
                     {progress > "1" ? (
@@ -104,6 +118,9 @@ const ImageUpload = (props) => {
                     <input type="file" name="profile_image" onChange={handleChange} />
                 </div>
             </div>
+            </>
+          )}
+            
           </>
         )}
       </div>

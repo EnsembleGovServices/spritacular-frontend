@@ -222,22 +222,26 @@ const Header = (props) => {
                 </DropdownMenu>
               </Dropdown>
             </NavItem>
-            <NavItem className="d-md-none d-xs-block">
-              <Button
-                className="register nav-link"
-                onClick={() => handleRegisterModal()}
-              >
-                Register
-              </Button>
-            </NavItem>
-            <NavItem className="d-md-none d-xs-block">
-              <Button
-                className="nav-link login-btn"
-                onClick={() => handleLoginModal()}
-              >
-                Login
-              </Button>
-            </NavItem>
+            {!persist ? (
+              <>
+              <NavItem className="d-md-none d-xs-block">
+                <Button
+                  className="register nav-link"
+                  onClick={() => handleRegisterModal()}
+                >
+                  Register
+                </Button>
+              </NavItem>
+              <NavItem className="d-md-none d-xs-block">
+                <Button
+                  className="nav-link login-btn"
+                  onClick={() => handleLoginModal()}
+                >
+                  Login
+                </Button>
+              </NavItem>
+              </>
+            ): ('')}
           </Nav>
         </Collapse>
         {!persist ? (
