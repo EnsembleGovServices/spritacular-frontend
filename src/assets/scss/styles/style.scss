@@ -35,6 +35,12 @@ body.modal-open {
   cursor: pointer!important;
 }
 
+.btn{
+  border-radius: 99px;
+  &.disabled{
+    @include disabled;
+  }
+}
 // Import any component file here
 
 @import "../component/index.scss";

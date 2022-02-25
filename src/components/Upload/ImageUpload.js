@@ -3,6 +3,8 @@ import axios from "../../api/axios";
 import PropTypes from "prop-types";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
+import { Button } from "reactstrap";
+import { Icon } from '@iconify/react';
 
 const ImageUpload = (props) => {
   const { setAuth } = useAuth();
@@ -63,22 +65,37 @@ const ImageUpload = (props) => {
       <div className="user-profile-upload">
         {data ? (
           <>
-            <label className="form-label-border">
-              <img
-                className="img-fluid"
-                src={data?.profile_image}
-                alt={user?.first_name}
-              />
-            </label>
-            <input type="file" name="profile_image" onChange={handleChange} />
+            {progress > "1" && progress !== "100%" ? (
+              <div className={progress > "1" ? 'progressBar' : 'form-label'} style={{ "--percentage": progress }}>
+                  <div className="wrapper">
+                          <>
+                              <b>{progress}</b>
+                              <span>uploading..</span>
+                          </>
+                      <input type="file" name="profile_image" onChange={handleChange} />
+                  </div>
+              </div>
+            ) : (
+              <>
+                <label className="form-label-border">
+                  <img
+                    className="img-fluid"
+                    src={data?.profile_image}
+                    alt={user?.first_name}
+                  />
+                </label>
+                <Button className="edit-btn"><Icon icon="lucide:edit-2" /></Button>
+                <input type="file" name="profile_image" onChange={handleChange} />
+              </>
+            )}
           </>
         ) : (
           <>
-            <div className="progressBar" style={{ "--percentage": progress }}>
+            <div className={progress > "1" ? 'progressBar' : 'form-label'} style={{ "--percentage": progress }}>
                 <div className="wrapper">
                     {progress > "1" ? (
                         <>
-                            <span>{progress}</span>
+                            <b>{progress}</b>
                             <span>uploading..</span>
                         </>
                     ) : (

@@ -409,12 +409,12 @@
     color: $black;
   }
   .dropdown-divider{
-    border-color: #EAEAEA;
+    border-color: $light-grey1;
   }
   &.notify-open_menu{
     padding: 10px;
     min-width: 230px;
-    border: 1px solid #EAEAEA;
+    border: 1px solid $light-grey1;
     box-sizing: border-box;
     box-shadow: 0px 12px 24px rgb(0 0 0 / 12%);
     border-radius: 6px;
