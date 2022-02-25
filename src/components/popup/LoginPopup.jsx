@@ -22,33 +22,33 @@ const LoginPopup = (props) => {
 
 
   return (
-    <>
-      <Modal
-          className={modalClass ? modalClass : "common-modal"}
-          isOpen={open}
-          toggle={handleClose}
-          centered
-          backdrop={true}
-          keyboard={false}
-      >
-        <ModalHeader>
-          Login
-          <Button className="close-icon" onClick={() => handleClose()}>
-            <img src={Images.Modalcloseicon} alt="close-icon" />
-          </Button>
-        </ModalHeader>
-        <ModalBody>
+      <>
+        <Modal
+            className={modalClass ? modalClass : "common-modal"}
+            isOpen={open}
+            toggle={handleClose}
+            centered
+            backdrop={true}
+            keyboard={false}
+        >
+          <ModalHeader>
+            Login
+            <Button className="close-icon" onClick={() => handleClose()}>
+              <img src={Images.Modalcloseicon} alt="close-icon" />
+            </Button>
+          </ModalHeader>
+          <ModalBody>
             <Login cp={()=> handleForgotPasswordModal()} />
-        </ModalBody>
-      </Modal>
-      {isForgotPasswordModal && (
-          <ForgotPasswordPopup
-              open={isForgotPasswordModal}
-              handleClose={handleForgotPasswordModal}
-          />
-      )}
+          </ModalBody>
+        </Modal>
+        {isForgotPasswordModal && (
+            <ForgotPasswordPopup
+                open={isForgotPasswordModal}
+                handleClose={handleForgotPasswordModal}
+            />
+        )}
 
-    </>
+      </>
   );
 };
 LoginPopup.propTypes = {
