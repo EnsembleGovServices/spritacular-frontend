@@ -14,6 +14,10 @@
                 background-color: $white;
                 color: $secondary;
             }
+            &.edit-btn{
+                padding: 0px;
+            }
+
         }
         .profile-left-tab{
             background: linear-gradient(128.5deg, #C01E37 0%, #F052C1 154.21%);

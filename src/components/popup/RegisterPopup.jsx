@@ -18,7 +18,7 @@ import axios from "../../api/axios";
 import { toast } from "react-hot-toast";
 import "../../assets/scss/component/modal.scss";
 import useAuth from "../../hooks/useAuth";
-import PlacesAutocomplete from '../LocationSearchInput'
+// import PlacesAutocomplete from '../LocationSearchInput';
 import LoginPopup from "./LoginPopup";
 
 const REGISTER_URL = process.env.REACT_APP_API_REGISTER_URL;

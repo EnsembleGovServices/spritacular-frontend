@@ -21,7 +21,7 @@ const HomeCounter = () => {
                 <div className="right-counter">
                   <h3>22,500</h3>
                   <Count  />
-                  <p>Storm Chasers</p>
+                  <p>Volunteers</p>
                 </div>
               </div>
             </Col>

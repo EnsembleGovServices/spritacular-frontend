@@ -15,7 +15,7 @@ import useAuth from "../../hooks/useAuth";
 
 import Images from "../../static/images";
 import PropTypes from "prop-types";
-import ForgotPasswordPopup from "../popup/ForgotPasswordPopup";
+import ForgotPasswordPopup from "../Popup/ForgotPasswordPopup";
 
 import {toast} from "react-hot-toast";
 
