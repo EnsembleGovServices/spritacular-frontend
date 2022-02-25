@@ -132,6 +132,17 @@
   line-height: 14px;
 }
 
+@mixin btn-bg{
+  background-color: $white;
+  padding: 10px 35px;
+  border-radius: 30px;
+  font-size: 14px;
+  line-height: 18px;
+  color: $black;
+  border:1px solid $admin-btn-bg;
+}
+
+// Common ScrollBar 
 @mixin customScrollBar{
   &::-webkit-scrollbar-thumb{
     background: rgba(163,160,160,.75);
@@ -147,12 +158,19 @@
     background: #e4e5e6;
   }
 }
-@mixin btn-bg{
-  background-color: $white;
-  padding: 10px 35px;
-  border-radius: 30px;
-  font-size: 14px;
-  line-height: 18px;
-  color: $black;
-  border:1px solid $admin-btn-bg;
+
+// Common form field 
+@mixin formField{
+  background-color: $input-bg;
+  border: 1px solid $input-bg;
+  box-shadow: none;
+  padding: 12px;
+  border-color: transparent;
+}
+
+@mixin disabled{
+  background-color: $modal-btn;
+  border: 1px solid $modal-btn;
+  color: $white;
+  opacity: 1;
 }

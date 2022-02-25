@@ -18,7 +18,7 @@
   }
   .border-line {
     padding: 20px 0px;
-    border-top: 1px solid #eaeaea;
+    border-top: 1px solid $light-grey1;
     h4 {
       color: $grey;
       @include lg-text;

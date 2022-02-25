@@ -39,7 +39,7 @@ const UserProfilePopup = (props) => {
         <p>Welcome to the Community! It is great to have you here.</p>
       </ModalHeader>
       <ModalBody>
-        <Row>
+        <Row className="align-items-center">
           <Col md={5}>
             <FormGroup className="custom-file-upload">
               <div className="file-upload-inners">
@@ -63,11 +63,11 @@ const UserProfilePopup = (props) => {
         </Row>
         <Row>
           <Col md={12}>
-            <FormGroup className="text-center mt-5">
+            <FormGroup className="text-center mt-4">
               <Link
                 to="/profile"
                 onClick={() => handleClose()}
-                className="bg-modal-btn"
+                className="bg-modal-btn d-inline-block mt-2"
               >
                 Continue
               </Link>
