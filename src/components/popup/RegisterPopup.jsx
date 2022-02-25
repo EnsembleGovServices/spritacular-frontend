@@ -18,12 +18,14 @@ import axios from "../../api/axios";
 import { toast } from "react-hot-toast";
 import "../../assets/scss/component/modal.scss";
 import useAuth from "../../hooks/useAuth";
+import PlacesAutocomplete from '../LocationSearchInput'
+import LoginPopup from "./LoginPopup";
 
 const REGISTER_URL = process.env.REACT_APP_API_REGISTER_URL;
 const LOGIN_URL = process.env.REACT_APP_API_TOKEN_URL;
 const RegisterPopup = (props) => {
-  const { setAuth, persist, setPersist } = useAuth();
-  const { open, handleClose, modalClass } = props;
+  const { setAuth,auth, persist, setPersist } = useAuth();
+  const { open, handleRegisterClose, handleOpenLogin,modalClass  } = props;
   const [userRegistration, setUserRegistration] = useState({
     first_name: "",
     last_name: "",
@@ -32,6 +34,7 @@ const RegisterPopup = (props) => {
   });
   const [success, setSuccess] = useState();
   const [error, setError] = useState();
+  
 
   function toastConfig(toastPosition, time) {
     return {
@@ -39,6 +42,13 @@ const RegisterPopup = (props) => {
       duration: time ?? 4000,
     };
   }
+
+  // const setLocation = (location) => {
+  //   setUserRegistration({
+  //     ...userRegistration,
+  //     location: location,
+  //   })
+  // }
 
   const handleInput = (e) => {
     let name = e.target.name,
@@ -48,15 +58,16 @@ const RegisterPopup = (props) => {
       [name]: value,
     });
   };
-
   const handleCheck = (e) => {
     setUserRegistration({
       ...userRegistration,
       agreeTerms: !!e.target.checked,
     });
-  };
+  };  
 
   const createNewUser = async (e) => {
+    
+    console.log(userRegistration);
     e.preventDefault();
     await axios
       .post(REGISTER_URL, userRegistration)
@@ -121,18 +132,19 @@ const RegisterPopup = (props) => {
     localStorage.setItem("persist", persist);
   }, [persist])
 
-  return (
+  return <>(
     <Modal
       className={modalClass ? modalClass : "common-modal"}
       isOpen={open}
-      toggle={handleClose}
+      toggle={handleRegisterClose}
       backdrop={true}
       keyboard={true}
       centered
     >
       <ModalHeader>
+      
         <span>Sign Up</span>
-        <Button className="close-icon" onClick={() => handleClose()}>
+        <Button className="close-icon" onClick={() => handleRegisterClose()}>
           <img src={Images.Modalcloseicon} alt="close-icon" />
         </Button>
       </ModalHeader>
@@ -158,6 +170,7 @@ const RegisterPopup = (props) => {
                 <FormFeedback>{error?.data?.first_name}</FormFeedback>
               </FormGroup>
             </Col>
+            
             <Col sm={6} className="">
               <FormGroup>
                 <Input
@@ -209,6 +222,7 @@ const RegisterPopup = (props) => {
                   <option value="Pune">Pune</option>
                   <option value="Bombay">Bombay</option>
                 </Input>
+                {/* <PlacesAutocomplete setLocation = {setLocation}/> */}
                 <FormFeedback>Location is required</FormFeedback>
               </FormGroup>
               <FormGroup check>
@@ -237,16 +251,17 @@ const RegisterPopup = (props) => {
           </Button>
         </Form>
         <p className="bottom-text">
-          Already have an account? <span className="pointer fw-bold">Login</span>
+          Already have an account? <span className="pointer fw-bold" onClick={handleOpenLogin}>Login</span>
         </p>
       </ModalBody>
     </Modal>
   );
+  </>
 };
 
 RegisterPopup.propTypes = {
   open: PropTypes.bool,
-  handleClose: PropTypes.func,
+  handleRegisterClose: PropTypes.func,
 };
 
 export default RegisterPopup;
