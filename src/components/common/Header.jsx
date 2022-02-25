@@ -260,17 +260,48 @@ const Header = (props) => {
             <Dropdown className="notify_menu" isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
               <DropdownToggle className="notification">
                 <Icon icon="ic:baseline-notifications" />
-
                 <span className="notify"></span>
               </DropdownToggle>
               <DropdownMenu container="body" className="notify-open_menu">
                 <DropdownItem header> Notifications (3) </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
-                  {/* <div className="nptify_wrapper">
+                  <div className="notify_wrapper">
                     <i><img src={Images.UserProfile} alt="user Profile"/></i>
-                    <div></div>
-                  </div> */}
+                    <div className="comment_wrapper">
+                      <div className="comment_details">
+                        <h4>New comments</h4>
+                        <p>Nice Shot!</p>
+                      </div>
+                      <span>5m</span>
+                    </div>
+                  </div>
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>
+                  <div className="notify_wrapper">
+                    <i><img src={Images.UserProfile} alt="user Profile"/></i>
+                    <div className="comment_wrapper">
+                      <div className="comment_details">
+                        <h4>New vote</h4>
+                        <p>John votes your Sprite Observation</p>
+                      </div>
+                      <span>1h</span>
+                    </div>
+                  </div>
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>
+                  <div className="notify_wrapper">
+                    <i><img src={Images.UserProfile} alt="user Profile"/></i>
+                    <div className="comment_wrapper">
+                      <div className="comment_details">
+                        <h4>Emily replied to your comment</h4>
+                        <p>Thank you!</p>
+                      </div>
+                      <span>1h</span>
+                    </div>
+                  </div>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
