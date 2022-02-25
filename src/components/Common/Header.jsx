@@ -287,7 +287,6 @@ const Header = (props) => {
                     />
                   ) : (
                     <Icon icon="entypo:user" />
-                    // <Icon className="default_icon" icon="fa:user" />
                   )}
                 </div>
                 <span className="profile_text">

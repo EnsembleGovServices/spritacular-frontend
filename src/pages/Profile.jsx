@@ -17,8 +17,8 @@ import classnames from "classnames";
 import {useState} from "react";
 import Images from "../static/images";
 import useAuth from "../hooks/useAuth";
-import {baseURL} from "../helpers/url";
 import "../assets/scss/component/camerasettings.scss";
+import ImageUpload from "../components/Upload/ImageUpload";
 
 const UpdateProfile = lazy(()=> import('../components/Account/UpdateProfile'))
 const ChangePassword = lazy(()=> import('../components/Account/ChangePassword'))
@@ -53,7 +53,7 @@ const Profile = () => {
                 <div className="profile-left-tab">
                   <div className="profile-info">
                     <div className="profile-img">
-                      <img className="img-fluid" src={baseURL.remote+auth?.user?.profile_image} alt={auth?.user?.first_name} />
+                      <ImageUpload user={auth?.user} token={auth?.token?.access}/>
                     </div>
                     <div className="profile-data text-center">
                       <h5>{auth?.user?.first_name} {auth?.user?.last_name}</h5>
