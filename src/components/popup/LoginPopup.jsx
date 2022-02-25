@@ -4,14 +4,12 @@ import {
   ModalBody,
   ModalHeader,
 } from "reactstrap";
-import { Suspense, lazy } from 'react';
-import {useState} from "react";
+import { useState } from 'react';
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 
 import Login from "../Auth/Login";
-
-const ForgotPasswordPopup = lazy(()=> import('.//ForgotPasswordPopup'));
+import ForgotPasswordPopup from "./ForgotPasswordPopup";
 
 const LoginPopup = (props) => {
   const { open, handleClose, modalClass } = props;
@@ -40,16 +38,14 @@ const LoginPopup = (props) => {
           </Button>
         </ModalHeader>
         <ModalBody>
-            <Login />
+            <Login cp={handleForgotPasswordModal}/>
         </ModalBody>
       </Modal>
       {isForgotPasswordModal && (
-          <Suspense fallback={<div>Loading...</div>}>
-            <ForgotPasswordPopup
-                open={isForgotPasswordModal}
-                handleClose={handleForgotPasswordModal}
-            />
-          </Suspense>
+          <ForgotPasswordPopup
+              open={isForgotPasswordModal}
+              handleClose={handleForgotPasswordModal}
+          />
       )}
 
     </>
@@ -58,6 +54,7 @@ const LoginPopup = (props) => {
 LoginPopup.propTypes = {
   open: PropTypes.bool,
   handleClose: PropTypes.func,
+  cp: PropTypes.func,
 };
 
 export default LoginPopup;

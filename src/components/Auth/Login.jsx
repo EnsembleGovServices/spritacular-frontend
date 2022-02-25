@@ -5,7 +5,8 @@ import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth";
 import {useLocation, useNavigate} from "react-router-dom";
 
-const Login = () => {
+const Login = (props) => {
+    const {cp} = props;
     const { setAuth, persist, setPersist } = useAuth();
 
     const navigate = useNavigate();
@@ -97,7 +98,7 @@ const Login = () => {
                     />
                 </FormGroup>
                 <FormText className="forgot-password">
-                    <Button type="button" >Forgot Password?</Button>
+                    <Button type="button" onClick={()=> cp()}>Forgot Password?</Button>
                 </FormText>
                 <FormGroup>
                     <Button type="submit" className="modal-btn" disabled={!(user?.email && user?.password)}>
