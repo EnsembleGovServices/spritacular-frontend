@@ -12,8 +12,9 @@ const GetStarted = lazy(()=> import('./pages/GetStarted'));
 const Blog = lazy(()=> import('./pages/Blog'));
 const TutorialsDetail = lazy(()=> import('./pages/TutorialsDetail'));
 
-const UploadObservationsForm = lazy(()=> import('./pages/UploadObservationsForm'));
 const UploadObservations = lazy(()=> import('./pages/UploadObservations'));
+const UploadObservationsForm = lazy(()=> import('./pages/UploadObservationForm'));
+
 const Profile = lazy(()=> import('./pages/Profile'));
 const Error = lazy(()=> import('./components/Error'));
 const LoginPage = lazy(()=> import('./pages/Auth/LoginPage'));

@@ -10,26 +10,17 @@ import {
   Col,
   Form,
   FormGroup,
-  Alert,
   Label,
   Input,
 } from "reactstrap";
 import classnames from "classnames";
-import { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
+import { useState } from "react";
 import "../assets/scss/component/uploadobservationform.scss";
-import { Icon } from "@iconify/react";
 import Images from "../static/images";
 const UploadObservationsForm = () => {
-  const { auth } = useAuth();
-  const [updateUser, setUpdatedUser] = useState();
-  const [success, setSuccess] = useState();
-  const [error, setError] = useState();
   const [activeTab, setActiveTab] = useState("1");
   const toggleTab = (tab) => {
-    // console.log("tab", tab);
     if (activeTab !== tab) {
-      // console.log("tab activeTab", tab, activeTab);
       setActiveTab(tab);
     }
   };
@@ -132,12 +123,9 @@ const UploadObservationsForm = () => {
                                     <input
                                       id="checkbox"
                                       type="checkbox"
-                                      class="checkbox hidden"
+                                      className="checkbox hidden"
                                     />
-                                    <label
-                                      class="switchbox"
-                                      for="checkbox"
-                                    ></label>
+                                    <label className="switchbox" for="checkbox"/>
                                     <span>
                                       Multiple Observations (limit to 3)
                                     </span>
@@ -153,7 +141,7 @@ const UploadObservationsForm = () => {
                                 <Col sm="6">
                                   <FormGroup>
                                     <div className="checkbox-wrapper">
-                                      <div class="inputGroup">
+                                      <div className="inputGroup">
                                         <input
                                           id="option1"
                                           name="option1"
@@ -168,7 +156,7 @@ const UploadObservationsForm = () => {
                                 <Col sm="6">
                                   <FormGroup>
                                     <div className="checkbox-wrapper">
-                                      <div class="inputGroup">
+                                      <div className="inputGroup">
                                         <input
                                           id="option1"
                                           name="option1"
