@@ -3,7 +3,7 @@ import {Alert, Button, Col, Form, FormGroup, Input, Row} from "reactstrap";
 import axios from "axios";
 import {baseURL} from "../../helpers/url";
 import PropTypes from "prop-types";
-import ChangePasswordPopup from "../popup/ChangePasswordPopup";
+import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 
 const ChangePassword = (props) => {
     const { user } = props;

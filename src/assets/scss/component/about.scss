@@ -8,6 +8,8 @@
     }
     h3 {
       @include slg-title;
+      font-weight: 900;
+      margin-bottom: 18px;
       color: $black;
     }
     p {

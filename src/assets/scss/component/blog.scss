@@ -66,6 +66,7 @@
         margin: 110px 0px 110px;
         h3{
             @include slg-title;
+            margin-bottom: 18px;
             font-weight: 700;
             display: flex;
             justify-content: space-between;

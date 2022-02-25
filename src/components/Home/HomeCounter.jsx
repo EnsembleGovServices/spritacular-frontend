@@ -2,6 +2,12 @@ import { Container, Row, Col } from "reactstrap";
 import Images from "../../static/images";
 
 const HomeCounter = () => {
+  const Count = ( ) => {
+    return(
+      <h3>value</h3>
+    )
+  }
+
   return (
     <>
       <div className="counter-main">
@@ -14,6 +20,7 @@ const HomeCounter = () => {
                 </div>
                 <div className="right-counter">
                   <h3>22,500</h3>
+                  <Count  />
                   <p>Storm Chasers</p>
                 </div>
               </div>

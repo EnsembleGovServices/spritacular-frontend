@@ -1,6 +1,5 @@
 import { Container, Row, Col, Button } from "reactstrap";
 import Images from "../../static/images";
-import Loader from "../shared/Loader";
 
 const GetStarted = () => {
   return (

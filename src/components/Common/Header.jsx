@@ -15,13 +15,12 @@ import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { baseURL } from "../../helpers/url";
 import Images from "../../static/images";
-import LoginPopup from "../popup/LoginPopup";
-import RegisterPopup from "../popup/RegisterPopup";
+import LoginPopup from "../Popup/LoginPopup";
+import RegisterPopup from "../Popup/RegisterPopup";
 import "../../assets/scss/component/header.scss";
-import ChangePasswordPopup from "../popup/ChangePasswordPopup";
-import UserProfilePopup from "../popup/UserProfilePopup";
+import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
+import UserProfilePopup from "../Popup/UserProfilePopup";
 import { Icon } from "@iconify/react";
-import Loader from "../shared/Loader";
 
 const Header = (props) => {
   const { auth, setAuth, persist, setPersist } = useAuth();
@@ -104,7 +103,6 @@ const Header = (props) => {
           <img src={Images.Logo} alt="Logo" className="logo" />
           <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo" />
         </Link>
-        {/* <Loader fixContent={false} /> */}
         <NavbarToggler onClick={() => menuToggle()}>
           <Icon icon="eva:menu-outline" />
         </NavbarToggler>
@@ -263,17 +261,48 @@ const Header = (props) => {
             <Dropdown className="notify_menu" isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
               <DropdownToggle className="notification">
                 <Icon icon="ic:baseline-notifications" />
-
                 <span className="notify"></span>
               </DropdownToggle>
               <DropdownMenu container="body" className="notify-open_menu">
                 <DropdownItem header> Notifications (3) </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
-                  {/* <div className="nptify_wrapper">
+                  <div className="notify_wrapper">
                     <i><img src={Images.UserProfile} alt="user Profile"/></i>
-                    <div></div>
-                  </div> */}
+                    <div className="comment_wrapper">
+                      <div className="comment_details">
+                        <h4>New comments</h4>
+                        <p>Nice Shot!</p>
+                      </div>
+                      <span>5m</span>
+                    </div>
+                  </div>
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>
+                  <div className="notify_wrapper">
+                    <i><img src={Images.UserProfile} alt="user Profile"/></i>
+                    <div className="comment_wrapper">
+                      <div className="comment_details">
+                        <h4>New vote</h4>
+                        <p>John votes your Sprite Observation</p>
+                      </div>
+                      <span>1h</span>
+                    </div>
+                  </div>
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>
+                  <div className="notify_wrapper">
+                    <i><img src={Images.UserProfile} alt="user Profile"/></i>
+                    <div className="comment_wrapper">
+                      <div className="comment_details">
+                        <h4>Emily replied to your comment</h4>
+                        <p>Thank you!</p>
+                      </div>
+                      <span>1h</span>
+                    </div>
+                  </div>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -288,12 +317,11 @@ const Header = (props) => {
                   {user?.profile_image ? (
                     <img
                       className="img-fluid"
-                      src={baseURL.base + user?.profile_image}
+                      src={baseURL.remote + user?.profile_image}
                       alt={user?.first_name}
                     />
                   ) : (
                     <Icon icon="entypo:user" />
-                    // <Icon className="default_icon" icon="fa:user" />
                   )}
                 </div>
                 <span className="profile_text">
