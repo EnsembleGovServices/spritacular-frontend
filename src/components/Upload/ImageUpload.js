@@ -20,6 +20,7 @@ const ImageUpload = (props) => {
   };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const fileUpload = useCallback(async () => {
+        setError('');
         const formData = new FormData();
         formData.append("profile_image", file);
         await axios.patch(baseURL.api + "/users/user_profile/" + user?.id + "/", formData, {
@@ -43,7 +44,6 @@ const ImageUpload = (props) => {
                     }
                 }
             });
-            setError('');
         }).catch((error) => {
             setError(error.response);
         })
@@ -118,7 +118,7 @@ const ImageUpload = (props) => {
           </>
           ) : (
             <>
-            {progress > "1" ? (
+            {progress > "1" && error?.status !== 400 ? (
               < ProfileLoader />
             ) : (
               <ProfileUploadText />
