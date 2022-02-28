@@ -20,6 +20,8 @@ import Images from "../static/images";
 import { Icon } from "@iconify/react";
 import EquipmentForm from "../components/Observation/EquipmentForm";
 import ObservationLocation from "../components/Observation/ObservationLocation";
+import ObservationImages from "../components/Observation/ObservationImages";
+import ObservationStepImageUpload from "../components/Observation/ObservationStepImageUpload";
 
 
 const UploadObservationsForm = () => {
@@ -82,224 +84,20 @@ const UploadObservationsForm = () => {
                   </Nav>
                 </div>
               </Col>
-              <Col md={9}>
+              {/* <Col md={9}>
                 <UploadObservationsForm />
-              </Col>
+              </Col> */}
               <Col md={7}>
                 <div className="observation-form-right-tab">
                   <TabContent activeTab={activeTab}>
                     <TabPane tabId="1">
-                      <Row>
-                        <Col sm="12">
-                          <div className="upload-observation-main">
-                            <div className="upload-ob-inner">
-                              <Form>
-                                <FormGroup>
-                                  <Label for="UploadFile">
-                                    <div className="upload-info">
-                                      <img
-                                        src={Images.UploadPlaceholder}
-                                        alt="UploadPlaceholder"
-                                      />
-                                      <p>
-                                        Drag and drop images or click to upload
-                                      </p>
-                                      <span>Max. Image Size: 5MB</span>
-                                      <ul>
-                                        <li>
-                                          Common Image File Formats (JPEG or
-                                          JPG, PNG, TIFF)
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </Label>
-                                  <Input
-                                    type="file"
-                                    name="file"
-                                    id="UploadFile"
-                                  />
-                                </FormGroup>
-                              </Form>
-                            </div>
-                          </div>
-                          {/*<Button disabled className="cnt-btn">Continue</Button>*/}
-                          <div className="upload-multiple-observation">
-                            <Form>
-                              <Row>
-                                <Col sm="12">
-                                  <FormGroup className="d-flex align-items-center">
-                                    <input
-                                      id="checkbox"
-                                      type="checkbox"
-                                      className="checkbox hidden"
-                                    />
-                                    <label
-                                      className="switchbox"
-                                      for="checkbox"
-                                    />
-                                    <span>
-                                      Multiple Observations (limit to 3)
-                                    </span>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="12">
-                                  <FormGroup className="mb-1">
-                                    <p className="fw-bold">
-                                      Please choose the appropriate category
-                                    </p>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="12">
-                                  <div className="observation-image position-relative">
-                                    <Button className="bg-transparent text-black border-0 shadow-none p-0 position-absolute"><Icon icon="ci:close-big" /></Button>
-                                    <img
-                                      src={Images.ObservationImageOne}
-                                      alt="Bluejet"
-                                    />
-                                  </div>
-                                </Col>
-                                <Col sm="6">
-                                  <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                      <div className="inputGroup">
-                                        <input
-                                          id="sprite"
-                                          name="option1"
-                                          type="checkbox"
-                                        />
-                                        <label for="sprite">
-                                          <img
-                                            src={Images.SpriteOb}
-                                            alt="Sprite"
-                                          />
-                                          Sprite
-                                        </label>
-                                      </div>
-                                    </div>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="6">
-                                  <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                      <div className="inputGroup">
-                                        <input
-                                          id="blue-jet"
-                                          name="BlueJet"
-                                          type="checkbox"
-                                        />
-                                        <label for="blue-jet">
-                                          <img
-                                            src={Images.Bluejet}
-                                            alt="Bluejet"
-                                          />
-                                          Blue Jet
-                                        </label>
-                                      </div>
-                                    </div>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="6">
-                                  <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                      <div className="inputGroup">
-                                        <input
-                                          id="elve"
-                                          name="Elve"
-                                          type="checkbox"
-                                        />
-                                        <label for="elve">
-                                          <img src={Images.Elev} alt="Elve" />
-                                          Elve
-                                        </label>
-                                      </div>
-                                    </div>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="6">
-                                  <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                      <div className="inputGroup">
-                                        <input
-                                          id="halo"
-                                          name="Halo"
-                                          type="checkbox"
-                                        />
-                                        <label for="halo">
-                                          <img src={Images.Halo} alt=" Halo" />
-                                          Halo
-                                        </label>
-                                      </div>
-                                    </div>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="6">
-                                  <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                      <div className="inputGroup">
-                                        <input
-                                          id="gigantic-jet"
-                                          name="Gigantic Jet"
-                                          type="checkbox"
-                                        />
-                                        <label for="gigantic-jet">
-                                          <img
-                                            src={Images.GiganticJet}
-                                            alt="Sprite"
-                                          />
-                                          Gigantic Jet
-                                        </label>
-                                      </div>
-                                    </div>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="6">
-                                  <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                      <div className="inputGroup">
-                                        <input
-                                          id="secondary-jet"
-                                          name="Secondary Jet"
-                                          type="checkbox"
-                                        />
-                                        <label for="secondary-jet">
-                                          <img
-                                            src={Images.SecondaryJet}
-                                            alt="Secondary Jet"
-                                          />
-                                          Secondary Jet
-                                        </label>
-                                      </div>
-                                    </div>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="12">
-                                  <FormGroup check>
-                                    <Label check>
-                                        <Input
-                                          required
-                                          type="checkbox"
-                                          name="agreeTerms"
-                                        />
-                                        Other
-                                    </Label>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="12">
-                                  <Button type="submit">Continue</Button>
-                                </Col>
-                              </Row>
-                            </Form>
-                          </div>
-                        </Col>
-                      </Row>
+                      <ObservationStepImageUpload />
                     </TabPane>
                     <TabPane tabId="2">
                       <ObservationLocation />
                     </TabPane>
                     <TabPane tabId="3">
-                      <Row>
-                        <EquipmentForm />
-                      </Row>
+                      <EquipmentForm />
                     </TabPane>
                   </TabContent>
                 </div>

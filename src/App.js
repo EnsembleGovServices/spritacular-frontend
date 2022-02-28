@@ -3,6 +3,9 @@ import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
 
 import { Suspense, lazy } from 'react';
+import EquipmentForm from "./components/Observation/EquipmentForm";
+import EquipmentDetails from "./components/Observation/EquipmentDetails";
+import ObservationLocation from "./components/Observation/ObservationLocation";
 
 const PersistLogin = lazy(()=> import('./layouts/PersistLogin'));
 const RequireAuth = lazy(()=> import('./layouts/RequireAuth'));

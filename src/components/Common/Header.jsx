@@ -115,7 +115,7 @@ const Header = (props) => {
               {persist ? (
                 <NavItem>
                   <Link
-                    to="/"
+                    to="/observations-form"
                     title="My Observations"
                     className="nav-link text-capitalize"
                   >
