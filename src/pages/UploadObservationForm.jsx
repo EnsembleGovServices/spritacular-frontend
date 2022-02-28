@@ -17,6 +17,11 @@ import classnames from "classnames";
 import { useState } from "react";
 import "../assets/scss/component/uploadobservationform.scss";
 import Images from "../static/images";
+import { Icon } from "@iconify/react";
+import EquipmentForm from "../components/Observation/EquipmentForm";
+import ObservationLocation from "../components/Observation/ObservationLocation";
+
+
 const UploadObservationsForm = () => {
   const [activeTab, setActiveTab] = useState("1");
   const toggleTab = (tab) => {
@@ -41,7 +46,7 @@ const UploadObservationsForm = () => {
         <div className="upload-observation-form-inner">
           <Container>
             <Row>
-              <Col md={4}>
+              <Col md={3}>
                 <div className="observation-form-left-tab">
                   <Nav tabs className="flex-column">
                     <NavItem>
@@ -77,7 +82,10 @@ const UploadObservationsForm = () => {
                   </Nav>
                 </div>
               </Col>
-              <Col md={8}>
+              <Col md={9}>
+                <UploadObservationsForm />
+              </Col>
+              <Col md={7}>
                 <div className="observation-form-right-tab">
                   <TabContent activeTab={activeTab}>
                     <TabPane tabId="1">
@@ -142,7 +150,8 @@ const UploadObservationsForm = () => {
                                   </FormGroup>
                                 </Col>
                                 <Col sm="12">
-                                  <div className="observation-image">
+                                  <div className="observation-image position-relative">
+                                    <Button className="bg-transparent text-black border-0 shadow-none p-0 position-absolute"><Icon icon="ci:close-big" /></Button>
                                     <img
                                       src={Images.ObservationImageOne}
                                       alt="Bluejet"
@@ -263,6 +272,21 @@ const UploadObservationsForm = () => {
                                     </div>
                                   </FormGroup>
                                 </Col>
+                                <Col sm="12">
+                                  <FormGroup check>
+                                    <Label check>
+                                        <Input
+                                          required
+                                          type="checkbox"
+                                          name="agreeTerms"
+                                        />
+                                        Other
+                                    </Label>
+                                  </FormGroup>
+                                </Col>
+                                <Col sm="12">
+                                  <Button type="submit">Continue</Button>
+                                </Col>
                               </Row>
                             </Form>
                           </div>
@@ -270,32 +294,21 @@ const UploadObservationsForm = () => {
                       </Row>
                     </TabPane>
                     <TabPane tabId="2">
-                      <Row>
-                        <Col sm="12">
-                          <h4>Camera Settings</h4>
-                        </Col>
-                      </Row>
-                      <Form>
-                        <Row>
-                          <Col md="12">Camera Seeting</Col>
-                        </Row>
-
-                        <FormGroup className="profile-bottom-btn ">
-                          <Button className="discard-btn">Discard</Button>
-                          <Button className="save-btn">Save Changes</Button>
-                        </FormGroup>
-                      </Form>
+                      <ObservationLocation />
                     </TabPane>
                     <TabPane tabId="3">
                       <Row>
-                        <Col sm="12">
-                          <h4>Change Password</h4>
-                        </Col>
-                        <Col md="12">Change Password</Col>
+                        <EquipmentForm />
                       </Row>
                     </TabPane>
                   </TabContent>
                 </div>
+              </Col>
+              <Col md={2}>
+                <img
+                  src={Images.ObservationImageOne}
+                  alt="Bluejet"
+                />
               </Col>
             </Row>
           </Container>
