@@ -370,13 +370,13 @@ const Header = (props) => {
         />
       )}
 
-      {/*{auth?.user?.is_first_login && (*/}
+      {auth?.user?.is_first_login && (
         <UserProfilePopup
           open={showUserProfilePopup}
           handleClose={handleUserProfilePopup}
           data={auth}
         />
-      {/*)}*/}
+      )}
     </>
   );
 };
