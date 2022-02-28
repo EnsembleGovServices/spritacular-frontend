@@ -214,15 +214,18 @@
     display: flex;
     justify-content: space-between;
     .btn {
-      @include btn-bg;
-      color: #3b3b3b;
-      &:hover {
-        background-color: $admin-btn-bg;
+      @include grayButton;
+      margin-right: 15px;
+      padding: 9px 34px;
+      @include md-text;
+      &.disabled{
+        @include disabled;
       }
     }
-    .top-right-btn {
-      .btn {
-        margin-right: 15px;
+    .top-right-btn{
+      .btn{
+        padding: 9px 20px;
+        min-width: 137px;
       }
     }
   }
