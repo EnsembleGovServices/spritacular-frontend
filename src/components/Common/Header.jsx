@@ -224,7 +224,7 @@ const Header = (props) => {
             </NavItem>
             {!persist ? (
               <>
-              <NavItem className="d-md-none d-xs-block">
+              <NavItem className="open-modal-btn">
                 <Button
                   className="register nav-link"
                   onClick={() => handleRegisterModal()}
@@ -232,7 +232,7 @@ const Header = (props) => {
                   Register
                 </Button>
               </NavItem>
-              <NavItem className="d-md-none d-xs-block">
+              <NavItem className="open-modal-btn">
                 <Button
                   className="nav-link login-btn"
                   onClick={() => handleLoginModal()}

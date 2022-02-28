@@ -10,6 +10,7 @@ const Home = lazy(()=> import('./pages/Home'));
 const About = lazy(()=> import('./pages/About'));
 const GetStarted = lazy(()=> import('./pages/GetStarted'));
 const Blog = lazy(()=> import('./pages/Blog'));
+const Tutorials = lazy(()=> import('./pages/Tutorials'));
 const TutorialsDetail = lazy(()=> import('./pages/TutorialsDetail'));
 
 const UploadObservations = lazy(()=> import('./pages/UploadObservations'));
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="about" element={<Suspense fallback={''}><About /></Suspense>} />
         <Route path="get-started" element={<Suspense fallback={''}><GetStarted /></Suspense>} />
         <Route path="blog" element={<Suspense fallback={''}><Blog /></Suspense>} />
+        <Route path="tutorials" element={<Suspense fallback={''}><Tutorials /></Suspense>} />
         <Route path="tutorials-detail" element={<Suspense fallback={''}><TutorialsDetail /></Suspense>} />
         <Route path="observations-form" element={<Suspense fallback={''}><UploadObservationsForm /></Suspense>} />
         <Route path="upload-observations" element={<Suspense fallback={''}><UploadObservations /></Suspense>} />

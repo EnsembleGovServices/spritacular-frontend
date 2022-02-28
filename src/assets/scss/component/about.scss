@@ -56,18 +56,14 @@
               color: $white;
             }
             .contact-btn {
-              background-color: $white;
-              color: $secondary;
               @include lg-text;
               margin-top: 35px;
               padding: 12px 35px;
               font-weight: 500;
-              border:1px solid $secondary;
               box-shadow: none;
-              &:hover{
-                  background-color: $secondary;
-                  color: $white;
-              }
+              @include buttonOutlineSecodary;
+              border-color: $white;
+              box-shadow: 0px 6px 10px rgba(153, 0, 0, 0.16);
             }
           }
     }

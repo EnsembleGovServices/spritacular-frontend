@@ -37,10 +37,16 @@ body.modal-open {
 
 .btn{
   border-radius: 99px;
-  &.disabled{
-    @include disabled;
+  &.btn-secondary{
+    @include buttonSecodary;
+    @include md-text;
+    &.disabled{
+      @include disabled;
+      box-shadow: none;
+    }
   }
 }
+
 // Import any component file here
 
 @import "../component/index.scss";

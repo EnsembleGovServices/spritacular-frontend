@@ -6,12 +6,12 @@ const GetStarted = () => {
     <>
       <div className="get-started-section">
         <div className="top-polygone">
-          <img src={Images.Topimage} alt="" />
+          <img src={Images.Topimage} alt="Shape" />
         </div>
         <Container>
           <Row className="align-items-center">
             <div className="top-text-polygon">
-              <img src={Images.Observepolygon} alt="" />
+              <img src={Images.Observepolygon} alt="Shape" />
             </div>
             <Col md={6} xs={12} className="works-gap">
               <div className="how-it-work-text-info">
@@ -25,7 +25,7 @@ const GetStarted = () => {
               <Button className="get-start">Get Started</Button>
             </Col>
             <div className="bottom-text-polygon">
-              <img src={Images.Observepolygon} alt="" />
+              <img src={Images.Observepolygon} alt="Shape" />
             </div>
           </Row>
         </Container>

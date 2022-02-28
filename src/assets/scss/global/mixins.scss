@@ -175,3 +175,48 @@
   color: $white;
   opacity: 1;
 }
+
+@mixin buttonOutlinePrimary{
+  background: $secondary;
+  border: 1px solid $white;
+  color: $white;
+  &:hover{
+    color: $white;
+    background: $secondary;
+    border-color: $secondary;
+  }
+}
+
+@mixin buttonSecodary{
+  background: $secondary;
+  border: 1px solid $secondary;
+  color: $white;
+  box-shadow: $box-shadow-button;
+  &:hover{
+    color: $secondary;
+    background: $white;
+    border-color: $secondary;
+  }
+}
+@mixin buttonOutlineSecodary{
+  color: $secondary;
+  background: $white;
+  border: 1px solid $secondary;
+  &:hover{
+    background: $secondary;
+    border-color: $secondary;
+    color: $white;
+  }
+}
+
+@mixin grayButton{
+  color: $gray1;
+  background: $white;
+  border: 1px solid $gray2;
+  box-shadow: none;
+  &:hover{
+    background: $gray1;
+    border-color: $gray1;
+    color: $white;
+  }
+}

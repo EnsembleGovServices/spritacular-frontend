@@ -77,20 +77,14 @@
             }
 
             .modal-btn {
-                color: $white;
                 @include md-text;
                 width: 100%;
-                box-shadow: none;
                 margin-top: 20px;
                 padding: 12px 15px;
                 font-weight: 500;
                 letter-spacing: 0.5px;
-
-                &:hover {
-                    background-color: $secondary;
-                    border: 1px solid $secondary;
-                    color: $white;
-                }
+                // @include buttonSecodary;
+                // box-shadow: $box-shadow-button;
             }
 
             .form-check {
@@ -147,13 +141,13 @@
             }
 
             .bg-modal-btn {
-                background-color: $secondary;
-                color: $white;
+                // background-color: $secondary;
+                // color: $white;
                 @include md-text;
                 font-weight: 500;
                 padding: 12px 35px;
                 border-radius: 25px;
-                border: 1px solid $secondary;
+                // border: 1px solid $secondary;
 
             }
 

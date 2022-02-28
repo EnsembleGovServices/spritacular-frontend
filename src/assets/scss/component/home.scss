@@ -49,53 +49,32 @@
       margin: 0 auto;
       text-align: center;
       h2 {
-        // font-size: 48px;
-        // line-height: 56px;
         @include xl-title;
         color: $white;
         font-weight: 700;
         margin: 0px;
-
-        @media (max-width: 1023px) {
-          // font-size: 36px;
-          // line-height: 40px;
-        }
       }
       p {
         @include xl-text;
         color: $white;
-        // font-size:18px;
-        // line-height: 24px;
         margin: 20px 0px 0px 0px;
-        @media (max-width: 1023px) {
-          // font-size: 15px;
-        }
       }
       .explore-btn {
-        background-color: $white;
         padding: 12px 25px;
-        color: $secondary;
-        // font-size: 18px;
-        // line-height: 26px;
         @include xl-text;
         text-transform: capitalize;
         max-width: 161px;
         display: block;
         margin: 0 auto;
         margin-top: 70px;
-        border: 1px solid $white;
         transition: all 0.3s ease 0s;
         font-weight: 600;
+        @include buttonOutlineSecodary;
         @media (max-width: 1023px) {
           margin-top: 40px;
         }
         @media (max-width: 767px) {
           margin-top: 30px;
-        }
-        &:hover {
-          background-color: $secondary;
-          color: $white;
-          border: 1px solid $secondary;
         }
       }
     }
@@ -120,23 +99,12 @@
       h3 {
         margin: 0px;
         font-weight: 900;
-        //   font-size: 42px;
-        //   line-height: 49px;
         @include lg-title;
-        @media (max-width: 1023px) {
-          //   font-size: 32px;
-          //   line-height: 35px;
-        }
       }
       p {
         @include lg-text;
-        //   font-size: 16px;
-        //   line-height: 26px;
         margin: 0px;
         color: #555555;
-        @media (max-width: 1023px) {
-          // font-size: 14px;
-        }
       }
     }
   }
@@ -172,15 +140,9 @@
   h2 {
     text-align: center;
     margin-bottom: 75px;
-    // font-size: 48px;
-    // line-height: 56px;
     font-weight: bold;
     @include xl-title;
     color: #181818;
-    @media (max-width: 1023px) {
-      // font-size: 36px;
-      // line-height: 40px;
-    }
   }
   .top-polygone {
     img {
@@ -216,18 +178,12 @@
     flex-direction: column;
     justify-content: center;
     h3 {
-      //   font-size: 42px;
-      //   line-height: 49px;
       @include lg-title;
       color: #000000;
       font-weight: 700;
       margin: 0px;
       display: flex;
       align-items: center;
-      @media (max-width: 1023px) {
-        //   font-size: 30px;
-        //   line-height: 35px;
-      }
 
       span {
         background-color: #c11e37;
@@ -235,7 +191,6 @@
         width: 46px;
         border-radius: 50%;
         @include vcenter;
-        //   font-size: 24px;
         @include sm-title;
         font-weight: normal;
         color: #fff;
@@ -244,21 +199,14 @@
         @media (max-width: 1023px) {
           height: 35px;
           width: 35px;
-          // font-size: 16px;
           margin-right: 10px;
         }
       }
     }
     p {
       color: #666;
-      //   font-size: 18px;
-      //   line-height: 26px;
       @include xl-text;
       margin: 24px 0px 0px 0px;
-      @media (max-width: 1023px) {
-        //   font-size: 15px;
-        //   margin-top: 15px;
-      }
     }
     .register-polygon {
       right: 20%;
@@ -338,7 +286,6 @@
 .map_section {
   position: relative;
   .map_inner {
-    // padding-top: 3%;
     background: url("../../images/map.png") no-repeat center;
     background-size: 63%;
     height: 690px;
@@ -368,26 +315,8 @@
     -webkit-clip-path: polygon(0 0, 100% 9%, 100% 10%, 0 10%);
     clip-path: polygon(0 0, 100% 9%, 100% 10%, 0 10%);
     z-index: 10;
-    // @media (max-width: 1200px){
-    //     top: -38px;
-    // }
-    // @media (max-width: 767px){
-    //     top: -55px;
-    // }
   }
   &::after {
-    /*content: "";
-        display: block;
-        background: $black;
-        width: 100%;
-        height: 100%;
-        -webkit-clip-path: polygon(0 92%, 100% 92%, 100% 100%, 0 93%);
-        clip-path: polygon(0 92%, 100% 92%, 100% 100%, 0 93%);
-        position: absolute;
-        bottom: -7.5%;
-        left: 0;
-        right: 0;
-        z-index: 10;*/
         content: "";
         width: 100%;
         height: 100%;
@@ -398,12 +327,6 @@
         background-color: #fff;
         -webkit-clip-path: polygon(100% 90%, 0% 100%, 100% 100%);
         clip-path: polygon(100% 90%, 0% 100%, 100% 100%);
-    // @media (max-width: 1200px){
-    //     bottom: -30px;
-    // }
-    // @media (max-width: 767px){
-    //     bottom: -42px;
-    // }
   }
 }
 .obervation-card_wrapper {
@@ -461,13 +384,10 @@
   }
   .get-start {
     padding: 15px 45px;
-    box-shadow: 0px 6px 10px rgba(153, 0, 0, 0.16);
+    box-shadow: $box-shadow-button;
     border-radius: 30px;
-    &:hover {
-      background-color: $white;
-      color: $secondary;
-      border: 1px solid $secondary;
-    }
+    @include buttonSecodary;
+    @include xl-text;
   }
   .top-text-polygon {
     img {

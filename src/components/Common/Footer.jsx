@@ -42,7 +42,7 @@ const Footer = () => {
                         <Link
                           to={"/"}
                           className="d-inline-block mb-4"
-                          title="Discover Now"
+                          title="What is Spritacular?"
                         >
                           What is Spritacular?
                         </Link>
@@ -51,7 +51,7 @@ const Footer = () => {
                         <Link
                           to={"/"}
                           className="d-inline-block mb-4"
-                          title="Our Story"
+                          title="Policy"
                         >
                           Policy
                         </Link>
@@ -60,7 +60,7 @@ const Footer = () => {
                         <Link
                           to={"/"}
                           className="d-inline-block mb-4"
-                          title="FAQ"
+                          title="Code of Conduct"
                         >
                           Code of Conduct
                         </Link>
@@ -73,7 +73,7 @@ const Footer = () => {
                         <Link
                           to={"/"}
                           className="d-inline-block mb-4"
-                          title="About Us"
+                          title="Get Started"
                         >
                           Get Started
                         </Link>
@@ -92,18 +92,18 @@ const Footer = () => {
                       <h6>Resources</h6>
                       <li>
                         <Link
-                          to={"/"}
+                          to={"/blog"}
                           className="d-inline-block mb-4"
-                          title="About Us"
+                          title="Blog"
                         >
                           Blog
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to={"/"}
+                          to={"/tutorials"}
                           className="d-inline-block mb-4"
-                          title="Gallery"
+                          title="Tutorials"
                         >
                           Tutorials
                         </Link>
@@ -117,7 +117,7 @@ const Footer = () => {
                         <Link
                           to={"/"}
                           className="d-inline-block mb-4"
-                          title="Blog"
+                          title="Meet the Team"
                         >
                           Meet the Team
                         </Link>
@@ -126,7 +126,7 @@ const Footer = () => {
                         <Link
                           to={"/"}
                           className="d-inline-block mb-4"
-                          title="Verify"
+                          title="Volunteer Profiles"
                         >
                           Volunteer Profiles
                         </Link>
@@ -135,7 +135,7 @@ const Footer = () => {
                         <Link
                           to={"/"}
                           className="d-inline-block mb-4"
-                          title="Register"
+                          title="Become an Ambassador"
                         >
                           Become an Ambassador
                         </Link>
@@ -144,7 +144,7 @@ const Footer = () => {
                         <Link
                           to={"/"}
                           className="d-inline-block mb-4"
-                          title="Register"
+                          title="Join Spritacular Google Group"
                         >
                           Join Spritacular Google Group
                         </Link>

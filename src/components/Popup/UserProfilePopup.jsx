@@ -67,7 +67,7 @@ const UserProfilePopup = (props) => {
               <Link
                 to="/profile"
                 onClick={() => handleClose()}
-                className="bg-modal-btn d-inline-block mt-2"
+                className="btn btn-secondary bg-modal-btn d-inline-block mt-2"
               >
                 Continue
               </Link>
