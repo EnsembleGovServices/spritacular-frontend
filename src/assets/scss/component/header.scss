@@ -98,12 +98,10 @@
     .nav-link {
       color: $white;
       padding: 0;
-      // font-size: 15px;
-      // line-height: 18px;
       @include lg-text;
       font-weight: 500;
       position: relative;
-      &:hover {
+      &:hover,  &:focus {
         color: $white;
         &:after {
           content: "";
