@@ -37,18 +37,17 @@ body.modal-open {
 
 .btn{
   border-radius: 99px;
-  &.btn-secondary{
-    @include buttonSecodary;
-    @include md-text;
-    &.disabled{
-      @include disabled;
-      box-shadow: none;
-    }
+  &.disabled{
+    @include disabled;
   }
 }
 
 .form-control, .form-select{
   @include formField;
+}
+.counter {
+  font-size: 35px;
+  font-weight: $font-weight-bolder;
 }
 // Import any component file here
 
