@@ -41,6 +41,10 @@ body.modal-open {
     @include disabled;
   }
 }
+.counter {
+  font-size: 35px;
+  font-weight: $font-weight-bolder;
+}
 // Import any component file here
 
 @import "../component/index.scss";
