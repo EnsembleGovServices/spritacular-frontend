@@ -3,7 +3,6 @@ import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
 
 import { Suspense, lazy } from 'react';
-import AddObservation from "./pages/Observation/AddObservation";
 
 const PersistLogin = lazy(()=> import('./layouts/PersistLogin'));
 const RequireAuth = lazy(()=> import('./layouts/RequireAuth'));
@@ -20,12 +19,12 @@ const LoginPage = lazy(()=> import('./pages/Auth/LoginPage'));
 //Protected Pages
 const Profile = lazy(()=> import('./pages/Profile'));
 
+const Observations = lazy(()=> import('./pages/Observation/Observations'));
+const AddObservation = lazy(()=> import('./pages/Observation/AddObservation'));
 const MyObservations = lazy(()=> import('./pages/Observation/MyObservations'));
 
+
 const UploadObservations = lazy(()=> import('./pages/UploadObservations'));
-const UploadObservationsForm = lazy(()=> import('./pages/UploadObservationForm'));
-
-
 
 
 const App = () => {
@@ -45,8 +44,10 @@ const App = () => {
         {/*Protected routes*/}
         <Route element={<Suspense fallback={''}><RequireAuth /></Suspense>}>
           <Route path="profile" element={<Suspense fallback={''}><Profile /></Suspense>} />
-          <Route path="observations" element={<Suspense fallback={''}><MyObservations /></Suspense>} />
-          <Route path="observations/add" element={<Suspense fallback={''}><AddObservation /></Suspense>} />
+          <Route element={<Suspense fallback={''}><Observations /></Suspense>}>
+            <Route path="observations" element={<Suspense fallback={''}><MyObservations /></Suspense>} />
+            <Route path="observations/add" element={<Suspense fallback={''}><AddObservation /></Suspense>} />
+          </Route>
         </Route>
         {/*</Route>*/}
         <Route path="*" element={<Suspense fallback={''}><Error /></Suspense>} />

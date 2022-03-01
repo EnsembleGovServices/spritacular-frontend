@@ -2,24 +2,22 @@ import {Button, Col, Container, Form, Nav, NavItem, NavLink, Row, TabContent, Ta
 import "../../assets/scss/component/uploadobservationform.scss";
 import {useEffect, useState} from "react";
 import {Tabs} from "../../helpers/observation";
+
 import ObservationUploadImg from "../../components/Observation/ObservationUploadImg";
 import ObservationLocation from "../../components/Observation/ObservationLocation";
 import EquipmentDetails from "../../components/Observation/EquipmentDetails";
 import ObservationUploadedImg from "../../components/Observation/ObservationUploadedImg";
 import ObservationImages from "../../components/Observation/ObservationImages";
 import ObservationProgress from "../../components/Observation/ObservationProgress";
+import useObservations from "../../hooks/useObservations";
 
 const AddObservation = () => {
-    const [activeTab, setActiveTab] = useState("ObservationImages");
-    const [step, setStep] = useState({
-        total: 3,
-        active: 1
-    });
-
+    const {observationSteps, setObservationSteps, observationImages} = useObservations();
+    const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
+    const [isMultiple] = useState(true);
 
     // Toggle Tabs
     const toggleTab = (tab) => {
-        console.log(activeTab);
         if (activeTab !== tab) {
             setActiveTab(tab);
         }
@@ -36,18 +34,16 @@ const AddObservation = () => {
                 return 3;
             }
         }
-        setStep(prev => {
+        setObservationSteps(prev => {
             return {
                 ...prev,
                 active: setActiveTabForProgressBar()
             }
         });
 
-    }, [activeTab]);
-
+    }, [activeTab, setObservationSteps]);
 
     return(
-        <>
           <Form className="observation-form upload-observation-form-main">
               <div className="common-top-button-wrapper">
                   <Container>
@@ -60,12 +56,11 @@ const AddObservation = () => {
                       </div>
                   </Container>
               </div>
-
               <section className="upload-observation-form-inner">
                   <Container>
                       <Row>
                           <Col md={3}>
-                              <ObservationProgress step={step}/>
+                              <ObservationProgress step={observationSteps}/>
                               <div className="observation-form-left-tab">
                                   <Nav tabs className="flex-column">
                                       <NavItem>
@@ -101,33 +96,37 @@ const AddObservation = () => {
                                   </Nav>
                               </div>
                           </Col>
-                          <Col md={7}>
+                          <Col md={observationImages?.length > 0 ? 7 : 9}>
                               <div className="observation-form-right-tab">
                                   <TabContent activeTab={activeTab}>
                                       <TabPane tabId={Tabs.ObservationImages}>
-                                          <ObservationUploadImg />
-
-                                          <div className="upload-multiple-observation">
-                                              <ObservationImages toggleTab = {toggleTab}/>
-                                          </div>
+                                          {observationImages.length < 1 ?
+                                              <ObservationUploadImg multiple={isMultiple}/> :
+                                              (
+                                                  <div className="upload-multiple-observation">
+                                                      <ObservationImages toggleTab={toggleTab}/>
+                                                  </div>
+                                              )
+                                          }
                                       </TabPane>
                                       <TabPane tabId={Tabs.DateTimeLocation}>
-                                          <ObservationLocation  toggleTab = {toggleTab}/>
+                                          <ObservationLocation  toggleTab={toggleTab}/>
                                       </TabPane>
                                       <TabPane tabId={Tabs.EquipmentDetails}>
-                                          <EquipmentDetails toggleTab = {toggleTab}/>
+                                          <EquipmentDetails toggleTab={toggleTab}/>
                                       </TabPane>
                                   </TabContent>
                               </div>
                           </Col>
-                          <Col md={2}>
-                            <ObservationUploadedImg />
-                          </Col>
+                          {observationImages.length > 0 &&
+                              <Col md={2}>
+                                  <ObservationUploadedImg />
+                              </Col>
+                          }
                       </Row>
                   </Container>
               </section>
           </Form>
-      </>
   )
 }
 export default AddObservation;

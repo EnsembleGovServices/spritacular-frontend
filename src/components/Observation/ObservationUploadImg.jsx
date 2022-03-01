@@ -1,7 +1,17 @@
 import { Row, Col, FormGroup,Button, Input,Label } from "reactstrap";
 import Images from "../../static/images";
-// import "../../assets/scss/component/uploadobservationform.scss";
-const ObservationUploadImg = () =>{
+import useObservations from "../../hooks/useObservations";
+
+const ObservationUploadImg = (props) =>{
+    const {multiple}=props;
+    const {setObservationImages} = useObservations();
+
+    const handleObservationUploadImage = (e) => {
+        const file = multiple ? e.target.files : e.target.files[0];
+        console.log(file);
+        setObservationImages(file);
+    };
+
     return (
         <>
             <Row>
@@ -31,6 +41,8 @@ const ObservationUploadImg = () =>{
                           type="file"
                           name="file"
                           id="UploadFile"
+                          multiple={multiple}
+                          onChange={(e)=> handleObservationUploadImage(e)}
                         />
                       </FormGroup>
                   </div>

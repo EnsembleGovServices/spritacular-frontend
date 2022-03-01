@@ -1,7 +1,7 @@
 import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
 import Images from "../../static/images";
-import { Suspense, lazy, useEffect, useState } from 'react';
-import Autocomplete from 'react-google-autocomplete';
+import { lazy, useState } from 'react';
+// import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 
 const HomeMapSection = lazy(()=> import('../Observation/../Home/HomeMapSection'))

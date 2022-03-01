@@ -1,4 +1,4 @@
-import {Container} from 'reactstrap';
+//import {Container} from 'reactstrap';
 // import HomeObservationCard from './HomeObservationCard';
 // const HomeMapSection = () => {
 //     return(
@@ -19,14 +19,6 @@ import {Container} from 'reactstrap';
 // }
 
 // export default HomeMapSection;
-
-
-
-
-
-
-
-
 
 
 
