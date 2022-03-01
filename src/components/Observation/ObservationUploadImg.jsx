@@ -1,5 +1,4 @@
 import { Row, Col, FormGroup,Button, Input,Label } from "reactstrap";
-import ObservationImages from "./ObservationImages";
 import Images from "../../static/images";
 // import "../../assets/scss/component/uploadobservationform.scss";
 const ObservationUploadImg = () =>{

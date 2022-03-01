@@ -15,8 +15,6 @@ const AddObservation = () => {
         total: 3,
         active: 1
     });
-    const [uploadedImg, setUploadedImg] = useState(null);
-
 
 
     // Toggle Tabs
