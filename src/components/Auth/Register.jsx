@@ -99,9 +99,6 @@ const Register = (props) => {
         localStorage.setItem("persist", persist);
     }, [persist])
 
-    const handleLoginModalClick= () => {
-        handleLogin();
-    }
     return(
         <>
             {success && (
