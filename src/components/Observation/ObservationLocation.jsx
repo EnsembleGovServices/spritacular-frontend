@@ -1,17 +1,51 @@
 import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
 import Images from "../../static/images";
+import { Suspense, lazy, useEffect, useState } from 'react';
+import Autocomplete from 'react-google-autocomplete';
 
-const ObservationLocation = () => {
+const HomeMapSection = lazy(()=> import('../Observation/../Home/HomeMapSection'))
+
+const ObservationLocation = (props) => {
+    const { toggleTab } = props;
+    const [address,setAddress] = useState();
+    const [lat,setLat] = useState(18.5204);
+    const [lng,setLng] = useState(73.8567);
+    // const [updateMap,setUpdateMap] = useState({
+    //     lat:18.5204,
+    //     lng:73.8567
+    // });
+    const [updateMap,setUpdateMap] = useState(false);
+    const handleValue = (value) => {
+        setAddress(value);
+    }
+    const handleChangeLat = (e) => {
+        setLat(e.target.value);
+        setUpdateMap({...updateMap,'lat': e.target.value});
+        setUpdateMap(true);
+    }
+    const handleChangeLng = (e) => {
+        setLng(e.target.value);
+        setUpdateMap({...updateMap,'lng' : e.target.value});
+        setUpdateMap(true);
+    }
+    // console.log(lat);
     return (
         <>
             <Col md="12">
                 <FormGroup>
                     <h6>Where did you make the observation?</h6>
-                    <Input
+                    <HomeMapSection
+					google={props.google}
+					center={{lat: lat, lng: lng}}
+					height='300px'
+					zoom={15}
+                    handleState={handleValue}                    
+				/>
+                    {/* <Input
                         type="search"
                         name="name"
                         placeholder="Edmon, OK, USA"
-                    />
+                    /> */}
                 </FormGroup>
             </Col>
             <Col md="12">
@@ -21,24 +55,28 @@ const ObservationLocation = () => {
                         <Col md={4}>
                             <Label htmlFor="LAT">LAT</Label>
                             <Input
+                            value={address?.markerPosition?.lat}
                                 id="LAT"
-                                type="search"
+                                type="textbox"
                                 name="LAT"
                                 placeholder="Edmon, OK, USA"
+                                onChange={handleChangeLat}
                             />
                         </Col>
                         <Col md={4}>
                             <Label htmlFor="LAT">LON</Label>
                             <Input
+                            value={address?.markerPosition?.lng}
                                 id="LON"
                                 type="search"
                                 name="LON"
                                 placeholder="Edmon, OK, USA"
+                                onChange={handleChangeLng}
                             />
                         </Col>
                         <Col md={4}>
                             <div>
-                                <img src={Images.Flag} alt="USA Flag"/> Edmon, OK, USA
+                                <img src={Images.Flag} alt="USA Flag"/> {address?.address}
                             </div>
                         </Col>
                     </Row>
@@ -123,8 +161,8 @@ const ObservationLocation = () => {
                     </FormGroup>
                 </FormGroup>
                 <FormGroup className="profile-bottom-btn ">
-                    <Button className="discard-btn me-2">Back</Button>
-                    <Button className="save-btn">Continue</Button>
+                    <Button className="discard-btn me-2" onClick={() => toggleTab('1')}>Back</Button>
+                    <Button className="save-btn" onClick={() => toggleTab('3')}>Continue</Button>
                 </FormGroup>
             </Col>
         </>

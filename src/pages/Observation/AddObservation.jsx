@@ -10,6 +10,7 @@ const AddObservation = () => {
     const [activeTab, setActiveTab] = useState("ObservationImages");
 
     const toggleTab = (tab) => {
+        console.log(activeTab);
         if (activeTab !== tab) {
             setActiveTab(tab);
         }

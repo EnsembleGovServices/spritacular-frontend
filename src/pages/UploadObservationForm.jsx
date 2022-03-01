@@ -88,7 +88,7 @@ const UploadObservationsForm = () => {
                       <ObservationStepImageUpload />
                     </TabPane>
                     <TabPane tabId="2">
-                      <ObservationLocation />
+                      <ObservationLocation  toggleTab = {toggleTab}/>
                     </TabPane>
                     <TabPane tabId="3">
                       <EquipmentDetails />
