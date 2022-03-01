@@ -13,18 +13,20 @@
       border-bottom: none;
       .nav-item {
         .nav-link {
-          background-color: #fdf2f4;
           border-radius: 6px;
           @include lg-text;
           font-weight: 700;
           color: $black;
-          padding: 10px 10px;
-          margin-bottom: 30px;
-          border: 1px solid #fdf2f4;
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 0;
           cursor: pointer;
+          background-color: $white;
+          transition: $modal-transition;
           &:hover,
           &.active {
-            color: $secondary;
+            background-color: $lightPink;
+            color: $primary;
           }
         }
       }
@@ -177,7 +179,7 @@
   padding: 11px 0px;
   top:60px;
   position: sticky;
-  z-index: 9999;
+  z-index: 9;
   margin-bottom: 60px;
   .common-top-button-wrapper-inner {
     display: flex;
