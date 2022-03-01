@@ -30,7 +30,7 @@
       }
     }
   }
-  .observation-form-right-tab {
+  // .observation-form-right-tab {
     .upload-observation-main {
       padding: 0px;
       .upload-ob-inner{
@@ -66,123 +66,84 @@
         margin-top: 60px;
     }
 
-  }
+  // }
   .upload-multiple-observation{
-    .checkbox {
-        & + .switchbox {
-            background: rgba(0, 0, 0, 0.4);
-          border: 1px solid #ccc;
-          border-radius: 20px;
-          cursor: pointer;
-          display: inline-block;
-          height: 20px;
-          overflow: hidden;
-          position: relative;
-          width: 32px;
-          margin-right: 10px;
-          span{
-              @include lg-text;
-          }
-          &:after {
-            background-color: #fff;
-            border-radius: 20px;
-            content: ' ';
-            display: block;
-            height: 18px;
-            width: 18px;
-            position: absolute;
-            right: 36%;
-            transition: all .1s linear;
-          }
-        }
-        &:checked {
-          & + .switchbox {
-            background-color:$secondary;
-            &:after {
-              right: 0%;
-            }
-          }
-        }
-        &.hidden{
-            display: none;
-        } 
-    }
     .inputGroup {
-            background-color: #fff;
-            display: block;
-            margin: 10px 0;
-            position: relative;
-            label {
-              padding: 12px 30px;
-              width: 100%;
-              display:flex;
-              align-items: center;
-              text-align: left;
-              color: $black;
-              @include lg-text;
-              font-weight: 500;
-              cursor: pointer;
-              position: relative;
-              z-index: 2;
-              transition: color 200ms ease-in;
-              overflow: hidden;
-              border:1px solid #CBCFD8;
-              border-radius: 6px;
-              
-              img{
-                margin-right: 10px;
-                width: 25px;
-                height: 25px;
-                object-fit: contain;
-              }
-              &:after {
-                width: 22px;
-                height: 22px;
-                content: '';
-                border: 1px solid #ADB4C2;
-                background-color: #fff;
-                background-image: url("../../images/check-white.svg");
-                background-repeat: no-repeat;
-                background-position: center;
-                background-size: 14px;
-                border-radius: 50%;
-                z-index: 2;
-                position: absolute;
-                right: 30px;
-                top: 50%;
-                transform: translateY(-50%);
-                cursor: pointer;
-                transition: all 200ms ease-in;
-              }
-            }
+      background-color: #fff;
+      display: block;
+      margin: 10px 0;
+      position: relative;
+      label {
+        padding: 12px 30px;
+        width: 100%;
+        display:flex;
+        align-items: center;
+        text-align: left;
+        color: $black;
+        @include lg-text;
+        font-weight: 500;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+        transition: color 200ms ease-in;
+        overflow: hidden;
+        border:1px solid #CBCFD8;
+        border-radius: 6px;
         
-            input:checked ~ label {
-              color: $black;
-              border:1px solid $secondary;
-              background: $lightPink;
-              box-shadow: 0px 4px 8px rgba(193, 30, 55, 0.12);
-              &:before {
-                transform: translate(-50%, -50%) scale3d(56, 56, 1);
-                opacity: 1;
-              }
-        
-              &:after {
-                background-color: #990000;
-                border-color: #990000;
-              }
-            }
-            input {
-              width: 22px;
-              height: 22px;
-              order: 1;
-              z-index: 2;
-              position: absolute;
-              right: 30px;
-              top: 50%;
-              transform: translateY(-50%);
-              cursor: pointer;
-              visibility: hidden;
-            }
+        img{
+          margin-right: 10px;
+          width: 25px;
+          height: 25px;
+          object-fit: contain;
+        }
+        &:after {
+          width: 22px;
+          height: 22px;
+          content: '';
+          border: 1px solid #ADB4C2;
+          background-color: #fff;
+          background-image: url("../../images/check-white.svg");
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 14px;
+          border-radius: 50%;
+          z-index: 2;
+          position: absolute;
+          right: 30px;
+          top: 50%;
+          transform: translateY(-50%);
+          cursor: pointer;
+          transition: all 200ms ease-in;
+        }
+      }
+  
+      input:checked ~ label {
+        color: $black;
+        border:1px solid $secondary;
+        background: $lightPink;
+        box-shadow: 0px 4px 8px rgba(193, 30, 55, 0.12);
+        &:before {
+          transform: translate(-50%, -50%) scale3d(56, 56, 1);
+          opacity: 1;
+        }
+  
+        &:after {
+          background-color: #990000;
+          border-color: #990000;
+        }
+      }
+      input {
+        width: 22px;
+        height: 22px;
+        order: 1;
+        z-index: 2;
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        visibility: hidden;
+      }
     }
     .observation-image{
       max-width: 100%;

@@ -10,7 +10,7 @@ const UploadObservations = () => {
           <div className="upload-ob-inner">
             <Form>
               <FormGroup>
-                <Label for="UploadFile">
+                <Label htmlFor="UploadFile">
                   <div className="upload-info">
                     <img
                       src={Images.UploadPlaceholder}

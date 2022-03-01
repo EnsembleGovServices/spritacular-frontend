@@ -5,15 +5,15 @@ const EquipmentForm = () =>{
         <>
         <Row>
             <Col sm="12">
-                <FormGroup className="d-flex align-items-center">
+                <FormGroup className="d-flex align-items-center position-relative">
                     <input
-                        id="checkbox"
+                        id="checkbox0"
                         type="checkbox"
-                        className="checkbox hidden"
+                        className="custom-switch hidden"
                     />
                     <label
                         className="switchbox"
-                        htmlFor="checkbox"
+                        htmlFor="checkbox0"
                     />
                     <span>
                         I used the same camera, camera settings, and lens listed in my profile

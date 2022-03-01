@@ -55,7 +55,7 @@ const UpdateProfile = (props) => {
             }
             <Form onSubmit={handleProfileUpdate}>
                 <FormGroup>
-                    <Label for="first_name">First Name</Label>
+                    <Label htmlFor="first_name">First Name</Label>
                     <Input
                         type="text"
                         name="first_name"
@@ -67,7 +67,7 @@ const UpdateProfile = (props) => {
                     <FormFeedback>{error?.data?.first_name}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                    <Label for="last_name">Last Name</Label>
+                    <Label htmlFor="last_name">Last Name</Label>
                     <Input
                         type="text"
                         name="last_name"
@@ -79,7 +79,7 @@ const UpdateProfile = (props) => {
                     <FormFeedback>{error?.data?.last_name}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                    <Label for="email">Email</Label>
+                    <Label htmlFor="email">Email</Label>
                     <Input
                         type="email"
                         name="email"
@@ -92,7 +92,7 @@ const UpdateProfile = (props) => {
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="location">Location</Label>
+                    <Label htmlFor="location">Location</Label>
                     <Input type="select" name="location" onChange={(e)=>handleInput(e)}>
                         <option disabled defaultValue>
                             Please Select Your Country

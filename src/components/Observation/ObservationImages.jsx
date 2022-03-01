@@ -6,15 +6,15 @@ const ObservationImages = () =>{
     return (
         <Row>
             <Col sm="12">
-                <FormGroup className="d-flex align-items-center">
+                <FormGroup className="d-flex align-items-center position-relative">
                 <input
-                    id="checkbox"
+                    id="checkbox3"
                     type="checkbox"
-                    className="checkbox hidden"
+                    className="custom-switch hidden"
                 />
                 <label
                     className="switchbox"
-                    for="checkbox"
+                    htmlFor="checkbox3"
                 />
                 <span>
                     Multiple Observations (limit to 3)
@@ -46,7 +46,7 @@ const ObservationImages = () =>{
                         name="option1"
                         type="checkbox"
                     />
-                    <label for="sprite">
+                    <label htmlFor="sprite">
                         <img
                         src={Images.SpriteOb}
                         alt="Sprite"
@@ -66,7 +66,7 @@ const ObservationImages = () =>{
                         name="BlueJet"
                         type="checkbox"
                     />
-                    <label for="blue-jet">
+                    <label htmlFor="blue-jet">
                         <img
                         src={Images.Bluejet}
                         alt="Bluejet"
@@ -86,7 +86,7 @@ const ObservationImages = () =>{
                         name="Elve"
                         type="checkbox"
                     />
-                    <label for="elve">
+                    <label htmlFor="elve">
                         <img src={Images.Elev} alt="Elve" />
                         Elve
                     </label>
@@ -103,7 +103,7 @@ const ObservationImages = () =>{
                         name="Halo"
                         type="checkbox"
                     />
-                    <label for="halo">
+                    <label htmlFor="halo">
                         <img src={Images.Halo} alt=" Halo" />
                         Halo
                     </label>
@@ -120,7 +120,7 @@ const ObservationImages = () =>{
                         name="Gigantic Jet"
                         type="checkbox"
                     />
-                    <label for="gigantic-jet">
+                    <label htmlFor="gigantic-jet">
                         <img
                         src={Images.GiganticJet}
                         alt="Sprite"
@@ -140,7 +140,7 @@ const ObservationImages = () =>{
                         name="Secondary Jet"
                         type="checkbox"
                     />
-                    <label for="secondary-jet">
+                    <label htmlFor="secondary-jet">
                         <img
                         src={Images.SecondaryJet}
                         alt="Secondary Jet"
