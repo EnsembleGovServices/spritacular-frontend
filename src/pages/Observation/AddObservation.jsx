@@ -1,14 +1,23 @@
 import {Button, Col, Container, Form, Nav, NavItem, NavLink, Row, TabContent, TabPane} from "reactstrap";
 import "../../assets/scss/component/uploadobservationform.scss";
-import {useState} from "react";
-import ObservationStepImageUpload from "../../components/Observation/ObservationStepImageUpload";
+import {useEffect, useState} from "react";
+import {Tabs} from "../../helpers/observation";
+import ObservationUploadImg from "../../components/Observation/ObservationUploadImg";
 import ObservationLocation from "../../components/Observation/ObservationLocation";
 import EquipmentDetails from "../../components/Observation/EquipmentDetails";
 import ObservationUploadedImg from "../../components/Observation/ObservationUploadedImg";
+import ObservationImages from "../../components/Observation/ObservationImages";
+import ObservationProgress from "../../components/Observation/ObservationProgress";
 
 const AddObservation = () => {
     const [activeTab, setActiveTab] = useState("ObservationImages");
+    const [step, setStep] = useState({
+        total: 3,
+        active: 1
+    });
 
+
+    // Toggle Tabs
     const toggleTab = (tab) => {
         console.log(activeTab);
         if (activeTab !== tab) {
@@ -16,8 +25,29 @@ const AddObservation = () => {
         }
     };
 
-  return(
-      <>
+    // Set Progress Bar
+    useEffect(() => {
+        function setActiveTabForProgressBar() {
+            if (activeTab === Tabs.ObservationImages) {
+                return 1;
+            } else if (activeTab === Tabs.DateTimeLocation) {
+                return 2;
+            } else  {
+                return 3;
+            }
+        }
+        setStep(prev => {
+            return {
+                ...prev,
+                active: setActiveTabForProgressBar()
+            }
+        });
+
+    }, [activeTab]);
+
+
+    return(
+        <>
           <Form className="observation-form upload-observation-form-main">
               <div className="common-top-button-wrapper">
                   <Container>
@@ -35,13 +65,14 @@ const AddObservation = () => {
                   <Container>
                       <Row>
                           <Col md={3}>
+                              <ObservationProgress step={step}/>
                               <div className="observation-form-left-tab">
                                   <Nav tabs className="flex-column">
                                       <NavItem>
                                           <NavLink
-                                              className={activeTab === "ObservationImages" ? 'active' : ''}
+                                              className={activeTab === Tabs.ObservationImages ? 'active' : ''}
                                               onClick={() => {
-                                                  toggleTab("ObservationImages");
+                                                  toggleTab(Tabs.ObservationImages);
                                               }}
                                           >
                                               Observation Images
@@ -49,9 +80,9 @@ const AddObservation = () => {
                                       </NavItem>
                                       <NavItem>
                                           <NavLink
-                                              className={activeTab === "DateTimeLocation" ? 'active' : ''}
+                                              className={activeTab === Tabs.DateTimeLocation ? 'active' : ''}
                                               onClick={() => {
-                                                  toggleTab("DateTimeLocation");
+                                                  toggleTab(Tabs.DateTimeLocation);
                                               }}
                                           >
                                               Date, Time & Location
@@ -59,9 +90,9 @@ const AddObservation = () => {
                                       </NavItem>
                                       <NavItem>
                                           <NavLink
-                                              className={activeTab === "EquipmentDetails" ? 'active' : ''}
+                                              className={activeTab === Tabs.EquipmentDetails ? 'active' : ''}
                                               onClick={() => {
-                                                  toggleTab("EquipmentDetails");
+                                                  toggleTab(Tabs.EquipmentDetails);
                                               }}
                                           >
                                               Equipment Details
@@ -73,13 +104,17 @@ const AddObservation = () => {
                           <Col md={7}>
                               <div className="observation-form-right-tab">
                                   <TabContent activeTab={activeTab}>
-                                      <TabPane tabId="ObservationImages">
-                                          <ObservationStepImageUpload />
+                                      <TabPane tabId={Tabs.ObservationImages}>
+                                          <ObservationUploadImg />
+
+                                          <div className="upload-multiple-observation">
+                                              <ObservationImages />
+                                          </div>
                                       </TabPane>
-                                      <TabPane tabId="DateTimeLocation">
+                                      <TabPane tabId={Tabs.DateTimeLocation}>
                                           <ObservationLocation />
                                       </TabPane>
-                                      <TabPane tabId="EquipmentDetails">
+                                      <TabPane tabId={Tabs.EquipmentDetails}>
                                           <EquipmentDetails />
                                       </TabPane>
                                   </TabContent>

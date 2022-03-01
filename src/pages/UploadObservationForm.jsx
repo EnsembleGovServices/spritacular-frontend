@@ -14,7 +14,7 @@ import "../assets/scss/component/uploadobservationform.scss";
 import Images from "../static/images";
 import EquipmentDetails from "../components/Observation/EquipmentDetails";
 import ObservationLocation from "../components/Observation/ObservationLocation";
-import ObservationStepImageUpload from "../components/Observation/ObservationStepImageUpload";
+import ObservationUploadImg from "../components/Observation/ObservationUploadImg";
 import classnames from "classnames";
 
 
@@ -85,7 +85,7 @@ const UploadObservationsForm = () => {
                 <div className="observation-form-right-tab">
                   <TabContent activeTab={activeTab}>
                     <TabPane tabId="1">
-                      <ObservationStepImageUpload />
+                      <ObservationUploadImg />
                     </TabPane>
                     <TabPane tabId="2">
                       <ObservationLocation  toggleTab = {toggleTab}/>
