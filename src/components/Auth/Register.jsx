@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import {baseURL} from "../../helpers/url";
+// import Autocomplete from 'react-google-autocomplete';
 
 const Register = (props) => {
     const { handleLogin } = props;
@@ -165,6 +166,17 @@ const Register = (props) => {
                             <FormFeedback>{error?.data?.password}</FormFeedback>
                         </FormGroup>
                         <FormGroup>
+                            {/* <Autocomplete
+                                style={{
+                                    width: '100%',
+                                    height: '40px',
+                                    paddingLeft: '16px',
+                                    marginTop: '2px',
+                                    marginBottom: '500px'
+                                }}
+                                // onPlaceSelected={ this.onPlaceSelected }
+                                types={['(regions)']}
+                            /> */}
                             <Input
                                 required
                                 type="select"
