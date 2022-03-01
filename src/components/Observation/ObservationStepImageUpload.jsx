@@ -1,4 +1,4 @@
-import { Row, Col, Form, FormGroup,Button, Input,Label } from "reactstrap";
+import { Row, Col, FormGroup,Button, Input,Label } from "reactstrap";
 import ObservationImages from "./ObservationImages";
 import Images from "../../static/images";
 // import "../../assets/scss/component/uploadobservationform.scss";
@@ -9,7 +9,6 @@ const ObservationStepImageUpload = () =>{
               <Col sm="12">
                 <div className="upload-observation-main">
                   <div className="upload-ob-inner">
-                    {/* <Form> */}
                       <FormGroup>
                         <Label htmlFor="UploadFile">
                           <div className="upload-info">
@@ -35,7 +34,6 @@ const ObservationStepImageUpload = () =>{
                           id="UploadFile"
                         />
                       </FormGroup>
-                    {/* </Form> */}
                   </div>
                 </div>
                 <Button disabled className="cnt-btn">Continue</Button>

@@ -3,9 +3,7 @@ import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
 
 import { Suspense, lazy } from 'react';
-import EquipmentForm from "./components/Observation/EquipmentForm";
-import EquipmentDetails from "./components/Observation/EquipmentDetails";
-import ObservationLocation from "./components/Observation/ObservationLocation";
+import AddObservation from "./pages/Observation/AddObservation";
 
 const PersistLogin = lazy(()=> import('./layouts/PersistLogin'));
 const RequireAuth = lazy(()=> import('./layouts/RequireAuth'));
@@ -15,13 +13,19 @@ const GetStarted = lazy(()=> import('./pages/GetStarted'));
 const Blog = lazy(()=> import('./pages/Blog'));
 const Tutorials = lazy(()=> import('./pages/Tutorials'));
 const TutorialsDetail = lazy(()=> import('./pages/TutorialsDetail'));
+const Error = lazy(()=> import('./components/Error'));
+const LoginPage = lazy(()=> import('./pages/Auth/LoginPage'));
+
+
+//Protected Pages
+const Profile = lazy(()=> import('./pages/Profile'));
+
+const MyObservations = lazy(()=> import('./pages/Observation/MyObservations'));
 
 const UploadObservations = lazy(()=> import('./pages/UploadObservations'));
 const UploadObservationsForm = lazy(()=> import('./pages/UploadObservationForm'));
 
-const Profile = lazy(()=> import('./pages/Profile'));
-const Error = lazy(()=> import('./components/Error'));
-const LoginPage = lazy(()=> import('./pages/Auth/LoginPage'));
+
 
 
 const App = () => {
@@ -41,6 +45,8 @@ const App = () => {
         {/*Protected routes*/}
         <Route element={<Suspense fallback={''}><RequireAuth /></Suspense>}>
           <Route path="profile" element={<Suspense fallback={''}><Profile /></Suspense>} />
+          <Route path="observations" element={<Suspense fallback={''}><MyObservations /></Suspense>} />
+          <Route path="observations/add" element={<Suspense fallback={''}><AddObservation /></Suspense>} />
         </Route>
         {/*</Route>*/}
         <Route path="*" element={<Suspense fallback={''}><Error /></Suspense>} />

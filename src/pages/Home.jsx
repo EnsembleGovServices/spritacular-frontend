@@ -1,5 +1,4 @@
-import { Suspense, lazy, useEffect } from 'react';
-
+import { Suspense, lazy } from 'react';
 import "../assets/scss/component/home.scss";
 // import  GoogleMapWrapper  from '../components/GoogleMapWrapper';
 

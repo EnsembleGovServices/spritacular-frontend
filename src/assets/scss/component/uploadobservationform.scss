@@ -37,8 +37,11 @@
           max-width: 900px;
           width: 100%;
           min-height: 305px;
-          display: none;
+          //display: none;
         .upload-info {
+          img{
+            width: 40px;
+          }
             p {
               margin-bottom: 0px;
             }

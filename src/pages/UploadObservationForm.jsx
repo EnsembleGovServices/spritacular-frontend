@@ -8,20 +8,14 @@ import {
   Button,
   Row,
   Col,
-  Form,
-  FormGroup,
-  Label,
-  Input,
 } from "reactstrap";
-import classnames from "classnames";
 import { useState } from "react";
 import "../assets/scss/component/uploadobservationform.scss";
 import Images from "../static/images";
-import { Icon } from "@iconify/react";
-import EquipmentForm from "../components/Observation/EquipmentForm";
+import EquipmentDetails from "../components/Observation/EquipmentDetails";
 import ObservationLocation from "../components/Observation/ObservationLocation";
-import ObservationImages from "../components/Observation/ObservationImages";
 import ObservationStepImageUpload from "../components/Observation/ObservationStepImageUpload";
+import classnames from "classnames";
 
 
 const UploadObservationsForm = () => {
@@ -97,7 +91,7 @@ const UploadObservationsForm = () => {
                       <ObservationLocation />
                     </TabPane>
                     <TabPane tabId="3">
-                      <EquipmentForm />
+                      <EquipmentDetails />
                     </TabPane>
                   </TabContent>
                 </div>
