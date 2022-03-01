@@ -1,6 +1,9 @@
 import { Row, Col, FormGroup, Label, Input, Button } from "reactstrap"
+import {Tabs} from "../../helpers/observation";
 
-const EquipmentDetails = () =>{
+
+const EquipmentDetails = (props) =>{
+    const {toggleTab } = props;
     return (
         <>
         <Row>
@@ -162,7 +165,7 @@ const EquipmentDetails = () =>{
                 </FormGroup>
             </Col>
             <Col md={12}>
-                <Button>Back</Button>
+                <Button  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
             </Col>
         </Row>
         </>

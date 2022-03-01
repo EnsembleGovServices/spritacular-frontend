@@ -1,8 +1,11 @@
 import { Row, Col, FormGroup, Input, Button, Label } from "reactstrap";
 import Images from "../../static/images";
 import { Icon } from "@iconify/react";
+import {Tabs} from "../../helpers/observation";
 
-const ObservationImages = () =>{
+
+const ObservationImages = (props) =>{
+    const {toggleTab} = props;
     return (
         <Row>
             <Col sm="12">
@@ -164,7 +167,7 @@ const ObservationImages = () =>{
                 </FormGroup>
             </Col>
             <Col sm="12">
-                <Button type="submit">Continue</Button>
+                <Button onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Continue</Button>
             </Col>
         </Row>
     )

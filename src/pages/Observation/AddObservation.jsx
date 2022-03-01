@@ -55,7 +55,7 @@ const AddObservation = () => {
                           <Button>Cancel</Button>
                           <div className="top-right-btn">
                               <Button>Save as draft</Button>
-                              <Button disabled>Submit</Button>
+                              <Button type="submit" >Submit</Button>
                           </div>
                       </div>
                   </Container>
@@ -108,14 +108,14 @@ const AddObservation = () => {
                                           <ObservationUploadImg />
 
                                           <div className="upload-multiple-observation">
-                                              <ObservationImages />
+                                              <ObservationImages toggleTab = {toggleTab}/>
                                           </div>
                                       </TabPane>
                                       <TabPane tabId={Tabs.DateTimeLocation}>
-                                          <ObservationLocation />
+                                          <ObservationLocation  toggleTab = {toggleTab}/>
                                       </TabPane>
                                       <TabPane tabId={Tabs.EquipmentDetails}>
-                                          <EquipmentDetails />
+                                          <EquipmentDetails toggleTab = {toggleTab}/>
                                       </TabPane>
                                   </TabContent>
                               </div>

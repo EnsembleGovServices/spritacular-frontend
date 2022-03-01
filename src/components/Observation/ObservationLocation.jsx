@@ -2,6 +2,7 @@ import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
 import Images from "../../static/images";
 import { Suspense, lazy, useEffect, useState } from 'react';
 import Autocomplete from 'react-google-autocomplete';
+import {Tabs} from "../../helpers/observation";
 
 const HomeMapSection = lazy(()=> import('../Observation/../Home/HomeMapSection'))
 
@@ -161,8 +162,8 @@ const ObservationLocation = (props) => {
                     </FormGroup>
                 </FormGroup>
                 <FormGroup className="profile-bottom-btn ">
-                    <Button className="discard-btn me-2" onClick={() => toggleTab('1')}>Back</Button>
-                    <Button className="save-btn" onClick={() => toggleTab('3')}>Continue</Button>
+                    <Button className="discard-btn me-2" onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
+                    <Button className="save-btn" onClick={() => toggleTab(Tabs.EquipmentDetails)}>Continue</Button>
                 </FormGroup>
             </Col>
         </>
