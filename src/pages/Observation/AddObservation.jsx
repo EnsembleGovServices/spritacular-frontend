@@ -4,7 +4,6 @@ import {useState} from "react";
 import ObservationStepImageUpload from "../../components/Observation/ObservationStepImageUpload";
 import ObservationLocation from "../../components/Observation/ObservationLocation";
 import EquipmentDetails from "../../components/Observation/EquipmentDetails";
-import classnames from "classnames";
 import ObservationUploadedImg from "../../components/Observation/ObservationUploadedImg";
 
 const AddObservation = () => {
@@ -49,7 +48,7 @@ const AddObservation = () => {
                                       </NavItem>
                                       <NavItem>
                                           <NavLink
-                                              className={classnames({ active: activeTab === "DateTimeLocation" })}
+                                              className={activeTab === "DateTimeLocation" ? 'active' : ''}
                                               onClick={() => {
                                                   toggleTab("DateTimeLocation");
                                               }}
@@ -59,7 +58,7 @@ const AddObservation = () => {
                                       </NavItem>
                                       <NavItem>
                                           <NavLink
-                                              className={classnames({ active: activeTab === "EquipmentDetails" })}
+                                              className={activeTab === "EquipmentDetails" ? 'active' : ''}
                                               onClick={() => {
                                                   toggleTab("EquipmentDetails");
                                               }}
