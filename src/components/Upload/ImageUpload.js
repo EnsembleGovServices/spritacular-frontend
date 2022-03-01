@@ -20,6 +20,7 @@ const ImageUpload = (props) => {
   };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const fileUpload = useCallback(async () => {
+        setError('');
         const formData = new FormData();
         formData.append("profile_image", file);
         await axios.patch(baseURL.api + "/users/user_profile/" + user?.id + "/", formData, {
@@ -33,9 +34,6 @@ const ImageUpload = (props) => {
                 setProgress(progressBar);
             },
         }).then((response) => {
-            console.group('Upload Response')
-            console.log(response);
-            console.groupEnd();
             setData(response.data);
             setAuth(prev => {
                 return {
@@ -47,68 +45,94 @@ const ImageUpload = (props) => {
                 }
             });
         }).catch((error) => {
-            console.group('Upload Error')
-            console.log(error);
-            console.groupEnd();
             setError(error.response);
         })
-    });
+    }, [file]);
 
     useEffect(() => {
         if (file) {
             fileUpload().then(r => r);
         }
-    }, [file])
+    }, [file, fileUpload]);
+
+    const ProfilePreview = () =>{
+      return(
+        <>
+          <label className="form-label-border">
+            <img
+              className="img-fluid"
+              src={data ? data?.profile_image : baseURL.remote+user?.profile_image}
+              alt={user?.first_name}
+            />
+          </label>
+          <Button className="edit-btn"><Icon icon="lucide:edit-2" /></Button>
+          <input type="file" name="profile_image" onChange={handleChange} />
+        </>
+      )
+    }
+    const ProfileLoader = () =>{
+      return(
+        <>
+          <div className='progressBar' style={{ "--percentage": progress }}>
+              <div className="wrapper">
+                <b>{progress}</b>
+                <span>uploading..</span>
+              </div>
+          </div>
+        </>
+      )
+    }
+    const ProfileUploadText = () =>{
+      return(
+        <>
+          <div className='form-label'>
+              <div className="wrapper">
+                <span>Please upload your image</span>
+                <input type="file" name="profile_image" onChange={handleChange} />
+              </div>
+          </div>
+        </>
+      )
+    }
     
   return (
     <>
       <div className="user-profile-upload">
         {data ? (
           <>
-            {progress > "1" && progress !== "100%" ? (
-              <div className={progress > "1" ? 'progressBar' : 'form-label'} style={{ "--percentage": progress }}>
-                  <div className="wrapper">
-                          <>
-                              <b>{progress}</b>
-                              <span>uploading..</span>
-                          </>
-                      <input type="file" name="profile_image" onChange={handleChange} />
-                  </div>
-              </div>
+            {progress > "1" && !error && progress !== "100%" ? (
+              <ProfileLoader />
             ) : (
-              <>
-                <label className="form-label-border">
-                  <img
-                    className="img-fluid"
-                    src={data?.profile_image}
-                    alt={user?.first_name}
-                  />
-                </label>
-                <Button className="edit-btn"><Icon icon="lucide:edit-2" /></Button>
-                <input type="file" name="profile_image" onChange={handleChange} />
-              </>
+              <ProfilePreview />
             )}
           </>
         ) : (
           <>
-            <div className={progress > "1" ? 'progressBar' : 'form-label'} style={{ "--percentage": progress }}>
-                <div className="wrapper">
-                    {progress > "1" ? (
-                        <>
-                            <b>{progress}</b>
-                            <span>uploading..</span>
-                        </>
-                    ) : (
-                        <span>Please upload your image</span>
-                    )}
-                    <input type="file" name="profile_image" onChange={handleChange} />
-                </div>
-            </div>
+          {user?.profile_image ? (
+            <>
+            {progress > "1"  && progress !== "100%" ? (
+              <ProfileLoader />
+            ) : (
+              <ProfilePreview />
+            )}
+          </>
+          ) : (
+            <>
+            {progress > "1" && error?.status !== 400 ? (
+              < ProfileLoader />
+            ) : (
+              <ProfileUploadText />
+            )
+
+            }
+            </>
+          )}
+            
           </>
         )}
       </div>
 
-      <div>
+      <>
         {error?.data &&
           error.data.profile_image.map((error, i) => {
             return (
@@ -117,7 +141,7 @@ const ImageUpload = (props) => {
               </span>
             );
           })}
-      </div>
+      </>
     </>
   );
 };

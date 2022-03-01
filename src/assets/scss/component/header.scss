@@ -65,6 +65,12 @@
         display: none !important;
       }
     }
+    .open-modal-btn{
+      display: none;
+      @media (max-width: 1023px){
+        display: block;
+      }
+    }
   }
   .navbar-brand{
     @media (max-width: 580px) {
@@ -92,12 +98,10 @@
     .nav-link {
       color: $white;
       padding: 0;
-      // font-size: 15px;
-      // line-height: 18px;
       @include lg-text;
       font-weight: 500;
       position: relative;
-      &:hover {
+      &:hover,  &:focus {
         color: $white;
         &:after {
           content: "";
@@ -149,24 +153,17 @@
     display: inline-flex;
     justify-content: flex-end;
     align-items: center;
-    @media (max-width: 767px) {
+    @media (max-width: 1023px) {
       display: none;
     }
     .register {
-      background-color: transparent !important;
-      color: $white;
-      @include md-text;
       padding: 10px 25px;
-      border: 1px solid $white;
       font-weight: 500;
-      &:hover {
-        // color: rgba(0, 0, 0, 0.7);
-        //border:1px solid rgba(0, 0, 0, 0.7);
-      }
+      @include buttonOutlinePrimary;
+      background-color: transparent;
     }
     .login-btn {
       color: $white;
-      @include md-text;
       background-color: transparent !important;
       padding: 0px 24px;
       font-weight: 500;
@@ -174,7 +171,6 @@
       box-shadow: none;
       position: relative;
       &:hover {
-        // color: rgba(0, 0, 0, 0.7);
         &:after {
           content: "";
           background-color: $white;
@@ -202,6 +198,10 @@
     box-shadow: none;
     @include xl-title;
     display: none;
+    &:hover{
+      background: transparent;
+      color: $white;
+    }
     @media (max-width: 1023px) {
       display: block;
     }
@@ -265,6 +265,7 @@
           img{
             width: 100%;
             height: 100%;
+            object-fit: cover;
           }
           .default_icon{
             color: $light-grey;
@@ -288,7 +289,7 @@
   }
   &.bg-color-menu, &.bg-not-home {
     background-color: $white;
-    @include box-shadow($box-shadow);
+    // @include box-shadow($box-shadow);
     .on-scroll-logo {
       display: inline-block;
     }
@@ -335,16 +336,9 @@
     }
     .right-menu {
       .register {
-        background-color: transparent !important;
-        color: $grey;
-        border: 1px solid $grey;
+        @include grayButton;
         &::after {
           display: none;
-        }
-        &:hover {
-          background-color: $secondary !important;
-          color: $white;
-          border-color: $secondary;
         }
       }
       .login-btn {
@@ -384,11 +378,19 @@
       }
     }
   } 
+  &.bg-not-home{
+    .right-menu {
+      .register {
+        @include buttonSecodary;
+      }
+    }
+  }
 }
 .dropdown-menu{
   .dropdown-item{
     a{
       color: $grey;
+      display: block;
     }
     &:hover {
       color: $secondary;

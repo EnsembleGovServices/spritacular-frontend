@@ -1,4 +1,4 @@
-import { useState} from "react";
+import {useState} from "react";
 import {Alert, Button, Col, Form, FormGroup, Input, Row} from "reactstrap";
 import axios from "axios";
 import {baseURL} from "../../helpers/url";
@@ -7,10 +7,10 @@ import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 
 const ChangePassword = (props) => {
     const { user } = props;
-
     const [password, setPassword] = useState(null);
     const [updated, setUpdated] = useState(false);
     const [error, setError] = useState(null);
+
 
     const handleChangePassword = async (e) => {
         e.preventDefault();
@@ -41,10 +41,12 @@ const ChangePassword = (props) => {
     }
 
     const passwordMatchCheck = () => {
-        if (password) {
-            return password.confirm_password !== password.new_password
+        if (password?.confirm_password !== password?.new_password) {
+            return true;
+        } else if (password?.old_password === "") {
+            return true;
         }
-        return true;
+        return false;
     }
 
     return(

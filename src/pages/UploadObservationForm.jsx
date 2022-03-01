@@ -17,6 +17,13 @@ import classnames from "classnames";
 import { useState } from "react";
 import "../assets/scss/component/uploadobservationform.scss";
 import Images from "../static/images";
+import { Icon } from "@iconify/react";
+import EquipmentForm from "../components/Observation/EquipmentForm";
+import ObservationLocation from "../components/Observation/ObservationLocation";
+import ObservationImages from "../components/Observation/ObservationImages";
+import ObservationStepImageUpload from "../components/Observation/ObservationStepImageUpload";
+
+
 const UploadObservationsForm = () => {
   const [activeTab, setActiveTab] = useState("1");
   const toggleTab = (tab) => {
@@ -41,7 +48,7 @@ const UploadObservationsForm = () => {
         <div className="upload-observation-form-inner">
           <Container>
             <Row>
-              <Col md={4}>
+              <Col md={3}>
                 <div className="observation-form-left-tab">
                   <Nav tabs className="flex-column">
                     <NavItem>
@@ -77,130 +84,29 @@ const UploadObservationsForm = () => {
                   </Nav>
                 </div>
               </Col>
-              <Col md={8}>
+              {/* <Col md={9}>
+                <UploadObservationsForm />
+              </Col> */}
+              <Col md={7}>
                 <div className="observation-form-right-tab">
                   <TabContent activeTab={activeTab}>
                     <TabPane tabId="1">
-                      <Row>
-                        <Col sm="12">
-                          <div className="upload-observation-main">
-                            <div className="upload-ob-inner">
-                              <Form>
-                                <FormGroup>
-                                  <Label for="UploadFile">
-                                    <div className="upload-info">
-                                      <img
-                                        src={Images.UploadPlaceholder}
-                                        alt="UploadPlaceholder"
-                                      />
-                                      <p>
-                                        Drag and drop images or click to upload
-                                      </p>
-                                      <span>Max. Image Size: 5MB</span>
-                                      <ul>
-                                        <li>
-                                          Common Image File Formats (JPEG or
-                                          JPG, PNG, TIFF)
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </Label>
-                                  <Input
-                                    type="file"
-                                    name="file"
-                                    id="UploadFile"
-                                  />
-                                </FormGroup>
-                              </Form>
-                            </div>
-                          </div>
-                          {/*<Button disabled className="cnt-btn">Continue</Button>*/}
-                          <div className="upload-multiple-observation">
-                            <Form>
-                              <Row>
-                                <Col sm="12">
-                                  <FormGroup className="d-flex align-items-center">
-                                    <input
-                                      id="checkbox"
-                                      type="checkbox"
-                                      className="checkbox hidden"
-                                    />
-                                    <label className="switchbox" for="checkbox"/>
-                                    <span>
-                                      Multiple Observations (limit to 3)
-                                    </span>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="12">
-                                  <FormGroup className="mb-1">
-                                    <p className="fw-bold">
-                                      Please choose the appropriate category
-                                    </p>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="6">
-                                  <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                      <div className="inputGroup">
-                                        <input
-                                          id="option1"
-                                          name="option1"
-                                          type="checkbox"
-                                        />
-                                        <label for="option1">
-                                            Option One</label>
-                                      </div>
-                                    </div>
-                                  </FormGroup>
-                                </Col>
-                                <Col sm="6">
-                                  <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                      <div className="inputGroup">
-                                        <input
-                                          id="option1"
-                                          name="option1"
-                                          type="checkbox"
-                                        />
-                                        <label for="option1">
-                                            Option One</label>
-                                      </div>
-                                    </div>
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                            </Form>
-                          </div>
-                        </Col>
-                      </Row>
+                      <ObservationStepImageUpload />
                     </TabPane>
                     <TabPane tabId="2">
-                      <Row>
-                        <Col sm="12">
-                          <h4>Camera Settings</h4>
-                        </Col>
-                      </Row>
-                      <Form>
-                        <Row>
-                          <Col md="12">Camera Seeting</Col>
-                        </Row>
-
-                        <FormGroup className="profile-bottom-btn ">
-                          <Button className="discard-btn">Discard</Button>
-                          <Button className="save-btn">Save Changes</Button>
-                        </FormGroup>
-                      </Form>
+                      <ObservationLocation />
                     </TabPane>
                     <TabPane tabId="3">
-                      <Row>
-                        <Col sm="12">
-                          <h4>Change Password</h4>
-                        </Col>
-                        <Col md="12">Change Password</Col>
-                      </Row>
+                      <EquipmentForm />
                     </TabPane>
                   </TabContent>
                 </div>
+              </Col>
+              <Col md={2}>
+                <img
+                  src={Images.ObservationImageOne}
+                  alt="Bluejet"
+                />
               </Col>
             </Row>
           </Container>

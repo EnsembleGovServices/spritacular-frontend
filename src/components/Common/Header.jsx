@@ -115,7 +115,7 @@ const Header = (props) => {
               {persist ? (
                 <NavItem>
                   <Link
-                    to="/"
+                    to="/observations-form"
                     title="My Observations"
                     className="nav-link text-capitalize"
                   >
@@ -222,22 +222,26 @@ const Header = (props) => {
                 </DropdownMenu>
               </Dropdown>
             </NavItem>
-            <NavItem className="d-md-none d-xs-block">
-              <Button
-                className="register nav-link"
-                onClick={() => handleRegisterModal()}
-              >
-                Register
-              </Button>
-            </NavItem>
-            <NavItem className="d-md-none d-xs-block">
-              <Button
-                className="nav-link login-btn"
-                onClick={() => handleLoginModal()}
-              >
-                Login
-              </Button>
-            </NavItem>
+            {!persist ? (
+              <>
+              <NavItem className="open-modal-btn">
+                <Button
+                  className="register nav-link"
+                  onClick={() => handleRegisterModal()}
+                >
+                  Register
+                </Button>
+              </NavItem>
+              <NavItem className="open-modal-btn">
+                <Button
+                  className="nav-link login-btn"
+                  onClick={() => handleLoginModal()}
+                >
+                  Login
+                </Button>
+              </NavItem>
+              </>
+            ): ('')}
           </Nav>
         </Collapse>
         {!persist ? (
@@ -261,7 +265,7 @@ const Header = (props) => {
             <Dropdown className="notify_menu" isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
               <DropdownToggle className="notification">
                 <Icon icon="ic:baseline-notifications" />
-                <span className="notify"></span>
+                <span className="notify"/>
               </DropdownToggle>
               <DropdownMenu container="body" className="notify-open_menu">
                 <DropdownItem header> Notifications (3) </DropdownItem>
