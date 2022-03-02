@@ -1,11 +1,59 @@
-import { Row, Col, FormGroup, Input, Button, Label } from "reactstrap";
+import { useState, useEffect } from "react";
+import { Row, Col, FormGroup, Input, Button, Label, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import Images from "../../static/images";
 import { Icon } from "@iconify/react";
+import { Tabs } from "../../helpers/observation";
 
 const ObservationImages = () =>{
+    const [activeTab, setActiveTab] = useState('MultipleImages');
+    const [step, setStep] = useState({
+        total: 3,
+        active: 1
+    });
+
+    // Toggle Tabs
+    const toggleTab = (tab) => {
+        if (activeTab !== tab) {
+            setActiveTab(tab);
+        }
+    };
+
+    // Set Progress Bar
+    useEffect(() => {
+        function setActiveTabForProgressBar() {
+            if (activeTab === Tabs.ObservationImages) {
+                return 1;
+            } else if (activeTab === Tabs.DateTimeLocation) {
+                return 2;
+            } else  {
+                return 3;
+            }
+        }
+        setStep(prev => {
+            return {
+                ...prev,
+                active: setActiveTabForProgressBar()
+            }
+        });
+
+    }, [activeTab]);
+
+    const ImagePreview = () =>{
+        return(
+            <>
+                <div className="observation-image position-relative">
+                    <Button className="bg-transparent text-black border-0 shadow-none p-0 position-absolute"><Icon icon="ci:close-big" /></Button>
+                    <img
+                        src={Images.ObservationImageOne}
+                        alt="Bluejet"
+                    />
+                </div>
+            </>
+        )
+    }
     return (
         <Row>
-            <Col sm="12">
+            <Col sm={12}>
                 <FormGroup className="d-flex align-items-center position-relative">
                 <input
                     id="checkbox3"
@@ -21,23 +69,48 @@ const ObservationImages = () =>{
                 </span>
                 </FormGroup>
             </Col>
-            <Col sm="12">
+            <Col sm={12}>
+                <Nav tabs>
+                    <NavItem>
+                        <NavLink
+                            className={activeTab === Tabs.MultipleImages ? 'active' : ''}
+                            onClick={() => {
+                                toggleTab(Tabs.MultipleImages);
+                            }}
+                        >
+                            <Icon icon="fluent:square-multiple-20-regular" color="black" className="me-3" />
+                            Multiple images
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink
+                            className={activeTab === Tabs.ImageSequence ? 'active' : ''}
+                            onClick={() => {
+                                toggleTab(Tabs.ImageSequence);
+                            }}
+                        >
+                            <Icon icon="codicon:list-filter" color="black" className="me-3" />
+                            Image Sequence
+                            <p>Images sequence extracted from a video</p>
+                        </NavLink>
+                    </NavItem>
+                </Nav>
+            </Col>
+            <Col sm={12}>
+                <TabContent activeTab={activeTab}>
+                    <TabPane tabId={Tabs.MultipleImages}>
+                        <Row>
+                        <Col sm={12}>
                 <FormGroup className="mb-1">
                 <p className="fw-bold">
                     Please choose the appropriate category
                 </p>
                 </FormGroup>
             </Col>
-            <Col sm="12">
-                <div className="observation-image position-relative">
-                <Button className="bg-transparent text-black border-0 shadow-none p-0 position-absolute"><Icon icon="ci:close-big" /></Button>
-                <img
-                    src={Images.ObservationImageOne}
-                    alt="Bluejet"
-                />
-                </div>
+            <Col sm={12}>
+                <ImagePreview />
             </Col>
-            <Col sm="6">
+            <Col sm={6}>
                 <FormGroup>
                 <div className="checkbox-wrapper">
                     <div className="inputGroup">
@@ -57,7 +130,7 @@ const ObservationImages = () =>{
                 </div>
                 </FormGroup>
             </Col>
-            <Col sm="6">
+            <Col sm={6}>
                 <FormGroup>
                 <div className="checkbox-wrapper">
                     <div className="inputGroup">
@@ -77,7 +150,7 @@ const ObservationImages = () =>{
                 </div>
                 </FormGroup>
             </Col>
-            <Col sm="6">
+            <Col sm={6}>
                 <FormGroup>
                 <div className="checkbox-wrapper">
                     <div className="inputGroup">
@@ -94,7 +167,7 @@ const ObservationImages = () =>{
                 </div>
                 </FormGroup>
             </Col>
-            <Col sm="6">
+            <Col sm={6}>
                 <FormGroup>
                 <div className="checkbox-wrapper">
                     <div className="inputGroup">
@@ -111,7 +184,7 @@ const ObservationImages = () =>{
                 </div>
                 </FormGroup>
             </Col>
-            <Col sm="6">
+            <Col sm={6}>
                 <FormGroup>
                 <div className="checkbox-wrapper">
                     <div className="inputGroup">
@@ -131,7 +204,7 @@ const ObservationImages = () =>{
                 </div>
                 </FormGroup>
             </Col>
-            <Col sm="6">
+            <Col sm={6}>
                 <FormGroup>
                 <div className="checkbox-wrapper">
                     <div className="inputGroup">
@@ -151,7 +224,7 @@ const ObservationImages = () =>{
                 </div>
                 </FormGroup>
             </Col>
-            <Col sm="12">
+            <Col sm={12}>
                 <FormGroup check>
                 <Label check>
                     <Input
@@ -163,8 +236,22 @@ const ObservationImages = () =>{
                 </Label>
                 </FormGroup>
             </Col>
-            <Col sm="12">
+            <Col sm={12}>
                 <Button type="submit">Continue</Button>
+            </Col>
+                        </Row>
+                    </TabPane>
+                    <TabPane tabId={Tabs.ImageSequence}>
+                        <Row>
+                            <Col sm={12}>
+                                <ImagePreview />
+                            </Col>
+                            <Col sm={12}>
+                                <Button type="submit">Continue</Button>
+                            </Col>
+                        </Row>
+                    </TabPane>
+                </TabContent>
             </Col>
         </Row>
     )

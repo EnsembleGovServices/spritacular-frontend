@@ -1,5 +1,7 @@
 export const Tabs = {
     ObservationImages : "ObservationImages",
     DateTimeLocation : "DateTimeLocation",
-    EquipmentDetails : "EquipmentDetails"
+    EquipmentDetails : "EquipmentDetails",
+    MultipleImages: "MultipleImages",
+    ImageSequence: "ImageSequence"
 }

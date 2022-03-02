@@ -35,7 +35,7 @@ const ObservationUploadImg = () =>{
                       </FormGroup>
                   </div>
                 </div>
-                <Button disabled className="cnt-btn">Continue</Button>
+                <Button disabled className="mt-5">Continue</Button>
               </Col>
             </Row>
         </>

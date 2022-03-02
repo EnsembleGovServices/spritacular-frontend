@@ -32,14 +32,12 @@
       }
     }
   }
-  // .observation-form-right-tab {
     .upload-observation-main {
       padding: 0px;
       .upload-ob-inner{
           max-width: 900px;
           width: 100%;
           min-height: 305px;
-          //display: none;
         .upload-info {
           img{
             width: 40px;
@@ -64,14 +62,6 @@
       }
       
     }
-    .cnt-btn{
-        @include btn-bg;
-        background-color: #E2E4E9;
-        color: #fff;
-        margin-top: 60px;
-    }
-
-  // }
   .upload-multiple-observation{
     .inputGroup {
       background-color: #fff;

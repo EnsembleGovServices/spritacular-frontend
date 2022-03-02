@@ -1,8 +1,9 @@
-import { Container, Form, FormGroup, Input, Label } from "reactstrap";
+import { Container, Form, FormGroup, Label } from "reactstrap";
 import { Icon } from "@iconify/react";
-import "../assets/scss/component/uploadobservations.scss";
+import "../assets/scss/component/initialUploadobservations.scss";
 import Images from "../static/images";
-const UploadObservations = () => {
+import { Link } from "react-router-dom";
+const InitialUploadObservations = () => {
   return (
     <>
       <section className="upload-observation-main">
@@ -17,13 +18,13 @@ const UploadObservations = () => {
                       alt="UploadPlaceholder"
                     />
                     <p>No observations yet.</p>
-                    <span className="btn btn-secondary">
-                      <Icon icon="bx:upload" width="25" height="22" /> Upload
+                    <Link to="/observations/add" className="btn btn-secondary">
+                      <Icon icon="heroicons-outline:upload"  width="25" height="22" /> Upload
                       Observation
-                    </span>
+                    </Link>
                   </div>
                 </Label>
-                <Input type="file" name="file" id="UploadFile" />
+                {/* <Input type="file" name="file" id="UploadFile" /> */}
               </FormGroup>
             </Form>
           </div>
@@ -33,4 +34,4 @@ const UploadObservations = () => {
   );
 };
 
-export default UploadObservations;
+export default InitialUploadObservations;
