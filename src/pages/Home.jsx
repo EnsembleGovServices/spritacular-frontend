@@ -21,14 +21,9 @@ const Home = (props) => {
 
         <Suspense fallback={''}>
             {/*<div style={{ margin: '100px' }}>*/}
-			{/*	<HomeMapSection*/}
-			{/*		google={props.google}*/}
-			{/*		center={{lat: 18.5204, lng: 73.8567}}*/}
-			{/*		height='300px'*/}
-			{/*		zoom={15}*/}
-			{/*	/>*/}
+				<HomeMapSection
+				/>
 			{/*</div>*/}
-            {/* <HomeMapSection google={window.google}/>*/}
         </Suspense>
 
         <Suspense fallback={''}>
