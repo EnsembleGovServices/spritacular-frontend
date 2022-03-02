@@ -7,7 +7,7 @@ import Autocomplete from 'react-google-autocomplete';
 import { SearchBox }  from "react-google-maps/lib/components/places/SearchBox";
 
 // import { GoogleMapsAPI } from '../client-config';
-Geocode.setApiKey( "AIzaSyC49bXfihl4zZqjG2-iRLUmcWO_PVcDehM");
+Geocode.setApiKey( "AIzaSyBEDPyTJNbYuUlhYYXSnpVAUMm0J-5cI4U");
 Geocode.enableDebug();
 
 class Map extends Component{
@@ -310,7 +310,7 @@ class Map extends Component{
 			// 	</div> */}
 
 				<AsyncMap
-					googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyC49bXfihl4zZqjG2-iRLUmcWO_PVcDehM&libraries=places`}
+					googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyBEDPyTJNbYuUlhYYXSnpVAUMm0J-5cI4U&libraries=places`}
 					loadingElement={
 						<div style={{ height: `100%` }} />
 					}

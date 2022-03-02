@@ -34,6 +34,7 @@
     "react-geocode": "^0.2.3",
     "react-google-autocomplete": "^2.6.1",
     "react-google-maps": "^9.4.5",
+    "react-hook-form": "^7.27.1",
     "react-hot-toast": "^2.2.0",
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^6.2.1",

@@ -19,8 +19,11 @@ import Images from "../static/images";
 import useAuth from "../hooks/useAuth";
 import "../assets/scss/component/camerasettings.scss";
 import ImageUpload from "../components/Upload/ImageUpload";
+import axios from "../api/axios";
+import {baseURL} from "../helpers/url";
 
 const UpdateProfile = lazy(()=> import('../components/Account/UpdateProfile'))
+const CameraSetting = lazy(()=> import('../components/Account/CameraSetting'))
 const ChangePassword = lazy(()=> import('../components/Account/ChangePassword'))
 
 
@@ -28,14 +31,41 @@ const Profile = () => {
   const { auth } = useAuth();
 
   const [activeTab, setActiveTab] = useState("1");
+  const [cameraDetails, setCameraDetails] = useState({
+    camera_type: '',
+    focal_length: '',
+    aperture: '',
+    iso: '',
+    shutter_speed: '',
+    fps: '',
+    question_field_one: '',
+    question_field_two: ''
+  });
+  const [isDetailExist, setIsDetailExist] = useState(false);
 
   const toggleTab = (tab) => {
     // console.log("tab", tab);
     if (activeTab !== tab) {
+      if(tab == '2'){
+        fetchCameraDetails();
+      }
       // console.log("tab activeTab", tab, activeTab);
       setActiveTab(tab);
     }
   };
+  const fetchCameraDetails = async () => {
+    await axios.get(baseURL.api+'/users/camera_setting/', {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${auth?.token?.access}`
+      }
+  }).then((success) => {
+          setIsDetailExist(true);
+      setCameraDetails(success.data);
+  }).catch((error) => {
+      console.log(error.response);
+  })
+  }
 
 
   return (
@@ -119,113 +149,13 @@ const Profile = () => {
                         <Col sm="12">
                           <h4>Camera Settings</h4>
                         </Col>
+                        <Col md="12">
+                          <Suspense fallback={<div>Loading...</div>}>
+                            <CameraSetting cameraDetails={cameraDetails} user={auth} isDetailExist={isDetailExist}/>
+                          </Suspense>
+                        </Col>
                       </Row>
-                      <Form>
-                        <Row>
-                          <Col md="12">
-                            <FormGroup>
-                              <h6>Camera Type</h6>
-                              <Input type="select" name="select">
-                                <option disabled defaultValue>
-                                  Please Select Your Camera Type
-                                </option>
-                                <option>Canon</option>
-                                <option>Nikon</option>
-                                <option>Sony</option>
-                                <option>Panasonic</option>
-                              </Input>
-                            </FormGroup>
-                            <div className="border-line"/>
-                          </Col>
-                          <Col md="12">
-                            <FormGroup>
-                              <h6>Lens Information</h6>
-                            </FormGroup>
-                          </Col>
-                          <Col md="6">
-                            <FormGroup>
-                              <label>Focal Length</label>
-                              <Input
-                                type="text"
-                                name="name"
-                                placeholder="35 mm"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="6">
-                            <FormGroup>
-                              <label>Aperture</label>
-                              <Input
-                                type="text"
-                                name="name"
-                                placeholder="35 mm"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="12">
-                            <div className="border-line"/>
-                            <FormGroup>
-                              <h6>Camera Settings</h6>
-                            </FormGroup>
-                          </Col>
-                          <Col md="6">
-                            <FormGroup>
-                              <label>ISO</label>
-                              <Input
-                                type="text"
-                                name="name"
-                                placeholder="100"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="6">
-                            <FormGroup>
-                              <label>Shutter Speed (exposure time)</label>
-                              <Input
-                                type="text"
-                                name="name"
-                                placeholder="1/15"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="6">
-                            <FormGroup>
-                              <label>Frame Rate (frames per second)</label>
-                              <Input type="text" name="name" placeholder="24" />
-                            </FormGroup>
-                          </Col>
-                          <Col md="12">
-                            <div className="border-line"></div>
-                            <FormGroup>
-                              <h6>How do you generally keep track of time?</h6>
-                              <Input
-                                type="text"
-                                name="name"
-                                placeholder="Camera Time"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col md="12">
-                            <div className="border-line"></div>
-                            <FormGroup>
-                              <h6>
-                                Do you use any special equipment attached to
-                                your camera (such as a filter)?
-                              </h6>
-                              <Input
-                                type="text"
-                                name="name"
-                                placeholder="Polarizing Filter"
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-
-                        <FormGroup className="profile-bottom-btn ">
-                          <Button className="discard-btn">Discard</Button>
-                          <Button className="save-btn">Save Changes</Button>
-                        </FormGroup>
-                      </Form>
+                     
                     </TabPane>
                     <TabPane tabId="3">
                       <Row>
