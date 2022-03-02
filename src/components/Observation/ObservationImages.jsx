@@ -5,11 +5,13 @@ import { Icon } from "@iconify/react";
 import { MultiImageTabs } from "../../helpers/observation";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import ObservationUploadImg from "./ObservationUploadImg";
+import useObservations from "../../hooks/useObservations";
 
 const ObservationImages = () =>{
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
     const [isMultiple, setIsMultiple] = useState(false);
     const [proceedNext, setProceedNext] = useState(false);
+    const { observationImages } = useObservations();
 
     // Toggle Tabs
     const toggleTab = (tab) => {
@@ -37,11 +39,16 @@ const ObservationImages = () =>{
 
     return (
         <>
-            {!proceedNext &&
+            {/* {!proceedNext &&
                 <ObservationUploadImg imageFormat={true} maxLimit={true} multiple={isMultiple} proceedNext={()=> handleProceedNext()}/>
             }
 
-            {proceedNext &&
+            {proceedNext && */}
+            {!observationImages?.data ? (
+                <Row>
+                    <ObservationUploadImg imageFormat={true} maxLimit={true}/>
+                </Row>
+            ) : (
                 <Row>
                     <Col sm={12}>
                         <FormGroup className="d-flex align-items-center position-relative">
@@ -261,7 +268,7 @@ const ObservationImages = () =>{
                         </TabContent>
                     </Col>
                 </Row>
-            }
+            )}
 
         </>
     )
