@@ -1,16 +1,17 @@
 import { Row, Col, FormGroup,Button, Input,Label } from "reactstrap";
-import Images from "../../static/images";
 import useObservations from "../../hooks/useObservations";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import { Icon } from '@iconify/react';
 
 const ObservationUploadImg = (props) =>{
-    const {multiple, maxLimit, imageFormat}=props;
-    const {setObservationImages} = useObservations();
+    const {multiple, maxLimit, imageFormat, proceedNext}=props;
+    const {observationImages, setObservationImages} = useObservations();
 
     const handleObservationUploadImage = (e) => {
         const file = multiple ? e.target.files : e.target.files[0];
-        setObservationImages(file);
+        setObservationImages({
+            data: file
+        });
         console.log(file);
     };
 
@@ -45,13 +46,16 @@ const ObservationUploadImg = (props) =>{
                           type="file"
                           name="file"
                           id="UploadFile"
+                          accept="image/jpg, image/tiff, image/jpeg, image/png"
                           multiple={multiple}
                           onChange={(e)=> handleObservationUploadImage(e)}
                         />
                       </FormGroup>
                   </div>
                 </div>
-                <Button disabled className="mt-5">Continue</Button>
+                <div className="mt-5">
+                    <Button disabled={observationImages?.length <= 0} onClick={proceedNext}>Continue</Button>
+                </div>
               </Col>
             </Row>
         </>
