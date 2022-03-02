@@ -1,6 +1,6 @@
 import { Row, Col, FormGroup, Label, Input, Button } from "reactstrap"
 import {Tabs} from "../../helpers/observation";
-
+import "../../assets/scss/component/observationEquipment.scss";
 
 const EquipmentDetails = (props) =>{
     const {toggleTab } = props;
@@ -9,7 +9,7 @@ const EquipmentDetails = (props) =>{
         <Row>
             <Col sm="12">
                 <FormGroup className="d-flex align-items-center position-relative">
-                    <div className="custom-switch">
+                    <div className="custom-switch mb-5">
                         <input
                             id="checkbox0"
                             type="checkbox"
@@ -27,7 +27,7 @@ const EquipmentDetails = (props) =>{
             </Col>
             <Col sm="12">
                 <FormGroup check>
-                <Label check>
+                <Label check className="mb-4">
                     <Input
                         required
                         type="checkbox"
@@ -41,13 +41,13 @@ const EquipmentDetails = (props) =>{
                 <FormGroup>
                     <h6>Camera Type</h6>
                     <Input type="select" name="select">
-                    <option disabled defaultValue>
-                        Please Select Your Camera Type
-                    </option>
-                    <option>Canon</option>
-                    <option>Nikon</option>
-                    <option>Sony</option>
-                    <option>Panasonic</option>
+                        <option disabled defaultValue>
+                            Please Select Your Camera Type
+                        </option>
+                        <option>Canon</option>
+                        <option>Nikon</option>
+                        <option>Sony</option>
+                        <option>Panasonic</option>
                     </Input>
                 </FormGroup>
                 <div className="border-line"/>

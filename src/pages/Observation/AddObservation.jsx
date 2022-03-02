@@ -101,10 +101,10 @@ const AddObservation = () => {
                                       <TabPane tabId={Tabs.ObservationImages}>
                                           <ObservationImages/>
                                       </TabPane>
-                                      <TabPane tabId={Tabs.DateTimeLocation}>
+                                      <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
                                           <ObservationLocation  toggleTab={toggleTab}/>
                                       </TabPane>
-                                      <TabPane tabId={Tabs.EquipmentDetails}>
+                                      <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                           <EquipmentDetails toggleTab={toggleTab}/>
                                       </TabPane>
                                   </TabContent>

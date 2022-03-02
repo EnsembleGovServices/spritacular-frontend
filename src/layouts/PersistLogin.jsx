@@ -1,11 +1,14 @@
 import { Outlet } from "react-router-dom";
-import { useState, useEffect, Suspense, lazy } from "react";
+import { useState, useEffect } from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
+import Header from "../components/Common/Header";
+import Footer from "../components/Common/Footer";
+import Loader from "../components/Shared/Loader";
 
-const Header = lazy(()=> import('../components/Common/Header'))
-const Footer = lazy(()=> import('../components/Common/Footer'))
-const Loader = lazy(()=> import('../components/Shared/Loader'))
+// const Header = lazy(()=> import('../components/Common/Header'))
+// const Footer = lazy(()=> import('../components/Common/Footer'))
+// const Loader = lazy(()=> import('../components/Shared/Loader'))
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -43,27 +46,24 @@ const PersistLogin = () => {
         <>
             {!persist ? (
                 <>
-                    <Suspense fallback={''}>
+                    {/* <Suspense fallback={''}> */}
                         <Header />
-                    </Suspense>
+                    {/* </Suspense> */}
                     <div className="main-content">
                         <Outlet />
                     </div>
-                    <Suspense fallback={''}>
+                    {/* <Suspense fallback={''}> */}
                         <Footer />
-                    </Suspense>
+                    {/* </Suspense> */}
                 </>
             ) : isLoading ? <Loader fixContent={true} /> : (
                 <>
-                    <Suspense fallback={''}>
+                    {/* <Suspense fallback={''}> */}
                         <Header />
-                    </Suspense>
+                    {/* </Suspense> */}
                     <div className="main-content">
                         <Outlet />
                     </div>
-                    <Suspense fallback={''}>
-                        <Footer />
-                    </Suspense>
                 </>
             )}
         </>

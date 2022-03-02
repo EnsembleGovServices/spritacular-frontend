@@ -4,7 +4,7 @@ footer{
     .footer-wrapper{
         overflow: hidden;
         padding: 20px 0 37px;
-        @media (max-width: 1200px){
+        @include media-breakpoint-down(xl){
             text-align: center;
         }
         &::after{
@@ -18,7 +18,7 @@ footer{
             background: url("../../images/footer-line.png") no-repeat center;
             background-size: contain;
             z-index: 0;
-            @media (max-width: 767px){
+            @include media-breakpoint-down(md){
                 width: 250px;
                 height: 250px;
             }
@@ -27,11 +27,11 @@ footer{
             max-width: 135px;
             width: 100%;
             margin: 0 0 0 auto;
-            @media (max-width: 575px){
+            @include media-breakpoint-down(sm){
                 margin: 0 auto;
             }
             a{
-                @media (max-width: 767px){
+                @include media-breakpoint-down(md){
                     margin-bottom: 15px !important;
                 }
             }
@@ -48,9 +48,9 @@ footer{
         max-width: 160px;
         width: 100%;
         margin: 0 auto;
-        @media (max-width: 1200px){
+        @include media-breakpoint-down(xl){
         }
-        @media (max-width: 575px){
+        @include media-breakpoint-down(sm){
             margin: 0 auto 15px;
         }
         img{
@@ -69,7 +69,7 @@ footer{
             display: block;
             top: 10%;
             bottom: 0;
-            @media (max-width: 575px){
+            @include media-breakpoint-down(sm){
                 display: none;
             }
         }
@@ -91,14 +91,14 @@ footer{
         opacity: 0.7;
         text-align: left;
         margin: 0;
-        @media (max-width: 575px){
+        @include media-breakpoint-down(sm){
             text-align: center;
             margin-bottom: 15px;
         }
     }
     .footer-social-links{
         justify-content: flex-end;
-        @media (max-width: 575px){
+        @include media-breakpoint-down(sm){
             justify-content: center;
         }
     }

@@ -21,8 +21,7 @@ const Home = (props) => {
 
         <Suspense fallback={''}>
             {/*<div style={{ margin: '100px' }}>*/}
-				<HomeMapSection
-				/>
+				<HomeMapSection />
 			{/*</div>*/}
         </Suspense>
 

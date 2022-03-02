@@ -85,10 +85,10 @@
     width: 100%;
     .nav-item{
       margin-right: 48px;
-      @media (max-width: 1399px) {
+      @include media-breakpoint-down(xxl) {
         margin-right: 28px;
       }
-      @media (max-width: 1199px) {
+      @include media-breakpoint-down(xl)  {
         margin-right: 10px;
       }
       &:last-child{
@@ -235,10 +235,10 @@
     }
     .user-menu{
       margin-left: 45px;
-      @media (max-width: 1399px) {
+      @include media-breakpoint-down(xxl) {
         margin-left: 25px;
       }
-      @media (max-width: 1199px) {
+      @include media-breakpoint-down(xl)  {
         margin-left: 15px;
       }
       .btn-secondary{

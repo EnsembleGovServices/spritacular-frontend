@@ -5,7 +5,7 @@ const GetStarted = () => {
   return (
     <>
       {/* ----- How It Work Section Start----- */}
-      <HomeHowItWorks />
+        <HomeHowItWorks />
       {/* ----- How IT Work Section End----- */}
     </>
   );
