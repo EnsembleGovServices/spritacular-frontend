@@ -4,7 +4,7 @@ import { lazy, useState } from 'react';
 // import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 
-const HomeMapSection = lazy(()=> import('../Observation/../Home/HomeMapSection'))
+const MapWrapper = lazy(()=> import('../MapWrapper'))
 
 const ObservationLocation = (props) => {
     const { toggleTab } = props;
@@ -35,7 +35,7 @@ const ObservationLocation = (props) => {
             <Col md="12">
                 <FormGroup>
                     <h6>Where did you make the observation?</h6>
-                    <HomeMapSection
+                    <MapWrapper
 					google={props.google}
 					center={{lat: lat, lng: lng}}
 					height='300px'
