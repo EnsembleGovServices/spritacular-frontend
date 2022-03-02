@@ -69,8 +69,8 @@
       .upload-info{
         text-align: center;
         z-index: 99;
-        img{
-          width: 40px;
+        svg{
+          margin-bottom: 17px;
         }
         span {
           @include md-text;
@@ -86,6 +86,7 @@
         }
         p{
           @include lg-text;
+          margin-bottom: 4px;
         }
         .btn{
           padding: 12px 25px;
@@ -98,82 +99,6 @@
     }
   }
   .upload-multiple-observation{
-    .inputGroup {
-      background-color: #fff;
-      display: block;
-      margin: 10px 0;
-      position: relative;
-      label {
-        padding: 12px 30px;
-        width: 100%;
-        display:flex;
-        align-items: center;
-        text-align: left;
-        color: $black;
-        @include lg-text;
-        font-weight: 500;
-        cursor: pointer;
-        position: relative;
-        z-index: 2;
-        transition: color 200ms ease-in;
-        overflow: hidden;
-        border:1px solid #CBCFD8;
-        border-radius: 6px;
-        &:after {
-          width: 22px;
-          height: 22px;
-          content: '';
-          border: 1px solid #ADB4C2;
-          background-color: #fff;
-          background-image: url("../../images/check-white.svg");
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: 14px;
-          border-radius: 50%;
-          z-index: 2;
-          position: absolute;
-          right: 30px;
-          top: 50%;
-          transform: translateY(-50%);
-          cursor: pointer;
-          transition: all 200ms ease-in;
-        }
-        img{
-          margin-right: 10px;
-          width: 25px;
-          height: 25px;
-          object-fit: contain;
-        }
-      }
-  
-      input:checked ~ label {
-        color: $black;
-        border:1px solid $secondary;
-        background: $lightPink;
-        box-shadow: 0px 4px 8px rgba(193, 30, 55, 0.12);
-        &:before {
-          transform: translate(-50%, -50%) scale3d(56, 56, 1);
-          opacity: 1;
-        }
-  
-        &:after {
-          background-color: #990000;
-          border-color: #990000;
-        }
-      }
-      input {
-        width: 22px;
-        height: 22px;
-        order: 1;
-        z-index: 2;
-        position: absolute;
-        right: 30px;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        visibility: hidden;
-      }
-    }
     .observation-image{
       max-width: 100%;
       background-color: #F6F7F8;
@@ -195,6 +120,7 @@
     }
   }
 }
+
 .common-top-button-wrapper {
   background-color: #f6f7f8;
   padding: 11px 0px;
@@ -222,3 +148,127 @@
     }
   }
 }
+.small-upload_box{
+  .upload-observation-main{
+    .upload-ob-inner{
+      min-height: 60px;
+      .upload-info{
+        display: flex;
+        align-items: center;
+        svg{
+          margin-bottom: 0;
+          margin-right: 17px;
+        }
+        p{
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+.nav-tabs{
+  margin: 0 -6px;
+  border: 0;
+  .nav-item{
+    width: 50%;
+    padding: 0 6px;
+    .nav-link{
+      background: #F9F9F9;
+      border: 1px solid #DDDDDD;
+      border-radius: 6px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      font-style: normal;
+      font-weight: 600;
+      @include lg-text;
+      color: black;
+      p{
+        font-weight: normal;
+      }
+      &.active{
+        background: $lightPink;
+        border-color: $secondary;
+      }
+    }
+  }
+}
+// Custom checkbox design for choose image category START
+.checkbox-wrapper{
+  .inputGroup {
+    background-color: #fff;
+    display: block;
+    margin: 10px 0;
+    position: relative;
+    label {
+      padding: 12px 30px;
+      width: 100%;
+      display:flex;
+      align-items: center;
+      text-align: left;
+      color: $black;
+      @include lg-text;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      transition: color 200ms ease-in;
+      overflow: hidden;
+      border:1px solid #CBCFD8;
+      border-radius: 6px;
+      &:after {
+        width: 22px;
+        height: 22px;
+        content: '';
+        border: 1px solid #ADB4C2;
+        background-color: #fff;
+        background-image: url("../../images/check-white.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14px;
+        border-radius: 50%;
+        z-index: 2;
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        transition: all 200ms ease-in;
+      }
+      img{
+        margin-right: 10px;
+        width: 25px;
+        height: 25px;
+        object-fit: contain;
+      }
+    }
+    input:checked ~ label {
+      color: $black;
+      border:1px solid $secondary;
+      background: $lightPink;
+      box-shadow: 0px 4px 8px rgba(193, 30, 55, 0.12);
+      &:before {
+        transform: translate(-50%, -50%) scale3d(56, 56, 1);
+        opacity: 1;
+      }
+
+      &:after {
+        background-color: #990000;
+        border-color: #990000;
+      }
+    }
+    input {
+      width: 22px;
+      height: 22px;
+      order: 1;
+      z-index: 2;
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      visibility: hidden;
+    }
+  }
+}
+// Custom checkbox design for choose image category END

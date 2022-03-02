@@ -70,9 +70,11 @@
 
 // Custom Switch Css Start 
 .custom-switch {
-    & + .switchbox {
+    display: flex;
+    align-items: center;
+    .switchbox {
         background: rgba(0, 0, 0, 0.4);
-        border: 1px solid #ccc;
+        border: 0;
         border-radius: 20px;
         cursor: pointer;
         display: inline-block;
@@ -89,25 +91,30 @@
             border-radius: 20px;
             content: ' ';
             display: block;
-            height: 18px;
-            width: 18px;
+            height: 14px;
+            width: 14px;
             position: absolute;
-            right: 36%;
+            right: 44%;
             transition: all .1s linear;
+            top: 3px;
         }
     }
-    &:checked {
+    input[type="checkbox"]:checked {
         & + .switchbox {
-            background-color:$secondary;
+            background-color:$primary;
             &:after {
-            right: 0%;
+                right: 8%;
             }
         }
     }
-    &.hidden{
+    .hidden{
         position: absolute;
         left: 0;
         opacity: 0;
     } 
+    span{
+        @include lg-text;
+        color: #000;
+    }
 }
 // Custom Switch Css End 

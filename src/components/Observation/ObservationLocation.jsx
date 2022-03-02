@@ -136,16 +136,18 @@ const ObservationLocation = (props) => {
                 <FormGroup>
                     <h6>Please choose azimuth (look direction) of your observation <p className="required">Required</p></h6>
                     <FormGroup className="d-flex align-items-center position-relative">
-                        <input
-                            id="checkbox2"
-                            type="checkbox"
-                            className="custom-switch hidden"
-                        />
-                        <label
-                            className="switchbox"
-                            htmlFor="checkbox2"
-                        />
-                        <span>I know the precise azimuth angle in degrees</span>
+                        <div className="custom-switch">
+                            <input
+                                id="checkbox2"
+                                type="checkbox"
+                                className="hidden"
+                            />
+                            <label
+                                className="switchbox"
+                                htmlFor="checkbox2"
+                            />
+                            <span>I know the precise azimuth angle in degrees</span>
+                        </div>
                     </FormGroup>
                     <FormGroup>
                         <Label>Look Direction</Label>

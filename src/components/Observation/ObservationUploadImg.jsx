@@ -18,14 +18,14 @@ const ObservationUploadImg = (props) =>{
     return (
         <>
             <Row>
-              <Col sm="12">
+              <Col sm={12}>
                 <div className="upload-observation-main">
                   <div className="upload-ob-inner">
                       <FormGroup>
                         <Label htmlFor="UploadFile">
                           <div className="upload-info">
-                            <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" className="mb-3" />
-                            <p className="mb-1" >Drag and drop images or click to upload</p>
+                            <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
+                            <p>Drag and drop images or click to upload</p>
                             {
                               maxLimit === true ? <span className="text-black">Max. Image Size: 5MB</span> : ''
                             }
@@ -53,9 +53,13 @@ const ObservationUploadImg = (props) =>{
                       </FormGroup>
                   </div>
                 </div>
-                <div className="mt-5">
-                    <Button disabled={observationImages?.length <= 0} onClick={proceedNext}>Continue</Button>
-                </div>
+                {
+                  !multiple ? (
+                  <div className="mt-5">
+                      <Button disabled={observationImages?.length <= 0} onClick={proceedNext}>Continue</Button>
+                  </div>
+                  ) : ('')
+                }
               </Col>
             </Row>
         </>

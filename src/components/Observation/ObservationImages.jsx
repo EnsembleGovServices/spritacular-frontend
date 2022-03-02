@@ -3,24 +3,23 @@ import { Row, Col, FormGroup, Input, Button, Label, TabContent, TabPane, Nav, Na
 import Images from "../../static/images";
 import { Icon } from "@iconify/react";
 import { MultiImageTabs } from "../../helpers/observation";
+import "../../assets/scss/component/uploadObservationImage.scss";
 import ObservationUploadImg from "./ObservationUploadImg";
 
 const ObservationImages = () =>{
-    // const [activeimagetab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
+    const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
     const [isMultiple, setIsMultiple] = useState(false);
     const [proceedNext, setProceedNext] = useState(false);
 
     // Toggle Tabs
-    // const toggleTab = (tab) => {
-    //     if (activeimagetab !== tab) {
-    //         setActiveImageTab(tab);
-    //     }
-    // };
-
+    const toggleTab = (tab) => {
+        if (activeTab !== tab) {
+            setActiveImageTab(tab);
+        }
+    };
     const handleProceedNext = () => {
       setProceedNext(!proceedNext);
     }
-
 
     const ImagePreview = () =>{
         return(
@@ -36,54 +35,78 @@ const ObservationImages = () =>{
         )
     }
 
-    
     return (
         <>
             {!proceedNext &&
-                <ObservationUploadImg imageFormat={true} maxLimit={true} multple={isMultiple} proceedNext={()=> handleProceedNext()}/>
+                <ObservationUploadImg imageFormat={true} maxLimit={true} multiple={isMultiple} proceedNext={()=> handleProceedNext()}/>
             }
 
             {proceedNext &&
                 <Row>
                     <Col sm={12}>
                         <FormGroup className="d-flex align-items-center position-relative">
-                            <input
-                                id="toggleMultiple"
-                                type="checkbox"
-                                className="custom-switch hidden"
-                                onChange={(e)=> setIsMultiple(!isMultiple)}
-                            />
-                            <label
-                                className="switchbox"
-                                htmlFor="toggleMultiple"
-                            />
-                            <span>
-                                Multiple Observations (limit to 3)
-                            </span>
+                            <div className="custom-switch">
+                                <input
+                                    id="toggleMultiple"
+                                    type="checkbox"
+                                    className="hidden"
+                                    onChange={(e)=> setIsMultiple(!isMultiple)}
+                                />
+                                <label
+                                    className="switchbox"
+                                    htmlFor="toggleMultiple"
+                                />
+                                <span>
+                                    Multiple Observations (limit to 3)
+                                </span>
+                            </div>
                         </FormGroup>
                     </Col>
-
+                    {
+                        isMultiple ? (
+                            <Col sm={12}>
+                                <Nav tabs>
+                                    <NavItem>
+                                        <NavLink 
+                                            className={activeTab === MultiImageTabs.MultipleImages ? 'active' : ''}
+                                            onClick={() => {
+                                                toggleTab(MultiImageTabs.MultipleImages);
+                                            }}
+                                        >
+                                            <Icon icon="fluent:square-multiple-20-regular" color="black" className="me-3" />
+                                            Multiple images
+                                        </NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink
+                                            className={activeTab === MultiImageTabs.ImageSequence ? 'active' : ''}
+                                            onClick={() => {
+                                                toggleTab(MultiImageTabs.ImageSequence);
+                                            }}
+                                        >
+                                            <Icon icon="codicon:list-filter" color="black" className="me-3" />
+                                            <div>
+                                                Image Sequence
+                                                <p className="mb-0">Images sequence extracted from a video</p>
+                                            </div>
+                                        </NavLink>
+                                    </NavItem>
+                                </Nav>
+                            </Col>
+                        ):('')
+                    
+                    }
                     <Col sm={12}>
-                        <Nav tabs>
-                            <NavItem>
-                                <NavLink>
-                                    <Icon icon="fluent:square-multiple-20-regular" color="black" className="me-3" />
-                                    Multiple images
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink>
-                                    <Icon icon="codicon:list-filter" color="black" className="me-3" />
-                                    Image Sequence
-                                    <p>Images sequence extracted from a video</p>
-                                </NavLink>
-                            </NavItem>
-                        </Nav>
-                    </Col>
-                    <Col sm={12}>
-                        <TabContent activeimagetab={""}>
-                            <TabPane tabId={""}>
+                        <TabContent activeTab={activeTab}>
+                            <TabPane tabId={MultiImageTabs.MultipleImages}>
                                 <Row>
+                                    {isMultiple ? (
+                                        <Col sm={12}>
+                                            <div className="small-upload_box">
+                                                <ObservationUploadImg imageFormat={false} maxLimit={false} multiple={isMultiple} proceedNext={()=> handleProceedNext()}/>
+                                            </div>
+                                        </Col>
+                                    ) : ('')}
                                     <Col sm={12}>
                                         <FormGroup className="mb-1">
                                             <p className="fw-bold">
@@ -226,7 +249,14 @@ const ObservationImages = () =>{
                                 </Row>
                             </TabPane>
                             <TabPane tabId={MultiImageTabs.ImageSequence}>
-                                Hello
+                                <Row>
+                                    <Col sm={12}>
+                                        <ImagePreview />
+                                    </Col>
+                                    <Col sm={12}>
+                                        <Button type="submit">Continue</Button>
+                                    </Col>
+                                </Row>
                             </TabPane>
                         </TabContent>
                     </Col>
