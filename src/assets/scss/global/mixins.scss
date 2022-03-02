@@ -29,7 +29,7 @@
     font-size: 36px;
     line-height: 40px;
   }
-  @media (max-width: 767px){
+  @include media-breakpoint-down(md){
     font-size: 28px;
     line-height: 36px;
   }
@@ -41,7 +41,7 @@
     font-size: 30px;
     line-height: 35px;
   }
-  @media (max-width: 767px){
+  @include media-breakpoint-down(md){
     font-size: 26px;
     line-height: 35px;
   }
@@ -53,7 +53,7 @@
       font-size: 26px;
       line-height: 30px;
     }
-    @media (max-width: 767px){
+    @include media-breakpoint-down(md){
       font-size: 22px;
       line-height: 26px;
     }
@@ -65,7 +65,7 @@
     font-size: 28px;
     line-height: 32px;
   }
-  @media (max-width: 767px){
+  @include media-breakpoint-down(md){
     font-size: 25px;
     line-height: 30px;
   }
@@ -85,7 +85,7 @@
     font-size: 21px;
     line-height: 25px;
   }
-  @media (max-width: 767px){
+  @include media-breakpoint-down(md){
     font-size: 18px;
     line-height: 22px;
   }
@@ -98,7 +98,7 @@
     font-size: 16px;
     line-height: 26px;
   }
-  @media (max-width: 767px){
+  @include media-breakpoint-down(md){
     font-size: 14px;
     line-height: 18px;
   }
@@ -110,7 +110,7 @@
     font-size: 14px;
     line-height: 18px;
   }
-  @media (max-width: 767px){
+  @include media-breakpoint-down(md){
     font-size: 15px;
     line-height: 20px;
   }

@@ -1,0 +1,39 @@
+@import "../global/config.scss";
+.observation_location{
+    h6{
+        margin-bottom: 20px;
+        font-weight: 600;
+        @include lg-text;
+    }
+    label{
+        @include sm-text;
+        margin-right: 0;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+    }
+    .selected-address {
+        font-weight: 500;
+        @include md-text;
+        height: 100%;
+        img{
+            width: 24px;
+            margin-right: 8px;
+        }
+    }
+    .btn-secondary{
+        &:not(.gray-outline-btn){
+            padding: 13px 50px;
+            @include buttonSecodary;
+            @include media-breakpoint-down(lg){
+                padding: 10px 30px;
+            }
+        }
+    }
+    .gray-outline-btn{
+        padding: 13px 32px;
+        @include media-breakpoint-down(lg){
+            padding: 10px 30px;
+        }
+    }
+}
