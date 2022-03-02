@@ -13,7 +13,7 @@
       border-bottom: none;
       .nav-item {
         .nav-link {
-          border-radius: 6px;
+          border-radius: $border-radius;
           @include lg-text;
           font-weight: 700;
           color: $black;
@@ -38,7 +38,7 @@
       position: relative;
       border:1px dashed #909090;
       background-color: #F9F9F9;
-      border-radius: 6px;
+      border-radius: $border-radius;
       margin: 0 auto;
       width: 100%;
       min-height: 305px;
@@ -103,7 +103,7 @@
       max-width: 100%;
       background-color: #F6F7F8;
       height: 305px;
-      border-radius: 6px; 
+      border-radius: $border-radius; 
       display: flex;
       justify-content: center;
       align-items: center;
@@ -116,6 +116,7 @@
         right: 25px;
         top: 25px;
         font-size: 24px;
+        line-height: 24px;
       }
     }
   }
@@ -166,29 +167,33 @@
     }
   }
 }
-.nav-tabs{
-  margin: 0 -6px;
-  border: 0;
-  .nav-item{
-    width: 50%;
-    padding: 0 6px;
-    .nav-link{
-      background: #F9F9F9;
-      border: 1px solid #DDDDDD;
-      border-radius: 6px;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      font-style: normal;
-      font-weight: 600;
-      @include lg-text;
-      color: black;
-      p{
-        font-weight: normal;
-      }
-      &.active{
-        background: $lightPink;
-        border-color: $secondary;
+.observation-form-right-tab{
+  .nav-tabs{
+    margin: 0 -6px 40px;
+    border: 0;
+    .nav-item{
+      width: 50%;
+      padding: 0 6px;
+      .nav-link{
+        background: #F9F9F9;
+        border: 1px solid #DDDDDD;
+        border-radius: $border-radius;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        font-style: normal;
+        font-weight: 600;
+        @include lg-text;
+        color: black;
+        p{
+          font-weight: normal;
+          @include md-text;
+        }
+        &.active{
+          background: $lightPink;
+          border-color: $secondary;
+          box-shadow: $box-shadow-pink;
+        }
       }
     }
   }
@@ -215,7 +220,7 @@
       transition: color 200ms ease-in;
       overflow: hidden;
       border:1px solid #CBCFD8;
-      border-radius: 6px;
+      border-radius: $border-radius;
       &:after {
         width: 22px;
         height: 22px;
@@ -246,7 +251,7 @@
       color: $black;
       border:1px solid $secondary;
       background: $lightPink;
-      box-shadow: 0px 4px 8px rgba(193, 30, 55, 0.12);
+      box-shadow: $box-shadow-pink;
       &:before {
         transform: translate(-50%, -50%) scale3d(56, 56, 1);
         opacity: 1;

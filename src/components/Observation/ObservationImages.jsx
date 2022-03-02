@@ -80,7 +80,7 @@ const ObservationImages = () =>{
                                                 toggleTab(MultiImageTabs.MultipleImages);
                                             }}
                                         >
-                                            <Icon icon="fluent:square-multiple-20-regular" color="black" className="me-3" />
+                                            <Icon icon="fluent:square-multiple-20-regular" color="black" width={24} className="me-3" />
                                             Multiple images
                                         </NavLink>
                                     </NavItem>
@@ -91,7 +91,7 @@ const ObservationImages = () =>{
                                                 toggleTab(MultiImageTabs.ImageSequence);
                                             }}
                                         >
-                                            <Icon icon="codicon:list-filter" color="black" className="me-3" />
+                                            <Icon icon="codicon:list-filter" color="black" width={24} className="me-3" />
                                             <div>
                                                 Image Sequence
                                                 <p className="mb-0">Images sequence extracted from a video</p>
@@ -109,7 +109,7 @@ const ObservationImages = () =>{
                                 <Row>
                                     {isMultiple ? (
                                         <Col sm={12}>
-                                            <div className="small-upload_box">
+                                            <div className="small-upload_box mb-3">
                                                 <ObservationUploadImg imageFormat={false} maxLimit={false} multiple={isMultiple} proceedNext={()=> handleProceedNext()}/>
                                             </div>
                                         </Col>
@@ -118,6 +118,7 @@ const ObservationImages = () =>{
                                         <FormGroup className="mb-1">
                                             <p className="fw-bold">
                                                 Please choose the appropriate category
+                                                <p className="required">Required</p>
                                             </p>
                                         </FormGroup>
                                     </Col>

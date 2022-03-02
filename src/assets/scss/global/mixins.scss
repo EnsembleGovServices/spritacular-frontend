@@ -166,7 +166,7 @@
   box-shadow: none;
   padding: 12px;
   border-color: transparent;
-  border-radius: 6px;
+  border-radius: $border-radius;
 }
 
 @mixin disabled{

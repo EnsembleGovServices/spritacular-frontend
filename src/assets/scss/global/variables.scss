@@ -29,6 +29,7 @@ $FontFamily: 'Roboto', sans-serif;
 $box-shadow-md: 0px 2px 6px rgba(0, 0, 0, 0.2);
 $box-shadow-popup: 0px 2px 5px rgba(0, 0, 0, 0.1);
 $box-shadow-button: 0px 6px 10px rgba(153, 0, 0, 0.16);
+$box-shadow-pink: 0px 4px 8px rgba(193, 30, 55, 0.12);
 // Modal
 $modal-fade-transform: scale(0.8);
 $modal-show-transform: none;
@@ -37,6 +38,8 @@ $modal-scale-transform: scale(1.02);
 $modal-content-box-shadow-sm-up: $box-shadow-popup;
 $modal-backdrop-bg: transparentize($dark, 0.1);
 $modal-content-border-width: 0;
+
+$border-radius: 6px;
 
 
 // Button
