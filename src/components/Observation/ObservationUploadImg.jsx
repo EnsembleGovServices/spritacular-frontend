@@ -2,23 +2,40 @@ import { Col, FormGroup,Button, Input,Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import { Icon } from '@iconify/react';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const ObservationUploadImg = (props) =>{
     const {multiple, maxLimit, imageFormat}=props;
     const {setObservationImages} = useObservations();
-    const [file, setFile] = useState(null);
+    const [images, setImages] = useState([]);
 
     const handleUploadImage = (e) => {
-        const images = multiple ? e.target.files : e.target.files[0];
-        setFile(images)
-    };
+        const fileList = e.target.files;
+        const tempImages = [];
+        const tempPreview = [];
 
-    const handleContinue = () => {
-        setObservationImages({
-            data: file
-        });
-    }
+        Array.from(fileList).forEach((item) => {
+            tempImages.push(item);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+                const baseImage = `data:image/png;base64,${base64String}`;
+                tempPreview.push(baseImage);
+            };
+            reader.readAsDataURL(item)
+        })
+        setTimeout(function () {
+            setImages({
+                data: tempImages,
+                preview: tempPreview
+            });
+        }, 1000)
+    };
+    
+    useEffect(()=> {
+        setObservationImages(images);
+    }, [images, setObservationImages])
+
 
 
     return (
@@ -57,11 +74,6 @@ const ObservationUploadImg = (props) =>{
                     </FormGroup>
                 </div>
             </div>
-            {!multiple ? (
-            <div className="mt-5">
-                <Button disabled={!file} onClick={()=> handleContinue()}>Continue</Button>
-            </div>
-            ): ('')}
         </Col>
     )
 }
