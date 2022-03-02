@@ -4,7 +4,8 @@ import Images from "../../static/images";
 import { Icon } from "@iconify/react";
 import { Tabs } from "../../helpers/observation";
 
-const ObservationImages = () =>{
+const ObservationImages = (props) =>{
+    const {toggleTab} = props;
     const [activeTab, setActiveTab] = useState('MultipleImages');
     const [step, setStep] = useState({
         total: 3,
@@ -12,11 +13,11 @@ const ObservationImages = () =>{
     });
 
     // Toggle Tabs
-    const toggleTab = (tab) => {
-        if (activeTab !== tab) {
-            setActiveTab(tab);
-        }
-    };
+    // const toggleTab = (tab) => {
+    //     if (activeTab !== tab) {
+    //         setActiveTab(tab);
+    //     }
+    // };
 
     // Set Progress Bar
     useEffect(() => {
@@ -51,6 +52,8 @@ const ObservationImages = () =>{
             </>
         )
     }
+
+    
     return (
         <Row>
             <Col sm={12}>
@@ -236,8 +239,8 @@ const ObservationImages = () =>{
                 </Label>
                 </FormGroup>
             </Col>
-            <Col sm={12}>
-                <Button type="submit">Continue</Button>
+            <Col sm="12">
+                <Button onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Continue</Button>
             </Col>
                         </Row>
                     </TabPane>

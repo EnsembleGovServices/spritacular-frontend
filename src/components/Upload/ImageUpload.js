@@ -13,6 +13,7 @@ const ImageUpload = (props) => {
   const [data, setData] = useState("");
   const [progress, setProgress] = useState("0");
   const [error, setError] = useState(null);
+
   const handleChange = (e) => {
     const file = e.target.files[0];
     setFile(file);
