@@ -10,7 +10,7 @@ import {
   Col,
 } from "reactstrap";
 import { useState } from "react";
-import "../assets/scss/component/uploadobservationform.scss";
+import "../assets/scss/component/uploadObservationImage.scss";
 import Images from "../static/images";
 import EquipmentDetails from "../components/Observation/EquipmentDetails";
 import ObservationLocation from "../components/Observation/ObservationLocation";
@@ -52,7 +52,7 @@ const UploadObservationsForm = () => {
                           toggleTab("1");
                         }}
                       >
-                        Observation Images
+                        Observation Images ss
                       </NavLink>
                     </NavItem>
                     <NavItem>
@@ -85,7 +85,7 @@ const UploadObservationsForm = () => {
                 <div className="observation-form-right-tab">
                   <TabContent activeTab={activeTab}>
                     <TabPane tabId="1">
-                      <ObservationUploadImg />
+                    <ObservationUploadImg imageFormat={true} maxLimit={true}/>
                     </TabPane>
                     <TabPane tabId="2">
                       <ObservationLocation  toggleTab = {toggleTab}/>

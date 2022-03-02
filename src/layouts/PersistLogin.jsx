@@ -46,7 +46,9 @@ const PersistLogin = () => {
                     <Suspense fallback={''}>
                         <Header />
                     </Suspense>
-                    <Outlet />
+                    <div className="main-content">
+                        <Outlet />
+                    </div>
                     <Suspense fallback={''}>
                         <Footer />
                     </Suspense>
@@ -56,7 +58,9 @@ const PersistLogin = () => {
                     <Suspense fallback={''}>
                         <Header />
                     </Suspense>
-                    <Outlet />
+                    <div className="main-content">
+                        <Outlet />
+                    </div>
                     <Suspense fallback={''}>
                         <Footer />
                     </Suspense>

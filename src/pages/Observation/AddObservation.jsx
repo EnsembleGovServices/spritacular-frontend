@@ -1,9 +1,8 @@
 import {Button, Col, Container, Form, Nav, NavItem, NavLink, Row, TabContent, TabPane} from "reactstrap";
-import "../../assets/scss/component/uploadobservationform.scss";
+import "../../assets/scss/component/uploadObservationImage.scss";
 import {useEffect, useState} from "react";
 import {Tabs} from "../../helpers/observation";
 
-import ObservationUploadImg from "../../components/Observation/ObservationUploadImg";
 import ObservationLocation from "../../components/Observation/ObservationLocation";
 import EquipmentDetails from "../../components/Observation/EquipmentDetails";
 import ObservationUploadedImg from "../../components/Observation/ObservationUploadedImg";
@@ -14,7 +13,6 @@ import useObservations from "../../hooks/useObservations";
 const AddObservation = () => {
     const {observationSteps, setObservationSteps, observationImages} = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
-    const [isMultiple] = useState(true);
 
     // Toggle Tabs
     const toggleTab = (tab) => {
@@ -25,6 +23,7 @@ const AddObservation = () => {
 
     // Set Progress Bar
     useEffect(() => {
+
         function setActiveTabForProgressBar() {
             if (activeTab === Tabs.ObservationImages) {
                 return 1;
@@ -41,7 +40,7 @@ const AddObservation = () => {
             }
         });
 
-    }, [activeTab, setObservationSteps]);
+    }, [activeTab, observationImages, setObservationSteps]);
 
     return(
           <Form className="observation-form upload-observation-form-main">
@@ -96,18 +95,11 @@ const AddObservation = () => {
                                   </Nav>
                               </div>
                           </Col>
-                          <Col md={observationImages?.length > 0 ? 7 : 9}>
+                          <Col md={observationImages?.data ? 7 : 9}>
                               <div className="observation-form-right-tab">
                                   <TabContent activeTab={activeTab}>
                                       <TabPane tabId={Tabs.ObservationImages}>
-                                          {observationImages.length < 1 ?
-                                              <ObservationUploadImg multiple={isMultiple}/> :
-                                              (
-                                                  <div className="upload-multiple-observation">
-                                                      <ObservationImages toggleTab={toggleTab}/>
-                                                  </div>
-                                              )
-                                          }
+                                          <ObservationImages/>
                                       </TabPane>
                                       <TabPane tabId={Tabs.DateTimeLocation}>
                                           <ObservationLocation  toggleTab={toggleTab}/>
@@ -118,7 +110,7 @@ const AddObservation = () => {
                                   </TabContent>
                               </div>
                           </Col>
-                          {observationImages.length > 0 &&
+                          {observationImages?.data &&
                               <Col md={2}>
                                   <ObservationUploadedImg />
                               </Col>

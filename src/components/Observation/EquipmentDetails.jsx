@@ -9,18 +9,20 @@ const EquipmentDetails = (props) =>{
         <Row>
             <Col sm="12">
                 <FormGroup className="d-flex align-items-center position-relative">
-                    <input
-                        id="checkbox0"
-                        type="checkbox"
-                        className="custom-switch hidden"
-                    />
-                    <label
-                        className="switchbox"
-                        htmlFor="checkbox0"
-                    />
-                    <span>
-                        I used the same camera, camera settings, and lens listed in my profile
-                    </span>
+                    <div className="custom-switch">
+                        <input
+                            id="checkbox0"
+                            type="checkbox"
+                            className="hidden"
+                        />
+                        <label
+                            className="switchbox"
+                            htmlFor="checkbox0"
+                        />
+                        <span>
+                            I used the same camera, camera settings, and lens listed in my profile
+                        </span>
+                    </div>
                 </FormGroup>
             </Col>
             <Col sm="12">
@@ -36,19 +38,19 @@ const EquipmentDetails = (props) =>{
                 </FormGroup>
             </Col>
             <Col md="12">
-                    <FormGroup>
-                        <h6>Camera Type</h6>
-                        <Input type="select" name="select">
-                        <option disabled defaultValue>
-                            Please Select Your Camera Type
-                        </option>
-                        <option>Canon</option>
-                        <option>Nikon</option>
-                        <option>Sony</option>
-                        <option>Panasonic</option>
-                        </Input>
-                    </FormGroup>
-                    <div className="border-line"/>
+                <FormGroup>
+                    <h6>Camera Type</h6>
+                    <Input type="select" name="select">
+                    <option disabled defaultValue>
+                        Please Select Your Camera Type
+                    </option>
+                    <option>Canon</option>
+                    <option>Nikon</option>
+                    <option>Sony</option>
+                    <option>Panasonic</option>
+                    </Input>
+                </FormGroup>
+                <div className="border-line"/>
             </Col>
             <Col md="12">
             <FormGroup>

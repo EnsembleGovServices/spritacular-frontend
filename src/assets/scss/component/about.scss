@@ -36,7 +36,7 @@
         position: relative;
         .about-card {
             background: linear-gradient(128.5deg, #c01e37 0%, #f052c1 154.21%);
-            border-radius: 6px;
+            border-radius: $border-radius;
             padding: 24px;
             max-width: 406px;
             z-index: 9;
