@@ -1,5 +1,5 @@
 import {Button, Col, Container, Form, Nav, NavItem, NavLink, Row, TabContent, TabPane} from "reactstrap";
-import "../../assets/scss/component/uploadobservationform.scss";
+import "../../assets/scss/component/uploadObservationImage.scss";
 import {useEffect, useState} from "react";
 import {Tabs} from "../../helpers/observation";
 
@@ -101,7 +101,7 @@ const AddObservation = () => {
                                   <TabContent activeTab={activeTab}>
                                       <TabPane tabId={Tabs.ObservationImages}>
                                           {observationImages.length < 1 ?
-                                              <ObservationUploadImg multiple={isMultiple}/> :
+                                              <ObservationUploadImg imageFormat={true} maxLimit={true} multiple={isMultiple}/> :
                                               (
                                                   <div className="upload-multiple-observation">
                                                       <ObservationImages toggleTab={toggleTab}/>

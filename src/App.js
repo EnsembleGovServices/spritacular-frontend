@@ -38,9 +38,7 @@ const App = () => {
         <Route path="blog" element={<Suspense fallback={''}><Blog /></Suspense>} />
         <Route path="tutorials" element={<Suspense fallback={''}><Tutorials /></Suspense>} />
         <Route path="tutorials-detail" element={<Suspense fallback={''}><TutorialsDetail /></Suspense>} />
-        <Route path="observations-form" element={<Suspense fallback={''}><UploadObservationsForm /></Suspense>} />
         <Route path="upload-observations" element={<Suspense fallback={''}><InitialUploadObservations /></Suspense>} />
-        <Route path="observations-form" element={<Suspense fallback={''}><AddObservation /></Suspense>} />
         <Route path="login" element={<Suspense fallback={''}><LoginPage /></Suspense>} />
 
         {/*Protected routes*/}

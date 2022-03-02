@@ -2,42 +2,18 @@ import { useState, useEffect } from "react";
 import { Row, Col, FormGroup, Input, Button, Label, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import Images from "../../static/images";
 import { Icon } from "@iconify/react";
-import { Tabs } from "../../helpers/observation";
+import { MultiImageTabs } from "../../helpers/observation";
 
-const ObservationImages = (props) =>{
-    const {toggleTab} = props;
-    const [activeTab, setActiveTab] = useState('MultipleImages');
-    const [step, setStep] = useState({
-        total: 3,
-        active: 1
-    });
+const ObservationImages = () =>{
+    const [activeimagetab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
 
     // Toggle Tabs
-    // const toggleTab = (tab) => {
-    //     if (activeTab !== tab) {
-    //         setActiveTab(tab);
-    //     }
-    // };
-
-    // Set Progress Bar
-    useEffect(() => {
-        function setActiveTabForProgressBar() {
-            if (activeTab === Tabs.ObservationImages) {
-                return 1;
-            } else if (activeTab === Tabs.DateTimeLocation) {
-                return 2;
-            } else  {
-                return 3;
-            }
+    const toggleTab = (tab) => {
+        if (activeimagetab !== tab) {
+            setActiveImageTab(tab);
         }
-        setStep(prev => {
-            return {
-                ...prev,
-                active: setActiveTabForProgressBar()
-            }
-        });
+    };
 
-    }, [activeTab]);
 
     const ImagePreview = () =>{
         return(
@@ -76,9 +52,9 @@ const ObservationImages = (props) =>{
                 <Nav tabs>
                     <NavItem>
                         <NavLink
-                            className={activeTab === Tabs.MultipleImages ? 'active' : ''}
+                            className={activeimagetab === MultiImageTabs.MultipleImages ? 'active' : ''}
                             onClick={() => {
-                                toggleTab(Tabs.MultipleImages);
+                                toggleTab(MultiImageTabs.MultipleImages);
                             }}
                         >
                             <Icon icon="fluent:square-multiple-20-regular" color="black" className="me-3" />
@@ -87,9 +63,9 @@ const ObservationImages = (props) =>{
                     </NavItem>
                     <NavItem>
                         <NavLink
-                            className={activeTab === Tabs.ImageSequence ? 'active' : ''}
+                            className={activeimagetab === MultiImageTabs.ImageSequence ? 'active' : ''}
                             onClick={() => {
-                                toggleTab(Tabs.ImageSequence);
+                                toggleTab(MultiImageTabs.ImageSequence);
                             }}
                         >
                             <Icon icon="codicon:list-filter" color="black" className="me-3" />
@@ -100,159 +76,160 @@ const ObservationImages = (props) =>{
                 </Nav>
             </Col>
             <Col sm={12}>
-                <TabContent activeTab={activeTab}>
-                    <TabPane tabId={Tabs.MultipleImages}>
+                <TabContent activeimagetab={activeimagetab.MultiImageTabs}>
+                    <TabPane tabId={MultiImageTabs.MultipleImages}>
                         <Row>
-                        <Col sm={12}>
-                <FormGroup className="mb-1">
-                <p className="fw-bold">
-                    Please choose the appropriate category
-                </p>
-                </FormGroup>
-            </Col>
-            <Col sm={12}>
-                <ImagePreview />
-            </Col>
-            <Col sm={6}>
-                <FormGroup>
-                <div className="checkbox-wrapper">
-                    <div className="inputGroup">
-                    <input
-                        id="sprite"
-                        name="option1"
-                        type="checkbox"
-                    />
-                    <label htmlFor="sprite">
-                        <img
-                        src={Images.SpriteOb}
-                        alt="Sprite"
-                        />
-                        Sprite
-                    </label>
-                    </div>
-                </div>
-                </FormGroup>
-            </Col>
-            <Col sm={6}>
-                <FormGroup>
-                <div className="checkbox-wrapper">
-                    <div className="inputGroup">
-                    <input
-                        id="blue-jet"
-                        name="BlueJet"
-                        type="checkbox"
-                    />
-                    <label htmlFor="blue-jet">
-                        <img
-                        src={Images.Bluejet}
-                        alt="Bluejet"
-                        />
-                        Blue Jet
-                    </label>
-                    </div>
-                </div>
-                </FormGroup>
-            </Col>
-            <Col sm={6}>
-                <FormGroup>
-                <div className="checkbox-wrapper">
-                    <div className="inputGroup">
-                    <input
-                        id="elve"
-                        name="Elve"
-                        type="checkbox"
-                    />
-                    <label htmlFor="elve">
-                        <img src={Images.Elev} alt="Elve" />
-                        Elve
-                    </label>
-                    </div>
-                </div>
-                </FormGroup>
-            </Col>
-            <Col sm={6}>
-                <FormGroup>
-                <div className="checkbox-wrapper">
-                    <div className="inputGroup">
-                    <input
-                        id="halo"
-                        name="Halo"
-                        type="checkbox"
-                    />
-                    <label htmlFor="halo">
-                        <img src={Images.Halo} alt=" Halo" />
-                        Halo
-                    </label>
-                    </div>
-                </div>
-                </FormGroup>
-            </Col>
-            <Col sm={6}>
-                <FormGroup>
-                <div className="checkbox-wrapper">
-                    <div className="inputGroup">
-                    <input
-                        id="gigantic-jet"
-                        name="Gigantic Jet"
-                        type="checkbox"
-                    />
-                    <label htmlFor="gigantic-jet">
-                        <img
-                        src={Images.GiganticJet}
-                        alt="Sprite"
-                        />
-                        Gigantic Jet
-                    </label>
-                    </div>
-                </div>
-                </FormGroup>
-            </Col>
-            <Col sm={6}>
-                <FormGroup>
-                <div className="checkbox-wrapper">
-                    <div className="inputGroup">
-                    <input
-                        id="secondary-jet"
-                        name="Secondary Jet"
-                        type="checkbox"
-                    />
-                    <label htmlFor="secondary-jet">
-                        <img
-                        src={Images.SecondaryJet}
-                        alt="Secondary Jet"
-                        />
-                        Secondary Jet
-                    </label>
-                    </div>
-                </div>
-                </FormGroup>
-            </Col>
-            <Col sm={12}>
-                <FormGroup check>
-                <Label check>
-                    <Input
-                        required
-                        type="checkbox"
-                        name="agreeTerms"
-                    />
-                    Other
-                </Label>
-                </FormGroup>
-            </Col>
-            <Col sm="12">
-                <Button onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Continue</Button>
-            </Col>
+                            <Col sm={12}>
+                                <FormGroup className="mb-1">
+                                <p className="fw-bold">
+                                    Please choose the appropriate category
+                                </p>
+                                </FormGroup>
+                            </Col>
+                            <Col sm={12}>
+                                <ImagePreview />
+                            </Col>
+                            <Col sm={6}>
+                                <FormGroup>
+                                <div className="checkbox-wrapper">
+                                    <div className="inputGroup">
+                                    <input
+                                        id="sprite"
+                                        name="option1"
+                                        type="checkbox"
+                                    />
+                                    <label htmlFor="sprite">
+                                        <img
+                                        src={Images.SpriteOb}
+                                        alt="Sprite"
+                                        />
+                                        Sprite
+                                    </label>
+                                    </div>
+                                </div>
+                                </FormGroup>
+                            </Col>
+                            <Col sm={6}>
+                                <FormGroup>
+                                <div className="checkbox-wrapper">
+                                    <div className="inputGroup">
+                                    <input
+                                        id="blue-jet"
+                                        name="BlueJet"
+                                        type="checkbox"
+                                    />
+                                    <label htmlFor="blue-jet">
+                                        <img
+                                        src={Images.Bluejet}
+                                        alt="Bluejet"
+                                        />
+                                        Blue Jet
+                                    </label>
+                                    </div>
+                                </div>
+                                </FormGroup>
+                            </Col>
+                            <Col sm={6}>
+                                <FormGroup>
+                                <div className="checkbox-wrapper">
+                                    <div className="inputGroup">
+                                    <input
+                                        id="elve"
+                                        name="Elve"
+                                        type="checkbox"
+                                    />
+                                    <label htmlFor="elve">
+                                        <img src={Images.Elev} alt="Elve" />
+                                        Elve
+                                    </label>
+                                    </div>
+                                </div>
+                                </FormGroup>
+                            </Col>
+                            <Col sm={6}>
+                                <FormGroup>
+                                <div className="checkbox-wrapper">
+                                    <div className="inputGroup">
+                                    <input
+                                        id="halo"
+                                        name="Halo"
+                                        type="checkbox"
+                                    />
+                                    <label htmlFor="halo">
+                                        <img src={Images.Halo} alt=" Halo" />
+                                        Halo
+                                    </label>
+                                    </div>
+                                </div>
+                                </FormGroup>
+                            </Col>
+                            <Col sm={6}>
+                                <FormGroup>
+                                <div className="checkbox-wrapper">
+                                    <div className="inputGroup">
+                                    <input
+                                        id="gigantic-jet"
+                                        name="Gigantic Jet"
+                                        type="checkbox"
+                                    />
+                                    <label htmlFor="gigantic-jet">
+                                        <img
+                                        src={Images.GiganticJet}
+                                        alt="Sprite"
+                                        />
+                                        Gigantic Jet
+                                    </label>
+                                    </div>
+                                </div>
+                                </FormGroup>
+                            </Col>
+                            <Col sm={6}>
+                                <FormGroup>
+                                <div className="checkbox-wrapper">
+                                    <div className="inputGroup">
+                                    <input
+                                        id="secondary-jet"
+                                        name="Secondary Jet"
+                                        type="checkbox"
+                                    />
+                                    <label htmlFor="secondary-jet">
+                                        <img
+                                        src={Images.SecondaryJet}
+                                        alt="Secondary Jet"
+                                        />
+                                        Secondary Jet
+                                    </label>
+                                    </div>
+                                </div>
+                                </FormGroup>
+                            </Col>
+                            <Col sm={12}>
+                                <FormGroup check>
+                                <Label check>
+                                    <Input
+                                        required
+                                        type="checkbox"
+                                        name="agreeTerms"
+                                    />
+                                    Other
+                                </Label>
+                                </FormGroup>
+                            </Col>
+                            <Col sm="12">
+                                <Button onClick={() =>toggleTab(MultiImageTabs.DateTimeLocation)}>Continue</Button>
+                            </Col>
                         </Row>
                     </TabPane>
-                    <TabPane tabId={Tabs.ImageSequence}>
-                        <Row>
+                    <TabPane tabId={MultiImageTabs.ImageSequence}>
+                                Hello
+                        {/* <Row>
                             <Col sm={12}>
                                 <ImagePreview />
                             </Col>
                             <Col sm={12}>
                                 <Button type="submit">Continue</Button>
                             </Col>
-                        </Row>
+                        </Row> */}
                     </TabPane>
                 </TabContent>
             </Col>
