@@ -4,18 +4,16 @@ import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "react-google-maps";
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
-import { SearchBox }  from "react-google-maps/lib/components/places/SearchBox";
+
 
 // import { GoogleMapsAPI } from '../client-config';
-Geocode.setApiKey( "AIzaSyBEDPyTJNbYuUlhYYXSnpVAUMm0J-5cI4U");
+Geocode.setApiKey("AIzaSyC49bXfihl4zZqjG2-iRLUmcWO_PVcDehM");
 Geocode.enableDebug();
 
 class Map extends Component{
 
-	// { onPlaceSelected} = this.props;
 	constructor( props ){
 		super( props );
-		// this.props.func(this);
 		this.state = {
 			address: '',
 			city: '',
@@ -225,30 +223,6 @@ class Map extends Component{
 					           defaultCenter={{ lat: this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
 
 					>
-						{/* <SearchBox
-						// ref={props.onSearchBoxMounted}
-						// bounds={google.maps.LatLngBounds()}
-						controlPosition={google.maps.ControlPosition.TOP_LEFT}
-						// onPlaceSelected={this.onPlaceSelected}
-						>
-						<input
-							type="text"
-							placeholder="Customized your placeholder"
-							style={{
-							boxSizing: `border-box`,
-							border: `1px solid transparent`,
-							width: `240px`,
-							height: `32px`,
-							marginTop: `27px`,
-							padding: `0 12px`,
-							borderRadius: `3px`,
-							boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-							fontSize: `14px`,
-							outline: `none`,
-							textOverflow: `ellipses`,
-							}}
-						/> */}
-						{/* </SearchBox> */}
 						{/* For Auto complete Search Box */}
 						<Autocomplete
 							style={{
@@ -258,9 +232,8 @@ class Map extends Component{
 								// marginTop: '20px',
 								// marginBottom: '500px'
 							}}
-							controlPosition= {google.maps.ControlPosition.TOP_CENTER}
 							// ref={el => this.input = el}
-							options = {{ controlPosition: google.maps.ControlPosition.TOP_CENTER, }}
+							// options = {{ controlPosition: google.maps.ControlPosition.TOP_CENTER, }}
 							onPlaceSelected={ this.onPlaceSelected }
 							types={['(regions)']}
 						/>
@@ -310,7 +283,7 @@ class Map extends Component{
 			// 	</div> */}
 
 				<AsyncMap
-					googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyBEDPyTJNbYuUlhYYXSnpVAUMm0J-5cI4U&libraries=places`}
+					googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyC49bXfihl4zZqjG2-iRLUmcWO_PVcDehM&libraries=places`}
 					loadingElement={
 						<div style={{ height: `100%` }} />
 					}

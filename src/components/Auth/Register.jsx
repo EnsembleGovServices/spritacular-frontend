@@ -4,7 +4,9 @@ import {useEffect, useState} from "react";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import {baseURL} from "../../helpers/url";
-// import Autocomplete from 'react-google-autocomplete';
+import PlacesAutocomplete from "../LocationSearchInput";
+ import Autocomplete from 'react-google-autocomplete';
+
 
 const Register = (props) => {
     const { handleLogin } = props;
@@ -14,7 +16,14 @@ const Register = (props) => {
         last_name: "",
         email: "",
         location: "",
+        extra_fields: {
+            address: "",
+            lat: "",
+            lng: "",
+            countryCode: ""
+        }
     });
+    const [locations,setLocation] = useState();
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
 
@@ -26,6 +35,19 @@ const Register = (props) => {
             [name]: value,
         });
     };
+
+    const handleLocations = (location) => {
+        setUserRegistration({
+            ...userRegistration,
+            location: location['placeId'],
+            extra_fields: {
+                address: location['address'],
+                lat: location['lat'],
+                lng: location['lng'],
+                countryCode: location['countryCode'],
+            }
+        });
+    }
 
     const handleCheck = (e) => {
         setUserRegistration({
@@ -163,27 +185,7 @@ const Register = (props) => {
                             <FormFeedback>{error?.data?.password}</FormFeedback>
                         </FormGroup>
                         <FormGroup>
-                            {/* <Autocomplete
-                                style={{
-                                    width: '100%',
-                                    height: '40px',
-                                    paddingLeft: '16px',
-                                    marginTop: '2px',
-                                    marginBottom: '500px'
-                                }}
-                                // onPlaceSelected={ this.onPlaceSelected }
-                                types={['(regions)']}
-                            /> */}
-                            <Input
-                                required
-                                type="select"
-                                name="location"
-                                onChange={(e) => handleInput(e)}
-                            >
-                                <option value="Ahmedabad">Ahmedabad</option>
-                                <option value="Pune">Pune</option>
-                                <option value="Bombay">Bombay</option>
-                            </Input>
+                            <PlacesAutocomplete handleLocations={handleLocations}/>
                             <FormFeedback>Location is required</FormFeedback>
                         </FormGroup>
                         <FormGroup check>
