@@ -1,7 +1,7 @@
 import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
 import Images from "../../static/images";
 import { lazy, useState } from 'react';
-// import Autocomplete from 'react-google-autocomplete';
+import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
 
@@ -34,21 +34,21 @@ const ObservationLocation = (props) => {
     return (
         <>
             <Col md="12">
-            <FormGroup row>
+            {/* <FormGroup row> */}
                     <h6>Where did you make the observation?</h6>
-                   {/* <MapWrapper
+                   <MapWrapper
 					google={props.google}
 					center={{lat: lat, lng: lng}}
 					height='300px'
 					zoom={15}
                     handleState={handleValue}                    
-				 /> */}
+				 />
                     {/* <Input
                         type="search"
                         name="name"
                         placeholder="Edmon, OK, USA"
                     /> */}
-                    </FormGroup>
+                    {/* </FormGroup> */}
             </Col>
             <Col md={12} className="mb-5">
                 <h6>If you know the precise coordinates of your observation location, please enter below</h6>

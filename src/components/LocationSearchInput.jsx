@@ -1,8 +1,12 @@
+/* eslint-disable no-undef */
+import { array } from "prop-types";
 import React from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
+
+import getCity, {getPostalCode, getState , getCountry, getArea} from '../helpers';
 
 class LocationSearchInput extends React.Component {
   constructor(props) {
@@ -16,12 +20,35 @@ class LocationSearchInput extends React.Component {
     this.setState({ address });
   };
 
-  handleSelect = address => {
-    
-    geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log("Success", latLng))
-      .catch(error => console.error("Error", error));
+  handleSelect = (address,placeId,suggestion) => {
+    console.log(suggestion);
+    const placesService = new google.maps.places.PlacesService(
+      document.createElement("div")
+    );
+    let place;
+    this.address = "";
+    placesService.getDetails({ placeId: placeId }, results => {
+      place = results;
+      if (!place.geometry) {
+        return;
+      }
+      console.log(place);  
+      // let area = getArea(place.address_components);
+      // let city = getCity(place.address_components);
+      // let state = getState(place.address_components);
+      // let postalCode = getPostalCode(place.address_components);
+      let country = getCountry(place.address_components)['short_name'];
+
+     let lat = place.geometry.location.lat();
+     let lng = place.geometry.location.lng();
+    let addressArray = [];
+    addressArray['address'] = place.formatted_address;
+    addressArray['lat'] = place.geometry.location.lat();
+    addressArray['lng'] = place.geometry.location.lng();
+    addressArray['placeId'] = placeId;
+    addressArray['countryCode'] = country;
+    this.props.handleLocations(addressArray);
+    });
   };
 
   render() {    
@@ -34,6 +61,7 @@ class LocationSearchInput extends React.Component {
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
             <input
+            
               {...getInputProps({
                 placeholder: "Search Places ...",
                 className: "location-search-input",
@@ -51,8 +79,9 @@ class LocationSearchInput extends React.Component {
                   ? { backgroundColor: "#fafafa", cursor: "pointer" }
                   : { backgroundColor: "#ffffff", cursor: "pointer" };
                   const suggesionClick = () => {
+                    console.log("hi");
                     this.setState({address: suggestion.description });
-                    this.props.setLocation(suggestion.description);
+                   
                   }
                 return (
                   <div
@@ -61,7 +90,7 @@ class LocationSearchInput extends React.Component {
                       style,
                     })}
                   >
-                    <span onClick= {suggesionClick}>{suggestion.description}</span>
+                    <span onClick={suggesionClick}>{suggestion.description}</span>
                   </div>
                 );
               })}
