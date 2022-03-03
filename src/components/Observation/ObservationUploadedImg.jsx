@@ -6,8 +6,8 @@ const ObservationUploadedImg = (props) => {
     const [preview, setPreview] = useState([]);
 
     useLayoutEffect(()=> {
-        setPreview(observationImages?.preview)
-    }, [observationImages.preview])
+        setPreview(observationImages)
+    }, [observationImages])
 
     return(
         <>
@@ -16,7 +16,7 @@ const ObservationUploadedImg = (props) => {
                     <div key={index} className="mb-2">
                         <img
                             className="img-fluid rounded-1 shadow-sm"
-                            src={item}
+                            src={item?.image}
                             alt="preview"
                         />
                     </div>
