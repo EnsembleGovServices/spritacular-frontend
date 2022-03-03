@@ -389,7 +389,8 @@
 .dropdown-menu{
   .dropdown-item{
     a{
-      color: $grey;
+      font-weight: 500;
+      color: $black;
       display: block;
     }
     &:hover {

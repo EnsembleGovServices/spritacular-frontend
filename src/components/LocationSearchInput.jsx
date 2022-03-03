@@ -5,6 +5,8 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
+import { Input } from "reactstrap";
+import Loader from "../components/Shared/Loader";
 
 import getCity, {getPostalCode, getState , getCountry, getArea} from '../helpers';
 
@@ -60,28 +62,28 @@ class LocationSearchInput extends React.Component {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            <input
+            {/* <Input */}
+            <Input
             
               {...getInputProps({
                 placeholder: "Search Places ...",
-                className: "location-search-input",
-               
+                className: "location-search-input form-control",
               })}
             />
             <div className="autocomplete-dropdown-container">
-              {loading && <div>Loading...</div>}
+              {loading && <Loader fixContent={false} />}
               {suggestions.map(suggestion => {
                 const className = suggestion.active
-                  ? "suggestion-item--active"
+                  ? "suggestion-item suggestion-item--active"
                   : "suggestion-item";
                 // inline style for demonstration purpose
                 const style = suggestion.active
-                  ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                  : { backgroundColor: "#ffffff", cursor: "pointer" };
+                  ? { backgroundColor: "#ffebeb",color: "#990000", cursor: "pointer" }
+                  : { backgroundColor: "transparent",color: "#000", cursor: "pointer" };
                   const suggesionClick = () => {
                     console.log("hi");
                     this.setState({address: suggestion.description });
-                   
+                  
                   }
                 return (
                   <div
