@@ -35,14 +35,30 @@ const ObservationLocation = (props) => {
         <>
             <Col md="12">
             <FormGroup row>
-                    <h6>Where did you make the observation?</h6>
+                <Row>
+                    <Col lg={7} className="order-2 order-lg-1">
+                        <h6>Where did you make the observation?</h6>
+                    </Col>
+                    <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
+                        <FormGroup check>
+                            <Label check className="mb-0">
+                                <Input
+                                    required
+                                    type="checkbox"
+                                    name="Same as the first image"
+                                />
+                                Same as the first image
+                            </Label>
+                        </FormGroup>
+                    </Col>
+                </Row>
                    {/* <MapWrapper
 					google={props.google}
 					center={{lat: lat, lng: lng}}
 					height='300px'
 					zoom={15}
                     handleState={handleValue}                    
-				 /> */}
+				 />  */}
                     {/* <Input
                         type="search"
                         name="name"
@@ -93,7 +109,23 @@ const ObservationLocation = (props) => {
                 </Row>
             </Col>
             <Col md={12} className="mb-5">
-                <h6>Please enter date and time for your observation</h6>
+                <Row>
+                    <Col lg={7} className="order-2 order-lg-1">
+                        <h6>Please enter date and time for your observation</h6>
+                    </Col>
+                    <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
+                        <FormGroup check>
+                            <Label check className="mb-0">
+                                <Input
+                                    required
+                                    type="checkbox"
+                                    name="Same as the first image"
+                                />
+                                Same as the first image
+                            </Label>
+                        </FormGroup>
+                    </Col>
+                </Row>
                 <Row>
                     <Col md={6} lg={4}>
                         <FormGroup>

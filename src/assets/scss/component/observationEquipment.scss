@@ -1,8 +1,40 @@
 @import "../global/config.scss";
 .observation_equipment{
     h6{
-        margin-bottom: 20px;
         font-weight: 600;
         @include lg-text;
+        margin: 8px 0;
+    }
+    .border-line {
+        height: 1px;
+        width: 100%;
+        background: #EAEAEA;
+        margin: 32px 0;
+    }
+    p{
+        font-weight: normal;
+        color: #181818;
+        @include md-text;
+    }
+    label{
+        @include sm-text;
+        margin-right: 0;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+    .form-check{
+        label{
+            font-weight: normal;
+            @include lg-text;
+            color: $black;
+            display: flex;
+            align-items: center;
+            text-transform: none;
+        }
+        .form-check-input{
+            margin-right: 12px;
+        }
     }
 }

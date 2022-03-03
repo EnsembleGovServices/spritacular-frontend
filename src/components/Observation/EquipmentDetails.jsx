@@ -7,135 +7,81 @@ const EquipmentDetails = (props) =>{
     return (
         <>
         <Row>
-            <Col sm="12">
-                <FormGroup className="d-flex align-items-center position-relative">
-                    <div className="custom-switch mb-5">
-                        <input
-                            id="checkbox0"
-                            type="checkbox"
-                            className="hidden"
-                        />
-                        <label
-                            className="switchbox"
-                            htmlFor="checkbox0"
-                        />
-                        <span>
-                            I used the same camera, camera settings, and lens listed in my profile
-                        </span>
-                    </div>
-                </FormGroup>
+            <Col md={12}>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Camera Type<span className="required">Required</span></h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">Canon</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Focal Length<span className="required">Required</span></h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">35 mm</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Aperture<span className="required">Required</span></h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">f/1.4</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">ISO</h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">100</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Shutter Speed</h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">1/15 sec</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Frame Rate</h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">24</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">How do you generally keep track of time?</h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">Camera Type</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Do you use any special equipment attached to your camera (such as a filter)?</h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">Polarizing Filter</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2 mb-4"></div>
             </Col>
-            <Col sm="12">
-                <FormGroup check>
-                <Label check className="mb-4">
-                    <Input
-                        required
-                        type="checkbox"
-                        name="Pull data from my profile"
-                    />
-                    Pull data from my profile
-                </Label>
-                </FormGroup>
-            </Col>
-            <Col md="12">
-                <FormGroup>
-                    <h6>Camera Type</h6>
-                    <Input type="select" name="select">
-                        <option disabled defaultValue>
-                            Please Select Your Camera Type
-                        </option>
-                        <option>Canon</option>
-                        <option>Nikon</option>
-                        <option>Sony</option>
-                        <option>Panasonic</option>
-                    </Input>
-                </FormGroup>
-                <div className="border-line"/>
-            </Col>
-            <Col md="12">
-            <FormGroup>
-                <h6>Lens Information</h6>
-            </FormGroup>
-            </Col>
-            <Col md="6">
-            <FormGroup>
-                <label>Focal Length</label>
-                <Input
-                type="text"
-                name="name"
-                placeholder="35 mm"
-                />
-            </FormGroup>
-            </Col>
-            <Col md="6">
-                <FormGroup>
-                    <label>Aperture</label>
-                    <Input
-                    type="text"
-                    name="name"
-                    placeholder="35 mm"
-                    />
-                </FormGroup>
-            </Col>
-            <Col md="12">
-            <div className="border-line"/>
-            <FormGroup>
-                <h6>Camera Settings</h6>
-            </FormGroup>
-            </Col>
-            <Col md="6">
-            <FormGroup>
-                <label>ISO</label>
-                <Input
-                type="text"
-                name="name"
-                placeholder="100"
-                />
-            </FormGroup>
-            </Col>
-            <Col md="6">
-            <FormGroup>
-                <label>Shutter Speed (exposure time)</label>
-                <Input
-                type="text"
-                name="name"
-                placeholder="1/15"
-                />
-            </FormGroup>
-            </Col>
-            <Col md="6">
-            <FormGroup>
-                <label>Frame Rate (frames per second)</label>
-                <Input type="text" name="name" placeholder="24" />
-            </FormGroup>
-            </Col>
-            <Col md="12">
-                <div className="border-line"></div>
-                <FormGroup>
-                    <h6>How do you generally keep track of time?</h6>
-                    <Input
-                    type="text"
-                    name="name"
-                    placeholder="e.g. GPS, Camera Time, Computer Time"
-                    />
-                </FormGroup>
-            </Col>
-            <Col md="12">
-                <div className="border-line"></div>
-                <FormGroup>
-                    <h6>
-                    Do you use any special equipment attached to
-                    your camera (such as a filter)?
-                    </h6>
-                    <Input
-                    type="text"
-                    name="name"
-                    placeholder="e.g. Polarizing Filter, ND Filter, etc"
-                    />
-                </FormGroup>
-            </Col>
-            <Col md="12">
-                <div className="border-line"></div>
+            <Col md={12}>
                 <FormGroup>
                     <h6>Elevation angle of your camera in degrees</h6>
                     <Input
@@ -145,8 +91,9 @@ const EquipmentDetails = (props) =>{
                     />
                 </FormGroup>
             </Col>
-            <Col md="12">
-                <div className="border-line"></div>
+            <Col md={12}>
+
+                {/* <div className="border-line"></div> */}
                 <FormGroup>
                     <h6>Link to the video of this event</h6>
                     <Input
@@ -158,16 +105,17 @@ const EquipmentDetails = (props) =>{
             </Col>
             <Col md={12}>
                 <FormGroup>
-                    <h6>Lorem ipsum dolor sit amet consectetur adipiscing elit sed sed lobortis magna</h6>
+                    <h6>Please share the story of your capture</h6>
+                    <div className="border-line my-2"></div>
                     <Input
                         type="textarea"
                         name="textarea"
-                        placeholder="Please describe the story of your capture."
+                        placeholder="We would love to hear more about your experience."
                     />
                 </FormGroup>
             </Col>
             <Col md={12}>
-                <Button  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
+                <Button className="gray-outline-btn"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
             </Col>
         </Row>
         </>

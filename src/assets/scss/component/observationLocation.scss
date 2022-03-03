@@ -5,7 +5,7 @@
         font-weight: 600;
         @include lg-text;
     }
-    label{
+    .form-label{
         @include sm-text;
         margin-right: 0;
         text-transform: uppercase;
@@ -30,10 +30,14 @@
             }
         }
     }
-    .gray-outline-btn{
-        padding: 13px 32px;
-        @include media-breakpoint-down(lg){
-            padding: 10px 30px;
+    .form-check{
+        .form-check-label {
+            font-weight: normal;
+            @include lg-text;
+            text-transform: none;
+            color: $black;
+            justify-content: flex-end;
         }
     }
+    
 }
