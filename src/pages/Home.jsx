@@ -4,7 +4,7 @@ import "../assets/scss/component/home.scss";
 
 const HomeBanner = lazy(()=> import('../components/Home/HomeBanner'))
 const HomeCounter = lazy(()=> import('../components/Home/HomeCounter'))
-// const HomeMapSection = lazy(()=> import('../components/Home/HomeMapSection'))
+const HomeMapSection = lazy(()=> import('../components/Home/HomeMapSection'))
 const GetStarted = lazy(()=> import('../components/Home/GetStarted'))
 
 const Home = (props) => {
