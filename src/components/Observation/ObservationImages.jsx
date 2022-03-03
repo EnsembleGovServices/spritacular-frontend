@@ -6,7 +6,7 @@ import useObservations from "../../hooks/useObservations";
 
 const ObservationStepImages = (props) =>{
     const {proceedNext} = props;
-    const [isMultiple, setIsMultiple] = useState(false);
+    const [isMultiple] = useState(false);
     const { observationImages } = useObservations();
 
     return (

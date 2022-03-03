@@ -114,12 +114,19 @@ const AddObservation = () => {
                                   </Nav>
                               </div>
                           </Col>
-                          <Col md={observationImages?.length && next ? 7 : 9}>
+                          <Col md={observationImages?.length > 0 && next ? 7 : 9}>
                               <div className="observation-form-right-tab">
                                   <TabContent activeTab={activeTab}>
                                       <TabPane tabId={Tabs.ObservationImages}>
-
                                           {next ? <ObservationAfterImageUpload /> : <ObservationImages proceedNext={()=> handleContinue()}/>}
+
+                                          {/*<div className={next ? 'd-none' : ''}>*/}
+                                          {/*    <ObservationImages proceedNext={()=> handleContinue()}/>*/}
+                                          {/*</div>*/}
+
+                                          {/*<div className={next ? '' : 'd-none'}>*/}
+                                          {/*    <ObservationAfterImageUpload />*/}
+                                          {/*</div>*/}
                                       </TabPane>
                                       <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
                                           <ObservationLocation  toggleTab={toggleTab}/>
@@ -147,7 +154,7 @@ const AddObservation = () => {
                                   </TabContent>
                               </div>
                           </Col>
-                          {observationImages?.length && next &&
+                          {observationImages?.length > 0 && next &&
                               <Col md={2}>
                                   <ObservationUploadedImg />
                               </Col>
