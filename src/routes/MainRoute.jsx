@@ -41,7 +41,7 @@ const routesList = [
     path: "/tutorials-detail",
     name: "tutorials",
     element: <TutorialsDetail />,
-  },
+  }, 
 ];
 
 export default routesList;

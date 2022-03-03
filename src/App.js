@@ -19,6 +19,7 @@ import Observations from "./pages/Observation/Observations";
 import Error from "./components/Error";
 import TutorialsDetail from "./pages/TutorialsDetail";
 import InitialUploadObservations from "./pages/InitialUploadObservations";
+import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 
 const App = () => {
   return (
@@ -31,6 +32,8 @@ const App = () => {
         <Route path={"tutorials"} element={<Tutorials />} />
         <Route path={"tutorials-detail"} element={<TutorialsDetail />} />
         <Route path={"login"} element={<LoginPage />} />
+        <Route exact path={"/password_reset"} element={<ResetPasswordPopup />} />
+        
 
         {/*Protected routes*/}
         <Route element={<RequireAuth />}>
@@ -39,6 +42,7 @@ const App = () => {
             <Route path={"observations"} element={<MyObservations />} />
             <Route path={"observations/add"} element={<AddObservation />} />
             <Route path={"upload-observations"} element={<InitialUploadObservations />} />
+            
           </Route>
         </Route>
         {/*</Route>*/}

@@ -9,13 +9,32 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
+import {useEffect, useState} from "react";
+
 import Images from "../../static/images";
 import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
 
 const ForgotPasswordPopup = (props) => {
   const { open, handleClose, modalClass } = props;
-
+  const [email, setEmail] = useState("");
+  const handleInput = (e) => {
+    e.preventDefault();
+        setEmail(e.target.value);
+}
+  const handleResetPasswordLink = async (e) => {
+    e.preventDefault();
+    await axios.post(baseURL.api+'/users/password_reset/',{'email': email})
+        .then((response) => {
+        })
+        .catch((error) => {
+            if (!error?.response) {
+                console.log('server error occurred')
+            }
+        })
+}
   return (
     <>
       <Modal
@@ -44,13 +63,14 @@ const ForgotPasswordPopup = (props) => {
                   <Input
                     type="email"
                     name="email"
-                    placeholder="Enter email address"
+                    placeholder="Enter email address" 
+                    onChange={(e)=>handleInput(e)}
                   />
                 </FormGroup>
               </Col>
               <Col sm={12}>
                 <FormGroup>
-                  <Button className="modal-btn" disabled>
+                  <Button className="modal-btn" onClick={handleResetPasswordLink}>
                     Request reset link
                   </Button>
                 </FormGroup>
