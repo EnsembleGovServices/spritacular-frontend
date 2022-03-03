@@ -24,10 +24,13 @@ body {
 }
 
 ::placeholder {
-  color: #000;
+  color: #000; 
   opacity: 0.32;
 }
-
+::selection{
+  color: #fff;
+  background-color: #9900004a;
+}
 body.modal-open {
   padding-right: 0 !important;
 }
@@ -72,6 +75,9 @@ body.modal-open {
   margin-top: 60px;
 }
 
+.btn-secondary{
+  @include buttonSecodary;
+}
 .gray-outline-btn{
   @include grayButton;
 }

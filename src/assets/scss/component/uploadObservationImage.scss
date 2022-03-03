@@ -133,7 +133,7 @@
     display: flex;
     justify-content: space-between;
     .btn {
-      @include grayButton;
+      // @include grayButton;
       margin-right: 15px;
       padding: 9px 34px;
       @include md-text;
@@ -195,6 +195,24 @@
           box-shadow: $box-shadow-pink;
         }
       }
+    }
+  }
+}
+.upload-observation-form-inner{
+  .gray-outline-btn{
+    padding: 13px 32px;
+    @include media-breakpoint-down(lg){
+        padding: 10px 30px;
+    }
+  }
+  textarea{
+    resize: none;
+    background: transparent;
+    padding: 0 0 10px 0;
+    @include md-text;
+    border-radius: 0;
+    &:focus{
+      background: transparent;
     }
   }
 }

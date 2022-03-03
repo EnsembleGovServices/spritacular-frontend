@@ -19,12 +19,11 @@ const Home = (props) => {
             <HomeCounter />
         </Suspense>
 
-        {/*<Suspense fallback={''}>*/}
+        <Suspense fallback={''}>
         {/*    /!*<div style={{ margin: '100px' }}>*!/*/}
-		{/*		<HomeMapSection*/}
-		{/*		/>*/}
+            <HomeMapSection />
 		{/*	/!*</div>*!/*/}
-        {/*</Suspense>*/}
+        </Suspense>
 
         <Suspense fallback={''}>
             <GetStarted />

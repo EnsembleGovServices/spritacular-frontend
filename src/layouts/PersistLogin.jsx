@@ -64,6 +64,7 @@ const PersistLogin = () => {
                     <div className="main-content">
                         <Outlet />
                     </div>
+                    <Footer />
                 </>
             )}
         </>

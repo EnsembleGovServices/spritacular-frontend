@@ -1,4 +1,4 @@
-import {Button, Col, Container, Form, Nav, NavItem, NavLink, Row, TabContent, TabPane} from "reactstrap";
+import {Button, Col, Container, Form, Nav, NavItem, NavLink, Row, TabContent, TabPane, FormGroup} from "reactstrap";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import {useEffect, useState} from "react";
 import {Tabs} from "../../helpers/observation";
@@ -9,10 +9,12 @@ import ObservationUploadedImg from "../../components/Observation/ObservationUplo
 import ObservationImages from "../../components/Observation/ObservationImages";
 import ObservationProgress from "../../components/Observation/ObservationProgress";
 import useObservations from "../../hooks/useObservations";
+import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
 
 const AddObservation = () => {
     const {observationSteps, setObservationSteps, observationImages} = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
+    const [isSwitchOn, setSwitchOn] = useState(false);
 
     // Toggle Tabs
     const toggleTab = (tab) => {
@@ -56,9 +58,9 @@ const AddObservation = () => {
               <div className="common-top-button-wrapper">
                   <Container>
                       <div className="common-top-button-wrapper-inner">
-                          <Button>Cancel</Button>
+                          <Button className="gray-outline-btn">Cancel</Button>
                           <div className="top-right-btn">
-                              <Button>Save as draft</Button>
+                              <Button className="gray-outline-btn">Save as draft</Button>
                               <Button type="submit" >Submit</Button>
                           </div>
                       </div>
@@ -114,7 +116,24 @@ const AddObservation = () => {
                                           <ObservationLocation  toggleTab={toggleTab}/>
                                       </TabPane>
                                       <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
-                                          <EquipmentDetails toggleTab={toggleTab}/>
+                                        <FormGroup className="d-flex align-items-center position-relative">
+                                            <div className="custom-switch mb-5">
+                                                <input
+                                                    id="checkbox0"
+                                                    type="checkbox"
+                                                    className="hidden"
+                                                    onChange = {(e)=>setSwitchOn(!isSwitchOn)}
+                                                />
+                                                <label
+                                                    className="switchbox"
+                                                    htmlFor="checkbox0"
+                                                />
+                                                <span>
+                                                    I used the same camera, camera settings, and lens listed in my profile
+                                                </span>
+                                            </div>
+                                        </FormGroup>
+                                        {isSwitchOn ? <EquipmentDetails toggleTab={toggleTab}/> : <EquipmentDetailsForm toggleTab={toggleTab}/>}
                                       </TabPane>
                                   </TabContent>
                               </div>
