@@ -2,55 +2,48 @@ import { Routes, Route } from "react-router-dom";
 import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
 
-import { Suspense, lazy } from 'react';
+// import { Suspense, lazy } from 'react';
 
-const PersistLogin = lazy(()=> import('./layouts/PersistLogin'));
-const RequireAuth = lazy(()=> import('./layouts/RequireAuth'));
-const Home = lazy(()=> import('./pages/Home'));
-const About = lazy(()=> import('./pages/About'));
-const GetStarted = lazy(()=> import('./pages/GetStarted'));
-const Blog = lazy(()=> import('./pages/Blog'));
-const Tutorials = lazy(()=> import('./pages/Tutorials'));
-const TutorialsDetail = lazy(()=> import('./pages/TutorialsDetail'));
-const Error = lazy(()=> import('./components/Error'));
-const LoginPage = lazy(()=> import('./pages/Auth/LoginPage'));
-
-
-//Protected Pages
-const Profile = lazy(()=> import('./pages/Profile'));
-
-const Observations = lazy(()=> import('./pages/Observation/Observations'));
-const AddObservation = lazy(()=> import('./pages/Observation/AddObservation'));
-const MyObservations = lazy(()=> import('./pages/Observation/MyObservations'));
-
-const InitialUploadObservations = lazy(()=> import('./pages/InitialUploadObservations'));
-const UploadObservationsForm = lazy(()=> import('./pages/UploadObservationForm'));
-
-
+import PersistLogin from "./layouts/PersistLogin";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Blog from "./pages/Blog";
+import GetStarted from "./pages/GetStarted";
+import Tutorials from "./pages/Tutorials";
+import LoginPage from "./pages/Auth/LoginPage";
+import RequireAuth from "./layouts/RequireAuth";
+import Profile from "./pages/Profile";
+import MyObservations from "./pages/Observation/MyObservations";
+import AddObservation from "./pages/Observation/AddObservation";
+import Observations from "./pages/Observation/Observations";
+import Error from "./components/Error";
+import TutorialsDetail from "./pages/TutorialsDetail";
+import InitialUploadObservations from "./pages/InitialUploadObservations";
 
 const App = () => {
   return (
     <Routes>
-      <Route element={<Suspense fallback={''}><PersistLogin /></Suspense>}>
-        <Route path="/" element={<Suspense fallback={''}><Home /></Suspense>} />
-        <Route path="about" element={<Suspense fallback={''}><About /></Suspense>} />
-        <Route path="get-started" element={<Suspense fallback={''}><GetStarted /></Suspense>} />
-        <Route path="blog" element={<Suspense fallback={''}><Blog /></Suspense>} />
-        <Route path="tutorials" element={<Suspense fallback={''}><Tutorials /></Suspense>} />
-        <Route path="tutorials-detail" element={<Suspense fallback={''}><TutorialsDetail /></Suspense>} />
-        <Route path="upload-observations" element={<Suspense fallback={''}><InitialUploadObservations /></Suspense>} />
-        <Route path="login" element={<Suspense fallback={''}><LoginPage /></Suspense>} />
+      <Route element={<PersistLogin />}>
+        <Route path={""} element={<Home />} />
+        <Route path={"about"} element={<About />} />
+        <Route path={"get-started"} element={<GetStarted />} />
+        <Route path={"blog"} element={<Blog />} />
+        <Route path={"tutorials"} element={<Tutorials />} />
+        <Route path={"tutorials-detail"} element={<TutorialsDetail />} />
+        <Route path={"login"} element={<LoginPage />} />
 
         {/*Protected routes*/}
-        <Route element={<Suspense fallback={''}><RequireAuth /></Suspense>}>
-          <Route path="profile" element={<Suspense fallback={''}><Profile /></Suspense>} />
-          <Route element={<Suspense fallback={''}><Observations /></Suspense>}>
-            <Route path="observations" element={<Suspense fallback={''}><MyObservations /></Suspense>} />
-            <Route path="observations/add" element={<Suspense fallback={''}><AddObservation /></Suspense>} />
+        <Route element={<RequireAuth />}>
+          <Route path={"profile"} element={<Profile />} />
+          <Route element={<Observations />}>
+            <Route path={"observations"} element={<MyObservations />} />
+            <Route path={"observations/add"} element={<AddObservation />} />
+            <Route path={"upload-observations"} element={<InitialUploadObservations />} />
           </Route>
         </Route>
         {/*</Route>*/}
-        <Route path="*" element={<Suspense fallback={''}><Error /></Suspense>} />
+
+        <Route path="*" element={<Error />} />
       </Route>
     </Routes>
   );

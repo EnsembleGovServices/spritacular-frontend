@@ -3,7 +3,7 @@
 .about-content {
   .about-content-inner {
     padding: 100px 0px 80px;
-    @media (max-width: 767px) {
+    @include media-breakpoint-down(md) {
       padding: 120px 0px 80px;
     }
     h3 {
@@ -18,13 +18,13 @@
     }
     .about-col {
       margin-top: 80px;
-      @media (max-width: 767px) {
+      @include media-breakpoint-down(md) {
         margin-top: 30px;
       }
       P {
         max-width: 286px;
         width: 100%;
-        @media (max-width: 767px) {
+        @include media-breakpoint-down(md) {
           max-width: 100%;
         }
       }

@@ -23,7 +23,6 @@ const AddObservation = () => {
 
     // Set Progress Bar
     useEffect(() => {
-
         function setActiveTabForProgressBar() {
             if (activeTab === Tabs.ObservationImages) {
                 return 1;
@@ -39,8 +38,18 @@ const AddObservation = () => {
                 active: setActiveTabForProgressBar()
             }
         });
-
     }, [activeTab, observationImages, setObservationSteps]);
+
+    // useEffect(()=> {
+    //     console.group('Steps')
+    //     console.log(observationSteps)
+    //     console.groupEnd()
+    //     console.group('Images')
+    //     console.log(observationImages)
+    //     console.groupEnd()
+    //
+    // }, [observationImages, observationSteps])
+    // console.clear();
 
     return(
           <Form className="observation-form upload-observation-form-main">
@@ -95,26 +104,24 @@ const AddObservation = () => {
                                   </Nav>
                               </div>
                           </Col>
-                          <Col md={observationImages?.data ? 7 : 9}>
+                          <Col md={7}>
                               <div className="observation-form-right-tab">
                                   <TabContent activeTab={activeTab}>
                                       <TabPane tabId={Tabs.ObservationImages}>
                                           <ObservationImages/>
                                       </TabPane>
-                                      <TabPane tabId={Tabs.DateTimeLocation}>
+                                      <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
                                           <ObservationLocation  toggleTab={toggleTab}/>
                                       </TabPane>
-                                      <TabPane tabId={Tabs.EquipmentDetails}>
+                                      <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                           <EquipmentDetails toggleTab={toggleTab}/>
                                       </TabPane>
                                   </TabContent>
                               </div>
                           </Col>
-                          {observationImages?.data &&
-                              <Col md={2}>
-                                  <ObservationUploadedImg />
-                              </Col>
-                          }
+                          <Col md={2}>
+                              <ObservationUploadedImg />
+                          </Col>
                       </Row>
                   </Container>
               </section>

@@ -38,7 +38,7 @@
                 // font-size: 14px;
                 // line-height: 16px;
                 @include md-text;
-                @media (max-width: 1200px){
+                @include media-breakpoint-down(xl){
                     // font-size: 13px;
                     // line-height: 16px;
                 }

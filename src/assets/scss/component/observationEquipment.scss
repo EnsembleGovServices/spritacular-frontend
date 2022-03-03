@@ -1,0 +1,8 @@
+@import "../global/config.scss";
+.observation_equipment{
+    h6{
+        margin-bottom: 20px;
+        font-weight: 600;
+        @include lg-text;
+    }
+}

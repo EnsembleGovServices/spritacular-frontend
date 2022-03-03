@@ -73,7 +73,7 @@
         @media (max-width: 1023px) {
           margin-top: 40px;
         }
-        @media (max-width: 767px) {
+        @include media-breakpoint-down(md) {
           margin-top: 30px;
         }
       }
@@ -83,7 +83,7 @@
 
 .counter-main {
   padding-bottom: 270px;
-  @media (max-width: 1200px) {
+  @include media-breakpoint-down(xl) {
     padding-bottom: 170px;
   }
   .counter-inner {
@@ -212,7 +212,7 @@
       right: 20%;
       bottom: 5%;
       position: absolute;
-      @media (max-width: 991px) {
+      @include media-breakpoint-down(lg) {
         display: none;
       }
     }
@@ -222,7 +222,7 @@
       height: 130px;
       width: 130px;
       position: absolute;
-      @media (max-width: 991px) {
+      @include media-breakpoint-down(lg) {
         display: none;
       }
     }
@@ -251,7 +251,7 @@
         left: -15%;
       }
 
-      @media (max-width: 991px) {
+      @include media-breakpoint-down(lg) {
         display: none;
       }
     }
@@ -261,7 +261,7 @@
       width: 100px;
       bottom: -35px;
       position: absolute;
-      @media (max-width: 991px) {
+      @include media-breakpoint-down(lg) {
         display: none;
       }
     }
@@ -292,11 +292,11 @@
     @media (max-width: 1600px) {
       background-size: 80%;
     }
-    @media (max-width: 1200px) {
+    @include media-breakpoint-down(xl) {
       height: 400px;
       background-size: 60%;
     }
-    @media (max-width: 767px) {
+    @include media-breakpoint-down(md) {
       height: auto;
       padding: 0 0;
     }
@@ -335,10 +335,10 @@
   left: 0;
   right: 0;
   z-index: 11;
-  @media (max-width: 1200px) {
+  @include media-breakpoint-down(xl) {
     top: -150px;
   }
-  @media (max-width: 767px) {
+  @include media-breakpoint-down(md) {
     top: -90px;
   }
   .observation_card {
@@ -346,10 +346,10 @@
       height: 180px;
       object-fit: cover;
       object-position: bottom;
-      @media (max-width: 991px) {
+      @include media-breakpoint-down(lg) {
         height: 120px;
       }
-      @media (max-width: 767px) {
+      @include media-breakpoint-down(md) {
         height: 160px;
       }
       @media (max-width: 474px) {
