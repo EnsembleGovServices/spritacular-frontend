@@ -62,7 +62,7 @@ const ImageUpload = (props) => {
           <label className="form-label-border">
             <img
               className="img-fluid"
-              src={data ? data?.profile_image : baseURL.remote+user?.profile_image}
+              src={data?.profile_image}
               alt={user?.first_name}
             />
           </label>
