@@ -35,13 +35,13 @@ const ObservationLocation = (props) => {
             <Col md="12">
                 <FormGroup>
                     <h6>Where did you make the observation?</h6>
-                {/*    <MapWrapper*/}
-				{/*	google={props.google}*/}
-				{/*	center={{lat: lat, lng: lng}}*/}
-				{/*	height='300px'*/}
-				{/*	zoom={15}*/}
-                {/*    handleState={handleValue}                    */}
-				{/*/>*/}
+                   {/* <MapWrapper
+					google={props.google}
+					center={{lat: lat, lng: lng}}
+					height='300px'
+					zoom={15}
+                    handleState={handleValue}                    
+				 /> */}
                     {/* <Input
                         type="search"
                         name="name"
