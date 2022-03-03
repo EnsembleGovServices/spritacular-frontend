@@ -9,11 +9,13 @@ import ObservationUploadedImg from "../../components/Observation/ObservationUplo
 import ObservationImages from "../../components/Observation/ObservationImages";
 import ObservationProgress from "../../components/Observation/ObservationProgress";
 import useObservations from "../../hooks/useObservations";
+import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
 
 const AddObservation = () => {
     const {observationSteps, setObservationSteps, observationImages} = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
+    const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
 
     // Toggle Tabs
@@ -22,6 +24,12 @@ const AddObservation = () => {
             setActiveTab(tab);
         }
     };
+
+
+    const handleContinue = () => {
+      setNext(!next);
+    }
+
 
     // Set Progress Bar
     useEffect(() => {
@@ -106,11 +114,12 @@ const AddObservation = () => {
                                   </Nav>
                               </div>
                           </Col>
-                          <Col md={7}>
+                          <Col md={observationImages?.length && next ? 7 : 9}>
                               <div className="observation-form-right-tab">
                                   <TabContent activeTab={activeTab}>
                                       <TabPane tabId={Tabs.ObservationImages}>
-                                          <ObservationImages/>
+
+                                          {next ? <ObservationAfterImageUpload /> : <ObservationImages proceedNext={()=> handleContinue()}/>}
                                       </TabPane>
                                       <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
                                           <ObservationLocation  toggleTab={toggleTab}/>
@@ -138,9 +147,11 @@ const AddObservation = () => {
                                   </TabContent>
                               </div>
                           </Col>
-                          <Col md={2}>
-                              <ObservationUploadedImg />
-                          </Col>
+                          {observationImages?.length && next &&
+                              <Col md={2}>
+                                  <ObservationUploadedImg />
+                              </Col>
+                          }
                       </Row>
                   </Container>
               </section>

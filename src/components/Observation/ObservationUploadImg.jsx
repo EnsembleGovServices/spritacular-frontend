@@ -6,30 +6,32 @@ import {useEffect, useState} from "react";
 
 const ObservationUploadImg = (props) =>{
     const {multiple, maxLimit, imageFormat}=props;
-    const {setObservationImages} = useObservations();
+    const {observationImages, setObservationImages} = useObservations();
     const [images, setImages] = useState([]);
 
     const handleUploadImage = (e) => {
         const fileList = e.target.files;
-        const tempImages = [];
         const tempPreview = [];
 
         Array.from(fileList).forEach((item) => {
-            tempImages.push(item);
             const reader = new FileReader();
             reader.onloadend = () => {
                 const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
                 const baseImage = `data:image/png;base64,${base64String}`;
-                tempPreview.push(baseImage);
+                const random = (Math.random() + 1).toString(36).substring(7) + (Math.random() + 1).toString(36).substring(20);
+
+                setImages(prevState => [
+                    ...prevState, {
+                        'id' : random,
+                        'name' : random,
+                        'image' : baseImage,
+                        'original': { item }
+                    }
+                ])
+
             };
             reader.readAsDataURL(item)
         })
-        setTimeout(function () {
-            setImages({
-                data: tempImages,
-                preview: tempPreview
-            });
-        }, 1000)
     };
     
     useEffect(()=> {
