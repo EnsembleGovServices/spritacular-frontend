@@ -16,7 +16,7 @@ import useAuth from "../hooks/useAuth";
 import "../assets/scss/component/camerasettings.scss";
 import ImageUpload from "../components/Upload/ImageUpload";
 import axios from "../api/axios";
-import {baseURL} from "../helpers/url";
+import {baseURL, cameraSettingFields} from "../helpers/url";
 
 const UpdateProfile = lazy(()=> import('../components/Account/UpdateProfile'))
 const CameraSetting = lazy(()=> import('../components/Account/CameraSetting'))
@@ -27,16 +27,7 @@ const Profile = () => {
   const { auth } = useAuth();
 
   const [activeTab, setActiveTab] = useState("1");
-  const [cameraDetails, setCameraDetails] = useState({
-    camera_type: '',
-    focal_length: '',
-    aperture: '',
-    iso: '',
-    shutter_speed: '',
-    fps: '',
-    question_field_one: '',
-    question_field_two: ''
-  });
+  const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
   const [isDetailExist, setIsDetailExist] = useState(false);
 
   const toggleTab = (tab) => {
