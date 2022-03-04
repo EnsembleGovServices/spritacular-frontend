@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import {createContext, useState} from "react";
+import {createContext, useMemo, useState} from "react";
 
 export const ObservationContext = createContext({});
 
@@ -12,7 +12,7 @@ const Observations = () => {
     const [observationImages, setObservationImages] = useState([]);
 
     return(
-        <ObservationContext.Provider value={{observationSteps, setObservationSteps, observationImages, setObservationImages}}>
+        <ObservationContext.Provider value={useMemo(()=> ({observationSteps, setObservationSteps, observationImages, setObservationImages}), [observationSteps, setObservationSteps, observationImages, setObservationImages])}>
             <Outlet />
         </ObservationContext.Provider>
     )

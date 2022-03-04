@@ -80,10 +80,15 @@ const ObservationAfterImageUpload = () => {
                 <TabContent activeTab={activeTab}>
                     <TabPane tabId={MultiImageTabs.MultipleImages}>
                         <Row>
+                            {/*<Col sm={12} className={isMultiple ? '' : 'd-none'}>*/}
+                            {/*    <div className="small-upload_box mb-3">*/}
+                            {/*        <ObservationUploadImg imageFormat={false} maxLimit={false} multiple={isMultiple} />*/}
+                            {/*    </div>*/}
+                            {/*</Col>*/}
                             {isMultiple &&
                                 <Col sm={12}>
                                     <div className="small-upload_box mb-3">
-                                        <ObservationUploadImg imageFormat={false} maxLimit={false} multiple={isMultiple} />
+                                        <ObservationUploadImg imageFormat={false} maxLimit={false} multiple={false} />
                                     </div>
                                 </Col>
                             }

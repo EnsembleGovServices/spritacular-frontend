@@ -8,11 +8,11 @@ const ObservationUploadImg = (props) =>{
     const {multiple, maxLimit, imageFormat}=props;
     const {observationImages, setObservationImages} = useObservations();
     const [images, setImages] = useState([]);
+    const [error, setError] = useState(null);
+
 
     const handleUploadImage = (e) => {
         const fileList = e.target.files;
-        const tempPreview = [];
-
         Array.from(fileList).forEach((item) => {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -20,24 +20,45 @@ const ObservationUploadImg = (props) =>{
                 const baseImage = `data:image/png;base64,${base64String}`;
                 const random = (Math.random() + 1).toString(36).substring(7) + (Math.random() + 1).toString(36).substring(20);
 
-                setImages(prevState => [
-                    ...prevState, {
-                        'id' : random,
-                        'name' : random,
-                        'image' : baseImage,
-                        'original': { item }
+                images?.map((image, index) => {
+                    if (image?.name === item?.name) {
+                        setError((prev) => {
+                            return {
+                                ...prev,
+                                duplicate: 'Image has been already added',
+                            }
+                        })
                     }
-                ])
+                    return true;
+                });
+
+
+                if (images?.length < 3) {
+                    setImages(prevState => [
+                        ...prevState, {
+                            'id' : random,
+                            'name' : item?.name,
+                            'image' : baseImage,
+                            'original': { item }
+                        }
+                    ])
+                } else {
+                    setError((prev) => {
+                        return {
+                            ...prev,
+                            message: 'You have reached the limit, delete image(s) to add new again.',
+                        }
+                    })
+                }
 
             };
             reader.readAsDataURL(item)
         })
     };
-    
+
     useEffect(()=> {
         setObservationImages(images);
     }, [images, setObservationImages])
-
 
 
     return (
@@ -75,6 +96,16 @@ const ObservationUploadImg = (props) =>{
                         />
                     </FormGroup>
                 </div>
+                {error?.message &&
+                    <>
+                        <span className="text-danger small mt-2 d-inline-block">{error?.message}</span>
+                    </>
+                }
+                {error?.duplicate &&
+                    <>
+                        <span className="text-danger small mt-2 d-inline-block">{error?.duplicate}</span>
+                    </>
+                }
             </div>
         </Col>
     )
