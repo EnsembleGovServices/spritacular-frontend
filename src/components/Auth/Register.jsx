@@ -5,7 +5,6 @@ import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import {baseURL} from "../../helpers/url";
 import PlacesAutocomplete from "../LocationSearchInput";
- import Autocomplete from 'react-google-autocomplete';
 
 
 const Register = (props) => {
@@ -23,7 +22,6 @@ const Register = (props) => {
             countryCode: ""
         }
     });
-    const [locations,setLocation] = useState();
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
 
@@ -108,7 +106,6 @@ const Register = (props) => {
                         user: response?.data
                     }
                 });
-                // toast.success(`Welcome, ${response.data.first_name}`, toastConfig());
                 setUserRegistration(null);
                 localStorage.setItem('refresh', response?.data?.refresh)
             })

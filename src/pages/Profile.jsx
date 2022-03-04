@@ -5,12 +5,8 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Button,
   Row,
   Col,
-  Form,
-  FormGroup,
-  Input
 } from "reactstrap";
 import { Suspense, lazy } from 'react';
 import classnames from "classnames";
@@ -44,12 +40,10 @@ const Profile = () => {
   const [isDetailExist, setIsDetailExist] = useState(false);
 
   const toggleTab = (tab) => {
-    // console.log("tab", tab);
     if (activeTab !== tab) {
-      if(tab == '2'){
-        fetchCameraDetails();
+      if(tab === '2'){
+        fetchCameraDetails().then(r => r);
       }
-      // console.log("tab activeTab", tab, activeTab);
       setActiveTab(tab);
     }
   };
