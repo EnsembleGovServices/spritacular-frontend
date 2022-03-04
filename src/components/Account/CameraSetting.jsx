@@ -1,7 +1,7 @@
 import {UncontrolledAlert, Button, FormFeedback, FormGroup, Input, Row,Col} from "reactstrap";
 import axios from "../../api/axios";
 import {useEffect, useState ,useRef} from "react";
-import {baseURL} from "../../helpers/url";
+import {baseURL, cameraSettingFields} from "../../helpers/url";
 
 
 const CameraSetting = (props) => {
@@ -11,9 +11,7 @@ const CameraSetting = (props) => {
     const executeScroll = () => {
         scrollToRef(myRef);
     }
-    const [updateSetting, setUpdateSetting] = useState({
-        camera_type: '',
-    });
+    const [updateSetting, setUpdateSetting] = useState(cameraSettingFields);
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
 
@@ -33,8 +31,6 @@ const CameraSetting = (props) => {
         e.preventDefault();
         setSuccess('');
         setError('');
-        
-        console.log(updateSetting);
         if(isDetailExist){
             await axios.patch(baseURL.api+'/users/camera_setting/', updateSetting, {
                 headers: {
@@ -71,7 +67,7 @@ const CameraSetting = (props) => {
     return(
         <>
             {success && (success?.status === 200 || success?.status === 201) &&
-                <UncontrolledAlert variant="success" data-dismiss="alert" dismissible>
+                <UncontrolledAlert variant="success" data-dismiss="alert" dismissible="true">
                     Camera settings updated successfully
                 </UncontrolledAlert>
             }
@@ -85,7 +81,7 @@ const CameraSetting = (props) => {
                                 name="camera_type"
                                 placeholder="Canon"
                                 // required
-                                value={updateSetting?.camera_type} 
+                                value={updateSetting?.camera_type}
                                 onChange={(e)=>handleInput(e)} 
                                 invalid={!!error?.data?.camera_type} />
                               <FormFeedback>{error?.data?.camera_type}</FormFeedback>
@@ -160,11 +156,16 @@ const CameraSetting = (props) => {
                           <Col md="6">
                             <FormGroup>
                               <label>Frame Rate (frames per second)</label>
-                              <Input type="text" name="fps" value={updateSetting?.fps} placeholder="24" onChange={(e)=>handleInput(e)}/>
+                              <Input
+                                  type="text"
+                                  name="fps"
+                                  value={updateSetting?.fps}
+                                  placeholder="24"
+                                  onChange={(e)=>handleInput(e)}/>
                             </FormGroup>
                           </Col>
                           <Col md="12">
-                            <div className="border-line"></div>
+                            <div className="border-line"/>
                             <FormGroup>
                               <h6>How do you generally keep track of time?</h6>
                               <Input
@@ -177,7 +178,7 @@ const CameraSetting = (props) => {
                             </FormGroup>
                           </Col>
                           <Col md="12">
-                            <div className="border-line"></div>
+                            <div className="border-line"/>
                             <FormGroup>
                               <h6>
                                 Do you use any special equipment attached to
