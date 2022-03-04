@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
-
 // import { Suspense, lazy } from 'react';
 
 import PersistLogin from "./layouts/PersistLogin";
@@ -22,6 +21,7 @@ import InitialUploadObservations from "./pages/InitialUploadObservations";
 import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 
 const App = () => {
+
   return (
     <Routes>
       <Route element={<PersistLogin />}>

@@ -10,7 +10,7 @@ import {
   NavbarToggler,
   NavItem
 } from "reactstrap";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { baseURL } from "../../helpers/url";
@@ -21,6 +21,7 @@ import "../../assets/scss/component/header.scss";
 import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 import UserProfilePopup from "../Popup/UserProfilePopup";
 import { Icon } from "@iconify/react";
+import LazyLoad from "../Upload/LazyLoad";
 
 const Header = (props) => {
   const { auth, setAuth, persist, setPersist } = useAuth();
@@ -46,6 +47,7 @@ const Header = (props) => {
     localStorage.removeItem("refresh");
     setIsRegisterModal(false);
     setIsLoginModal(false);
+    setShowUserProfilePopup(true)
   };
 
   useEffect(() => {
@@ -319,11 +321,10 @@ const Header = (props) => {
               <DropdownToggle>
                 <div className="profile_img">
                   {user?.profile_image ? (
-                    <img
-                      className="img-fluid"
-                      src={user?.profile_image}
-                      alt={user?.first_name}
-                    />
+                      <LazyLoad
+                          src={user?.profile_image}
+                          alt={user?.first_name}
+                      />
                   ) : (
                     <Icon icon="entypo:user" />
                   )}

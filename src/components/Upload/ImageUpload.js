@@ -3,8 +3,9 @@ import axios from "../../api/axios";
 import PropTypes from "prop-types";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
-import { Button } from "reactstrap";
+import {Button} from "reactstrap";
 import { Icon } from '@iconify/react';
+import LazyLoad from "./LazyLoad";
 
 const ImageUpload = (props) => {
   const { setAuth } = useAuth();
@@ -56,15 +57,15 @@ const ImageUpload = (props) => {
         }
     }, [file, fileUpload]);
 
+
     const ProfilePreview = () =>{
       return(
         <>
           <label className="form-label-border">
-            <img
-              className="img-fluid"
-              src={data?.profile_image}
-              alt={user?.first_name}
-            />
+              <LazyLoad
+                  src={user?.profile_image}
+                  alt={user?.first_name}
+              />
           </label>
           <Button className="edit-btn"><Icon icon="lucide:edit-2" /></Button>
           <input type="file" name="profile_image" onChange={handleChange} />

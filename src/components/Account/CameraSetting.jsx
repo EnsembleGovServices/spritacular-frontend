@@ -9,17 +9,14 @@ const CameraSetting = (props) => {
     const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)   
     const myRef = useRef(null);
     const executeScroll = () => {
-        console.log(myRef); 
-        scrollToRef(myRef); 
+        scrollToRef(myRef);
     }
     const [updateSetting, setUpdateSetting] = useState({
         camera_type: '',
     });
-    let method = 'post';
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
 
-    console.log(updateSetting);
     const handleInput = (e) => {
         let name = e.target.name,
             value = e.target.value;
