@@ -1,24 +1,29 @@
 import useObservations from "../../hooks/useObservations";
 import {useLayoutEffect, useState} from "react";
+import LazyLoad from "../Upload/LazyLoad";
 
-const ObservationUploadedImg = (props) => {
+const ObservationUploadedImg = () => {
     const {observationImages} = useObservations();
     const [preview, setPreview] = useState([]);
+    const [activeTab, setActiveTab] = useState(null);
 
+    // Toggle Tabs
+    const toggleTab = (tab) => {
+        setActiveTab(tab);
+    };
+    
     useLayoutEffect(()=> {
-        setPreview(observationImages)
-    }, [observationImages])
+        setPreview(observationImages);
+        setActiveTab(activeTab)
+    }, [observationImages, preview])
+
 
     return(
         <>
             {preview?.map((item, index) => {
                 return(
-                    <div key={index} className="mb-2">
-                        <img
-                            className="img-fluid rounded-1 shadow-sm"
-                            src={item?.image}
-                            alt="preview"
-                        />
+                    <div key={index} className="mb-2" onClick={()=> toggleTab(item?.id)}>
+                        <LazyLoad src={item?.image} alt={item?.name} />
                     </div>
                 )
             })}

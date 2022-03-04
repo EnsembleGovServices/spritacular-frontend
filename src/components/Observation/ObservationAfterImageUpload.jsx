@@ -4,8 +4,11 @@ import {Button, Col, FormGroup, Input, Label, Nav, NavItem, NavLink, Row, TabCon
 import ObservationUploadImg from "./ObservationUploadImg";
 import Images from "../../static/images";
 import { useState } from "react";
+import useObservations from "../../hooks/useObservations";
+import LazyLoad from "../Upload/LazyLoad";
 
 const ObservationAfterImageUpload = () => {
+    const {observationImages} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
 
@@ -18,14 +21,20 @@ const ObservationAfterImageUpload = () => {
 
     const ImagePreview = () => {
         return (
-            <div className="upload-multiple-observation">
-                <div className="observation-image position-relative">
-                    <Button className="bg-transparent text-black border-0 shadow-none p-0 position-absolute">
-                        <Icon icon="ci:close-big" />
-                    </Button>
-                    <img src={Images.ObservationImageOne} alt="Bluejet" />
-                </div>
-            </div>
+            <>
+                {observationImages?.map((item, index) => {
+                    return(
+                        <div key={index} className="upload-multiple-observation">
+                            <div className="observation-image position-relative">
+                                <Button className="bg-transparent text-black border-0 shadow-none p-0 position-absolute">
+                                    <Icon icon="ci:close-big" />
+                                </Button>
+                                <LazyLoad src={item?.image} alt={item?.name} />
+                            </div>
+                        </div>
+                    )
+                })}
+            </>
         );
     };
 

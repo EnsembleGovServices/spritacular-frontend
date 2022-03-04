@@ -25,7 +25,6 @@ const AddObservation = () => {
         }
     };
 
-
     const handleContinue = () => {
       setNext(!next);
     }
@@ -49,17 +48,6 @@ const AddObservation = () => {
             }
         });
     }, [activeTab, observationImages, setObservationSteps]);
-
-    // useEffect(()=> {
-    //     console.group('Steps')
-    //     console.log(observationSteps)
-    //     console.groupEnd()
-    //     console.group('Images')
-    //     console.log(observationImages)
-    //     console.groupEnd()
-    //
-    // }, [observationImages, observationSteps])
-    // console.clear();
 
     return(
           <Form className="observation-form upload-observation-form-main">
