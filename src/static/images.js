@@ -9,8 +9,10 @@ import Catholic from "../assets/images/catholic.png";
 import Facebook from "../assets/images/facebook.png";
 import Linkedin from "../assets/images/linkedin.png";
 import Twitter from "../assets/images/twitter.png";
-import card1 from "../assets/images/card1.png";
-import card2 from "../assets/images/card2.png";
+import card1 from "../assets/images/card1.jpeg";
+import card2 from "../assets/images/card2.jpeg";
+import card3 from "../assets/images/card3.jpeg";
+import card4 from "../assets/images/card4.jpeg";
 import Profile from "../assets/images/profile.png";
 import Sprite from "../assets/images/sprite.png";
 import Map from "../assets/images/map.png";
@@ -57,6 +59,8 @@ const Images = {
   Twitter,
   card1,
   card2,
+  card3,
+  card4,
   Profile,
   Sprite,
   Map,
