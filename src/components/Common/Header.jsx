@@ -13,7 +13,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import { baseURL } from "../../helpers/url";
 import Images from "../../static/images";
 import LoginPopup from "../Popup/LoginPopup";
 import RegisterPopup from "../Popup/RegisterPopup";

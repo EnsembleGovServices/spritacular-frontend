@@ -388,6 +388,9 @@
 }
 .dropdown-menu{
   .dropdown-item{
+    font-weight: 500;
+    color: $black;
+    display: block;
     a{
       font-weight: 500;
       color: $black;
