@@ -1,11 +1,12 @@
-import {Alert, Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
+import {Alert, Button, Form, FormFeedback, FormGroup, Input, Label, UncontrolledAlert} from "reactstrap";
 import axios from "../../api/axios";
 import {useEffect, useState} from "react";
 import {baseURL} from "../../helpers/url";
+import useAuth from "../../hooks/useAuth";
 
 const UpdateProfile = (props) => {
     const {user} = props;
-
+    const { setAuth } = useAuth();
     const [updateUser, setUpdatedUser] = useState()
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
@@ -40,6 +41,12 @@ const UpdateProfile = (props) => {
             withCredentials: true,
         }).then((success) => {
             setSuccess(success)
+            setAuth(prev => {
+                return {
+                    ...prev,
+                    user: updateUser
+                }
+            });
         }).catch((error) => {
             console.log(error.response);
             setError(error.response)
@@ -49,9 +56,9 @@ const UpdateProfile = (props) => {
     return(
         <>
             {success && success?.status === 200 &&
-                <Alert variant="success">
+                <UncontrolledAlert variant="success" data-dismiss="alert" dismissible="true">
                     Profile updated successfully
-                </Alert>
+                </UncontrolledAlert>
             }
             <Form onSubmit={handleProfileUpdate}>
                 <FormGroup>

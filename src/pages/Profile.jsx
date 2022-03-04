@@ -8,7 +8,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import { Suspense, lazy } from 'react';
+import {Suspense, lazy, useEffect} from 'react';
 import classnames from "classnames";
 import {useState} from "react";
 import Images from "../static/images";
@@ -25,7 +25,7 @@ const ChangePassword = lazy(()=> import('../components/Account/ChangePassword'))
 
 const Profile = () => {
   const { auth } = useAuth();
-
+  const [user, setUser] = useState(auth?.user);
   const [activeTab, setActiveTab] = useState("1");
   const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
   const [isDetailExist, setIsDetailExist] = useState(false);
@@ -44,14 +44,17 @@ const Profile = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth?.token?.access}`
       }
-  }).then((success) => {
-          setIsDetailExist(true);
-      setCameraDetails(success.data);
-  }).catch((error) => {
-      console.log(error.response);
-  })
+      }).then((success) => {
+              setIsDetailExist(true);
+          setCameraDetails(success.data);
+      }).catch((error) => {
+          console.log(error.response);
+      })
   }
 
+  useEffect(()=> {
+    setUser(auth?.user);
+  }, [auth])
 
   return (
     <>
@@ -68,14 +71,14 @@ const Profile = () => {
                 <div className="profile-left-tab">
                   <div className="profile-info">
                     <div className="profile-img">
-                      <ImageUpload user={auth?.user} token={auth?.token?.access}/>
+                      <ImageUpload user={user} token={auth?.token?.access}/>
                     </div>
                     <div className="profile-data text-center">
-                      <h5>{auth?.user?.first_name} {auth?.user?.last_name}</h5>
-                      <p>{auth?.user?.email}</p>
+                      <h5>{user.first_name} {user?.last_name}</h5>
+                      <p>{user?.email}</p>
                       <div className="d-flex align-items-center justify-content-center">
                         <img src={Images.UsaFlag} alt="" />
-                        <span>{auth?.user?.location}</span>
+                        <span>{user?.location}</span>
                       </div>
                     </div>
                   </div>

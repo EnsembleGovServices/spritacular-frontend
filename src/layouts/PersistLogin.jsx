@@ -11,6 +11,7 @@ import Loader from "../components/Shared/Loader";
 // const Loader = lazy(()=> import('../components/Shared/Loader'))
 
 const PersistLogin = () => {
+
     const [isLoading, setIsLoading] = useState(true);
     const refresh = useRefreshToken();
     const { auth, persist } = useAuth();
@@ -41,26 +42,19 @@ const PersistLogin = () => {
         // console.log(`rT: ${JSON.stringify(auth?.token?.refresh)}`)
     }, [auth?.token?.access, auth?.token?.refresh, isLoading])
 
-
     return (
         <>
             {!persist ? (
                 <>
-                    {/* <Suspense fallback={''}> */}
-                        <Header />
-                    {/* </Suspense> */}
+                    <Header />
                     <div className="main-content">
                         <Outlet />
                     </div>
-                    {/* <Suspense fallback={''}> */}
-                        <Footer />
-                    {/* </Suspense> */}
+                    <Footer />
                 </>
             ) : isLoading ? <Loader fixContent={true} /> : (
                 <>
-                    {/* <Suspense fallback={''}> */}
-                        <Header />
-                    {/* </Suspense> */}
+                    <Header />
                     <div className="main-content">
                         <Outlet />
                     </div>
