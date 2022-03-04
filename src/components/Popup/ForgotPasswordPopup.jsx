@@ -9,6 +9,7 @@ import {
   ModalHeader,
   FormFeedback,
   Row,
+  Alert
 } from "reactstrap";
 import {useEffect, useState} from "react";
 
@@ -22,6 +23,7 @@ const ForgotPasswordPopup = (props) => {
   const { open, handleClose, modalClass } = props;
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState('');
   const handleInput = (e) => {
     e.preventDefault();
         setEmail(e.target.value);
@@ -30,7 +32,10 @@ const ForgotPasswordPopup = (props) => {
     e.preventDefault();
     await axios.post(baseURL.api+'/users/password_reset/',{'email': email})
         .then((response) => {
-          handleClose();
+          setSuccess('Password reset link sent successfully');
+          setTimeout(() =>{
+            handleClose();
+        },3000)
         })
         .catch((error) => {
           console.log(error);
@@ -64,6 +69,11 @@ const ForgotPasswordPopup = (props) => {
           <Form>
             <Row>
               <Col sm={12}>
+              {success &&
+                  <Alert color="success">
+                    {success}
+                  </Alert>
+              }
                 <FormGroup>
                   <Input
                     type="email"
