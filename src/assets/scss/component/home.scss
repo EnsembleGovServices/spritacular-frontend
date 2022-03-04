@@ -345,7 +345,7 @@
     .card-img-top {
       height: 180px;
       object-fit: cover;
-      object-position: bottom;
+      object-position: center;
       @include media-breakpoint-down(lg) {
         height: 120px;
       }
