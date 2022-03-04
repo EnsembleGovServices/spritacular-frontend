@@ -78,9 +78,9 @@ import ShowErrorPopup from "./ShowErrorPopup";
             </ModalBody>
           </Modal>
           }
-          {/* {!error && */}
+          {error &&
           <ShowErrorPopup modalClass={modalClass} errorDisplay={error}/>
-          {/* } */}
+          }
           
         </>
     );
