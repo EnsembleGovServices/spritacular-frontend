@@ -11,7 +11,7 @@
   }
   .navbar-collapse {
     @media (max-width: 1023px) {
-      background-color: $secondary;
+      background-color: $white;
       display: flex !important;
       flex-basis: auto;
       left: 0;
@@ -22,8 +22,11 @@
       z-index: 999;
       overflow-y: auto;
       align-items: flex-start;
+      flex-direction: column;
+      width: 100%;
+      max-width: 300px;
       .navbar-nav {
-        padding: 40px 0;
+        padding: 20px 0;
         flex-direction: column;
         .nav-item {
           width: 100%;
@@ -34,7 +37,8 @@
             border-bottom: 0px;
           }
           .nav-link {
-            color: $white;
+            color: black;
+            text-align: left;
           }
           .btn-secondary {
             background-color: transparent;
@@ -56,6 +60,14 @@
         .dropdown{
           .btn-secondary{
             color: $white;
+            @media (max-width: 1023px) {
+              width: 100%;
+              text-align: left;
+              color: $black;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
           }
         }
       }
@@ -69,6 +81,12 @@
       display: none;
       @media (max-width: 1023px){
         display: block;
+      }
+    }
+    .menu-logo{
+      display: none;
+      @media (max-width: 1023px) {
+        display: flex;
       }
     }
   }
@@ -135,6 +153,19 @@
       svg{
         font-size: 16px;
         line-height: 26px;
+        &.iconify--fe{
+          transform: rotate(0deg);
+          transition: all 0.3s ease;
+        }
+
+      }
+    }
+    &.show{
+      .btn-secondary{
+        svg{
+          transform: rotate(180deg);
+          transition: all 0.3s ease;
+        }
       }
     }
   }
@@ -191,9 +222,6 @@
     background: transparent;
     padding: 0;
     line-height: 0;
-    position: absolute;
-    right: 10px;
-    top: 10px;
     border: 0;
     box-shadow: none;
     @include xl-title;
@@ -316,9 +344,12 @@
         &:hover,
         &.active {
           color: $secondary;
+          @media(max-width: 1023px){
+            color: $black;
+          }
           &::after {
             background-color: $secondary;
-            @media(max-width:767px){
+            @media(max-width: 1023px){
                 display: none;
             }
           }
@@ -328,7 +359,13 @@
         .btn-secondary {
           color: $grey;
           @media (max-width: 1023px) {
-            color: $white;
+            color: $black;
+            text-align: left;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            //@include lg-text;
           }
         }
       }
@@ -370,6 +407,7 @@
         .btn-secondary{
           color: $grey;
         }
+
       }
     }
     .navbar-toggler {
@@ -382,6 +420,32 @@
     .right-menu {
       .register {
         @include buttonSecodary;
+      }
+    }
+  }
+}
+.custom-relative-dropdown{
+
+  .dropdown-menu{
+    &.show{
+      @media (max-width: 1023px) {
+        background: transparent;
+        box-shadow: none;
+        border: 0;
+        border-bottom: 1px solid #ebeaea;
+        border-radius: 0;
+        display: block;
+        position: relative !important;
+        transform: none !important;
+      }
+      .dropdown-item{
+        @include lg-text;
+        a{
+          @media (max-width: 1023px) {
+            color: $black;
+            text-align: left;
+          }
+        }
       }
     }
   }
@@ -485,6 +549,20 @@
 }
 body{
   &.menu-open {
-    overflow: hidden;
+    .navbar-toggler {
+      &:after {
+        content: "";
+        background: #00000061;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(3px);
+      }
+    }
   }
 }

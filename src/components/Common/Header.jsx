@@ -108,9 +108,15 @@ const Header = (props) => {
           <Icon icon="eva:menu-outline" />
         </NavbarToggler>
         <Collapse navbar isOpen={showMenu}>
-          <Button className="close-menu" onClick={() => menuClose()}>
-            <Icon icon="ci:close-big" />
-          </Button>
+          <div className="menu-logo  justify-content-between w-100 px-2 py-1 shadow-sm">
+            <Link to="/" className="navbar-brand">
+              <img src={Images.BlackLogo} alt="Logo" />
+            </Link>
+            <Button className="close-menu" onClick={() => menuClose()}>
+              <Icon icon="ci:close-big" color="#000" width="25" height="25" />
+            </Button>
+          </div>
+
           <Nav navbar>
             <>
               {persist ? (
@@ -127,14 +133,14 @@ const Header = (props) => {
             </>
             <NavItem>
               <Dropdown
-                className="user-menu"
+                className="user-menu custom-relative-dropdown"
                 isOpen={aboutDropdown}
                 toggle={ () => setAboutDropdown(!aboutDropdown)}
               >
                 <DropdownToggle>
                   About <Icon icon="fe:arrow-down" />
                 </DropdownToggle>
-                <DropdownMenu container="body">
+                <DropdownMenu>
                   <DropdownItem>
                     <Link to="/about" title="What is Spritacular?">
                       What is Spritacular?
@@ -169,14 +175,14 @@ const Header = (props) => {
             </NavItem>
             <NavItem>
               <Dropdown
-                className="user-menu"
+                className="user-menu custom-relative-dropdown"
                 isOpen={resourcesDropdown}
                 toggle={ () => setResourcesDropdown(!resourcesDropdown)}
               >
                 <DropdownToggle>
                   Resources <Icon icon="fe:arrow-down" />
                 </DropdownToggle>
-                <DropdownMenu container="body">
+                <DropdownMenu>
                   <DropdownItem>
                     <Link to="/blog" title="Blog">
                       Blog
@@ -192,14 +198,14 @@ const Header = (props) => {
             </NavItem>
             <NavItem>
               <Dropdown
-                className="user-menu"
+                className="user-menu custom-relative-dropdown"
                 isOpen={communityDropdown}
                 toggle={ () => setCommunityDropdown(!communityDropdown)}
               >
                 <DropdownToggle>
                   Community <Icon icon="fe:arrow-down" />
                 </DropdownToggle>
-                <DropdownMenu container="body">
+                <DropdownMenu>
                   <DropdownItem>
                     <Link to="/" title="Meet the Teem">
                       Meet the Teem
