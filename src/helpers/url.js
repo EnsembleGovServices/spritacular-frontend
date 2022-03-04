@@ -7,3 +7,14 @@ export const baseURL = {
     'user': process.env.REACT_APP_API_USER_URL,
     'register': process.env.REACT_APP_API_REGISTER_URL
 }
+
+export const cameraSettingFields = {
+    camera_type: '',
+    focal_length: '',
+    aperture: '',
+    iso: '',
+    shutter_speed: '',
+    fps: '',
+    question_field_one: '',
+    question_field_two: ''
+}

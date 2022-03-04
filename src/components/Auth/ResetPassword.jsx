@@ -1,4 +1,4 @@
-import {Button, Form, FormGroup, FormText, Input} from "reactstrap";
+import {Button, Form, FormGroup, FormFeedback, FormText, Input} from "reactstrap";
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
 import {useEffect, useState} from "react";
@@ -73,7 +73,9 @@ const ResetPassword = (props) => {
                         placeholder=" New Password"
                         required
                         onChange={(e)=>handleInput(e)}
+                        invalid={!!error?.data?.password}
                     />
+                    <FormFeedback>{error?.data?.password}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Button type="submit" className="modal-btn" disabled={!(user?.password)}>

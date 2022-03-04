@@ -29,6 +29,7 @@ import ShowErrorPopup from "./ShowErrorPopup";
     const [searchParams, setSearchParams] = useSearchParams();
     const token = searchParams.get('token');
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const handleCloseModal = () => {
         navigate('/')
         setIsOpenModal(false);
@@ -36,6 +37,7 @@ import ShowErrorPopup from "./ShowErrorPopup";
     useEffect( () => {
         axios.post(baseURL.api+'/users/password_reset/validate_token/', {'token': token})
         .then((response) => {
+          setSuccess(response);
             // console.log(response);
             setIsOpenModal(true);
             
@@ -73,14 +75,13 @@ import ShowErrorPopup from "./ShowErrorPopup";
               </Button>
             </ModalHeader>
             <ModalBody>
-          
-              {/* <ResetPassword token={token} /> */}
+              <ResetPassword token={token} />
             </ModalBody>
           </Modal>
           }
-          {/* {!error && */}
+          {error &&
           <ShowErrorPopup modalClass={modalClass} errorDisplay={error}/>
-          {/* } */}
+          }
           
         </>
     );
