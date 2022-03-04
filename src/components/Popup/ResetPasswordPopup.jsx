@@ -73,8 +73,7 @@ import ShowErrorPopup from "./ShowErrorPopup";
               </Button>
             </ModalHeader>
             <ModalBody>
-          
-              {/* <ResetPassword token={token} /> */}
+              <ResetPassword token={token} />
             </ModalBody>
           </Modal>
           }

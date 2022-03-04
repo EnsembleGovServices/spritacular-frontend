@@ -7,6 +7,7 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
+  FormFeedback,
   Row,
 } from "reactstrap";
 import {useEffect, useState} from "react";
@@ -20,6 +21,7 @@ import {baseURL} from "../../helpers/url";
 const ForgotPasswordPopup = (props) => {
   const { open, handleClose, modalClass } = props;
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const handleInput = (e) => {
     e.preventDefault();
         setEmail(e.target.value);
@@ -28,8 +30,11 @@ const ForgotPasswordPopup = (props) => {
     e.preventDefault();
     await axios.post(baseURL.api+'/users/password_reset/',{'email': email})
         .then((response) => {
+          handleClose();
         })
         .catch((error) => {
+          console.log(error);
+          setError(error.response);
             if (!error?.response) {
                 console.log('server error occurred')
             }
@@ -65,7 +70,9 @@ const ForgotPasswordPopup = (props) => {
                     name="email"
                     placeholder="Enter email address" 
                     onChange={(e)=>handleInput(e)}
+                    invalid={!!error?.data?.email}
                   />
+                <FormFeedback>{error?.data?.email}</FormFeedback>
                 </FormGroup>
               </Col>
               <Col sm={12}>

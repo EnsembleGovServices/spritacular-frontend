@@ -14,16 +14,18 @@ import ForgotPasswordPopup from "./ForgotPasswordPopup";
 const LoginPopup = (props) => {
   const { open, handleClose, modalClass } = props;
   const [ isForgotPasswordModal, setIsForgotPasswordModal ] = useState(false);
+  const [ loginPopup, setLoginPopup ] = useState(true);
 
 
   const handleForgotPasswordModal = () => {
     setIsForgotPasswordModal(!isForgotPasswordModal);
+    setLoginPopup(false);
   };
 
 
   return (
       <>
-        <Modal
+        {loginPopup === true && <Modal
             className={modalClass ? modalClass : "common-modal"}
             isOpen={open}
             toggle={handleClose}
@@ -40,7 +42,7 @@ const LoginPopup = (props) => {
           <ModalBody>
             <Login cp={()=> handleForgotPasswordModal()} />
           </ModalBody>
-        </Modal>
+        </Modal>}
         {isForgotPasswordModal && (
             <ForgotPasswordPopup
                 open={isForgotPasswordModal}
