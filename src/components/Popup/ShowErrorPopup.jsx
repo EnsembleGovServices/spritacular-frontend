@@ -17,45 +17,20 @@ import ResetPassword from "../Auth/ResetPassword";
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
-import ShowErrorPopup from "./ShowErrorPopup";
 
 
 
   
-  const ResetPasswordPopup = (props) => {
-    const { open, modalClass } = props;
-    const [isOpenModal,setIsOpenModal] = useState(false);
-    const navigate = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const token = searchParams.get('token');
+  const ShowErrorPopup = (props) => {
+    const { modalClass, errorDisplay } = props;
+    const [isOpenModal,setIsOpenModal] = useState(true);
+    const navigate = useNavigate();    
     const [error, setError] = useState('');
     const handleCloseModal = () => {
         navigate('/')
         setIsOpenModal(false);
     }
-    useEffect( () => {
-        axios.post(baseURL.api+'/users/password_reset/validate_token/', {'token': token})
-        .then((response) => {
-            // console.log(response);
-            setIsOpenModal(true);
-            
-            })
-        .catch((error) => {
-            setIsOpenModal(false);
-            console.log(error);
-            if (!error?.response) {
-              setError('server error occurred');
-                console.log('server error occurred')
-            }
-            else {
-              setError(error?.response?.statusText);
-                console.log(error?.response?.statusText)
-            }
-        })
-    },[token]);
-
     
-
     return (
         <>
           { <Modal
@@ -67,28 +42,26 @@ import ShowErrorPopup from "./ShowErrorPopup";
               keyboard={false}
           >
             <ModalHeader>
-              New Password
               <Button className="close-icon" onClick={handleCloseModal}>
                 <img src={Images.Modalcloseicon} alt="close-icon" />
               </Button>
             </ModalHeader>
             <ModalBody>
-          
-              {/* <ResetPassword token={token} /> */}
+          {!error &&
+            <Alert color="danger">
+                  {errorDisplay}
+            </Alert>
+          }
             </ModalBody>
           </Modal>
           }
-          {/* {!error && */}
-          <ShowErrorPopup modalClass={modalClass} errorDisplay={error}/>
-          {/* } */}
-          
         </>
     );
   };
-  ResetPasswordPopup.propTypes = {
+  ShowErrorPopup.propTypes = {
     open: PropTypes.bool,
     handleClose: PropTypes.func,
     cp: PropTypes.func,
   };
   
-  export default ResetPasswordPopup;
+  export default ShowErrorPopup;
