@@ -27,7 +27,7 @@ const AddObservation = () => {
 
 
     const handleContinue = () => {
-      setNext(!next);
+      setNext(false);
     }
 
 
