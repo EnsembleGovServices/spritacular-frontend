@@ -11,12 +11,19 @@ import ObservationProgress from "../../components/Observation/ObservationProgres
 import useObservations from "../../hooks/useObservations";
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
+import {baseURL, cameraSettingFields} from "../../helpers/url";
+import useAuth from "../../hooks/useAuth";
+import axios from "../../api/axios";
 
 const AddObservation = () => {
+    const { auth } = useAuth();
+
     const {observationSteps, setObservationSteps, observationImages} = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
+    const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
+
 
     // Toggle Tabs
     const toggleTab = (tab) => {
@@ -24,6 +31,38 @@ const AddObservation = () => {
             setActiveTab(tab);
         }
     };
+    const handleInput = (e) => {
+        let name = e.target.name,
+            value = e.target.value;
+            setCameraDetails({
+            ...cameraDetails,
+            [name]:value,
+        })
+    }
+    const handleSubmit = () => {
+        console.log("hihi");
+        console.log(cameraDetails);
+    }
+
+    const getCameraDetail = async (e) => {
+        
+        if(e.target.checked == true){
+            await axios.get(baseURL.api+'/users/camera_setting/', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${auth?.token?.access}`
+                }
+            }).then((success) => {
+                setCameraDetails(success?.data);
+            }).catch((error) => {
+                console.log(error.response);
+            })
+        }
+        else {
+            setCameraDetails(cameraSettingFields);
+
+        }
+    }
 
     const handleContinue = () => {
       setNext(!next);
@@ -50,7 +89,8 @@ const AddObservation = () => {
     }, [activeTab, observationImages, setObservationSteps]);
 
     return(
-          <Form className="observation-form upload-observation-form-main">
+        <>
+          <Form className="observation-form upload-observation-form-main" onSubmit={handleSubmit}>
               <div className="common-top-button-wrapper">
                   <Container>
                       <div className="common-top-button-wrapper-inner">
@@ -118,7 +158,7 @@ const AddObservation = () => {
                                                     id="checkbox0"
                                                     type="checkbox"
                                                     className="hidden"
-                                                    onChange = {(e)=>setSwitchOn(!isSwitchOn)}
+                                                    onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e);}}
                                                 />
                                                 <label
                                                     className="switchbox"
@@ -129,7 +169,7 @@ const AddObservation = () => {
                                                 </span>
                                             </div>
                                         </FormGroup>
-                                        {isSwitchOn ? <EquipmentDetails toggleTab={toggleTab}/> : <EquipmentDetailsForm toggleTab={toggleTab}/>}
+                                        {isSwitchOn ? <EquipmentDetails handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/> : <EquipmentDetailsForm handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>}
                                       </TabPane>
                                   </TabContent>
                               </div>
@@ -143,6 +183,7 @@ const AddObservation = () => {
                   </Container>
               </section>
           </Form>
+          </>
   )
 }
 export default AddObservation;

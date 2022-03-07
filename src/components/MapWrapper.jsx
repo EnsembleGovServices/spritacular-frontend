@@ -49,7 +49,7 @@ class Map extends Component{
 				} )
 			},
 			error => {
-				// console.error( error );
+				console.error( error );
 			}
 		);
 	};
@@ -60,18 +60,51 @@ class Map extends Component{
 	 * @param nextState
 	 * @return {boolean}
 	 */
-	shouldComponentUpdate( nextProps, nextState ){
+	shouldComponentUpdate( nextProps, nextState ){		
+		if(this.props.isLoaded == true && this.state.markerPosition.lat !== this.props.center.lat){
+				 Geocode.fromLatLng( nextProps.center.lat , nextProps.center.lng ).then(
+					response => {
+						const address = response.results[0].formatted_address,
+							  addressArray =  response.results[0].address_components,
+							  city = this.getCity( addressArray ),
+							  area = this.getArea( addressArray ),
+							  state = this.getState( addressArray );
+						this.setState( {
+							address: ( address ) ? address : '',
+							area: ( area ) ? area : '',
+							city: ( city ) ? city : '',
+							state: ( state ) ? state : '',
+							markerPosition: {
+								lat: nextProps.center.lat,
+								lng: nextProps.center.lng
+							},
+							mapPosition: {
+								lat: nextProps.center.lat,
+								lng: nextProps.center.lng
+							},
+						})
+						this.props.handleState(this.state);
+					},
+					error => {
+						console.error(error);
+					}
+				);
+			return true;
+		}
 		if (
 			this.state.markerPosition.lat !== this.props.center.lat ||
 			this.state.address !== nextState.address ||
 			this.state.city !== nextState.city ||
 			this.state.area !== nextState.area ||
 			this.state.state !== nextState.state
-		) {
+		) {			
 			return true
 		} else if ( this.props.center.lat === nextProps.center.lat ){
-			return false
+
+			return false;
 		}
+		
+		return false;
 	}
 	/**
 	 * Get the city and set the city input value to the one selected
@@ -261,25 +294,6 @@ class Map extends Component{
 		let map;
 		if( this.props.center.lat !== undefined ) {
 			map = <div>
-			{/* // 	<div>
-			// 		<div className="form-group">
-			// 			<label htmlFor="">City</label>
-			// 			<input type="text" name="city" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.city }/>
-			// 		</div>
-			// 		<div className="form-group">
-			// 			<label htmlFor="">Area</label>
-			// 			<input type="text" name="area" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.area }/>
-			// 		</div>
-			// 		<div className="form-group">
-			// 			<label htmlFor="">State</label>
-			// 			<input type="text" name="state" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.state }/>
-			// 		</div>
-			// 		<div className="form-group">
-			// 			<label htmlFor="">Address</label>
-			// 			<input type="text" name="address" className="form-control" onChange={ this.onChange } readOnly="readOnly" value={ this.state.address }/>
-			// 		</div>
-			// 	</div> */}
-
 				<AsyncMap
 					googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyC49bXfihl4zZqjG2-iRLUmcWO_PVcDehM&libraries=places`}
 					loadingElement={
@@ -296,9 +310,7 @@ class Map extends Component{
 		} else {
 			map = <div style={{height: this.props.height}} />
 		}
-		// map.controls[this.props.google.maps.ControlPosition.TOP_LEFT].push("<input type='text'>");
 		return( map )
-
 	}
 }
 export default Map
