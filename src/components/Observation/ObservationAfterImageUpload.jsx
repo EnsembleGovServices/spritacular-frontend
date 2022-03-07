@@ -6,6 +6,7 @@ import Images from "../../static/images";
 import { useState } from "react";
 import useObservations from "../../hooks/useObservations";
 import LazyLoad from "../Upload/LazyLoad";
+import { Category } from "../../helpers/observation";
 
 const ObservationAfterImageUpload = () => {
     const {observationImages} = useObservations();
@@ -99,6 +100,7 @@ const ObservationAfterImageUpload = () => {
                             <Col sm={12}>
                                 <ImagePreview />
                             </Col>
+
                             <Col sm={12}>
                                 <FormGroup className="mb-1">
                                     <p className="fw-bold">
@@ -107,84 +109,23 @@ const ObservationAfterImageUpload = () => {
                                     </p>
                                 </FormGroup>
                             </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="sprite" name="option1" type="checkbox" />
-                                            <label htmlFor="sprite">
-                                                <img src={Images.SpriteOb} alt="Sprite" />
-                                                Sprite
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="blue-jet" name="BlueJet" type="checkbox" />
-                                            <label htmlFor="blue-jet">
-                                                <img src={Images.Bluejet} alt="Bluejet" />
-                                                Blue Jet
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="elve" name="Elve" type="checkbox" />
-                                            <label htmlFor="elve">
-                                                <img src={Images.Elev} alt="Elve" />
-                                                Elve
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="halo" name="Halo" type="checkbox" />
-                                            <label htmlFor="halo">
-                                                <img src={Images.Halo} alt=" Halo" />
-                                                Halo
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="gigantic-jet" name="Gigantic Jet" type="checkbox" />
-                                            <label htmlFor="gigantic-jet">
-                                                <img src={Images.GiganticJet} alt="Sprite" />
-                                                Gigantic Jet
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="secondary-jet" name="Secondary Jet" type="checkbox" />
-                                            <label htmlFor="secondary-jet">
-                                                <img src={Images.SecondaryJet} alt="Secondary Jet" />
-                                                Secondary Jet
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
+                            {Category?.map((imagItem, index)=>{
+                                return (
+                                    <Col sm={6} key={index}>
+                                        <FormGroup>
+                                            <div className="checkbox-wrapper">
+                                                <div className="inputGroup">
+                                                    <input id={imagItem.id} name={imagItem.name} type="checkbox" />
+                                                    <label htmlFor={imagItem.id}>
+                                                        <img src={imagItem.image} alt={imagItem.name} />
+                                                        {imagItem.name}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </FormGroup>
+                                    </Col>
+                                )
+                            })}
                             <Col sm={12}>
                                 <FormGroup check>
                                     <Label check>
