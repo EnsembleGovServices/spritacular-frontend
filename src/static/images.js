@@ -44,6 +44,7 @@ import Halo from "../assets/images/Halo.png";
 import GiganticJet from "../assets/images/Gigantic-Jet.png";
 import SecondaryJet from "../assets/images/Secondary-Jet.png";
 import ObservationImageOne from "../assets/images/observation-image-one.png";
+import compassArrow from "../assets/images/compass-arrow.svg";
 
 const Images = {
   Logo,
@@ -92,5 +93,7 @@ const Images = {
   GiganticJet,
   SecondaryJet,
   ObservationImageOne,
+  compassArrow
 };
+
 export default Images;
