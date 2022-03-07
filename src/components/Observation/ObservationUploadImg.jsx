@@ -1,12 +1,13 @@
-import { Col, FormGroup,Button, Input,Label } from "reactstrap";
+import { Col, FormGroup, Input,Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import { Icon } from '@iconify/react';
 import {useEffect, useState} from "react";
+import images from "../../static/images";
 
 const ObservationUploadImg = (props) =>{
     const {multiple, maxLimit, imageFormat}=props;
-    const {observationImages, setObservationImages} = useObservations();
+    const {setObservationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
 
@@ -39,7 +40,7 @@ const ObservationUploadImg = (props) =>{
                             'id' : random,
                             'name' : item?.name,
                             'image' : baseImage,
-                            'original': { item }
+                            'original': item
                         }
                     ])
                 } else {
@@ -57,7 +58,10 @@ const ObservationUploadImg = (props) =>{
     };
 
     useEffect(()=> {
-        setObservationImages(images);
+        setObservationImages({
+            images: images,
+            selected: images?.[0]?.id
+        });
     }, [images, setObservationImages])
 
 

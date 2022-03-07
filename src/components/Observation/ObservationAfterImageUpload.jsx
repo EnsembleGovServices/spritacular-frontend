@@ -22,7 +22,7 @@ const ObservationAfterImageUpload = () => {
     const ImagePreview = () => {
         return (
             <>
-                {observationImages?.map((item, index) => {
+                {observationImages?.images?.filter(item => item?.id === observationImages?.selected).map((item, index) => {
                     return(
                         <div key={index} className="upload-multiple-observation">
                             <div className="observation-image position-relative">

@@ -102,7 +102,7 @@ const AddObservation = () => {
                                   </Nav>
                               </div>
                           </Col>
-                          <Col md={observationImages?.length > 0 && next ? 7 : 9}>
+                          <Col md={observationImages?.images?.length > 0 && next ? 7 : 9}>
                               <div className="observation-form-right-tab">
                                   <TabContent activeTab={activeTab}>
                                       <TabPane tabId={Tabs.ObservationImages}>
@@ -142,7 +142,7 @@ const AddObservation = () => {
                                   </TabContent>
                               </div>
                           </Col>
-                          {observationImages?.length > 0 && next &&
+                          {observationImages?.images && next &&
                               <Col md={2}>
                                   <ObservationUploadedImg />
                               </Col>
