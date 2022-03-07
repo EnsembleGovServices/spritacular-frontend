@@ -11,12 +11,19 @@ import ObservationProgress from "../../components/Observation/ObservationProgres
 import useObservations from "../../hooks/useObservations";
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
+import {baseURL, cameraSettingFields} from "../../helpers/url";
+import useAuth from "../../hooks/useAuth";
+import axios from "../../api/axios";
 
 const AddObservation = () => {
+    const { auth } = useAuth();
+
     const {observationSteps, setObservationSteps, observationImages} = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
+    const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
+
 
     // Toggle Tabs
     const toggleTab = (tab) => {
@@ -31,6 +38,10 @@ const AddObservation = () => {
             ...cameraDetails,
             [name]:value,
         })
+    }
+    const handleSubmit = () => {
+        console.log("hihi");
+        console.log(cameraDetails);
     }
 
     const getCameraDetail = async (e) => {
