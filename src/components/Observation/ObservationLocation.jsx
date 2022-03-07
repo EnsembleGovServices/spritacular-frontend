@@ -31,8 +31,22 @@ const ObservationLocation = (props) => {
     //     lng:73.8567
     // });
     const [updateMap,setUpdateMap] = useState(false);
-    const handleValue = (value,) => {
-        console.log(value);
+    const [isActiveDire, setActiveDire] = useState(null);
+    const [directionAngle, setDirectionAngle] = useState(0);
+    const [angleDegree, setAngleDegree] = useState(false);
+
+    const directionValue = [
+        {name: 'N', angle: 360},
+        {name: 'NE', angle: 45},
+        {name: 'E', angle: 90},
+        {name: 'SE', angle: 135},
+        {name: 'S', angle: 180},
+        {name: 'SW', angle: 235},
+        {name: 'W', angle: 270},
+        {name: 'NW', angle: 315}
+    ]
+
+    const handleValue = (value) => {
         setAddress(value);
     }
     const handleChangeLat = (e) => {
@@ -55,6 +69,21 @@ const ObservationLocation = (props) => {
              addressState.markerPosition.lng = Number(value);
         setAddress(addressState);
         setIsLoaded(true);
+    }
+    // console.log(lat);
+    const selectDirection = (index) => {
+        const directionWrapper = document.querySelector('.compass-wrapper');
+        
+        const directionId = document.getElementById(`directionValue${index}`);
+        let getAngleValue = directionId.getAttribute("data-angle");
+
+        if(isActiveDire === index){
+            directionWrapper.classList.remove("active-arrow");
+        }else{
+            directionWrapper.classList.add("active-arrow");
+            setActiveDire(index);
+            setDirectionAngle(getAngleValue);
+        }
     }
     return (
         <>
@@ -213,6 +242,7 @@ const ObservationLocation = (props) => {
                             id="checkbox2"
                             type="checkbox"
                             className="hidden"
+                            onClick={()=> setAngleDegree(!angleDegree)}
                         />
                         <label
                             className="switchbox"
@@ -221,22 +251,46 @@ const ObservationLocation = (props) => {
                         <span>I know the precise azimuth angle in degrees</span>
                     </div>
                 </FormGroup>
-                <FormGroup>
-                    <Label className="justify-content-center">Look Direction</Label>
-                    <div className="compass-wrapper">
-
-                    </div>
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="Date">Azimuth Angle</Label>
-                    <Input
-                        id="Date"
-                        type="text"
-                        name="angle"
-                        placeholder="120°" 
-                        className="w-100"
-                    />
-                </FormGroup>
+                {!angleDegree ? 
+                    <FormGroup>
+                        <Label className="justify-content-center mb-3">Look Direction</Label>
+                        <div className="compass-wrapper">
+                            {
+                                directionValue?.map((direction, index)=>{
+                                    return(
+                                        <Button 
+                                            className={`${direction.name}-direction ${
+                                                isActiveDire === index ? "active_direction" : null}`
+                                            }
+                                            onClick={()=> selectDirection(index)}
+                                            key={index}
+                                            id= {`directionValue${index}`}
+                                            data-angle ={direction.angle}
+                                        >{direction.name}</Button>
+                                    )
+                                })
+                            }
+                            <div className="center-dot rounded-circle"></div>
+                            <div className="rotate-arrow-wrap">
+                                <div className="rotate-arrow-inner" style={{ "--directionAngle": directionAngle + 'deg' }}>
+                                    <div className="rotate-arrow main"><img src={Images.compassArrow} alt="Compass Arrow" /> </div>
+                                    <div className="rotate-arrow hidden"><img src={Images.compassArrow} alt="Compass Arrow" /> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </FormGroup>
+                : 
+                    <FormGroup>
+                        <Label htmlFor="Date">Azimuth Angle</Label>
+                        <Input
+                            id="Date"
+                            type="text"
+                            name="Date"
+                            placeholder="120°" 
+                            className="degree-input"
+                        />
+                    </FormGroup>
+                }
                 <FormGroup className="mt-5">
                     <Button className="gray-outline-btn me-2" onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
                     <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)}>Continue</Button>

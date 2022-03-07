@@ -1,4 +1,4 @@
-import { Col, FormGroup,Button, Input,Label } from "reactstrap";
+import { Col, FormGroup, Input,Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import { Icon } from '@iconify/react';
@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 
 const ObservationUploadImg = (props) =>{
     const {multiple, maxLimit, imageFormat}=props;
-    const {observationImages, setObservationImages} = useObservations();
+    const {setObservationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
 
@@ -39,7 +39,7 @@ const ObservationUploadImg = (props) =>{
                             'id' : random,
                             'name' : item?.name,
                             'image' : baseImage,
-                            'original': { item }
+                            'original': item
                         }
                     ])
                 } else {
@@ -57,7 +57,10 @@ const ObservationUploadImg = (props) =>{
     };
 
     useEffect(()=> {
-        setObservationImages(images);
+        setObservationImages({
+            images: images,
+            selected: images?.[0]?.id,
+        });
     }, [images, setObservationImages])
 
 
@@ -68,20 +71,18 @@ const ObservationUploadImg = (props) =>{
                     <FormGroup>
                         <Label htmlFor="UploadFile">
                             <div className="upload-info">
-                                <Icon icon="bx:image-alt" color="#737e96" width="42" height="42"/>
+                                <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
                                 <p>Drag and drop images or click to upload</p>
-                                {
-                                    maxLimit === true ? <span className="text-black">Max. Image Size: 5MB</span> : ''
+                                { maxLimit === true && 
+                                    <span className="text-black">Max. Image Size: 5MB</span> 
                                 }
-                                {
-                                    imageFormat === true ? (
-                                        <ul>
-                                            <li>
-                                                Common Image File Formats (JPEG or
-                                                JPG, PNG, TIFF)
-                                            </li>
-                                        </ul>
-                                    ) : ''
+                                {imageFormat === true &&
+                                    <ul>
+                                        <li>
+                                            Common Image File Formats (JPEG or
+                                            JPG, PNG, TIFF)
+                                        </li>
+                                    </ul>
                                 }
 
                             </div>
@@ -95,6 +96,9 @@ const ObservationUploadImg = (props) =>{
                             onChange={(e)=> handleUploadImage(e)}
                         />
                     </FormGroup>
+                    {/* <div className="progress-bar_wrapper" style={{ "--uploadProgress": 65 + '%' }}>
+                        <p className="image-progree_bar"><b>65%</b> uploading..</p>
+                    </div> */}
                 </div>
                 {error?.message &&
                     <>

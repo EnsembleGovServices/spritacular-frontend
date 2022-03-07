@@ -50,6 +50,7 @@ const LazyLoad = ({ src, alt }) => {
 
     return (
         <img
+            className="img-fluid"
             ref={setImageRef}
             src={imageSrc}
             alt={alt}

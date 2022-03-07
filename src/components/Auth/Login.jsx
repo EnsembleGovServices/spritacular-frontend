@@ -8,7 +8,6 @@ import {useLocation, useNavigate} from "react-router-dom";
 const Login = (props) => {
     const {cp} = props;
     const { setAuth, persist, setPersist } = useAuth();
-
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -50,7 +49,13 @@ const Login = (props) => {
             })
             .catch((error) => {
                 if (!error?.response) {
-                    console.log('server error occurred')
+                    console.log(error?.message)
+                    setError(prev => {
+                        return {
+                            ...prev,
+                            server: error?.message
+                        }
+                    });
                 }
                 else if (error?.response) {
                     setError({
@@ -76,6 +81,9 @@ const Login = (props) => {
         <>
             {error?.data &&
                 <p className="text-danger small mb-4 fw-bolder">{error?.data?.detail}</p>
+            }
+            {error?.server &&
+                <p className="text-danger text-center small mb-4 fw-bolder">{error?.server}</p>
             }
             <Form onSubmit={handleLogin}>
                 <FormGroup>

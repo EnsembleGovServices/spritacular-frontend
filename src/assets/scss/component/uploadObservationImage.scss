@@ -36,7 +36,7 @@
     padding: 0;
     .upload-ob-inner{
       position: relative;
-      border:1px dashed #909090;
+      border:1px dashed #CCC;
       background-color: #F9F9F9;
       border-radius: $border-radius;
       margin: 0 auto;
@@ -87,6 +87,7 @@
         p{
           @include lg-text;
           margin-bottom: 4px;
+          margin-top: 0;
         }
         .btn{
           padding: 12px 25px;
@@ -109,8 +110,9 @@
       align-items: center;
       margin-bottom: 60px;
       img{
-        max-height: 305px;
-        width: auto;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
       .btn{
         right: 25px;
@@ -159,6 +161,8 @@
         svg{
           margin-bottom: 0;
           margin-right: 17px;
+          width: 36px;
+          height: 36px;
         }
         p{
           margin: 0;
@@ -216,6 +220,36 @@
     }
   }
 }
+
+.progress-bar_wrapper{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  outline: 1px solid #E8EAEE;
+  border-radius: 6px;
+  overflow: hidden; 
+  &::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(270deg, #E82C95 0%, #8C61E5 100%);
+    width: var(--uploadProgress);
+    height: 3px;
+  }
+  .image-progree_bar{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
 // Custom checkbox design for choose image category START
 .checkbox-wrapper{
   .inputGroup {

@@ -11,18 +11,12 @@ import ObservationProgress from "../../components/Observation/ObservationProgres
 import useObservations from "../../hooks/useObservations";
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
-import {baseURL, cameraSettingFields} from "../../helpers/url";
-import useAuth from "../../hooks/useAuth";
-import axios from "../../api/axios";
 
 const AddObservation = () => {
-    const { auth } = useAuth();
-
     const {observationSteps, setObservationSteps, observationImages} = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
-    const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
 
     // Toggle Tabs
     const toggleTab = (tab) => {
@@ -63,10 +57,6 @@ const AddObservation = () => {
       setNext(!next);
     }
 
-    const handleSubmit = () => {
-        console.log("hihi");
-        console.log(cameraDetails);
-    }
 
     // Set Progress Bar
     useEffect(() => {
@@ -86,17 +76,6 @@ const AddObservation = () => {
             }
         });
     }, [activeTab, observationImages, setObservationSteps]);
-
-    // useEffect(()=> {
-    //     console.group('Steps')
-    //     console.log(observationSteps)
-    //     console.groupEnd()
-    //     console.group('Images')
-    //     console.log(observationImages)
-    //     console.groupEnd()
-    //
-    // }, [observationImages, observationSteps])
-    // console.clear();
 
     return(
         <>
@@ -152,19 +131,11 @@ const AddObservation = () => {
                                   </Nav>
                               </div>
                           </Col>
-                          <Col md={observationImages?.length > 0 && next ? 7 : 9}>
+                          <Col md={observationImages?.images?.length > 0 && next && !(activeTab === Tabs.EquipmentDetails) ? 7 : 9}>
                               <div className="observation-form-right-tab">
                                   <TabContent activeTab={activeTab}>
                                       <TabPane tabId={Tabs.ObservationImages}>
                                           {next ? <ObservationAfterImageUpload /> : <ObservationImages proceedNext={()=> handleContinue()}/>}
-
-                                          {/*<div className={next ? 'd-none' : ''}>*/}
-                                          {/*    <ObservationImages proceedNext={()=> handleContinue()}/>*/}
-                                          {/*</div>*/}
-
-                                          {/*<div className={next ? '' : 'd-none'}>*/}
-                                          {/*    <ObservationAfterImageUpload />*/}
-                                          {/*</div>*/}
                                       </TabPane>
                                       <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
                                           <ObservationLocation  toggleTab={toggleTab}/>
@@ -192,7 +163,7 @@ const AddObservation = () => {
                                   </TabContent>
                               </div>
                           </Col>
-                          {observationImages?.length > 0 && next &&
+                          {observationImages?.images && next && !(activeTab === Tabs.EquipmentDetails) &&
                               <Col md={2}>
                                   <ObservationUploadedImg />
                               </Col>
