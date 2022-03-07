@@ -106,7 +106,7 @@ const AddObservation = () => {
                               <div className="observation-form-right-tab">
                                   <TabContent activeTab={activeTab}>
                                       <TabPane tabId={Tabs.ObservationImages}>
-                                          {next ? <ObservationAfterImageUpload /> : <ObservationImages proceedNext={()=> handleContinue()}/>}
+                                          {next ? <ObservationAfterImageUpload toggleTab={toggleTab} /> : <ObservationImages proceedNext={()=> handleContinue()}/>}
                                       </TabPane>
                                       <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
                                           <ObservationLocation  toggleTab={toggleTab}/>
