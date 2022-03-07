@@ -40,7 +40,7 @@ const AddObservation = () => {
     }
 
     const getCameraDetail = async (e) => {
-        console.log(e);
+        
         if(e.target.checked == true){
             await axios.get(baseURL.api+'/users/camera_setting/', {
                 headers: {
@@ -99,6 +99,7 @@ const AddObservation = () => {
     // console.clear();
 
     return(
+        <>
           <Form className="observation-form upload-observation-form-main" onSubmit={handleSubmit}>
               <div className="common-top-button-wrapper">
                   <Container>
@@ -175,7 +176,7 @@ const AddObservation = () => {
                                                     id="checkbox0"
                                                     type="checkbox"
                                                     className="hidden"
-                                                    onChange = {(e)=>setSwitchOn(!isSwitchOn)}
+                                                    onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e);}}
                                                 />
                                                 <label
                                                     className="switchbox"
@@ -186,7 +187,7 @@ const AddObservation = () => {
                                                 </span>
                                             </div>
                                         </FormGroup>
-                                        {isSwitchOn ? <EquipmentDetails handleInput={handleInput} toggleTab={toggleTab}/> : <EquipmentDetailsForm handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>}
+                                        {isSwitchOn ? <EquipmentDetails handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/> : <EquipmentDetailsForm handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>}
                                       </TabPane>
                                   </TabContent>
                               </div>
@@ -200,6 +201,7 @@ const AddObservation = () => {
                   </Container>
               </section>
           </Form>
+          </>
   )
 }
 export default AddObservation;
