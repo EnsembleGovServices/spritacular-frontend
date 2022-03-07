@@ -72,20 +72,18 @@ const ObservationUploadImg = (props) =>{
                     <FormGroup>
                         <Label htmlFor="UploadFile">
                             <div className="upload-info">
-                                <Icon icon="bx:image-alt" color="#737e96" width="42" height="42"/>
+                                <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
                                 <p>Drag and drop images or click to upload</p>
-                                {
-                                    maxLimit === true ? <span className="text-black">Max. Image Size: 5MB</span> : ''
+                                { maxLimit === true && 
+                                    <span className="text-black">Max. Image Size: 5MB</span> 
                                 }
-                                {
-                                    imageFormat === true ? (
-                                        <ul>
-                                            <li>
-                                                Common Image File Formats (JPEG or
-                                                JPG, PNG, TIFF)
-                                            </li>
-                                        </ul>
-                                    ) : ''
+                                {imageFormat === true &&
+                                    <ul>
+                                        <li>
+                                            Common Image File Formats (JPEG or
+                                            JPG, PNG, TIFF)
+                                        </li>
+                                    </ul>
                                 }
 
                             </div>
@@ -99,6 +97,9 @@ const ObservationUploadImg = (props) =>{
                             onChange={(e)=> handleUploadImage(e)}
                         />
                     </FormGroup>
+                    {/* <div className="progress-bar_wrapper" style={{ "--uploadProgress": 65 + '%' }}>
+                        <p className="image-progree_bar"><b>65%</b> uploading..</p>
+                    </div> */}
                 </div>
                 {error?.message &&
                     <>
