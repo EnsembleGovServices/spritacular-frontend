@@ -25,6 +25,7 @@
       flex-direction: column;
       width: 100%;
       max-width: 300px;
+      transition: all 0.3s ease;
       .navbar-nav {
         padding: 20px 0;
         flex-direction: column;
@@ -74,7 +75,8 @@
     }
     &.collapse:not(.show) {
       @media (max-width: 1023px) {
-        display: none !important;
+        transition: all 0.3s ease;
+        left: -100%;
       }
     }
     .open-modal-btn{
@@ -163,14 +165,30 @@
     &.show{
       .btn-secondary{
         svg{
-          transform: rotate(180deg);
-          transition: all 0.3s ease;
+          &.iconify--fe{
+            transform: rotate(-180deg);
+            transition: all 0.3s ease;
+          }
         }
       }
     }
   }
   .navbar-toggler {
     @include slg-title;
+    &:after{
+      content: "";
+      background: #00000061;
+      position: fixed;
+      left: -100%;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(3px);
+      transition: all 0.5s ease;
+    }
     @media (max-width: 1023px) {
       display: block;
       border: none;
@@ -551,17 +569,9 @@ body{
   &.menu-open {
     .navbar-toggler {
       &:after {
-        content: "";
-        background: #00000061;
-        position: fixed;
+        
         left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        z-index: 1;
-        width: 100%;
-        height: 100%;
-        backdrop-filter: blur(3px);
+        transition: all 0.5s ease;
       }
     }
   }
