@@ -3,7 +3,6 @@ import useObservations from "../../hooks/useObservations";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import { Icon } from '@iconify/react';
 import {useEffect, useState} from "react";
-import images from "../../static/images";
 
 const ObservationUploadImg = (props) =>{
     const {multiple, maxLimit, imageFormat}=props;
@@ -60,7 +59,7 @@ const ObservationUploadImg = (props) =>{
     useEffect(()=> {
         setObservationImages({
             images: images,
-            selected: images?.[0]?.id
+            selected: images?.[0]?.id,
         });
     }, [images, setObservationImages])
 
