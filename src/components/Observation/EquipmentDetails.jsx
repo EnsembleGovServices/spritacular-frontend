@@ -1,63 +1,87 @@
-import { Row, Col, FormGroup,FormFeedback, Label, Input, Button } from "reactstrap"
+import { Row, Col, FormGroup, Label, Input, Button } from "reactstrap"
 import {Tabs} from "../../helpers/observation";
-import {useEffect, useState ,useRef} from "react";
-
 import "../../assets/scss/component/observationEquipment.scss";
-import EquipmentForm from '../Shared/EquipmentForm'
 
 const EquipmentDetails = (props) =>{
-    const {toggleTab,handleInput } = props;
-    const [updateSetting, setUpdateSetting] = useState();
-    const [error, setError] = useState();
-
-    // const handleInput = (e) => {
-    //     let name = e.target.name,
-    //         value = e.target.value;
-    //         setUpdateSetting({
-    //         ...updateSetting,
-    //         [name]:value,
-    //     })
-    // }
-
-    const getCameraDetail = () => {
-
-    }
+    const {toggleTab } = props;
     return (
         <>
         <Row>
-        <Col sm="12">
-                <FormGroup className="d-flex align-items-center position-relative">
-                    <div className="custom-switch mb-5">
-                        <input
-                            id="checkbox0"
-                            type="checkbox"
-                            className="hidden"
-                        />
-                        <label
-                            className="switchbox"
-                            htmlFor="checkbox0"
-                        />
-                        <span>
-                            I used the same camera, camera settings, and lens listed in my profile
-                        </span>
-                    </div>
-                </FormGroup>
+            <Col md={12}>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Camera Type<span className="required">Required</span></h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">Canon</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Focal Length<span className="required">Required</span></h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">35 mm</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Aperture<span className="required">Required</span></h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">f/1.4</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">ISO</h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">100</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Shutter Speed</h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">1/15 sec</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Frame Rate</h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">24</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">How do you generally keep track of time?</h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">Camera Type</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2"></div>
+                <Row>
+                    <Col md={6}>
+                        <h6 className="m-0">Do you use any special equipment attached to your camera (such as a filter)?</h6>
+                    </Col>
+                    <Col md={6}>
+                        <p className="mb-0 h-100 d-flex align-items-center">Polarizing Filter</p>
+                    </Col>
+                </Row>
+                <div className="border-line my-2 mb-4"></div>
             </Col>
-            <Col sm="12">
-                <FormGroup check>
-                <Label check className="mb-4">
-                    <Input
-                        type="checkbox"
-                        name="Pull data from my profile"
-                        onClick={getCameraDetail}
-                    />
-                    Pull data from my profile
-                </Label>
-                </FormGroup>
-            </Col>
-            <EquipmentForm handleInput1={handleInput} updateSetting={updateSetting} error={error}/>
-            <Col md="12">
-                <div className="border-line"></div>
+            <Col md={12}>
                 <FormGroup>
                     <h6>Elevation angle of your camera in degrees</h6>
                     <Input
