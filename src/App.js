@@ -38,6 +38,7 @@ const App = () => {
         <Route element={<RequireAuth/>}>
           <Route path={"profile"} element={<Profile />} />
           <Route element={<Observations />}>
+          <Route path={"profile"} element={<Profile />} />
             <Route path={"observations"} element={<MyObservations />} />
             <Route path={"observations/add"} element={<AddObservation />} />
             <Route path={"upload-observations"} element={<InitialUploadObservations />} />

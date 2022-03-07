@@ -1,121 +1,48 @@
 import { Row, Col, FormGroup, Label, Input, Button } from "reactstrap"
 import {Tabs} from "../../helpers/observation";
+import {useEffect, useState ,useRef} from "react";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
+import useAuth from "../../hooks/useAuth";
+
 import "../../assets/scss/component/observationEquipment.scss";
+import EquipmentForm from '../Shared/EquipmentForm';
+import useObservations from "../../hooks/useObservations";
+
 
 const EquipmentDetailsForm = (props) =>{
-    const {toggleTab } = props;
+    const {toggleTab,handleInput,getCameraDetail,cameraDetails } = props;
+    const { auth } = useAuth();
+
+    const [updateSetting, setUpdateSetting] = useState();
+    const [error, setError] = useState();
+
+    // const handleInput = (e) => {
+    //     let name = e.target.name,
+    //         value = e.target.value;
+    //         setUpdateSetting({
+    //         ...updateSetting,
+    //         [name]:value,
+    //     })
+    // }
+
+    
     return (
         <>
-        <Row>
+        <Row>    
             <Col sm="12">
                 <FormGroup check>
-                    <Label check className="mb-0">
-                        <Input
-                            required
-                            type="checkbox"
-                            name="Pull data from my profile"
-                        />
-                        Pull data from my profile
-                    </Label>
-                </FormGroup>
-            </Col>
-            <Col md="12">
-                <FormGroup>
-                    <h6>Camera Type</h6>
-                    <Input type="select" name="select">
-                        <option disabled defaultValue>
-                            Please Select Your Camera Type
-                        </option>
-                        <option>Canon</option>
-                        <option>Nikon</option>
-                        <option>Sony</option>
-                        <option>Panasonic</option>
-                    </Input>
-                </FormGroup>
-                <div className="border-line"/>
-            </Col>
-            <Col md="12">
-            <FormGroup>
-                <h6>Lens Information</h6>
-            </FormGroup>
-            </Col>
-            <Col md="6">
-            <FormGroup>
-                <label>Focal Length</label>
-                <Input
-                type="text"
-                name="name"
-                placeholder="35 mm"
-                />
-            </FormGroup>
-            </Col>
-            <Col md="6">
-                <FormGroup>
-                    <label>Aperture</label>
+                <Label check className="mb-4">
                     <Input
-                    type="text"
-                    name="name"
-                    placeholder="35 mm"
+                        type="checkbox"
+                        name="Pull data from my profile"
+                        onClick={getCameraDetail}
                     />
+                    Pull data from my profile
+                </Label>
                 </FormGroup>
             </Col>
-            <Col md="12">
-            <div className="border-line"/>
-            <FormGroup>
-                <h6>Camera Settings</h6>
-            </FormGroup>
-            </Col>
-            <Col md="6">
-            <FormGroup>
-                <label>ISO</label>
-                <Input
-                type="text"
-                name="name"
-                placeholder="100"
-                />
-            </FormGroup>
-            </Col>
-            <Col md="6">
-            <FormGroup>
-                <label>Shutter Speed (exposure time)</label>
-                <Input
-                type="text"
-                name="name"
-                placeholder="1/15"
-                />
-            </FormGroup>
-            </Col>
-            <Col md="6">
-            <FormGroup>
-                <label>Frame Rate (frames per second)</label>
-                <Input type="text" name="name" placeholder="24" />
-            </FormGroup>
-            </Col>
-            <Col md="12">
-                <div className="border-line"></div>
-                <FormGroup>
-                    <h6>How do you generally keep track of time?</h6>
-                    <Input
-                    type="text"
-                    name="name"
-                    placeholder="e.g. GPS, Camera Time, Computer Time"
-                    />
-                </FormGroup>
-            </Col>
-            <Col md="12">
-                {/* <div className="border-line"></div> */}
-                <FormGroup>
-                    <h6>
-                    Do you use any special equipment attached to
-                    your camera (such as a filter)?
-                    </h6>
-                    <Input
-                    type="text"
-                    name="name"
-                    placeholder="e.g. Polarizing Filter, ND Filter, etc"
-                    />
-                </FormGroup>
-            </Col>
+            <EquipmentForm handleInput1={handleInput} updateSetting={cameraDetails} error={error}/>
             <Col md="12">
                 <div className="border-line"></div>
                 <FormGroup>
@@ -127,7 +54,8 @@ const EquipmentDetailsForm = (props) =>{
                     />
                 </FormGroup>
             </Col>
-            <Col md="12">
+            <Col md={12}>
+
                 {/* <div className="border-line"></div> */}
                 <FormGroup>
                     <h6>Link to the video of this event</h6>
@@ -140,12 +68,12 @@ const EquipmentDetailsForm = (props) =>{
             </Col>
             <Col md={12}>
                 <FormGroup>
-                    <h6>Lorem ipsum dolor sit amet consectetur adipiscing elit sed sed lobortis magna</h6>
+                    <h6>Please share the story of your capture</h6>
                     <div className="border-line my-2"></div>
                     <Input
                         type="textarea"
                         name="textarea"
-                        placeholder="Please describe the story of your capture."
+                        placeholder="We would love to hear more about your experience."
                     />
                 </FormGroup>
             </Col>

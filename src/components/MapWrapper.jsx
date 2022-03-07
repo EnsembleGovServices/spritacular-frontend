@@ -4,8 +4,6 @@ import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "react-google-maps";
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
-
-
 // import { GoogleMapsAPI } from '../client-config';
 Geocode.setApiKey("AIzaSyC49bXfihl4zZqjG2-iRLUmcWO_PVcDehM");
 Geocode.enableDebug();

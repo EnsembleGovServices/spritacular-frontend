@@ -91,7 +91,7 @@ const UploadObservationsForm = () => {
                       <ObservationLocation  toggleTab = {toggleTab}/>
                     </TabPane>
                     <TabPane tabId="3">
-                      <EquipmentDetails />
+                      {/* <EquipmentDetails /> */}
                     </TabPane>
                   </TabContent>
                 </div>
