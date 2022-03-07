@@ -28,7 +28,7 @@ const ObservationUploadedImg = () => {
         <>
             {preview?.map((item, index) => {
                 return(
-                    <div key={index} className="mb-2" onClick={()=> toggleTab(item?.id)}>
+                    <div key={index} className={`mb-2 selected-image ${activeTab === item?.id ? 'active-tab' : null}`} onClick={()=> toggleTab(item?.id)}>
                         <LazyLoad src={item?.image} alt={item?.name} />
                     </div>
                 )

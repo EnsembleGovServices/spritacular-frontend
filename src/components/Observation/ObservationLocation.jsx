@@ -88,38 +88,38 @@ const ObservationLocation = (props) => {
     return (
         <>
             <Col md="12">
-            <FormGroup row>
-                <Row>
-                    <Col lg={7} className="order-2 order-lg-1">
-                        <h6>Where did you make the observation?</h6>
-                    </Col>
-                    <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
-                        <FormGroup check>
-                            <Label check className="mb-0">
-                                <Input
-                                    required
-                                    type="checkbox"
-                                    name="Same as the first image"
-                                />
-                                Same as the first image
-                            </Label>
-                        </FormGroup>
-                    </Col>
-                </Row>
-                   {/* <MapWrapper
-                   google={props.google}
-                   center={{lat:address1?.markerPosition?.lat, lng:address1?.markerPosition?.lng}}
-                   height='300px'
-                   zoom={15}
-                    handleState={handleValue}
-                    isLoaded={isLoaded}
-                   />  */}
-                    {/* <Input
-                        type="search"
-                        name="name"
-                        placeholder="Edmon, OK, USA"
-                    /> */}
-                    </FormGroup>
+                <FormGroup row>
+                    <Row>
+                        <Col lg={7} className="order-2 order-lg-1">
+                            <h6>Where did you make the observation?</h6>
+                        </Col>
+                        <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
+                            <FormGroup check>
+                                <Label check className="mb-0">
+                                    <Input
+                                        required
+                                        type="checkbox"
+                                        name="Same as the first image"
+                                    />
+                                    Same as the first image
+                                </Label>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    {/* <MapWrapper
+                    google={props.google}
+                    center={{lat:address1?.markerPosition?.lat, lng:address1?.markerPosition?.lng}}
+                    height='300px'
+                    zoom={15}
+                        handleState={handleValue}
+                        isLoaded={isLoaded}
+                    />  */}
+                        {/* <Input
+                            type="search"
+                            name="name"
+                            placeholder="Edmon, OK, USA"
+                        /> */}
+                </FormGroup>
             </Col>
             <Col md={12} className="mb-5">
                 <h6>If you know the precise coordinates of your observation location, please enter below</h6>
