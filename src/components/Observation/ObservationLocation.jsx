@@ -5,32 +5,57 @@ import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
 
-const MapWrapper = lazy(()=> import('../MapWrapper'))
+import  MapWrapper from '../MapWrapper';
 
 const ObservationLocation = (props) => {
     const { toggleTab } = props;
-    const [address,setAddress] = useState();
+    const [address1,setAddress] = useState({
+        address: '',
+        city: '',
+        area: '',
+        state: '',
+        mapPosition: {
+            lat: 18.5204,
+            lng: 73.8567
+        },
+        markerPosition: {
+            lat: 18.5204,
+            lng: 73.8567
+        }
+    });
     const [lat,setLat] = useState(18.5204);
     const [lng,setLng] = useState(73.8567);
+    const [isLoaded,setIsLoaded] = useState(false);
     // const [updateMap,setUpdateMap] = useState({
     //     lat:18.5204,
     //     lng:73.8567
     // });
     const [updateMap,setUpdateMap] = useState(false);
-    const handleValue = (value) => {
+    const handleValue = (value,) => {
+        console.log(value);
         setAddress(value);
     }
     const handleChangeLat = (e) => {
-        setLat(e.target.value);
-        setUpdateMap({...updateMap,'lat': e.target.value});
-        setUpdateMap(true);
+        let name = e.target.name,
+             value = e.target.value;
+            
+             let addressState = {...address1};
+             addressState.mapPosition.lat = Number(value);
+             addressState.markerPosition.lat = Number(value);
+             setAddress(addressState);
+             setTimeout(()=> {
+                 setIsLoaded(true);
+             },3000);
     }
     const handleChangeLng = (e) => {
-        setLng(e.target.value);
-        setUpdateMap({...updateMap,'lng' : e.target.value});
-        setUpdateMap(true);
+        let name = e.target.name,
+             value = e.target.value;
+             let addressState = {...address1};
+             addressState.mapPosition.lng = Number(value);
+             addressState.markerPosition.lng = Number(value);
+        setAddress(addressState);
+        setIsLoaded(true);
     }
-    // console.log(lat);
     return (
         <>
             <Col md="12">
@@ -53,12 +78,13 @@ const ObservationLocation = (props) => {
                     </Col>
                 </Row>
                    {/* <MapWrapper
-					google={props.google}
-					center={{lat: lat, lng: lng}}
-					height='300px'
-					zoom={15}
-                    handleState={handleValue}                    
-				 />  */}
+                   google={props.google}
+                   center={{lat:address1?.markerPosition?.lat, lng:address1?.markerPosition?.lng}}
+                   height='300px'
+                   zoom={15}
+                    handleState={handleValue}
+                    isLoaded={isLoaded}
+                   />  */}
                     {/* <Input
                         type="search"
                         name="name"
@@ -74,10 +100,10 @@ const ObservationLocation = (props) => {
                             <Label htmlFor="LAT" sm={2} >LAT</Label>
                             <Col sm={10}>
                                 <Input
-                                    value={address?.markerPosition?.lat}
+                                    value={address1?.markerPosition?.lat}
                                     id="LAT"
                                     type="textbox"
-                                    name="LAT"
+                                    name="lat"
                                     placeholder="Edmon, OK, USA"
                                     onChange={handleChangeLat}
                                 />
@@ -89,10 +115,10 @@ const ObservationLocation = (props) => {
                             <Label htmlFor="LAT" sm={2} >LON</Label>
                             <Col sm={10}>
                                 <Input
-                                    value={address?.markerPosition?.lng}
+                                    value={address1?.markerPosition?.lng}
                                     id="LON"
                                     type="search"
-                                    name="LON"
+                                    name="lng"
                                     placeholder="Edmon, OK, USA"
                                     onChange={handleChangeLng}
                                 />
@@ -103,7 +129,7 @@ const ObservationLocation = (props) => {
                         <div className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
                             <img src={Images.Flag} alt="USA Flag"/> 
                             Edmon, OK, USA
-                            {address?.address}
+                            {address1?.address}
                         </div>
                     </Col>
                 </Row>
@@ -117,7 +143,6 @@ const ObservationLocation = (props) => {
                         <FormGroup check>
                             <Label check className="mb-0">
                                 <Input
-                                    required
                                     type="checkbox"
                                     name="Same as the first image"
                                 />
@@ -133,7 +158,7 @@ const ObservationLocation = (props) => {
                             <Input
                                 id="Date"
                                 type="date"
-                                name="Date"
+                                name="date"
                                 className="w-100"
                                 placeholder="12/20/2021" 
                             />
@@ -145,7 +170,7 @@ const ObservationLocation = (props) => {
                             <Input
                                 id="Time"
                                 type="time"
-                                name="Time"
+                                name="time"
                                 className="w-100"
                                 placeholder="10:21:00 am"
                             />
@@ -154,7 +179,7 @@ const ObservationLocation = (props) => {
                     <Col md={6} lg={4}>
                         <FormGroup>
                             <Label htmlFor="TIME ZONE">TIME ZONE</Label>
-                            <Input type="select" name="select" className="w-100">
+                            <Input type="select" name="timezone" className="w-100">
                                 <option disabled defaultValue>
                                 CT
                                 </option>
@@ -174,7 +199,7 @@ const ObservationLocation = (props) => {
                     <Input
                         id="Date"
                         type="text"
-                        name="Date"
+                        name="uncertainity_time"
                         placeholder="e.g. +/- 3 sec  or  +/- 1 min" 
                         className="w-100"
                     />
@@ -207,7 +232,7 @@ const ObservationLocation = (props) => {
                     <Input
                         id="Date"
                         type="text"
-                        name="Date"
+                        name="angle"
                         placeholder="120°" 
                         className="w-100"
                     />

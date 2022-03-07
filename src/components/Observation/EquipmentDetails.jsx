@@ -1,9 +1,11 @@
 import { Row, Col, FormGroup, Label, Input, Button } from "reactstrap"
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationEquipment.scss";
+import { useEffect } from "react";
 
 const EquipmentDetails = (props) =>{
-    const {toggleTab } = props;
+    const {toggleTab,cameraDetails } = props;
+    console.log(cameraDetails);
     return (
         <>
         <Row>
@@ -13,7 +15,7 @@ const EquipmentDetails = (props) =>{
                         <h6 className="m-0">Camera Type<span className="required">Required</span></h6>
                     </Col>
                     <Col md={6}>
-                        <p className="mb-0 h-100 d-flex align-items-center">Canon</p>
+                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.camera_type}</p>
                     </Col>
                 </Row>
                 <div className="border-line my-2"></div>
@@ -22,7 +24,7 @@ const EquipmentDetails = (props) =>{
                         <h6 className="m-0">Focal Length<span className="required">Required</span></h6>
                     </Col>
                     <Col md={6}>
-                        <p className="mb-0 h-100 d-flex align-items-center">35 mm</p>
+                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.focal_length}</p>
                     </Col>
                 </Row>
                 <div className="border-line my-2"></div>
@@ -31,7 +33,7 @@ const EquipmentDetails = (props) =>{
                         <h6 className="m-0">Aperture<span className="required">Required</span></h6>
                     </Col>
                     <Col md={6}>
-                        <p className="mb-0 h-100 d-flex align-items-center">f/1.4</p>
+                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.aperture}</p>
                     </Col>
                 </Row>
                 <div className="border-line my-2"></div>
@@ -40,7 +42,7 @@ const EquipmentDetails = (props) =>{
                         <h6 className="m-0">ISO</h6>
                     </Col>
                     <Col md={6}>
-                        <p className="mb-0 h-100 d-flex align-items-center">100</p>
+                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.iso}</p>
                     </Col>
                 </Row>
                 <div className="border-line my-2"></div>
@@ -49,7 +51,7 @@ const EquipmentDetails = (props) =>{
                         <h6 className="m-0">Shutter Speed</h6>
                     </Col>
                     <Col md={6}>
-                        <p className="mb-0 h-100 d-flex align-items-center">1/15 sec</p>
+                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.shutter_speed}</p>
                     </Col>
                 </Row>
                 <div className="border-line my-2"></div>
@@ -58,7 +60,7 @@ const EquipmentDetails = (props) =>{
                         <h6 className="m-0">Frame Rate</h6>
                     </Col>
                     <Col md={6}>
-                        <p className="mb-0 h-100 d-flex align-items-center">24</p>
+                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.fps}</p>
                     </Col>
                 </Row>
                 <div className="border-line my-2"></div>
@@ -67,7 +69,7 @@ const EquipmentDetails = (props) =>{
                         <h6 className="m-0">How do you generally keep track of time?</h6>
                     </Col>
                     <Col md={6}>
-                        <p className="mb-0 h-100 d-flex align-items-center">Camera Type</p>
+                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.question_field_one}</p>
                     </Col>
                 </Row>
                 <div className="border-line my-2"></div>
@@ -76,7 +78,7 @@ const EquipmentDetails = (props) =>{
                         <h6 className="m-0">Do you use any special equipment attached to your camera (such as a filter)?</h6>
                     </Col>
                     <Col md={6}>
-                        <p className="mb-0 h-100 d-flex align-items-center">Polarizing Filter</p>
+                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.question_field_two}</p>
                     </Col>
                 </Row>
                 <div className="border-line my-2 mb-4"></div>
