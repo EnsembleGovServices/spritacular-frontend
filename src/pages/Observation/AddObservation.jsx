@@ -7,13 +7,21 @@ import {baseURL, cameraSettingFields} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 
-const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
-const EquipmentDetails = lazy(()=> import('../../components/Observation/EquipmentDetails'))
-const ObservationUploadedImg = lazy(()=> import('../../components/Observation/ObservationUploadedImg'))
-const ObservationImages = lazy(()=> import('../../components/Observation/ObservationImages'))
-const ObservationProgress = lazy(()=> import('../../components/Observation/ObservationProgress'))
-const ObservationAfterImageUpload = lazy(()=> import('../../components/Observation/ObservationAfterImageUpload'))
-const EquipmentDetailsForm = lazy(()=> import('../../components/Observation/EquipmentDetailsForm'))
+// const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
+// const EquipmentDetails = lazy(()=> import('../../components/Observation/EquipmentDetails'))
+// const ObservationUploadedImg = lazy(()=> import('../../components/Observation/ObservationUploadedImg'))
+// const ObservationImages = lazy(()=> import('../../components/Observation/ObservationImages'))
+// const ObservationProgress = lazy(()=> import('../../components/Observation/ObservationProgress'))
+// const ObservationAfterImageUpload = lazy(()=> import('../../components/Observation/ObservationAfterImageUpload'))
+// const EquipmentDetailsForm = lazy(()=> import('../../components/Observation/EquipmentDetailsForm'))
+
+import ObservationLocation from "../../components/Observation/ObservationLocation";
+import EquipmentDetails from "../../components/Observation/EquipmentDetails";
+import ObservationUploadedImg from "../../components/Observation/ObservationUploadedImg";
+import ObservationImages from "../../components/Observation/ObservationImages";
+import ObservationProgress from "../../components/Observation/ObservationProgress";
+import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
+import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
 
 const AddObservation = () => {
     const { auth } = useAuth();
@@ -147,19 +155,19 @@ const AddObservation = () => {
                                   <TabContent activeTab={activeTab}>
                                       <TabPane tabId={Tabs.ObservationImages}>
                                           {next ? 
-                                            <Suspense fallback={''} >
+                                            // <Suspense fallback={''} >
                                                 <ObservationAfterImageUpload toggleTab={toggleTab} />
-                                            </Suspense>
+                                            // </Suspense>
                                         : 
-                                            <Suspense fallback={''} >
+                                            // <Suspense fallback={''} >
                                                 <ObservationImages proceedNext={()=> handleContinue()}/>
-                                            </Suspense>
+                                            // </Suspense>
                                         }
                                       </TabPane>
                                       <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
-                                        <Suspense fallback={''} >
+                                        {/* <Suspense fallback={''} > */}
                                             <ObservationLocation  toggleTab={toggleTab}/>
-                                        </Suspense>
+                                        {/* </Suspense> */}
                                       </TabPane>
                                       <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                         <FormGroup className="d-flex align-items-center position-relative">
@@ -180,12 +188,13 @@ const AddObservation = () => {
                                             </div>
                                         </FormGroup>
                                         {isSwitchOn ? 
-                                        <Suspense fallback={''} >
+                                        // <Suspense fallback={''} >
                                             <EquipmentDetails handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
-                                        </Suspense>
-                                        : <Suspense fallback={''} >
+                                        // </Suspense>
+                                        : 
+                                        // <Suspense fallback={''} >
                                             <EquipmentDetailsForm handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>
-                                        </Suspense>
+                                        // </Suspense>
                                         }
                                       </TabPane>
                                   </TabContent>
@@ -193,9 +202,9 @@ const AddObservation = () => {
                           </Col>
                           {observationImages?.images && next && !(activeTab === Tabs.EquipmentDetails) &&
                               <Col md={2}>
-                                    <Suspense fallback={''} >
+                                    {/* <Suspense fallback={''} > */}
                                       <ObservationUploadedImg />
-                                    </Suspense>
+                                    {/* </Suspense> */}
                               </Col>
                           }
                       </Row>

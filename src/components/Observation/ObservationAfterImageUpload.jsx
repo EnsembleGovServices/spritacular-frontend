@@ -1,6 +1,6 @@
 import { MultiImageTabs, Tabs } from "../../helpers/observation";
 import { Icon } from "@iconify/react/dist/iconify";
-import {Button, Col, FormGroup, Input, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane} from "reactstrap";
+import {Button, Col, FormGroup, Input, Label, Nav, NavItem, NavLink, Popover, Row, TabContent, TabPane, UncontrolledPopover, PopoverHeader, PopoverBody} from "reactstrap";
 import ObservationUploadImg from "./ObservationUploadImg";
 import { useState } from "react";
 import useObservations from "../../hooks/useObservations";
@@ -40,6 +40,33 @@ const ObservationAfterImageUpload = (props) => {
         );
     };
 
+    const ImagePopover = () => {
+        return(
+            <>
+                <div className="ms-2">
+                    <Button
+                        id="ScheduleUpdateButton"
+                        type="button"
+                        className="bg-transparent p-0 border-0 shadow-none"
+                    >
+                        <Icon icon="charm:info" color="#adb4c2" width="15" height="15" />
+                    </Button>
+                    <UncontrolledPopover
+                        placement="top"
+                        target="ScheduleUpdateButton"
+                        trigger="click"
+                    >
+                        <PopoverHeader>What is sprite? <Button className="bg-transparent p-0 border-0 text-black"><Icon icon="codicon:chrome-close" width="15" height="15" /></Button></PopoverHeader>
+                        <PopoverBody>
+                            <p>Sprites or red sprites are large-scale electric discharges that occur high above thunderstor..</p>
+                            <Button className="bg-transparent p-0 border-0 text-secondary">Show more</Button>
+                        </PopoverBody>
+                    </UncontrolledPopover>
+                </div>
+            </>
+        )
+    }
+
     const ObservationCategory = () => {
         return(
             Category?.map((imagItem, index)=>{
@@ -52,6 +79,7 @@ const ObservationAfterImageUpload = (props) => {
                                     <label htmlFor={imagItem.id}>
                                         <img src={imagItem.image} alt={imagItem.name} />
                                         {imagItem.name}
+                                        <ImagePopover />
                                     </label>
                                 </div>
                             </div>
@@ -134,7 +162,7 @@ const ObservationAfterImageUpload = (props) => {
                             </Col>
                             <ObservationCategory />
                             <Col sm={12}>
-                                <FormGroup check>
+                                <FormGroup check className="mb-3">
                                     <Label check>
                                         <Input required type="checkbox" name="other" onChange={(e)=> setIsOther(e.target.checked)} />
                                         Other

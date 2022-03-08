@@ -35,7 +35,7 @@ const App = () => {
         <Route exact path={"/password_reset"} element={<ResetPasswordPopup />} />
         
         {/*Protected routes*/}
-        <Route element={<RequireAuth/>}>
+        <Route element={<RequireAuth />}>
           <Route path={"profile"} element={<Profile />} />
           <Route element={<Observations />}>
           <Route path={"profile"} element={<Profile />} />

@@ -36,14 +36,14 @@ const ObservationLocation = (props) => {
     const [angleDegree, setAngleDegree] = useState(false);
 
     const directionValue = [
-        {name: 'N', angle: 360},
-        {name: 'NE', angle: 45},
-        {name: 'E', angle: 90},
-        {name: 'SE', angle: 135},
-        {name: 'S', angle: 180},
-        {name: 'SW', angle: 235},
-        {name: 'W', angle: 270},
-        {name: 'NW', angle: 315}
+        {name: 'N', angle: 360, default : true},
+        {name: 'NE', angle: 45, default : false},
+        {name: 'E', angle: 90, default : false},
+        {name: 'SE', angle: 135, default : false},
+        {name: 'S', angle: 180, default : false},
+        {name: 'SW', angle: 235, default : false},
+        {name: 'W', angle: 270, default : false},
+        {name: 'NW', angle: 315, default : false},
     ]
 
     const handleValue = (value) => {
@@ -76,7 +76,7 @@ const ObservationLocation = (props) => {
         
         const directionId = document.getElementById(`directionValue${index}`);
         let getAngleValue = directionId.getAttribute("data-angle");
-
+        console.log("isActiveDire, index", isActiveDire, index);
         if(isActiveDire === index){
             directionWrapper.classList.remove("active-arrow");
         }else{
@@ -126,7 +126,7 @@ const ObservationLocation = (props) => {
                 <Row>
                     <Col md={6} lg={4}>
                         <FormGroup row>
-                            <Label htmlFor="LAT" sm={2} >LAT</Label>
+                            <Label className="form-label" htmlFor="LAT" sm={2} >LAT</Label>
                             <Col sm={10}>
                                 <Input
                                     value={address1?.markerPosition?.lat}
@@ -141,7 +141,7 @@ const ObservationLocation = (props) => {
                     </Col>
                     <Col md={6} lg={4}>
                         <FormGroup row>
-                            <Label htmlFor="LAT" sm={2} >LON</Label>
+                            <Label className="form-label" htmlFor="LAT" sm={2} >LON</Label>
                             <Col sm={10}>
                                 <Input
                                     value={address1?.markerPosition?.lng}
@@ -259,8 +259,8 @@ const ObservationLocation = (props) => {
                                 directionValue?.map((direction, index)=>{
                                     return(
                                         <Button 
-                                            className={`${direction.name}-direction ${
-                                                isActiveDire === index ? "active_direction" : null}`
+                                            className={ `${direction.name}-direction ${ (direction.default === true) && isActiveDire === null ? 'active_direction' : '' } 
+                                                ${ isActiveDire === index ? "active_direction" : '' }`
                                             }
                                             onClick={()=> selectDirection(index)}
                                             key={index}

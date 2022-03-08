@@ -201,6 +201,11 @@
       }
     }
   }
+  .btn-secondary{
+    padding: 13px 47px;
+    font-weight: 500;
+    @include lg-text;
+  }
 }
 .upload-observation-form-inner{
   .gray-outline-btn{
