@@ -1,7 +1,9 @@
+import InitialUploadObservations from "../InitialUploadObservations";
+
 const MyObservations = () => {
   return(
       <>
-          <h1>My Observations</h1>
+         <InitialUploadObservations />
       </>
   )
 }
