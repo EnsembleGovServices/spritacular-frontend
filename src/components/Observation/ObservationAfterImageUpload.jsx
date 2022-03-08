@@ -1,20 +1,21 @@
-import { MultiImageTabs } from "../../helpers/observation";
+import { MultiImageTabs, Tabs } from "../../helpers/observation";
 import { Icon } from "@iconify/react/dist/iconify";
-import {Button, Col, FormGroup, Input, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane} from "reactstrap";
+import {Button, Col, FormGroup, Input, Label, Nav, NavItem, NavLink, Popover, Row, TabContent, TabPane, UncontrolledPopover, PopoverHeader, PopoverBody} from "reactstrap";
 import ObservationUploadImg from "./ObservationUploadImg";
-import Images from "../../static/images";
 import { useState } from "react";
 import useObservations from "../../hooks/useObservations";
 import LazyLoad from "../Upload/LazyLoad";
 import { Category } from "../../helpers/observation";
 
-const ObservationAfterImageUpload = () => {
+const ObservationAfterImageUpload = (props) => {
+    const { toggleTab } = props;
     const {observationImages} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
+    const [isOther, setIsOther] = useState(false);
 
     // Toggle Tabs
-    const toggleTab = (tab) => {
+    const toggleImageTab = (tab) => {
         if (activeTab !== tab) {
             setActiveImageTab(tab);
         }
@@ -39,6 +40,56 @@ const ObservationAfterImageUpload = () => {
         );
     };
 
+    const ImagePopover = () => {
+        return(
+            <>
+                <div className="ms-2">
+                    <Button
+                        id="ScheduleUpdateButton"
+                        type="button"
+                        className="bg-transparent p-0 border-0 shadow-none"
+                    >
+                        <Icon icon="charm:info" color="#adb4c2" width="15" height="15" />
+                    </Button>
+                    <UncontrolledPopover
+                        placement="top"
+                        target="ScheduleUpdateButton"
+                        trigger="click"
+                    >
+                        <PopoverHeader>What is sprite? <Button className="bg-transparent p-0 border-0 text-black"><Icon icon="codicon:chrome-close" width="15" height="15" /></Button></PopoverHeader>
+                        <PopoverBody>
+                            <p>Sprites or red sprites are large-scale electric discharges that occur high above thunderstor..</p>
+                            <Button className="bg-transparent p-0 border-0 text-secondary">Show more</Button>
+                        </PopoverBody>
+                    </UncontrolledPopover>
+                </div>
+            </>
+        )
+    }
+
+    const ObservationCategory = () => {
+        return(
+            Category?.map((imagItem, index)=>{
+                return (
+                    <Col sm={6} key={index}>
+                        <FormGroup>
+                            <div className="checkbox-wrapper">
+                                <div className="inputGroup">
+                                    <input id={imagItem.id} name={imagItem.name} type="checkbox" />
+                                    <label htmlFor={imagItem.id}>
+                                        <img src={imagItem.image} alt={imagItem.name} />
+                                        {imagItem.name}
+                                        <ImagePopover />
+                                    </label>
+                                </div>
+                            </div>
+                        </FormGroup>
+                    </Col>
+                )
+            })
+        )
+    }
+
     return (
         <Row>
             <Col sm={12}>
@@ -62,7 +113,7 @@ const ObservationAfterImageUpload = () => {
                             <NavLink
                                 className={activeTab === MultiImageTabs.MultipleImages ? 'active' : ''}
                                 onClick={() => {
-                                    toggleTab(MultiImageTabs.MultipleImages);
+                                    toggleImageTab(MultiImageTabs.MultipleImages);
                                 }}
                             >
                                 <Icon icon="fluent:square-multiple-20-regular" color="black" width={24} className="me-3" />
@@ -73,7 +124,7 @@ const ObservationAfterImageUpload = () => {
                             <NavLink
                                 className={activeTab === MultiImageTabs.ImageSequence ? 'active' : ''}
                                 onClick={() => {
-                                    toggleTab(MultiImageTabs.ImageSequence);
+                                    toggleImageTab(MultiImageTabs.ImageSequence);
                                 }}
                             >
                                 <Icon icon="codicon:list-filter" color="black" width={24} className="me-3" />
@@ -109,30 +160,22 @@ const ObservationAfterImageUpload = () => {
                                     </p>
                                 </FormGroup>
                             </Col>
-                            {Category?.map((imagItem, index)=>{
-                                return (
-                                    <Col sm={6} key={index}>
-                                        <FormGroup>
-                                            <div className="checkbox-wrapper">
-                                                <div className="inputGroup">
-                                                    <input id={imagItem.id} name={imagItem.name} type="checkbox" />
-                                                    <label htmlFor={imagItem.id}>
-                                                        <img src={imagItem.image} alt={imagItem.name} />
-                                                        {imagItem.name}
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </FormGroup>
-                                    </Col>
-                                )
-                            })}
+                            <ObservationCategory />
                             <Col sm={12}>
-                                <FormGroup check>
+                                <FormGroup check className="mb-3">
                                     <Label check>
-                                        <Input required type="checkbox" name="agreeTerms" />
+                                        <Input required type="checkbox" name="other" onChange={(e)=> setIsOther(e.target.checked)} />
                                         Other
                                     </Label>
                                 </FormGroup>
+                                {isOther && 
+                                    <FormGroup>
+                                        <Input type="text"  name="text" placeholder="Please enter other details" className="other-textfield"/>
+                                    </FormGroup>
+                                }
+                            </Col>
+                            <Col sm={12}>
+                                <Button type="submit" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
                             </Col>
                         </Row>
                     </TabPane>
@@ -142,7 +185,7 @@ const ObservationAfterImageUpload = () => {
                                 <ImagePreview />
                             </Col>
                             <Col sm={12}>
-                                <Button type="submit">Continue</Button>
+                                <Button type="submit" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
                             </Col>
                         </Row>
                     </TabPane>

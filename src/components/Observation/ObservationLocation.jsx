@@ -36,14 +36,14 @@ const ObservationLocation = (props) => {
     const [angleDegree, setAngleDegree] = useState(false);
 
     const directionValue = [
-        {name: 'N', angle: 360},
-        {name: 'NE', angle: 45},
-        {name: 'E', angle: 90},
-        {name: 'SE', angle: 135},
-        {name: 'S', angle: 180},
-        {name: 'SW', angle: 235},
-        {name: 'W', angle: 270},
-        {name: 'NW', angle: 315}
+        {name: 'N', angle: 360, default : true},
+        {name: 'NE', angle: 45, default : false},
+        {name: 'E', angle: 90, default : false},
+        {name: 'SE', angle: 135, default : false},
+        {name: 'S', angle: 180, default : false},
+        {name: 'SW', angle: 235, default : false},
+        {name: 'W', angle: 270, default : false},
+        {name: 'NW', angle: 315, default : false},
     ]
 
     const handleValue = (value) => {
@@ -84,7 +84,7 @@ const ObservationLocation = (props) => {
         
         const directionId = document.getElementById(`directionValue${index}`);
         let getAngleValue = directionId.getAttribute("data-angle");
-
+        console.log("isActiveDire, index", isActiveDire, index);
         if(isActiveDire === index){
             directionWrapper.classList.remove("active-arrow");
         }else{
@@ -96,45 +96,45 @@ const ObservationLocation = (props) => {
     return (
         <>
             <Col md="12">
-            <FormGroup row>
-                <Row>
-                    <Col lg={7} className="order-2 order-lg-1">
-                        <h6>Where did you make the observation?</h6>
-                    </Col>
-                    <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
-                        <FormGroup check>
-                            <Label check className="mb-0">
-                                <Input
-                                    required
-                                    type="checkbox"
-                                    name="Same as the first image"
-                                />
-                                Same as the first image
-                            </Label>
-                        </FormGroup>
-                    </Col>
-                </Row>
-                   {/* <MapWrapper
-                   google={props.google}
-                   center={{lat:address1?.markerPosition?.lat, lng:address1?.markerPosition?.lng}}
-                   height='300px'
-                   zoom={15}
-                    handleState={handleValue}
-                    isLoaded={isLoaded}
-                   />  */}
-                    {/* <Input
-                        type="search"
-                        name="name"
-                        placeholder="Edmon, OK, USA"
-                    /> */}
-                    </FormGroup>
+                <FormGroup row>
+                    <Row>
+                        <Col lg={7} className="order-2 order-lg-1">
+                            <h6>Where did you make the observation?</h6>
+                        </Col>
+                        <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
+                            <FormGroup check>
+                                <Label check className="mb-0">
+                                    <Input
+                                        required
+                                        type="checkbox"
+                                        name="Same as the first image"
+                                    />
+                                    Same as the first image
+                                </Label>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    {/* <MapWrapper
+                    google={props.google}
+                    center={{lat:address1?.markerPosition?.lat, lng:address1?.markerPosition?.lng}}
+                    height='300px'
+                    zoom={15}
+                        handleState={handleValue}
+                        isLoaded={isLoaded}
+                    />  */}
+                        {/* <Input
+                            type="search"
+                            name="name"
+                            placeholder="Edmon, OK, USA"
+                        /> */}
+                </FormGroup>
             </Col>
             <Col md={12} className="mb-5">
                 <h6>If you know the precise coordinates of your observation location, please enter below</h6>
                 <Row>
                     <Col md={6} lg={4}>
                         <FormGroup row>
-                            <Label htmlFor="LAT" sm={2} >LAT</Label>
+                            <Label className="form-label" htmlFor="LAT" sm={2} >LAT</Label>
                             <Col sm={10}>
                                 <Input
                                     value={address1?.markerPosition?.lat}
@@ -149,7 +149,7 @@ const ObservationLocation = (props) => {
                     </Col>
                     <Col md={6} lg={4}>
                         <FormGroup row>
-                            <Label htmlFor="LAT" sm={2} >LON</Label>
+                            <Label className="form-label" htmlFor="LAT" sm={2} >LON</Label>
                             <Col sm={10}>
                                 <Input
                                     value={address1?.markerPosition?.lng}
@@ -272,8 +272,8 @@ const ObservationLocation = (props) => {
                                 directionValue?.map((direction, index)=>{
                                     return(
                                         <Button 
-                                            className={`${direction.name}-direction ${
-                                                isActiveDire === index ? "active_direction" : null}`
+                                            className={ `${direction.name}-direction ${ (direction.default === true) && isActiveDire === null ? 'active_direction' : '' } 
+                                                ${ isActiveDire === index ? "active_direction" : '' }`
                                             }
                                             onClick={()=> selectDirection(index)}
                                             key={index}
