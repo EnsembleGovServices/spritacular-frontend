@@ -13,7 +13,7 @@ const ObservationUploadImg = (props) =>{
 
     const handleUploadImage = (e) => {
         const fileList = e.target.files;
-        Array.from(fileList).forEach((item) => {
+        Array.from(fileList).forEach((item,id) => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
@@ -37,9 +37,10 @@ const ObservationUploadImg = (props) =>{
                     setImages(prevState => [
                         ...prevState, {
                             'id' : random,
-                            'name' : item?.name,
+                            // 'name' : item?.name,
+                            'image_id':id,
                             'image' : baseImage,
-                            'original': item
+                            // 'original': item
                         }
                     ])
                 } else {

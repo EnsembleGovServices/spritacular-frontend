@@ -4,11 +4,11 @@ import { lazy, useState } from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
-
+import useObservations from "../../hooks/useObservations";
 import  MapWrapper from '../MapWrapper';
 
 const ObservationLocation = (props) => {
-    const { toggleTab } = props;
+    const { toggleTab,handleImageInput } = props;
     const [address1,setAddress] = useState({
         address: '',
         city: '',
@@ -50,28 +50,36 @@ const ObservationLocation = (props) => {
         setAddress(value);
     }
     const handleChangeLat = (e) => {
+        handleImageInput(e);
         let name = e.target.name,
-             value = e.target.value;
+             value = Number(e.target.value);
             
              let addressState = {...address1};
-             addressState.mapPosition.lat = Number(value);
-             addressState.markerPosition.lat = Number(value);
+             addressState.mapPosition.lat = value;
+             addressState.markerPosition.lat = value;
              setAddress(addressState);
+            //  let imageArray = {...observationImages};
+            //  imageArray.images[0].lat = value;
+            //  setObservationImages(imageArray);
              setTimeout(()=> {
                  setIsLoaded(true);
              },3000);
     }
     const handleChangeLng = (e) => {
+        handleImageInput(e);
         let name = e.target.name,
-             value = e.target.value;
+             value = Number(e.target.value);
              let addressState = {...address1};
-             addressState.mapPosition.lng = Number(value);
-             addressState.markerPosition.lng = Number(value);
+             addressState.mapPosition.lng = value;
+             addressState.markerPosition.lng = value;
+            //  let imageArray = {...observationImages};
+            //  imageArray.images[0].lng = value;
+            //  setObservationImages(imageArray);
         setAddress(addressState);
         setIsLoaded(true);
     }
-    // console.log(lat);
     const selectDirection = (index) => {
+       
         const directionWrapper = document.querySelector('.compass-wrapper');
         
         const directionId = document.getElementById(`directionValue${index}`);
@@ -131,10 +139,10 @@ const ObservationLocation = (props) => {
                                 <Input
                                     value={address1?.markerPosition?.lat}
                                     id="LAT"
-                                    type="textbox"
-                                    name="lat"
+                                    type="number"
+                                    name="latitude"
                                     placeholder="Edmon, OK, USA"
-                                    onChange={handleChangeLat}
+                                    onChange={(e)=> {handleImageInput(e); handleChangeLat(e);}}
                                 />
                             </Col>
                         </FormGroup>
@@ -146,10 +154,10 @@ const ObservationLocation = (props) => {
                                 <Input
                                     value={address1?.markerPosition?.lng}
                                     id="LON"
-                                    type="search"
-                                    name="lng"
+                                    type="number"
+                                    name="longitude"
                                     placeholder="Edmon, OK, USA"
-                                    onChange={handleChangeLng}
+                                    onChange={(e)=> {handleImageInput(e); handleChangeLng(e);}}
                                 />
                             </Col>
                         </FormGroup>
@@ -187,9 +195,10 @@ const ObservationLocation = (props) => {
                             <Input
                                 id="Date"
                                 type="date"
-                                name="date"
+                                name="obs_date"
                                 className="w-100"
                                 placeholder="12/20/2021" 
+                                onChange={(e)=>handleImageInput(e)}
                             />
                         </FormGroup>
                     </Col>
@@ -199,16 +208,17 @@ const ObservationLocation = (props) => {
                             <Input
                                 id="Time"
                                 type="time"
-                                name="time"
+                                name="obs_time"
                                 className="w-100"
                                 placeholder="10:21:00 am"
+                                onChange={(e)=>handleImageInput(e)}
                             />
                         </FormGroup>
                     </Col>
                     <Col md={6} lg={4}>
                         <FormGroup>
                             <Label htmlFor="TIME ZONE">TIME ZONE</Label>
-                            <Input type="select" name="timezone" className="w-100">
+                            <Input type="select" name="timezone" className="w-100" onChange={(e)=>handleImageInput(e)}>
                                 <option disabled defaultValue>
                                 CT
                                 </option>
@@ -231,6 +241,7 @@ const ObservationLocation = (props) => {
                         name="uncertainity_time"
                         placeholder="e.g. +/- 3 sec  or  +/- 1 min" 
                         className="w-100"
+                        onChange={(e)=>handleImageInput(e)}
                     />
                 </FormGroup>
             </Col>
@@ -241,7 +252,9 @@ const ObservationLocation = (props) => {
                         <input
                             id="checkbox2"
                             type="checkbox"
+                            name="is_precise_az"
                             className="hidden"
+                            onChange={(e)=>handleImageInput(e)}
                             onClick={()=> setAngleDegree(!angleDegree)}
                         />
                         <label
@@ -285,9 +298,10 @@ const ObservationLocation = (props) => {
                         <Input
                             id="Date"
                             type="text"
-                            name="Date"
+                            name="azimuth"
                             placeholder="120°" 
                             className="degree-input"
+                            onChange={(e)=>handleImageInput(e)}
                         />
                     </FormGroup>
                 }

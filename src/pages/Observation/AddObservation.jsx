@@ -18,7 +18,7 @@ import axios from "../../api/axios";
 const AddObservation = () => {
     const { auth } = useAuth();
 
-    const {observationSteps, setObservationSteps, observationImages} = useObservations();
+    const {observationSteps, setObservationSteps, observationImages ,setObservationImages} = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
@@ -39,9 +39,18 @@ const AddObservation = () => {
             [name]:value,
         })
     }
-    const handleSubmit = () => {
-        console.log("hihi");
+    const handleImageInput = (e) => {
+        let name = e.target.name,
+            value = e.target.value;
+            let observationArray = {...observationImages};
+            observationArray.images[0][name] = (value === 'on') ? true : value;
+            setObservationImages(observationArray);
+        
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
         console.log(cameraDetails);
+        console.log(observationImages);
     }
 
     const getCameraDetail = async (e) => {
@@ -149,7 +158,7 @@ const AddObservation = () => {
                                           {next ? <ObservationAfterImageUpload /> : <ObservationImages proceedNext={()=> handleContinue()}/>}
                                       </TabPane>
                                       <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
-                                          <ObservationLocation  toggleTab={toggleTab}/>
+                                          <ObservationLocation  toggleTab={toggleTab} handleImageInput={handleImageInput}/>
                                       </TabPane>
                                       <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                         <FormGroup className="d-flex align-items-center position-relative">

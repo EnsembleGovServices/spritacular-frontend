@@ -9,7 +9,7 @@ const Observations = () => {
         active: 1
     });
 
-    const [observationImages, setObservationImages] = useState([]);
+    const [observationImages, setObservationImages] = useState();
 
     return(
         <ObservationContext.Provider value={useMemo(()=> ({observationSteps, setObservationSteps, observationImages, setObservationImages}), [observationSteps, setObservationSteps, observationImages, setObservationImages])}>
