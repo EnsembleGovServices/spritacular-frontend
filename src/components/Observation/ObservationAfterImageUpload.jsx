@@ -1,11 +1,12 @@
 import { MultiImageTabs, Tabs } from "../../helpers/observation";
 import { Icon } from "@iconify/react/dist/iconify";
-import {Button, Col, FormGroup, Input, Label, Nav, NavItem, NavLink, Popover, Row, TabContent, TabPane, UncontrolledPopover, PopoverHeader, PopoverBody} from "reactstrap";
+import {Button, Col, FormGroup, Input, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane,Popover, UncontrolledPopover, PopoverHeader, PopoverBody, Collapse} from "reactstrap";
 import ObservationUploadImg from "./ObservationUploadImg";
 import { useState } from "react";
 import useObservations from "../../hooks/useObservations";
 import LazyLoad from "../Upload/LazyLoad";
 import { Category } from "../../helpers/observation";
+import ImageCarousel from "../Shared/ImageCarousel";
 
 const ObservationAfterImageUpload = (props) => {
     const { toggleTab } = props;
@@ -13,6 +14,7 @@ const ObservationAfterImageUpload = (props) => {
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
     const [isOther, setIsOther] = useState(false);
+    const [popoverOpen, setPopoverOpen] = useState(null);
 
     // Toggle Tabs
     const toggleImageTab = (tab) => {
@@ -40,46 +42,76 @@ const ObservationAfterImageUpload = (props) => {
         );
     };
 
-    const ImagePopover = () => {
+    const PopoverContent = ({ contentUpdate, popoverId }) => {
+
+        const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
+        
+        return (
+          <>
+            <PopoverHeader>What is sprite? 
+                <Button className="bg-transparent p-0 border-0 text-black shadow-none" onClick={()=>setPopoverOpen(false)}><Icon icon="codicon:chrome-close" width="15" height="15" /></Button>
+            </PopoverHeader>
+            <PopoverBody>
+                <p style={{'--line-clamb': isPopoverContentOpen === true ? 'unset' : '2'}}>
+                    Sprites or red sprites are large-scale electric discharges that occur high above thunderstorm clouds, they appear as luminous reddish-orange flashes. 
+                </p>
+                <Collapse
+                isOpen={isPopoverContentOpen}
+                onEntered={contentUpdate}
+                onExited={contentUpdate}
+                >
+                {/* <ImageCarousel className="popover-carousel" /> */}
+              </Collapse>
+                <Button className="bg-transparent p-0 border-0 text-secondary shadow-none d-block" onClick={()=>setIsPopoverContentOpen(!isPopoverContentOpen)}>
+                    {isPopoverContentOpen === true ? 'Show less' : 'Show more'}
+                </Button>
+            </PopoverBody>
+          </>
+        );
+    };
+    
+    const ImagePopover = (props) => {
+        const {index} = props;
         return(
-            <>
-                <div className="ms-2">
-                    <Button
-                        id="ScheduleUpdateButton"
-                        type="button"
-                        className="bg-transparent p-0 border-0 shadow-none"
-                    >
-                        <Icon icon="charm:info" color="#adb4c2" width="15" height="15" />
-                    </Button>
-                    <UncontrolledPopover
-                        placement="top"
-                        target="ScheduleUpdateButton"
-                        trigger="click"
-                    >
-                        <PopoverHeader>What is sprite? <Button className="bg-transparent p-0 border-0 text-black"><Icon icon="codicon:chrome-close" width="15" height="15" /></Button></PopoverHeader>
-                        <PopoverBody>
-                            <p>Sprites or red sprites are large-scale electric discharges that occur high above thunderstor..</p>
-                            <Button className="bg-transparent p-0 border-0 text-secondary">Show more</Button>
-                        </PopoverBody>
-                    </UncontrolledPopover>
-                </div>
-            </>
+            <div className="ms-2">
+                <Button id={`popover${index}`} type="button" onClick={()=>toggle(index)} className="bg-transparent p-0 border-0 shadow-none">
+                    <Icon icon="charm:info" color="#adb4c2" width="15" height="15" />
+                </Button>
+                <UncontrolledPopover
+                    trigger="click"
+                    target={`popover${index}`}
+                    placement="top"
+                    toggle={()=>toggle(index)}
+                    isOpen={popoverOpen === index ? true : false}
+                >
+                    {({ contentUpdate, popoverId }) => (
+                        <PopoverContent contentUpdate={contentUpdate} popoverId={`popover${index}`} />
+                    )}
+                </UncontrolledPopover>
+            </div>
         )
     }
-
+    const toggle = (index) =>{
+        if(popoverOpen === index){
+            console.log("if popover", popoverOpen, index);
+        }else{
+            setPopoverOpen(index);
+            console.log("else popover", popoverOpen);
+        }
+    }
     const ObservationCategory = () => {
         return(
-            Category?.map((imagItem, index)=>{
+            Category?.map((imageItem, index)=>{
                 return (
                     <Col sm={6} key={index}>
                         <FormGroup>
                             <div className="checkbox-wrapper">
                                 <div className="inputGroup">
-                                    <input id={imagItem.id} name={imagItem.name} type="checkbox" />
-                                    <label htmlFor={imagItem.id}>
-                                        <img src={imagItem.image} alt={imagItem.name} />
-                                        {imagItem.name}
-                                        <ImagePopover />
+                                    <input id={imageItem.id} name={imageItem.name} type="checkbox" />
+                                    <label htmlFor={imageItem.id}>
+                                        <img src={imageItem.image} alt={imageItem.name} />
+                                        {imageItem.name}
+                                        <ImagePopover index={imageItem.id} />
                                     </label>
                                 </div>
                             </div>
@@ -89,9 +121,10 @@ const ObservationAfterImageUpload = (props) => {
             })
         )
     }
-
+    
     return (
         <Row>
+            
             <Col sm={12}>
                 <FormGroup className="d-flex align-items-center position-relative">
                     <div className="custom-switch">
@@ -161,6 +194,16 @@ const ObservationAfterImageUpload = (props) => {
                                 </FormGroup>
                             </Col>
                             <ObservationCategory />
+                            {/* <div className="pt-5 text-center">
+                                <Button id="Popover2" onClick={()=>setPopoverOpen(!popoverOpen)}>
+                                    Launch Popover
+                                </Button>
+                                <Popover placement="bottom" isOpen={popoverOpen} target="Popover2" toggle={()=>setPopoverOpen(!popoverOpen)}>
+                                <PopoverHeader>Popover Title</PopoverHeader>
+                                <Button onClick={()=>setPopoverOpen(false)} >Close</Button>
+                                <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
+                                </Popover>
+                            </div> */}
                             <Col sm={12}>
                                 <FormGroup check className="mb-3">
                                     <Label check>
@@ -175,7 +218,7 @@ const ObservationAfterImageUpload = (props) => {
                                 }
                             </Col>
                             <Col sm={12}>
-                                <Button type="submit" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
+                                <Button type="submit" className="mt-3" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
                             </Col>
                         </Row>
                     </TabPane>
