@@ -26,7 +26,7 @@ import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsF
 const AddObservation = () => {
     const { auth } = useAuth();
 
-    const {observationSteps, setObservationSteps, observationImages ,setObservationImages} = useObservations();
+    const {observationSteps, setObservationSteps, observationImages ,setObservationImages,observationData, setObservationData,observationCategory} = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
@@ -48,12 +48,18 @@ const AddObservation = () => {
         })
     }
     const handleImageInput = (e) => {
+
         let name = e.target.name,
             value = e.target.value;
-            console.log(observationImages?.selected);
+            console.log(value,name);
             let observationArray = {...observationImages};
-            observationArray.images[observationImages?.imageId][name] = (value === 'on') ? true : value;
-            observationArray.images[1][name] = observationArray.images[observationImages?.imageId][name];
+            
+            if(name == 'is_other'){
+                observationArray.data[observationImages?.selected_image_index].category_map[name] = (value === 'on') ? true : value;
+                console.log(observationArray.data[observationImages?.selected_image_index].category_map[name]);
+            }else{
+                observationArray.data[observationImages?.selected_image_index][name] = (value === 'on') ? true : value;
+            }
             setObservationImages(observationArray);
         
     }
@@ -61,12 +67,18 @@ const AddObservation = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // console.log(e.target.name);
-        
-        console.log(cameraDetails);
-        console.log(observationImages);
-    }
+        let map_data = {...observationImages?.data};
+        let ObservationData = {...observationData};
+        ObservationData.map_data = map_data;
+        ObservationData.camera = cameraDetails;
+        ObservationData.isDraft = 0;
+        // ObservationData.map_data[observationImages?.selected_image_index].category_map.category = observationCategory?.category;
 
+        setObservationData(ObservationData);
+        // console.log(observationImages);
+    }
+    
+    console.log(observationData);
 
     const getCameraDetail = async (e) => {
         
@@ -99,7 +111,6 @@ const AddObservation = () => {
             if (activeTab === Tabs.ObservationImages) {
                 return 1;
             } else if (activeTab === Tabs.DateTimeLocation) {
-                console.log(observationImages?.images)
                 return 2;
             } else  {
                 return 3;
@@ -110,6 +121,7 @@ const AddObservation = () => {
                 ...prev,
                 active: setActiveTabForProgressBar(),
                 selected_image_id: observationImages?.selected_image_id,
+                selected_image_index:observationImages?.selected_image_index,
                 is_draft: draft
             }
         });
@@ -177,7 +189,7 @@ const AddObservation = () => {
                                       <TabPane tabId={Tabs.ObservationImages}>
                                           {next ? 
                                             // <Suspense fallback={''} >
-                                                <ObservationAfterImageUpload toggleTab={toggleTab} />
+                                                <ObservationAfterImageUpload toggleTab={toggleTab} handleImageInput = {handleImageInput} />
                                             // </Suspense>
                                         : 
                                             // <Suspense fallback={''} >

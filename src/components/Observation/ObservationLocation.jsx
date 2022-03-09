@@ -7,6 +7,7 @@ import "../../assets/scss/component/observationLocation.scss";
 import useObservations from "../../hooks/useObservations";
 import  MapWrapper from '../MapWrapper';
 
+
 const ObservationLocation = (props) => {
     const { toggleTab,handleImageInput } = props;
     const [address1,setAddress] = useState({
@@ -26,6 +27,7 @@ const ObservationLocation = (props) => {
     const [lat,setLat] = useState(18.5204);
     const [lng,setLng] = useState(73.8567);
     const [isLoaded,setIsLoaded] = useState(false);
+    const {observationImages} = useObservations();
     // const [updateMap,setUpdateMap] = useState({
     //     lat:18.5204,
     //     lng:73.8567
@@ -46,6 +48,7 @@ const ObservationLocation = (props) => {
         {name: 'NW', angle: 315, default : false},
     ]
 
+    // console.log(observationImages?.selected_image_index);
     const handleValue = (value) => {
         setAddress(value);
     }
@@ -93,6 +96,7 @@ const ObservationLocation = (props) => {
             setDirectionAngle(getAngleValue);
         }
     }
+    // console.log(observationImages?.data,'hih');
     return (
         <>
             <Col md="12">
@@ -137,7 +141,7 @@ const ObservationLocation = (props) => {
                             <Label className="form-label" htmlFor="LAT" sm={2} >LAT</Label>
                             <Col sm={10}>
                                 <Input
-                                    value={address1?.markerPosition?.lat}
+                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude:''}
                                     id="LAT"
                                     type="number"
                                     name="latitude"
@@ -152,7 +156,8 @@ const ObservationLocation = (props) => {
                             <Label className="form-label" htmlFor="LAT" sm={2} >LON</Label>
                             <Col sm={10}>
                                 <Input
-                                    value={address1?.markerPosition?.lng}
+                                    // value={address1?.markerPosition?.lng}
+                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude:''}
                                     id="LON"
                                     type="number"
                                     name="longitude"
@@ -196,6 +201,7 @@ const ObservationLocation = (props) => {
                                 id="Date"
                                 type="date"
                                 name="obs_date"
+                                value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.obs_date: ''}
                                 className="w-100"
                                 placeholder="12/20/2021" 
                                 onChange={(e)=>handleImageInput(e)}
@@ -209,6 +215,7 @@ const ObservationLocation = (props) => {
                                 id="Time"
                                 type="time"
                                 name="obs_time"
+                                value={(observationImages?.data) ?observationImages?.data[observationImages?.selected_image_index]?.obs_time:''}
                                 className="w-100"
                                 placeholder="10:21:00 am"
                                 onChange={(e)=>handleImageInput(e)}
@@ -218,13 +225,15 @@ const ObservationLocation = (props) => {
                     <Col md={6} lg={4}>
                         <FormGroup>
                             <Label htmlFor="TIME ZONE">TIME ZONE</Label>
-                            <Input type="select" name="timezone" className="w-100" onChange={(e)=>handleImageInput(e)}>
+                            <Input type="select" name="timezone" className="w-100" 
+                            value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
+                             onChange={(e)=>handleImageInput(e)}>
                                 <option disabled defaultValue>
                                 CT
                                 </option>
                                 <option>CT</option>
-                                <option>CT</option>
-                                <option>CT</option>
+                                <option>ET</option>
+                                <option>CTS</option>
                                 <option>CT</option>
                             </Input>
                         </FormGroup>
@@ -239,6 +248,7 @@ const ObservationLocation = (props) => {
                         id="Date"
                         type="text"
                         name="uncertainity_time"
+                        value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.uncertainity_time:''}
                         placeholder="e.g. +/- 3 sec  or  +/- 1 min" 
                         className="w-100"
                         onChange={(e)=>handleImageInput(e)}
@@ -253,6 +263,7 @@ const ObservationLocation = (props) => {
                             id="checkbox2"
                             type="checkbox"
                             name="is_precise_az"
+                            value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.is_precise_az:''}
                             className="hidden"
                             onChange={(e)=>handleImageInput(e)}
                             onClick={()=> setAngleDegree(!angleDegree)}
@@ -299,6 +310,7 @@ const ObservationLocation = (props) => {
                             id="Date"
                             type="text"
                             name="azimuth"
+                            value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.azimuth:''}
                             placeholder="120°" 
                             className="degree-input"
                             onChange={(e)=>handleImageInput(e)}

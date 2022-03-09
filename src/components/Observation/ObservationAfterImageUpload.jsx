@@ -21,8 +21,8 @@ import LazyLoad from "../Upload/LazyLoad";
 import ObservationCategory from "./ObservationCategory";
 
 const ObservationAfterImageUpload = (props) => {
-    const { toggleTab } = props;
-    const {observationImages, observationSteps, setObservationCategory, setObservationType} = useObservations();
+    const { toggleTab,handleImageInput } = props;
+    const {observationImages,setObservationImages, observationSteps, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
     const [isOther, setIsOther] = useState(false);
@@ -34,6 +34,11 @@ const ObservationAfterImageUpload = (props) => {
         }
         console.log(tab)
     };
+
+    // const handleOtherToggle = (e) => {
+    //     let map_data = {...observationImages?.data};
+    //     setObservationImages
+    // }
 
     const ImagePreview = () => {
         return (
@@ -190,7 +195,7 @@ const ObservationAfterImageUpload = (props) => {
                             <Col sm={12}>
                                 <FormGroup check className="mb-3">
                                     <Label check>
-                                        <Input required type="checkbox" name="is_other" onChange={(e) => setIsOther(e.target.checked)} />
+                                        <Input required type="checkbox" name="is_other" checked={observationImages?.data[observationImages?.selected_image_index]?.category_map?.is_other} onChange={(e) => handleImageInput(e)} />
                                         Other
                                     </Label>
                                 </FormGroup>

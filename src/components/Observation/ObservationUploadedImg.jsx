@@ -14,11 +14,12 @@ const ObservationUploadedImg = () => {
         setObservationImages(prev => {
             return {
                 ...prev,
-                selected_image_id: tab
+                selected_image_id: tab,
+                selected_image_index:index
             }
         });
     };
-    console.log(observationImages);
+    // console.log(observationImages);
     useLayoutEffect(()=> {
         setPreview(observationImages?.data);
         setActiveTab(activeTab);
@@ -29,7 +30,7 @@ const ObservationUploadedImg = () => {
         <>
             {preview?.map((item, index) => {
                 return(
-                    <div key={index} className={`mb-2 selected-image ${activeTab === item?.id ? 'active-tab' : ''}`} onClick={()=> toggleTab(item?.id)}>
+                    <div key={index} className={`mb-2 selected-image ${activeTab === item?.id ? 'active-tab' : ''}`} onClick={()=> toggleTab(item?.id,index)}>
                         <LazyLoad src={item?.image} alt={item?.name} />
                     </div>
                 )

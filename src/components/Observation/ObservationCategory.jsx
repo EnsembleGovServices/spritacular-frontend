@@ -2,9 +2,10 @@ import { CategoryList } from "../../helpers/observation";
 import {Col, FormGroup} from "reactstrap";
 import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
+import { array } from "prop-types";
 
 const ObservationCategory = () => {
-    const { observationImages, setObservationCategory } = useObservations();
+    const { observationImages,setObservationImages, setObservationCategory,observationData } = useObservations();
     const [Category] = useState(CategoryList);
     const [isChecked, setIsChecked] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('' || []);
@@ -17,10 +18,14 @@ const ObservationCategory = () => {
         {
             const filterValue = selectedCategory.filter((item) => item !== value)
             setSelectedCategory(filterValue);
-        }else{
+        }else{  
             setSelectedCategory([...selectedCategory, value]);
         }
+        let ObservationData = {...observationImages};
+        ObservationData.data[observationImages?.selected_image_index].category_map.category =  selectedCategory;        
+        setObservationImages(ObservationData);
     }
+    
     
     useEffect(()=> {
         setObservationCategory((prev) => {
@@ -31,6 +36,19 @@ const ObservationCategory = () => {
         })
     }, [selectedCategory, setObservationCategory])
 
+
+    useEffect(()=> {
+        let checked = {};
+        let selectedCategory = observationImages?.data[observationImages?.selected_image_index]?.category_map?.category;
+        
+        if(selectedCategory && selectedCategory.length > 0){
+            selectedCategory.map((id)=> {
+                checked[id] = true;
+            });
+        }
+        console.log(checked,'hihihih');
+        setIsChecked(checked);
+    }, [selectedCategory])
 
     return(
         observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {

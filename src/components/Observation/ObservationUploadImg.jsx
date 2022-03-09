@@ -37,9 +37,21 @@ const ObservationUploadImg = (props) =>{
                     setImages(prevState => [
                         ...prevState, {
                             'id' : random,
-                            // 'name' : item?.name,
                             'image' : baseImage,
-                            'item': item
+                            'item': item,
+                            'latitude': '',
+                            'longitude': '',
+                            'obs_date': null,
+                            'obs_time': null,
+                            'timezone': '',
+                            'azimuth': '',
+                            'uncertainity_time':'',
+                            'is_precise_az':false,
+                            'category_map': {
+                                'category': [],
+                                'is_other': false,
+                                'other_value': ''
+                            }
                         }
                     ])
                 } else {
@@ -64,6 +76,7 @@ const ObservationUploadImg = (props) =>{
                 image: images?.[0]?.item
             },
             selected_image_id: images?.[0]?.id,
+            selected_image_index:0
         });
     }, [images, setObservationImages])  
 
