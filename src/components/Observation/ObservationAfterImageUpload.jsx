@@ -1,16 +1,30 @@
 import { MultiImageTabs, Tabs } from "../../helpers/observation";
 import { Icon } from "@iconify/react/dist/iconify";
-import {Button, Col, FormGroup, Input, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane,Popover, UncontrolledPopover, PopoverHeader, PopoverBody, Collapse} from "reactstrap";
+import {
+    Button,
+    Col,
+    FormGroup,
+    Input,
+    Label,
+    Nav,
+    NavItem,
+    NavLink, PopoverBody, PopoverHeader,
+    Row,
+    TabContent,
+    TabPane,
+    UncontrolledPopover
+} from "reactstrap";
 import ObservationUploadImg from "./ObservationUploadImg";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import LazyLoad from "../Upload/LazyLoad";
 import { Category } from "../../helpers/observation";
 import ImageCarousel from "../Shared/ImageCarousel";
+import ObservationCategory from "./ObservationCategory";
 
 const ObservationAfterImageUpload = (props) => {
     const { toggleTab } = props;
-    const {observationImages} = useObservations();
+    const {observationImages, observationSteps, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
     const [isOther, setIsOther] = useState(false);
@@ -21,12 +35,13 @@ const ObservationAfterImageUpload = (props) => {
         if (activeTab !== tab) {
             setActiveImageTab(tab);
         }
+        console.log(tab)
     };
 
     const ImagePreview = () => {
         return (
             <>
-                {observationImages?.images?.filter(item => item?.id === observationImages?.selected).map((item, index) => {
+                {observationImages?.data?.filter(item => item?.id === observationSteps?.selected_image_id).map((item, index) => {
                     return(
                         <div key={index} className="upload-multiple-observation">
                             <div className="observation-image position-relative">
@@ -122,9 +137,40 @@ const ObservationAfterImageUpload = (props) => {
         )
     }
     
+
+    useEffect(() => {
+        setObservationCategory((prev) => {
+            return {
+                ...prev,
+                is_other: isOther
+            }
+        })
+        if (isMultiple && activeTab === MultiImageTabs.MultipleImages) {
+            setObservationType((prev) => {
+                return {
+                    ...prev,
+                    image_type: 2
+                }
+            })
+        } else if (!isMultiple)  {
+            setObservationType((prev) => {
+                return {
+                    ...prev,
+                    image_type: 1
+                }
+            })
+        } else {
+            setObservationType((prev) => {
+                return {
+                    ...prev,
+                    image_type: 3
+                }
+            })
+        }
+    }, [activeTab, isMultiple, isOther, setObservationCategory, setObservationType])
+
     return (
         <Row>
-            
             <Col sm={12}>
                 <FormGroup className="d-flex align-items-center position-relative">
                     <div className="custom-switch">
@@ -194,24 +240,14 @@ const ObservationAfterImageUpload = (props) => {
                                 </FormGroup>
                             </Col>
                             <ObservationCategory />
-                            {/* <div className="pt-5 text-center">
-                                <Button id="Popover2" onClick={()=>setPopoverOpen(!popoverOpen)}>
-                                    Launch Popover
-                                </Button>
-                                <Popover placement="bottom" isOpen={popoverOpen} target="Popover2" toggle={()=>setPopoverOpen(!popoverOpen)}>
-                                <PopoverHeader>Popover Title</PopoverHeader>
-                                <Button onClick={()=>setPopoverOpen(false)} >Close</Button>
-                                <PopoverBody>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</PopoverBody>
-                                </Popover>
-                            </div> */}
                             <Col sm={12}>
                                 <FormGroup check className="mb-3">
                                     <Label check>
-                                        <Input required type="checkbox" name="other" onChange={(e)=> setIsOther(e.target.checked)} />
+                                        <Input required type="checkbox" name="is_other" onChange={(e) => setIsOther(e.target.checked)} />
                                         Other
                                     </Label>
                                 </FormGroup>
-                                {isOther && 
+                                {isOther?.status &&
                                     <FormGroup>
                                         <Input type="text"  name="text" placeholder="Please enter other details" className="other-textfield"/>
                                     </FormGroup>

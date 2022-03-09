@@ -14,7 +14,7 @@ const ObservationStepImages = (props) =>{
             <Row>
                 <ObservationUploadImg imageFormat={true} maxLimit={true} multiple={isMultiple}/>
                 <div className="mt-5">
-                    <Button disabled={!observationImages?.images?.length} onClick={proceedNext}>Continue</Button>
+                    <Button disabled={!observationImages?.data?.length} onClick={proceedNext}>Continue</Button>
                 </div>
             </Row>
         </>

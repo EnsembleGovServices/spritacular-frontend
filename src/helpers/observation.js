@@ -10,7 +10,7 @@ export const MultiImageTabs = {
     ImageSequence: "ImageSequence"
 }
 
-export const Category = [
+export const CategoryList = [
     {
         id: 1,
         name: 'Sprite',

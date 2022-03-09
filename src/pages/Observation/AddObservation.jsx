@@ -1,6 +1,6 @@
 import {Button, Col, Container, Form, Nav, NavItem, NavLink, Row, TabContent, TabPane, FormGroup} from "reactstrap";
 import "../../assets/scss/component/uploadObservationImage.scss";
-import {useEffect, useState, Suspense, lazy} from "react";
+import {useEffect, useState} from "react";
 import {Tabs} from "../../helpers/observation";
 import useObservations from "../../hooks/useObservations";
 import {baseURL, cameraSettingFields} from "../../helpers/url";
@@ -31,7 +31,7 @@ const AddObservation = () => {
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
     const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
-
+    const [draft, setDraft] = useState(true);
 
     // Toggle Tabs
     const toggleTab = (tab) => {
@@ -55,15 +55,16 @@ const AddObservation = () => {
             setObservationImages(observationArray);
         
     }
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(cameraDetails);
-        console.log(observationImages);
     }
+
 
     const getCameraDetail = async (e) => {
         
-        if(e.target.checked == true){
+        if(e.target.checked === true){
             await axios.get(baseURL.api+'/users/camera_setting/', {
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,6 +93,7 @@ const AddObservation = () => {
             if (activeTab === Tabs.ObservationImages) {
                 return 1;
             } else if (activeTab === Tabs.DateTimeLocation) {
+                console.log(observationImages?.images)
                 return 2;
             } else  {
                 return 3;
@@ -100,10 +102,12 @@ const AddObservation = () => {
         setObservationSteps(prev => {
             return {
                 ...prev,
-                active: setActiveTabForProgressBar()
+                active: setActiveTabForProgressBar(),
+                selected_image_id: observationImages?.selected_image_id,
+                is_draft: draft
             }
         });
-    }, [activeTab, observationImages, setObservationSteps]);
+    }, [activeTab, draft, observationImages, setObservationSteps]);
 
     return(
         <>
@@ -113,7 +117,7 @@ const AddObservation = () => {
                       <div className="common-top-button-wrapper-inner">
                           <Button className="gray-outline-btn">Cancel</Button>
                           <div className="top-right-btn">
-                              <Button className="gray-outline-btn">Save as draft</Button>
+                              <Button className="gray-outline-btn" onClick={ ()=> setDraft(!draft)}>Save as draft</Button>
                               <Button type="submit" >Submit</Button>
                           </div>
                       </div>
@@ -123,7 +127,9 @@ const AddObservation = () => {
                   <Container>
                       <Row>
                           <Col md={3}>
+
                               <ObservationProgress step={observationSteps}/>
+
                               <div className="observation-form-left-tab">
                                   <Nav tabs className="flex-column">
                                       <NavItem>
@@ -159,7 +165,7 @@ const AddObservation = () => {
                                   </Nav>
                               </div>
                           </Col>
-                          <Col md={observationImages?.images?.length > 0 && next && !(activeTab === Tabs.EquipmentDetails) ? 7 : 9}>
+                          <Col md={observationImages?.data?.length > 0 && next && !(activeTab === Tabs.EquipmentDetails) ? 7 : 9}>
                               <div className="observation-form-right-tab">
                                   <TabContent activeTab={activeTab}>
                                       <TabPane tabId={Tabs.ObservationImages}>
@@ -209,7 +215,7 @@ const AddObservation = () => {
                                   </TabContent>
                               </div>
                           </Col>
-                          {observationImages?.images && next && !(activeTab === Tabs.EquipmentDetails) &&
+                          {observationImages?.data && next && !(activeTab === Tabs.EquipmentDetails) &&
                               <Col md={2}>
                                     {/* <Suspense fallback={''} > */}
                                       <ObservationUploadedImg />
