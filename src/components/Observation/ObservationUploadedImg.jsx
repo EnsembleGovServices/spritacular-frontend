@@ -5,7 +5,7 @@ import LazyLoad from "../Upload/LazyLoad";
 const ObservationUploadedImg = () => {
     const {observationImages, setObservationImages} = useObservations();
     const [preview, setPreview] = useState([]);
-    const [activeTab, setActiveTab] = useState(observationImages?.selected ?? null);
+    const [activeTab, setActiveTab] = useState(observationImages?.selected_image_id ?? null);
 
     // Toggle Tabs
     const toggleTab = (tab) => {
@@ -13,13 +13,13 @@ const ObservationUploadedImg = () => {
         setObservationImages(prev => {
             return {
                 ...prev,
-                selected: tab
+                selected_image_id: tab
             }
         });
     };
     
     useLayoutEffect(()=> {
-        setPreview(observationImages?.images);
+        setPreview(observationImages?.data);
         setActiveTab(activeTab);
     }, [activeTab, observationImages, preview])
 
@@ -28,7 +28,7 @@ const ObservationUploadedImg = () => {
         <>
             {preview?.map((item, index) => {
                 return(
-                    <div key={index} className={`mb-2 selected-image ${activeTab === item?.id ? 'active-tab' : null}`} onClick={()=> toggleTab(item?.id)}>
+                    <div key={index} className={`mb-2 selected-image ${activeTab === item?.id ? 'active-tab' : ''}`} onClick={()=> toggleTab(item?.id)}>
                         <LazyLoad src={item?.image} alt={item?.name} />
                     </div>
                 )

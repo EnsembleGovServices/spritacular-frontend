@@ -4,7 +4,7 @@ import {ObservationContext} from "../pages/Observation/Observations";
 const useObservations = () => {
     const { observationImages } = useContext(ObservationContext);
     // useDebugValue(observationSteps, observationSteps => observationSteps ? 'Steps set' : "Steps not set")
-    useDebugValue(observationImages, observationImages => observationImages?.images ? 'Images set' : "Images not set")
+    useDebugValue(observationImages, observationImages => observationImages?.data ? 'Images set' : "Images not set")
     return useContext(ObservationContext);
 }
 
