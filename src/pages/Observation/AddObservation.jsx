@@ -50,8 +50,10 @@ const AddObservation = () => {
     const handleImageInput = (e) => {
         let name = e.target.name,
             value = e.target.value;
+            console.log(observationImages?.selected);
             let observationArray = {...observationImages};
-            observationArray.images[0][name] = (value === 'on') ? true : value;
+            observationArray.images[observationImages?.imageId][name] = (value === 'on') ? true : value;
+            observationArray.images[1][name] = observationArray.images[observationImages?.imageId][name];
             setObservationImages(observationArray);
         
     }
@@ -59,6 +61,10 @@ const AddObservation = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // console.log(e.target.name);
+        
+        console.log(cameraDetails);
+        console.log(observationImages);
     }
 
 

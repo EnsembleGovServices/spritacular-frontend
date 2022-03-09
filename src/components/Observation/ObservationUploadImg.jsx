@@ -37,7 +37,7 @@ const ObservationUploadImg = (props) =>{
                     setImages(prevState => [
                         ...prevState, {
                             'id' : random,
-                            'name' : item?.name,
+                            // 'name' : item?.name,
                             'image' : baseImage,
                             'item': item
                         }
@@ -65,7 +65,7 @@ const ObservationUploadImg = (props) =>{
             },
             selected_image_id: images?.[0]?.id,
         });
-    }, [images, setObservationImages])
+    }, [images, setObservationImages])  
 
 
     return (

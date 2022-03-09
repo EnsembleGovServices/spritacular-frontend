@@ -8,8 +8,9 @@ const ObservationUploadedImg = () => {
     const [activeTab, setActiveTab] = useState(observationImages?.selected_image_id ?? null);
 
     // Toggle Tabs
-    const toggleTab = (tab) => {
+    const toggleTab = (tab,index=0) => {
         setActiveTab(tab);
+        
         setObservationImages(prev => {
             return {
                 ...prev,
@@ -17,7 +18,7 @@ const ObservationUploadedImg = () => {
             }
         });
     };
-    
+    console.log(observationImages);
     useLayoutEffect(()=> {
         setPreview(observationImages?.data);
         setActiveTab(activeTab);
