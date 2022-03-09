@@ -68,7 +68,7 @@
       border-radius: 50%;
       .upload-info{
         text-align: center;
-        z-index: 99;
+        // z-index: 99;
         svg{
           margin-bottom: 17px;
         }
@@ -264,6 +264,9 @@
   background: #fff;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 0;
   &.active-tab{
    &::before{
       content: "";
@@ -369,3 +372,15 @@
   }
 }
 // Custom checkbox design for choose image category END
+
+.popover-carousel{
+  &.carousel{
+    margin-bottom: 8px;
+    .carousel-item{
+      img{
+        max-height: 165px;
+        min-height: 165px;
+      }
+    }
+  }
+}

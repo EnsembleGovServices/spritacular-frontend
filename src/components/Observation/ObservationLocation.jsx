@@ -84,7 +84,7 @@ const ObservationLocation = (props) => {
         
         const directionId = document.getElementById(`directionValue${index}`);
         let getAngleValue = directionId.getAttribute("data-angle");
-        console.log("isActiveDire, index", isActiveDire, index);
+
         if(isActiveDire === index){
             directionWrapper.classList.remove("active-arrow");
         }else{

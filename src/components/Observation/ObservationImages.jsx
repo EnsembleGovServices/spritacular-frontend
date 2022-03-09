@@ -4,7 +4,7 @@ import { Row, Button } from "reactstrap";
 import ObservationUploadImg from "./ObservationUploadImg";
 import useObservations from "../../hooks/useObservations";
 
-const ObservationStepImages = (props) =>{
+const ObservationImages = (props) =>{
     const {proceedNext} = props;
     const [isMultiple] = useState(false);
     const { observationImages } = useObservations();
@@ -21,4 +21,4 @@ const ObservationStepImages = (props) =>{
     )
 }
 
-export default ObservationStepImages;
+export default ObservationImages;
