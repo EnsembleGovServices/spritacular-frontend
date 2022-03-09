@@ -72,7 +72,7 @@ const AddObservation = () => {
         ObservationData.map_data = map_data;
         ObservationData.camera = cameraDetails;
         ObservationData.isDraft = 0;
-        // ObservationData.map_data[observationImages?.selected_image_index].category_map.category = observationCategory?.category;
+        ObservationData.map_data[observationImages?.selected_image_index].category_map.category = observationCategory?.category;
 
         setObservationData(ObservationData);
         // console.log(observationImages);

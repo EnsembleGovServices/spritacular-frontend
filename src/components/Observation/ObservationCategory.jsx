@@ -97,18 +97,18 @@ const ObservationCategory = () => {
         }
     }
 
-    useEffect(()=> {
-        let checked = {};
-        let selectedCategory = observationImages?.data[observationImages?.selected_image_index]?.category_map?.category;
+    // useEffect(()=> {
+    //     let checked = {};
+    //     let selectedCategory = observationImages?.data[observationImages?.selected_image_index]?.category_map?.category;
         
-        if(selectedCategory && selectedCategory.length > 0){
-            selectedCategory.map((id)=> {
-                checked[id] = true;
-            });
-        }
-        console.log(checked,'hihihih');
-        setIsChecked(checked);
-    }, [selectedCategory])
+    //     if(selectedCategory && selectedCategory.length > 0){
+    //         selectedCategory.map((id)=> {
+    //             checked[id] = true;
+    //         });
+    //     }
+    //     console.log(checked,'hihihih');
+    //     setIsChecked(checked);
+    // }, [selectedCategory])
 
     return(
         observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
