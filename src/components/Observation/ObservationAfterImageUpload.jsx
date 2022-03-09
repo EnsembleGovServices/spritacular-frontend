@@ -8,17 +8,17 @@ import {
     Label,
     Nav,
     NavItem,
-    NavLink, PopoverBody, PopoverHeader,
+    NavLink, 
     Row,
     TabContent,
-    TabPane,
-    UncontrolledPopover
+    TabPane
 } from "reactstrap";
 import ObservationUploadImg from "./ObservationUploadImg";
 import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import LazyLoad from "../Upload/LazyLoad";
 import ObservationCategory from "./ObservationCategory";
+
 
 const ObservationAfterImageUpload = (props) => {
     const { toggleTab,handleImageInput } = props;
@@ -59,33 +59,7 @@ const ObservationAfterImageUpload = (props) => {
         );
     };
 
-    const ImagePopover = () => {
-        return(
-            <>
-                <div className="ms-2">
-                    <Button
-                        id="ScheduleUpdateButton"
-                        type="button"
-                        className="bg-transparent p-0 border-0 shadow-none"
-                    >
-                        <Icon icon="charm:info" color="#adb4c2" width="15" height="15" />
-                    </Button>
-                    <UncontrolledPopover
-                        placement="top"
-                        target="ScheduleUpdateButton"
-                        trigger="click"
-                    >
-                        <PopoverHeader>What is sprite? <Button className="bg-transparent p-0 border-0 text-black"><Icon icon="codicon:chrome-close" width="15" height="15" /></Button></PopoverHeader>
-                        <PopoverBody>
-                            <p>Sprites or red sprites are large-scale electric discharges that occur high above thunderstor..</p>
-                            <Button className="bg-transparent p-0 border-0 text-secondary">Show more</Button>
-                        </PopoverBody>
-                    </UncontrolledPopover>
-                </div>
-            </>
-        )
-    }
-
+    
     useEffect(() => {
         setObservationCategory((prev) => {
             return {
@@ -187,11 +161,7 @@ const ObservationAfterImageUpload = (props) => {
                                     </p>
                                 </FormGroup>
                             </Col>
-
-
                             <ObservationCategory />
-
-
                             <Col sm={12}>
                                 <FormGroup check className="mb-3">
                                     <Label check>
@@ -206,7 +176,7 @@ const ObservationAfterImageUpload = (props) => {
                                 }
                             </Col>
                             <Col sm={12}>
-                                <Button type="submit" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
+                                <Button type="submit" className="mt-3" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
                             </Col>
                         </Row>
                     </TabPane>

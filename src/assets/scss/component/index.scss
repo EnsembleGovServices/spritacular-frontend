@@ -166,3 +166,89 @@
     }
 }
 // Auto complete search box Css End 
+
+// Popover Design Start 
+.popover{
+    background: $white;
+    border: 1px solid #F4F4F4;
+    border-radius: 8px;
+    box-shadow: 0 15px 16px rgb(0 0 0 / 3%);
+    max-width: 338px;
+    &.bs-popover-auto[data-popper-placement^=top]{
+        .popover-arrow{
+            &::before{
+                border-top-color: #F4F4F4;
+            }
+        }
+    }
+    &.bs-popover-auto[data-popper-placement^=bottom]{
+        .popover-arrow{
+            &::before{
+                border-bottom-color: #F4F4F4;
+            }
+            &::after{
+                top: 2px;
+            }
+        }
+    }
+    .popover-header{
+        background: $white;
+        font-style: normal;
+        font-weight: 600;
+        @include lg-text;
+        color: $black;
+        @include vspace;
+        border: 0;
+        padding: 15px 20px 6px;
+        border-radius: 8px;
+    }
+    .popover-body{
+        padding: 6px 20px 20px;
+        p{
+            color: $gray3;
+            @include md-text;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: var(--line-clamb);
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .btn-secondary{
+            font-weight: 500;
+            @include md-text;
+        }
+    }
+}
+// Popover Design End
+
+// Image Carousel Design Start
+.carousel{
+    .carousel-inner{
+        border-radius: $border-radius;
+    }
+    .carousel-item{
+        img{
+            width: 100%;
+            height: 100%;
+            background: $white;
+            // border-radius: $border-radius;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+    .carousel-control-next-icon{
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M10.707 17.707L16.414 12l-5.707-5.707l-1.414 1.414L13.586 12l-4.293 4.293z"%2F%3E%3C%2Fsvg%3E');
+        width: 24px;
+        height: 24px;
+        background-color: $white;
+        border-radius: 50%;
+    }
+    .carousel-control-prev-icon{
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"%3E%3Cpath fill="currentColor" d="M13.293 6.293L7.586 12l5.707 5.707l1.414-1.414L10.414 12l4.293-4.293z"%2F%3E%3C%2Fsvg%3E');
+        width: 24px;
+        height: 24px;
+        background-color: $white;
+        border-radius: 50%;
+    }
+}
+// Image Carousel Design End
