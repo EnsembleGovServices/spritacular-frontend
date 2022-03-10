@@ -42,49 +42,20 @@ const AddObservation = () => {
     const handleInput = (e) => {
         let name = e.target.name,
             value = e.target.value;
-            setCameraDetails({
+        setCameraDetails({
             ...cameraDetails,
             [name]:value,
         })
     }
     const handleImageInput = (e,address = null) => {
         let observationArray = {...observationImages};
-        if(e == 'address'){
+        if(e === 'address'){
             observationArray.data[observationImages?.selected_image_index]['location'] = address;
         }else{
             let name = e.target.name,
                 value = e.target.value;
-                console.log(e.target.checked,name);
-                if(name === 'is_other'){
-                    observationArray.data[observationImages?.selected_image_index].category_map[name] = e.target.checked;
-                    if(observationData?.image_type === 3){
-                        if(observationArray.data[1]){
-                            observationArray.data[1].category_map[name] = e.target.checked;
-                        }
-                        if(observationArray.data[2]){
-                            observationArray.data[2].category_map[name] = e.target.checked;
-                        }
-                    }
-                }else{
-                    if(name === 'is_precise_az'){
-                        observationArray.data[observationImages?.selected_image_index][name] = e.target.checked;
-                    }
-                    else{
-                        observationArray.data[observationImages?.selected_image_index][name] = value;
-                    }
-                    if(observationData?.image_type === 3){
-                        if(observationArray.data[1]){
-                            observationArray.data[1][name] = (value === 'on') ? true : (value === '' ? false: value);
-                        }
-                        if(observationArray.data[2]){
-                            observationArray.data[2][name] = (value === 'on') ? true : value;
-                        }
-    const handleImageInput = (e) => {
-        let name = e.target.name,
-            value = e.target.value;
             console.log(e.target.checked,name);
-            let observationArray = {...observationImages};
-                observationArray.data[observationImages?.selected_image_index]['azimuth'] = ''
+
 
             if(name === 'is_other'){
                 observationArray.data[observationImages?.selected_image_index].category_map[name] = e.target.checked;
@@ -112,8 +83,9 @@ const AddObservation = () => {
                     }
                 }
             }
-            setObservationImages(observationArray);
-        
+        }
+        setObservationImages(observationArray);
+
     }
 
     const handlesetDraft = () => {
@@ -132,11 +104,11 @@ const AddObservation = () => {
         ObservationData.map_data[observationImages?.selected_image_index].category_map.category = observationCategory?.category;
         setObservationData(ObservationData);
     }
-    
+
     // console.log(observationData);
 
     const getCameraDetail = async (e) => {
-        
+
         if(e.target.checked === true){
             await axios.get(baseURL.api+'/users/camera_setting/', {
                 headers: {
@@ -156,7 +128,7 @@ const AddObservation = () => {
     }
 
     const handleContinue = () => {
-      setNext(!next);
+        setNext(!next);
     }
 
 
@@ -184,122 +156,110 @@ const AddObservation = () => {
 
     return(
         <>
-          <Form className="observation-form upload-observation-form-main" onSubmit={handleSubmit}>
-              <div className="common-top-button-wrapper">
-                  <Container>
-                      <div className="common-top-button-wrapper-inner">
-                          <Button className="gray-outline-btn">Cancel</Button>
-                          <div className="top-right-btn">
-                              <Button className="gray-outline-btn" onClick={handlesetDraft}>Save as draft</Button>
-                              <Button type="submit" >Submit</Button>
-                          </div>
-                      </div>
-                  </Container>
-              </div>
-              <section className="upload-observation-form-inner">
-                  <Container>
-                      <Row>
-                          <Col md={3}>
+            <Form className="observation-form upload-observation-form-main" onSubmit={handleSubmit}>
+                <div className="common-top-button-wrapper">
+                    <Container>
+                        <div className="common-top-button-wrapper-inner">
+                            <Button className="gray-outline-btn">Cancel</Button>
+                            <div className="top-right-btn">
+                                <Button className="gray-outline-btn" onClick={handlesetDraft}>Save as draft</Button>
+                                <Button type="submit" >Submit</Button>
+                            </div>
+                        </div>
+                    </Container>
+                </div>
+                <section className="upload-observation-form-inner">
+                    <Container>
+                        <Row>
+                            <Col md={3}>
 
-                              <ObservationProgress step={observationSteps}/>
+                                <ObservationProgress step={observationSteps}/>
 
-                              <div className="observation-form-left-tab">
-                                  <Nav tabs className="flex-column">
-                                      <NavItem>
-                                          <NavLink
-                                              className={activeTab === Tabs.ObservationImages ? 'active' : ''}
-                                              onClick={() => {
-                                                  toggleTab(Tabs.ObservationImages);
-                                              }}
-                                          >
-                                              Observation Images
-                                          </NavLink>
-                                      </NavItem>
-                                      <NavItem>
-                                          <NavLink
-                                              className={activeTab === Tabs.DateTimeLocation ? 'active' : ''}
-                                              onClick={() => {
-                                                  toggleTab(Tabs.DateTimeLocation);
-                                              }}
-                                          >
-                                              Date, Time & Location
-                                          </NavLink>
-                                      </NavItem>
-                                      <NavItem>
-                                          <NavLink
-                                              className={activeTab === Tabs.EquipmentDetails ? 'active' : ''}
-                                              onClick={() => {
-                                                  toggleTab(Tabs.EquipmentDetails);
-                                              }}
-                                          >
-                                              Equipment Details
-                                          </NavLink>
-                                      </NavItem>
-                                  </Nav>
-                              </div>
-                          </Col>
-                          <Col md={observationImages?.data?.length > 0 && next && !(activeTab === Tabs.EquipmentDetails) ? 7 : 9}>
-                              <div className="observation-form-right-tab">
-                                  <TabContent activeTab={activeTab}>
-                                      <TabPane tabId={Tabs.ObservationImages}>
-                                          {next ? 
-                                            // <Suspense fallback={''} >
+                                <div className="observation-form-left-tab">
+                                    <Nav tabs className="flex-column">
+                                        <NavItem>
+                                            <NavLink
+                                                className={activeTab === Tabs.ObservationImages ? 'active' : ''}
+                                                onClick={() => {
+                                                    toggleTab(Tabs.ObservationImages);
+                                                }}
+                                            >
+                                                Observation Images
+                                            </NavLink>
+                                        </NavItem>
+                                        <NavItem>
+                                            <NavLink
+                                                className={activeTab === Tabs.DateTimeLocation ? 'active' : ''}
+                                                onClick={() => {
+                                                    toggleTab(Tabs.DateTimeLocation);
+                                                }}
+                                            >
+                                                Date, Time & Location
+                                            </NavLink>
+                                        </NavItem>
+                                        <NavItem>
+                                            <NavLink
+                                                className={activeTab === Tabs.EquipmentDetails ? 'active' : ''}
+                                                onClick={() => {
+                                                    toggleTab(Tabs.EquipmentDetails);
+                                                }}
+                                            >
+                                                Equipment Details
+                                            </NavLink>
+                                        </NavItem>
+                                    </Nav>
+                                </div>
+                            </Col>
+                            <Col md={observationImages?.data?.length > 0 && next && !(activeTab === Tabs.EquipmentDetails) ? 7 : 9}>
+                                <div className="observation-form-right-tab">
+                                    <TabContent activeTab={activeTab}>
+                                        <TabPane tabId={Tabs.ObservationImages}>
+                                            {next ?
                                                 <ObservationAfterImageUpload toggleTab={toggleTab} handleImageInput = {handleImageInput} />
-                                            // </Suspense>
-                                        : 
-                                            // <Suspense fallback={''} >
+                                                :
                                                 <ObservationImages proceedNext={()=> handleContinue()}/>
-                                            // </Suspense>
-                                        }
-                                      </TabPane>
-                                      <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
-                                        {/* <Suspense fallback={''} > */}
+                                            }
+                                        </TabPane>
+                                        <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
                                             <ObservationLocation  toggleTab={toggleTab} handleImageInput={handleImageInput}/>
-                                        {/* </Suspense> */}
-                                      </TabPane>
-                                      <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
-                                        <FormGroup className="d-flex align-items-center position-relative">
-                                            <div className="custom-switch mb-5">
-                                                <input
-                                                    id="checkbox0"
-                                                    type="checkbox"
-                                                    className="hidden"
-                                                    onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e);}}
-                                                />
-                                                <label
-                                                    className="switchbox"
-                                                    htmlFor="checkbox0"
-                                                />
-                                                <span>
+                                        </TabPane>
+                                        <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
+                                            <FormGroup className="d-flex align-items-center position-relative">
+                                                <div className="custom-switch mb-5">
+                                                    <input
+                                                        id="checkbox0"
+                                                        type="checkbox"
+                                                        className="hidden"
+                                                        onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e);}}
+                                                    />
+                                                    <label
+                                                        className="switchbox"
+                                                        htmlFor="checkbox0"
+                                                    />
+                                                    <span>
                                                     I used the same camera, camera settings, and lens listed in my profile
                                                 </span>
-                                            </div>
-                                        </FormGroup>
-                                        {isSwitchOn ? 
-                                        // <Suspense fallback={''} >
-                                            <EquipmentDetails handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
-                                        // </Suspense>
-                                        : 
-                                        // <Suspense fallback={''} >
-                                            <EquipmentDetailsForm handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>
-                                        // </Suspense>
-                                        }
-                                      </TabPane>
-                                  </TabContent>
-                              </div>
-                          </Col>
-                          {observationImages?.data && next && !(activeTab === Tabs.EquipmentDetails) &&
-                              <Col md={2}>
-                                    {/* <Suspense fallback={''} > */}
-                                      <ObservationUploadedImg />
-                                    {/* </Suspense> */}
-                              </Col>
-                          }
-                      </Row>
-                  </Container>
-              </section>
-          </Form>
-          </>
-  )
+                                                </div>
+                                            </FormGroup>
+                                            {isSwitchOn ?
+                                                <EquipmentDetails handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
+                                                :
+                                                <EquipmentDetailsForm handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>
+                                            }
+                                        </TabPane>
+                                    </TabContent>
+                                </div>
+                            </Col>
+                            {observationImages?.data && next && !(activeTab === Tabs.EquipmentDetails) &&
+                                <Col md={2}>
+                                    <ObservationUploadedImg />
+                                </Col>
+                            }
+                        </Row>
+                    </Container>
+                </section>
+            </Form>
+        </>
+    )
 }
 export default AddObservation;
