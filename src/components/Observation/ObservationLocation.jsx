@@ -1,6 +1,6 @@
 import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
 import Images from "../../static/images";
-import { lazy, useState } from 'react';
+import {useEffect, useState} from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
@@ -36,6 +36,7 @@ const ObservationLocation = (props) => {
     const [isActiveDire, setActiveDire] = useState(null);
     const [directionAngle, setDirectionAngle] = useState(0);
     const [angleDegree, setAngleDegree] = useState(false);
+    const [angleValue, setAngleValue] = useState('');
 
     const directionValue = [
         {name: 'N', angle: 360, default : true},
@@ -52,6 +53,8 @@ const ObservationLocation = (props) => {
     const handleValue = (value) => {
         setAddress(value);
     }
+    const observationArray = {...observationImages};
+
     const handleChangeLat = (e) => {
         handleImageInput(e);
         let name = e.target.name,
@@ -82,11 +85,10 @@ const ObservationLocation = (props) => {
         setIsLoaded(true);
     }
     const selectDirection = (index) => {
-       
         const directionWrapper = document.querySelector('.compass-wrapper');
-        
         const directionId = document.getElementById(`directionValue${index}`);
-        let getAngleValue = directionId.getAttribute("data-angle");
+        let getAngleValue = directionId.getAttribute("data-angle"),
+            getAngleName = directionId.getAttribute("data-value");
 
         if(isActiveDire === index){
             directionWrapper.classList.remove("active-arrow");
@@ -94,6 +96,12 @@ const ObservationLocation = (props) => {
             directionWrapper.classList.add("active-arrow");
             setActiveDire(index);
             setDirectionAngle(getAngleValue);
+            setAngleValue(getAngleName);
+
+            if (observationImages?.data[observationImages?.selected_image_index]?.is_precise_az === false) {
+                observationArray.data[observationImages?.selected_image_index]['azimuth'] = getAngleName;
+            }
+
         }
     }
     const handleCopyData = (e,keys) => {
@@ -108,6 +116,7 @@ const ObservationLocation = (props) => {
         });
             setObservationImages(copyImages);
     }
+
     return (
         <>
             <Col md="12">
@@ -296,17 +305,18 @@ const ObservationLocation = (props) => {
                                     return(
                                         <Button 
                                             className={ `${direction.name}-direction ${ (direction.default === true) && isActiveDire === null ? 'active_direction' : '' } 
-                                                ${ isActiveDire === index ? "active_direction" : '' }`
+                                                ${ isActiveDire === index ? `active_direction ${observationArray.data[observationImages?.selected_image_index]['azimuth']}` : '' }`
                                             }
                                             onClick={()=> selectDirection(index)}
                                             key={index}
                                             id= {`directionValue${index}`}
-                                            data-angle ={direction.angle}
+                                            data-angle={direction.angle}
+                                            data-value={direction.name}
                                         >{direction.name}</Button>
                                     )
                                 })
                             }
-                            <div className="center-dot rounded-circle"></div>
+                            <div className="center-dot rounded-circle"/>
                             <div className="rotate-arrow-wrap">
                                 <div className="rotate-arrow-inner" style={{ "--directionAngle": directionAngle + 'deg' }}>
                                     <div className="rotate-arrow main"><img src={Images.compassArrow} alt="Compass Arrow" /> </div>
