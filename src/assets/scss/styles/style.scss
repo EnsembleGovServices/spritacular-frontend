@@ -78,6 +78,9 @@ body.modal-open {
 .btn-secondary{
   @include buttonSecodary;
 }
+.btn-outline-secondary{
+  @include buttonOutlineSecodary;
+}
 .gray-outline-btn{
   @include grayButton;
 }

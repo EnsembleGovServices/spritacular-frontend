@@ -39,7 +39,6 @@ const App = () => {
           <Route exact path={"tutorials"} element={<Tutorials />} />
           <Route exact path={"tutorials-detail"} element={<TutorialsDetail />} />
           <Route exact path={"login"} element={<LoginPage />} />
-          <Route path="*" element={<Error />} />
         </Route>
         <Route exact path={"/password_reset"} element={<ResetPasswordPopup />} />
         
@@ -53,10 +52,8 @@ const App = () => {
             <Route exact path={"upload-observations"} element={<InitialUploadObservations />} />
           </Route>
         </Route>
-        {/*</Route>*/}
-
-        {/* <Route path="*" element={<Error />} /> */}
       </Route>
+      <Route path="*" element={<Error />} />
     </Routes>
   );
 };

@@ -105,7 +105,7 @@ const AddObservation = () => {
         setObservationData(ObservationData);
     }
     
-    console.log(observationData);
+    // console.log(observationData);
 
     const getCameraDetail = async (e) => {
         
