@@ -45,6 +45,8 @@ import GiganticJet from "../assets/images/Gigantic-Jet.png";
 import SecondaryJet from "../assets/images/Secondary-Jet.png";
 import ObservationImageOne from "../assets/images/observation-image-one.png";
 import compassArrow from "../assets/images/compass-arrow.svg";
+import PageNotFound from "../assets/images/404-error.svg";
+import ErrorBG from "../assets/images/error_bg.svg";
 
 const Images = {
   Logo,
@@ -93,7 +95,9 @@ const Images = {
   GiganticJet,
   SecondaryJet,
   ObservationImageOne,
-  compassArrow
+  compassArrow,
+  PageNotFound,
+  ErrorBG
 };
 
 export default Images;

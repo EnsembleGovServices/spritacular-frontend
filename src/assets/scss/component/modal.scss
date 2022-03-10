@@ -49,9 +49,6 @@
 
             .form-control,
             .form-select {
-                // background-color: $input-bg !important;
-                // border: 1px solid $input-bg;
-                // box-shadow: none;
                 padding: 12px;
                 @include formField;
                 &.is-invalid {
@@ -83,8 +80,6 @@
                 padding: 12px 15px;
                 font-weight: 500;
                 letter-spacing: 0.5px;
-                // @include buttonSecodary;
-                // box-shadow: $box-shadow-button;
             }
 
             .form-check {
@@ -103,11 +98,6 @@
                     }
                 }
             }
-
-            .custom-file-upload {
-                .file-upload-inner {}
-            }
-
             .user-info {
                 p {
                     margin-bottom: 0px;

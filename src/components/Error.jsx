@@ -1,24 +1,32 @@
 import {Button, Card, CardBody, Col, Container, Row} from "reactstrap";
 import '../assets/scss/component/error.scss';
 import {NavLink, useNavigate} from "react-router-dom";
+import Images from "../static/images";
 
 const Error = () => {
   const navigate = useNavigate();
 
   return(
       <section className="error">
+        <i className="d-inline-block  error-bg"><img src={Images.ErrorBG} alt="Eroor bg" /></i>
         <Container>
-          <Row >
-            <Col md={{size: 6, offset: 3}}>
-                <Card className="shadow-lg border-0">
-                  <CardBody className="text-center p-md-5">
-                    <h3>The requested content couldn't be found</h3>
+          <Row className="align-items-center">
+            <Col xs={{size: 12, order: 2}} md={{size: 6, order: 1}}>
+                <Card className="shadow-none border-0 bg-transparent">
+                  <CardBody className="text-center text-md-start p-0">
+                    <h2 className="mb-2 mb-md-4">Opps !!
+                      <p className="m-0">Page Not Found</p>
+                    </h2>
+                    <p>We're sorry, The page you requested couldn't be found.</p>
                     <div className="mt-4">
-                      <Button color="primary" onClick={()=> navigate(-1)} className="me-2">Go Back</Button>
-                      <NavLink to="/" color="success">Back to Home</NavLink>
+                      <Button outline onClick={()=> navigate(-1)} className="me-2 px-3">Go Back</Button>
+                      <NavLink to="/" className="btn btn-secondary px-4">Back to Home</NavLink>
                     </div>
                   </CardBody>
                 </Card>
+            </Col>
+            <Col xs={{size: 12, order: 1}} md={{size: 6, order: 2}} className="text-center text-md-end mb-3 mb-md-0">
+              <img className="error-img" src={Images.PageNotFound} alt="Page not found" width={'100%'}/>
             </Col>
           </Row>
         </Container>

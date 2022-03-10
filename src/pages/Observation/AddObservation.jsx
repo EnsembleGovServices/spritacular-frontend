@@ -47,6 +47,38 @@ const AddObservation = () => {
             [name]:value,
         })
     }
+    const handleImageInput = (e,address = null) => {
+        let observationArray = {...observationImages};
+        if(e == 'address'){
+            observationArray.data[observationImages?.selected_image_index]['location'] = address;
+        }else{
+            let name = e.target.name,
+                value = e.target.value;
+                console.log(e.target.checked,name);
+                if(name === 'is_other'){
+                    observationArray.data[observationImages?.selected_image_index].category_map[name] = e.target.checked;
+                    if(observationData?.image_type === 3){
+                        if(observationArray.data[1]){
+                            observationArray.data[1].category_map[name] = e.target.checked;
+                        }
+                        if(observationArray.data[2]){
+                            observationArray.data[2].category_map[name] = e.target.checked;
+                        }
+                    }
+                }else{
+                    if(name === 'is_precise_az'){
+                        observationArray.data[observationImages?.selected_image_index][name] = e.target.checked;
+                    }
+                    else{
+                        observationArray.data[observationImages?.selected_image_index][name] = value;
+                    }
+                    if(observationData?.image_type === 3){
+                        if(observationArray.data[1]){
+                            observationArray.data[1][name] = (value === 'on') ? true : (value == '' ? false: value);
+                        }
+                        if(observationArray.data[2]){
+                            observationArray.data[2][name] = (value === 'on') ? true : value;
+                        }
     const handleImageInput = (e) => {
         let name = e.target.name,
             value = e.target.value;
@@ -84,6 +116,11 @@ const AddObservation = () => {
         
     }
 
+    const handlesetDraft = () => {
+        let ObservationData = {...observationData};
+        ObservationData.isDraft = 1;
+        setObservationData(ObservationData);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -153,7 +190,7 @@ const AddObservation = () => {
                       <div className="common-top-button-wrapper-inner">
                           <Button className="gray-outline-btn">Cancel</Button>
                           <div className="top-right-btn">
-                              <Button className="gray-outline-btn" onClick={ ()=> setDraft(!draft)}>Save as draft</Button>
+                              <Button className="gray-outline-btn" onClick={handlesetDraft}>Save as draft</Button>
                               <Button type="submit" >Submit</Button>
                           </div>
                       </div>
