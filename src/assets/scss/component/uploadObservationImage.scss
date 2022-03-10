@@ -115,8 +115,8 @@
         object-fit: contain;
       }
       .btn{
-        right: 25px;
-        top: 25px;
+        right: 0;
+        top: -2px;
         font-size: 24px;
         line-height: 24px;
       }
@@ -316,6 +316,9 @@
       overflow: hidden;
       border:1px solid #CBCFD8;
       border-radius: $border-radius;
+      @media(max-width:1023px){
+        padding: 8px 10px;
+      }
       &:after {
         width: 22px;
         height: 22px;
@@ -334,12 +337,22 @@
         transform: translateY(-50%);
         cursor: pointer;
         transition: all 200ms ease-in;
+        @media(max-width:1023px){
+          width: 17px;
+          height: 17px;
+          background-size: 11px;
+          right: 8px;
+        }
       }
       img{
         margin-right: 10px;
         width: 25px;
         height: 25px;
         object-fit: contain;
+        @media(max-width:1023px){
+          width: 20px;
+          height: 20px;
+        }
       }
     }
     input:checked ~ label {
@@ -368,6 +381,7 @@
       transform: translateY(-50%);
       cursor: pointer;
       visibility: hidden;
+      
     }
   }
 }

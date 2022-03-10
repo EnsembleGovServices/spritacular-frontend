@@ -72,7 +72,7 @@ const Header = (props) => {
   };
   const menuToggle = () => {
     let getBody = document.querySelector('body');
-    getBody.classList.add("menu-open");
+    getBody.classList.toggle("menu-open");
     setShowMenu(!showMenu);
   };
   const menuClose = () => {

@@ -16,8 +16,8 @@ import {
 import ObservationUploadImg from "./ObservationUploadImg";
 import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
-import LazyLoad from "../Upload/LazyLoad";
 import ObservationCategory from "./ObservationCategory";
+import ImagePreview from "./ImagePreview";
 
 
 const ObservationAfterImageUpload = (props) => {
@@ -32,33 +32,12 @@ const ObservationAfterImageUpload = (props) => {
         if (activeTab !== tab) {
             setActiveImageTab(tab);
         }
-        console.log(tab)
     };
 
     // const handleOtherToggle = (e) => {
     //     let map_data = {...observationImages?.data};
     //     setObservationImages
     // }
-
-    const ImagePreview = () => {
-        return (
-            <>
-                {observationImages?.data?.filter(item => item?.id === observationSteps?.selected_image_id).map((item, index) => {
-                    return(
-                        <div key={index} className="upload-multiple-observation">
-                            <div className="observation-image position-relative">
-                                <Button className="bg-transparent text-black border-0 shadow-none p-0 position-absolute">
-                                    <Icon icon="ci:close-big" />
-                                </Button>
-                                <LazyLoad src={item?.image} alt={item?.name} />
-                            </div>
-                        </div>
-                    )
-                })}
-            </>
-        );
-    };
-
     
     useEffect(() => {
         setObservationCategory((prev) => {

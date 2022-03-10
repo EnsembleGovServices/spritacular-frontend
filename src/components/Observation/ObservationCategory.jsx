@@ -2,16 +2,15 @@ import { CategoryList } from "../../helpers/observation";
 import {Col, FormGroup,PopoverBody, PopoverHeader,UncontrolledPopover, Collapse, Button} from "reactstrap";
 import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
-import { array } from "prop-types";
-
 import ImageCarousel from "../../components/Shared/ImageCarousel";
 import { Icon } from "@iconify/react";
+
 const ObservationCategory = () => {
     const { observationImages,setObservationImages, setObservationCategory,observationData } = useObservations();
     const [Category] = useState(CategoryList);
     const [isChecked, setIsChecked] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('' || []);
-    const [popoverOpen, setPopoverOpen] = useState(null);
+    const [popoverOpen, setPopoverOpen] = useState(false);
 
     const onCategoryChange=(e)=>{
         const value = parseFloat(e.target.id);
@@ -38,7 +37,13 @@ const ObservationCategory = () => {
         })
     }, [selectedCategory, setObservationCategory])
 
-    
+    const toggle = (index) =>{
+        if(popoverOpen === index){
+            setPopoverOpen(false);
+        }else{
+            setPopoverOpen(index);
+        }
+    }
     const PopoverContent = ({ contentUpdate, popoverId }) => {
 
         const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
@@ -87,14 +92,6 @@ const ObservationCategory = () => {
                 </UncontrolledPopover>
             </div>
         )
-    }
-    const toggle = (index) =>{
-        if(popoverOpen === index){
-            console.log("if popover", popoverOpen, index);
-        }else{
-            setPopoverOpen(index);
-            console.log("else popover", popoverOpen);
-        }
     }
 
     // useEffect(()=> {
