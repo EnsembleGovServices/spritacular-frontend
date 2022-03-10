@@ -10,12 +10,13 @@ import Loader from "../components/Shared/Loader";
 // const Footer = lazy(()=> import('../components/Common/Footer'))
 // const Loader = lazy(()=> import('../components/Shared/Loader'))
 
-const PersistLogin = () => {
+const PersistLogin = (props) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const refresh = useRefreshToken();
     const { auth, persist } = useAuth();
-
+    const { persistValue } = props;
+    
     useEffect(() => {
         let isMounted = true;
         const verifyRefreshToken = async () => {
@@ -58,7 +59,8 @@ const PersistLogin = () => {
                     <div className="main-content">
                         <Outlet />
                     </div>
-                    <Footer />
+                    {persistValue && <Footer />}
+                    
                 </>
             )}
         </>
