@@ -1,7 +1,47 @@
 @import "../global/config.scss";
 
 .error {
-  padding: 60px 0;
-  min-height: calc(100vh - 60px);
+  min-height: 100vh;
   @include vcenter;
+  @include media-breakpoint-down(md) {
+    padding: 20px;
+  }
+  .error-bg{
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: -3;
+    text-align: right;
+    img{
+      height: 100%;
+      @include media-breakpoint-down(lg) {
+        object-fit: cover;
+        width: 100%;
+      }
+    }
+  }
+  h2{
+    font-size: 50px;
+    line-height: 55px;
+    color: $secondary;
+    font-weight: 700;
+    @include media-breakpoint-down(lg) {
+      font-size: 45px;
+      line-height: 50px;
+    }
+    @include media-breakpoint-down(md) {
+      font-size: 35px;
+      line-height: 45px;
+    }
+  }
+  .error-img{
+    max-width: 650px;
+    width: 100%;
+    @include media-breakpoint-down(md) {
+      max-width: 240px;
+    }
+  }
 }
