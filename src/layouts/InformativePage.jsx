@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
 import { Outlet } from "react-router-dom";
 
 const InformativePage = (props) => {
     const {setAuthValue} = props;
     
-    setAuthValue(true);
+    useEffect(()=>{
+        setAuthValue(true);
+    }, [setAuthValue])
 
     return (
         <Outlet />

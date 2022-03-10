@@ -73,7 +73,7 @@ const AddObservation = () => {
                 }
                 if(observationData?.image_type === 3){
                     if(observationArray.data[1]){
-                        observationArray.data[1][name] = (value === 'on') ? true : (value == '' ? false: value);
+                        observationArray.data[1][name] = (value === 'on') ? true : (value === '' ? false: value);
                     }
                     if(observationArray.data[2]){
                         observationArray.data[2][name] = (value === 'on') ? true : value;
