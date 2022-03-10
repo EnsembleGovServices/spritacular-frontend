@@ -172,7 +172,7 @@ const ObservationLocation = (props) => {
                     </Row>
                     <MapWrapper
                     google={props.google}
-                    center={{ lat:Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng:Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
+                    center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
                     height='300px'
                     zoom={15}
                     handleState={handleValue}
