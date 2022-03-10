@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "react-google-maps";
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
-// import { GoogleMapsAPI } from '../client-config';
-Geocode.setApiKey("AIzaSyC49bXfihl4zZqjG2-iRLUmcWO_PVcDehM");
+import { GoogleMapsAPI } from '../config';
+Geocode.setApiKey(GoogleMapsAPI);
 Geocode.enableDebug();
 
 class Map extends Component{
@@ -61,7 +61,7 @@ class Map extends Component{
 	 * @return {boolean}
 	 */
 	shouldComponentUpdate( nextProps, nextState ){		
-		if(this.props.isLoaded == true && this.state.markerPosition.lat !== this.props.center.lat){
+		if(this.props.isLoaded == true && this.state.markerPosition.lat !== this.props.center.lat || this.state.markerPosition.lng !== this.props.center.lng){
 				 Geocode.fromLatLng( nextProps.center.lat , nextProps.center.lng ).then(
 					response => {
 						const address = response.results[0].formatted_address,
@@ -295,7 +295,7 @@ class Map extends Component{
 		if( this.props.center.lat !== undefined ) {
 			map = <div>
 				<AsyncMap
-					googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyC49bXfihl4zZqjG2-iRLUmcWO_PVcDehM&libraries=places`}
+					googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GoogleMapsAPI}&libraries=places`}
 					loadingElement={
 						<div style={{ height: `100%` }} />
 					}

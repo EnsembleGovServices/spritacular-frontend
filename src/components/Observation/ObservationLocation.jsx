@@ -1,6 +1,6 @@
 import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
 import Images from "../../static/images";
-import { lazy, useState } from 'react';
+import { lazy, useState ,useEffect } from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
@@ -11,7 +11,7 @@ import  MapWrapper from '../MapWrapper';
 const ObservationLocation = (props) => {
     const { toggleTab,handleImageInput } = props;
     const [address1,setAddress] = useState({
-        address: '',
+        address: '204, Mote Mangal Karyalay Rd, Bhavani Peth, Shobhapur, Kasba Peth, Pune, Maharashtra 411011, India',
         city: '',
         area: '',
         state: '',
@@ -50,13 +50,22 @@ const ObservationLocation = (props) => {
 
     // console.log(observationImages?.selected_image_index);
     const handleValue = (value) => {
+        console.log(value.address);
         setAddress(value);
+        if(observationImages?.data){
+            let observationAddress = {...observationImages};
+            if(observationAddress?.data){
+                observationAddress.data[observationAddress.selected_image_index]['latitude'] = value.markerPosition.lat;
+                observationAddress.data[observationAddress.selected_image_index]['longitude'] = value.markerPosition.lng;
+                observationAddress.data[observationAddress.selected_image_index]['location'] = value.address;
+                setObservationImages(observationAddress);
+            }
+        }
     }
     const handleChangeLat = (e) => {
         handleImageInput(e);
         let name = e.target.name,
              value = Number(e.target.value);
-            
              let addressState = {...address1};
              addressState.mapPosition.lat = value;
              addressState.markerPosition.lat = value;
@@ -64,9 +73,9 @@ const ObservationLocation = (props) => {
             //  let imageArray = {...observationImages};
             //  imageArray.images[0].lat = value;
             //  setObservationImages(imageArray);
-             setTimeout(()=> {
+            //  setTimeout(()=> {
                  setIsLoaded(true);
-             },3000);
+            //  },3000);
     }
     const handleChangeLng = (e) => {
         handleImageInput(e);
@@ -81,6 +90,29 @@ const ObservationLocation = (props) => {
         setAddress(addressState);
         setIsLoaded(true);
     }
+    useEffect(() => {
+        let observationAddress = {...observationImages};        
+        if(observationAddress?.data){
+            let addressState = {...address1};
+            observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.address;
+            setObservationImages(observationAddress);
+            // addressState.mapPosition.lat = 12.3;//observationAddress.data[observationAddress?.selected_image_index]['latitude'];
+            // setAddress(addressState);
+        }
+    },[address1]);
+    // useEffect(() => {
+    //     // console.log(observationAddress.data.length);
+    //     if(observationImages.data.length > 0){
+    //         let addressState = {...address1};
+    //         console.log(addressState);
+    //         let observationAddress = {...observationImages};
+    //         // addressState.mapPosition.lat =12.2;// observationAddress.data[observationAddress?.selected_image_index]['latitude'];
+    //         // addressState.markerPosition.lat = observationAddress?.data[observationAddress?.selected_image_index]['latitude'];
+    //         // addressState.mapPosition.lng = observationAddress?.data[observationAddress?.selected_image_index]['longitude'];
+    //         // addressState.markerPosition.lng = observationAddress?.data[observationAddress?.selected_image_index]['longitude'];
+    //         // setAddress(addressState);
+    //     }
+    // },[observationImages]);
     const selectDirection = (index) => {
        
         const directionWrapper = document.querySelector('.compass-wrapper');
@@ -108,6 +140,8 @@ const ObservationLocation = (props) => {
         });
             setObservationImages(copyImages);
     }
+
+    // console.log((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude :'');
     return (
         <>
             <Col md="12">
@@ -129,14 +163,14 @@ const ObservationLocation = (props) => {
                             </FormGroup>
                         </Col>}
                     </Row>
-                    {/* <MapWrapper
+                    <MapWrapper
                     google={props.google}
-                    center={{lat:address1?.markerPosition?.lat, lng:address1?.markerPosition?.lng}}
+                    center={{ lat:Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng:Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
                     height='300px'
                     zoom={15}
-                        handleState={handleValue}
-                        isLoaded={isLoaded}
-                    />  */}
+                    handleState={handleValue}
+                    isLoaded={isLoaded}
+                    /> 
                         {/* <Input
                             type="search"
                             name="name"
@@ -152,7 +186,8 @@ const ObservationLocation = (props) => {
                             <Label className="form-label" htmlFor="LAT" sm={2} >LAT</Label>
                             <Col sm={10}>
                                 <Input
-                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude:''}
+                                    // value={address1?.markerPosition?.lat}
+                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude :''}
                                     id="LAT"
                                     type="number"
                                     name="latitude"
@@ -168,7 +203,7 @@ const ObservationLocation = (props) => {
                             <Col sm={10}>
                                 <Input
                                     // value={address1?.markerPosition?.lng}
-                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude:''}
+                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :''}
                                     id="LON"
                                     type="number"
                                     name="longitude"
@@ -181,8 +216,7 @@ const ObservationLocation = (props) => {
                     <Col md={6} lg={4}>
                         <div className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
                             <img src={Images.Flag} alt="USA Flag"/> 
-                            Edmon, OK, USA
-                            {address1?.address}
+                            <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                         </div>
                     </Col>
                 </Row>
