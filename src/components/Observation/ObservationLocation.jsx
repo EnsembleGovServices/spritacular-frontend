@@ -27,7 +27,7 @@ const ObservationLocation = (props) => {
     const [lat,setLat] = useState(18.5204);
     const [lng,setLng] = useState(73.8567);
     const [isLoaded,setIsLoaded] = useState(false);
-    const {observationImages} = useObservations();
+    const {observationImages, setObservationImages,observationData} = useObservations();
     // const [updateMap,setUpdateMap] = useState({
     //     lat:18.5204,
     //     lng:73.8567
@@ -96,13 +96,18 @@ const ObservationLocation = (props) => {
             setDirectionAngle(getAngleValue);
         }
     }
-    const handleCopyData = (e) => {
+    const handleCopyData = (e,keys) => {
+        console.log(keys);
+        let copyImages = {...observationImages};
+        keys.map((k) => {
         if(e.target.checked){
-            let copyImages = {...observationImages};
-            copyImages.data[copyImages?.selected_image_index] = copyImages.data[0];
+            copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
+        }else{
+            copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
         }
+        });
+            setObservationImages(copyImages);
     }
-    console.log(observationImages?.data,'hih');
     return (
         <>
             <Col md="12">
@@ -111,13 +116,13 @@ const ObservationLocation = (props) => {
                         <Col lg={7} className="order-2 order-lg-1">
                             <h6>Where did you make the observation?</h6>
                         </Col>
-                        {observationImages?.selected_image_index !== 0 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
+                        {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
                             <FormGroup check>
                                 <Label check className="mb-0">
                                     <Input
                                         type="checkbox"
                                         name="Same as the first image"
-                                        // onChange={handleCopyData}
+                                        onChange={(e) => handleCopyData(e,['latitude','longitude'])}
                                     />
                                     Same as the first image
                                 </Label>
@@ -187,12 +192,13 @@ const ObservationLocation = (props) => {
                     <Col lg={7} className="order-2 order-lg-1">
                         <h6>Please enter date and time for your observation</h6>
                     </Col>
-                    {observationImages?.selected_image_index !== 0 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
+                    {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
                         <FormGroup check>
                             <Label check className="mb-0">
                                 <Input
                                     type="checkbox"
                                     name="Same as the first image"
+                                    onChange={(e) => handleCopyData(e,['obs_date','obs_time','timezone'])}
                                 />
                                 Same as the first image
                             </Label>
@@ -269,7 +275,7 @@ const ObservationLocation = (props) => {
                             id="checkbox2"
                             type="checkbox"
                             name="is_precise_az"
-                            value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.is_precise_az:''}
+                            checked={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.is_precise_az :''}
                             className="hidden"
                             onChange={(e)=>handleImageInput(e)}
                             onClick={()=> setAngleDegree(!angleDegree)}
@@ -281,7 +287,7 @@ const ObservationLocation = (props) => {
                         <span>I know the precise azimuth angle in degrees</span>
                     </div>
                 </FormGroup>
-                {!angleDegree ? 
+                {(observationImages?.data[observationImages?.selected_image_index]?.is_precise_az === false) ? 
                     <FormGroup>
                         <Label className="justify-content-center mb-3">Look Direction</Label>
                         <div className="compass-wrapper">

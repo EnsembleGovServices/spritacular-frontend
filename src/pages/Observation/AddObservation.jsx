@@ -48,27 +48,31 @@ const AddObservation = () => {
         })
     }
     const handleImageInput = (e) => {
-
         let name = e.target.name,
             value = e.target.value;
-            console.log(value,name);
+            console.log(e.target.checked,name);
             let observationArray = {...observationImages};
             
             if(name === 'is_other'){
-                observationArray.data[observationImages?.selected_image_index].category_map[name] = (value === 'on') ? true : value;
+                observationArray.data[observationImages?.selected_image_index].category_map[name] = e.target.checked;
                 if(observationData?.image_type === 3){
                     if(observationArray.data[1]){
-                        observationArray.data[1].category_map[name] = (value === 'on') ? true : value;
+                        observationArray.data[1].category_map[name] = e.target.checked;
                     }
                     if(observationArray.data[2]){
-                        observationArray.data[2].category_map[name] = (value === 'on') ? true : value;
+                        observationArray.data[2].category_map[name] = e.target.checked;
                     }
                 }
             }else{
-                observationArray.data[observationImages?.selected_image_index][name] = (value === 'on') ? true : value;
+                if(name === 'is_precise_az'){
+                    observationArray.data[observationImages?.selected_image_index][name] = e.target.checked;
+                }
+                else{
+                    observationArray.data[observationImages?.selected_image_index][name] = value;
+                }
                 if(observationData?.image_type === 3){
                     if(observationArray.data[1]){
-                        observationArray.data[1][name] = (value === 'on') ? true : value;
+                        observationArray.data[1][name] = (value === 'on') ? true : (value == '' ? false: value);
                     }
                     if(observationArray.data[2]){
                         observationArray.data[2][name] = (value === 'on') ? true : value;
