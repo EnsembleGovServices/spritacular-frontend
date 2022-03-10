@@ -144,7 +144,7 @@ const ObservationAfterImageUpload = (props) => {
                             <Col sm={12}>
                                 <FormGroup check className="mb-3">
                                     <Label check>
-                                        <Input required type="checkbox" name="is_other" checked={observationImages?.data[observationImages?.selected_image_index]?.category_map?.is_other} onChange={(e) => handleImageInput(e)} />
+                                        <Input type="checkbox" name="is_other" checked={observationImages?.data[observationImages?.selected_image_index]?.category_map?.is_other} onChange={(e) => handleImageInput(e)} />
                                         Other
                                     </Label>
                                 </FormGroup>

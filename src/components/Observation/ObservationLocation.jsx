@@ -96,7 +96,13 @@ const ObservationLocation = (props) => {
             setDirectionAngle(getAngleValue);
         }
     }
-    // console.log(observationImages?.data,'hih');
+    const handleCopyData = (e) => {
+        if(e.target.checked){
+            let copyImages = {...observationImages};
+            copyImages.data[copyImages?.selected_image_index] = copyImages.data[0];
+        }
+    }
+    console.log(observationImages?.data,'hih');
     return (
         <>
             <Col md="12">
@@ -105,18 +111,18 @@ const ObservationLocation = (props) => {
                         <Col lg={7} className="order-2 order-lg-1">
                             <h6>Where did you make the observation?</h6>
                         </Col>
-                        <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
+                        {observationImages?.selected_image_index !== 0 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
                             <FormGroup check>
                                 <Label check className="mb-0">
                                     <Input
-                                        required
                                         type="checkbox"
                                         name="Same as the first image"
+                                        // onChange={handleCopyData}
                                     />
                                     Same as the first image
                                 </Label>
                             </FormGroup>
-                        </Col>
+                        </Col>}
                     </Row>
                     {/* <MapWrapper
                     google={props.google}
@@ -181,7 +187,7 @@ const ObservationLocation = (props) => {
                     <Col lg={7} className="order-2 order-lg-1">
                         <h6>Please enter date and time for your observation</h6>
                     </Col>
-                    <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
+                    {observationImages?.selected_image_index !== 0 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
                         <FormGroup check>
                             <Label check className="mb-0">
                                 <Input
@@ -191,7 +197,7 @@ const ObservationLocation = (props) => {
                                 Same as the first image
                             </Label>
                         </FormGroup>
-                    </Col>
+                    </Col>}
                 </Row>
                 <Row>
                     <Col md={6} lg={4}>
@@ -201,7 +207,7 @@ const ObservationLocation = (props) => {
                                 id="Date"
                                 type="date"
                                 name="obs_date"
-                                value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.obs_date: ''}
+                                value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
                                 className="w-100"
                                 placeholder="12/20/2021" 
                                 onChange={(e)=>handleImageInput(e)}
@@ -215,7 +221,7 @@ const ObservationLocation = (props) => {
                                 id="Time"
                                 type="time"
                                 name="obs_time"
-                                value={(observationImages?.data) ?observationImages?.data[observationImages?.selected_image_index]?.obs_time:''}
+                                value={(observationImages?.data)? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : null}
                                 className="w-100"
                                 placeholder="10:21:00 am"
                                 onChange={(e)=>handleImageInput(e)}
