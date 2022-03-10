@@ -287,7 +287,7 @@ const ObservationLocation = (props) => {
                         <span>I know the precise azimuth angle in degrees</span>
                     </div>
                 </FormGroup>
-                {(observationImages?.data[observationImages?.selected_image_index]?.is_precise_az === false) ? 
+                {( (observationImages?.data) && observationImages?.data[observationImages?.selected_image_index]?.is_precise_az === false) ? 
                     <FormGroup>
                         <Label className="justify-content-center mb-3">Look Direction</Label>
                         <div className="compass-wrapper">
