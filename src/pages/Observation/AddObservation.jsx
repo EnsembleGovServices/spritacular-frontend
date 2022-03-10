@@ -54,11 +54,26 @@ const AddObservation = () => {
             console.log(value,name);
             let observationArray = {...observationImages};
             
-            if(name == 'is_other'){
+            if(name === 'is_other'){
                 observationArray.data[observationImages?.selected_image_index].category_map[name] = (value === 'on') ? true : value;
-                console.log(observationArray.data[observationImages?.selected_image_index].category_map[name]);
+                if(observationData?.image_type === 3){
+                    if(observationArray.data[1]){
+                        observationArray.data[1].category_map[name] = (value === 'on') ? true : value;
+                    }
+                    if(observationArray.data[2]){
+                        observationArray.data[2].category_map[name] = (value === 'on') ? true : value;
+                    }
+                }
             }else{
                 observationArray.data[observationImages?.selected_image_index][name] = (value === 'on') ? true : value;
+                if(observationData?.image_type === 3){
+                    if(observationArray.data[1]){
+                        observationArray.data[1][name] = (value === 'on') ? true : value;
+                    }
+                    if(observationArray.data[2]){
+                        observationArray.data[2][name] = (value === 'on') ? true : value;
+                    }
+                }
             }
             setObservationImages(observationArray);
         
@@ -73,9 +88,7 @@ const AddObservation = () => {
         ObservationData.camera = cameraDetails;
         ObservationData.isDraft = 0;
         ObservationData.map_data[observationImages?.selected_image_index].category_map.category = observationCategory?.category;
-
         setObservationData(ObservationData);
-        // console.log(observationImages);
     }
     
     console.log(observationData);
