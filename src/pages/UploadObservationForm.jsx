@@ -33,7 +33,7 @@ const UploadObservationsForm = () => {
             <div className="common-top-button-wrapper-inner">
               <Button>Cancel</Button>
               <div className="top-right-btn">
-                <Button>Save as draft</Button>
+                <Button >Save as draft</Button>
                 <Button disabled>Submit</Button>
               </div>
             </div>
