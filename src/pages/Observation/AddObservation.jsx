@@ -52,7 +52,8 @@ const AddObservation = () => {
             value = e.target.value;
             console.log(e.target.checked,name);
             let observationArray = {...observationImages};
-            
+                observationArray.data[observationImages?.selected_image_index]['azimuth'] = ''
+
             if(name === 'is_other'){
                 observationArray.data[observationImages?.selected_image_index].category_map[name] = e.target.checked;
                 if(observationData?.image_type === 3){
@@ -95,7 +96,7 @@ const AddObservation = () => {
         setObservationData(ObservationData);
     }
     
-    console.log(observationData);
+    // console.log(observationData);
 
     const getCameraDetail = async (e) => {
         
