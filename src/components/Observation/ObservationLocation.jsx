@@ -27,15 +27,8 @@ const ObservationLocation = (props) => {
             lng: 73.8567
         }
     });
-    const [lat,setLat] = useState(18.5204);
-    const [lng,setLng] = useState(73.8567);
     const [isLoaded,setIsLoaded] = useState(false);
     const {observationImages, setObservationImages,observationData} = useObservations();
-    // const [updateMap,setUpdateMap] = useState({
-    //     lat:18.5204,
-    //     lng:73.8567
-    // });
-    const [updateMap,setUpdateMap] = useState(false);
     const [isActiveDire, setActiveDire] = useState(null);
     const [directionAngle, setDirectionAngle] = useState(0);
     const [angleDegree, setAngleDegree] = useState(false);
@@ -51,7 +44,6 @@ const ObservationLocation = (props) => {
         {name: 'NW', angle: 315, default : false},
     ]
 
-    // console.log(observationImages?.selected_image_index);
     const handleValue = (value) => {
         console.log(value.address);
         setAddress(value);
@@ -61,6 +53,7 @@ const ObservationLocation = (props) => {
                 observationAddress.data[observationAddress.selected_image_index]['latitude'] = value.markerPosition.lat;
                 observationAddress.data[observationAddress.selected_image_index]['longitude'] = value.markerPosition.lng;
                 observationAddress.data[observationAddress.selected_image_index]['location'] = value.address;
+                observationAddress.data[observationAddress.selected_image_index]['country_code'] = value.country;
                 setObservationImages(observationAddress);
             }
         }
@@ -90,9 +83,6 @@ const ObservationLocation = (props) => {
              let addressState = {...address1};
              addressState.mapPosition.lng = value;
              addressState.markerPosition.lng = value;
-            //  let imageArray = {...observationImages};
-            //  imageArray.images[0].lng = value;
-            //  setObservationImages(imageArray);
         setAddress(addressState);
         setIsLoaded(true);
         fref.current.handleChangeLatLng(address1.markerPosition.lat,e.target.value);
@@ -102,24 +92,10 @@ const ObservationLocation = (props) => {
         if(observationAddress?.data){
             let addressState = {...address1};
             observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.address;
+            observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
             setObservationImages(observationAddress);
-            // addressState.mapPosition.lat = 12.3;//observationAddress.data[observationAddress?.selected_image_index]['latitude'];
-            // setAddress(addressState);
         }
     },[address1]);
-    // useEffect(() => {
-    //     // console.log(observationAddress.data.length);
-    //     if(observationImages.data.length > 0){
-    //         let addressState = {...address1};
-    //         console.log(addressState);
-    //         let observationAddress = {...observationImages};
-    //         // addressState.mapPosition.lat =12.2;// observationAddress.data[observationAddress?.selected_image_index]['latitude'];
-    //         // addressState.markerPosition.lat = observationAddress?.data[observationAddress?.selected_image_index]['latitude'];
-    //         // addressState.mapPosition.lng = observationAddress?.data[observationAddress?.selected_image_index]['longitude'];
-    //         // addressState.markerPosition.lng = observationAddress?.data[observationAddress?.selected_image_index]['longitude'];
-    //         // setAddress(addressState);
-    //     }
-    // },[observationImages]);
     const selectDirection = (index) => {
         const directionWrapper = document.querySelector('.compass-wrapper');
         const directionId = document.getElementById(`directionValue${index}`);
@@ -225,7 +201,7 @@ const ObservationLocation = (props) => {
                     </Col>
                     <Col md={6} lg={4}>
                         <div className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
-                        <ReactCountryFlags country={address1?.country} />
+                        <ReactCountryFlags country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code: null} />
                             {/* <img src={Images.Flag} alt="USA Flag"/>  */}
                             <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                         </div>

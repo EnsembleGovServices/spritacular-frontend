@@ -42,6 +42,7 @@ const ObservationUploadImg = (props) =>{
                             'latitude': 18.5204,
                             'longitude': 73.8567,
                             'location': '204, Mote Mangal Karyalay Rd, Bhavani Peth, Shobhapur, Kasba Peth, Pune, Maharashtra 411011, India',
+                            'country_code': 'IN',
                             'obs_date': null,
                             'obs_time': null,
                             'timezone': '',
