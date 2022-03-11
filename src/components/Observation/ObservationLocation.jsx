@@ -1,20 +1,23 @@
 import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
 import Images from "../../static/images";
-import {useState, useEffect} from 'react';
+import {useState, useEffect,useRef} from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
 import useObservations from "../../hooks/useObservations";
 import  MapWrapper from '../MapWrapper';
+import ReactCountryFlags from '../ReactCountryFlag';
 
 
 const ObservationLocation = (props) => {
     const { toggleTab,handleImageInput } = props;
+    const fref = useRef()
     const [address1,setAddress] = useState({
         address: '204, Mote Mangal Karyalay Rd, Bhavani Peth, Shobhapur, Kasba Peth, Pune, Maharashtra 411011, India',
         city: '',
         area: '',
         state: '',
+        country: 'IN',
         mapPosition: {
             lat: 18.5204,
             lng: 73.8567
@@ -78,6 +81,7 @@ const ObservationLocation = (props) => {
             //  setTimeout(()=> {
                  setIsLoaded(true);
             //  },3000);
+            fref.current.handleChangeLatLng(e.target.value,address1.markerPosition.lng);
     }
     const handleChangeLng = (e) => {
         handleImageInput(e);
@@ -91,6 +95,7 @@ const ObservationLocation = (props) => {
             //  setObservationImages(imageArray);
         setAddress(addressState);
         setIsLoaded(true);
+        fref.current.handleChangeLatLng(address1.markerPosition.lat,e.target.value);
     }
     useEffect(() => {
         let observationAddress = {...observationImages};        
@@ -169,18 +174,18 @@ const ObservationLocation = (props) => {
                         </Col>}
                     </Row>
                     <MapWrapper
-                    google={props.google}
-                    center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
-                    height='300px'
-                    zoom={15}
-                    handleState={handleValue}
-                    isLoaded={isLoaded}
-                    /> 
-                        {/* <Input
-                            type="search"
-                            name="name"
-                            placeholder="Edmon, OK, USA"
-                        /> */}
+                        google={props.google}
+                        center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
+                        height="400px"
+                        containerPosition={"relative"}
+                        mapRadius="10px"
+                        zoom={15}
+                        handleState={handleValue}
+                        isLoaded={isLoaded}
+                        mapContainer="map-search-container"
+                        searchInputClass="search-input-class"
+                        ref={fref}
+                    />
                 </FormGroup>
             </Col>
             <Col md={12} className="mb-5">
@@ -220,7 +225,8 @@ const ObservationLocation = (props) => {
                     </Col>
                     <Col md={6} lg={4}>
                         <div className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
-                            <img src={Images.Flag} alt="USA Flag" /> 
+                        <ReactCountryFlags country={address1?.country} />
+                            {/* <img src={Images.Flag} alt="USA Flag"/>  */}
                             <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                         </div>
                     </Col>

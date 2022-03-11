@@ -17,6 +17,7 @@ import "../assets/scss/component/camerasettings.scss";
 import ImageUpload from "../components/Upload/ImageUpload";
 import axios from "../api/axios";
 import {baseURL, cameraSettingFields} from "../helpers/url";
+import ReactCountryFlags from "../components/ReactCountryFlag";
 
 const UpdateProfile = lazy(()=> import('../components/Account/UpdateProfile'))
 const CameraSetting = lazy(()=> import('../components/Account/CameraSetting'))
@@ -77,7 +78,8 @@ const Profile = () => {
                       <h5>{user.first_name} {user?.last_name}</h5>
                       <p>{user?.email}</p>
                       <div className="d-flex align-items-center justify-content-center">
-                        <img src={Images.UsaFlag} alt="" />
+                        {/* <img src={Images.UsaFlag} alt="" /> */}
+                        <ReactCountryFlags country={user?.country_code} />
                         <span>{user?.location}</span>
                       </div>
                     </div>

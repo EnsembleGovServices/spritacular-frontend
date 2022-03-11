@@ -15,6 +15,7 @@ import ImageUpload from "../Upload/ImageUpload";
 import { useEffect, useState } from "react";
 import {Link} from "react-router-dom";
 import { routeUrls } from './../../helpers/url';
+import ReactCountryFlags from "../ReactCountryFlag";
 
 const UserProfilePopup = (props) => {
   const [user, setUser] = useState(props);
@@ -56,7 +57,8 @@ const UserProfilePopup = (props) => {
               </h4>
               <FormText>{user?.email}</FormText>
               <div className="user-country d-flex align-items-center">
-                <img src={Images.UsaFlag} alt="Usa-Flag" />
+                {/* <img src={Images.UsaFlag} alt="Usa-Flag" /> */}
+                <ReactCountryFlags country={user?.country_code} />
                 <p>{user?.location}</p>
               </div>
             </div>

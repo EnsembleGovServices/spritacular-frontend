@@ -17,6 +17,7 @@ const Register = (props) => {
         last_name: "",
         email: "",
         location: "",
+        place_uid:"",
         extra_fields: {
             address: "",
             lat: "",
@@ -39,12 +40,13 @@ const Register = (props) => {
     const handleLocations = (location) => {
         setUserRegistration({
             ...userRegistration,
-            location: location['placeId'],
+            location: location['address'],
+            place_uid: location['placeId'],
+            country_code: location['countryCode'],
             extra_fields: {
-                address: location['address'],
                 lat: location['lat'],
                 lng: location['lng'],
-                countryCode: location['countryCode'],
+                
             }
         });
     }
@@ -184,7 +186,7 @@ const Register = (props) => {
                             <FormFeedback>{error?.data?.password}</FormFeedback>
                         </FormGroup>
                         <FormGroup>
-                            <Input
+                            {/* <Input
                                 required
                                 type="select"
                                 name="location"
@@ -193,8 +195,8 @@ const Register = (props) => {
                                 <option value="Ahmedabad">Ahmedabad</option>
                                 <option value="Pune">Pune</option>
                                 <option value="Bombay">Bombay</option>
-                            </Input>
-                            {/* <PlacesAutocomplete handleLocations={handleLocations}/> */}
+                            </Input> */}
+                            <PlacesAutocomplete handleLocations={handleLocations}/>
                             <FormFeedback>Location is required</FormFeedback>
                         </FormGroup>
                         <FormGroup check>

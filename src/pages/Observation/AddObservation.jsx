@@ -22,16 +22,27 @@ import ObservationImages from "../../components/Observation/ObservationImages";
 import ObservationProgress from "../../components/Observation/ObservationProgress";
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
+import {useNavigate} from "react-router-dom";
 
 const AddObservation = () => {
     const { auth } = useAuth();
+    const navigate = useNavigate();
 
-    const {observationSteps, setObservationSteps, observationImages ,setObservationImages,observationData, setObservationData,observationCategory} = useObservations();
+    const {
+        observationSteps,
+        setObservationSteps,
+        observationImages,
+        setObservationImages,
+        observationData,
+        setObservationData,
+        observationCategory
+    } = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
     const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
-    const [draft, setDraft] = useState(true);
+    const [draft] = useState(true);
+    const [reset, setReset] = useState(false);
 
     // Toggle Tabs
     const toggleTab = (tab) => {
@@ -47,6 +58,7 @@ const AddObservation = () => {
             [name]:value,
         })
     }
+
     const handleImageInput = (e,address = null) => {
         let observationArray = {...observationImages};
         if(e === 'address'){
@@ -105,8 +117,6 @@ const AddObservation = () => {
         setObservationData(ObservationData);
     }
 
-    // console.log(observationData);
-
     const getCameraDetail = async (e) => {
 
         if(e.target.checked === true){
@@ -131,6 +141,16 @@ const AddObservation = () => {
         setNext(!next);
     }
 
+    const handleReset = (e) => {
+        setReset(!reset);
+        setObservationSteps({
+            total: 3,
+            active: 1
+        })
+        setObservationImages([])
+        setObservationData(null)
+        navigate('/observations')
+    }
 
     // Set Progress Bar
     useEffect(() => {
@@ -160,9 +180,9 @@ const AddObservation = () => {
                 <div className="common-top-button-wrapper">
                     <Container>
                         <div className="common-top-button-wrapper-inner">
-                            <Button className="gray-outline-btn">Cancel</Button>
+                            <Button className="gray-outline-btn" onClick={handleReset} disabled={!observationImages?.data}>Cancel</Button>
                             <div className="top-right-btn">
-                                <Button className="gray-outline-btn" onClick={handlesetDraft}>Save as draft</Button>
+                                <Button className="gray-outline-btn" onClick={handlesetDraft} disabled={!observationImages?.data}>Save as draft</Button>
                                 <Button type="submit" >Submit</Button>
                             </div>
                         </div>
