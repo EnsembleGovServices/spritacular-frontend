@@ -3,6 +3,8 @@ import axios from "../../api/axios";
 import {useEffect, useState} from "react";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
+import PlacesAutocomplete from "../LocationSearchInput";
+
 
 const UpdateProfile = (props) => {
     const {user} = props;
@@ -10,6 +12,20 @@ const UpdateProfile = (props) => {
     const [updateUser, setUpdatedUser] = useState()
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
+    
+    const [userRegistration, setUserRegistration] = useState({
+        first_name: "",
+        last_name: "",
+        email: "",
+        location: "",
+        place_uid:"",
+        extra_fields: {
+            address: "",
+            lat: "",
+            lng: "",
+            countryCode: ""
+        }
+    });
 
     const handleInput = (e) => {
         e.preventDefault();
@@ -21,8 +37,23 @@ const UpdateProfile = (props) => {
         })
     }
     useEffect(()=> {
+        // console.log(user?.user?.location);
         setUpdatedUser(user?.user)
     }, [user?.user])
+
+    const handleLocations = (location) => {
+        setUpdatedUser({
+            ...updateUser,
+            location: location['address'],
+            place_uid: location['placeId'],
+            country_code: location['countryCode'],
+            extra_fields: {
+                lat: location['lat'],
+                lng: location['lng'],
+                
+            }
+        });
+    }
 
     const handleProfileUpdate = async (e) => {
         e.preventDefault();
@@ -100,7 +131,7 @@ const UpdateProfile = (props) => {
 
                 <FormGroup>
                     <Label htmlFor="location">Location</Label>
-                    <Input type="select" name="location" onChange={(e)=>handleInput(e)}>
+                    {/* <Input type="select" name="location" onChange={(e)=>handleInput(e)}>
                         <option disabled defaultValue>
                             Please Select Your Country
                         </option>
@@ -108,7 +139,9 @@ const UpdateProfile = (props) => {
                         <option value="Bahrain">Bahrain</option>
                         <option value="Canada">Canada</option>
                         <option value="Denmark">Denmark</option>
-                    </Input>
+                    </Input> */}
+                    <PlacesAutocomplete handleLocations={handleLocations} address={user?.user?.location}/>
+                    <FormFeedback>{error?.data?.location}</FormFeedback>
                 </FormGroup>
                 <FormGroup className="profile-bottom-btn ">
                     <Button type="submit" className="save-btn">Save Changes</Button>

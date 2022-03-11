@@ -6,6 +6,7 @@ import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
 import useObservations from "../../hooks/useObservations";
 import  MapWrapper from '../MapWrapper';
+import ReactCountryFlags from '../ReactCountryFlag';
 
 
 const ObservationLocation = (props) => {
@@ -15,6 +16,7 @@ const ObservationLocation = (props) => {
         city: '',
         area: '',
         state: '',
+        country: 'IN',
         mapPosition: {
             lat: 18.5204,
             lng: 73.8567
@@ -221,8 +223,10 @@ const ObservationLocation = (props) => {
                         </FormGroup>
                     </Col>
                     <Col md={6} lg={4}>
+                    
                         <div className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
-                            <img src={Images.Flag} alt="USA Flag"/> 
+                        <ReactCountryFlags country={address1?.country} />
+                            {/* <img src={Images.Flag} alt="USA Flag"/>  */}
                             <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                         </div>
                     </Col>

@@ -13,12 +13,14 @@ import getCity, {getPostalCode, getState , getCountry, getArea} from '../helpers
 class LocationSearchInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { address: "" };
-  }
+    this.state = { address: this.props.address};
+    // this.statelocation = {...this.state};
+    // this.statelocation['address'] = this.props.address;
 
+    // this.setState(this.statelocation);
+  }
+  
   handleChange = address => {
-    // console.log(address);
-    
     this.setState({ address });
   };
 
@@ -34,22 +36,24 @@ class LocationSearchInput extends React.Component {
       if (!place.geometry) {
         return;
       }
-      console.log(place);  
+      console.log(place);
       // let area = getArea(place.address_components);
-      // let city = getCity(place.address_components);
-      // let state = getState(place.address_components);
+      let city = getCity(place.address_components);
+      let state = getState(place.address_components);
       // let postalCode = getPostalCode(place.address_components);
-      let country = getCountry(place.address_components)['short_name'];
+      let country = getCountry(place.address_components);
 
      let lat = place.geometry.location.lat();
      let lng = place.geometry.location.lng();
     let addressArray = [];
-    addressArray['address'] = place.formatted_address;
+    addressArray['address'] = city+', '+state+', '+country['long_name'];//place.formatted_address;
     addressArray['lat'] = place.geometry.location.lat();
     addressArray['lng'] = place.geometry.location.lng();
     addressArray['placeId'] = placeId;
-    addressArray['countryCode'] = country;
+    addressArray['countryCode'] = country['short_name'];
+    console.log(addressArray);
     this.props.handleLocations(addressArray);
+    this.setState({ addressArray });
     });
   };
 
@@ -82,7 +86,6 @@ class LocationSearchInput extends React.Component {
                   ? { backgroundColor: "#ffebeb",color: "#990000", cursor: "pointer" }
                   : { backgroundColor: "transparent",color: "#000", cursor: "pointer" };
                   const suggesionClick = () => {
-                    console.log("hi");
                     this.setState({address: suggestion.description });
                   
                   }

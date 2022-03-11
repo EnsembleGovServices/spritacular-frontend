@@ -5,6 +5,7 @@ import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "reac
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
 import { GoogleMapsAPI } from '../config';
+import getCity, {getPostalCode, getState , getCountry, getArea} from '../helpers';
 Geocode.setApiKey(GoogleMapsAPI);
 Geocode.enableDebug();
 
@@ -17,6 +18,7 @@ class Map extends Component{
 			city: '',
 			area: '',
 			state: '',
+			countryCode: '',
 			mapPosition: {
 				lat: this.props.center.lat,
 				lng: this.props.center.lng
@@ -38,6 +40,7 @@ class Map extends Component{
 				      city = this.getCity( addressArray ),
 				      area = this.getArea( addressArray ),
 				      state = this.getState( addressArray );
+					  country = this.getCountry(addressArray)['short_name'];
 
 				// console.log( 'city', city, area, state );
 
@@ -46,6 +49,7 @@ class Map extends Component{
 					area: ( area ) ? area : '',
 					city: ( city ) ? city : '',
 					state: ( state ) ? state : '',
+					country: (country) ? country: '',
 				} )
 			},
 			error => {
@@ -69,11 +73,13 @@ class Map extends Component{
 							  city = this.getCity( addressArray ),
 							  area = this.getArea( addressArray ),
 							  state = this.getState( addressArray );
+							  country = this.getCountry(addressArray)['short_name'];
 						this.setState( {
 							address: ( address ) ? address : '',
 							area: ( area ) ? area : '',
 							city: ( city ) ? city : '',
 							state: ( state ) ? state : '',
+							country: (country) ? country : '',
 							markerPosition: {
 								lat: nextProps.center.lat,
 								lng: nextProps.center.lng
@@ -118,6 +124,18 @@ class Map extends Component{
 			if ( addressArray[ i ].types[0] && 'administrative_area_level_2' === addressArray[ i ].types[0] ) {
 				city = addressArray[ i ].long_name;
 				return city;
+			}
+		}
+	};
+	getCountry = ( addressArray ) => {
+		let country = [];
+		for( let i = 0; i < addressArray.length; i++ ) {
+			for( let i = 0; i < addressArray.length; i++ ) {
+				if ( addressArray[ i ].types[0] && 'country' === addressArray[ i ].types[0] ) {
+					country['long_name'] = addressArray[ i ].long_name;
+					country['short_name'] = addressArray[ i ].short_name;
+					return country;
+				}
 			}
 		}
 	};
@@ -191,11 +209,13 @@ class Map extends Component{
 				      city = this.getCity( addressArray ),
 				      area = this.getArea( addressArray ),
 				      state = this.getState( addressArray );
+					  country = this.getCountry(addressArray)['short_name'];
 				this.setState( {
 					address: ( address ) ? address : '',
 					area: ( area ) ? area : '',
 					city: ( city ) ? city : '',
 					state: ( state ) ? state : '',
+					country: (country) ? country : '',
 					markerPosition: {
 						lat: newLat,
 						lng: newLng
@@ -224,6 +244,7 @@ class Map extends Component{
 		      city = this.getCity( addressArray ),
 		      area = this.getArea( addressArray ),
 		      state = this.getState( addressArray ),
+			  country = this.getCountry(addressArray)['short_name'],
 		      latValue = place.geometry.location.lat(),
 		      lngValue = place.geometry.location.lng();
 		// Set these values in the state.
@@ -232,6 +253,7 @@ class Map extends Component{
 			area: ( area ) ? area : '',
 			city: ( city ) ? city : '',
 			state: ( state ) ? state : '',
+			country: (country) ? country: '',
 			markerPosition: {
 				lat: latValue,
 				lng: lngValue
