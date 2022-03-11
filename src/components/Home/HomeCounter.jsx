@@ -26,7 +26,7 @@ const HomeCounter = () => {
                   <img src={Images.Submit} alt="user" />
                 </div>
                 <div className="right-counter">
-                  <Counter end="8000" speed="20"/>
+                  <Counter end="8000" speed="20" />
                   <p>Observations</p>
                 </div>
               </div>

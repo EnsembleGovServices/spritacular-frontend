@@ -1,33 +1,75 @@
-import { MultiImageTabs } from "../../helpers/observation";
+import { MultiImageTabs, Tabs } from "../../helpers/observation";
 import { Icon } from "@iconify/react/dist/iconify";
-import {Button, Col, FormGroup, Input, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane} from "reactstrap";
+import {
+    Button,
+    Col,
+    FormGroup,
+    Input,
+    Label,
+    Nav,
+    NavItem,
+    NavLink, 
+    Row,
+    TabContent,
+    TabPane
+} from "reactstrap";
 import ObservationUploadImg from "./ObservationUploadImg";
-import Images from "../../static/images";
-import { useState } from "react";
+import {useEffect, useState} from "react";
+import useObservations from "../../hooks/useObservations";
+import ObservationCategory from "./ObservationCategory";
+import ImagePreview from "./ImagePreview";
 
-const ObservationAfterImageUpload = () => {
+
+const ObservationAfterImageUpload = (props) => {
+    const { toggleTab,handleImageInput } = props;
+    const {observationImages, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
+    const [isOther] = useState(false);
 
     // Toggle Tabs
-    const toggleTab = (tab) => {
+    const toggleImageTab = (tab) => {
         if (activeTab !== tab) {
             setActiveImageTab(tab);
         }
     };
 
-    const ImagePreview = () => {
-        return (
-            <div className="upload-multiple-observation">
-                <div className="observation-image position-relative">
-                    <Button className="bg-transparent text-black border-0 shadow-none p-0 position-absolute">
-                        <Icon icon="ci:close-big" />
-                    </Button>
-                    <img src={Images.ObservationImageOne} alt="Bluejet" />
-                </div>
-            </div>
-        );
-    };
+
+    useEffect(()=> {
+        setIsMultiple(observationImages?.data?.length > 1)
+    }, [observationImages?.data?.length])
+
+
+    useEffect(() => {
+        setObservationCategory((prev) => {
+            return {
+                ...prev,
+                is_other: isOther
+            }
+        })
+        if (isMultiple && activeTab === MultiImageTabs.MultipleImages) {
+            setObservationType((prev) => {
+                return {
+                    ...prev,
+                    image_type: 2
+                }
+            })
+        } else if (!isMultiple)  {
+            setObservationType((prev) => {
+                return {
+                    ...prev,
+                    image_type: 1
+                }
+            })
+        } else {
+            setObservationType((prev) => {
+                return {
+                    ...prev,
+                    image_type: 3
+                }
+            })
+        }
+    }, [activeTab, isMultiple, isOther, setObservationCategory, setObservationType])
 
     return (
         <Row>
@@ -38,6 +80,7 @@ const ObservationAfterImageUpload = () => {
                             id="toggleMultiple"
                             type="checkbox"
                             className="hidden"
+                            checked={isMultiple}
                             onChange={(e)=> setIsMultiple(!isMultiple)}
                         />
                         <label className="switchbox" htmlFor="toggleMultiple" />
@@ -52,7 +95,7 @@ const ObservationAfterImageUpload = () => {
                             <NavLink
                                 className={activeTab === MultiImageTabs.MultipleImages ? 'active' : ''}
                                 onClick={() => {
-                                    toggleTab(MultiImageTabs.MultipleImages);
+                                    toggleImageTab(MultiImageTabs.MultipleImages);
                                 }}
                             >
                                 <Icon icon="fluent:square-multiple-20-regular" color="black" width={24} className="me-3" />
@@ -63,7 +106,7 @@ const ObservationAfterImageUpload = () => {
                             <NavLink
                                 className={activeTab === MultiImageTabs.ImageSequence ? 'active' : ''}
                                 onClick={() => {
-                                    toggleTab(MultiImageTabs.ImageSequence);
+                                    toggleImageTab(MultiImageTabs.ImageSequence);
                                 }}
                             >
                                 <Icon icon="codicon:list-filter" color="black" width={24} className="me-3" />
@@ -80,11 +123,6 @@ const ObservationAfterImageUpload = () => {
                 <TabContent activeTab={activeTab}>
                     <TabPane tabId={MultiImageTabs.MultipleImages}>
                         <Row>
-                            {/*<Col sm={12} className={isMultiple ? '' : 'd-none'}>*/}
-                            {/*    <div className="small-upload_box mb-3">*/}
-                            {/*        <ObservationUploadImg imageFormat={false} maxLimit={false} multiple={isMultiple} />*/}
-                            {/*    </div>*/}
-                            {/*</Col>*/}
                             {isMultiple &&
                                 <Col sm={12}>
                                     <div className="small-upload_box mb-3">
@@ -95,6 +133,7 @@ const ObservationAfterImageUpload = () => {
                             <Col sm={12}>
                                 <ImagePreview />
                             </Col>
+
                             <Col sm={12}>
                                 <FormGroup className="mb-1">
                                     <p className="fw-bold">
@@ -103,91 +142,24 @@ const ObservationAfterImageUpload = () => {
                                     </p>
                                 </FormGroup>
                             </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="sprite" name="option1" type="checkbox" />
-                                            <label htmlFor="sprite">
-                                                <img src={Images.SpriteOb} alt="Sprite" />
-                                                Sprite
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="blue-jet" name="BlueJet" type="checkbox" />
-                                            <label htmlFor="blue-jet">
-                                                <img src={Images.Bluejet} alt="Bluejet" />
-                                                Blue Jet
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="elve" name="Elve" type="checkbox" />
-                                            <label htmlFor="elve">
-                                                <img src={Images.Elev} alt="Elve" />
-                                                Elve
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="halo" name="Halo" type="checkbox" />
-                                            <label htmlFor="halo">
-                                                <img src={Images.Halo} alt=" Halo" />
-                                                Halo
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="gigantic-jet" name="Gigantic Jet" type="checkbox" />
-                                            <label htmlFor="gigantic-jet">
-                                                <img src={Images.GiganticJet} alt="Sprite" />
-                                                Gigantic Jet
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
-                            <Col sm={6}>
-                                <FormGroup>
-                                    <div className="checkbox-wrapper">
-                                        <div className="inputGroup">
-                                            <input id="secondary-jet" name="Secondary Jet" type="checkbox" />
-                                            <label htmlFor="secondary-jet">
-                                                <img src={Images.SecondaryJet} alt="Secondary Jet" />
-                                                Secondary Jet
-                                            </label>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                            </Col>
+
+                            <ObservationCategory />
+
                             <Col sm={12}>
-                                <FormGroup check>
+                                <FormGroup check className="mb-3">
                                     <Label check>
-                                        <Input required type="checkbox" name="agreeTerms" />
+                                        <Input type="checkbox" name="is_other" checked ={observationImages?.data[observationImages?.selected_image_index]?.category_map?.is_other} onChange={(e) => handleImageInput(e)} />
                                         Other
                                     </Label>
                                 </FormGroup>
+                                {isOther?.status &&
+                                    <FormGroup>
+                                        <Input type="text"  name="text" placeholder="Please enter other details" className="other-textfield" />
+                                    </FormGroup>
+                                }
+                            </Col>
+                            <Col sm={12}>
+                                <Button type="submit" className="mt-3" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
                             </Col>
                         </Row>
                     </TabPane>
@@ -197,7 +169,7 @@ const ObservationAfterImageUpload = () => {
                                 <ImagePreview />
                             </Col>
                             <Col sm={12}>
-                                <Button type="submit">Continue</Button>
+                                <Button type="submit" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
                             </Col>
                         </Row>
                     </TabPane>

@@ -2,6 +2,7 @@ import Images from "../../static/images";
 import { Card, CardBody, CardTitle, CardImg, CardSubtitle, Row, Col, Badge } from "reactstrap";
 import { Link } from "react-router-dom";
 import "../../assets/scss/component/observationCard.scss";
+import { routeUrls } from './../../helpers/url';
 
 const ObservationCard = (props) => {
     const {cardItems} = props;
@@ -9,7 +10,7 @@ const ObservationCard = (props) => {
     return(
         <>
             <Card className="observation_card overflow-hidden">
-                <Link to="" className="text-black card-link">
+                <Link to={routeUrls.home} className="text-black card-link">
                     <div className="observation_country">
                         <Badge className="bg-black text-white">
                             <img src={cardItems.userCountryIcon} alt="Flag" className="me-1" /> {cardItems.userCountryName}

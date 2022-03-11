@@ -1,4 +1,4 @@
-import { Col, FormGroup,Button, Input,Label } from "reactstrap";
+import { Col, FormGroup, Input,Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import { Icon } from '@iconify/react';
@@ -6,14 +6,14 @@ import {useEffect, useState} from "react";
 
 const ObservationUploadImg = (props) =>{
     const {multiple, maxLimit, imageFormat}=props;
-    const {observationImages, setObservationImages} = useObservations();
+    const {setObservationImages, observationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
 
 
     const handleUploadImage = (e) => {
         const fileList = e.target.files;
-        Array.from(fileList).forEach((item) => {
+        Array.from(fileList).forEach((item,id) => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
@@ -21,7 +21,7 @@ const ObservationUploadImg = (props) =>{
                 const random = (Math.random() + 1).toString(36).substring(7) + (Math.random() + 1).toString(36).substring(20);
 
                 images?.map((image, index) => {
-                    if (image?.name === item?.name) {
+                    if (image?.lastModified === item?.lastModified) {
                         setError((prev) => {
                             return {
                                 ...prev,
@@ -29,7 +29,6 @@ const ObservationUploadImg = (props) =>{
                             }
                         })
                     }
-                    return true;
                 });
 
 
@@ -37,9 +36,24 @@ const ObservationUploadImg = (props) =>{
                     setImages(prevState => [
                         ...prevState, {
                             'id' : random,
-                            'name' : item?.name,
                             'image' : baseImage,
-                            'original': { item }
+                            'lastModified': item?.lastModified,
+                            'item': item,
+                            'latitude': 18.5204,
+                            'longitude': 73.8567,
+                            'location': 'Maharashtra, India',
+                            'country_code': 'IN',
+                            'obs_date': null,
+                            'obs_time': null,
+                            'timezone': '',
+                            'azimuth': '',
+                            'uncertainity_time':'',
+                            'is_precise_az':false,
+                            'category_map': {
+                                'category': [],
+                                'is_other': false,
+                                'other_value': ''
+                            }
                         }
                     ])
                 } else {
@@ -56,8 +70,19 @@ const ObservationUploadImg = (props) =>{
         })
     };
 
+    useEffect(() => {
+        let images = (observationImages?.data) ? [...observationImages?.data] : []
+        setImages(images)
+    }, [])
+
     useEffect(()=> {
-        setObservationImages(images);
+        if (images.length > 0) {
+            setObservationImages({
+                data: images,
+                selected_image_id: images?.[0]?.id,
+                selected_image_index:0
+            });
+        }
     }, [images, setObservationImages])
 
 
@@ -68,20 +93,18 @@ const ObservationUploadImg = (props) =>{
                     <FormGroup>
                         <Label htmlFor="UploadFile">
                             <div className="upload-info">
-                                <Icon icon="bx:image-alt" color="#737e96" width="42" height="42"/>
+                                <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
                                 <p>Drag and drop images or click to upload</p>
-                                {
-                                    maxLimit === true ? <span className="text-black">Max. Image Size: 5MB</span> : ''
+                                { maxLimit === true && 
+                                    <span className="text-black">Max. Image Size: 5MB</span> 
                                 }
-                                {
-                                    imageFormat === true ? (
-                                        <ul>
-                                            <li>
-                                                Common Image File Formats (JPEG or
-                                                JPG, PNG, TIFF)
-                                            </li>
-                                        </ul>
-                                    ) : ''
+                                {imageFormat === true &&
+                                    <ul>
+                                        <li>
+                                            Common Image File Formats (JPEG or
+                                            JPG, PNG, TIFF)
+                                        </li>
+                                    </ul>
                                 }
 
                             </div>
@@ -95,16 +118,15 @@ const ObservationUploadImg = (props) =>{
                             onChange={(e)=> handleUploadImage(e)}
                         />
                     </FormGroup>
+                    {/* <div className="progress-bar_wrapper" style={{ "--uploadProgress": 65 + '%' }}>
+                        <p className="image-progree_bar"><b>65%</b> uploading..</p>
+                    </div> */}
                 </div>
                 {error?.message &&
-                    <>
-                        <span className="text-danger small mt-2 d-inline-block">{error?.message}</span>
-                    </>
+                    <span className="text-danger d-block small my-1 d-inline-block">{error?.message} </span>
                 }
                 {error?.duplicate &&
-                    <>
-                        <span className="text-danger small mt-2 d-inline-block">{error?.duplicate}</span>
-                    </>
+                    <span className="text-danger d-block small my-1 d-inline-block">{error?.duplicate}</span>
                 }
             </div>
         </Col>

@@ -4,6 +4,7 @@ import {baseURL} from "../../helpers/url";
 import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth";
 import {useLocation, useNavigate} from "react-router-dom";
+import { routeUrls } from './../../helpers/url';
 
 const ResetPassword = (props) => {
     const {cp,token} = props;
@@ -12,7 +13,7 @@ const ResetPassword = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || routeUrls.home;
 
     const [user, setUser] = useState({
         token: "",

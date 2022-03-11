@@ -21,6 +21,7 @@ import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 import UserProfilePopup from "../Popup/UserProfilePopup";
 import { Icon } from "@iconify/react";
 import LazyLoad from "../Upload/LazyLoad";
+import { routeUrls } from './../../helpers/url';
 
 const Header = (props) => {
   const { auth, setAuth, persist, setPersist } = useAuth();
@@ -37,7 +38,7 @@ const Header = (props) => {
   const [notificationDropdown, setNotificationDropdown] = useState(false);
 
   const location = useLocation();
-  const homeUrl = location.pathname === "/";
+  const homeUrl = location.pathname === "";
 
   const Logout = () => {
     setAuth("");
@@ -72,7 +73,7 @@ const Header = (props) => {
   };
   const menuToggle = () => {
     let getBody = document.querySelector('body');
-    getBody.classList.add("menu-open");
+    getBody.classList.toggle("menu-open");
     setShowMenu(!showMenu);
   };
   const menuClose = () => {
@@ -100,7 +101,7 @@ const Header = (props) => {
         className={homeUrl ? "custom-header" : "custom-header bg-not-home"}
         light
       >
-        <Link to="/" className="navbar-brand">
+        <Link to={routeUrls.home} className="navbar-brand p-0" title="Spritacular">
           <img src={Images.Logo} alt="Logo" className="logo" />
           <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo" />
         </Link>
@@ -109,7 +110,7 @@ const Header = (props) => {
         </NavbarToggler>
         <Collapse navbar isOpen={showMenu}>
           <div className="menu-logo  justify-content-between w-100 px-2 py-1 shadow-sm">
-            <Link to="/" className="navbar-brand">
+            <Link to={routeUrls.home} className="navbar-brand">
               <img src={Images.BlackLogo} alt="Logo" />
             </Link>
             <Button className="close-menu" onClick={() => menuClose()}>
@@ -122,7 +123,7 @@ const Header = (props) => {
               {persist ? (
                 <NavItem>
                   <Link
-                    to="/observations/add"
+                    to={routeUrls.myObservations}
                     title="My Observations"
                     className="nav-link text-capitalize"
                   >
@@ -142,17 +143,17 @@ const Header = (props) => {
                 </DropdownToggle>
                 <DropdownMenu>
                   <DropdownItem>
-                    <Link to="/about" title="What is Spritacular?">
+                    <Link to={routeUrls.about} title="What is Spritacular?">
                       What is Spritacular?
                     </Link>
                   </DropdownItem>
                   <DropdownItem>
-                    <Link to="/" title="Policy">
+                    <Link to={routeUrls.home} title="Policy">
                       Policy
                     </Link>
                   </DropdownItem>
                   <DropdownItem>
-                    <Link to="/" title="Code of Conduct">
+                    <Link to={routeUrls.home} title="Code of Conduct">
                       Code of Conduct
                     </Link>
                   </DropdownItem>
@@ -161,7 +162,7 @@ const Header = (props) => {
             </NavItem>
             <NavItem>
               <Link
-                to="get-started"
+                to={routeUrls.getStarted}
                 title="Get Started"
                 className="nav-link text-capitalize"
               >
@@ -169,7 +170,7 @@ const Header = (props) => {
               </Link>
             </NavItem>
             <NavItem>
-              <Link to="/" title="Gallery" className="nav-link text-capitalize">
+              <Link to={routeUrls.home} title="Gallery" className="nav-link text-capitalize">
                 Gallery
               </Link>
             </NavItem>
@@ -184,12 +185,12 @@ const Header = (props) => {
                 </DropdownToggle>
                 <DropdownMenu>
                   <DropdownItem>
-                    <Link to="/blog" title="Blog">
+                    <Link to={routeUrls.blog} title="Blog">
                       Blog
                     </Link>
                   </DropdownItem>
                   <DropdownItem>
-                    <Link to="/tutorials" title="Tutorials">
+                    <Link to={routeUrls.tutorials} title="Tutorials">
                       Tutorials
                     </Link>
                   </DropdownItem>
@@ -207,22 +208,22 @@ const Header = (props) => {
                 </DropdownToggle>
                 <DropdownMenu>
                   <DropdownItem>
-                    <Link to="/" title="Meet the Teem">
+                    <Link to={routeUrls.home} title="Meet the Teem">
                       Meet the Teem
                     </Link>
                   </DropdownItem>
                   <DropdownItem>
-                    <Link to="/" title="Volunteer Profile">
+                    <Link to={routeUrls.home} title="Volunteer Profile">
                       Volunteer Profile
                     </Link>
                   </DropdownItem>
                   <DropdownItem>
-                    <Link to="/" title="Become an ambassador">
+                    <Link to={routeUrls.home} title="Become an ambassador">
                       Become an ambassador
                     </Link>
                   </DropdownItem>
                   <DropdownItem>
-                    <Link to="/" title="Join Spritacular Google Group">
+                    <Link to={routeUrls.home} title="Join Spritacular Google Group">
                       Join Spritacular Google Group
                     </Link>
                   </DropdownItem>
@@ -272,14 +273,14 @@ const Header = (props) => {
             <Dropdown className="notify_menu" isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
               <DropdownToggle className="notification">
                 <Icon icon="ic:baseline-notifications" />
-                <span className="notify"/>
+                <span className="notify" />
               </DropdownToggle>
               <DropdownMenu container="body" className="notify-open_menu">
                 <DropdownItem header> Notifications (3) </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
                   <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile"/></i>
+                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
                     <div className="comment_wrapper">
                       <div className="comment_details">
                         <h4>New comments</h4>
@@ -292,7 +293,7 @@ const Header = (props) => {
                 <DropdownItem divider />
                 <DropdownItem>
                   <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile"/></i>
+                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
                     <div className="comment_wrapper">
                       <div className="comment_details">
                         <h4>New vote</h4>
@@ -305,7 +306,7 @@ const Header = (props) => {
                 <DropdownItem divider />
                 <DropdownItem>
                   <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile"/></i>
+                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
                     <div className="comment_wrapper">
                       <div className="comment_details">
                         <h4>Emily replied to your comment</h4>
@@ -341,7 +342,7 @@ const Header = (props) => {
               </DropdownToggle>
               <DropdownMenu container="body">
                 <DropdownItem>
-                  <Link to="/profile">Edit Profile</Link>
+                  <Link to={routeUrls.profile}>Edit Profile</Link>
                 </DropdownItem>
                 <DropdownItem onClick={() => handleChangePasswordModal()}>
                   Change Password

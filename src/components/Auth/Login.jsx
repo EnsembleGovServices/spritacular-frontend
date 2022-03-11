@@ -4,15 +4,15 @@ import {baseURL} from "../../helpers/url";
 import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth";
 import {useLocation, useNavigate} from "react-router-dom";
+import { routeUrls } from './../../helpers/url';
 
 const Login = (props) => {
     const {cp} = props;
     const { setAuth, persist, setPersist } = useAuth();
-
     const navigate = useNavigate();
     const location = useLocation();
 
-    const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || routeUrls.home;
 
     const [user, setUser] = useState({
         email: "",
@@ -50,7 +50,13 @@ const Login = (props) => {
             })
             .catch((error) => {
                 if (!error?.response) {
-                    console.log('server error occurred')
+                    console.log(error?.message)
+                    setError(prev => {
+                        return {
+                            ...prev,
+                            server: error?.message
+                        }
+                    });
                 }
                 else if (error?.response) {
                     setError({
@@ -76,6 +82,9 @@ const Login = (props) => {
         <>
             {error?.data &&
                 <p className="text-danger small mb-4 fw-bolder">{error?.data?.detail}</p>
+            }
+            {error?.server &&
+                <p className="text-danger text-center small mb-4 fw-bolder">{error?.server}</p>
             }
             <Form onSubmit={handleLogin}>
                 <FormGroup>

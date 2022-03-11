@@ -27,8 +27,8 @@
   }
   .hero-banner-inner {
     padding: 160px 0px 60px;
-    @media (max-width: 480px) {
-      padding: 120px 0px 60px;
+    @media (max-width: 575px) {
+      padding: 80px 0px 60px;
     }
     .border-line {
       &::after {
@@ -293,6 +293,9 @@
       background-size: 80%;
     }
     @include media-breakpoint-down(xl) {
+      height: 560px;
+    }
+    @include media-breakpoint-down(lg) {
       height: 400px;
       background-size: 60%;
     }
@@ -346,6 +349,9 @@
       height: 180px;
       object-fit: cover;
       object-position: center;
+      @media (max-width: 1024px) {
+        height: 130px;
+      }
       @include media-breakpoint-down(lg) {
         height: 120px;
       }
@@ -395,6 +401,7 @@
       max-width: 80px;
       top: 10%;
       right: 50%;
+      z-index: -1;
     }
   }
   .bottom-text-polygon {
@@ -403,6 +410,7 @@
       max-width: 80px;
       bottom: 25px;
       left: 30%;
+      z-index: -1;
     }
   }
 }

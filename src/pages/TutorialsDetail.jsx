@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   Badge,
   Breadcrumb,
@@ -8,6 +9,7 @@ import {
 } from "reactstrap";
 import "../assets/scss/component/tutorialdetail.scss";
 import Images from "../static/images";
+import { routeUrls } from './../helpers/url';
 
 const TutorialsDetail = () => {
   return (
@@ -17,10 +19,10 @@ const TutorialsDetail = () => {
           <div className="breadcrumb-main">
             <Breadcrumb>
               <BreadcrumbItem>
-                <a href="/">Home</a>
+                <Link to={'/'+routeUrls.home}>Home</Link>
               </BreadcrumbItem>
               <BreadcrumbItem>
-                <a href="/">Tutorial </a>
+                <Link to={'/'+routeUrls.tutorials}>Tutorial </Link>
               </BreadcrumbItem>
               <BreadcrumbItem active>
                 Preparing data before uploading observation

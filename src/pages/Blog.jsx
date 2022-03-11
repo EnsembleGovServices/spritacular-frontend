@@ -2,6 +2,7 @@ import { Container, Row, Col } from "reactstrap";
 import Images from "../../src/static/images";
 import "../assets/scss/component/blog.scss";
 import {Link} from "react-router-dom";
+import { routeUrls } from './../helpers/url';
 
 const Blog = () => {
   return (
@@ -68,7 +69,7 @@ const Blog = () => {
           <div className="recommended-blog">
             <h3>
               Recommended for you
-              <Link to="/" className="view-all">View All</Link>
+              <Link to={routeUrls.home} className="view-all">View All</Link>
             </h3>
             <Row>
               <Col md={4}>

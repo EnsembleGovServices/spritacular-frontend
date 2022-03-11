@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react";
 import "../assets/scss/component/initialUploadobservations.scss";
 import Images from "../static/images";
 import { Link } from "react-router-dom";
+import { routeUrls } from './../helpers/url';
 const InitialUploadObservations = () => {
   return (
     <>
@@ -18,13 +19,12 @@ const InitialUploadObservations = () => {
                       alt="UploadPlaceholder"
                     />
                     <p>No observations yet.</p>
-                    <Link to="/observations/add" className="btn btn-secondary">
+                    <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary">
                       <Icon icon="heroicons-outline:upload"  width="25" height="22" /> Upload
                       Observation
                     </Link>
                   </div>
                 </Label>
-                {/* <Input type="file" name="file" id="UploadFile" /> */}
               </FormGroup>
             </Form>
           </div>
