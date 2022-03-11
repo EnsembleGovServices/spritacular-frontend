@@ -29,7 +29,6 @@ export const routeUrls = {
     tutorialsDetail: 'tutorials-detail',
     login: 'login',
     profile: 'profile',
-    myObservations: 'my-observations',
-    observationsAdd: 'observations/add',
-    uploadObservations: 'upload-observations'
+    myObservations: 'observations',
+    observationsAdd: 'observations/add'
 }

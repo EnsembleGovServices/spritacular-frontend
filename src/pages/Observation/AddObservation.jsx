@@ -50,6 +50,7 @@ const AddObservation = () => {
             setActiveTab(tab);
         }
     };
+
     const handleInput = (e) => {
         let name = e.target.name,
             value = e.target.value;
@@ -182,7 +183,7 @@ const AddObservation = () => {
                         <div className="common-top-button-wrapper-inner">
                             <Button className="gray-outline-btn" onClick={handleReset} disabled={!observationImages?.data}>Cancel</Button>
                             <div className="top-right-btn">
-                                <Button className="gray-outline-btn" onClick={handlesetDraft} disabled={!observationImages?.data}>Save as draft</Button>
+                                <Button className="gray-outline-btn me-2 me-sm-3" onClick={handlesetDraft} disabled={!observationImages?.data}>Save as draft</Button>
                                 <Button type="submit" >Submit</Button>
                             </div>
                         </div>

@@ -11,7 +11,6 @@ import {
 import {Suspense, lazy, useEffect} from 'react';
 import classnames from "classnames";
 import {useState} from "react";
-import Images from "../static/images";
 import useAuth from "../hooks/useAuth";
 import "../assets/scss/component/camerasettings.scss";
 import ImageUpload from "../components/Upload/ImageUpload";

@@ -21,7 +21,7 @@ const ObservationUploadImg = (props) =>{
                 const random = (Math.random() + 1).toString(36).substring(7) + (Math.random() + 1).toString(36).substring(20);
 
                 images?.map((image, index) => {
-                    if (image?.name === item?.name) {
+                    if (image?.lastModified === item?.lastModified) {
                         setError((prev) => {
                             return {
                                 ...prev,
@@ -29,7 +29,6 @@ const ObservationUploadImg = (props) =>{
                             }
                         })
                     }
-                    return true;
                 });
 
 
@@ -38,10 +37,11 @@ const ObservationUploadImg = (props) =>{
                         ...prevState, {
                             'id' : random,
                             'image' : baseImage,
+                            'lastModified': item?.lastModified,
                             'item': item,
                             'latitude': 18.5204,
                             'longitude': 73.8567,
-                            'location': "Pune,Maharashtra",
+                            'location': 'Maharashtra, India',
                             'country_code': 'IN',
                             'obs_date': null,
                             'obs_time': null,
@@ -123,14 +123,10 @@ const ObservationUploadImg = (props) =>{
                     </div> */}
                 </div>
                 {error?.message &&
-                    <>
-                        <span className="text-danger small mt-2 d-inline-block">{error?.message}</span>
-                    </>
+                    <span className="text-danger d-block small my-1 d-inline-block">{error?.message} </span>
                 }
                 {error?.duplicate &&
-                    <>
-                        <span className="text-danger small mt-2 d-inline-block">{error?.duplicate}</span>
-                    </>
+                    <span className="text-danger d-block small my-1 d-inline-block">{error?.duplicate}</span>
                 }
             </div>
         </Col>

@@ -235,9 +235,9 @@ const ObservationLocation = (props) => {
                                 id="Date"
                                 type="date"
                                 name="obs_date"
-                                value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === '' ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
+                                value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
                                 className="w-100"
-                                placeholder="12/20/2021" 
+                                placeholder="12/20/2021"
                                 onChange={(e)=>handleImageInput(e)}
                             />
                         </FormGroup>
@@ -249,7 +249,7 @@ const ObservationLocation = (props) => {
                                 id="Time"
                                 type="time"
                                 name="obs_time"
-                                value={(observationImages?.data)? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === '' ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
+                                value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
                                 className="w-100"
                                 placeholder="10:21:00 am"
                                 onChange={(e)=>handleImageInput(e)}
@@ -259,7 +259,7 @@ const ObservationLocation = (props) => {
                     <Col md={6} lg={4}>
                         <FormGroup>
                             <Label htmlFor="TIME ZONE">TIME ZONE</Label>
-                            <Input type="select" name="timezone" className="w-100" 
+                            <Input type="select" name="timezone" className="w-100"
                             value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
                              onChange={(e)=>handleImageInput(e)}>
                                 <option disabled defaultValue>
@@ -276,18 +276,18 @@ const ObservationLocation = (props) => {
             </Col>
             <Col md={12} className="mb-5">
                 <h6>How accurate is your timing?</h6>
-                <FormGroup>
-                    <Label htmlFor="Date">Uncertainty in Time</Label>
-                    <Input
-                        id="Date"
-                        type="text"
-                        name="uncertainity_time"
-                        value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.uncertainity_time:''}
-                        placeholder="e.g. +/- 3 sec  or  +/- 1 min" 
-                        className="w-100"
-                        onChange={(e)=>handleImageInput(e)}
-                    />
-                </FormGroup>
+                {/*<FormGroup>*/}
+                {/*    <Label htmlFor="Date">Uncertainty in Time</Label>*/}
+                {/*    <Input*/}
+                {/*        id="Date"*/}
+                {/*        type="text"*/}
+                {/*        name="uncertainity_time"*/}
+                {/*        value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.uncertainity_time:''}*/}
+                {/*        placeholder="e.g. +/- 3 sec  or  +/- 1 min" */}
+                {/*        className="w-100"*/}
+                {/*        onChange={(e)=>handleImageInput(e)}*/}
+                {/*    />*/}
+                {/*</FormGroup>*/}
             </Col>
             <Col md={12} className="mb-5">
                 <h6>Please choose azimuth (look direction) of your observation <p className="required">Required</p></h6>
