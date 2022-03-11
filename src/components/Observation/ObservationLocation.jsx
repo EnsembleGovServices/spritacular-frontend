@@ -18,6 +18,7 @@ const ObservationLocation = (props) => {
         area: '',
         state: '',
         country: 'IN',
+        short_address: 'Maharashtra, India',
         mapPosition: {
             lat: 18.5204,
             lng: 73.8567
@@ -45,14 +46,14 @@ const ObservationLocation = (props) => {
     ]
 
     const handleValue = (value) => {
-        console.log(value.address);
+        console.log(value.short_address);
         setAddress(value);
         if(observationImages?.data){
             let observationAddress = {...observationImages};
             if(observationAddress?.data){
                 observationAddress.data[observationAddress.selected_image_index]['latitude'] = value.markerPosition.lat;
                 observationAddress.data[observationAddress.selected_image_index]['longitude'] = value.markerPosition.lng;
-                observationAddress.data[observationAddress.selected_image_index]['location'] = value.address;
+                observationAddress.data[observationAddress.selected_image_index]['location'] = value.short_address;
                 observationAddress.data[observationAddress.selected_image_index]['country_code'] = value.country;
                 setObservationImages(observationAddress);
             }
@@ -91,7 +92,7 @@ const ObservationLocation = (props) => {
         let observationAddress = {...observationImages};        
         if(observationAddress?.data){
             let addressState = {...address1};
-            observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.address;
+            observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.short_address;
             observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
             setObservationImages(observationAddress);
         }

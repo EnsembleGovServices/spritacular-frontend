@@ -19,6 +19,7 @@ class Map extends Component{
 			area: '',
 			state: '',
 			countryCode: '',
+			short_address: '',
 			mapPosition: {
 				lat: this.props.center.lat,
 				lng: this.props.center.lng
@@ -40,7 +41,8 @@ class Map extends Component{
 				      city = this.getCity( addressArray ),
 				      area = this.getArea( addressArray ),
 				      state = this.getState( addressArray ),
-					  country = this.getCountry(addressArray)['short_name'];
+					  country = this.getCountry(addressArray)['short_name'],
+					  short_address = [city,state,country['long_name']].filter(x => x !== undefined && x !== null ).toString();
 
 				// console.log( 'city', city, area, state );
 
@@ -50,16 +52,17 @@ class Map extends Component{
 					city: ( city ) ? city : '',
 					state: ( state ) ? state : '',
 					country: (country) ? country: '',
+					short_address: (short_address)? short_address : '',
 				} )
 			},
 			error => {
 				console.error( error );
 			}
 		);
+		
 	};
 
 	handleChangeLatLng(newLat,newLng) {
-		console.log("hhihiih");
 		newLat = Number(newLat);
 		newLng = Number(newLng);
 		Geocode.fromLatLng( newLat , newLng ).then(
@@ -69,13 +72,15 @@ class Map extends Component{
 				      city = this.getCity( addressArray ),
 				      area = this.getArea( addressArray ),
 				      state = this.getState( addressArray ),
-					  country = this.getCountry(addressArray)['short_name'];
+					  country = this.getCountry(addressArray)['short_name'],
+					  short_address = [city,state,country['long_name']].filter(x => x !== undefined && x !== null ).toString();
 				this.setState( {
 					address: ( address ) ? address : '',
 					area: ( area ) ? area : '',
 					city: ( city ) ? city : '',
 					state: ( state ) ? state : '',
 					country: (country) ? country : '',
+					short_address: (short_address)? short_address: '',
 					markerPosition: {
 						lat: newLat,
 						lng: newLng
@@ -91,6 +96,7 @@ class Map extends Component{
 				console.error(error);
 			}
 		);
+		console.log(this.state);
 	};
 	/**
 	 * Component should only update ( meaning re-render ), when the user selects the address, or drags the pin
@@ -215,13 +221,15 @@ class Map extends Component{
 				      city = this.getCity( addressArray ),
 				      area = this.getArea( addressArray ),
 				      state = this.getState( addressArray ),
-					  country = this.getCountry(addressArray)['short_name'];
+					  country = this.getCountry(addressArray)['short_name'],
+					  short_address = [city,state,country['long_name']].filter(x => x !== undefined && x !== null ).toString();
 				this.setState( {
 					address: ( address ) ? address : '',
 					area: ( area ) ? area : '',
 					city: ( city ) ? city : '',
 					state: ( state ) ? state : '',
 					country: (country) ? country : '',
+					short_address: (short_address)? short_address : '',
 					markerPosition: {
 						lat: newLat,
 						lng: newLng
@@ -251,6 +259,7 @@ class Map extends Component{
 		      area = this.getArea( addressArray ),
 		      state = this.getState( addressArray ),
 			  country = this.getCountry(addressArray)['short_name'],
+			  short_address = [city,state,country['long_name']].filter(x => x !== undefined && x !== null ).toString(),
 		      latValue = place.geometry.location.lat(),
 		      lngValue = place.geometry.location.lng();
 		// Set these values in the state.
@@ -260,6 +269,7 @@ class Map extends Component{
 			city: ( city ) ? city : '',
 			state: ( state ) ? state : '',
 			country: (country) ? country: '',
+			short_address: (short_address)? short_address:'',
 			markerPosition: {
 				lat: latValue,
 				lng: lngValue
