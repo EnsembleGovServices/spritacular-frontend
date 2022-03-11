@@ -100,6 +100,7 @@ class Map extends Component{
 	 * @return {boolean}
 	 */
 	shouldComponentUpdate( nextProps, nextState ){
+
 		if (
 			this.state.markerPosition.lat !== this.props.center.lat ||
 			this.state.address !== nextState.address ||
@@ -107,6 +108,7 @@ class Map extends Component{
 			this.state.area !== nextState.area ||
 			this.state.state !== nextState.state
 		) {			
+
 			return true
 		}
 		 else if ( this.props.center.lat === nextProps.center.lat ){
@@ -114,7 +116,7 @@ class Map extends Component{
 			return false;
 		}
 		
-		return false;
+		return true;
 	}
 	/**
 	 * Get the city and set the city input value to the one selected
@@ -302,7 +304,7 @@ class Map extends Component{
 									onPlaceSelected={ this.onPlaceSelected }
 									types={['(regions)']}
 									placeholder="Type address"
-									value="india"
+									// value="india"
 								/>
 								<InfoWindow
 									onClose={this.onInfoWindowClose}
