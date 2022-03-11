@@ -1,0 +1,50 @@
+// Overriding defaults
+$enable-shadows: true;
+$link-decoration: none;
+
+// Colors
+$dark: #0f0f0f;
+$grey: #181818;
+$primary:#C11E37;
+$secondary : #990000;
+$input-bg : #F4F5F6;
+$modal-btn: #E2E4E9;
+$banner-bg: #E8EAEE;
+$light-grey: #666666;
+$light-grey1: #EAEAEA;
+$admin-btn-bg: #E2E4E9;
+$gray1: #3B3B3B;
+$gray2: #737E96;
+$gray3: #555555;
+$lightPink: #FDF2F4;
+
+$green: #6FCF97;
+// Body
+$body-bg: #ccc;
+
+// Project FontFamily
+$FontFamily: 'Roboto', sans-serif;
+
+// Box shadow
+
+$box-shadow-md: 0px 2px 6px rgba(0, 0, 0, 0.2);
+$box-shadow-popup: 0px 2px 5px rgba(0, 0, 0, 0.1);
+$box-shadow-button: 0px 6px 10px rgba(153, 0, 0, 0.16);
+$box-shadow-pink: 0px 4px 8px rgba(193, 30, 55, 0.12);
+// Modal
+$modal-fade-transform: scale(0.8);
+$modal-show-transform: none;
+$modal-transition: transform 0.1s ease-out;
+$modal-scale-transform: scale(1.02);
+$modal-content-box-shadow-sm-up: $box-shadow-popup;
+$modal-backdrop-bg: transparentize($dark, 0.1);
+$modal-content-border-width: 0;
+
+$border-radius: 6px;
+
+
+// Button
+$btn-border-radius: 25px;
+$btn-focus-width: 0;
+$btn-focus-box-shadow: 0;
+$btn-active-box-shadow: 0;

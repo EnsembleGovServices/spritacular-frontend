@@ -1,0 +1,86 @@
+@import "../global/config.scss";
+
+.blog-main{
+    padding: 50px 0px 80px;
+    h2{
+        @include lg-title;
+        margin-bottom: 30px;
+    }
+    .main-blog{
+        position: relative;
+        height: 550px;
+        img{
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+        }
+        .blog-text{
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            P{
+                color: $white;
+                font-size: 11px;
+                margin-bottom: 0px;
+            }
+            h3{
+                @include md-title;
+                color: $white;
+                margin: 15px 0px;
+                font-weight: 700;
+            }
+
+        }
+    }
+    .blog-small{
+        position: relative;
+        height: 260px;
+        img{
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+        }
+        .blog-text{
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            P{
+                color: $white;
+                font-size: 11px;
+                margin-bottom: 0px;
+            }
+            h3{
+                @include sm-title;
+                color: $white;
+                margin: 15px 0px;
+                font-weight: 700;
+            }
+
+        }
+    }
+    .recommended-blog{
+        margin: 110px 0px 110px;
+        h3{
+            @include slg-title;
+            margin-bottom: 18px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .view-all{
+                color: $secondary;
+                @include md-text;
+            }
+        }
+        .blog-small{
+            h3{
+                @include sm-title;
+            }
+            
+        }
+    }
+}

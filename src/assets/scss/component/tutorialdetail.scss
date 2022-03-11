@@ -1,0 +1,50 @@
+@import "../global/config.scss";
+
+.tutorial-detail-main {
+  padding: 100px 0px 120px;
+  h2 {
+    color: $black;
+    @include lg-title;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  img {
+    width: 100%;
+  }
+  h3 {
+    margin-top: 40px;
+    color: $black;
+    font-weight: 700;
+  }
+  .border-line {
+    padding: 20px 0px;
+    border-top: 1px solid $light-grey1;
+    h4 {
+      color: $grey;
+      @include lg-text;
+      font-weight: 700;
+      margin-bottom: 0px;
+    }
+    ol {
+      margin-bottom: 0px;
+      li {
+        color: $grey;
+        @include lg-text;
+        
+      }
+    }
+    p {
+      color: $grey;
+      @include lg-text;
+      display: flex;
+      align-items: center;
+    }
+    .badge-required{
+      font-size: 11px;
+      font-weight: 500;
+      margin-left: 5px;
+      background: linear-gradient(128.5deg, #C01E37 0%, #F052C1 154.21%);
+      border-radius: 2px;
+    }
+  }
+}

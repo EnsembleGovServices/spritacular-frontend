@@ -1,0 +1,82 @@
+@import "../global/config.scss";
+.observation_card{
+    background: $white;
+    border: 0;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    z-index: 11;
+    position: relative;
+    .observation_country {
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        .badge{
+            padding: 4px 6px;
+            background: rgba(0, 0, 0, 0.64);
+            border-radius: 0px 6px 0px 8px;
+        }
+        img{
+            width: 20px;
+        }
+    }
+    .card-link{
+        &:hover .observation_country{
+            opacity: 1;
+        }
+    }
+    .observation-card_body{
+        padding: 15px 11px 11px;
+        .observation_type{
+            top: -15px;
+            box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
+            width: 22px;
+            height: 22px;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+        .card_desc{
+            .card-title{
+                font-weight: bold;
+                @include md-text;
+            }
+            .card-subtitle{
+                font-weight: normal;
+                @include md-text;
+                .badge{
+                    @include xs-text;
+                    font-weight: 500;
+                    margin-left: 4px;
+                }
+            }
+        }
+        .card-details{
+            .card-user_details{
+                h6{
+                    @include md-text;
+                    font-weight: 400;
+                    width: calc(100% - 30px);
+                }
+                .profile-icon{
+                    width: 30px;
+                    height: 30px;
+                }
+                .profile-text{
+                    width: 30px;
+                    height: 30px;
+                    font-style: normal;
+                    @include md-text;
+                    font-weight: 700;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+            
+        }   
+    }
+}

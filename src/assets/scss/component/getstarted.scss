@@ -1,0 +1,208 @@
+@import "../global/config.scss";
+
+.how-it-works-section{
+    padding: 70px 0px 140px;
+    position: relative;
+    @media(max-width:1023px){
+      padding: 150px 0px 120px;
+    }
+    @media(max-width:767px){
+      padding: 100px 0px 120px;
+    }
+    &::before{
+      content: "";
+      position: absolute;
+      background-image: url(../../images/left-dot.png);
+      background-repeat: no-repeat;
+      width: 240px;
+      height: 140px;
+      position: absolute;
+      left: 0px;
+      top: 8%;
+      @media(max-width:1023px){
+          width: 140px;
+          height: 80px;
+          background-size: 100%;
+          
+      }
+      @media(max-width:767px){
+        display: none;
+    }
+    }
+    img{
+        z-index: -1;
+        position: relative;
+    }
+    .shadow-lg{
+        img{
+            z-index: 1;
+        }
+    }
+    h2{
+        text-align: center;
+        margin-bottom: 75px;
+        // font-size: 48px;
+        // line-height: 56px;
+        font-weight: bold;
+        @include xl-title;
+        color: #181818;
+        @media(max-width:1023px){
+            // font-size: 36px;
+            // line-height: 40px;
+            margin-bottom: 40px;
+        }
+      
+        
+    }
+    .top-polygone{
+        img{
+            position: absolute;
+            right: 0px;
+            top: 3%;
+            @media(max-width:1150px){
+                width: 40%;
+            }
+            @media(max-width:767px){
+              display: none;
+          }
+        }
+    }
+    .bottom-polygone{
+      img{
+          position: absolute;
+          left: 0px;
+          bottom: 0px;
+          @media(max-width:1450px){
+              width: 40%;
+              z-index: -9;
+          }
+      }
+    }
+    .works-gap{
+        margin-bottom: 90px;
+        @media(max-width:1023px){
+            margin-bottom: 35px;
+        }
+    }
+    .how-it-work-text-info{
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        h3{
+        //   font-size: 42px;
+        //   line-height: 49px;
+          @include lg-title;
+          color: #000000;
+          font-weight: 700;
+          margin: 0px;
+          display: flex;
+          align-items: center;
+          @media(max-width:1023px){
+            //   font-size: 30px;
+            //   line-height: 35px;
+          }
+          
+          span{
+              background-color: #C11E37;
+              height: 46px;
+              width: 46px;
+              border-radius: 50%;
+              @include vcenter;
+            //   font-size: 24px;
+              @include sm-title;
+              font-weight: normal;
+              color: #fff;
+              text-align: center;
+              margin-right: 18px;
+              @media(max-width:1023px){
+                height: 35px;
+                width: 35px;
+                // font-size: 16px;
+                margin-right: 10px;
+            }
+          }
+          
+        }
+        p{
+          color: #666;
+        //   font-size: 18px;
+        //   line-height: 26px;
+          @include xl-text;
+          margin: 24px 0px 0px 0px;
+          @media(max-width:1023px){
+            //   font-size: 15px;
+            //   margin-top: 15px;
+          }
+      }
+      .register-polygon{
+          right: 20%;
+          bottom: 5%;
+          position: absolute;
+          @media(max-width:991px){
+              display: none;
+          }
+         
+      }
+      .observe-polygon{
+          right: 0px;
+          bottom: 0px;
+          height: 130px;
+          width: 130px;
+          position: absolute;
+          @media(max-width:991px){
+            display: none;
+        }
+          
+      }
+      .share-polygon{
+          left: -50%;
+          width: 100px;
+          height: 100px;
+          position: absolute;
+          top: -90px;
+          @media(max-width:1820px){
+            left: -40%;
+          }
+          @media(max-width:1700px){
+            left: -30%;
+          }
+          @media(max-width:1600px){
+            left: -18%;
+          }
+          @media(max-width:1500px){
+            left: -17%;
+          }
+          @media(max-width:1380px){
+            left: -26%;
+          }
+          @media(max-width:1280px){
+            left: -15%;
+          }
+          
+          @media(max-width:991px){
+            display: none;
+         }
+      }
+      .engage-polygon{
+        right: 50%;
+        height: 100px;
+        width: 100px;
+        bottom: -35px;
+        position: absolute;
+        @media(max-width:991px){
+            display: none;
+        }
+      }
+      .view-tutorial{
+          margin-top: 24px;
+          padding: 11px 26px;
+          @include lg-text;
+          font-weight: 500;
+          max-width: fit-content;
+          border-radius: 99px;
+          @include buttonOutlineSecodary;
+      }
+    }
+}

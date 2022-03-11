@@ -1,0 +1,409 @@
+@import "../global/config.scss";
+.upload-observation-form-main {
+  img{
+    width: 100%;
+  }
+  .upload-observation-form-inner {
+    padding: 0 0 200px;
+  }
+  .observation-form-left-tab {
+    max-width: 180px;
+    width: 100%;
+    .nav-tabs {
+      border-bottom: none;
+      .nav-item {
+        .nav-link {
+          border-radius: $border-radius;
+          @include lg-text;
+          font-weight: 700;
+          color: $black;
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 0;
+          cursor: pointer;
+          background-color: $white;
+          transition: $modal-transition;
+          &:hover,
+          &.active {
+            background-color: $lightPink;
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+  .upload-observation-main{
+    padding: 0;
+    .upload-ob-inner{
+      position: relative;
+      border:1px dashed #CCC;
+      background-color: #F9F9F9;
+      border-radius: $border-radius;
+      margin: 0 auto;
+      width: 100%;
+      min-height: 305px;
+    }
+    input[type=file] {
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+    }
+    .form-label {
+      color: $black;
+      @include md-text;
+      position: absolute;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      flex-direction: column;
+      cursor: pointer;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      .upload-info{
+        text-align: center;
+        // z-index: 99;
+        svg{
+          margin-bottom: 17px;
+        }
+        span {
+          @include md-text;
+          opacity: 0.6;
+        }
+        ul {
+          margin-top: 80px;
+          li {
+            color: $black;
+            @include md-text;
+            opacity: 0.6;
+          }
+        }
+        p{
+          @include lg-text;
+          margin-bottom: 4px;
+          margin-top: 0;
+        }
+        .btn{
+          padding: 12px 25px;
+          &:hover{
+            background-color: $white;
+            color: $secondary;
+          }
+        }
+      }
+    }
+  }
+  .upload-multiple-observation{
+    .observation-image{
+      max-width: 100%;
+      background-color: #F6F7F8;
+      height: 305px;
+      border-radius: $border-radius; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 60px;
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .btn{
+        right: 0;
+        top: -2px;
+        font-size: 24px;
+        line-height: 24px;
+      }
+    }
+  }
+}
+
+.common-top-button-wrapper {
+  background-color: #f6f7f8;
+  padding: 11px 0px;
+  top:70px;
+  position: sticky;
+  z-index: 9;
+  margin-bottom: 60px;
+  @include media-breakpoint-down(sm)  {
+    top: 64px;
+    margin-bottom: 30px;
+  }
+  .common-top-button-wrapper-inner {
+    display: flex;
+    justify-content: space-between;
+    .btn {
+      padding: 9px 34px;
+      @include md-text;
+      @include media-breakpoint-down(sm) {
+        padding: 5px 15px;
+      }
+      &.disabled{
+        @include disabled;
+      }
+    }
+    .top-right-btn{
+      .btn{
+        padding: 9px 20px;
+        min-width: 137px;
+        @include media-breakpoint-down(sm) {
+          padding: 5px 15px;
+          min-width: 75px;
+        }
+      }
+    }
+  }
+}
+.small-upload_box{
+  .upload-observation-main{
+    .upload-ob-inner{
+      min-height: 60px;
+      .upload-info{
+        display: flex;
+        align-items: center;
+        svg{
+          margin-bottom: 0;
+          margin-right: 17px;
+          width: 36px;
+          height: 36px;
+        }
+        p{
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+.observation-form-right-tab{
+  .nav-tabs{
+    margin: 0 -6px 40px;
+    border: 0;
+    .nav-item{
+      width: 50%;
+      padding: 0 6px;
+      .nav-link{
+        background: #F9F9F9;
+        border: 1px solid #DDDDDD;
+        border-radius: $border-radius;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        font-style: normal;
+        font-weight: 600;
+        @include lg-text;
+        color: black;
+        p{
+          font-weight: normal;
+          @include md-text;
+        }
+        &.active{
+          background: $lightPink;
+          border-color: $secondary;
+          box-shadow: $box-shadow-pink;
+        }
+      }
+    }
+  }
+  .btn-secondary{
+    padding: 13px 47px;
+    font-weight: 500;
+    @include lg-text;
+  }
+}
+.upload-observation-form-inner{
+  .gray-outline-btn{
+    padding: 13px 32px;
+    @include media-breakpoint-down(lg){
+        padding: 10px 30px;
+    }
+  }
+  textarea{
+    resize: none;
+    background: transparent;
+    padding: 0 0 10px 0;
+    @include md-text;
+    border-radius: 0;
+    &:focus{
+      background: transparent;
+    }
+  }
+}
+
+.progress-bar_wrapper{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  outline: 1px solid #E8EAEE;
+  border-radius: 6px;
+  overflow: hidden; 
+  &::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(270deg, #E82C95 0%, #8C61E5 100%);
+    width: var(--uploadProgress);
+    height: 3px;
+  }
+  .image-progree_bar{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+.other-textfield{
+  max-width: 470px;
+}
+.selected-image{
+  width: 160px;
+  height: 160px;
+  border-radius: 10px;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 0;
+  &.active-tab{
+   &::before{
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, #E82C95 0.28%, #8C61E5 100%);
+      z-index: 0;
+   }
+  }
+  img{
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    object-fit: cover;
+    object-position: top;
+    position: relative;
+    z-index: 1;
+    top: 4px;
+    left: 4px;
+    border-radius: 6px;
+    outline: 2px solid #fff;
+  }
+}
+
+// Custom checkbox design for choose image category START
+.checkbox-wrapper{
+  .inputGroup {
+    background-color: #fff;
+    display: block;
+    margin: 10px 0;
+    position: relative;
+    label {
+      padding: 12px 30px;
+      width: 100%;
+      display:flex;
+      align-items: center;
+      text-align: left;
+      color: $black;
+      @include lg-text;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      transition: color 200ms ease-in;
+      overflow: hidden;
+      border:1px solid #CBCFD8;
+      border-radius: $border-radius;
+      @media(max-width:1023px){
+        padding: 8px 10px;
+      }
+      &:after {
+        width: 22px;
+        height: 22px;
+        content: '';
+        border: 1px solid #ADB4C2;
+        background-color: #fff;
+        background-image: url("../../images/check-white.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14px;
+        border-radius: 50%;
+        z-index: 2;
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        transition: all 200ms ease-in;
+        @media(max-width:1023px){
+          width: 17px;
+          height: 17px;
+          background-size: 11px;
+          right: 8px;
+        }
+      }
+      img{
+        margin-right: 10px;
+        width: 25px;
+        height: 25px;
+        object-fit: contain;
+        @media(max-width:1023px){
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+    input:checked ~ label {
+      color: $black;
+      border:1px solid $secondary;
+      background: $lightPink;
+      box-shadow: $box-shadow-pink;
+      &:before {
+        transform: translate(-50%, -50%) scale3d(56, 56, 1);
+        opacity: 1;
+      }
+
+      &:after {
+        background-color: #990000;
+        border-color: #990000;
+      }
+    }
+    input {
+      width: 22px;
+      height: 22px;
+      order: 1;
+      z-index: 2;
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      visibility: hidden;
+      
+    }
+  }
+}
+// Custom checkbox design for choose image category END
+
+.popover-carousel{
+  &.carousel{
+    margin-bottom: 8px;
+    .carousel-item{
+      img{
+        max-height: 165px;
+        min-height: 165px;
+      }
+    }
+  }
+}

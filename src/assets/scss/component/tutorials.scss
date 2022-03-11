@@ -1,0 +1,31 @@
+@import "../global/config.scss";
+
+
+.tutorial-main{
+    background-color: #E8EAEE;
+    padding: 60px 0px 80px;
+    @media(max-width:767px){
+        padding: 100px 0px 80px; 
+    }
+    img{
+        width: 100%;
+    }
+    h2{
+        @include lg-title;
+        margin-bottom: 40px;
+        color: $black;
+        font-weight: 700;
+    }
+    h3{
+        margin:20px 0px 15px;
+        color: $black;
+        font-weight: 700;
+        @include mds-title;
+
+    }
+    p{
+        color: $light-grey;
+        @include lg-text;
+        
+    }
+}

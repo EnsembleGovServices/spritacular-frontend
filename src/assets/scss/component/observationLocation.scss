@@ -1,0 +1,159 @@
+@import "../global/config.scss";
+.observation_location{
+    h6{
+        margin-bottom: 20px;
+        font-weight: 600;
+        @include lg-text;
+    }
+    .form-label{
+        @include sm-text;
+        margin-right: 0;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+    }
+    .selected-address {
+        font-weight: 500;
+        @include md-text;
+        height: 100%;
+        img{
+            width: 24px;
+            margin-right: 8px;
+        }
+    }
+    .btn-secondary{
+        &:not(.gray-outline-btn){
+            padding: 13px 50px;
+            @include buttonSecodary;
+            @include media-breakpoint-down(lg){
+                padding: 10px 30px;
+            }
+        }
+    }
+    .form-check{
+        .form-check-label {
+            font-weight: normal;
+            @include lg-text;
+            text-transform: none;
+            color: $black;
+            justify-content: flex-end;
+        }
+    }
+    .degree-input{
+        width: 100%;
+        max-width: 318px;
+    }
+    .compass-wrapper{
+        border: 1px solid #CBCFD8;
+        border-radius: 50%;
+        width: 220px;
+        height: 220px;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+        .btn-secondary{
+            padding: 7px;
+            text-transform: uppercase;
+            font-style: normal;
+            font-weight: normal;
+            @include md-text;
+            width: 38px;
+            height: 38px;
+            @include vcenter;
+            z-index: 2;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            color: $black;
+            &.active_direction{
+                @include buttonSecodary;
+                box-shadow: 0px 4px 4px rgba(153, 0, 0, 0.16);
+
+            }
+            &.N-direction{
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 6px;
+            }
+            &.NE-direction{
+                position: absolute;
+                right: 30px;
+                top: 14%;
+            }
+            &.E-direction{
+                position: absolute;
+                right: 6px;
+                transform: translateY(-50%);
+                top: 50%;
+            }
+            &.SE-direction{
+                position: absolute;
+                right: 30px;
+                top: 68%;
+            }
+            &.S-direction{
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 6px;
+            }
+            &.SW-direction{
+                position: absolute;
+                bottom: 10%;
+                transform: translateY(-50%);
+                left: 20px;
+            }
+            &.W-direction{
+                position: absolute;
+                left: 6px;
+                transform: translateY(-50%);
+                top: 50%;
+            }
+            &.NW-direction{
+                position: absolute;
+                left: 30px;
+                top: 14%;
+            }
+        }
+        .center-dot{
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #CBCFD8;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 1;
+        }
+        .rotate-arrow-wrap{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            .rotate-arrow-inner{
+                height: 100%;
+                transition: all 0.5s ease;
+                padding: 0 8px;
+                transform: rotate(var(--directionAngle));
+            }
+            .rotate-arrow{
+                &.main {
+                    position: relative;
+                    top: -1px;
+                }
+                &.hidden{
+                    opacity: 0;
+                }
+            }
+        }
+    }
+    .search-input-container {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding: 14px;
+    }
+}
