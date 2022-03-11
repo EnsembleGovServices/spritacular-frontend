@@ -174,19 +174,18 @@ const ObservationLocation = (props) => {
                         </Col>}
                     </Row>
                     <MapWrapper
-                    google={props.google}
-                    center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
-                    height='300px'
-                    zoom={15}
-                    handleState={handleValue}
-                    isLoaded={isLoaded}
-                    ref={fref}
-                    /> 
-                        {/* <Input
-                            type="search"
-                            name="name"
-                            placeholder="Edmon, OK, USA"
-                        /> */}
+                        google={props.google}
+                        center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
+                        height="400px"
+                        containerPosition={"relative"}
+                        mapRadius="10px"
+                        zoom={15}
+                        handleState={handleValue}
+                        isLoaded={isLoaded}
+                        mapContainer="map-search-container"
+                        searchInputClass="search-input-class"
+                        ref={fref}
+                    />
                 </FormGroup>
             </Col>
             <Col md={12} className="mb-5">
