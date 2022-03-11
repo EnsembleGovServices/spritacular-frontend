@@ -25,7 +25,7 @@ const ObservationAfterImageUpload = (props) => {
     const {observationImages, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
-    const [isOther, setIsOther] = useState(false);
+    const [isOther] = useState(false);
 
     // Toggle Tabs
     const toggleImageTab = (tab) => {
@@ -35,9 +35,9 @@ const ObservationAfterImageUpload = (props) => {
     };
 
 
-    // useEffect(()=> {
-    //     setIsMultiple(observationImages?.data?.length > 1)
-    // }, [observationImages?.data?.length])
+    useEffect(()=> {
+        setIsMultiple(observationImages?.data?.length > 1)
+    }, [observationImages?.data?.length])
 
 
     useEffect(() => {
@@ -80,6 +80,7 @@ const ObservationAfterImageUpload = (props) => {
                             id="toggleMultiple"
                             type="checkbox"
                             className="hidden"
+                            checked={isMultiple}
                             onChange={(e)=> setIsMultiple(!isMultiple)}
                         />
                         <label className="switchbox" htmlFor="toggleMultiple" />

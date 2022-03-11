@@ -50,6 +50,7 @@ const AddObservation = () => {
             setActiveTab(tab);
         }
     };
+
     const handleInput = (e) => {
         let name = e.target.name,
             value = e.target.value;

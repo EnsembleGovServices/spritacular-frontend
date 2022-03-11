@@ -29,7 +29,7 @@ export const routeUrls = {
     tutorialsDetail: 'tutorials-detail',
     login: 'login',
     profile: 'profile',
-    myObservations: 'my-observations',
+    myObservations: 'observations',
     observationsAdd: 'observations/add',
-    uploadObservations: 'upload-observations'
+    uploadObservations: 'observations/upload'
 }
