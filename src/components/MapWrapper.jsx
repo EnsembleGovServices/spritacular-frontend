@@ -42,7 +42,7 @@ class Map extends Component{
 				      area = this.getArea( addressArray ),
 				      state = this.getState( addressArray ),
 					  country = this.getCountry(addressArray)['short_name'],
-					  short_address = [city,state,country['long_name']].filter(x => x !== undefined && x !== null ).toString();
+					  short_address = [city,state,this.getCountry(addressArray)['long_name']].filter(x => x !== undefined && x !== null ).toString();
 
 				// console.log( 'city', city, area, state );
 
@@ -73,7 +73,7 @@ class Map extends Component{
 				      area = this.getArea( addressArray ),
 				      state = this.getState( addressArray ),
 					  country = this.getCountry(addressArray)['short_name'],
-					  short_address = [city,state,country['long_name']].filter(x => x !== undefined && x !== null ).toString();
+					  short_address = [city,state,this.getCountry(addressArray)['long_name']].filter(x => x !== undefined && x !== null ).toString();
 				this.setState( {
 					address: ( address ) ? address : '',
 					area: ( area ) ? area : '',
@@ -222,7 +222,7 @@ class Map extends Component{
 				      area = this.getArea( addressArray ),
 				      state = this.getState( addressArray ),
 					  country = this.getCountry(addressArray)['short_name'],
-					  short_address = [city,state,country['long_name']].filter(x => x !== undefined && x !== null ).toString();
+					  short_address = [city,state,this.getCountry(addressArray)['long_name']].filter(x => x !== undefined && x !== null ).toString();
 				this.setState( {
 					address: ( address ) ? address : '',
 					area: ( area ) ? area : '',
@@ -259,7 +259,7 @@ class Map extends Component{
 		      area = this.getArea( addressArray ),
 		      state = this.getState( addressArray ),
 			  country = this.getCountry(addressArray)['short_name'],
-			  short_address = [city,state,country['long_name']].filter(x => x !== undefined && x !== null ).toString(),
+			  short_address = [city,state,this.getCountry(addressArray)['long_name']].filter(x => x !== undefined && x !== null ).toString(),
 		      latValue = place.geometry.location.lat(),
 		      lngValue = place.geometry.location.lng();
 		// Set these values in the state.
