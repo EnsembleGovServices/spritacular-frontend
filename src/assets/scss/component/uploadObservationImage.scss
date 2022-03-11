@@ -127,18 +127,23 @@
 .common-top-button-wrapper {
   background-color: #f6f7f8;
   padding: 11px 0px;
-  top:60px;
+  top:70px;
   position: sticky;
   z-index: 9;
   margin-bottom: 60px;
+  @include media-breakpoint-down(sm)  {
+    top: 64px;
+    margin-bottom: 30px;
+  }
   .common-top-button-wrapper-inner {
     display: flex;
     justify-content: space-between;
     .btn {
-      // @include grayButton;
-      margin-right: 15px;
       padding: 9px 34px;
       @include md-text;
+      @include media-breakpoint-down(sm) {
+        padding: 5px 15px;
+      }
       &.disabled{
         @include disabled;
       }
@@ -147,6 +152,10 @@
       .btn{
         padding: 9px 20px;
         min-width: 137px;
+        @include media-breakpoint-down(sm) {
+          padding: 5px 15px;
+          min-width: 75px;
+        }
       }
     }
   }

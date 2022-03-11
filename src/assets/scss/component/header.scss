@@ -1,14 +1,11 @@
 @import "../global/config.scss";
 .custom-header {
-  padding: 15px 0px;
+  padding: 10px 0px;
   position: fixed;
   top: 0px;
   width: 100%;
   z-index: 999;
   @include transition();
-  @include media-breakpoint-down(md){
-    padding: 10px 0px;
-  }
   .on-scroll-logo {
     display: none;
   }
