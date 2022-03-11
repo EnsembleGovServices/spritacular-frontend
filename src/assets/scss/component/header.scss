@@ -46,15 +46,24 @@
             background-color: transparent;
             border: none;
             box-shadow: none;
-            &.register,
+            &.register {
+              @media (max-width: 1023px) {
+                max-width: 100px;
+                width: 100%;
+                margin: 0 auto;
+                padding: 10px;
+                text-align: center;
+                @include buttonSecodary;
+              }
+            }
             &.login-btn {
               @media (max-width: 1023px) {
                 max-width: 100px;
                 width: 100%;
                 margin: 0 auto;
-                background: #fff;
-                color: $secondary;
                 padding: 10px;
+                text-align: center;
+                @include buttonOutlineSecodary;
               }
             }
           }
@@ -160,7 +169,6 @@
           transform: rotate(0deg);
           transition: all 0.3s ease;
         }
-
       }
     }
     &.show{

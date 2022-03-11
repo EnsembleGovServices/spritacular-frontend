@@ -19,7 +19,7 @@ const LoginPopup = (props) => {
 
   const handleForgotPasswordModal = () => {
     setIsForgotPasswordModal(!isForgotPasswordModal);
-    setLoginPopup(false);
+    setLoginPopup(!loginPopup);
   };
 
 

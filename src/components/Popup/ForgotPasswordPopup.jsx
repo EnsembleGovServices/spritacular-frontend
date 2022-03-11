@@ -11,7 +11,7 @@ import {
   Row,
   Alert
 } from "reactstrap";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 import Images from "../../static/images";
 import PropTypes from "prop-types";
@@ -35,7 +35,7 @@ const ForgotPasswordPopup = (props) => {
           setSuccess('Password reset link sent successfully');
           setTimeout(() =>{
             handleClose();
-        },3000)
+          },3000)
         })
         .catch((error) => {
           console.log(error);
