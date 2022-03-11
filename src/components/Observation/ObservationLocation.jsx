@@ -1,6 +1,7 @@
 import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
 import Images from "../../static/images";
-import {useState, useEffect} from 'react';
+import {useState, useEffect,useRef} from 'react';
+import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
 import useObservations from "../../hooks/useObservations";
@@ -10,8 +11,9 @@ import ReactCountryFlags from '../ReactCountryFlag';
 
 const ObservationLocation = (props) => {
     const { toggleTab,handleImageInput } = props;
+    const fref = useRef()
     const [address1,setAddress] = useState({
-        address: 'India',
+        address: '204, Mote Mangal Karyalay Rd, Bhavani Peth, Shobhapur, Kasba Peth, Pune, Maharashtra 411011, India',
         city: '',
         area: '',
         state: '',
@@ -29,7 +31,10 @@ const ObservationLocation = (props) => {
     const [lng,setLng] = useState(73.8567);
     const [isLoaded,setIsLoaded] = useState(false);
     const {observationImages, setObservationImages,observationData} = useObservations();
-
+    // const [updateMap,setUpdateMap] = useState({
+    //     lat:18.5204,
+    //     lng:73.8567
+    // });
     const [updateMap,setUpdateMap] = useState(false);
     const [isActiveDire, setActiveDire] = useState(null);
     const [directionAngle, setDirectionAngle] = useState(0);
@@ -76,6 +81,7 @@ const ObservationLocation = (props) => {
             //  setTimeout(()=> {
                  setIsLoaded(true);
             //  },3000);
+            fref.current.handleChangeLatLng(e.target.value,address1.markerPosition.lng);
     }
     const handleChangeLng = (e) => {
         handleImageInput(e);
@@ -89,8 +95,8 @@ const ObservationLocation = (props) => {
             //  setObservationImages(imageArray);
         setAddress(addressState);
         setIsLoaded(true);
+        fref.current.handleChangeLatLng(address1.markerPosition.lat,e.target.value);
     }
-
     useEffect(() => {
         let observationAddress = {...observationImages};        
         if(observationAddress?.data){
@@ -134,6 +140,7 @@ const ObservationLocation = (props) => {
         }
     }
     const handleCopyData = (e,keys) => {
+        console.log(keys);
         let copyImages = {...observationImages};
         keys.map((k) => {
         if(e.target.checked){
@@ -167,53 +174,55 @@ const ObservationLocation = (props) => {
                         </Col>}
                     </Row>
                     <MapWrapper
-                        google={props.google}
-                        center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
-                        height="400px"
-                        containerPosition={"relative"}
-                        mapRadius="10px"
-                        zoom={15}
-                        handleState={handleValue}
-                        isLoaded={isLoaded}
-                        mapContainer="map-search-container"
-                        searchInputClass="search-input-class"
-                    />
+                    google={props.google}
+                    center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
+                    height='300px'
+                    zoom={15}
+                    handleState={handleValue}
+                    isLoaded={isLoaded}
+                    ref={fref}
+                    /> 
+                        {/* <Input
+                            type="search"
+                            name="name"
+                            placeholder="Edmon, OK, USA"
+                        /> */}
                 </FormGroup>
             </Col>
             <Col md={12} className="mb-5">
                 <h6>If you know the precise coordinates of your observation location, please enter below</h6>
                 <Row>
                     <Col md={6} lg={4}>
-                        {/*<FormGroup row>*/}
-                        {/*    <Label className="form-label" htmlFor="LAT" sm={2} >LAT</Label>*/}
-                        {/*    <Col sm={10}>*/}
-                        {/*        <Input*/}
-                        {/*            // value={address1?.markerPosition?.lat}*/}
-                        {/*            value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : ''}*/}
-                        {/*            id="LAT"*/}
-                        {/*            type="number"*/}
-                        {/*            name="latitude"*/}
-                        {/*            placeholder="Edmon, OK, USA"*/}
-                        {/*            onChange={(e)=> {handleImageInput(e); handleChangeLat(e);}}*/}
-                        {/*        />*/}
-                        {/*    </Col>*/}
-                        {/*</FormGroup>*/}
+                        <FormGroup row>
+                            <Label className="form-label" htmlFor="LAT" sm={2} >LAT</Label>
+                            <Col sm={10}>
+                                <Input
+                                    // value={address1?.markerPosition?.lat}
+                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude :''}
+                                    id="LAT"
+                                    type="number"
+                                    name="latitude"
+                                    placeholder="Edmon, OK, USA"
+                                    onChange={(e)=> {handleImageInput(e); handleChangeLat(e);}}
+                                />
+                            </Col>
+                        </FormGroup>
                     </Col>
                     <Col md={6} lg={4}>
-                        {/*<FormGroup row>*/}
-                        {/*    <Label className="form-label" htmlFor="LAT" sm={2} >LON</Label>*/}
-                        {/*    <Col sm={10}>*/}
-                        {/*        <Input*/}
-                        {/*            // value={address1?.markerPosition?.lng}*/}
-                        {/*            value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :''}*/}
-                        {/*            id="LON"*/}
-                        {/*            type="number"*/}
-                        {/*            name="longitude"*/}
-                        {/*            placeholder="Edmon, OK, USA"*/}
-                        {/*            onChange={(e)=> {handleImageInput(e); handleChangeLng(e);}}*/}
-                        {/*        />*/}
-                        {/*    </Col>*/}
-                        {/*</FormGroup>*/}
+                        <FormGroup row>
+                            <Label className="form-label" htmlFor="LAT" sm={2} >LON</Label>
+                            <Col sm={10}>
+                                <Input
+                                    // value={address1?.markerPosition?.lng}
+                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :''}
+                                    id="LON"
+                                    type="number"
+                                    name="longitude"
+                                    placeholder="Edmon, OK, USA"
+                                    onChange={(e)=> {handleImageInput(e); handleChangeLng(e);}}
+                                />
+                            </Col>
+                        </FormGroup>
                     </Col>
                     <Col md={6} lg={4}>
                     
@@ -230,33 +239,33 @@ const ObservationLocation = (props) => {
                     <Col lg={7} className="order-2 order-lg-1">
                         <h6>Please enter date and time for your observation</h6>
                     </Col>
-                    {/*{observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">*/}
-                    {/*    <FormGroup check>*/}
-                    {/*        <Label check className="mb-0">*/}
-                    {/*            <Input*/}
-                    {/*                type="checkbox"*/}
-                    {/*                name="Same as the first image"*/}
-                    {/*                onChange={(e) => handleCopyData(e,['obs_date','obs_time','timezone'])}*/}
-                    {/*            />*/}
-                    {/*            Same as the first image*/}
-                    {/*        </Label>*/}
-                    {/*    </FormGroup>*/}
-                    {/*</Col>}*/}
+                    {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
+                        <FormGroup check>
+                            <Label check className="mb-0">
+                                <Input
+                                    type="checkbox"
+                                    name="Same as the first image"
+                                    onChange={(e) => handleCopyData(e,['obs_date','obs_time','timezone'])}
+                                />
+                                Same as the first image
+                            </Label>
+                        </FormGroup>
+                    </Col>}
                 </Row>
                 <Row>
                     <Col md={6} lg={4}>
-                        {/*<FormGroup>*/}
-                        {/*    <Label htmlFor="Date">Date</Label>*/}
-                        {/*    <Input*/}
-                        {/*        id="Date"*/}
-                        {/*        type="date"*/}
-                        {/*        name="obs_date"*/}
-                        {/*        value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === '' ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}*/}
-                        {/*        className="w-100"*/}
-                        {/*        placeholder="12/20/2021" */}
-                        {/*        onChange={(e)=>handleImageInput(e)}*/}
-                        {/*    />*/}
-                        {/*</FormGroup>*/}
+                        <FormGroup>
+                            <Label htmlFor="Date">Date</Label>
+                            <Input
+                                id="Date"
+                                type="date"
+                                name="obs_date"
+                                value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === '' ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
+                                className="w-100"
+                                placeholder="12/20/2021" 
+                                onChange={(e)=>handleImageInput(e)}
+                            />
+                        </FormGroup>
                     </Col>
                     <Col md={6} lg={4}>
                         <FormGroup>
@@ -265,7 +274,7 @@ const ObservationLocation = (props) => {
                                 id="Time"
                                 type="time"
                                 name="obs_time"
-                                value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === "" ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ""}
+                                value={(observationImages?.data)? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === '' ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
                                 className="w-100"
                                 placeholder="10:21:00 am"
                                 onChange={(e)=>handleImageInput(e)}
@@ -275,7 +284,7 @@ const ObservationLocation = (props) => {
                     <Col md={6} lg={4}>
                         <FormGroup>
                             <Label htmlFor="TIME ZONE">TIME ZONE</Label>
-                            <Input type="select" name="timezone" className="w-100"
+                            <Input type="select" name="timezone" className="w-100" 
                             value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
                              onChange={(e)=>handleImageInput(e)}>
                                 <option disabled defaultValue>
@@ -299,7 +308,7 @@ const ObservationLocation = (props) => {
                         type="text"
                         name="uncertainity_time"
                         value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.uncertainity_time:''}
-                        placeholder="e.g. +/- 3 sec  or  +/- 1 min"
+                        placeholder="e.g. +/- 3 sec  or  +/- 1 min" 
                         className="w-100"
                         onChange={(e)=>handleImageInput(e)}
                     />
