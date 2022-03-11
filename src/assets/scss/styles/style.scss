@@ -84,6 +84,13 @@ body.modal-open {
 .gray-outline-btn{
   @include grayButton;
 }
+.map-search-container {
+  padding: 20px;
+  position: relative;
+}
+.search-input-class {
+
+}
 // Import any component file here
 
 @import "../component/index.scss";

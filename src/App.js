@@ -33,7 +33,7 @@ const App = () => {
       <Route element={<PersistLogin persistValue={persistValue} />}>
         <Route element={ <InformativePage setAuthValue={authCallBack} /> }>
           <Route exact path={""} element={<Home />} />
-          <Route exact path={"about"} element={<About />} />
+          <Route exact path={""} element={<About />} />
           <Route exact path={"get-started"} element={<GetStarted />} />
           <Route exact path={"blog"} element={<Blog />} />
           <Route exact path={"tutorials"} element={<Tutorials />} />

@@ -5,7 +5,6 @@ import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "reac
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
 import { GoogleMapsAPI } from '../config';
-import getCity, {getPostalCode, getState , getCountry, getArea} from '../helpers';
 Geocode.setApiKey(GoogleMapsAPI);
 Geocode.enableDebug();
 
@@ -39,7 +38,7 @@ class Map extends Component{
 				      addressArray =  response.results[0].address_components,
 				      city = this.getCity( addressArray ),
 				      area = this.getArea( addressArray ),
-				      state = this.getState( addressArray );
+				      state = this.getState( addressArray ),
 					  country = this.getCountry(addressArray)['short_name'];
 
 				// console.log( 'city', city, area, state );
@@ -65,14 +64,14 @@ class Map extends Component{
 	 * @return {boolean}
 	 */
 	shouldComponentUpdate( nextProps, nextState ){		
-		if(this.props.isLoaded == true && this.state.markerPosition.lat !== this.props.center.lat || this.state.markerPosition.lng !== this.props.center.lng){
+		if(this.props.isLoaded === true && this.state.markerPosition.lat !== this.props.center.lat || this.state.markerPosition.lng !== this.props.center.lng){
 				 Geocode.fromLatLng( nextProps.center.lat , nextProps.center.lng ).then(
 					response => {
 						const address = response.results[0].formatted_address,
 							  addressArray =  response.results[0].address_components,
 							  city = this.getCity( addressArray ),
 							  area = this.getArea( addressArray ),
-							  state = this.getState( addressArray );
+							  state = this.getState( addressArray ),
 							  country = this.getCountry(addressArray)['short_name'];
 						this.setState( {
 							address: ( address ) ? address : '',
@@ -208,7 +207,7 @@ class Map extends Component{
 				      addressArray =  response.results[0].address_components,
 				      city = this.getCity( addressArray ),
 				      area = this.getArea( addressArray ),
-				      state = this.getState( addressArray );
+				      state = this.getState( addressArray ),
 					  country = this.getCountry(addressArray)['short_name'];
 				this.setState( {
 					address: ( address ) ? address : '',
@@ -271,64 +270,65 @@ class Map extends Component{
 		const AsyncMap = withScriptjs(
 			withGoogleMap(
 				props => (
-					<GoogleMap google={ this.props.google }
-					           defaultZoom={ this.props.zoom }
-					           defaultCenter={{ lat: this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
-
-					>
-						{/* For Auto complete Search Box */}
-						<Autocomplete
-							style={{
-								width: '100%',
-								height: '40px',
-								paddingLeft: '16px',
-								// marginTop: '20px',
-								// marginBottom: '500px'
-							}}
-							// ref={el => this.input = el}
-							// options = {{ controlPosition: google.maps.ControlPosition.TOP_CENTER, }}
-							onPlaceSelected={ this.onPlaceSelected }
-							types={['(regions)']}
-						/>
-						{/* {console.log(google.maps.ControlPosition)} */}
-						{/* InfoWindow on top of marker */}
-						<InfoWindow
-							onClose={this.onInfoWindowClose}
-							position={{ lat: ( this.state.markerPosition.lat + 0.0018 ), lng: this.state.markerPosition.lng }}
+					<>
+						<GoogleMap google={ this.props.google }
+								   defaultZoom={ this.props.zoom }
+								   defaultCenter={{ lat: this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
+								   defaultOptions={{
+									   disableDefaultUI: true,
+								   }}
 						>
-							<div>
-								<span style={{ padding: 0, margin: 0 }}>{ this.state.address }</span>
+							{/*Marker*/}
+							<Marker google={this.props.google}
+									name={'Dolores park'}
+									draggable={true}
+									onDragEnd={ this.onMarkerDragEnd }
+									position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
+							/>
+							<Marker />
+
+							{/* For Auto complete Search Box */}
+							<div className="search-input-container">
+								<Autocomplete
+									style={{
+										width: '100%',
+									}}
+									className={`form-control bg-white ${this.props.searchInputClass}`}
+									onPlaceSelected={ this.onPlaceSelected }
+									types={['(regions)']}
+									placeholder="Type address"
+								/>
+								<InfoWindow
+									onClose={this.onInfoWindowClose}
+									position={{ lat: ( this.state.markerPosition.lat + 0.0018 ), lng: this.state.markerPosition.lng }}
+								>
+									<div>
+										<span style={{ padding: 0, margin: 0 }}>{ this.state.address }</span>
+									</div>
+								</InfoWindow>
 							</div>
-						</InfoWindow>
-						{/*Marker*/}
-						<Marker google={this.props.google}
-						        name={'Dolores park'}
-						        draggable={true}
-						        onDragEnd={ this.onMarkerDragEnd }
-						        position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
-						/>
-						<Marker />
-						
-					</GoogleMap>
+
+						</GoogleMap>
+					</>
 				)
 			)
 		);
 		let map;
 		if( this.props.center.lat !== undefined ) {
-			map = <div>
-				<AsyncMap
-					googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GoogleMapsAPI}&libraries=places`}
-					loadingElement={
-						<div style={{ height: `100%` }} />
-					}
-					containerElement={
-						<div style={{ height: this.props.height }} />
-					}
-					mapElement={
-						<div style={{ height: `100%` }} />
-					}
-				/>
-			</div>
+			map =   <div>
+					<AsyncMap
+						googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GoogleMapsAPI}&libraries=places`}
+						loadingElement={
+							<div style={{ height: `100%` }} />
+						}
+						containerElement={
+							<div style={{ height: this.props.height, position: this.props.containerPosition }} />
+						}
+						mapElement={
+							<div className={this.props.mapContainer} style={{ height: `100%`, borderRadius: this.props.mapRadius }} />
+						}
+					/>
+					</div>
 		} else {
 			map = <div style={{height: this.props.height}} />
 		}
