@@ -78,10 +78,6 @@ const ObservationUploadImg = (props) =>{
         if (images.length > 0) {
             setObservationImages({
                 data: images,
-                imageData: {
-                    image_id: images?.[0]?.id,
-                    image: images?.[0]?.item
-                },
                 selected_image_id: images?.[0]?.id,
                 selected_image_index:0
             });
