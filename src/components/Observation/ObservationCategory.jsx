@@ -6,11 +6,12 @@ import ImageCarousel from "../../components/Shared/ImageCarousel";
 import { Icon } from "@iconify/react";
 
 const ObservationCategory = () => {
-    const { observationImages,setObservationImages, setObservationCategory,observationData } = useObservations();
+    const { observationImages,setObservationImages, setObservationCategory, observationData, observationSteps } = useObservations();
     const [Category] = useState(CategoryList);
     const [isChecked, setIsChecked] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('' || []);
     const [popoverOpen, setPopoverOpen] = useState(false);
+
 
     const onCategoryChange=(e)=>{
         const value = parseFloat(e.target.id);
@@ -26,16 +27,16 @@ const ObservationCategory = () => {
         ObservationData.data[observationImages?.selected_image_index].category_map.category =  selectedCategory;        
         setObservationImages(ObservationData);
     }
-    
-    
+
     useEffect(()=> {
         setObservationCategory((prev) => {
             return {
                 ...prev,
+                image_id: observationSteps?.selected_image_id,
                 category: selectedCategory
             }
         })
-    }, [selectedCategory, setObservationCategory])
+    }, [observationSteps?.selected_image_id, selectedCategory, setObservationCategory])
 
     const toggle = (index) =>{
         if(popoverOpen === index){
@@ -84,7 +85,7 @@ const ObservationCategory = () => {
                     target={`popover${index}`}
                     placement="top"
                     toggle={()=>toggle(index)}
-                    isOpen={popoverOpen === index ? true : false}
+                    isOpen={popoverOpen === index}
                 >
                     {({ contentUpdate, popoverId }) => (
                         <PopoverContent contentUpdate={contentUpdate} popoverId={`popover${index}`} />

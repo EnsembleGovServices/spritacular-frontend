@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 
 const ObservationUploadImg = (props) =>{
     const {multiple, maxLimit, imageFormat}=props;
-    const {setObservationImages} = useObservations();
+    const {setObservationImages, observationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
 
@@ -69,17 +69,20 @@ const ObservationUploadImg = (props) =>{
         })
     };
 
+    useEffect(() => {
+        let images = (observationImages?.data) ? [...observationImages?.data] : []
+        setImages(images)
+    }, [])
+
     useEffect(()=> {
-        setObservationImages({
-            data: images,
-            imageData: {
-                image_id: images?.[0]?.id,
-                image: images?.[0]?.item
-            },
-            selected_image_id: images?.[0]?.id,
-            selected_image_index:0
-        });
-    }, [images, setObservationImages])  
+        if (images.length > 0) {
+            setObservationImages({
+                data: images,
+                selected_image_id: images?.[0]?.id,
+                selected_image_index:0
+            });
+        }
+    }, [images, setObservationImages])
 
 
     return (

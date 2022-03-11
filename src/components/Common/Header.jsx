@@ -122,7 +122,7 @@ const Header = (props) => {
               {persist ? (
                 <NavItem>
                   <Link
-                    to="/my-observations"
+                    to="/observations"
                     title="My Observations"
                     className="nav-link text-capitalize"
                   >

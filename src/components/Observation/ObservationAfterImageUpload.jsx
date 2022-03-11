@@ -22,7 +22,7 @@ import ImagePreview from "./ImagePreview";
 
 const ObservationAfterImageUpload = (props) => {
     const { toggleTab,handleImageInput } = props;
-    const {observationImages,setObservationImages, observationSteps, setObservationCategory, setObservationType} = useObservations();
+    const {observationImages, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
     const [isOther, setIsOther] = useState(false);
@@ -34,11 +34,12 @@ const ObservationAfterImageUpload = (props) => {
         }
     };
 
-    // const handleOtherToggle = (e) => {
-    //     let map_data = {...observationImages?.data};
-    //     setObservationImages
-    // }
-    
+
+    // useEffect(()=> {
+    //     setIsMultiple(observationImages?.data?.length > 1)
+    // }, [observationImages?.data?.length])
+
+
     useEffect(() => {
         setObservationCategory((prev) => {
             return {
@@ -140,7 +141,9 @@ const ObservationAfterImageUpload = (props) => {
                                     </p>
                                 </FormGroup>
                             </Col>
+
                             <ObservationCategory />
+
                             <Col sm={12}>
                                 <FormGroup check className="mb-3">
                                     <Label check>

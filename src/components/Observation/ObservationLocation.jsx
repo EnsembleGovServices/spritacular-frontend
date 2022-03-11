@@ -1,6 +1,6 @@
 import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
 import Images from "../../static/images";
-import {useEffect, useState} from 'react';
+import {useState, useEffect} from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
@@ -38,7 +38,6 @@ const ObservationLocation = (props) => {
     const [isActiveDire, setActiveDire] = useState(null);
     const [directionAngle, setDirectionAngle] = useState(0);
     const [angleDegree, setAngleDegree] = useState(false);
-    const [angleValue, setAngleValue] = useState('');
 
     const directionValue = [
         {name: 'N', angle: 360, default : true},
@@ -66,7 +65,7 @@ const ObservationLocation = (props) => {
         }
     }
     const observationArray = {...observationImages};
-
+    
     const handleChangeLat = (e) => {
         handleImageInput(e);
         let name = e.target.name,
@@ -122,7 +121,7 @@ const ObservationLocation = (props) => {
         const directionWrapper = document.querySelector('.compass-wrapper');
         const directionId = document.getElementById(`directionValue${index}`);
         let getAngleValue = directionId.getAttribute("data-angle"),
-            getAngleName = directionId.getAttribute("data-value");
+            getAngleName = directionId.getAttribute("data-name");
 
         if(isActiveDire === index){
             directionWrapper.classList.remove("active-arrow");
@@ -130,12 +129,11 @@ const ObservationLocation = (props) => {
             directionWrapper.classList.add("active-arrow");
             setActiveDire(index);
             setDirectionAngle(getAngleValue);
-            setAngleValue(getAngleName);
+            
 
             if (observationImages?.data[observationImages?.selected_image_index]?.is_precise_az === false) {
                 observationArray.data[observationImages?.selected_image_index]['azimuth'] = getAngleName;
             }
-
         }
     }
     const handleCopyData = (e,keys) => {
@@ -258,7 +256,7 @@ const ObservationLocation = (props) => {
                                 id="Date"
                                 type="date"
                                 name="obs_date"
-                                value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
+                                value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === '' ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
                                 className="w-100"
                                 placeholder="12/20/2021" 
                                 onChange={(e)=>handleImageInput(e)}
@@ -272,7 +270,7 @@ const ObservationLocation = (props) => {
                                 id="Time"
                                 type="time"
                                 name="obs_time"
-                                value={(observationImages?.data)? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : null}
+                                value={(observationImages?.data)? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === '' ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
                                 className="w-100"
                                 placeholder="10:21:00 am"
                                 onChange={(e)=>handleImageInput(e)}
@@ -340,21 +338,21 @@ const ObservationLocation = (props) => {
                                 directionValue?.map((direction, index)=>{
                                     return(
                                         <Button 
-                                            className={ `${direction.name}-direction ${ (direction.default === true) && isActiveDire === null ? 'active_direction' : '' } 
-                                                ${ isActiveDire === index ? `active_direction ${observationArray.data[observationImages?.selected_image_index]['azimuth']}` : '' }`
-                                            }
+                                            className={`${direction.name}-direction ${(direction.default === true) && isActiveDire === null ? 'active_direction' : ''}${ isActiveDire === index ? ( observationArray.data[observationImages?.selected_image_index]['azimuth'] === "" ? 'active_direction' : '') : '' }${observationArray.data[observationImages?.selected_image_index]['azimuth'] === direction.name ? 'active_direction' : ''}`}
                                             onClick={()=> selectDirection(index)}
                                             key={index}
                                             id= {`directionValue${index}`}
                                             data-angle={direction.angle}
-                                            data-value={direction.name}
+                                            data-name={direction.name}
                                         >{direction.name}</Button>
                                     )
                                 })
                             }
                             <div className="center-dot rounded-circle"/>
                             <div className="rotate-arrow-wrap">
-                                <div className="rotate-arrow-inner" style={{ "--directionAngle": directionAngle + 'deg' }}>
+                                <div className="rotate-arrow-inner" style={{ "--directionAngle": directionValue.filter((item) => item.name === observationArray.data[observationImages?.selected_image_index]['azimuth']).map((dirData) => {
+                                    return dirData.angle;
+                                }) + 'deg' }}>
                                     <div className="rotate-arrow main"><img src={Images.compassArrow} alt="Compass Arrow" /> </div>
                                     <div className="rotate-arrow hidden"><img src={Images.compassArrow} alt="Compass Arrow" /> </div>
                                 </div>

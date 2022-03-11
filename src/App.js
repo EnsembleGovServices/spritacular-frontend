@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
@@ -47,9 +47,9 @@ const App = () => {
           <Route exact path={"profile"} element={<Profile />} />
           <Route element={<Observations />}>
             <Route exact path={"profile"} element={<Profile />} />
-            <Route exact path={"my-observations"} element={<MyObservations />} />
+            <Route exact path={"observations"} element={<MyObservations />} />
             <Route exact path={"observations/add"} element={<AddObservation />} />
-            <Route exact path={"upload-observations"} element={<InitialUploadObservations />} />
+            <Route exact path={"observations/upload"} element={<InitialUploadObservations />} />
           </Route>
         </Route>
       </Route>

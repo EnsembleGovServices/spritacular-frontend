@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
@@ -7,7 +8,9 @@ const RequireAuth = (props) => {
 
     const {setAuthValue} = props;
     
-    setAuthValue(false);
+    useEffect(()=>{
+        setAuthValue(false);
+    }, [setAuthValue])
 
     return (
         persist ? <Outlet /> : <Navigate to="/" state={{ from: location }} replace />
