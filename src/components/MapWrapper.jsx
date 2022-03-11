@@ -13,6 +13,7 @@ class Map extends Component{
 
 	constructor( props ){
 		super( props );
+		this.isLoad = this.props.isLoaded;
 		this.state = {
 			address: '',
 			city: '',
@@ -33,13 +34,14 @@ class Map extends Component{
 	 * Get the current address from the default map position and set those values in the state
 	 */
 	componentDidMount() {
+		console.log("hhihiih");
 		Geocode.fromLatLng( this.state.mapPosition.lat , this.state.mapPosition.lng ).then(
 			response => {
 				const address = response.results[0].formatted_address,
 				      addressArray =  response.results[0].address_components,
 				      city = this.getCity( addressArray ),
 				      area = this.getArea( addressArray ),
-				      state = this.getState( addressArray );
+				      state = this.getState( addressArray ),
 					  country = this.getCountry(addressArray)['short_name'];
 
 				// console.log( 'city', city, area, state );
@@ -57,6 +59,41 @@ class Map extends Component{
 			}
 		);
 	};
+
+	handleChangeLatLng(newLat,newLng) {
+		console.log("hhihiih");
+		newLat = Number(newLat);
+		newLng = Number(newLng);
+		Geocode.fromLatLng( newLat , newLng ).then(
+			response => {
+				const address = response.results[0].formatted_address,
+				      addressArray =  response.results[0].address_components,
+				      city = this.getCity( addressArray ),
+				      area = this.getArea( addressArray ),
+				      state = this.getState( addressArray ),
+					  country = this.getCountry(addressArray)['short_name'];
+				this.setState( {
+					address: ( address ) ? address : '',
+					area: ( area ) ? area : '',
+					city: ( city ) ? city : '',
+					state: ( state ) ? state : '',
+					country: (country) ? country : '',
+					markerPosition: {
+						lat: newLat,
+						lng: newLng
+					},
+					mapPosition: {
+						lat: newLat,
+						lng: newLng
+					},
+				} )
+				this.props.handleState(this.state);
+			},
+			error => {
+				console.error(error);
+			}
+		);
+	};
 	/**
 	 * Component should only update ( meaning re-render ), when the user selects the address, or drags the pin
 	 *
@@ -64,39 +101,7 @@ class Map extends Component{
 	 * @param nextState
 	 * @return {boolean}
 	 */
-	shouldComponentUpdate( nextProps, nextState ){		
-		if(this.props.isLoaded == true && this.state.markerPosition.lat !== this.props.center.lat || this.state.markerPosition.lng !== this.props.center.lng){
-				 Geocode.fromLatLng( nextProps.center.lat , nextProps.center.lng ).then(
-					response => {
-						const address = response.results[0].formatted_address,
-							  addressArray =  response.results[0].address_components,
-							  city = this.getCity( addressArray ),
-							  area = this.getArea( addressArray ),
-							  state = this.getState( addressArray );
-							  country = this.getCountry(addressArray)['short_name'];
-						this.setState( {
-							address: ( address ) ? address : '',
-							area: ( area ) ? area : '',
-							city: ( city ) ? city : '',
-							state: ( state ) ? state : '',
-							country: (country) ? country : '',
-							markerPosition: {
-								lat: nextProps.center.lat,
-								lng: nextProps.center.lng
-							},
-							mapPosition: {
-								lat: nextProps.center.lat,
-								lng: nextProps.center.lng
-							},
-						})
-						this.props.handleState(this.state);
-					},
-					error => {
-						console.error(error);
-					}
-				);
-			return true;
-		}
+	shouldComponentUpdate( nextProps, nextState ){			
 		if (
 			this.state.markerPosition.lat !== this.props.center.lat ||
 			this.state.address !== nextState.address ||
@@ -105,7 +110,8 @@ class Map extends Component{
 			this.state.state !== nextState.state
 		) {			
 			return true
-		} else if ( this.props.center.lat === nextProps.center.lat ){
+		}
+		 else if ( this.props.center.lat === nextProps.center.lat ){
 
 			return false;
 		}
@@ -208,7 +214,7 @@ class Map extends Component{
 				      addressArray =  response.results[0].address_components,
 				      city = this.getCity( addressArray ),
 				      area = this.getArea( addressArray ),
-				      state = this.getState( addressArray );
+				      state = this.getState( addressArray ),
 					  country = this.getCountry(addressArray)['short_name'];
 				this.setState( {
 					address: ( address ) ? address : '',

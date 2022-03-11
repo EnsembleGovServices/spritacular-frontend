@@ -1,6 +1,6 @@
 import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
 import Images from "../../static/images";
-import {useState, useEffect} from 'react';
+import {useState, useEffect,useRef} from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
@@ -11,6 +11,7 @@ import ReactCountryFlags from '../ReactCountryFlag';
 
 const ObservationLocation = (props) => {
     const { toggleTab,handleImageInput } = props;
+    const fref = useRef()
     const [address1,setAddress] = useState({
         address: '204, Mote Mangal Karyalay Rd, Bhavani Peth, Shobhapur, Kasba Peth, Pune, Maharashtra 411011, India',
         city: '',
@@ -80,6 +81,7 @@ const ObservationLocation = (props) => {
             //  setTimeout(()=> {
                  setIsLoaded(true);
             //  },3000);
+            fref.current.handleChangeLatLng(e.target.value,address1.markerPosition.lng);
     }
     const handleChangeLng = (e) => {
         handleImageInput(e);
@@ -93,6 +95,7 @@ const ObservationLocation = (props) => {
             //  setObservationImages(imageArray);
         setAddress(addressState);
         setIsLoaded(true);
+        fref.current.handleChangeLatLng(address1.markerPosition.lat,e.target.value);
     }
     useEffect(() => {
         let observationAddress = {...observationImages};        
@@ -177,6 +180,7 @@ const ObservationLocation = (props) => {
                     zoom={15}
                     handleState={handleValue}
                     isLoaded={isLoaded}
+                    ref={fref}
                     /> 
                         {/* <Input
                             type="search"
