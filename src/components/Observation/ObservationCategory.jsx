@@ -6,11 +6,12 @@ import ImageCarousel from "../../components/Shared/ImageCarousel";
 import { Icon } from "@iconify/react";
 
 const ObservationCategory = () => {
-    const { observationImages,setObservationImages, setObservationCategory, observationData, observationSteps } = useObservations();
+    const { observationImages,setObservationImages } = useObservations();
     const [Category] = useState(CategoryList);
     const [isChecked, setIsChecked] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('' || []);
     const [popoverOpen, setPopoverOpen] = useState(false);
+    const ObservationData = {...observationImages};
 
 
     const onCategoryChange=(e)=>{
@@ -20,23 +21,27 @@ const ObservationCategory = () => {
         {
             const filterValue = selectedCategory.filter((item) => item !== value)
             setSelectedCategory(filterValue);
-        }else{  
+        }else{
             setSelectedCategory([...selectedCategory, value]);
         }
-        let ObservationData = {...observationImages};
-        ObservationData.data[observationImages?.selected_image_index].category_map.category =  selectedCategory;        
         setObservationImages(ObservationData);
     }
 
+    useEffect(() => {
+        let previourCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [];
+        setSelectedCategory((previourCategory))
+    }, [])
+
+    useEffect(() => {
+        setSelectedCategory([])
+    }, [ observationImages?.selected_image_index])
+    
     useEffect(()=> {
-        setObservationCategory((prev) => {
-            return {
-                ...prev,
-                image_id: observationSteps?.selected_image_id,
-                category: selectedCategory
-            }
-        })
-    }, [observationSteps?.selected_image_id, selectedCategory, setObservationCategory])
+        // let previourCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [];
+        // console.log(selectedCategory)
+        //  console.log([...new Set([...previourCategory, ...selectedCategory])])
+        ObservationData.data[observationImages?.selected_image_index].category_map.category = selectedCategory;
+    },[selectedCategory])
 
     const toggle = (index) =>{
         if(popoverOpen === index){
@@ -95,18 +100,38 @@ const ObservationCategory = () => {
         )
     }
 
-    // useEffect(()=> {
-    //     let checked = {};
-    //     let selectedCategory = observationImages?.data[observationImages?.selected_image_index]?.category_map?.category;
-        
-    //     if(selectedCategory && selectedCategory.length > 0){
-    //         selectedCategory.map((id)=> {
-    //             checked[id] = true;
-    //         });
-    //     }
-    //     console.log(checked,'hihihih');
-    //     setIsChecked(checked);
-    // }, [selectedCategory])
+    // return(
+    //     observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
+    //         return(
+    //             Category?.map((imagItem, index)=>{
+    //                 return (
+    //                     <Col sm={6} key={index}>
+    //                         <FormGroup>
+    //                             <div className="checkbox-wrapper">
+    //                                 <div className="inputGroup">
+    //                                     <input
+    //                                         value={imagItem.name || ''}
+    //                                         name={imagItem.id}
+    //                                         id={imagItem.id}
+    //                                         type="checkbox"
+    //                                         checked={!!isChecked[imagItem.id]}
+    //                                         hidden
+    //                                         onChange={(e) => onCategoryChange(e)}
+    //                                     />
+    //                                     <label htmlFor={imagItem.id}>
+    //                                         <img src={imagItem.image} alt={imagItem.name} />
+    //                                         {imagItem.name}
+    //                                         <ImagePopover />
+    //                                     </label>
+    //                                 </div>
+    //                             </div>
+    //                         </FormGroup>
+    //                     </Col>
+    //                 )
+    //             })
+    //         )
+    //     })
+    // )
 
     return(
         observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
@@ -122,13 +147,13 @@ const ObservationCategory = () => {
                                             name={imagItem.id}
                                             id={imagItem.id}
                                             type="checkbox"
-                                            checked={!!isChecked[imagItem.id]}
+                                            checked={(item?.category_map?.category?.find(list => list === imagItem?.id) === imagItem?.id) ? 'checked' : ''}
                                             hidden
                                             onChange={(e) => onCategoryChange(e)}
                                         />
                                         <label htmlFor={imagItem.id}>
                                             <img src={imagItem.image} alt={imagItem.name} />
-                                            {imagItem.name}
+                                            {imagItem.name} {item?.category_map?.category?.find(list => list === imagItem?.id)}
                                             <ImagePopover />
                                         </label>
                                     </div>
@@ -140,6 +165,9 @@ const ObservationCategory = () => {
             )
         })
     )
+
+
+
 }
 
 export default ObservationCategory;

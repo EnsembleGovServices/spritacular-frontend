@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Row, Button } from "reactstrap";
 import ObservationUploadImg from "./ObservationUploadImg";
 import useObservations from "../../hooks/useObservations";
-import ObservationUploadedImg from "./ObservationUploadedImg";
+// import ObservationUploadedImg from "./ObservationUploadedImg";
 
 const ObservationImages = (props) =>{
     const {proceedNext} = props;
@@ -14,7 +14,7 @@ const ObservationImages = (props) =>{
         <>
             <Row>
                 <ObservationUploadImg imageFormat={true} maxLimit={true} multiple={isMultiple}/>
-                <ObservationUploadedImg />
+                {/*<ObservationUploadedImg />*/}
                 <div className="mt-5">
                     <Button disabled={!observationImages?.data?.length} onClick={proceedNext}>Continue</Button>
                 </div>
