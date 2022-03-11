@@ -334,11 +334,7 @@ const ObservationLocation = (props) => {
                                 directionValue?.map((direction, index)=>{
                                     return(
                                         <Button 
-                                            className={ `${direction.name}-direction ${ (direction.default === true) && isActiveDire === null ? 'active_direction' : '' } 
-                                                ${ isActiveDire === index ? ( observationArray.data[observationImages?.selected_image_index]['azimuth'] === "" ? 'active_direction' : '') : '' }
-                                                ${observationArray.data[observationImages?.selected_image_index]['azimuth'] === direction.name ? 'active_direction' : ''}
-                                                `
-                                            }
+                                            className={`${direction.name}-direction ${(direction.default === true) && isActiveDire === null ? 'active_direction' : ''}${ isActiveDire === index ? ( observationArray.data[observationImages?.selected_image_index]['azimuth'] === "" ? 'active_direction' : '') : '' }${observationArray.data[observationImages?.selected_image_index]['azimuth'] === direction.name ? 'active_direction' : ''}`}
                                             onClick={()=> selectDirection(index)}
                                             key={index}
                                             id= {`directionValue${index}`}
@@ -351,8 +347,8 @@ const ObservationLocation = (props) => {
                             <div className="center-dot rounded-circle"/>
                             <div className="rotate-arrow-wrap">
                                 <div className="rotate-arrow-inner" style={{ "--directionAngle": directionValue.filter((item) => item.name === observationArray.data[observationImages?.selected_image_index]['azimuth']).map((dirData) => {
-            return dirData.angle;
-        }) + 'deg' }}>
+                                    return dirData.angle;
+                                }) + 'deg' }}>
                                     <div className="rotate-arrow main"><img src={Images.compassArrow} alt="Compass Arrow" /> </div>
                                     <div className="rotate-arrow hidden"><img src={Images.compassArrow} alt="Compass Arrow" /> </div>
                                 </div>
