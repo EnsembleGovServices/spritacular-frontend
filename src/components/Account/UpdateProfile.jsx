@@ -50,7 +50,6 @@ const UpdateProfile = (props) => {
             extra_fields: {
                 lat: location['lat'],
                 lng: location['lng'],
-                
             }
         });
     }
@@ -63,7 +62,14 @@ const UpdateProfile = (props) => {
             first_name: updateUser?.first_name,
             last_name: updateUser?.last_name,
             email: updateUser?.email,
-            location: updateUser?.location
+            location: updateUser?.location,
+            place_uid: updateUser?.place_uid,
+            country_code: updateUser?.country_code,
+            extra_fields: {
+                lat: updateUser?.extra_fields.lat,
+                lng: updateUser?.extra_fields.lng,
+                
+            }
         }, {
             headers: {
                 'Content-Type': 'application/json',
