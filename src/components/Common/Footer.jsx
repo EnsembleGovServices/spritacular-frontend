@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Col, Container, Row, List } from "reactstrap";
 import Images from "../../static/images";
 import "../../assets/scss/component/footer.scss";
+import { routeUrls } from './../../helpers/url';
 
 const Footer = () => {
   return (
@@ -12,7 +13,7 @@ const Footer = () => {
             <Row className="gy-2 gy-md-3">
               <Col lg={12}>
                 <Link
-                  to={"/"}
+                  to={routeUrls.home}
                   title="Spritacular"
                   className="d-inline-block mb-3"
                 >
@@ -40,7 +41,7 @@ const Footer = () => {
                       <h6>About</h6>
                       <li>
                         <Link
-                          to={"/"}
+                          to={routeUrls.home}
                           className="d-inline-block mb-4"
                           title="What is Spritacular?"
                         >
@@ -49,7 +50,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={"/"}
+                          to={routeUrls.home}
                           className="d-inline-block mb-4"
                           title="Policy"
                         >
@@ -58,7 +59,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={"/"}
+                          to={routeUrls.home}
                           className="d-inline-block mb-4"
                           title="Code of Conduct"
                         >
@@ -71,7 +72,7 @@ const Footer = () => {
                     <List type="unstyled" className="footer-links">
                       <li>
                         <Link
-                          to={"/"}
+                          to={routeUrls.home}
                           className="d-inline-block mb-4"
                           title="Get Started"
                         >
@@ -80,7 +81,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={"/"}
+                          to={routeUrls.home}
                           className="d-inline-block mb-4"
                           title="Gallery"
                         >
@@ -92,7 +93,7 @@ const Footer = () => {
                       <h6>Resources</h6>
                       <li>
                         <Link
-                          to={"/blog"}
+                          to={routeUrls.blog}
                           className="d-inline-block mb-4"
                           title="Blog"
                         >
@@ -101,7 +102,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={"/tutorials"}
+                          to={routeUrls.tutorials}
                           className="d-inline-block mb-4"
                           title="Tutorials"
                         >
@@ -115,7 +116,7 @@ const Footer = () => {
                       <h6>Community</h6>
                       <li>
                         <Link
-                          to={"/"}
+                          to={routeUrls.home}
                           className="d-inline-block mb-4"
                           title="Meet the Team"
                         >
@@ -124,7 +125,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={"/"}
+                          to={routeUrls.home}
                           className="d-inline-block mb-4"
                           title="Volunteer Profiles"
                         >
@@ -133,7 +134,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={"/"}
+                          to={routeUrls.home}
                           className="d-inline-block mb-4"
                           title="Become an Ambassador"
                         >
@@ -142,7 +143,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={"/"}
+                          to={routeUrls.home}
                           className="d-inline-block mb-4"
                           title="Join Spritacular Google Group"
                         >
@@ -167,7 +168,7 @@ const Footer = () => {
                     >
                       <li>
                         <Link
-                          to={"/"}
+                          to={routeUrls.home}
                           className="d-inline-block ms-3"
                           title="Twitter"
                         >

@@ -5,6 +5,8 @@ import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import {baseURL} from "../../helpers/url";
 import PlacesAutocomplete from "../LocationSearchInput";
+import { Link } from "react-router-dom";
+import { routeUrls } from './../../helpers/url';
 
 
 const Register = (props) => {
@@ -205,7 +207,7 @@ const Register = (props) => {
                                     onChange={(e) => handleCheck(e)}
                                 />
                                 Creating an account means you agree with our with our{" "}
-                                <a href="/">Privacy Policy</a> and <a href="/">Terms.</a>
+                                <Link to={routeUrls.home}>Privacy Policy</Link> and <Link to={routeUrls.home}>Terms.</Link>
                             </Label>
                         </FormGroup>
                     </Col>

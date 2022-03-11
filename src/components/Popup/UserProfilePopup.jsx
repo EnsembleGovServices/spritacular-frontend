@@ -14,6 +14,7 @@ import "../../assets/scss/component/modal.scss";
 import ImageUpload from "../Upload/ImageUpload";
 import { useEffect, useState } from "react";
 import {Link} from "react-router-dom";
+import { routeUrls } from './../../helpers/url';
 
 const UserProfilePopup = (props) => {
   const [user, setUser] = useState(props);
@@ -65,7 +66,7 @@ const UserProfilePopup = (props) => {
           <Col md={12}>
             <FormGroup className="text-center mt-4">
               <Link
-                to="/profile"
+                to={routeUrls.profile}
                 onClick={() => handleClose()}
                 className="btn btn-secondary bg-modal-btn d-inline-block mt-2"
               >

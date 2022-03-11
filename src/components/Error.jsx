@@ -1,7 +1,8 @@
 import {Button, Card, CardBody, Col, Container, Row} from "reactstrap";
 import '../assets/scss/component/error.scss';
-import {NavLink, useNavigate} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import Images from "../static/images";
+import { routeUrls } from './../helpers/url';
 
 const Error = () => {
   const navigate = useNavigate();
@@ -20,13 +21,15 @@ const Error = () => {
                     <p>We're sorry, The page you requested couldn't be found.</p>
                     <div className="mt-4">
                       <Button outline onClick={()=> navigate(-1)} className="me-2 px-3">Go Back</Button>
-                      <NavLink to="/" className="btn btn-secondary px-4">Back to Home</NavLink>
+                      <NavLink to={routeUrls.home} className="btn btn-secondary px-4">Back to Home</NavLink>
                     </div>
                   </CardBody>
                 </Card>
             </Col>
             <Col xs={{size: 12, order: 1}} md={{size: 6, order: 2}} className="text-center text-md-end mb-3 mb-md-0">
-              <img className="error-img" src={Images.PageNotFound} alt="Page not found" width={'100%'}/>
+              <Link to={routeUrls.home}>
+                <img className="error-img" src={Images.PageNotFound} alt="Page not found" width={'100%'}/>
+              </Link>
             </Col>
           </Row>
         </Container>

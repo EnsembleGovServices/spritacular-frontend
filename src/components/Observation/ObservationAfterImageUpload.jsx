@@ -153,7 +153,7 @@ const ObservationAfterImageUpload = (props) => {
                                 </FormGroup>
                                 {isOther?.status &&
                                     <FormGroup>
-                                        <Input type="text"  name="text" placeholder="Please enter other details" className="other-textfield"/>
+                                        <Input type="text"  name="text" placeholder="Please enter other details" className="other-textfield" />
                                     </FormGroup>
                                 }
                             </Col>

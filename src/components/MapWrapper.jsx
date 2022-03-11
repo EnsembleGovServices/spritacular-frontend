@@ -260,8 +260,8 @@ class Map extends Component{
 								width: '100%',
 								height: '40px',
 								paddingLeft: '16px',
-								// marginTop: '20px',
-								// marginBottom: '500px'
+								marginTop: '20px',
+								marginBottom: '500px'
 							}}
 							// ref={el => this.input = el}
 							// options = {{ controlPosition: google.maps.ControlPosition.TOP_CENTER, }}

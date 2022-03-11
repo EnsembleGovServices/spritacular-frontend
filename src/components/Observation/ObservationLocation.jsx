@@ -220,7 +220,7 @@ const ObservationLocation = (props) => {
                     </Col>
                     <Col md={6} lg={4}>
                         <div className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
-                            <img src={Images.Flag} alt="USA Flag"/> 
+                            <img src={Images.Flag} alt="USA Flag" /> 
                             <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                         </div>
                     </Col>
@@ -344,7 +344,7 @@ const ObservationLocation = (props) => {
                                     )
                                 })
                             }
-                            <div className="center-dot rounded-circle"/>
+                            <div className="center-dot rounded-circle" />
                             <div className="rotate-arrow-wrap">
                                 <div className="rotate-arrow-inner" style={{ "--directionAngle": directionValue.filter((item) => item.name === observationArray.data[observationImages?.selected_image_index]['azimuth']).map((dirData) => {
                                     return dirData.angle;

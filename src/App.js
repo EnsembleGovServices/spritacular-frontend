@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
+import { routeUrls } from "./helpers/url";
 
 import PersistLogin from "./layouts/PersistLogin";
 import Home from "./pages/Home";
@@ -32,24 +33,23 @@ const App = () => {
     <Routes>
       <Route element={<PersistLogin persistValue={persistValue} />}>
         <Route element={ <InformativePage setAuthValue={authCallBack} /> }>
-          <Route exact path={""} element={<Home />} />
-          <Route exact path={"about"} element={<About />} />
-          <Route exact path={"get-started"} element={<GetStarted />} />
-          <Route exact path={"blog"} element={<Blog />} />
-          <Route exact path={"tutorials"} element={<Tutorials />} />
-          <Route exact path={"tutorials-detail"} element={<TutorialsDetail />} />
-          <Route exact path={"login"} element={<LoginPage />} />
+          <Route exact path={routeUrls.home} element={<Home />} />
+          <Route exact path={routeUrls.about} element={<About />} />
+          <Route exact path={routeUrls.getStarted} element={<GetStarted />} />
+          <Route exact path={routeUrls.blog} element={<Blog />} />
+          <Route exact path={routeUrls.tutorials} element={<Tutorials />} />
+          <Route exact path={routeUrls.tutorialsDetail} element={<TutorialsDetail />} />
+          <Route exact path={routeUrls.login} element={<LoginPage />} />
         </Route>
         <Route exact path={"/password_reset"} element={<ResetPasswordPopup />} />
         
         {/*Protected routes*/}
         <Route element={<RequireAuth setAuthValue={authCallBack} />}>
-          <Route exact path={"profile"} element={<Profile />} />
+          <Route exact path={routeUrls.profile} element={<Profile />} />
           <Route element={<Observations />}>
-            <Route exact path={"profile"} element={<Profile />} />
-            <Route exact path={"my-observations"} element={<MyObservations />} />
-            <Route exact path={"observations/add"} element={<AddObservation />} />
-            <Route exact path={"upload-observations"} element={<InitialUploadObservations />} />
+            <Route exact path={routeUrls.myObservations} element={<MyObservations />} />
+            <Route exact path={routeUrls.observationsAdd} element={<AddObservation />} />
+            <Route exact path={routeUrls.uploadObservations} element={<InitialUploadObservations />} />
           </Route>
         </Route>
       </Route>

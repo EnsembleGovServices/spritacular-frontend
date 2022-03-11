@@ -18,3 +18,18 @@ export const cameraSettingFields = {
     question_field_one: '',
     question_field_two: ''
 }
+
+
+export const routeUrls = {
+    home: '',
+    about: 'about',
+    getStarted: 'get-started',
+    blog: 'blog',
+    tutorials: 'tutorials',
+    tutorialsDetail: 'tutorials-detail',
+    login: 'login',
+    profile: 'profile',
+    myObservations: 'my-observations',
+    observationsAdd: 'observations/add',
+    uploadObservations: 'upload-observations'
+}

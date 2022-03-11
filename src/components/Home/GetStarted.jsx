@@ -1,5 +1,7 @@
-import { Container, Row, Col, Button } from "reactstrap";
+import { Link } from "react-router-dom";
+import { Container, Row, Col } from "reactstrap";
 import Images from "../../static/images";
+import { routeUrls } from './../../helpers/url';
 
 const GetStarted = () => {
   return (
@@ -22,7 +24,8 @@ const GetStarted = () => {
               </div>
             </Col>
             <Col md={6} xs={12}>
-              <Button className="get-start">Get Started</Button>
+              {/* <Button className="get-start"></Button> */}
+              <Link to={routeUrls.getStarted} className="btn btn-secondary get-start">Get Started</Link>
             </Col>
             <div className="bottom-text-polygon">
               <img src={Images.Observepolygon} alt="Shape" />

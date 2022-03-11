@@ -16,7 +16,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 invalid={!!error?.data?.camera_type} />
                 <FormFeedback>{error?.data?.camera_type}</FormFeedback>
             </FormGroup>
-            <div className="border-line"/>
+            <div className="border-line" />
             </Col>
             <Col md="12">
             <FormGroup>
@@ -54,7 +54,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             </FormGroup>
             </Col>
             <Col md="12">
-            <div className="border-line"/>
+            <div className="border-line" />
             <FormGroup>
                 <h6>Camera Settings</h6>
             </FormGroup>

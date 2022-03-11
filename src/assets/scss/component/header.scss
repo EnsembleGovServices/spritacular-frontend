@@ -1,11 +1,14 @@
 @import "../global/config.scss";
 .custom-header {
-  padding: 0px;
+  padding: 15px 0px;
   position: fixed;
   top: 0px;
   width: 100%;
   z-index: 999;
   @include transition();
+  @include media-breakpoint-down(md){
+    padding: 10px 0px;
+  }
   .on-scroll-logo {
     display: none;
   }
@@ -221,6 +224,8 @@
       font-weight: 500;
       @include buttonOutlinePrimary;
       background-color: transparent;
+      font-weight: 400;
+      @include md-text;
     }
     .login-btn {
       color: $white;
@@ -230,6 +235,8 @@
       border: none;
       box-shadow: none;
       position: relative;
+      font-weight: 400;
+      @include md-text;
       &:hover {
         &:after {
           content: "";
