@@ -2,19 +2,13 @@ import {
     Button,
     Modal,
     ModalBody,
-    Row,
-    Col,
-    Alert,
     ModalHeader,
   } from "reactstrap";
   import {useEffect, useState} from "react";
   import Images from "../../static/images";
   import PropTypes from "prop-types";
-  
-  import Login from "../Auth/Login";
-  import ForgotPasswordPopup from "./ForgotPasswordPopup";
 import ResetPassword from "../Auth/ResetPassword";
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
 import ShowErrorPopup from "./ShowErrorPopup";

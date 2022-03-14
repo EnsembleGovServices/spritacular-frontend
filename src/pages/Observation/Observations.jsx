@@ -20,11 +20,10 @@ const Observations = () => {
             isDraft: observationSteps?.is_draft ? 1 : 0,
             image_type: observationType?.image_type,
             map_data: {
-                ...observationImages?.data,
-                category_map: observationCategory,
+                ...observationImages?.data
             }
         })
-    }, [observationCategory, observationImages?.data, observationSteps?.is_draft, observationType?.image_type])
+    }, [observationImages?.data, observationSteps?.is_draft, observationType?.image_type])
 
     return(
         <ObservationContext.Provider value={
