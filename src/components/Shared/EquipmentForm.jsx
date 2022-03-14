@@ -1,4 +1,4 @@
-import {UncontrolledAlert, Button, FormFeedback, FormGroup, Input, Row,Col} from "reactstrap";
+import {FormFeedback, FormGroup, Input, Col} from "reactstrap";
 
 const EquipmentForm = ({handleInput1,updateSetting,error}) => {
     return(

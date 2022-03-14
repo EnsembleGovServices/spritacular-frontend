@@ -1,7 +1,6 @@
 import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
 import Images from "../../static/images";
 import {useState, useEffect,useRef} from 'react';
-import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
 import useObservations from "../../hooks/useObservations";
@@ -31,7 +30,6 @@ const ObservationLocation = (props) => {
     const [isLoaded,setIsLoaded] = useState(false);
     const {observationImages, setObservationImages,observationData} = useObservations();
     const [isActiveDire, setActiveDire] = useState(null);
-    const [directionAngle, setDirectionAngle] = useState(0);
     const [angleDegree, setAngleDegree] = useState(false);
 
     const directionValue = [
@@ -100,15 +98,13 @@ const ObservationLocation = (props) => {
     const selectDirection = (index) => {
         const directionWrapper = document.querySelector('.compass-wrapper');
         const directionId = document.getElementById(`directionValue${index}`);
-        let getAngleValue = directionId.getAttribute("data-angle"),
-            getAngleName = directionId.getAttribute("data-name");
+        let getAngleName = directionId.getAttribute("data-name");
 
         if(isActiveDire === index){
             directionWrapper.classList.remove("active-arrow");
         }else{
             directionWrapper.classList.add("active-arrow");
             setActiveDire(index);
-            setDirectionAngle(getAngleValue);
             
 
             if (observationImages?.data[observationImages?.selected_image_index]?.is_precise_az === false) {

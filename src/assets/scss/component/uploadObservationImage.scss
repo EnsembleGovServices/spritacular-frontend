@@ -270,7 +270,7 @@
   width: 160px;
   height: 160px;
   border-radius: 10px;
-  background: #fff;
+  background: $white;
   overflow: hidden;
   position: relative;
   cursor: pointer;
@@ -298,18 +298,18 @@
     top: 4px;
     left: 4px;
     border-radius: 6px;
-    outline: 2px solid #fff;
+    outline: 2px solid $white;
   }
 }
 
 // Custom checkbox design for choose image category START
 .checkbox-wrapper{
   .inputGroup {
-    background-color: #fff;
     display: block;
     margin: 10px 0;
     position: relative;
     label {
+      background-color: $white;
       padding: 12px 30px;
       width: 100%;
       display:flex;
@@ -333,7 +333,7 @@
         height: 22px;
         content: '';
         border: 1px solid #ADB4C2;
-        background-color: #fff;
+        background-color: $white;
         background-image: url("../../images/check-white.svg");
         background-repeat: no-repeat;
         background-position: center;
