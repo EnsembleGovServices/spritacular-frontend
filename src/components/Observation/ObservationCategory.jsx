@@ -28,18 +28,17 @@ const ObservationCategory = () => {
     }
 
     useEffect(() => {
-        let previousCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [...selectedCategory];
-        setSelectedCategory((previousCategory))
-    }, [])
+        let prevCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [];
+        setSelectedCategory((prevCategory))
+    }, [ObservationData.data, observationImages?.selected_image_index])
 
     useEffect(() => {
-        setSelectedCategory([])
-    }, [ observationImages?.selected_image_index])
+        if (observationImages?.selected_image_index === []) {
+            setSelectedCategory([])
+        }
+    }, [observationImages?.selected_image_index])
     
     useEffect(()=> {
-        // let previourCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [];
-        // console.log(selectedCategory)
-        //  console.log([...new Set([...previourCategory, ...selectedCategory])])
         ObservationData.data[observationImages?.selected_image_index].category_map.category = selectedCategory;
     },[selectedCategory])
 
@@ -100,39 +99,6 @@ const ObservationCategory = () => {
         )
     }
 
-    // return(
-    //     observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
-    //         return(
-    //             Category?.map((imagItem, index)=>{
-    //                 return (
-    //                     <Col sm={6} key={index}>
-    //                         <FormGroup>
-    //                             <div className="checkbox-wrapper">
-    //                                 <div className="inputGroup">
-    //                                     <input
-    //                                         value={imagItem.name || ''}
-    //                                         name={imagItem.id}
-    //                                         id={imagItem.id}
-    //                                         type="checkbox"
-    //                                         checked={!!isChecked[imagItem.id]}
-    //                                         hidden
-    //                                         onChange={(e) => onCategoryChange(e)}
-    //                                     />
-    //                                     <label htmlFor={imagItem.id}>
-    //                                         <img src={imagItem.image} alt={imagItem.name} />
-    //                                         {imagItem.name}
-    //                                         <ImagePopover />
-    //                                     </label>
-    //                                 </div>
-    //                             </div>
-    //                         </FormGroup>
-    //                     </Col>
-    //                 )
-    //             })
-    //         )
-    //     })
-    // )
-
     return(
         observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
             return(
@@ -153,7 +119,7 @@ const ObservationCategory = () => {
                                         />
                                         <label htmlFor={imagItem.id}>
                                             <img src={imagItem.image} alt={imagItem.name} />
-                                            {imagItem.name} {item?.category_map?.category?.find(list => list === imagItem?.id)}
+                                            {imagItem.name}
                                             <ImagePopover />
                                         </label>
                                     </div>
