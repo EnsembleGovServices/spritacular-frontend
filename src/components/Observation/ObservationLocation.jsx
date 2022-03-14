@@ -146,7 +146,7 @@ const ObservationLocation = (props) => {
                             </FormGroup>
                         </Col>}
                     </Row>
-                    <MapWrapper
+                     <MapWrapper
                         google={props.google}
                         center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
                         height="400px"
@@ -158,7 +158,7 @@ const ObservationLocation = (props) => {
                         mapContainer="map-search-container"
                         searchInputClass="search-input-class"
                         ref={fref}
-                    />
+                    /> 
                 </FormGroup>
             </Col>
             <Col md={12} className="mb-5">
@@ -170,7 +170,7 @@ const ObservationLocation = (props) => {
                             <Col sm={10}>
                                 <Input
                                     // value={address1?.markerPosition?.lat}
-                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude :''}
+                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat}
                                     id="LAT"
                                     type="number"
                                     name="latitude"
@@ -186,7 +186,7 @@ const ObservationLocation = (props) => {
                             <Col sm={10}>
                                 <Input
                                     // value={address1?.markerPosition?.lng}
-                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :''}
+                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :address1?.markerPosition?.lng}
                                     id="LON"
                                     type="number"
                                     name="longitude"
