@@ -28,8 +28,8 @@ const ObservationCategory = () => {
     }
 
     useEffect(() => {
-        let previourCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [];
-        setSelectedCategory((previourCategory))
+        let previousCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [...selectedCategory];
+        setSelectedCategory((previousCategory))
     }, [])
 
     useEffect(() => {
