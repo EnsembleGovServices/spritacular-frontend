@@ -30,7 +30,7 @@ const EquipmentDetailsForm = (props) =>{
     return (
         <>
         <Row>    
-            <Col sm="12">
+            {/* <Col sm="12">
                 <FormGroup check>
                 <Label check className="mb-4">
                     <Input
@@ -41,7 +41,7 @@ const EquipmentDetailsForm = (props) =>{
                     Pull data from my profile
                 </Label>
                 </FormGroup>
-            </Col>
+            </Col> */}
             <EquipmentForm handleInput1={handleInput} updateSetting={cameraDetails} error={error}/>
             <Col md="12">
                 <div className="border-line"></div>
