@@ -109,13 +109,28 @@ const AddObservation = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let map_data = {...observationImages?.data};
+        let map_data = [...observationImages?.data];
         let ObservationData = {...observationData};
         ObservationData.map_data = map_data;
         ObservationData.camera = cameraDetails;
         ObservationData.isDraft = 0;
         ObservationData.map_data[observationImages?.selected_image_index].category_map.category = observationCategory?.category;
         setObservationData(ObservationData);
+        saveImageData();
+    }
+
+    const saveImageData = async() => {
+        await axios.post(baseURL.api+'/observation/upload_observation/',observationData, {
+            headers: {
+                'Content-Type': 'application/json',
+                // 'content-type': 'multipart/form-data',
+                'Authorization': `Bearer ${auth?.token?.access}`
+            }
+        }).then((success) => {
+            setCameraDetails(success?.data);
+        }).catch((error) => {
+            console.log(error.response);
+        })
     }
 
     const getCameraDetail = async (e) => {
