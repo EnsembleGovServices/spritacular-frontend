@@ -2,21 +2,14 @@ import {
     Button,
     Modal,
     ModalBody,
-    Row,
-    Col,
     Alert,
     ModalHeader,
   } from "reactstrap";
-  import {useEffect, useState} from "react";
+  import {useState} from "react";
   import Images from "../../static/images";
   import PropTypes from "prop-types";
-  
-  import Login from "../Auth/Login";
-  import ForgotPasswordPopup from "./ForgotPasswordPopup";
-import ResetPassword from "../Auth/ResetPassword";
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
+
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -25,7 +18,7 @@ import {baseURL} from "../../helpers/url";
     const { modalClass, errorDisplay } = props;
     const [isOpenModal,setIsOpenModal] = useState(true);
     const navigate = useNavigate();    
-    const [error, setError] = useState('');
+    const [error] = useState('');
     const handleCloseModal = () => {
         navigate('/')
         setIsOpenModal(false);
