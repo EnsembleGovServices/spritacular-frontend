@@ -1,7 +1,6 @@
-import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
+import {Col, FormGroup, Input, Label, Row, Button, FormFeedback} from "reactstrap";
 import Images from "../../static/images";
 import {useState, useEffect,useRef} from 'react';
-import Autocomplete from 'react-google-autocomplete';
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
 import useObservations from "../../hooks/useObservations";
@@ -10,7 +9,7 @@ import ReactCountryFlags from '../ReactCountryFlag';
 
 
 const ObservationLocation = (props) => {
-    const { toggleTab,handleImageInput } = props;
+    const { toggleTab,handleImageInput, error } = props;
     const fref = useRef()
     const [address1,setAddress] = useState({
         address: '204, Mote Mangal Karyalay Rd, Bhavani Peth, Shobhapur, Kasba Peth, Pune, Maharashtra 411011, India',
@@ -31,7 +30,6 @@ const ObservationLocation = (props) => {
     const [isLoaded,setIsLoaded] = useState(false);
     const {observationImages, setObservationImages,observationData} = useObservations();
     const [isActiveDire, setActiveDire] = useState(null);
-    const [directionAngle, setDirectionAngle] = useState(0);
     const [angleDegree, setAngleDegree] = useState(false);
 
     const directionValue = [
@@ -100,15 +98,13 @@ const ObservationLocation = (props) => {
     const selectDirection = (index) => {
         const directionWrapper = document.querySelector('.compass-wrapper');
         const directionId = document.getElementById(`directionValue${index}`);
-        let getAngleValue = directionId.getAttribute("data-angle"),
-            getAngleName = directionId.getAttribute("data-name");
+        let getAngleName = directionId.getAttribute("data-name");
 
         if(isActiveDire === index){
             directionWrapper.classList.remove("active-arrow");
         }else{
             directionWrapper.classList.add("active-arrow");
             setActiveDire(index);
-            setDirectionAngle(getAngleValue);
             
 
             if (observationImages?.data[observationImages?.selected_image_index]?.is_precise_az === false) {
@@ -150,7 +146,7 @@ const ObservationLocation = (props) => {
                             </FormGroup>
                         </Col>}
                     </Row>
-                    <MapWrapper
+                     {/* <MapWrapper
                         google={props.google}
                         center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
                         height="400px"
@@ -162,7 +158,7 @@ const ObservationLocation = (props) => {
                         mapContainer="map-search-container"
                         searchInputClass="search-input-class"
                         ref={fref}
-                    />
+                    />  */}
                 </FormGroup>
             </Col>
             <Col md={12} className="mb-5">
@@ -174,7 +170,7 @@ const ObservationLocation = (props) => {
                             <Col sm={10}>
                                 <Input
                                     // value={address1?.markerPosition?.lat}
-                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude :''}
+                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat}
                                     id="LAT"
                                     type="number"
                                     name="latitude"
@@ -190,7 +186,7 @@ const ObservationLocation = (props) => {
                             <Col sm={10}>
                                 <Input
                                     // value={address1?.markerPosition?.lng}
-                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :''}
+                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :address1?.markerPosition?.lng}
                                     id="LON"
                                     type="number"
                                     name="longitude"
@@ -238,8 +234,10 @@ const ObservationLocation = (props) => {
                                 value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
                                 className="w-100"
                                 placeholder="12/20/2021"
+                                invalid={!!error?.data?.[0]?.obs_date}
                                 onChange={(e)=>handleImageInput(e)}
                             />
+                            <FormFeedback>{error?.data?.[0]?.obs_date}</FormFeedback>
                         </FormGroup>
                     </Col>
                     <Col md={6} lg={4}>
@@ -252,24 +250,25 @@ const ObservationLocation = (props) => {
                                 value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
                                 className="w-100"
                                 placeholder="10:21:00 am"
+                                invalid={!!error?.data?.[0]?.obs_time}
                                 onChange={(e)=>handleImageInput(e)}
                             />
+                            <FormFeedback>{error?.data?.[0]?.obs_time}</FormFeedback>
                         </FormGroup>
                     </Col>
                     <Col md={6} lg={4}>
                         <FormGroup>
                             <Label htmlFor="TIME ZONE">TIME ZONE</Label>
                             <Input type="select" name="timezone" className="w-100"
-                            value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
-                             onChange={(e)=>handleImageInput(e)}>
-                                <option disabled defaultValue>
-                                CT
-                                </option>
-                                <option>CT</option>
+                                   value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
+                                   invalid={!!error?.data?.[0]?.timezone}
+                                   onChange={(e)=>handleImageInput(e)}>
+                                <option defaultValue>CT</option>
                                 <option>ET</option>
                                 <option>CTS</option>
                                 <option>CT</option>
                             </Input>
+                            <FormFeedback>{error?.data?.[0]?.timezone}</FormFeedback>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -290,7 +289,13 @@ const ObservationLocation = (props) => {
                 {/*</FormGroup>*/}
             </Col>
             <Col md={12} className="mb-5">
+
                 <h6>Please choose azimuth (look direction) of your observation <p className="required">Required</p></h6>
+                {error?.data?.[0]?.azimuth &&
+                    <span className="text-danger small">
+                        {error?.data?.[0]?.azimuth}
+                    </span>
+                }
                 <FormGroup className="d-flex align-items-center position-relative mb-4 pb-3">
                     <div className="custom-switch">
                         <input
@@ -354,7 +359,7 @@ const ObservationLocation = (props) => {
                 }
                 <FormGroup className="mt-5">
                     <Button className="gray-outline-btn me-2" onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
-                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)}>Continue</Button>
+                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)} disabled={((observationImages?.data) ? (!observationImages?.data[observationImages?.selected_image_index]?.azimuth) : true)}>Continue</Button>
                 </FormGroup>
             </Col>
         </>

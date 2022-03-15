@@ -21,6 +21,11 @@
   justify-content: flex-start;
 }
 
+@mixin vend {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 // Title Fonts 
 @mixin xl-title {
   font-size: 48px;

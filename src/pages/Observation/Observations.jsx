@@ -13,15 +13,14 @@ const Observations = () => {
     });
     const [observationImages, setObservationImages] = useState([]);
     const [observationCategory, setObservationCategory] = useState([]);
-    const [observationData, setObservationData] = useState([]);
+    const [observationData, setObservationData] = useState({});
 
     useEffect(()=> {
+        let data = (observationImages?.data) ? [...observationImages?.data] : []
         setObservationData({
             isDraft: observationSteps?.is_draft ? 1 : 0,
             image_type: observationType?.image_type,
-            map_data: {
-                ...observationImages?.data
-            }
+            map_data: data
         })
     }, [observationImages?.data, observationSteps?.is_draft, observationType?.image_type])
 

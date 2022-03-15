@@ -87,7 +87,7 @@ const ObservationUploadImg = (props) =>{
 
 
     return (
-        <Col sm="12">
+        <>
             <div className="upload-observation-main">
                 <div className="upload-ob-inner">
                     <FormGroup>
@@ -129,7 +129,7 @@ const ObservationUploadImg = (props) =>{
                     <span className="text-danger d-block small my-1 d-inline-block">{error?.duplicate}</span>
                 }
             </div>
-        </Col>
+        </>
     )
 }
 export default ObservationUploadImg;

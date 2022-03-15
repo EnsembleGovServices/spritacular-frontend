@@ -21,7 +21,7 @@ import ImagePreview from "./ImagePreview";
 
 
 const ObservationAfterImageUpload = (props) => {
-    const { toggleTab,handleImageInput } = props;
+    const { toggleTab,handleImageInput, error } = props;
     const {observationImages, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
@@ -143,7 +143,7 @@ const ObservationAfterImageUpload = (props) => {
                                 </FormGroup>
                             </Col>
 
-                            <ObservationCategory />
+                            <ObservationCategory error={error} />
 
                             <Col sm={12}>
                                 <FormGroup check className="mb-3">
@@ -159,7 +159,7 @@ const ObservationAfterImageUpload = (props) => {
                                 }
                             </Col>
                             <Col sm={12}>
-                                <Button type="submit" className="mt-3" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
+                                <Button type="button" className="mt-3" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
                             </Col>
                         </Row>
                     </TabPane>
@@ -169,7 +169,7 @@ const ObservationAfterImageUpload = (props) => {
                                 <ImagePreview />
                             </Col>
                             <Col sm={12}>
-                                <Button type="submit" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
+                                <Button type="button" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
                             </Col>
                         </Row>
                     </TabPane>

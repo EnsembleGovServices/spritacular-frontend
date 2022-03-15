@@ -1,18 +1,39 @@
-import { CategoryList } from "../../helpers/observation";
 import {Col, FormGroup,PopoverBody, PopoverHeader,UncontrolledPopover, Collapse, Button} from "reactstrap";
 import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import ImageCarousel from "../../components/Shared/ImageCarousel";
 import { Icon } from "@iconify/react";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
+import useAuth from "../../hooks/useAuth";
 
-const ObservationCategory = () => {
+const ObservationCategory = (props) => {
+    const {error}=props;
+    const { auth } = useAuth();
     const { observationImages,setObservationImages } = useObservations();
-    const [Category] = useState(CategoryList);
+    const [Category, setCategory] = useState([]);
     const [isChecked, setIsChecked] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('' || []);
     const [popoverOpen, setPopoverOpen] = useState(false);
     const ObservationData = {...observationImages};
 
+
+    const fetchCategory = async () => {
+            await axios.get(baseURL.api+'/observation/get_category_list/', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${auth?.token?.access}`
+                }
+            })
+            .then((response)=> {
+                setCategory(response?.data)
+            })
+            .catch((error)=> {console.log(error)})
+    }
+
+    useEffect(()=> {
+        fetchCategory().then(r=>console.log(r))
+    }, [])
 
     const onCategoryChange=(e)=>{
         const value = parseFloat(e.target.id);
@@ -28,18 +49,17 @@ const ObservationCategory = () => {
     }
 
     useEffect(() => {
-        let previourCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [];
-        setSelectedCategory((previourCategory))
-    }, [])
+        let prevCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [];
+        setSelectedCategory((prevCategory))
+    }, [ObservationData.data, observationImages?.selected_image_index])
 
     useEffect(() => {
-        setSelectedCategory([])
-    }, [ observationImages?.selected_image_index])
+        if (observationImages?.selected_image_index === []) {
+            setSelectedCategory([])
+        }
+    }, [observationImages?.selected_image_index])
     
     useEffect(()=> {
-        // let previourCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [];
-        // console.log(selectedCategory)
-        //  console.log([...new Set([...previourCategory, ...selectedCategory])])
         ObservationData.data[observationImages?.selected_image_index].category_map.category = selectedCategory;
     },[selectedCategory])
 
@@ -50,6 +70,7 @@ const ObservationCategory = () => {
             setPopoverOpen(index);
         }
     }
+
     const PopoverContent = ({ contentUpdate, popoverId }) => {
 
         const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
@@ -100,41 +121,8 @@ const ObservationCategory = () => {
         )
     }
 
-    // return(
-    //     observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
-    //         return(
-    //             Category?.map((imagItem, index)=>{
-    //                 return (
-    //                     <Col sm={6} key={index}>
-    //                         <FormGroup>
-    //                             <div className="checkbox-wrapper">
-    //                                 <div className="inputGroup">
-    //                                     <input
-    //                                         value={imagItem.name || ''}
-    //                                         name={imagItem.id}
-    //                                         id={imagItem.id}
-    //                                         type="checkbox"
-    //                                         checked={!!isChecked[imagItem.id]}
-    //                                         hidden
-    //                                         onChange={(e) => onCategoryChange(e)}
-    //                                     />
-    //                                     <label htmlFor={imagItem.id}>
-    //                                         <img src={imagItem.image} alt={imagItem.name} />
-    //                                         {imagItem.name}
-    //                                         <ImagePopover />
-    //                                     </label>
-    //                                 </div>
-    //                             </div>
-    //                         </FormGroup>
-    //                     </Col>
-    //                 )
-    //             })
-    //         )
-    //     })
-    // )
-
-    return(
-        observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
+    const showCategory = () => {
+        return observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
             return(
                 Category?.map((imagItem, index)=>{
                     return (
@@ -152,8 +140,8 @@ const ObservationCategory = () => {
                                             onChange={(e) => onCategoryChange(e)}
                                         />
                                         <label htmlFor={imagItem.id}>
-                                            <img src={imagItem.image} alt={imagItem.name} />
-                                            {imagItem.name} {item?.category_map?.category?.find(list => list === imagItem?.id)}
+                                            {/*<img src={imagItem.image} alt={imagItem.name} />*/}
+                                            {imagItem.name}
                                             <ImagePopover />
                                         </label>
                                     </div>
@@ -164,6 +152,17 @@ const ObservationCategory = () => {
                 })
             )
         })
+    }
+
+    return(
+        <>
+            {error?.data[0]?.category &&
+                <>
+                    <span className="text-danger small">{error?.data[0]?.category}</span>
+                </>
+            }
+            {showCategory()}
+        </>
     )
 
 

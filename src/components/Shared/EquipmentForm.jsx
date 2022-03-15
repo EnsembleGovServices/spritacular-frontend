@@ -1,4 +1,4 @@
-import {UncontrolledAlert, Button, FormFeedback, FormGroup, Input, Row,Col} from "reactstrap";
+import {FormFeedback, FormGroup, Input, Col} from "reactstrap";
 
 const EquipmentForm = ({handleInput1,updateSetting,error}) => {
     return(
@@ -90,7 +90,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             </FormGroup>
             </Col>
             <Col md="12">
-            <div className="border-line"></div>
+            <div className="border-line"/>
             <FormGroup>
                 <h6>How do you generally keep track of time?</h6>
                 <Input
@@ -103,7 +103,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             </FormGroup>
             </Col>
             <Col md="12">
-            <div className="border-line"></div>
+            <div className="border-line"/>
             <FormGroup>
                 <h6>
                 Do you use any special equipment attached to
