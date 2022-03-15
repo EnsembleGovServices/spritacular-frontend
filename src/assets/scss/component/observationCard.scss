@@ -13,6 +13,7 @@
         position: absolute;
         right: 0;
         top: 0;
+        z-index: 1;
         .badge{
             padding: 4px 6px;
             background: rgba(0, 0, 0, 0.64);
@@ -30,6 +31,10 @@
         border-radius: 6px 0px 8px;
         padding: 5px;
         line-height: 0;
+        z-index: 1;
+    }
+    .card-img{
+        border-radius: 8px 8px 0 0;
     }
     .card-link{
         &:hover .observation_country{
@@ -43,6 +48,7 @@
             box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
             width: 22px;
             height: 22px;
+            left: 7px;
             img {
                 width: 100%;
                 height: 100%;

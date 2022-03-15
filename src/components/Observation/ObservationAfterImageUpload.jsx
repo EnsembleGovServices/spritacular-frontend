@@ -159,7 +159,7 @@ const ObservationAfterImageUpload = (props) => {
                                 }
                             </Col>
                             <Col sm={12}>
-                                <Button type="button" className="mt-3" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
+                                <Button type="button" disabled className="mt-3" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
                             </Col>
                         </Row>
                     </TabPane>

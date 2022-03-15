@@ -1,16 +1,17 @@
+import { useState } from 'react';
 import InitialUploadObservations from "../InitialUploadObservations";
 import { Col, Container, Row, UncontrolledAlert } from 'reactstrap';
 import ObservationCard from "../../components/Shared/ObservationCard";
 import Images from './../../static/images';
-import { FormGroup } from 'reactstrap';
-import { Label } from 'reactstrap';
-import { Input } from 'reactstrap';
+import { FormGroup, Label, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { routeUrls } from './../../helpers/url';
 import { Icon } from '@iconify/react';
 import "../../assets/scss/component/myObservation.scss";
+import ObservationDetails from './ObservationDetails';
 
 const MyObservations = () => {
+  const [isObservationDetailModal, setObservationDetailModal] = useState(false)
   const observationCards=[
     {
         img: "image",
@@ -56,7 +57,10 @@ const MyObservations = () => {
         userCountryName: "Trieben, AT",
         userCountryIcon: Images.Flag
     }
-]
+  ]
+  const handleObservationDetailModal = () => {
+    setObservationDetailModal(!isObservationDetailModal);
+  };
   return(
       <>
         <Container>
@@ -68,7 +72,7 @@ const MyObservations = () => {
               <Col sm={12} md={8}>
                 <FormGroup className="m-0 d-inline-block form-group">
                   <Label className="text-uppercase" htmlFor="Country">Country</Label>
-                  <Input id="Country" type="select" name="timezone" className="bg-transparent p-0 custom-select" value="" >
+                  <Input id="Country" type="select" name="timezone" className="bg-transparent p-0 custom-select" defaultValue="" >
                     <option disabled defaultValue>
                       All countries
                     </option>
@@ -80,7 +84,7 @@ const MyObservations = () => {
                 </FormGroup>  
                 <FormGroup className="m-0 d-inline-block form-group">
                   <Label className="text-uppercase" htmlFor="TransientLuminousEvent">Transient Luminous Event</Label>
-                  <Input id="TransientLuminousEvent" type="select" name="timezone" className="bg-transparent p-0 custom-select" value="" >
+                  <Input id="TransientLuminousEvent" type="select" name="timezone" className="bg-transparent p-0 custom-select" defaultValue="" >
                     <option disabled defaultValue>
                     All types
                     </option>
@@ -92,7 +96,7 @@ const MyObservations = () => {
                 </FormGroup>  
                 <FormGroup className="m-0 d-inline-block form-group">
                   <Label className="text-uppercase" htmlFor="ObservationStatus">Observation Status</Label>
-                  <Input id="ObservationStatus" type="select" name="timezone" className="bg-transparent p-0 custom-select" value="" >
+                  <Input id="ObservationStatus" type="select" name="timezone" className="bg-transparent p-0 custom-select" defaultValue="" >
                     <option disabled defaultValue>
                     All status
                     </option>
@@ -129,7 +133,7 @@ const MyObservations = () => {
               <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mt-2 mt-md-0">
                   <FormGroup className="form-group sort-by-select">
                     <Label className="text-uppercase" htmlFor="SortBy">Sort by</Label>
-                    <Input id="SortBy" type="select" name="timezone" value="" >
+                    <Input id="SortBy" type="select" name="timezone" defaultValue="" >
                       <option disabled defaultValue>
                         Recent observations
                       </option>
@@ -160,12 +164,13 @@ const MyObservations = () => {
           <Row className="list-masonry">
             {observationCards && observationCards?.map((cardItems, index)=>{
             return (
-                <Col key={index} sm={6} md={4} xl={3}>
-                    <ObservationCard cardItems={cardItems} />
+                <Col key={index} sm={6} md={4} xl={3} className="w-100">
+                    <ObservationCard cardItems={cardItems} handleClick={() => handleObservationDetailModal()} />
                 </Col>
             );})}
           </Row>
         </Container>
+        <ObservationDetails modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />
       </>
   )
 }

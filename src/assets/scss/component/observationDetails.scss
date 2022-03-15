@@ -1,0 +1,59 @@
+@import "../global/config.scss";
+.observation-details_modal{
+    max-width: 750px;
+    width: 100%;
+    display: flex;
+    margin: 0 0 0 auto;
+    height: 100%;
+    border-radius: 8px 0px 0px 8px;
+    .modal-header{
+        padding: 16px 20px 12px;
+        border-radius: 0;
+    }
+    .modal-title{
+        font-weight: 700;
+        @include sm-title;
+        @include vstart;
+        .badge {
+            font-weight: 400;
+            @include sm-text;
+            color: $light-grey;
+            background: #F4F4F4 !important;
+            border-radius: 4px;
+            padding: 2px 4px;
+            margin-left: 8px;
+        }
+    }
+    .modal-body{
+        padding: 0 20px 12px;
+    }
+    h6{
+        font-weight: 400;
+        @include sm-text;
+        color: $light-grey;
+    }
+    p{
+        font-weight: 500;
+        @include md-text;
+        color: $black;
+
+    }
+}
+.border-line{
+    height: 1px;
+    width: 100%;
+    background: #EAEAEA;
+    margin: 8px 0;
+}
+.user-review{
+    font-weight: 400;
+    @include md-text;
+    color: $black;
+    opacity: 0.6;
+}
+.question-box{
+    background: #FDF2F4;
+    border: 1px solid #F09EAD;
+    border-radius: 6px;
+    padding: 16px;
+}
