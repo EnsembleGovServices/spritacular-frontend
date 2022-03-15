@@ -66,8 +66,8 @@ const UpdateProfile = (props) => {
             place_uid: updateUser?.place_uid,
             country_code: updateUser?.country_code,
             extra_fields: {
-                lat: updateUser?.extra_fields.lat,
-                lng: updateUser?.extra_fields.lng,
+                lat: updateUser?.extra_fields?.lat,
+                lng: updateUser?.extra_fields?.lng,
                 
             }
         }, {
