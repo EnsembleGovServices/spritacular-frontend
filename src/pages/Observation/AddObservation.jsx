@@ -23,11 +23,12 @@ import ObservationProgress from "../../components/Observation/ObservationProgres
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
 import {useNavigate} from "react-router-dom";
+import Loader from "../../components/Shared/Loader";
 
 const AddObservation = () => {
     const { auth } = useAuth();
     const navigate = useNavigate();
-
+    const [isLoading, setIsLoading] = useState(false);
     const {
         observationSteps,
         setObservationSteps,
@@ -117,12 +118,13 @@ const AddObservation = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         setDraft(0);
 
         const formData = new FormData();
 
         observationData.camera = cameraDetails;
-        // observationData.map_data[observationImages?.selected_image_index].category_map.category = observationCategory?.category;
+
         observationData?.map_data?.map((item, index) => {
             delete item["image"];
             formData.append("image_"+index, item.item);
@@ -140,8 +142,10 @@ const AddObservation = () => {
                 'Authorization': `Bearer ${auth?.token?.access}`
             }
         }).then((response) => {
+            setIsLoading(false);
             console.log(response)
         }).catch((error) => {
+            setIsLoading(false);
             console.log(error.response);
         })
 
@@ -206,7 +210,10 @@ const AddObservation = () => {
     }, [activeTab, draft, observationImages, setObservationSteps]);
 
     return(
-        <>
+        <div className="position-relative">
+            {isLoading &&
+                <Loader fixContent={true} />
+            }
             <Form className="observation-form upload-observation-form-main" onSubmit={handleSubmit}>
                 <div className="common-top-button-wrapper">
                     <Container>
@@ -312,7 +319,7 @@ const AddObservation = () => {
                     </Container>
                 </section>
             </Form>
-        </>
+        </div>
     )
 }
 export default AddObservation;
