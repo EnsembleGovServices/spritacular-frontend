@@ -21,7 +21,7 @@ import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 import UserProfilePopup from "../Popup/UserProfilePopup";
 import { Icon } from "@iconify/react";
 import LazyLoad from "../Upload/LazyLoad";
-import { routeUrls } from './../../helpers/url';
+import { routeUrls } from '../../helpers/url';
 
 const Header = (props) => {
   const { auth, setAuth, persist, setPersist } = useAuth();

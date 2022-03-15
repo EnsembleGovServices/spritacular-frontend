@@ -24,7 +24,6 @@
     .btn-secondary{
         &:not(.gray-outline-btn){
             padding: 13px 50px;
-            @include buttonSecodary;
             @include media-breakpoint-down(lg){
                 padding: 10px 30px;
             }

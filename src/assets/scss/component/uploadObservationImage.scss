@@ -28,6 +28,9 @@
             background-color: $lightPink;
             color: $primary;
           }
+          &.disabled{
+            opacity: 0.5;
+          }
         }
       }
     }
