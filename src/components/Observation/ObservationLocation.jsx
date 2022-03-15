@@ -350,7 +350,7 @@ const ObservationLocation = (props) => {
                 }
                 <FormGroup className="mt-5">
                     <Button className="gray-outline-btn me-2" onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
-                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)}>Continue</Button>
+                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)} disabled={((observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.azimuth ?'': 'true') : 'true')}>Continue</Button>
                 </FormGroup>
             </Col>
         </>

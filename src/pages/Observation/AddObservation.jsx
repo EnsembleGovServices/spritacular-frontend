@@ -110,6 +110,7 @@ const AddObservation = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         let map_data = [...observationImages?.data];
+        map_data.map((id) => id.image = null );
         let ObservationData = {...observationData};
         ObservationData.map_data = map_data;
         ObservationData.camera = cameraDetails;
@@ -120,10 +121,16 @@ const AddObservation = () => {
     }
 
     const saveImageData = async() => {
-        await axios.post(baseURL.api+'/observation/upload_observation/',observationData, {
+        const formData = new FormData();
+        observationData.map_data.map((item,index) => {
+            console.log(item);
+            formData.append("image_"+index, item.item);
+        })
+        formData.append("camera", JSON.stringify(observationData.camera));
+        formData.append("map_data", JSON.stringify(observationData.map_data));
+        await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
             headers: {
                 'Content-Type': 'application/json',
-                // 'content-type': 'multipart/form-data',
                 'Authorization': `Bearer ${auth?.token?.access}`
             }
         }).then((success) => {
@@ -237,7 +244,9 @@ const AddObservation = () => {
                                             <NavLink
                                                 className={activeTab === Tabs.EquipmentDetails ? 'active' : ''}
                                                 onClick={() => {
-                                                    toggleTab(Tabs.EquipmentDetails);
+                                                    if(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.azimuth){
+                                                        toggleTab(Tabs.EquipmentDetails);
+                                                    }
                                                 }}
                                             >
                                                 Equipment Details
