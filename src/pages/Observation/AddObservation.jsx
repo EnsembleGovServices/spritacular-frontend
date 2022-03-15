@@ -198,7 +198,6 @@ const AddObservation = () => {
             }
         });
     }, [activeTab, draft, observationImages, setObservationSteps]);
-
     return(
         <>
             <Form className="observation-form upload-observation-form-main" onSubmit={handleSubmit}>
@@ -236,7 +235,9 @@ const AddObservation = () => {
                                             <NavLink
                                                 className={activeTab === Tabs.DateTimeLocation ? 'active' : ''}
                                                 onClick={() => {
-                                                    toggleTab(Tabs.DateTimeLocation);
+                                                    if(observationImages?.data ){
+                                                        toggleTab(Tabs.DateTimeLocation);
+                                                    }
                                                 }}
                                             >
                                                 Date, Time & Location
