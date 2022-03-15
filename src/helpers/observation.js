@@ -10,6 +10,11 @@ export const MultiImageTabs = {
     ImageSequence: "ImageSequence"
 }
 
+export const imageDetails = {
+    Details : "Details",
+    Equipment : "Equipment",
+    Comments : "Comments",
+}
 export const CategoryList = [
     {
         id: 1,

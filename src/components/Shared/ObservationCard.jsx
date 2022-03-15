@@ -1,29 +1,24 @@
 import Images from "../../static/images";
-import { Card, CardBody, CardTitle, CardImg, CardSubtitle, Row, Col, Badge, CardFooter } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Card, CardBody, CardTitle, CardSubtitle, Row, Col, Badge, CardFooter, Button } from "reactstrap";
 import "../../assets/scss/component/observationCard.scss";
-import { routeUrls } from './../../helpers/url';
 import { Icon } from '@iconify/react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const ObservationCard = (props) => {
-    const {cardItems} = props;
+    const {cardItems, handleClick} = props;
     
     return(
         <>
             <Card className="observation_card overflow-hidden">
-                <Link to={routeUrls.home} className="text-black card-link d-inline-block">
+                <Button className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start" onClick={handleClick} >
                     <div className="observation_country">
                         <Badge className="bg-black text-white">
                             <img src={cardItems.userCountryIcon} alt="Flag" className="me-1" /> {cardItems.userCountryName}
                         </Badge>
                     </div>
                     <div className="varify-card"><Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" /></div>
-                    <CardImg
-                    alt="Card image cap"
-                    src={cardItems.imgCategory}
-                    top
-                    width="100%"
-                    />
+                        <LazyLoadImage alt="Card cap" src={cardItems.imgCategory} delayTime="1000" effect="blur" className="img-fluid card-img" />
                     <CardBody className="position-relative observation-card_body">
                         <i className="position-absolute observation_type rounded-circle bg-white"><img src={cardItems.imageFormat} alt="Sprite" className="rounded-circle" /></i>
                         <Row className="card-details">
@@ -56,7 +51,7 @@ const ObservationCard = (props) => {
                             </Col>
                         </Row>
                     </CardFooter>
-                </Link>
+                </Button>
             </Card>
         </>
     )

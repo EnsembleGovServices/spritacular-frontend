@@ -59,6 +59,9 @@ const AddObservation = () => {
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
 
+    const disabledLocationTab = observationData?.map_data?.[0]?.category_map?.category.length > 0 && next;
+    const disabledEquipmentTab = observationData?.map_data?.[0]?.category_map?.category && next && observationData?.map_data?.[0]?.azimuth;
+
     // Toggle Tabs
     const toggleTab = (tab) => {
         if (activeTab !== tab) {
@@ -278,9 +281,9 @@ const AddObservation = () => {
                                         </NavItem>
                                         <NavItem>
                                             <NavLink
-                                                className={activeTab === Tabs.DateTimeLocation ? 'active' : ''}
+                                                className={`${activeTab === Tabs.DateTimeLocation ? 'active' : ''} ${disabledLocationTab ? '' : 'disabled'}`}
                                                 onClick={() => {
-                                                    if(observationData?.map_data?.[0]?.category_map?.category.length > 0 && next){
+                                                    if(disabledLocationTab){
                                                         toggleTab(Tabs.DateTimeLocation);
                                                     }
                                                 }}
@@ -290,9 +293,9 @@ const AddObservation = () => {
                                         </NavItem>
                                         <NavItem>
                                             <NavLink
-                                                className={activeTab === Tabs.EquipmentDetails ? 'active' : ''}
+                                                className={`${activeTab === Tabs.EquipmentDetails ? 'active' : ''} ${disabledEquipmentTab ? '' : 'disabled'}`}
                                                 onClick={() => {
-                                                    if(observationData?.map_data?.[0]?.category_map?.category && next && observationData?.map_data?.[0]?.azimuth){
+                                                    if(disabledEquipmentTab){
                                                         toggleTab(Tabs.EquipmentDetails);
                                                     }
                                                 }}

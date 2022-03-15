@@ -1,7 +1,6 @@
-import { Row, Col, FormGroup, Label, Input, Button } from "reactstrap"
+import { Row, Col, FormGroup, Input, Button } from "reactstrap"
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationEquipment.scss";
-import { useEffect } from "react";
 
 const EquipmentDetails = (props) =>{
     const {toggleTab,cameraDetails } = props;
@@ -94,8 +93,6 @@ const EquipmentDetails = (props) =>{
                 </FormGroup>
             </Col>
             <Col md={12}>
-
-                {/* <div className="border-line"></div> */}
                 <FormGroup>
                     <h6>Link to the video of this event</h6>
                     <Input
@@ -117,7 +114,8 @@ const EquipmentDetails = (props) =>{
                 </FormGroup>
             </Col>
             <Col md={12}>
-                <Button className="gray-outline-btn"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
+                <Button className="gray-outline-btn me-2"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
+                <Button disabled >Continue</Button>
             </Col>
         </Row>
         </>
