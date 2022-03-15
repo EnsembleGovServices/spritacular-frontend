@@ -130,14 +130,7 @@ const AddObservation = () => {
             delete mapData[index]['image'];
             
         })
-        delete otherDetails['map_data'];
-        delete otherDetails['camera'];
-        
-        console.log(mapData);
-        console.log(otherDetails);
-        formData.append("camera", JSON.stringify(observationData.camera));
         formData.append("data", JSON.stringify(otherDetails));
-        formData.append("map_data", JSON.stringify(mapData));
         await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
             headers: {
                 'Content-Type': 'application/json',
