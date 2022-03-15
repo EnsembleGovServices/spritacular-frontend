@@ -292,7 +292,7 @@ const AddObservation = () => {
                                             <NavLink
                                                 className={activeTab === Tabs.EquipmentDetails ? 'active' : ''}
                                                 onClick={() => {
-                                                    if(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.azimuth){
+                                                    if(observationData?.map_data?.[0]?.category_map?.category && next && observationData?.map_data?.[0]?.azimuth){
                                                         toggleTab(Tabs.EquipmentDetails);
                                                     }
                                                 }}
