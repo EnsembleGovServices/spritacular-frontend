@@ -122,7 +122,6 @@ const AddObservation = () => {
 
     const saveImageData = async() => {
         const formData = new FormData();
-        console.log(observationData);
         let otherDetails = {...observationData};
         let mapData = otherDetails['map_data'];
         mapData.map((item,index) => {
@@ -209,7 +208,7 @@ const AddObservation = () => {
                             <Button className="gray-outline-btn" onClick={handleReset} disabled={!observationImages?.data}>Cancel</Button>
                             <div className="top-right-btn">
                                 <Button className="gray-outline-btn me-2 me-sm-3" onClick={handlesetDraft} disabled={!observationImages?.data}>Save as draft</Button>
-                                <Button type="submit" >Submit</Button>
+                                <Button type="submit" disabled={!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture)} >Submit</Button>
                             </div>
                         </div>
                     </Container>
