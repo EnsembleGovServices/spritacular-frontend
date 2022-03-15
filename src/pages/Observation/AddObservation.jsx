@@ -168,7 +168,6 @@ const AddObservation = () => {
         }
         else {
             setCameraDetails(cameraSettingFields);
-
         }
     }
 

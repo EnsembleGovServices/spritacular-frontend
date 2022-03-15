@@ -9,6 +9,10 @@ import { Link } from 'react-router-dom';
 import { routeUrls } from './../../helpers/url';
 import { Icon } from '@iconify/react';
 import "../../assets/scss/component/myObservation.scss";
+import { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
 
 const MyObservations = () => {
   const observationCards=[
@@ -57,12 +61,29 @@ const MyObservations = () => {
         userCountryIcon: Images.Flag
     }
 ]
+const [observationList,setObservationList] = useState();
+const [observatioImagenList,setObservationImageList] = useState();
+const [isLoaded,setIsLoaded] = useState(true);
+const { auth } = useAuth();
+useEffect(() => {
+   axios.get(baseURL.api+'/observation/observation_collection/',{
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${auth?.token?.access}`
+    }
+}).then((success) => {
+  setObservationList(success?.data);
+  setIsLoaded(false);
+}).catch((error) => {
+    console.log(error.response);
+})
+},[isLoaded]);
   return(
       <>
         <Container>
           <InitialUploadObservations />
         </Container>
-        <div className="observation-filter_wrapper">
+        {/* <div className="observation-filter_wrapper">
           <Container>
             <Row>
               <Col sm={12} md={8}>
@@ -158,14 +179,25 @@ const MyObservations = () => {
             <Link to={routeUrls.getStarted} className="btn btn-outline-primary">Get Trained</Link>
           </UncontrolledAlert>
           <Row className="list-masonry">
-            {observationCards && observationCards?.map((cardItems, index)=>{
-            return (
-                <Col key={index} sm={6} md={4} xl={3}>
-                    <ObservationCard cardItems={cardItems} />
-                </Col>
-            );})}
+            {observationList && observationList?.map((cardItems, index)=> {
+              if(cardItems?.images.length > 0){
+                return (
+                    <>
+                    {cardItems?.images?.map((image,id) => {
+                    return (<Col key={id} sm={6} md={4} xl={3}>
+                        <ObservationCard cardItems = {image} userProfile={cardItems.user_data}/>
+                     </Col>)
+                    })
+                    }
+                    </>
+                  );
+              }
+              else{
+                return;
+              }
+            })}
           </Row>
-        </Container>
+        </Container> */}
       </>
   )
 }
