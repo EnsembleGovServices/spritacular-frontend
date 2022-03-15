@@ -268,7 +268,9 @@ const AddObservation = () => {
                                             <NavLink
                                                 className={activeTab === Tabs.ObservationImages ? 'active' : ''}
                                                 onClick={() => {
-                                                    toggleTab(Tabs.ObservationImages);
+                                                    if (observationData?.map_data?.[0]?.category_map?.category && next) {
+                                                        toggleTab(Tabs.ObservationImages);
+                                                    }
                                                 }}
                                             >
                                                 Observation Images
@@ -278,7 +280,7 @@ const AddObservation = () => {
                                             <NavLink
                                                 className={activeTab === Tabs.DateTimeLocation ? 'active' : ''}
                                                 onClick={() => {
-                                                    if(observationImages?.data ){
+                                                    if(observationData?.map_data?.[0]?.category_map?.category.length > 0 && next){
                                                         toggleTab(Tabs.DateTimeLocation);
                                                     }
                                                 }}
