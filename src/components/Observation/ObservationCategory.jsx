@@ -1,4 +1,3 @@
-import { CategoryList } from "../../helpers/observation";
 import {Col, FormGroup,PopoverBody, PopoverHeader,UncontrolledPopover, Collapse, Button} from "reactstrap";
 import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
@@ -8,7 +7,8 @@ import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 
-const ObservationCategory = () => {
+const ObservationCategory = (props) => {
+    const {error}=props;
     const { auth } = useAuth();
     const { observationImages,setObservationImages } = useObservations();
     const [Category, setCategory] = useState([]);
@@ -70,6 +70,7 @@ const ObservationCategory = () => {
             setPopoverOpen(index);
         }
     }
+
     const PopoverContent = ({ contentUpdate, popoverId }) => {
 
         const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
@@ -120,8 +121,8 @@ const ObservationCategory = () => {
         )
     }
 
-    return(
-        observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
+    const showCategory = () => {
+        return observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
             return(
                 Category?.map((imagItem, index)=>{
                     return (
@@ -151,6 +152,17 @@ const ObservationCategory = () => {
                 })
             )
         })
+    }
+
+    return(
+        <>
+            {error?.data[0]?.category &&
+                <>
+                    <span className="text-danger small">{error?.data[0]?.category}</span>
+                </>
+            }
+            {showCategory()}
+        </>
     )
 
 

@@ -1,4 +1,4 @@
-import { Col, FormGroup, Input, Label, Row, Button } from "reactstrap";
+import {Col, FormGroup, Input, Label, Row, Button, FormFeedback} from "reactstrap";
 import Images from "../../static/images";
 import {useState, useEffect,useRef} from 'react';
 import {Tabs} from "../../helpers/observation";
@@ -9,7 +9,7 @@ import ReactCountryFlags from '../ReactCountryFlag';
 
 
 const ObservationLocation = (props) => {
-    const { toggleTab,handleImageInput } = props;
+    const { toggleTab,handleImageInput, error } = props;
     const fref = useRef()
     const [address1,setAddress] = useState({
         address: '204, Mote Mangal Karyalay Rd, Bhavani Peth, Shobhapur, Kasba Peth, Pune, Maharashtra 411011, India',
@@ -234,8 +234,10 @@ const ObservationLocation = (props) => {
                                 value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
                                 className="w-100"
                                 placeholder="12/20/2021"
+                                invalid={!!error?.data?.[0]?.obs_date}
                                 onChange={(e)=>handleImageInput(e)}
                             />
+                            <FormFeedback>{error?.data?.[0]?.obs_date}</FormFeedback>
                         </FormGroup>
                     </Col>
                     <Col md={6} lg={4}>
@@ -248,22 +250,25 @@ const ObservationLocation = (props) => {
                                 value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
                                 className="w-100"
                                 placeholder="10:21:00 am"
+                                invalid={!!error?.data?.[0]?.obs_time}
                                 onChange={(e)=>handleImageInput(e)}
                             />
+                            <FormFeedback>{error?.data?.[0]?.obs_time}</FormFeedback>
                         </FormGroup>
                     </Col>
                     <Col md={6} lg={4}>
                         <FormGroup>
                             <Label htmlFor="TIME ZONE">TIME ZONE</Label>
                             <Input type="select" name="timezone" className="w-100"
-                            value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
-                             onChange={(e)=>handleImageInput(e)}>
+                                   value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
+                                   invalid={!!error?.data?.[0]?.timezone}
+                                   onChange={(e)=>handleImageInput(e)}>
                                 <option defaultValue>CT</option>
-                                <option>CT</option>
                                 <option>ET</option>
                                 <option>CTS</option>
                                 <option>CT</option>
                             </Input>
+                            <FormFeedback>{error?.data?.[0]?.timezone}</FormFeedback>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -284,7 +289,13 @@ const ObservationLocation = (props) => {
                 {/*</FormGroup>*/}
             </Col>
             <Col md={12} className="mb-5">
+
                 <h6>Please choose azimuth (look direction) of your observation <p className="required">Required</p></h6>
+                {error?.data?.[0]?.azimuth &&
+                    <span className="text-danger small">
+                        {error?.data?.[0]?.azimuth}
+                    </span>
+                }
                 <FormGroup className="d-flex align-items-center position-relative mb-4 pb-3">
                     <div className="custom-switch">
                         <input
