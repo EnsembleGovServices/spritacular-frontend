@@ -1,11 +1,11 @@
 import {Button, Col, Container, Form, Nav, NavItem, NavLink, Row, TabContent, TabPane, FormGroup} from "reactstrap";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import {useEffect, useState} from "react";
-import {Tabs} from "../../helpers/observation";
 import useObservations from "../../hooks/useObservations";
-import {baseURL, cameraSettingFields} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
+import {baseURL, cameraSettingFields} from "../../helpers/url";
+import {Tabs} from "../../helpers/observation";
 
 // const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
 // const EquipmentDetails = lazy(()=> import('../../components/Observation/EquipmentDetails'))
@@ -41,7 +41,7 @@ const AddObservation = () => {
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
     const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
-    const [draft] = useState(true);
+    const [draft, setDraft] = useState(true);
     const [reset, setReset] = useState(false);
 
     // Toggle Tabs
@@ -57,7 +57,14 @@ const AddObservation = () => {
         setCameraDetails({
             ...cameraDetails,
             [name]:value,
-        })
+        });
+
+        setObservationData(prev => {
+            return {
+                ...prev,
+                camera: cameraDetails
+            }
+        });
     }
 
     const handleImageInput = (e,address = null) => {
@@ -107,40 +114,39 @@ const AddObservation = () => {
         setObservationData(ObservationData);
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        let map_data = [...observationImages?.data];
-        // map_data.map((id) => id.image = null );
-        let ObservationData = {...observationData};
-        ObservationData.map_data = map_data;
-        ObservationData.camera = cameraDetails;
-        ObservationData.isDraft = 0;
-        ObservationData.map_data[observationImages?.selected_image_index].category_map.category = observationCategory?.category;
-        setObservationData(ObservationData);
-        saveImageData();
-    }
 
-    const saveImageData = async() => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setDraft(0);
+
         const formData = new FormData();
-        let otherDetails = {...observationData};
-        let mapData = otherDetails['map_data'];
-        mapData.map((item,index) => {
+
+        observationData.camera = cameraDetails;
+        // observationData.map_data[observationImages?.selected_image_index].category_map.category = observationCategory?.category;
+        observationData?.map_data?.map((item, index) => {
+            delete item["image"];
             formData.append("image_"+index, item.item);
-            delete mapData[index]['image'];
-            
+            return true;
         })
-        formData.append("data", JSON.stringify(otherDetails));
+
+        console.log(observationData)
+
+        formData.append("data", JSON.stringify(observationData));
+        console.log(formData.get('data'))
+
         await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${auth?.token?.access}`
             }
-        }).then((success) => {
-            setCameraDetails(success?.data);
+        }).then((response) => {
+            console.log(response)
         }).catch((error) => {
             console.log(error.response);
         })
+
     }
+
 
     const getCameraDetail = async (e) => {
 
@@ -208,7 +214,7 @@ const AddObservation = () => {
                             <Button className="gray-outline-btn" onClick={handleReset} disabled={!observationImages?.data}>Cancel</Button>
                             <div className="top-right-btn">
                                 <Button className="gray-outline-btn me-2 me-sm-3" onClick={handlesetDraft} disabled={!observationImages?.data}>Save as draft</Button>
-                                <Button type="submit" disabled={!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture)} >Submit</Button>
+                                <Button type="submit" >Submit</Button>
                             </div>
                         </div>
                     </Container>

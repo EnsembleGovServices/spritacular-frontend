@@ -258,9 +258,7 @@ const ObservationLocation = (props) => {
                             <Input type="select" name="timezone" className="w-100"
                             value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
                              onChange={(e)=>handleImageInput(e)}>
-                                <option disabled defaultValue>
-                                CT
-                                </option>
+                                <option defaultValue>CT</option>
                                 <option>CT</option>
                                 <option>ET</option>
                                 <option>CTS</option>
@@ -350,7 +348,7 @@ const ObservationLocation = (props) => {
                 }
                 <FormGroup className="mt-5">
                     <Button className="gray-outline-btn me-2" onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
-                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)} disabled={((observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.azimuth ?'': 'true') : 'true')}>Continue</Button>
+                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)} disabled={((observationImages?.data) ? (!observationImages?.data[observationImages?.selected_image_index]?.azimuth) : true)}>Continue</Button>
                 </FormGroup>
             </Col>
         </>
