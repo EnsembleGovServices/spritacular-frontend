@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import InitialUploadObservations from "../InitialUploadObservations";
 import { Col, Container, Row, UncontrolledAlert } from 'reactstrap';
 import ObservationCard from "../../components/Shared/ObservationCard";
@@ -88,7 +88,7 @@ useEffect(() => {
         <Container>
           <InitialUploadObservations />
         </Container>
-        {/* <div className="observation-filter_wrapper">
+        <div className="observation-filter_wrapper">
           <Container>
             <Row>
               <Col sm={12} md={8}>
@@ -203,7 +203,7 @@ useEffect(() => {
             })}
           </Row>
         </Container> 
-         <ObservationDetails modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />*/}
+         <ObservationDetails modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />
       </>
   )
 }
