@@ -4,15 +4,36 @@ import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import ImageCarousel from "../../components/Shared/ImageCarousel";
 import { Icon } from "@iconify/react";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
+import useAuth from "../../hooks/useAuth";
 
 const ObservationCategory = () => {
+    const { auth } = useAuth();
     const { observationImages,setObservationImages } = useObservations();
-    const [Category] = useState(CategoryList);
+    const [Category, setCategory] = useState([]);
     const [isChecked, setIsChecked] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('' || []);
     const [popoverOpen, setPopoverOpen] = useState(false);
     const ObservationData = {...observationImages};
 
+
+    const fetchCategory = async () => {
+            await axios.get(baseURL.api+'/observation/get_category_list/', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${auth?.token?.access}`
+                }
+            })
+            .then((response)=> {
+                setCategory(response?.data)
+            })
+            .catch((error)=> {console.log(error)})
+    }
+
+    useEffect(()=> {
+        fetchCategory().then(r=>console.log(r))
+    }, [])
 
     const onCategoryChange=(e)=>{
         const value = parseFloat(e.target.id);
@@ -118,7 +139,7 @@ const ObservationCategory = () => {
                                             onChange={(e) => onCategoryChange(e)}
                                         />
                                         <label htmlFor={imagItem.id}>
-                                            <img src={imagItem.image} alt={imagItem.name} />
+                                            {/*<img src={imagItem.image} alt={imagItem.name} />*/}
                                             {imagItem.name}
                                             <ImagePopover />
                                         </label>
