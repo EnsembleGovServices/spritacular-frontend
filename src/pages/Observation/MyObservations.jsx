@@ -68,13 +68,14 @@ const [observationCount,setObservationCount] = useState({
   unverified: 0,
   denied: 0,
   draft: 0,
+  total:0,
 });
 const [isLoaded,setIsLoaded] = useState(true);
 const [activeType,setActiveType] = useState('verified');
 const [selectedObservationId,setSelectedObservationId] = useState();
 const { auth } = useAuth();
 useEffect(() => {
-  getObservationType('verified');
+  // getObservationType('verified');
   
 },[isLoaded]);
 
