@@ -310,7 +310,7 @@ const AddObservation = () => {
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
-                                                <ObservationAfterImageUpload error={error} toggleTab={toggleTab} handleImageInput = {handleImageInput} />
+                                                <ObservationAfterImageUpload error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
                                                 <ObservationImages proceedNext={()=> handleContinue()}/>
                                             }

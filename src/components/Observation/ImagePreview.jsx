@@ -11,7 +11,7 @@ const ImagePreview = () =>{
                 return(
                     <div key={index} className="upload-multiple-observation">
                         <div className="observation-image position-relative">
-                            <Button className="bg-transparent text-black border-0 shadow-none p-0 position-absolute">
+                            <Button type="button" className="bg-transparent text-black border-0 shadow-none p-0 position-absolute">
                                 <Icon icon="ci:close-big" className="bg-white" />
                             </Button>
                             <LazyLoad src={item?.image} alt={item?.name} />

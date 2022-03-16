@@ -105,7 +105,7 @@ const EquipmentDetails = (props) =>{
             <Col md={12}>
                 <FormGroup>
                     <h6>Please share the story of your capture</h6>
-                    <div className="border-line my-2"></div>
+                    <div className="border-line my-2"/>
                     <Input
                         type="textarea"
                         name="textarea"
@@ -115,7 +115,6 @@ const EquipmentDetails = (props) =>{
             </Col>
             <Col md={12}>
                 <Button className="gray-outline-btn me-2"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
-                <Button disabled >Continue</Button>
             </Col>
         </Row>
         </>

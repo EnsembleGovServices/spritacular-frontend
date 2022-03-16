@@ -6,7 +6,7 @@ const HomeBanner = () =>{
             <div className="hero-banner">
                 <Container>
                 <div className="hero-banner-inner">
-                    <div className="border-line" />
+                    {/*<div className="border-line" />*/}
                     <div className="banner-text">
                     <h2>Explore Sprites Observations!</h2>
                     <p>

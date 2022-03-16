@@ -60,7 +60,6 @@ const EquipmentDetailsForm = (props) =>{
             </Col>
             <Col md={12}>
                 <Button className="gray-outline-btn me-2"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
-                <Button disabled >Continue</Button>
             </Col>
         </Row>
         </>
