@@ -85,6 +85,19 @@ const AddObservation = () => {
         });
     }
 
+    const handleOtherCamera = (e) => {
+        let name = e.target.name,
+            value = e.target.value;
+        
+
+        setObservationData(prev => {
+            return {
+                ...prev,
+                [name]: value
+            }
+        });
+    }
+
     const handleImageInput = (e,address = null) => {
         let observationArray = {...observationImages};
         if(e === 'address'){
@@ -143,11 +156,9 @@ const AddObservation = () => {
         observationData.camera = cameraDetails;
 
         observationData?.map_data?.map((item, index) => {
-            delete item["image"];
             formData.append("image_"+index, item.item);
             return true;
         })
-
         formData.append("data", JSON.stringify(observationData));
 
         await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
@@ -339,7 +350,7 @@ const AddObservation = () => {
                                             {isSwitchOn ?
                                                 <EquipmentDetails handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
                                                 :
-                                                <EquipmentDetailsForm handleInput={handleInput} error={error} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>
+                                                <EquipmentDetailsForm handleInput={handleInput}  handleOtherCamera={handleOtherCamera}error={error} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>
                                             }
                                         </TabPane>
                                     </TabContent>
