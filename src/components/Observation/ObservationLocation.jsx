@@ -1,11 +1,12 @@
-import {Col, FormGroup, Input, Label, Row, Button, FormFeedback} from "reactstrap";
-import Images from "../../static/images";
-import {useState, useEffect,useRef} from 'react';
-import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationLocation.scss";
+import {Col, FormGroup, Input, Label, Row, Button, FormFeedback} from "reactstrap";
+import {useState, useEffect,useRef} from 'react';
 import useObservations from "../../hooks/useObservations";
 import  MapWrapper from '../MapWrapper';
 import ReactCountryFlags from '../ReactCountryFlag';
+import Images from "../../static/images";
+import {Tabs, DirectionValue} from "../../helpers/observation";
+import {timezone} from "../../helpers/timezone";
 
 
 const ObservationLocation = (props) => {
@@ -31,17 +32,6 @@ const ObservationLocation = (props) => {
     const {observationImages, setObservationImages,observationData} = useObservations();
     const [isActiveDire, setActiveDire] = useState(null);
     const [angleDegree, setAngleDegree] = useState(false);
-
-    const directionValue = [
-        {name: 'N', angle: 360, default : true},
-        {name: 'NE', angle: 45, default : false},
-        {name: 'E', angle: 90, default : false},
-        {name: 'SE', angle: 135, default : false},
-        {name: 'S', angle: 180, default : false},
-        {name: 'SW', angle: 235, default : false},
-        {name: 'W', angle: 270, default : false},
-        {name: 'NW', angle: 315, default : false},
-    ]
 
     const handleValue = (value) => {
         console.log(value.short_address);
@@ -263,10 +253,9 @@ const ObservationLocation = (props) => {
                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
                                    invalid={!!error?.data?.[0]?.timezone}
                                    onChange={(e)=>handleImageInput(e)}>
-                                <option defaultValue>CT</option>
-                                <option>ET</option>
-                                <option>CTS</option>
-                                <option>CT</option>
+                                {timezone?.map((item, index) => {
+                                    return <option key={index} value={item}>{item}</option>
+                                })}
                             </Input>
                             <FormFeedback>{error?.data?.[0]?.timezone}</FormFeedback>
                         </FormGroup>
@@ -319,7 +308,7 @@ const ObservationLocation = (props) => {
                         <Label className="justify-content-center mb-3">Look Direction</Label>
                         <div className="compass-wrapper">
                             {
-                                directionValue?.map((direction, index)=>{
+                                DirectionValue?.map((direction, index)=>{
                                     return(
                                         <Button 
                                             className={`${direction.name}-direction ${(direction.default === true) && isActiveDire === null ? 'active_direction' : ''}${ isActiveDire === index ? ( observationArray.data[observationImages?.selected_image_index]['azimuth'] === "" ? 'active_direction' : '') : '' }${observationArray.data[observationImages?.selected_image_index]['azimuth'] === direction.name ? 'active_direction' : ''}`}
@@ -334,7 +323,7 @@ const ObservationLocation = (props) => {
                             }
                             <div className="center-dot rounded-circle" />
                             <div className="rotate-arrow-wrap">
-                                <div className="rotate-arrow-inner" style={{ "--directionAngle": directionValue.filter((item) => item.name === observationArray.data[observationImages?.selected_image_index]['azimuth']).map((dirData) => {
+                                <div className="rotate-arrow-inner" style={{ "--directionAngle": DirectionValue.filter((item) => item.name === observationArray.data[observationImages?.selected_image_index]['azimuth']).map((dirData) => {
                                     return dirData.angle;
                                 }) + 'deg' }}>
                                     <div className="rotate-arrow main"><img src={Images.compassArrow} alt="Compass Arrow" /> </div>
