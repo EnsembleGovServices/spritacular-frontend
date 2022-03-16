@@ -49,7 +49,7 @@ export const CategoryList = [
 
 ]
 
-export const DirectionValue = [
+export const directionValue = [
     {name: 'N', angle: 360, default : true},
     {name: 'NE', angle: 45, default : false},
     {name: 'E', angle: 90, default : false},

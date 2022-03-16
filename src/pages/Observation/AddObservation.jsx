@@ -67,6 +67,7 @@ const AddObservation = () => {
         if (activeTab !== tab) {
             setActiveTab(tab);
         }
+        window.scrollTo(0, 0);
     };
 
     const handleInput = (e) => {
@@ -316,7 +317,7 @@ const AddObservation = () => {
                                             }
                                         </TabPane>
                                         <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
-                                            <ObservationLocation error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput}/>
+                                            <ObservationLocation step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput}/>
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                             <FormGroup className="d-flex align-items-center position-relative">
@@ -337,9 +338,9 @@ const AddObservation = () => {
                                                 </div>
                                             </FormGroup>
                                             {isSwitchOn ?
-                                                <EquipmentDetails handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
+                                                <EquipmentDetails step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
                                                 :
-                                                <EquipmentDetailsForm handleInput={handleInput} error={error} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>
+                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>
                                             }
                                         </TabPane>
                                     </TabContent>

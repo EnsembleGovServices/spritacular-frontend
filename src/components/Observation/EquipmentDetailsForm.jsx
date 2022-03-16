@@ -6,7 +6,7 @@ import EquipmentForm from '../Shared/EquipmentForm';
 
 
 const EquipmentDetailsForm = (props) =>{
-    const {toggleTab,handleInput,getCameraDetail,cameraDetails, error } = props;
+    const {toggleTab,handleInput,getCameraDetail,cameraDetails, error, step } = props;
 
     return (
         <>
@@ -23,7 +23,8 @@ const EquipmentDetailsForm = (props) =>{
                 </Label>
                 </FormGroup>
             </Col> */}
-            <EquipmentForm handleInput1={handleInput} updateSetting={cameraDetails} error={error}/>
+            <EquipmentForm step={step} handleInput1={handleInput} updateSetting={cameraDetails} error={error}/>
+
             <Col md="12">
                 <div className="border-line"/>
                 <FormGroup>

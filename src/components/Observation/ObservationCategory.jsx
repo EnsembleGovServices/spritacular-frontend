@@ -155,16 +155,10 @@ const ObservationCategory = (props) => {
     }
 
     const errorData = error ? Object.values(error?.data) : {};
-    // console.log(errorData);
-    //
-    // errorData?.map((item)=> {
-    //     console.log(item?.category)
-    // })
+
 
     return(
         <>
-            {/*{console.log(observationSteps?.selected_image_index)}*/}
-
             {error && errorData?.map((item, index) => {
                 if (observationSteps?.selected_image_index === index) {
                     return(
@@ -173,17 +167,6 @@ const ObservationCategory = (props) => {
                 }
                 return true;
             })}
-
-            {/*{error?.data[0]?.category &&*/}
-            {/*    <>*/}
-            {/*        <span className="text-danger small">{error?.data[0]?.category}</span>*/}
-            {/*    </>*/}
-            {/*}*/}
-            {/*{error?.data[1]?.category &&*/}
-            {/*    <>*/}
-            {/*        <span className="text-danger small">{error?.data[1]?.category}</span>*/}
-            {/*    </>*/}
-            {/*}*/}
             {showCategory()}
         </>
     )
