@@ -26,27 +26,19 @@ const Observations = () => {
 
     return(
         <ObservationContext.Provider value={
-            useMemo(()=> (
-                {
-                    observationType,
-                    setObservationType,
-                    observationSteps,
-                    setObservationSteps,
-                    observationImages,
-                    setObservationImages,
-                    observationCategory,
-                    setObservationCategory,
-                    observationData,
-                    setObservationData
-                }
-            ), [
-                        observationType,
-                        observationSteps,
-                        observationImages,
-                        observationCategory,
-                        observationData
-                    ]
-            )}>
+            {
+                observationType,
+                setObservationType,
+                observationSteps,
+                setObservationSteps,
+                observationImages,
+                setObservationImages,
+                observationCategory,
+                setObservationCategory,
+                observationData,
+                setObservationData
+            }
+        }>
             <Outlet />
         </ObservationContext.Provider>
     )
