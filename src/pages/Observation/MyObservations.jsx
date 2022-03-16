@@ -19,75 +19,103 @@ const MyObservations = () => {
   const observationCards=[
     {
         img: "image",
-        imgCategory: Images.card1,
-        date:"17 June 2022",
-        time: "5:23:00",
+        image: Images.card1,
+        obs_date:"17 June 2022",
+        obs_time: "5:23:00",
         imageFormat: Images.Sprite,
         username:"John Doe",
-        userProfile: "imagepath",
-        userCountryName: "Trieben, AT",
-        userCountryIcon: Images.Flag
+        user_profile: "imagepath",
+        location: "Trieben, AT",
+        country_code: 'US'
     },
     {
         img: "image",
-        imgCategory: Images.card2,
-        date:"17 June 2022",
-        time: "5:23:00",
+        image: Images.card2,
+        obs_date:"17 June 2022",
+        obs_time: "5:23:00",
         imageFormat: Images.Sprite,
         username:"Emily White",
-        userProfile: "imagepath",
-        userCountryName: "Trieben, AT",
-        userCountryIcon: Images.Flag
+        user_profile: "imagepath",
+        location: "Trieben, AT",
+        country_code: 'US'
     },
     {
         img: "image",
-        imgCategory: Images.card3,
-        date:"17 June 2022",
-        time: "5:23:00",
+        image: Images.card3,
+        obs_date:"17 June 2022",
+        obs_time: "5:23:00",
         imageFormat: Images.Bluejet,
         username:"Jane Ford",
-        userProfile: "imagepath",
-        userCountryName: "Trieben, AT",
-        userCountryIcon: Images.Flag
+        user_profile: "imagepath",
+        location: "Trieben, AT",
+        country_code: 'US'
     },
     {
         img: "image",
-        imgCategory: Images.card4,
-        date:"17 June 2022",
-        time: "5:23:00",
+        image: Images.card4,
+        obs_date:"17 June 2022",
+        obs_time: "5:23:00",
         imageFormat: Images.GiganticJet,
         username:"Alex Smith",
-        userProfile: "imagepath",
-        userCountryName: "Trieben, AT",
-        userCountryIcon: Images.Flag
-    }
+        user_profile: "imagepath",
+        location: "Trieben, AT",
+        country_code: 'US'
+    },
 ]
-const [observationList,setObservationList] = useState();
-const [observatioImagenList,setObservationImageList] = useState();
+const [observationList,setObservationList] = useState({});
+const [observationCount,setObservationCount] = useState({
+  verified: 0,
+  unverified: 0,
+  denied: 0,
+  draft: 0,
+  total:0,
+});
 const [isLoaded,setIsLoaded] = useState(true);
+const [activeType,setActiveType] = useState('verified');
+const [selectedObservationId,setSelectedObservationId] = useState();
 const { auth } = useAuth();
 useEffect(() => {
-   axios.get(baseURL.api+'/observation/observation_collection/',{
+  // getObservationType('verified');
+  
+},[isLoaded]);
+
+
+const getObservationType = (type) => {
+  setActiveType(type);
+  axios.get(baseURL.api+'/observation/observation_collection/?observation_type='+type,{
     headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${auth?.token?.access}`
-    }
+        'Authorization': `Bearer ${auth?.token?.access}`,
+    },
+    
 }).then((success) => {
-  setObservationList(success?.data);
+  setObservationList(success?.data?.data);
+  setObservationCount({
+    verified: success?.data?.verified_count,
+    unverified: success?.data?.unverified_count,
+    denied: success?.data?.denied_count,
+    draft: success?.data?.draft_count,
+    total: success?.data?.verified_count+success?.data?.unverified_count+success?.data?.denied_count+success?.data?.draft_count
+  })
+
   setIsLoaded(false);
 }).catch((error) => {
     console.log(error.response);
 })
-},[isLoaded]);
+}
   
-  const handleObservationDetailModal = () => {
+  const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
+    console.log(id);
+    setSelectedObservationId(id);
   };
   return(
       <>
-        <Container>
+        {observationCount.total === 0 &&  <Container>
           <InitialUploadObservations />
-        </Container>
+        </Container>}
+        {observationCount.total > 0 && 
+        <>
         {/* <div className="observation-filter_wrapper">
           <Container>
             <Row>
@@ -139,16 +167,16 @@ useEffect(() => {
               </Col>
             </Row>
           </Container>
-        </div>
+        </div> */}
         <Container>
           <div className="filtered-data_wrapper">
             <Row>
             <Col sm={12} md={7} lg={6}>
                 <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
-                  <span className="filter-link active">Verified (5)</span>     
-                  <span className="filter-link">Unverified (3)</span>     
-                  <span className="filter-link">Denied (1)</span>     
-                  <span className="filter-link">Drafts (1)</span>     
+                  <span className= {activeType=='verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('verified')}}>Verified ({observationCount.verified})</span>     
+                  <span className={activeType=='unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('unverified')}}>Unverified ({observationCount.unverified})</span>     
+                  <span className={activeType=='denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('denied')}}>Denied ({observationCount.denied})</span>     
+                  <span className={activeType=='draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('draft')}}>Drafts ({observationCount.draft})</span>     
                 </div>
               </Col>
               <Col sm={12} md={5} lg={6} className="text-end">
@@ -176,21 +204,21 @@ useEffect(() => {
           </div>
         </Container>
         <Container>
-          <UncontrolledAlert color="success" data-dismiss="alert" dismissible="true" className="text-center">
+          {/* <UncontrolledAlert color="success" data-dismiss="alert" dismissible="true" className="text-center">
               Observation uploaded successfully
           </UncontrolledAlert>
           <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center">
             Would you like to help us sift through observations and endorse their validity?
             <Link to={routeUrls.getStarted} className="btn btn-outline-primary">Get Trained</Link>
-          </UncontrolledAlert>
-          <Row className="list-masonry">
+          </UncontrolledAlert> */}
+          <Row className="">
             {observationList && observationList?.map((cardItems, index)=> {
               if(cardItems?.images.length > 0){
                 return (
                     <>
                     {cardItems?.images?.map((image,id) => {
-                    return (<Col key={id} sm={6} md={4} xl={3}>
-                        <ObservationCard cardItems = {image} userProfile={cardItems.user_data}/>
+                    return ( <Col key={id} sm={6} md={4} xl={3} className="mb-4">
+                        <ObservationCard cardItems = {image} cardData={cardItems} index={index} userProfile={cardItems.user_data} handleClick={handleObservationDetailModal}/>
                      </Col>)
                     })
                     }
@@ -200,10 +228,13 @@ useEffect(() => {
               else{
                 return;
               }
-            })}
+            })
+            }
           </Row>
         </Container> 
-         <ObservationDetails modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} /> */}
+         <ObservationDetails data={observationList[selectedObservationId]} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />
+         </>
+         }
       </>
   )
 }

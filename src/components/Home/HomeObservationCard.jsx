@@ -6,47 +6,47 @@ const HomeObservationCard = () => {
     const observationCards=[
         {
             img: "image",
-            imgCategory: Images.card1,
-            date:"17 June 2022",
-            time: "5:23:00",
+            image: Images.card1,
+            obs_date:"17 June 2022",
+            obs_time: "5:23:00",
             imageFormat: Images.Sprite,
             username:"John Doe",
-            userProfile: "imagepath",
-            userCountryName: "Trieben, AT",
-            userCountryIcon: Images.Flag
+            user_profile: "imagepath",
+            location: "Trieben, AT",
+            country_code: 'US'
         },
         {
             img: "image",
-            imgCategory: Images.card2,
-            date:"17 June 2022",
-            time: "5:23:00",
+            image: Images.card2,
+            obs_date:"17 June 2022",
+            obs_time: "5:23:00",
             imageFormat: Images.Sprite,
             username:"Emily White",
-            userProfile: "imagepath",
-            userCountryName: "Trieben, AT",
-            userCountryIcon: Images.Flag
+            user_profile: "imagepath",
+            location: "Trieben, AT",
+            country_code: 'US'
         },
         {
             img: "image",
-            imgCategory: Images.card3,
-            date:"17 June 2022",
-            time: "5:23:00",
+            image: Images.card3,
+            obs_date:"17 June 2022",
+            obs_time: "5:23:00",
             imageFormat: Images.Bluejet,
             username:"Jane Ford",
-            userProfile: "imagepath",
-            userCountryName: "Trieben, AT",
-            userCountryIcon: Images.Flag
+            user_profile: "imagepath",
+            location: "Trieben, AT",
+            country_code: 'US'
         },
         {
             img: "image",
-            imgCategory: Images.card4,
-            date:"17 June 2022",
-            time: "5:23:00",
+            image: Images.card4,
+            obs_date:"17 June 2022",
+            obs_time: "5:23:00",
             imageFormat: Images.GiganticJet,
             username:"Alex Smith",
-            userProfile: "imagepath",
-            userCountryName: "Trieben, AT",
-            userCountryIcon: Images.Flag
+            user_profile: "imagepath",
+            location: "Trieben, AT",
+            country_code: 'US'
         },
     ]
     return (

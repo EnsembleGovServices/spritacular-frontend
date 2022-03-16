@@ -8,8 +8,9 @@ import ObservationMoreDetails from "../../components/Observation/ObservationDeta
 import ObservationMoreEquipementDetails from "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails";
 
 const ObservationDetails = (props) =>{
-    const {modalClass, open, handleClose} = props;
+    const {modalClass, open, handleClose,data} = props;
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
+    console.log(data);
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
         if (activeTab !== tab) {
@@ -31,24 +32,24 @@ const ObservationDetails = (props) =>{
                     <Button className="close-icon bg-transparent rounded-0 border-0 shadow-none" onClick={() => handleClose()}>
                         <img src={Images.Modalcloseicon} alt="close-icon" />
                     </Button>
-                    Gigantic Jet <Badge className="text-uppercase">Unverified</Badge>
+                    {data?.category_data[0]} <Badge className="text-uppercase">Unverified</Badge>
                 </ModalHeader>
                 <ModalBody>
                     <Row>
                         <Col md={6}>
-                            <LazyLoad src={Images.card4} alt="card details" imageClass="mb-2" ></LazyLoad>
+                            <LazyLoad src={data?.images[0].image} alt="card details" imageClass="mb-2" ></LazyLoad>
                             <Row>
                                 <Col xs={6} className="justify-content-start d-flex align-items-center">
                                     <div className="d-flex card-user_details align-items-center overflow-hidden">
-                                        <i className="profile-icon rounded-circle"><img src={Images.Profile} alt="Profile" className="rounded-circle" /></i>
+                                        <i className="profile-icon rounded-circle"><img width="100%" height="100%" src={data?.user_data?.profile_image} alt="Profile" className="rounded-circle" /></i>
                                         {/* User sort name  */}
                                         {/* <i className="profile-text rounded-circle bg-black text-white">JD</i> */}
-                                        <h6 className="pe-2 mb-0 text-truncate">John Due</h6>
+                                        <h6 className="pe-2 mb-0 text-truncate">{data?.user_data?.first_name + ' ' + data?.user_data?.last_name}</h6>
                                     </div>
                                 </Col>
                                 <Col xs={6} className="justify-content-end d-flex align-items-center">
                                     <i className="observation_type rounded-circle bg-white"><img src={Images.GiganticJet} alt="Sprite" className="rounded-circle" /></i>
-                                    <h6 className="pe-2 mb-0 text-truncate">Gigantic Jet</h6>
+                                    <h6 className="pe-2 mb-0 text-truncate">{data?.category_data[0]}</h6>
                                 </Col>
                             </Row>
                         </Col>

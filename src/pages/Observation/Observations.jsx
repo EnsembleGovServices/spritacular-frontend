@@ -20,7 +20,9 @@ const Observations = () => {
         setObservationData({
             isDraft: observationSteps?.is_draft ? 1 : 0,
             image_type: observationType?.image_type,
-            map_data: data
+            map_data: data,
+            elevation_angle: null,
+            video_url : ''
         })
     }, [observationImages?.data, observationSteps?.is_draft, observationType?.image_type])
 

@@ -144,11 +144,9 @@ const AddObservation = () => {
         observationData.camera = cameraDetails;
 
         observationData?.map_data?.map((item, index) => {
-            delete item["image"];
             formData.append("image_"+index, item.item);
             return true;
         })
-
         formData.append("data", JSON.stringify(observationData));
 
         await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
