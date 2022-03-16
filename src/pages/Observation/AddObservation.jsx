@@ -86,6 +86,18 @@ const AddObservation = () => {
         });
     }
 
+    const handleOtherCamera = (e) => {
+        let name = e.target.name,
+            value = e.target.value;
+
+        setObservationData(prev => {
+            return {
+                ...prev,
+                [name]: value
+            }
+        });
+    }
+
     const handleImageInput = (e,address = null) => {
         let observationArray = {...observationImages};
         if(e === 'address'){
@@ -144,6 +156,7 @@ const AddObservation = () => {
         observationData.camera = cameraDetails;
 
         observationData?.map_data?.map((item, index) => {
+            delete item.image;
             formData.append("image_"+index, item.item);
             return true;
         })
@@ -162,6 +175,7 @@ const AddObservation = () => {
                 message: response?.message
             })
             setIsLoading(false);
+            window.scrollTo(0, 0);
             setTimeout(function () {
                 handleReset();
             }, 3000)
@@ -338,7 +352,7 @@ const AddObservation = () => {
                                             {isSwitchOn ?
                                                 <EquipmentDetails step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
                                                 :
-                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>
+                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails} handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
                                             }
                                         </TabPane>
                                     </TabContent>
