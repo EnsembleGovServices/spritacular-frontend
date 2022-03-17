@@ -6,7 +6,7 @@ const EquipmentDetails = (props) =>{
     const {toggleTab,cameraDetails } = props;
     // console.log(cameraDetails);
     return (
-        <Row>
+        <Row className="mt-4">
             <Col md={12}>
                 <Row>
                     <Col md={6}>

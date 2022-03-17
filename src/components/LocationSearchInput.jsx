@@ -63,10 +63,10 @@ class LocationSearchInput extends React.Component {
         onSelect={this.handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div className="position-relative">
+          <div className="position-relative setplaceholdersize">
             <Input
               {...getInputProps({
-                placeholder: "Search Places ...",
+                placeholder: "Enter name of your city or country of residence",
                 className: "location-search-input form-control",
               })}
               value={this.state.address ?? ''}

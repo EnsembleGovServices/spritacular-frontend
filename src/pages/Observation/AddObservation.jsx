@@ -17,7 +17,7 @@ import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
-import {baseURL, cameraSettingFields} from "../../helpers/url";
+import {baseURL, cameraSettingFields, routeUrls} from "../../helpers/url";
 import {Tabs} from "../../helpers/observation";
 
 // const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
@@ -35,13 +35,12 @@ import ObservationImages from "../../components/Observation/ObservationImages";
 import ObservationProgress from "../../components/Observation/ObservationProgress";
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
-import {useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import Loader from "../../components/Shared/Loader";
 
 
 const AddObservation = () => {
     const { auth } = useAuth();
-    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const {
         observationSteps,
@@ -60,8 +59,10 @@ const AddObservation = () => {
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
 
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || routeUrls.profile;
 
-    // const [finalData, setFinalData] = useState();
 
     const disabledLocationTab = observationData?.map_data?.[0]?.category_map?.category.length > 0 && next;
     const disabledEquipmentTab = observationData?.map_data?.[0]?.category_map?.category && next && observationData?.map_data?.[0]?.azimuth;
@@ -149,12 +150,10 @@ const AddObservation = () => {
         setObservationData(ObservationData);
     }
 
-
-
     const handleSubmit = async (e) => {
         const cloneDeep = require('lodash.clonedeep');
         e.preventDefault();
-        setIsLoading(false);
+        setIsLoading(true);
         setDraft(0);
 
         const formData = new FormData();
@@ -165,8 +164,12 @@ const AddObservation = () => {
             return true;
         })
 
-        finalData.camera = cameraDetails;
+        finalData.camera = auth?.camera ? auth?.camera?.id : cameraDetails;
         formData.append("data", JSON.stringify(finalData));
+
+
+        console.log('finalData', finalData);
+        console.log('formData', formData.getAll('data'));
 
         await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
             headers: {
@@ -196,7 +199,6 @@ const AddObservation = () => {
         })
 
     }
-
 
     const getCameraDetail = async (e) => {
 
@@ -232,6 +234,10 @@ const AddObservation = () => {
         setObservationData(null)
         console.clear();
     }
+
+    // const handleCameraUpdateUrl = () => {
+    //     navigate(from, { replace: true });
+    // }
 
     // Set Progress Bar
     useEffect(() => {
@@ -340,11 +346,12 @@ const AddObservation = () => {
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                             <FormGroup className="d-flex align-items-center position-relative">
-                                                <div className="custom-switch mb-5">
+                                                <div className="custom-switch">
                                                     <input
                                                         id="checkbox0"
                                                         type="checkbox"
                                                         className="hidden"
+                                                        disabled={!auth?.camera}
                                                         onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e).then(r => r);}}
                                                     />
                                                     <label
@@ -356,10 +363,16 @@ const AddObservation = () => {
                                                 </span>
                                                 </div>
                                             </FormGroup>
+                                            {!auth?.camera &&
+                                                <span className="block">
+                                                    You don't have <b>camera setting</b> saved in your profile.
+                                                    To enable this feature, you need to update it in your profile setting.
+                                                </span>
+                                            }
                                             {isSwitchOn ?
                                                 <EquipmentDetails step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
                                                 :
-                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails} handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
+                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={auth?.camera} handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
                                             }
                                         </TabPane>
                                     </TabContent>

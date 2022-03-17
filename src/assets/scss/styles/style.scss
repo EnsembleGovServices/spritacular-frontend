@@ -93,4 +93,10 @@ body.modal-open {
 }
 // Import any component file here
 
+.setplaceholdersize {
+  input::placeholder {
+    font-size: 14px;
+  }
+}
+
 @import "../component/index.scss";
