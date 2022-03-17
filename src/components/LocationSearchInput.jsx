@@ -4,10 +4,11 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
-import { Input } from "reactstrap";
+import { Input,FormFeedback } from "reactstrap";
 import Loader from "../components/Shared/Loader";
 
 import getCity, {getPostalCode, getState , getCountry, getArea} from '../helpers';
+
 
 class LocationSearchInput extends React.Component {
   constructor(props) {
@@ -70,7 +71,9 @@ class LocationSearchInput extends React.Component {
                 className: "location-search-input form-control",
               })}
               value={this.state.address ?? ''}
+              invalid ={this.props.error?.data?.location}
             />
+            <FormFeedback>{this.props.error?.data?.location}</FormFeedback>
             <div className="autocomplete-dropdown-container">
               {loading && <Loader fixContent={false} />}
               {suggestions.map((suggestion, index) => {

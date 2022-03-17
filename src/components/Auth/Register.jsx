@@ -196,8 +196,8 @@ const Register = (props) => {
                                 <option value="Pune">Pune</option>
                                 <option value="Bombay">Bombay</option>
                             </Input> */}
-                            <PlacesAutocomplete handleLocations={handleLocations}/>
-                            <FormFeedback>Location is required</FormFeedback>
+                            <PlacesAutocomplete handleLocations={handleLocations} error = {error}/>
+                            
                         </FormGroup>
                         <FormGroup check>
                             <Label check>
