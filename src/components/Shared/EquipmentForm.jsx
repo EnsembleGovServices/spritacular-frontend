@@ -1,4 +1,4 @@
-import {FormFeedback, FormGroup, Input, Col} from "reactstrap";
+import {FormGroup, Input, Col} from "reactstrap";
 
 const EquipmentForm = ({handleInput1,updateSetting,error}) => {
     return(
@@ -10,7 +10,6 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 type="text"
                 name="camera_type"
                 placeholder="Canon"
-                // required
                 value={updateSetting?.camera_type ?? ''}
                 onChange={(e)=>handleInput1(e)} />
                 {error?.data?.camera_type &&
@@ -32,7 +31,6 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 name="focal_length"
                 value={updateSetting?.focal_length ?? ''}
                 placeholder="35 mm"
-                // required
                 onChange={(e)=>handleInput1(e)}
                 />
                 {error?.data?.focal_length &&
@@ -44,9 +42,8 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <FormGroup>
                 <label>Aperture<span className="required">Required</span></label>
                 <Input
-                type="text"
+                type="number"
                 name="aperture"
-                // required
                 value={updateSetting?.aperture ?? ''}
                 placeholder="35 mm"
                 onChange={(e)=>handleInput1(e)}
