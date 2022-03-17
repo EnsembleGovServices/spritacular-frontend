@@ -121,6 +121,9 @@ const AddObservation = () => {
             }else{
                 if(name === 'is_precise_az'){
                     observationArray.data[observationImages?.selected_image_index][name] = e.target.checked;
+                    if(e.target.checked === false){
+                        observationArray.data[observationImages?.selected_image_index]['azimuth'] = 'N';
+                    }
                 }
                 else{
                     observationArray.data[observationImages?.selected_image_index][name] = value;

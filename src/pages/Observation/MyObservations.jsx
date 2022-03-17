@@ -232,7 +232,7 @@ const getObservationType = (type) => {
             }
           </Row>
         </Container> 
-         <ObservationDetails data={observationList[selectedObservationId]} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />
+         {isObservationDetailModal && <ObservationDetails data={observationList[selectedObservationId]}  activeType={activeType}modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />}
          </>
          }
       </>

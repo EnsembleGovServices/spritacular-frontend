@@ -108,6 +108,7 @@ const ObservationLocation = (props) => {
         keys.map((k) => {
         if(e.target.checked){
             copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
+            copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
         }else{
             copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
         }
@@ -138,7 +139,7 @@ const ObservationLocation = (props) => {
                             </FormGroup>
                         </Col>}
                     </Row>
-                     {/* <MapWrapper
+                     <MapWrapper
                         google={props.google}
                         center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
                         height="400px"
@@ -150,7 +151,7 @@ const ObservationLocation = (props) => {
                         mapContainer="map-search-container"
                         searchInputClass="search-input-class"
                         ref={fref}
-                    />  */}
+                    /> 
                 </FormGroup>
             </Col>
             <Col md={12} className="mb-5">
@@ -334,7 +335,7 @@ const ObservationLocation = (props) => {
                                 directionValue?.map((direction, index)=>{
                                     return(
                                         <Button
-                                            className={`${direction.name}-direction ${(direction.default === true) && isActiveDire === null ? 'active_direction' : ''}${ isActiveDire === index ? ( observationArray.data[observationImages?.selected_image_index]['azimuth'] === "" ? 'active_direction' : '') : '' }${observationArray.data[observationImages?.selected_image_index]['azimuth'] === direction.name ? 'active_direction' : ''}`}
+                                            className={`${direction.name}-direction ${observationArray.data[observationImages?.selected_image_index]['azimuth'] === direction.name ? 'active_direction' : ''}`}
                                             onClick={()=> selectDirection(index)}
                                             key={index}
                                             id= {`directionValue${index}`}
