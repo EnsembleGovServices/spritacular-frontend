@@ -11,7 +11,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 name="camera_type"
                 placeholder="Canon"
                 // required
-                value={updateSetting?.camera_type} 
+                value={updateSetting?.camera_type ?? ''}
                 onChange={(e)=>handleInput1(e)} />
                 {error?.data?.camera_type &&
                     <span className="text-danger small">{error?.data?.camera_type}</span>
@@ -30,7 +30,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 <Input
                 type="text"
                 name="focal_length"
-                value={updateSetting?.focal_length}
+                value={updateSetting?.focal_length ?? ''}
                 placeholder="35 mm"
                 // required
                 onChange={(e)=>handleInput1(e)}
@@ -47,7 +47,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 type="text"
                 name="aperture"
                 // required
-                value={updateSetting?.aperture}
+                value={updateSetting?.aperture ?? ''}
                 placeholder="35 mm"
                 onChange={(e)=>handleInput1(e)}
                 />
@@ -68,7 +68,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 <Input
                 type="number"
                 name="iso"
-                value={updateSetting?.iso}
+                value={updateSetting?.iso ?? ''}
                 placeholder="100"
                 onChange={(e)=>handleInput1(e)}
                 />
@@ -80,7 +80,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 <Input
                 type="text"
                 name="shutter_speed"
-                value={updateSetting?.shutter_speed}
+                value={updateSetting?.shutter_speed ?? ''}
                 placeholder="1/15"
                 onChange={(e)=>handleInput1(e)}
                 />
@@ -89,7 +89,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <Col md="6">
             <FormGroup>
                 <label>Frame Rate (frames per second)</label>
-                <Input type="number" name="fps" value={updateSetting?.fps} placeholder="24" onChange={(e)=>handleInput1(e)}/>
+                <Input type="number" name="fps" value={updateSetting?.fps ?? ''} placeholder="24" onChange={(e)=>handleInput1(e)}/>
             </FormGroup>
             </Col>
             <Col md="12">
@@ -99,7 +99,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 <Input
                 type="text"
                 name="question_field_one"
-                value={updateSetting?.question_field_one}
+                value={updateSetting?.question_field_one ?? ''}
                 placeholder="Camera Time"
                 onChange={(e)=>handleInput1(e)}
                 />
@@ -115,7 +115,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 <Input
                 type="text"
                 name="question_field_two"
-                value={updateSetting?.question_field_two}
+                value={updateSetting?.question_field_two ?? ''}
                 placeholder="Polarizing Filter"
                 onChange={(e)=>handleInput1(e)}
                 />

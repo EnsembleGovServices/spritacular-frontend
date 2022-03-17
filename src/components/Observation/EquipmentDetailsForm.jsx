@@ -5,8 +5,6 @@ import "../../assets/scss/component/observationEquipment.scss";
 import EquipmentForm from '../Shared/EquipmentForm';
 import useObservations from "../../hooks/useObservations";
 
-
-
 const EquipmentDetailsForm = (props) =>{
     const {toggleTab,handleInput,handleOtherCamera,getCameraDetail,cameraDetails, error, step } = props;
     const {
