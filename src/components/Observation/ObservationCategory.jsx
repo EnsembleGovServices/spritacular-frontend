@@ -10,7 +10,7 @@ import useAuth from "../../hooks/useAuth";
 const ObservationCategory = (props) => {
     const {error}=props;
     const { auth } = useAuth();
-    const { observationImages,setObservationImages } = useObservations();
+    const { observationImages,setObservationImages, observationSteps } = useObservations();
     const [Category, setCategory] = useState([]);
     const [isChecked, setIsChecked] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('' || []);
@@ -154,13 +154,19 @@ const ObservationCategory = (props) => {
         })
     }
 
+    const errorData = error ? Object.values(error?.data) : {};
+
+
     return(
         <>
-            {error?.data[0]?.category &&
-                <>
-                    <span className="text-danger small">{error?.data[0]?.category}</span>
-                </>
-            }
+            {error && errorData?.map((item, index) => {
+                if (observationSteps?.selected_image_index === index) {
+                    return(
+                        <span key={index} className="text-danger small">{item?.category}</span>
+                    )
+                }
+                return true;
+            })}
             {showCategory()}
         </>
     )

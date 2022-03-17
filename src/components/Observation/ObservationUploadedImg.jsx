@@ -1,16 +1,15 @@
 import useObservations from "../../hooks/useObservations";
-import {useLayoutEffect, useState} from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 import LazyLoad from "../Upload/LazyLoad";
 
-const ObservationUploadedImg = () => {
+const ObservationUploadedImg = (props) => {
+    const {step, error}=props;
     const {observationImages, setObservationImages} = useObservations();
     const [preview, setPreview] = useState([]);
     const [activeTab, setActiveTab] = useState(observationImages?.selected_image_id ?? null);
-
     // Toggle Tabs
     const toggleTab = (tab,index=0) => {
         setActiveTab(tab);
-        
         setObservationImages(prev => {
             return {
                 ...prev,
@@ -19,12 +18,12 @@ const ObservationUploadedImg = () => {
             }
         });
     };
-    // console.log(observationImages);
+
+
     useLayoutEffect(()=> {
         setPreview(observationImages?.data);
         setActiveTab(activeTab);
     }, [activeTab, observationImages, preview])
-
 
     return(
         <>

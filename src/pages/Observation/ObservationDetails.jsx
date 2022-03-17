@@ -1,0 +1,108 @@
+import { useState } from "react";
+import { Badge, Button, Col, Modal, ModalBody, ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
+import Images from './../../static/images';
+import { imageDetails } from "../../helpers/observation";
+import LazyLoad from "../../components/Upload/LazyLoad";
+import "../../assets/scss/component/observationDetails.scss";
+import ObservationMoreDetails from "../../components/Observation/ObservationDetails/ObservationMoreDetails";
+import ObservationMoreEquipementDetails from "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails";
+
+const ObservationDetails = (props) =>{
+    const {modalClass, open, handleClose,data,activeType} = props;
+    const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
+    console.log(data);
+    // Toggle Tabs
+    const toggleImageDetailsTab = (tab) => {
+        console.log(tab);
+        if (activeTab !== tab) {
+            setActiveImageTab(tab);
+        }
+    };
+    return (
+        <>
+            <Modal 
+                className={modalClass ? modalClass : ''}
+                isOpen={open}
+                backdrop={true}
+                keyboard={false}
+                scrollable
+                size="xl"
+                toggle={handleClose}
+            >
+                <ModalHeader>
+                    <Button className="close-icon bg-transparent rounded-0 border-0 shadow-none" onClick={() => handleClose()}>
+                        <img src={Images.Modalcloseicon} alt="close-icon" />
+                    </Button>
+                    {data?.category_data[0]} <Badge className="text-uppercase">{activeType}</Badge>
+                </ModalHeader>
+                <ModalBody>
+                    <Row>
+                        <Col md={6}>
+                            <LazyLoad src={data?.images[0].image} alt="card details" imageClass="mb-2" ></LazyLoad>
+                            <Row>
+                                <Col xs={6} className="justify-content-start d-flex align-items-center">
+                                    <div className="d-flex card-user_details align-items-center overflow-hidden">
+                                        <i className="profile-icon rounded-circle"><img width="100%" height="100%" src={data?.user_data?.profile_image} alt="Profile" className="rounded-circle" /></i>
+                                        {/* User sort name  */}
+                                        {/* <i className="profile-text rounded-circle bg-black text-white">JD</i> */}
+                                        <h6 className="pe-2 mb-0 text-truncate">{data?.user_data?.first_name + ' ' + data?.user_data?.last_name}</h6>
+                                    </div>
+                                </Col>
+                                <Col xs={6} className="justify-content-end d-flex align-items-center">
+                                    <i className="observation_type rounded-circle bg-white"><img src={Images.GiganticJet} alt="Sprite" className="rounded-circle" /></i>
+                                    <h6 className="pe-2 mb-0 text-truncate">{data?.category_data[0]}</h6>
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col md={6}>
+                            <Nav tabs>
+                                <NavItem>
+                                    <NavLink
+                                        className={activeTab === imageDetails.Details ? 'active' : ''}
+                                        onClick={() => {
+                                            toggleImageDetailsTab(imageDetails.Details);
+                                        }}
+                                    >
+                                        Details
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink
+                                        className={activeTab === imageDetails.Equipment ? 'active' : ''}
+                                        onClick={() => {
+                                            toggleImageDetailsTab(imageDetails.Equipment);
+                                        }}
+                                    >
+                                        Equipment
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink
+                                        className={activeTab === imageDetails.Comments ? 'active' : ''}
+                                        onClick={() => {
+                                            toggleImageDetailsTab(imageDetails.Comments);
+                                        }}
+                                    >
+                                        Comments
+                                    </NavLink>
+                                </NavItem>
+                            </Nav>
+                            <TabContent activeTab={activeTab}>
+                                <TabPane tabId={imageDetails.Details}>
+                                    <ObservationMoreDetails data={data}/>
+                                </TabPane>
+                                <TabPane tabId={imageDetails.Equipment}>
+                                    <ObservationMoreEquipementDetails data={data?.camera_data} />
+                                </TabPane>
+                                <TabPane tabId={imageDetails.Comments}>
+                                    imageComments.Comments
+                                </TabPane>
+                            </TabContent>
+                        </Col>
+                    </Row>
+                </ModalBody>
+            </Modal>
+        </>
+    )
+}
+export default ObservationDetails;

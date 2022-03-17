@@ -12,9 +12,10 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 placeholder="Canon"
                 // required
                 value={updateSetting?.camera_type} 
-                onChange={(e)=>handleInput1(e)}
-                invalid={!!error?.data?.camera_type} />
-                <FormFeedback>{error?.data?.camera_type}</FormFeedback>
+                onChange={(e)=>handleInput1(e)} />
+                {error?.data?.camera_type &&
+                    <span className="text-danger small">{error?.data?.camera_type}</span>
+                }
             </FormGroup>
             <div className="border-line" />
             </Col>
@@ -33,9 +34,10 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 placeholder="35 mm"
                 // required
                 onChange={(e)=>handleInput1(e)}
-                invalid={!!error?.data?.focal_length}
                 />
-            <FormFeedback>{error?.data?.focal_length}</FormFeedback>
+                {error?.data?.focal_length &&
+                    <span className="text-danger small">{error?.data?.focal_length}</span>
+                }
             </FormGroup>
             </Col>
             <Col md="6">
@@ -47,10 +49,11 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 // required
                 value={updateSetting?.aperture}
                 placeholder="35 mm"
-                invalid={!!error?.data?.aperture}
                 onChange={(e)=>handleInput1(e)}
                 />
-                <FormFeedback>{error?.data?.aperture}</FormFeedback>
+                {error?.data?.aperture &&
+                    <span className="text-danger small">{error?.data?.aperture}</span>
+                }
             </FormGroup>
             </Col>
             <Col md="12">
@@ -86,7 +89,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <Col md="6">
             <FormGroup>
                 <label>Frame Rate (frames per second)</label>
-                <Input type="text" name="fps" value={updateSetting?.fps} placeholder="24" onChange={(e)=>handleInput1(e)}/>
+                <Input type="number" name="fps" value={updateSetting?.fps} placeholder="24" onChange={(e)=>handleInput1(e)}/>
             </FormGroup>
             </Col>
             <Col md="12">

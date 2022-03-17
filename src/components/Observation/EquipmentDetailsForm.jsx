@@ -3,14 +3,18 @@ import {Tabs} from "../../helpers/observation";
 
 import "../../assets/scss/component/observationEquipment.scss";
 import EquipmentForm from '../Shared/EquipmentForm';
+import useObservations from "../../hooks/useObservations";
+
 
 
 const EquipmentDetailsForm = (props) =>{
-    const {toggleTab,handleInput,getCameraDetail,cameraDetails, error } = props;
-
+    const {toggleTab,handleInput,handleOtherCamera,getCameraDetail,cameraDetails, error, step } = props;
+    const {
+        observationData,
+    } = useObservations();
     return (
         <>
-        <Row>    
+        <Row className="mt-4">
             {/* <Col sm="12">
                 <FormGroup check>
                 <Label check className="mb-4">
@@ -23,15 +27,18 @@ const EquipmentDetailsForm = (props) =>{
                 </Label>
                 </FormGroup>
             </Col> */}
-            <EquipmentForm handleInput1={handleInput} updateSetting={cameraDetails} error={error}/>
+            <EquipmentForm step={step} handleInput1={handleInput} updateSetting={cameraDetails} error={error}/>
+
             <Col md="12">
                 <div className="border-line"/>
                 <FormGroup>
                     <h6>Elevation angle of your camera in degrees</h6>
                     <Input
                     type="text"
-                    name="name"
+                    name="elevation_angle"
+                    value={observationData?.elevation_angle ?? ''}
                     placeholder="e.g. 20"
+                    onChange={(e)=>handleOtherCamera(e)}
                     />
                 </FormGroup>
             </Col>
@@ -41,8 +48,10 @@ const EquipmentDetailsForm = (props) =>{
                 <FormGroup>
                     <h6>Link to the video of this event</h6>
                     <Input
-                    type="text"
-                    name="name"
+                    type="url"
+                    name="video_url"
+                    value={observationData?.video_url ?? ''}
+                    onChange={(e)=>handleOtherCamera(e)}
                     placeholder="e.g. https://www.youtube.com/watch?v=PjZ2Y2nn000"
                     />
                 </FormGroup>
@@ -53,13 +62,15 @@ const EquipmentDetailsForm = (props) =>{
                     <div className="border-line my-2"/>
                     <Input
                         type="textarea"
-                        name="textarea"
+                        name="story"
+                        value={observationData?.story ?? ''}
+                        onChange={(e)=>handleOtherCamera(e)}
                         placeholder="We would love to hear more about your experience."
                     />
                 </FormGroup>
             </Col>
             <Col md={12}>
-                <Button className="gray-outline-btn"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
+                <Button className="gray-outline-btn me-2"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
             </Col>
         </Row>
         </>

@@ -20,33 +20,27 @@ const Observations = () => {
         setObservationData({
             isDraft: observationSteps?.is_draft ? 1 : 0,
             image_type: observationType?.image_type,
-            map_data: data
+            map_data: data,
+            elevation_angle: null,
+            video_url : ''
         })
     }, [observationImages?.data, observationSteps?.is_draft, observationType?.image_type])
 
     return(
         <ObservationContext.Provider value={
-            useMemo(()=> (
-                {
-                    observationType,
-                    setObservationType,
-                    observationSteps,
-                    setObservationSteps,
-                    observationImages,
-                    setObservationImages,
-                    observationCategory,
-                    setObservationCategory,
-                    observationData,
-                    setObservationData
-                }
-            ), [
-                        observationType,
-                        observationSteps,
-                        observationImages,
-                        observationCategory,
-                        observationData
-                    ]
-            )}>
+            {
+                observationType,
+                setObservationType,
+                observationSteps,
+                setObservationSteps,
+                observationImages,
+                setObservationImages,
+                observationCategory,
+                setObservationCategory,
+                observationData,
+                setObservationData
+            }
+        }>
             <Outlet />
         </ObservationContext.Provider>
     )

@@ -17,7 +17,7 @@ import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
-import {baseURL, cameraSettingFields} from "../../helpers/url";
+import {baseURL, cameraSettingFields, routeUrls} from "../../helpers/url";
 import {Tabs} from "../../helpers/observation";
 
 // const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
@@ -35,12 +35,12 @@ import ObservationImages from "../../components/Observation/ObservationImages";
 import ObservationProgress from "../../components/Observation/ObservationProgress";
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
-import {useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import Loader from "../../components/Shared/Loader";
+
 
 const AddObservation = () => {
     const { auth } = useAuth();
-    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const {
         observationSteps,
@@ -59,11 +59,20 @@ const AddObservation = () => {
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
 
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || routeUrls.profile;
+
+
+    const disabledLocationTab = observationData?.map_data?.[0]?.category_map?.category.length > 0 && next;
+    const disabledEquipmentTab = observationData?.map_data?.[0]?.category_map?.category && next && observationData?.map_data?.[0]?.azimuth;
+
     // Toggle Tabs
     const toggleTab = (tab) => {
         if (activeTab !== tab) {
             setActiveTab(tab);
         }
+        window.scrollTo(0, 0);
     };
 
     const handleInput = (e) => {
@@ -82,6 +91,18 @@ const AddObservation = () => {
         });
     }
 
+    const handleOtherCamera = (e) => {
+        let name = e.target.name,
+            value = e.target.value;
+
+        setObservationData(prev => {
+            return {
+                ...prev,
+                [name]: value
+            }
+        });
+    }
+
     const handleImageInput = (e,address = null) => {
         let observationArray = {...observationImages};
         if(e === 'address'){
@@ -89,7 +110,7 @@ const AddObservation = () => {
         }else{
             let name = e.target.name,
                 value = e.target.value;
-            console.log(e.target.checked,name);
+            // console.log(e.target.checked,name);
 
 
             if(name === 'is_other'){
@@ -105,6 +126,9 @@ const AddObservation = () => {
             }else{
                 if(name === 'is_precise_az'){
                     observationArray.data[observationImages?.selected_image_index][name] = e.target.checked;
+                    if(e.target.checked === false){
+                        observationArray.data[observationImages?.selected_image_index]['azimuth'] = 'N';
+                    }
                 }
                 else{
                     observationArray.data[observationImages?.selected_image_index][name] = value;
@@ -129,23 +153,26 @@ const AddObservation = () => {
         setObservationData(ObservationData);
     }
 
-
     const handleSubmit = async (e) => {
+        const cloneDeep = require('lodash.clonedeep');
         e.preventDefault();
         setIsLoading(true);
         setDraft(0);
 
         const formData = new FormData();
-
-        observationData.camera = cameraDetails;
-
-        observationData?.map_data?.map((item, index) => {
+        const finalData = cloneDeep(observationData);
+        finalData?.map_data?.map((item, index) => {
             delete item["image"];
             formData.append("image_"+index, item.item);
             return true;
         })
 
-        formData.append("data", JSON.stringify(observationData));
+        finalData.camera = auth?.camera ? auth?.camera?.id : cameraDetails;
+        formData.append("data", JSON.stringify(finalData));
+
+
+        console.log('finalData', finalData);
+        console.log('formData', formData.getAll('data'));
 
         await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
             headers: {
@@ -160,6 +187,7 @@ const AddObservation = () => {
                 message: response?.message
             })
             setIsLoading(false);
+            window.scrollTo(0, 0);
             setTimeout(function () {
                 handleReset();
             }, 3000)
@@ -174,7 +202,6 @@ const AddObservation = () => {
         })
 
     }
-
 
     const getCameraDetail = async (e) => {
 
@@ -192,7 +219,6 @@ const AddObservation = () => {
         }
         else {
             setCameraDetails(cameraSettingFields);
-
         }
     }
 
@@ -202,14 +228,19 @@ const AddObservation = () => {
 
     const handleReset = (e) => {
         navigate('/observations')
-        setReset(!reset);
+        setReset(true);
         setObservationSteps({
             total: 3,
             active: 1
         })
         setObservationImages([])
         setObservationData(null)
+        console.clear();
     }
+
+    // const handleCameraUpdateUrl = () => {
+    //     navigate(from, { replace: true });
+    // }
 
     // Set Progress Bar
     useEffect(() => {
@@ -250,7 +281,7 @@ const AddObservation = () => {
                             <Button className="gray-outline-btn" onClick={handleReset} disabled={!observationImages?.data}>Cancel</Button>
                             <div className="top-right-btn">
                                 <Button className="gray-outline-btn me-2 me-sm-3" onClick={handlesetDraft} disabled={!observationImages?.data}>Save as draft</Button>
-                                <Button type="submit" >Submit</Button>
+                                <Button type="submit">Submit</Button>
                             </div>
                         </div>
                     </Container>
@@ -278,9 +309,9 @@ const AddObservation = () => {
                                         </NavItem>
                                         <NavItem>
                                             <NavLink
-                                                className={activeTab === Tabs.DateTimeLocation ? 'active' : ''}
+                                                className={`${activeTab === Tabs.DateTimeLocation ? 'active' : ''} ${disabledLocationTab ? '' : 'disabled'}`}
                                                 onClick={() => {
-                                                    if(observationData?.map_data?.[0]?.category_map?.category.length > 0 && next){
+                                                    if(disabledLocationTab){
                                                         toggleTab(Tabs.DateTimeLocation);
                                                     }
                                                 }}
@@ -290,9 +321,9 @@ const AddObservation = () => {
                                         </NavItem>
                                         <NavItem>
                                             <NavLink
-                                                className={activeTab === Tabs.EquipmentDetails ? 'active' : ''}
+                                                className={`${activeTab === Tabs.EquipmentDetails ? 'active' : ''} ${disabledEquipmentTab ? '' : 'disabled'}`}
                                                 onClick={() => {
-                                                    if(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.azimuth){
+                                                    if(disabledEquipmentTab){
                                                         toggleTab(Tabs.EquipmentDetails);
                                                     }
                                                 }}
@@ -308,22 +339,23 @@ const AddObservation = () => {
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
-                                                <ObservationAfterImageUpload error={error} toggleTab={toggleTab} handleImageInput = {handleImageInput} />
+                                                <ObservationAfterImageUpload error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
                                                 <ObservationImages proceedNext={()=> handleContinue()}/>
                                             }
                                         </TabPane>
                                         <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
-                                            <ObservationLocation error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput}/>
+                                            <ObservationLocation step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput}/>
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                             <FormGroup className="d-flex align-items-center position-relative">
-                                                <div className="custom-switch mb-5">
+                                                <div className="custom-switch">
                                                     <input
                                                         id="checkbox0"
                                                         type="checkbox"
                                                         className="hidden"
-                                                        onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e);}}
+                                                        disabled={!auth?.camera}
+                                                        onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e).then(r => r);}}
                                                     />
                                                     <label
                                                         className="switchbox"
@@ -334,10 +366,16 @@ const AddObservation = () => {
                                                 </span>
                                                 </div>
                                             </FormGroup>
+                                            {!auth?.camera &&
+                                                <span className="block text-danger small">
+                                                    You don't have <b>camera setting</b> saved in your profile.
+                                                    To enable this feature, you need to update it in your profile setting.
+                                                </span>
+                                            }
                                             {isSwitchOn ?
-                                                <EquipmentDetails handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
+                                                <EquipmentDetails step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
                                                 :
-                                                <EquipmentDetailsForm handleInput={handleInput} error={error} toggleTab={toggleTab} cameraDetails={cameraDetails} getCameraDetail={getCameraDetail}/>
+                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={auth?.camera} handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
                                             }
                                         </TabPane>
                                     </TabContent>
@@ -345,7 +383,7 @@ const AddObservation = () => {
                             </Col>
                             {observationImages?.data && next && !(activeTab === Tabs.EquipmentDetails) &&
                                 <Col md={2}>
-                                    <ObservationUploadedImg />
+                                    <ObservationUploadedImg step={observationSteps} error={error} />
                                 </Col>
                             }
                         </Row>

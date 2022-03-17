@@ -1,4 +1,4 @@
-import { Col, FormGroup, Input,Label } from "reactstrap";
+import { FormGroup, Input,Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import { Icon } from '@iconify/react';
@@ -9,7 +9,6 @@ const ObservationUploadImg = (props) =>{
     const {setObservationImages, observationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
-
 
     const handleUploadImage = (e) => {
         const fileList = e.target.files;
@@ -46,7 +45,7 @@ const ObservationUploadImg = (props) =>{
                             'obs_date': null,
                             'obs_time': null,
                             'timezone': '',
-                            'azimuth': '',
+                            'azimuth': 'N',
                             'uncertainity_time':'',
                             'is_precise_az':false,
                             'category_map': {
@@ -71,9 +70,10 @@ const ObservationUploadImg = (props) =>{
     };
 
     useEffect(() => {
-        let images = (observationImages?.data) ? [...observationImages?.data] : []
-        setImages(images)
-    }, [])
+            let images = (observationImages?.data) ? [...observationImages?.data] : []
+            setImages(images)
+        },
+        [])
 
     useEffect(()=> {
         if (images.length > 0) {

@@ -21,7 +21,7 @@ import ImagePreview from "./ImagePreview";
 
 
 const ObservationAfterImageUpload = (props) => {
-    const { toggleTab,handleImageInput, error } = props;
+    const { toggleTab,handleImageInput, error, disableNext } = props;
     const {observationImages, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
@@ -159,7 +159,7 @@ const ObservationAfterImageUpload = (props) => {
                                 }
                             </Col>
                             <Col sm={12}>
-                                <Button type="button" className="mt-3" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
+                                <Button type="button" className="mt-3" disabled={!disableNext} onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
                             </Col>
                         </Row>
                     </TabPane>
