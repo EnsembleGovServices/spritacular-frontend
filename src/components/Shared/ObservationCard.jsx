@@ -49,7 +49,7 @@ const ObservationCard = (props) => {
                     {cardData?.is_verified && <div className="varify-card"><Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" /></div>}
                         <LazyLoadImage alt="Card cap" src={cardItems.image} delayTime="1000" effect="blur" className="img-fluid card-img" />
                     <CardBody className="position-relative observation-card_body">
-                        <i className="position-absolute observation_type rounded-circle bg-white"><img src={getCategoryImage(cardData?.category_data[0])} alt="Sprite" className="rounded-circle" />
+                        <i className="position-absolute observation_type rounded-circle bg-white"><img src={(userProfile) ? getCategoryImage(cardData?.category_data[0]): Images.Sprite} alt="Sprite" className="rounded-circle" />
                         </i>
                         <Row className="card-details">
                             <Col className="col-12 col-lg-6">
