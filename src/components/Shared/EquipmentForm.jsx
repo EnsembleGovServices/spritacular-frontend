@@ -66,7 +66,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <FormGroup>
                 <label>ISO</label>
                 <Input
-                type="text"
+                type="number"
                 name="iso"
                 value={updateSetting?.iso}
                 placeholder="100"

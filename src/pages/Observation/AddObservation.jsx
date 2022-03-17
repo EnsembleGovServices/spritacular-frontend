@@ -60,9 +60,6 @@ const AddObservation = () => {
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || routeUrls.profile;
-
 
     const disabledLocationTab = observationData?.map_data?.[0]?.category_map?.category.length > 0 && next;
     const disabledEquipmentTab = observationData?.map_data?.[0]?.category_map?.category && next && observationData?.map_data?.[0]?.azimuth;
@@ -241,6 +238,12 @@ const AddObservation = () => {
     // const handleCameraUpdateUrl = () => {
     //     navigate(from, { replace: true });
     // }
+    
+    const handleCameraDetailsSwitch = () => {
+      if (auth?.camera) {
+          setSwitchOn(!isSwitchOn);
+      }
+    }
 
     // Set Progress Bar
     useEffect(() => {
@@ -355,7 +358,7 @@ const AddObservation = () => {
                                                         type="checkbox"
                                                         className="hidden"
                                                         disabled={!auth?.camera}
-                                                        onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e).then(r => r);}}
+                                                        onChange = {(e)=> handleCameraDetailsSwitch(e)}
                                                     />
                                                     <label
                                                         className="switchbox"
@@ -373,9 +376,9 @@ const AddObservation = () => {
                                                 </span>
                                             }
                                             {isSwitchOn ?
-                                                <EquipmentDetails step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
+                                                <EquipmentDetails step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={auth?.camera}/>
                                                 :
-                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={auth?.camera} handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
+                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails} handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
                                             }
                                         </TabPane>
                                     </TabContent>

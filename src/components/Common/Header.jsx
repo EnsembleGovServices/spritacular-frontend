@@ -10,18 +10,19 @@ import {
   NavbarToggler,
   NavItem
 } from "reactstrap";
+import "../../assets/scss/component/header.scss";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import Images from "../../static/images";
 import LoginPopup from "../Popup/LoginPopup";
 import RegisterPopup from "../Popup/RegisterPopup";
-import "../../assets/scss/component/header.scss";
 import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 import UserProfilePopup from "../Popup/UserProfilePopup";
 import { Icon } from "@iconify/react";
 import LazyLoad from "../Upload/LazyLoad";
 import { routeUrls } from '../../helpers/url';
+import Images from "../../static/images";
+
 
 const Header = (props) => {
   const { auth, setAuth, persist, setPersist } = useAuth();
@@ -36,7 +37,6 @@ const Header = (props) => {
   const [resourcesDropdown, setResourcesDropdown] = useState(false);
   const [communityDropdown, setCommunityDropdown] = useState(false);
   const [notificationDropdown, setNotificationDropdown] = useState(false);
-
   const location = useLocation();
   const homeUrl = location.pathname === "";
 
@@ -92,6 +92,8 @@ const Header = (props) => {
   const handleUserProfilePopup = () => {
     setShowUserProfilePopup(!showUserProfilePopup);
   };
+
+
 
   return (
     <>
