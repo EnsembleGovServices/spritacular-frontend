@@ -281,7 +281,7 @@ const AddObservation = () => {
                             <Button className="gray-outline-btn" onClick={handleReset} disabled={!observationImages?.data}>Cancel</Button>
                             <div className="top-right-btn">
                                 <Button className="gray-outline-btn me-2 me-sm-3" onClick={handlesetDraft} disabled={!observationImages?.data}>Save as draft</Button>
-                                <Button type="submit" >Submit</Button>
+                                <Button type="submit" disabled={!observationData?.camera?.camera_type || !observationData?.camera?.focal_length || !observationData?.camera?.aperture} >Submit</Button>
                             </div>
                         </div>
                     </Container>
@@ -367,7 +367,7 @@ const AddObservation = () => {
                                                 </div>
                                             </FormGroup>
                                             {!auth?.camera &&
-                                                <span className="block">
+                                                <span className="block text-danger small">
                                                     You don't have <b>camera setting</b> saved in your profile.
                                                     To enable this feature, you need to update it in your profile setting.
                                                 </span>
