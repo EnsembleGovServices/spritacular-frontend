@@ -54,8 +54,8 @@ const ObservationCard = (props) => {
                         <Row className="card-details">
                             <Col className="col-12 col-lg-6">
                                 <div className="card_desc">
-                                    <CardTitle className="font-bold">{(cardItems?.obs_date_time_as_per_utc) ? moment.utc(moment(cardItems?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY"): null}</CardTitle> 
-                                    <CardSubtitle>{(cardItems?.obs_date_time_as_per_utc) ? moment.utc(moment(cardItems?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): null} <Badge className="bg-black text-white p-1">{(cardItems?.obs_date_time_as_per_utc)  ? 'UTC': null}</Badge></CardSubtitle>
+                                    <CardTitle className="font-bold">{(cardItems?.obs_date_time_as_per_utc) ? moment.utc(moment(cardItems?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY"): cardItems.obs_date}</CardTitle> 
+                                    <CardSubtitle>{(cardItems?.obs_date_time_as_per_utc) ? moment.utc(moment(cardItems?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): cardItems.obs_time} <Badge className="bg-black text-white p-1">{(cardItems?.obs_date_time_as_per_utc)  ? 'UTC': "UTC"}</Badge></CardSubtitle>
                                 </div>
                             </Col>
                             <Col className="col-12 col-lg-6 justify-content-end d-flex" >
