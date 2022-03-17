@@ -14,7 +14,7 @@ const EquipmentDetailsForm = (props) =>{
     } = useObservations();
     return (
         <>
-        <Row>    
+        <Row className="mt-4">
             {/* <Col sm="12">
                 <FormGroup check>
                 <Label check className="mb-4">
