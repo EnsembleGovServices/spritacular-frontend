@@ -11,7 +11,6 @@ const EquipmentDetailsForm = (props) =>{
     const {toggleTab,handleInput,handleOtherCamera,getCameraDetail,cameraDetails, error, step } = props;
     const {
         observationData,
-        setObservationData
     } = useObservations();
     return (
         <>
@@ -37,7 +36,7 @@ const EquipmentDetailsForm = (props) =>{
                     <Input
                     type="text"
                     name="elevation_angle"
-                    value={observationData?.elevation_angle}
+                    value={observationData?.elevation_angle ?? ''}
                     placeholder="e.g. 20"
                     onChange={(e)=>handleOtherCamera(e)}
                     />
@@ -49,9 +48,9 @@ const EquipmentDetailsForm = (props) =>{
                 <FormGroup>
                     <h6>Link to the video of this event</h6>
                     <Input
-                    type="text"
+                    type="url"
                     name="video_url"
-                    value={observationData?.video_url}
+                    value={observationData?.video_url ?? ''}
                     onChange={(e)=>handleOtherCamera(e)}
                     placeholder="e.g. https://www.youtube.com/watch?v=PjZ2Y2nn000"
                     />
@@ -64,7 +63,7 @@ const EquipmentDetailsForm = (props) =>{
                     <Input
                         type="textarea"
                         name="story"
-                        value={observationData?.story}
+                        value={observationData?.story ?? ''}
                         onChange={(e)=>handleOtherCamera(e)}
                         placeholder="We would love to hear more about your experience."
                     />
