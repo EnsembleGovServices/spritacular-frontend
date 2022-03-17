@@ -6,7 +6,6 @@ import LazyLoad from "../../components/Upload/LazyLoad";
 import "../../assets/scss/component/observationDetails.scss";
 import ObservationMoreDetails from "../../components/Observation/ObservationDetails/ObservationMoreDetails";
 import ObservationMoreEquipementDetails from "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails";
-import { useEffect } from "react/cjs/react.production.min";
 
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose,data,activeType} = props;
