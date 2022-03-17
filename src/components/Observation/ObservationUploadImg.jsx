@@ -45,7 +45,7 @@ const ObservationUploadImg = (props) =>{
                             'obs_date': null,
                             'obs_time': null,
                             'timezone': '',
-                            'azimuth': '',
+                            'azimuth': 'N',
                             'uncertainity_time':'',
                             'is_precise_az':false,
                             'category_map': {

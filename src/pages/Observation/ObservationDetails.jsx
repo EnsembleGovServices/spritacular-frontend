@@ -6,13 +6,15 @@ import LazyLoad from "../../components/Upload/LazyLoad";
 import "../../assets/scss/component/observationDetails.scss";
 import ObservationMoreDetails from "../../components/Observation/ObservationDetails/ObservationMoreDetails";
 import ObservationMoreEquipementDetails from "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails";
+import { useEffect } from "react/cjs/react.production.min";
 
 const ObservationDetails = (props) =>{
-    const {modalClass, open, handleClose,data} = props;
+    const {modalClass, open, handleClose,data,activeType} = props;
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
     console.log(data);
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
+        console.log(tab);
         if (activeTab !== tab) {
             setActiveImageTab(tab);
         }
@@ -32,7 +34,7 @@ const ObservationDetails = (props) =>{
                     <Button className="close-icon bg-transparent rounded-0 border-0 shadow-none" onClick={() => handleClose()}>
                         <img src={Images.Modalcloseicon} alt="close-icon" />
                     </Button>
-                    {data?.category_data[0]} <Badge className="text-uppercase">Unverified</Badge>
+                    {data?.category_data[0]} <Badge className="text-uppercase">{activeType}</Badge>
                 </ModalHeader>
                 <ModalBody>
                     <Row>
@@ -88,10 +90,10 @@ const ObservationDetails = (props) =>{
                             </Nav>
                             <TabContent activeTab={activeTab}>
                                 <TabPane tabId={imageDetails.Details}>
-                                    <ObservationMoreDetails />
+                                    <ObservationMoreDetails data={data}/>
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Equipment}>
-                                    <ObservationMoreEquipementDetails />
+                                    <ObservationMoreEquipementDetails data={data?.camera_data} />
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Comments}>
                                     imageComments.Comments
