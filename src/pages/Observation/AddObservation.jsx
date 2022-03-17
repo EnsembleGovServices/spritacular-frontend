@@ -38,6 +38,7 @@ import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsF
 import {useNavigate} from "react-router-dom";
 import Loader from "../../components/Shared/Loader";
 
+
 const AddObservation = () => {
     const { auth } = useAuth();
     const navigate = useNavigate();
@@ -58,6 +59,9 @@ const AddObservation = () => {
     const [reset, setReset] = useState(false);
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
+
+
+    // const [finalData, setFinalData] = useState();
 
     const disabledLocationTab = observationData?.map_data?.[0]?.category_map?.category.length > 0 && next;
     const disabledEquipmentTab = observationData?.map_data?.[0]?.category_map?.category && next && observationData?.map_data?.[0]?.azimuth;
@@ -105,7 +109,7 @@ const AddObservation = () => {
         }else{
             let name = e.target.name,
                 value = e.target.value;
-            console.log(e.target.checked,name);
+            // console.log(e.target.checked,name);
 
 
             if(name === 'is_other'){
@@ -146,21 +150,23 @@ const AddObservation = () => {
     }
 
 
+
     const handleSubmit = async (e) => {
+        const cloneDeep = require('lodash.clonedeep');
         e.preventDefault();
-        setIsLoading(true);
+        setIsLoading(false);
         setDraft(0);
 
         const formData = new FormData();
-
-        observationData.camera = cameraDetails;
-
-        observationData?.map_data?.map((item, index) => {
-            delete item.image;
+        const finalData = cloneDeep(observationData);
+        finalData?.map_data?.map((item, index) => {
+            delete item["image"];
             formData.append("image_"+index, item.item);
             return true;
         })
-        formData.append("data", JSON.stringify(observationData));
+
+        finalData.camera = cameraDetails;
+        formData.append("data", JSON.stringify(finalData));
 
         await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
             headers: {
@@ -217,13 +223,14 @@ const AddObservation = () => {
 
     const handleReset = (e) => {
         navigate('/observations')
-        setReset(!reset);
+        setReset(true);
         setObservationSteps({
             total: 3,
             active: 1
         })
         setObservationImages([])
         setObservationData(null)
+        console.clear();
     }
 
     // Set Progress Bar
@@ -338,7 +345,7 @@ const AddObservation = () => {
                                                         id="checkbox0"
                                                         type="checkbox"
                                                         className="hidden"
-                                                        onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e);}}
+                                                        onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e).then(r => r);}}
                                                     />
                                                     <label
                                                         className="switchbox"
@@ -360,7 +367,7 @@ const AddObservation = () => {
                             </Col>
                             {observationImages?.data && next && !(activeTab === Tabs.EquipmentDetails) &&
                                 <Col md={2}>
-                                    <ObservationUploadedImg />
+                                    <ObservationUploadedImg step={observationSteps} error={error} />
                                 </Col>
                             }
                         </Row>
