@@ -75,7 +75,7 @@ const [activeType,setActiveType] = useState('verified');
 const [selectedObservationId,setSelectedObservationId] = useState();
 const { auth } = useAuth();
 useEffect(() => {
-  // getObservationType('verified');
+  getObservationType('verified');
   
 },[isLoaded]);
 

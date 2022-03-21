@@ -198,7 +198,7 @@ const AddObservation = () => {
             return true;
         })
 
-        finalData.camera = auth?.camera ? auth?.camera?.id : cameraDetails;
+        finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id  : null);
         formData.append("data", JSON.stringify(finalData));
 
 
@@ -404,9 +404,9 @@ const AddObservation = () => {
                                                 </span>
                                             }
                                             {isSwitchOn ?
-                                                <EquipmentDetails step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}/>
+                                                <EquipmentDetails step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={auth?.camera}/>
                                                 :
-                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={auth?.camera} handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
+                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}  handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
                                             }
                                         </TabPane>
                                     </TabContent>
