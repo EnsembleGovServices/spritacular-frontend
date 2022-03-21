@@ -48,7 +48,8 @@ const AddObservation = () => {
         observationImages,
         setObservationImages,
         observationData,
-        setObservationData
+        setObservationData,
+        observationType
     } = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
