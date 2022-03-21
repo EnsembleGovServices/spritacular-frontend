@@ -47,6 +47,7 @@ import ObservationImageOne from "../assets/images/observation-image-one.png";
 import compassArrow from "../assets/images/compass-arrow.svg";
 import PageNotFound from "../assets/images/404-error.svg";
 import ErrorBG from "../assets/images/error_bg.svg";
+import Ensemble from "../assets/images/ensemble.png";
 
 const Images = {
   Logo,
@@ -97,7 +98,8 @@ const Images = {
   ObservationImageOne,
   compassArrow,
   PageNotFound,
-  ErrorBG
+  ErrorBG,
+  Ensemble
 };
 
 export default Images;
