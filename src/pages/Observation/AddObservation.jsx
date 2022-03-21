@@ -48,8 +48,7 @@ const AddObservation = () => {
         observationImages,
         setObservationImages,
         observationData,
-        setObservationData,
-        observationType
+        setObservationData
     } = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
@@ -65,7 +64,7 @@ const AddObservation = () => {
     const from = location.state?.from?.pathname || routeUrls.profile;
 
 
-    const disabledLocationTab = observationData?.map_data?.[0]?.category_map?.category.length > 0 && next;
+    const disabledLocationTab = (observationData?.image_type !== 3) ? observationData?.map_data?.[0]?.category_map?.category.length > 0 && next :next ;
     const disabledEquipmentTab = observationData?.map_data?.[0]?.category_map?.category.length > 0 && next && observationData?.map_data?.[0]?.azimuth;
 
     // Toggle Tabs
@@ -371,13 +370,13 @@ const AddObservation = () => {
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
-                                                <ObservationAfterImageUpload obvType={observationType} error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
+                                                <ObservationAfterImageUpload error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
                                                 <ObservationImages proceedNext={()=> handleContinue()}/>
                                             }
                                         </TabPane>
                                         <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
-                                            <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput}/>
+                                            <ObservationLocation step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} obvType ={observationData}/>
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                             <FormGroup className="d-flex align-items-center position-relative">
@@ -413,10 +412,12 @@ const AddObservation = () => {
                                     </TabContent>
                                 </div>
                             </Col>
-                            {observationImages?.data && next && !(activeTab === Tabs.EquipmentDetails) &&
+                            {(observationImages?.data && next && ((!(activeTab === Tabs.EquipmentDetails) && !(activeTab === Tabs.DateTimeLocation)) || (!(activeTab === Tabs.DateTimeLocation)) && observationData?.image_type !== 3)) ?
                                 <Col md={2}>
                                     <ObservationUploadedImg step={observationSteps} error={error} />
                                 </Col>
+                                :
+                                ''
                             }
                         </Row>
                     </Container>

@@ -224,7 +224,7 @@ const ObservationLocation = (props) => {
                 </Row>
             </Col>
 
-            {obvType?.image_type === 3 &&
+            {observationData?.image_type === 3 &&
             <Row>
                 <ObservationCategory obvType={obvType} error={error} />
             </Row>
@@ -404,7 +404,7 @@ const ObservationLocation = (props) => {
                 }
                 <FormGroup className="mt-5">
                     <Button className="gray-outline-btn me-2" onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
-                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)} disabled={((observationImages?.data) ? (!observationImages?.data[observationImages?.selected_image_index]?.azimuth) : true)}>Continue</Button>
+                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)} disabled={((observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.azimuth && observationData?.map_data?.[0]?.category_map?.category.length > 0) ? false : true)}>Continue</Button>
                 </FormGroup>
             </Col>
         </>
