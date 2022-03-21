@@ -28,9 +28,8 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <FormGroup>
                 <label>Focal Length<span className="required">Required</span></label>
                 <Input
-                type="number"
+                type="text"
                 name="focal_length"
-                min={0}
                 value={updateSetting?.focal_length}
                 placeholder="35 mm"
                 // required
@@ -45,9 +44,8 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <FormGroup>
                 <label>Aperture<span className="required">Required</span></label>
                 <Input
-                type="number"
+                type="text"
                 name="aperture"
-                min={0}
                 // required
                 value={updateSetting?.aperture}
                 placeholder="35 mm"
@@ -68,8 +66,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <FormGroup>
                 <label>ISO</label>
                 <Input
-                type="number"
-                min={0}
+                type="text"
                 name="iso"
                 value={updateSetting?.iso}
                 placeholder="100"
@@ -81,9 +78,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <FormGroup>
                 <label>Shutter Speed (exposure time)</label>
                 <Input
-                type="number"
-                min={1}
-                max={15}
+                type="text"
                 name="shutter_speed"
                 value={updateSetting?.shutter_speed}
                 placeholder="1/15"
@@ -94,7 +89,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <Col md="6">
             <FormGroup>
                 <label>Frame Rate (frames per second)</label>
-                <Input type="number" name="fps" min={0} value={updateSetting?.fps} placeholder="24" onChange={(e)=>handleInput1(e)}/>
+                <Input type="text" name="fps" value={updateSetting?.fps} placeholder="24" onChange={(e)=>handleInput1(e)}/>
             </FormGroup>
             </Col>
             <Col md="12">

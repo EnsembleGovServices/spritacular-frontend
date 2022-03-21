@@ -58,7 +58,6 @@ const MyObservations = () => {
   
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
-    console.log(id);
     setSelectedObservationId(id);
   };
   return(
