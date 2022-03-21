@@ -158,7 +158,7 @@ const ObservationCategory = (props) => {
         } else {
             ObservationData.data[observationImages?.selected_image_index].category_map.category = selectedCategory;
         }
-    },[selectedCategory, obvType])
+    },[selectedCategory])
 
     return(
         <>

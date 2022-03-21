@@ -3,7 +3,12 @@ import { Icon } from "@iconify/react";
 import useObservations from "../../hooks/useObservations";
 import LazyLoad from "../Upload/LazyLoad";
 
-const ImagePreview = () =>{
+const removeImage = (e) => {
+    console.log(e.target);
+}
+
+const ImagePreview = (props) =>{
+    const {remove}=props;
     const {observationImages, observationSteps} = useObservations();
     return (
         <>
@@ -11,9 +16,9 @@ const ImagePreview = () =>{
                 return(
                     <div key={index} className="upload-multiple-observation">
                         <div className="observation-image position-relative">
-                            <Button type="button" className="bg-transparent text-black border-0 shadow-none p-0 position-absolute">
+                            <button type="button" className="bg-transparent text-black border-0 shadow-none p-0 position-absolute top-0">
                                 <Icon icon="ci:close-big" className="bg-white" />
-                            </Button>
+                            </button>
                             <LazyLoad src={item?.image} alt={item?.name} />
                         </div>
                     </div>

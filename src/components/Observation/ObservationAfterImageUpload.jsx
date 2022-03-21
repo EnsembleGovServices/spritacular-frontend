@@ -21,7 +21,7 @@ import ImagePreview from "./ImagePreview";
 
 
 const ObservationAfterImageUpload = (props) => {
-    const { toggleTab,handleImageInput, error, disableNext, obvType } = props;
+    const { toggleTab,handleImageInput, error, disableNext, obvType, removeItem } = props;
     const {observationImages, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
