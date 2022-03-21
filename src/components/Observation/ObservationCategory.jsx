@@ -16,7 +16,7 @@ const ObservationCategory = (props) => {
     const [selectedCategory, setSelectedCategory] = useState('' || []);
     const [popoverOpen, setPopoverOpen] = useState(false);
     const ObservationData = {...observationImages};
-
+    const errorData = error ? Object.values(error?.data) : {};
 
     const fetchCategory = async () => {
             await axios.get(baseURL.api+'/observation/get_category_list/', {
@@ -31,10 +31,6 @@ const ObservationCategory = (props) => {
             .catch((error)=> {console.log(error)})
     }
 
-    useEffect(()=> {
-        fetchCategory().then(r=>console.log(r))
-    }, [])
-
     const onCategoryChange=(e)=>{
         const value = parseFloat(e.target.id);
         setIsChecked({...isChecked,[e.target.name]: e.target.checked});
@@ -47,27 +43,6 @@ const ObservationCategory = (props) => {
         }
         setObservationImages(ObservationData);
     }
-
-    useEffect(() => {
-        let prevCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [];
-        setSelectedCategory((prevCategory))
-    }, [ObservationData.data, observationImages?.selected_image_index])
-
-    useEffect(() => {
-        if (observationImages?.selected_image_index === []) {
-            setSelectedCategory([])
-        }
-    }, [observationImages?.selected_image_index])
-    
-    useEffect(()=> {
-        if(obvType?.image_type === 3) {
-            observationImages?.data?.map((item, index) => {
-                return item.category_map.category = selectedCategory
-            })
-        } else {
-            ObservationData.data[observationImages?.selected_image_index].category_map.category = selectedCategory;
-        }
-    },[selectedCategory])
 
     const toggle = (index) =>{
         if(popoverOpen === index){
@@ -160,8 +135,30 @@ const ObservationCategory = (props) => {
         })
     }
 
-    const errorData = error ? Object.values(error?.data) : {};
+    useEffect(()=> {
+        fetchCategory().then(r=>r)
+    }, [])
 
+    useEffect(() => {
+        let prevCategory = ObservationData.data[observationImages?.selected_image_index]?.category_map?.category || [];
+        setSelectedCategory((prevCategory))
+    }, [ObservationData.data, observationImages?.selected_image_index])
+
+    useEffect(() => {
+        if (observationImages?.selected_image_index === []) {
+            setSelectedCategory([])
+        }
+    }, [observationImages?.selected_image_index])
+
+    useEffect(()=> {
+        if(obvType?.image_type === 3) {
+            observationImages?.data?.map((item, index) => {
+                return item.category_map.category = selectedCategory
+            })
+        } else {
+            ObservationData.data[observationImages?.selected_image_index].category_map.category = selectedCategory;
+        }
+    },[selectedCategory, obvType])
 
     return(
         <>

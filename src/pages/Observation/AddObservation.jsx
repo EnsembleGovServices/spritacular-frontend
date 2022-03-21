@@ -312,8 +312,8 @@ const AddObservation = () => {
                         <div className="common-top-button-wrapper-inner">
                             <Button className="gray-outline-btn" onClick={handleReset} disabled={!observationImages?.data}>Cancel</Button>
                             <div className="top-right-btn">
-                                <Button className="gray-outline-btn me-2 me-sm-3" onClick={handlesetDraft} disabled={!observationImages?.data}>Save as draft</Button>
-                                <Button type="submit" disabled={(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture) ? false : true }>Submit</Button>
+                                <Button className="gray-outline-btn me-2 me-sm-3" onClick={handlesetDraft} disabled={!next}>Save as draft</Button>
+                                <Button type="submit" disabled={(!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture)) }>Submit</Button>
                             </div>
                         </div>
                     </Container>
@@ -415,7 +415,7 @@ const AddObservation = () => {
                             </Col>
                             {observationImages?.data && next && !(activeTab === Tabs.EquipmentDetails) &&
                                 <Col md={2}>
-                                    <ObservationUploadedImg step={observationSteps} error={error} />
+                                    <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} />
                                 </Col>
                             }
                         </Row>

@@ -13,10 +13,10 @@ const ObservationImages = (props) =>{
     return (
         <>
             <Row>
-                <Col sm={observationImages?.data?.length ? 10 : 12}>
+                <Col sm={observationImages?.data?.length ? 9 : 12}>
                     <ObservationUploadImg imageFormat={true} maxLimit={true} multiple={isMultiple}/>
                 </Col>
-                {observationImages?.data?.length && <Col sm={2}>
+                {observationImages?.data?.length && <Col sm={3}>
                     <ObservationUploadedImg />
                 </Col>}
                 
