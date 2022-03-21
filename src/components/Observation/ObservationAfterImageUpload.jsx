@@ -18,10 +18,11 @@ import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import ObservationCategory from "./ObservationCategory";
 import ImagePreview from "./ImagePreview";
+import PropTypes from "prop-types";
 
 
 const ObservationAfterImageUpload = (props) => {
-    const { toggleTab,handleImageInput, error, disableNext, obvType, removeItem } = props;
+    const { toggleTab,handleImageInput, error, disableNext, obvType, remove } = props;
     const {observationImages, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
@@ -131,7 +132,7 @@ const ObservationAfterImageUpload = (props) => {
                                 </Col>
                             }
                             <Col sm={12}>
-                                <ImagePreview />
+                                <ImagePreview remove={remove} />
                             </Col>
 
                             {obvType?.image_type !== 3 &&
@@ -166,7 +167,7 @@ const ObservationAfterImageUpload = (props) => {
                                 </div>
                             </Col>
                             <Col sm={12}>
-                                <ImagePreview />
+                                <ImagePreview remove={remove}/>
                             </Col>
                             <Col sm={12}>
                                 <Button type="button" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
@@ -177,5 +178,9 @@ const ObservationAfterImageUpload = (props) => {
             </Col>
         </Row>
     );
+};
+
+ObservationAfterImageUpload.propTypes = {
+    remove: PropTypes.func,
 };
 export default ObservationAfterImageUpload;

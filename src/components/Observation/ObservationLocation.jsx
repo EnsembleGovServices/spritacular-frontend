@@ -404,7 +404,7 @@ const ObservationLocation = (props) => {
                 }
                 <FormGroup className="mt-5">
                     <Button className="gray-outline-btn me-2" onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
-                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)} disabled={((observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.azimuth && observationData?.map_data?.[0]?.category_map?.category.length > 0) ? false : true)}>Continue</Button>
+                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)} disabled={((!(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.azimuth && observationData?.map_data?.[0]?.category_map?.category.length > 0)))}>Continue</Button>
                 </FormGroup>
             </Col>
         </>

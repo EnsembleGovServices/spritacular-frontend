@@ -35,7 +35,7 @@ import ObservationImages from "../../components/Observation/ObservationImages";
 import ObservationProgress from "../../components/Observation/ObservationProgress";
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import Loader from "../../components/Shared/Loader";
 
 
@@ -63,7 +63,6 @@ const AddObservation = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || routeUrls.profile;
-
 
     const disabledLocationTab = (observationData?.image_type !== 3) ? observationData?.map_data?.[0]?.category_map?.category.length > 0 && next :next ;
     const disabledEquipmentTab = observationData?.map_data?.[0]?.category_map?.category.length > 0 && next && observationData?.map_data?.[0]?.azimuth;
@@ -270,7 +269,36 @@ const AddObservation = () => {
         console.clear();
     }
 
+    const removeItem = (id) => {
+        console.log(id);
+        let newImage = [];
+        observationData?.map_data?.filter(item => item.id !== id).map((item, index) => {
+            return newImage.push(item);
+        })
+        setObservationSteps(prev => {
+            return {
+                ...prev,
+                selected_image_id: newImage?.[0].id,
+                selected_image_index: 0,
+            }
+        });
 
+        setObservationImages(prev => {
+            return {
+                ...prev,
+                selected_image_id: newImage?.[0].id,
+                selected_image_index: 0,
+                data: newImage
+            }
+        });
+
+        setObservationData(prev => {
+            return {
+                ...prev,
+                map_data: newImage
+            }
+        });
+    }
 
     // const handleCameraUpdateUrl = () => {
     //     navigate(from, { replace: true });
@@ -297,6 +325,7 @@ const AddObservation = () => {
             }
         });
     }, [activeTab, draft, observationImages, setObservationSteps]);
+
 
     return(
         <div className="position-relative">
@@ -373,7 +402,7 @@ const AddObservation = () => {
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
-                                                <ObservationAfterImageUpload obvType={observationType} error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
+                                                <ObservationAfterImageUpload remove={removeItem} obvType={observationType} error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
                                                 <ObservationImages proceedNext={()=> handleContinue()}/>
                                             }
@@ -415,12 +444,10 @@ const AddObservation = () => {
                                     </TabContent>
                                 </div>
                             </Col>
-                            {(observationImages?.data && next && ((!(activeTab === Tabs.EquipmentDetails) && !(activeTab === Tabs.DateTimeLocation)) || (!(activeTab === Tabs.DateTimeLocation)) && observationData?.image_type !== 3)) ?
+                            {observationImages?.data && next && !(activeTab === Tabs.EquipmentDetails) && !(observationType?.image_type === 3) &&
                                 <Col md={2}>
                                     <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} />
                                 </Col>
-                                :
-                                ''
                             }
                         </Row>
                     </Container>
