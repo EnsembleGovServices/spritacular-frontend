@@ -6,6 +6,7 @@ import LazyLoad from "../../components/Upload/LazyLoad";
 import "../../assets/scss/component/observationDetails.scss";
 import ObservationMoreDetails from "../../components/Observation/ObservationDetails/ObservationMoreDetails";
 import ObservationMoreEquipementDetails from "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose,data,activeType} = props;
@@ -30,27 +31,30 @@ const ObservationDetails = (props) =>{
                 toggle={handleClose}
             >
                 <ModalHeader>
-                    <Button className="close-icon bg-transparent rounded-0 border-0 shadow-none" onClick={() => handleClose()}>
+                    <Button className="close-icon bg-transparent rounded-0 border-0 shadow-none p-0 me-3" onClick={() => handleClose()}>
                         <img src={Images.Modalcloseicon} alt="close-icon" />
                     </Button>
                     {data?.category_data[0]} <Badge className="text-uppercase">{activeType}</Badge>
                 </ModalHeader>
                 <ModalBody>
-                    <Row>
+                    <Row className="h-100">
                         <Col md={6}>
-                            <LazyLoad src={data?.images[0].image} alt="card details" imageClass="mb-2" ></LazyLoad>
+                            <div className="preview-detail mb-2">
+                                {/* <LazyLoad src={data?.images[0].image} alt="card details" ></LazyLoad> */}
+                                <LazyLoadImage effect="blur" src={data?.images[0].image} alt="card details" className="test" />
+                            </div>
                             <Row>
                                 <Col xs={6} className="justify-content-start d-flex align-items-center">
                                     <div className="d-flex card-user_details align-items-center overflow-hidden">
-                                        <i className="profile-icon rounded-circle"><img width="100%" height="100%" src={data?.user_data?.profile_image} alt="Profile" className="rounded-circle" /></i>
+                                        <i className="profile-icon rounded-circle"><LazyLoadImage effect="blur" width="100%" height="100%" src={data?.user_data?.profile_image} alt="Profile" className="rounded-circle" /></i>
                                         {/* User sort name  */}
                                         {/* <i className="profile-text rounded-circle bg-black text-white">JD</i> */}
                                         <h6 className="pe-2 mb-0 text-truncate">{data?.user_data?.first_name + ' ' + data?.user_data?.last_name}</h6>
                                     </div>
                                 </Col>
                                 <Col xs={6} className="justify-content-end d-flex align-items-center">
-                                    <i className="observation_type rounded-circle bg-white"><img src={Images.GiganticJet} alt="Sprite" className="rounded-circle" /></i>
-                                    <h6 className="pe-2 mb-0 text-truncate">{data?.category_data[0]}</h6>
+                                    <i className="observation_type rounded-circle bg-white"><LazyLoadImage effect="blur" src={Images.GiganticJet} alt="Sprite" className="rounded-circle" /></i>
+                                    <h6 className="ps-2 mb-0 text-truncate">{data?.category_data[0]}</h6>
                                 </Col>
                             </Row>
                         </Col>
@@ -95,7 +99,7 @@ const ObservationDetails = (props) =>{
                                     <ObservationMoreEquipementDetails data={data?.camera_data} />
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Comments}>
-                                    imageComments.Comments
+                                    <p className="text-center">No comment found</p>
                                 </TabPane>
                             </TabContent>
                         </Col>

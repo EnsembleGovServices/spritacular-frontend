@@ -190,6 +190,7 @@
     .nav-item{
       width: 50%;
       padding: 0 6px;
+      cursor: pointer;
       .nav-link{
         background: #F9F9F9;
         border: 1px solid #DDDDDD;
@@ -276,6 +277,22 @@
   background: $white;
   &[disabled]{
     cursor: no-drop;
+    &.active-tab{
+      &::before{
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: transparent;
+        z-index: 0;
+      }
+    }
+    img{
+      outline-color: $gray3;
+      opacity: 0.9;
+    }
   }
   &.active-tab{
    &::before{
@@ -300,6 +317,7 @@
     left: 4px;
     border-radius: 6px;
     outline: 2px solid $white;
+    background-color: #fff;
   }
 }
 

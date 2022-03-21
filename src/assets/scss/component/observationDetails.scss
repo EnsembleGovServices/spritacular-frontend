@@ -38,12 +38,96 @@
         color: $black;
 
     }
+    .profile-icon{
+        width: 30px;
+        height: 30px;
+        margin-right: 6px;
+        img{
+            object-fit: cover;
+        }
+    }
+    .preview-detail{
+        height: calc( 100% - 38px);
+        border-radius: $border-radius;
+        overflow: hidden;
+        img{
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    .tab-content{
+        .tab-pane{
+            padding-top: 12px;
+            .selected_direction{
+                background: #F3F4F6;
+                width: 40px;
+                height: 40px;
+                padding: 10px;
+                margin-left: auto;
+                margin-right: 0;
+                position: relative;
+                span{
+                    @include sm-text;
+                    background-image: linear-gradient(180deg, #C01E37 0%, #F052C1 125%);
+                    background-size: 100%;
+                    -webkit-background-clip: text;
+                    -moz-background-clip: text;
+                    -webkit-text-fill-color: transparent; 
+                    -moz-text-fill-color: transparent;
+                    
+                }
+                .direction_arrow{
+                    transform: rotate(var(--selected-angle));
+                    &::after{
+                        content: "";
+                        background-color: transparent;
+                        border-color: transparent;
+                        border-style: solid;
+                        line-height: 0;
+                        border-width: 0 6px 6px;
+                        border-top-color: transparent;
+                        border-bottom-color: #C01E37;
+                        position: absolute;
+                        top: 0;
+                    }
+                }
+            }
+        }
+    }
+    .nav-tabs{
+        justify-content: space-between;
+        .nav-item{
+            .nav-link{
+                font-style: normal;
+                font-weight: 400;
+                @include md-text;
+                padding: 0;
+                color: #181818;
+                border: 0;
+                border-bottom: 3px solid transparent;
+                cursor: pointer;
+                &.active{
+                    font-weight: 700;
+                    color: $secondary;
+                    background-color: transparent;
+                    border-color: $secondary;
+                    &:hover{
+                        border-color: $secondary;
+                    }
+                }
+                &:hover{
+                    border-color: transparent;
+                    color: $secondary;
+                }
+            }
+        }
+    }
 }
 .border-line{
     height: 1px;
     width: 100%;
     background: #EAEAEA;
-    margin: 8px 0;
+    margin: 11px 0 !important;
 }
 .user-review{
     font-weight: 400;
@@ -56,4 +140,13 @@
     border: 1px solid #F09EAD;
     border-radius: 6px;
     padding: 16px;
+    h5{
+        font-weight: 400;
+        @include md-text;
+    }
+    button{
+        font-weight: 400;
+        @include md-text;
+        padding: 7px 16px;
+    }
 }

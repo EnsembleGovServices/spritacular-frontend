@@ -2,7 +2,6 @@
 import InitialUploadObservations from "../InitialUploadObservations";
 import { Col, Container, Row, UncontrolledAlert } from 'reactstrap';
 import ObservationCard from "../../components/Shared/ObservationCard";
-import Images from './../../static/images';
 import { FormGroup, Label, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { routeUrls } from './../../helpers/url';
@@ -16,93 +15,46 @@ import ObservationDetails from './ObservationDetails';
 
 const MyObservations = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
-  const observationCards=[
-    {
-        img: "image",
-        image: Images.card1,
-        obs_date:"17 June 2022",
-        obs_time: "5:23:00",
-        imageFormat: Images.Sprite,
-        username:"John Doe",
-        user_profile: "imagepath",
-        location: "Trieben, AT",
-        country_code: 'US'
-    },
-    {
-        img: "image",
-        image: Images.card2,
-        obs_date:"17 June 2022",
-        obs_time: "5:23:00",
-        imageFormat: Images.Sprite,
-        username:"Emily White",
-        user_profile: "imagepath",
-        location: "Trieben, AT",
-        country_code: 'US'
-    },
-    {
-        img: "image",
-        image: Images.card3,
-        obs_date:"17 June 2022",
-        obs_time: "5:23:00",
-        imageFormat: Images.Bluejet,
-        username:"Jane Ford",
-        user_profile: "imagepath",
-        location: "Trieben, AT",
-        country_code: 'US'
-    },
-    {
-        img: "image",
-        image: Images.card4,
-        obs_date:"17 June 2022",
-        obs_time: "5:23:00",
-        imageFormat: Images.GiganticJet,
-        username:"Alex Smith",
-        user_profile: "imagepath",
-        location: "Trieben, AT",
-        country_code: 'US'
-    },
-]
-const [observationList,setObservationList] = useState({});
-const [observationCount,setObservationCount] = useState({
-  verified: 0,
-  unverified: 0,
-  denied: 0,
-  draft: 0,
-  total:0,
-});
-const [isLoaded,setIsLoaded] = useState(true);
-const [activeType,setActiveType] = useState('verified');
-const [selectedObservationId,setSelectedObservationId] = useState();
-const { auth } = useAuth();
-useEffect(() => {
-  getObservationType('verified');
-  
-},[isLoaded]);
+  const [observationList,setObservationList] = useState({});
+  const [observationCount,setObservationCount] = useState({
+    verified: 0,
+    unverified: 0,
+    denied: 0,
+    draft: 0,
+    total:0,
+  });
+  const [isLoaded,setIsLoaded] = useState(true);
+  const [activeType,setActiveType] = useState('verified');
+  const [selectedObservationId,setSelectedObservationId] = useState();
+  const { auth } = useAuth();
+  useEffect(() => {
+    getObservationType('verified');
+  },[isLoaded]);
 
 
-const getObservationType = (type) => {
-  setActiveType(type);
-  axios.get(baseURL.api+'/observation/observation_collection/?observation_type='+type,{
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${auth?.token?.access}`,
-    },
-    
-}).then((success) => {
-  setObservationList(success?.data?.data);
-  setObservationCount({
-    verified: success?.data?.verified_count,
-    unverified: success?.data?.unverified_count,
-    denied: success?.data?.denied_count,
-    draft: success?.data?.draft_count,
-    total: success?.data?.verified_count+success?.data?.unverified_count+success?.data?.denied_count+success?.data?.draft_count
+  const getObservationType = (type) => {
+    setActiveType(type);
+    axios.get(baseURL.api+'/observation/observation_collection/?observation_type='+type,{
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${auth?.token?.access}`,
+      },
+      
+  }).then((success) => {
+    setObservationList(success?.data?.data);
+    setObservationCount({
+      verified: success?.data?.verified_count,
+      unverified: success?.data?.unverified_count,
+      denied: success?.data?.denied_count,
+      draft: success?.data?.draft_count,
+      total: success?.data?.verified_count+success?.data?.unverified_count+success?.data?.denied_count+success?.data?.draft_count
+    })
+
+    setIsLoaded(false);
+  }).catch((error) => {
+      console.log(error.response);
   })
-
-  setIsLoaded(false);
-}).catch((error) => {
-    console.log(error.response);
-})
-}
+  }
   
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
@@ -173,10 +125,10 @@ const getObservationType = (type) => {
             <Row>
             <Col sm={12} md={7} lg={6}>
                 <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
-                  <span className= {activeType=='verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('verified')}}>Verified ({observationCount.verified})</span>     
-                  <span className={activeType=='unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('unverified')}}>Unverified ({observationCount.unverified})</span>     
-                  <span className={activeType=='denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('denied')}}>Denied ({observationCount.denied})</span>     
-                  <span className={activeType=='draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('draft')}}>Drafts ({observationCount.draft})</span>     
+                  <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('verified')}}>Verified ({observationCount.verified})</span>     
+                  <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('unverified')}}>Unverified ({observationCount.unverified})</span>     
+                  <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('denied')}}>Denied ({observationCount.denied})</span>     
+                  <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('draft')}}>Drafts ({observationCount.draft})</span>     
                 </div>
               </Col>
               <Col sm={12} md={5} lg={6} className="text-end">
@@ -217,10 +169,10 @@ const getObservationType = (type) => {
                 return (
                     <>
                     {cardItems?.images?.map((image,id) => {
-                    return ( <Col key={id} sm={6} md={4} xl={3} className="mb-4">
-                        <ObservationCard cardItems = {image} cardData={cardItems} index={index} userProfile={cardItems.user_data} handleClick={handleObservationDetailModal}/>
-                     </Col>)
-                    })
+                      return ( <Col key={id} sm={6} md={4} xl={3} className="mb-4">
+                          <ObservationCard cardItems = {image} cardData={cardItems} index={index} userProfile={cardItems.user_data} handleClick={handleObservationDetailModal}/>
+                      </Col>)
+                      })
                     }
                     </>
                   );
