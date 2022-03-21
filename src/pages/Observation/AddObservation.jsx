@@ -48,7 +48,8 @@ const AddObservation = () => {
         observationImages,
         setObservationImages,
         observationData,
-        setObservationData
+        setObservationData,
+        observationType
     } = useObservations();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
@@ -370,13 +371,13 @@ const AddObservation = () => {
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
-                                                <ObservationAfterImageUpload error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
+                                                <ObservationAfterImageUpload obvType={observationType} error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
                                                 <ObservationImages proceedNext={()=> handleContinue()}/>
                                             }
                                         </TabPane>
                                         <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
-                                            <ObservationLocation step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput}/>
+                                            <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput}/>
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                             <FormGroup className="d-flex align-items-center position-relative">

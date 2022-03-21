@@ -8,7 +8,7 @@ import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 
 const ObservationCategory = (props) => {
-    const {error}=props;
+    const {error, obvType}=props;
     const { auth } = useAuth();
     const { observationImages,setObservationImages, observationSteps } = useObservations();
     const [Category, setCategory] = useState([]);
@@ -60,7 +60,13 @@ const ObservationCategory = (props) => {
     }, [observationImages?.selected_image_index])
     
     useEffect(()=> {
-        ObservationData.data[observationImages?.selected_image_index].category_map.category = selectedCategory;
+        if(obvType?.image_type === 3) {
+            observationImages?.data?.map((item, index) => {
+                return item.category_map.category = selectedCategory
+            })
+        } else {
+            ObservationData.data[observationImages?.selected_image_index].category_map.category = selectedCategory;
+        }
     },[selectedCategory])
 
     const toggle = (index) =>{

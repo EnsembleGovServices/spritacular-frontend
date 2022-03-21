@@ -7,10 +7,11 @@ import ReactCountryFlags from '../ReactCountryFlag';
 import Images from "../../static/images";
 import {Tabs, directionValue} from "../../helpers/observation";
 import {timezone} from "../../helpers/timezone";
+import ObservationCategory from "./ObservationCategory";
 
 
 const ObservationLocation = (props) => {
-    const { toggleTab,handleImageInput, error, step } = props;
+    const { toggleTab,handleImageInput, error, step, obvType } = props;
     const fref = useRef()
     const [address1,setAddress] = useState({
         address: '204, Mote Mangal Karyalay Rd, Bhavani Peth, Shobhapur, Kasba Peth, Pune, Maharashtra 411011, India',
@@ -222,6 +223,13 @@ const ObservationLocation = (props) => {
                     </Col>
                 </Row>
             </Col>
+
+            {obvType?.image_type === 3 &&
+            <Row>
+                <ObservationCategory obvType={obvType} error={error} />
+            </Row>
+            }
+
             <Col md={12} className="mb-5">
                 <Row>
                     <Col lg={7} className="order-2 order-lg-1">

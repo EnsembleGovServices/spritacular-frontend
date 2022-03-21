@@ -21,7 +21,7 @@ import ImagePreview from "./ImagePreview";
 
 
 const ObservationAfterImageUpload = (props) => {
-    const { toggleTab,handleImageInput, error, disableNext } = props;
+    const { toggleTab,handleImageInput, error, disableNext, obvType } = props;
     const {observationImages, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
@@ -134,7 +134,11 @@ const ObservationAfterImageUpload = (props) => {
                                 <ImagePreview />
                             </Col>
 
-                            <ObservationCategory error={error} />
+                            {obvType?.image_type !== 3 &&
+                            <Row>
+                                <ObservationCategory obvType={obvType} error={error} />
+                            </Row>
+                            }
 
                             <Col sm={12}>
                                 <FormGroup check className="mb-3">
