@@ -107,6 +107,12 @@ const AddObservation = () => {
         let observationArray = {...observationImages};
         if(e === 'address'){
             observationArray.data[observationImages?.selected_image_index]['location'] = address;
+            if(observationArray.data[1]){
+                observationArray.data[1].category_map['location'] = address;
+            }
+            if(observationArray.data[2]){
+                observationArray.data[2].category_map['location'] = address;
+            }
         }else{
             let name = e.target.name,
                 value = e.target.value;
@@ -125,22 +131,47 @@ const AddObservation = () => {
                 }
             }else{
                 if(name === 'is_precise_az'){
+                    // console.log('hihi');
                     observationArray.data[observationImages?.selected_image_index][name] = e.target.checked;
+                    if(observationData?.image_type === 3){
+                        if(observationArray.data[1]){
+                           observationArray.data[1]['is_precise_az'] = e.target.checked;
+                        }
+                        if(observationArray.data[2]){
+                            observationArray.data[2]['is_precise_az'] = e.target.checked;
+                        }
+                    }
                     if(e.target.checked === false){
                         observationArray.data[observationImages?.selected_image_index]['azimuth'] = 'N';
+                        if(observationData?.image_type === 3){
+                            if(observationArray.data[1]){
+                               observationArray.data[1]['azimuth'] = 'N';
+                            }
+                            if(observationArray.data[2]){
+                                observationArray.data[2]['azimuth'] = 'N';
+                            }
+                        }
                     }
                 }
                 else{
                     observationArray.data[observationImages?.selected_image_index][name] = value;
-                }
-                if(observationData?.image_type === 3){
-                    if(observationArray.data[1]){
-                        observationArray.data[1][name] = (value === 'on') ? true : (value === '' ? false: value);
+                    if(observationData?.image_type === 3){
+                        if(observationArray.data[1]){
+                            observationArray.data[1][name] = value;
+                        }
+                        if(observationArray.data[2]){
+                            observationArray.data[2][name] = value;
+                        }
                     }
-                    if(observationArray.data[2]){
-                        observationArray.data[2][name] = (value === 'on') ? true : value;
-                    }
                 }
+                // if(observationData?.image_type === 3){
+                //     if(observationArray.data[1]){
+                //         observationArray.data[1][name] = (value === 'on') ? true : (value === '' ? false: value);
+                //     }
+                //     if(observationArray.data[2]){
+                //         observationArray.data[2][name] = (value === 'on') ? true : value;
+                //     }
+                // }
             }
         }
         setObservationImages(observationArray);

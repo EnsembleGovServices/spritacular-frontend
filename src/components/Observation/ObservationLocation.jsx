@@ -43,6 +43,21 @@ const ObservationLocation = (props) => {
                 observationAddress.data[observationAddress.selected_image_index]['longitude'] = value.markerPosition.lng;
                 observationAddress.data[observationAddress.selected_image_index]['location'] = value.short_address;
                 observationAddress.data[observationAddress.selected_image_index]['country_code'] = value.country;
+
+                if(observationData?.image_type === 3){
+                    if(observationAddress.data[1]){
+                        observationAddress.data[1]['latitude'] = value.markerPosition.lat;
+                        observationAddress.data[1]['longitude'] = value.markerPosition.lng;
+                        observationAddress.data[1]['location'] = value.short_address;
+                        observationAddress.data[1]['country_code'] = value.country;
+                    }
+                    if(observationAddress.data[2]){
+                        observationAddress.data[2]['latitude'] = value.markerPosition.lat;
+                        observationAddress.data[2]['longitude'] = value.markerPosition.lng;
+                        observationAddress.data[2]['location'] = value.short_address;
+                        observationAddress.data[2]['country_code'] = value.country;
+                    }
+                }
                 setObservationImages(observationAddress);
             }
         }
@@ -99,6 +114,15 @@ const ObservationLocation = (props) => {
 
             if (observationImages?.data[observationImages?.selected_image_index]?.is_precise_az === false) {
                 observationArray.data[observationImages?.selected_image_index]['azimuth'] = getAngleName;
+
+                if(observationData?.image_type === 3){
+                    if(observationArray.data[1]){
+                        observationArray.data[1]['azimuth'] = getAngleName;
+                    }
+                    if(observationArray.data[2]){
+                        observationArray.data[2]['azimuth'] = getAngleName;
+                    }
+                }
             }
         }
     }
