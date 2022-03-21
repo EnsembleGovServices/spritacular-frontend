@@ -141,11 +141,13 @@ class Map extends Component{
 	};
 	getCountry = ( addressArray ) => {
 		let country = [];
+		country['long_name'] = '';
+		country['short_name'] = '';
 		for( let i = 0; i < addressArray.length; i++ ) {
 			for( let i = 0; i < addressArray.length; i++ ) {
 				if ( addressArray[ i ].types[0] && 'country' === addressArray[ i ].types[0] ) {
 					country['long_name'] = addressArray[ i ].long_name;
-					country['short_name'] = addressArray[ i ].short_name;
+					country['short_name'] = (addressArray[ i ].short_name) ? addressArray[ i ].short_name: '';
 					return country;
 				}
 			}
