@@ -167,6 +167,14 @@ const ObservationCategory = (props) => {
                 }
                 return true;
             })}
+            <Col sm={12}>
+                <FormGroup className="mb-1">
+                    <p className="fw-bold">
+                        Please choose the appropriate category
+                        <span className="required">Required</span>
+                    </p>
+                </FormGroup>
+            </Col>
             {showCategory()}
         </>
     )
