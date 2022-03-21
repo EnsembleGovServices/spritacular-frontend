@@ -274,11 +274,9 @@
   height: 160px;
   border-radius: 10px;
   background: $white;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  margin-left: auto;
-  margin-right: 0;
+  &[disabled]{
+    cursor: no-drop;
+  }
   &.active-tab{
    &::before{
       content: "";
