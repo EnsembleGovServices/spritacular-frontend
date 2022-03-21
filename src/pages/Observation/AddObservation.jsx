@@ -65,7 +65,7 @@ const AddObservation = () => {
 
 
     const disabledLocationTab = observationData?.map_data?.[0]?.category_map?.category.length > 0 && next;
-    const disabledEquipmentTab = observationData?.map_data?.[0]?.category_map?.category && next && observationData?.map_data?.[0]?.azimuth;
+    const disabledEquipmentTab = observationData?.map_data?.[0]?.category_map?.category.length > 0 && next && observationData?.map_data?.[0]?.azimuth;
 
     // Toggle Tabs
     const toggleTab = (tab) => {
