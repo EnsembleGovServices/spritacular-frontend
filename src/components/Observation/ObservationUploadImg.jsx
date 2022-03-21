@@ -44,7 +44,7 @@ const ObservationUploadImg = (props) =>{
                             'country_code': 'IN',
                             'obs_date': null,
                             'obs_time': null,
-                            'timezone': '',
+                            'timezone': 'Africa/Abidjan',
                             'azimuth': 'N',
                             'uncertainity_time':'',
                             'is_precise_az':false,
