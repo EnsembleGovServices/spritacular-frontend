@@ -3,6 +3,7 @@ import { Col, Container, Row, List } from "reactstrap";
 import Images from "../../static/images";
 import "../../assets/scss/component/footer.scss";
 import { routeUrls } from './../../helpers/url';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Footer = () => {
   return (
@@ -17,19 +18,19 @@ const Footer = () => {
                   title="Spritacular"
                   className="d-inline-block mb-3"
                 >
-                  <img src={Images.spritacularWhite} alt="spritacular" />
+                  <LazyLoadImage effect="blur" src={Images.spritacularWhite} alt="spritacular" />
                 </Link>
               </Col>
               <Col lg={4}>
                 <Row className="mb-2 mt-4 mb-md-5 align-items-center">
                   <Col className="nasa-img col-12 col-sm-6">
                     <div className="footer-brand">
-                      <img src={Images.Catholic} alt="spritacular" />
+                      <LazyLoadImage effect="blur" src={Images.Catholic} alt="spritacular" />
                     </div>
                   </Col>
                   <Col className="col-12 col-sm-6">
                     <div className="footer-brand">
-                      <img src={Images.Nasa} alt="spritacular" />
+                      <LazyLoadImage effect="blur" src={Images.Nasa} alt="spritacular" />
                     </div>
                   </Col>
                 </Row>
@@ -178,6 +179,11 @@ const Footer = () => {
                     </List>
                   </Col>
                 </Row>
+              </Col>
+              <Col sm={12}>
+                <Link to={''} className="d-inline-block w-100">
+                  <LazyLoadImage alt="Ensemble" effect="blur"  src={Images.Ensemble} width="120" />
+                </Link>
               </Col>
             </Row>
           </Container>
