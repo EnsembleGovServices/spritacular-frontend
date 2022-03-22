@@ -216,6 +216,10 @@
         font-weight: 600;
         @include lg-text;
         color: black;
+        height: 100%;
+        @include media-breakpoint-down(xxl){
+          padding: 8px;
+        }
         p{
           font-weight: normal;
           @include md-text;
@@ -293,10 +297,10 @@
   .remove-btn{
     opacity: 0;
     z-index: 2;
-    font-size: 24px;
-    line-height: 24px;
-    right: -10px;
-    top: -10px;
+    font-size: 19px;
+    line-height: 19px;
+    right: -7px;
+    top: -7px;
     background: $white;
     box-shadow: 0px 2px 4px $light-grey;
   }
@@ -306,39 +310,51 @@
   height: 160px;
   border-radius: 10px;
   background: $white;
-  border: 2px solid $body-bg;
-  &[disabled]{
-    cursor: no-drop;
-    &.active-tab{
-      &::before{
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background: transparent;
-        z-index: 0;
+  @include media-breakpoint-down(xl){
+    width: 100px;
+    height: 100px;
+  }
+  .preview-btn{
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    border: 0;
+    &[disabled]{
+      cursor: no-drop;
+      &.active-tab{
+        &::before{
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          background: transparent;
+          z-index: 0;
+        }
+      }
+      img{
+        outline-color: $gray3;
+        opacity: 0.9;
       }
     }
-    img{
-      outline-color: $gray3;
-      opacity: 0.9;
-    }
-  }
-  &.active-tab{
-    border: 0;
-   &::before{
+    &::before{
       content: "";
       position: absolute;
       left: 0;
       right: 0;
       top: 0;
       bottom: 0;
-      background: linear-gradient(90deg, #E82C95 0.28%, #8C61E5 100%);
       z-index: 0;
       border-radius: 10px;
-   }
+      background: $body-bg;
+    }
+    &.active-tab{
+      &::before{
+        background: linear-gradient(90deg, #E82C95 0.28%, #8C61E5 100%);
+      }
+     
+    }
   }
   img{
     width: calc(100% - 8px);
@@ -418,6 +434,7 @@
         @media(max-width:1023px){
           width: 20px;
           height: 20px;
+          margin-right: 4px;
         }
       }
     }

@@ -48,7 +48,8 @@ const ObservationCard = (props) => {
                         </Badge>
                     </div> }
                     { userProfile && cardData?.image_type === 3 && <div className="multiple-image_icon">
-                        <Icon icon="ep:copy-document" color="black" />
+                        <Icon icon="fluent:square-multiple-20-regular" color="black" />
+                        {/* <Icon icon="ep:copy-document" color="black" /> */}
                     </div> }
                     {cardData?.is_verified && <div className="verify-card"><Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" /></div>}
                         <img alt="Card cap" src={cardItems.image} className="img-fluid card-img" />

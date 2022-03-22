@@ -153,10 +153,10 @@ const ObservationLocation = (props) => {
             <Col md="12">
                 <FormGroup>
                     <Row>
-                        <Col lg={7} className="order-2 order-lg-1">
+                        <Col xxl={7} className="order-2 order-xxl-1">
                             <h6>Where did you make the observation? <span className="required">Required</span></h6>
                         </Col>
-                        {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
+                        {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col xxl={5} className="order-1 order-xxl-2 mb-2 mb-xxl-0">
                             <FormGroup>
                                 <Label check className="mb-0 justify-content-end">
                                     <Input
@@ -238,10 +238,10 @@ const ObservationLocation = (props) => {
 
             <Col md={12} className="mb-5">
                 <Row>
-                    <Col lg={7} className="order-2 order-lg-1">
+                    <Col xxl={7} className="order-2 order-xxl-1">
                         <h6>Please enter date and time for your observation <span className="required">Required</span></h6>
                     </Col>
-                    {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
+                    {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col xxl={5} className="order-1 order-xxl-2 mb-2 mb-xxl-0">
                         <FormGroup>
                             <Label check className="mb-0 justify-content-end">
                                 <Input

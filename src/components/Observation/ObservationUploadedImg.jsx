@@ -33,16 +33,18 @@ const ObservationUploadedImg = (props) => {
             {preview?.map((item, index) => {
                 return(
                     <div className={`selected-image_wrapper d-flex justify-content-end mb-2 position-relative ${className ? className : ''}`} key={index}>
-                        <button type="button" disabled={obvType?.image_type === 3} className={`position-relative d-flex p-0 shadow-none selected-image ${activeTab === item?.id ? 'active-tab' : ''}`} onClick={()=> toggleTab(item?.id,index)}>
-                            <LazyLoad src={item?.image} alt={item?.name} />
-                        </button>
-                        {observationImages?.observation_count > 1 &&
-                            <button type="button" className="remove-btn text-black border-0 p-0 position-absolute btn" ref={imageDelete} onClick={()=> remove(item?.id)}>
-                            <span>
-                                <Icon icon="ci:close-big" />
-                            </span>
+                        <div className="selected-image">
+                            <button type="button" disabled={obvType?.image_type === 3} className={`preview-btn position-relative d-flex p-0 shadow-none  ${activeTab === item?.id ? 'active-tab' : ''}`} onClick={()=> toggleTab(item?.id,index)}>
+                                <LazyLoad src={item?.image} alt={item?.name} />
                             </button>
-                        }
+                            {observationImages?.observation_count > 1 &&
+                                <button type="button" className="remove-btn text-black border-0 p-0 position-absolute btn" ref={imageDelete} onClick={()=> remove(item?.id)}>
+                                <span>
+                                    <Icon icon="ci:close-big" />
+                                </span>
+                                </button>
+                            }
+                        </div>
                     </div>
                 )
             })}
