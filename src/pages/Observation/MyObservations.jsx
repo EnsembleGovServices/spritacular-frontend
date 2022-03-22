@@ -14,6 +14,7 @@ import {baseURL} from "../../helpers/url";
 import ObservationDetails from './ObservationDetails';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Images from './../../static/images';
+import ObservationDetailPage from "./ObservationDetailPage";
 
 const MyObservations = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
@@ -169,7 +170,7 @@ const MyObservations = () => {
               <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
               <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
             </div>}
-          <Row className="">
+          {/* <Row className="">
             {observationList && observationList?.map((cardItems, index)=> {
               if(cardItems?.images.length > 0){
                 return (
@@ -188,7 +189,8 @@ const MyObservations = () => {
               }
             })
             }
-          </Row>
+          </Row> */}
+          <ObservationDetailPage  observationList={observationList} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
         </Container> 
          {isObservationDetailModal && <ObservationDetails data={observationList[selectedObservationId]}  activeType={activeType}modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />}
          </>

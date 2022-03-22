@@ -14,6 +14,7 @@ import LoginPage from "./pages/Auth/LoginPage";
 import RequireAuth from "./layouts/RequireAuth";
 import Profile from "./pages/Profile";
 import MyObservations from "./pages/Observation/MyObservations";
+import Gallery from "./pages/Gallery";
 import AddObservation from "./pages/Observation/AddObservation";
 import Observations from "./pages/Observation/Observations";
 import Error from "./components/Error";
@@ -36,6 +37,7 @@ const App = () => {
           <Route exact path={routeUrls.home} element={<Home />} />
           <Route exact path={routeUrls.about} element={<About />} />
           <Route exact path={routeUrls.getStarted} element={<GetStarted />} />
+          <Route exact path={routeUrls.gallery} element={<Gallery />} />
           <Route exact path={routeUrls.blog} element={<Blog />} />
           <Route exact path={routeUrls.tutorials} element={<Tutorials />} />
           <Route exact path={routeUrls.tutorialsDetail} element={<TutorialsDetail />} />
