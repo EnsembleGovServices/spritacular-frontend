@@ -46,8 +46,8 @@ const ObservationUploadImg = (props) =>{
                             'obs_time': null,
                             'timezone': 'Africa/Abidjan',
                             'azimuth': 'N',
-                            'uncertainity_time':'',
-                            'is_precise_az':false,
+                            'time_accuracy':'',
+                            'is_precise_azimuth':0,
                             'category_map': {
                                 'category': [],
                                 'is_other': false,

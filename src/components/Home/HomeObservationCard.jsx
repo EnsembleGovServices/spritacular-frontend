@@ -55,7 +55,7 @@ const HomeObservationCard = () => {
                 {observationCards && observationCards?.map((cardItems, index)=>{
                 return (
                     <Col key={index} className="col-6 col-md-3 mb-3 mb-md-0">
-                        <ObservationCard cardItems={cardItems} />
+                        <ObservationCard cardItems={cardItems}  />
                     </Col>
                 );})}
             </Row>

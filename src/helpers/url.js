@@ -11,7 +11,7 @@ export const baseURL = {
 export const cameraSettingFields = {
     camera_type: '',
     focal_length: '',
-    aperture: '',
+    aperture: null,
     iso: '',
     shutter_speed: '',
     fps: '',

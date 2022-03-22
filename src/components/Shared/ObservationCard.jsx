@@ -32,13 +32,14 @@ const ObservationCard = (props) => {
             break;
         
             default:
+                return Images.Sprite
                 break;
         }
     }
     return(
         <>
             <Card className="observation_card overflow-hidden">
-                <Button className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start" onClick={(e) => {handleClick(index)}} >
+                <Button className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start" onClick={(e) => {userProfile &&  handleClick(index)}} >
                     { !userProfile && <div className="observation_country">
                         <Badge className="bg-black text-white">
                             {/* <img src={cardItems.userCountryIcon} alt="Flag" className="me-1" />  */}
@@ -50,9 +51,12 @@ const ObservationCard = (props) => {
                         <Icon icon="ep:copy-document" color="black" />
                     </div> }
                     {cardData?.is_verified && <div className="verify-card"><Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" /></div>}
-                        <LazyLoadImage alt="Card cap" src={cardItems.image} delayTime="1000" effect="blur" className="img-fluid card-img" />
+                        <img alt="Card cap" src={cardItems.image} className="img-fluid card-img" />
+                        {/* <LazyLoadImage alt="Card cap" src={cardItems.image} effect="blur" className="img-fluid card-img" /> */}
                         <CardBody className="position-relative observation-card_body">
-                            <i className="position-absolute observation_type rounded-circle bg-white"><LazyLoadImage effect="blur" src={(userProfile) ? getCategoryImage(cardData?.category_data[0]): Images.Sprite} alt="Sprite" className="rounded-circle" />
+                            <i className="position-absolute observation_type rounded-circle bg-white">
+                                <img  src={(userProfile) ? getCategoryImage(cardData?.category_data[0]): Images.Sprite} alt="Sprite" className="rounded-circle" />
+                                {/* <LazyLoadImage effect="blur" src={(userProfile) ? getCategoryImage(cardData?.category_data[0]): Images.Sprite} alt="Sprite" className="rounded-circle" /> */}
                             </i>
                             <Row className="card-details">
                                 <Col className="col-12 col-lg-6">

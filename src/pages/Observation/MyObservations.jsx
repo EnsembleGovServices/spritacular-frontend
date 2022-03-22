@@ -30,7 +30,7 @@ const MyObservations = () => {
   const [selectedObservationId,setSelectedObservationId] = useState();
   const { auth } = useAuth();
   useEffect(() => {
-    // getObservationType('verified');
+    getObservationType('verified');
   },[isLoaded]);
 
 
@@ -164,7 +164,7 @@ const MyObservations = () => {
             Would you like to help us sift through observations and endorse their validity?
             <Link to={routeUrls.getStarted} className="btn btn-outline-primary">Get Trained</Link>
           </UncontrolledAlert> */}
-          {observationCount.total ==  0 &&
+          {observationCount[`${activeType}`] ==  0 &&
            <div className="data-not-found">
               <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
               <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
