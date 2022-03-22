@@ -134,6 +134,7 @@ const ObservationLocation = (props) => {
         if(e.target.checked){
             copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
             copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
+            copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
         }else{
             copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
         }
