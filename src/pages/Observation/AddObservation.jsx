@@ -14,19 +14,12 @@ import {
 } from "reactstrap";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
-import {baseURL, cameraSettingFields, routeUrls} from "../../helpers/url";
-import {MultiImageTabs, Tabs} from "../../helpers/observation";
-
-// const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
-// const EquipmentDetails = lazy(()=> import('../../components/Observation/EquipmentDetails'))
-// const ObservationUploadedImg = lazy(()=> import('../../components/Observation/ObservationUploadedImg'))
-// const ObservationImages = lazy(()=> import('../../components/Observation/ObservationImages'))
-// const ObservationProgress = lazy(()=> import('../../components/Observation/ObservationProgress'))
-// const ObservationAfterImageUpload = lazy(()=> import('../../components/Observation/ObservationAfterImageUpload'))
-// const EquipmentDetailsForm = lazy(()=> import('../../components/Observation/EquipmentDetailsForm'))
+import {baseURL, cameraSettingFields} from "../../helpers/url";
+import {Tabs} from "../../helpers/observation";
 
 import ObservationLocation from "../../components/Observation/ObservationLocation";
 import EquipmentDetails from "../../components/Observation/EquipmentDetails";
@@ -35,10 +28,16 @@ import ObservationImages from "../../components/Observation/ObservationImages";
 import ObservationProgress from "../../components/Observation/ObservationProgress";
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
-import {useLocation, useNavigate} from "react-router-dom";
 import Loader from "../../components/Shared/Loader";
-import { PropTypes } from 'prop-types';
 
+
+// const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
+// const EquipmentDetails = lazy(()=> import('../../components/Observation/EquipmentDetails'))
+// const ObservationUploadedImg = lazy(()=> import('../../components/Observation/ObservationUploadedImg'))
+// const ObservationImages = lazy(()=> import('../../components/Observation/ObservationImages'))
+// const ObservationProgress = lazy(()=> import('../../components/Observation/ObservationProgress'))
+// const ObservationAfterImageUpload = lazy(()=> import('../../components/Observation/ObservationAfterImageUpload'))
+// const EquipmentDetailsForm = lazy(()=> import('../../components/Observation/EquipmentDetailsForm'))
 
 const AddObservation = () => {
     const { auth } = useAuth();
@@ -62,10 +61,8 @@ const AddObservation = () => {
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || routeUrls.profile;
 
-    var disabledLocation = false;
+    let disabledLocation = false;
     for (let index = 0; index < observationData?.map_data?.length; index++) {
         if(observationData?.map_data?.[index] && observationData?.map_data?.[index]?.category_map?.category.length > 0 ){
             disabledLocation = true;
@@ -75,7 +72,7 @@ const AddObservation = () => {
         }
     }
 
-    var disabledEquipment = false;
+    let disabledEquipment = false;
     for (let index = 0; index < observationData?.map_data?.length; index++) {
         if(observationData?.map_data?.[index] && observationData?.map_data?.[index]?.azimuth && observationData?.map_data?.[index]?.obs_time && observationData?.map_data?.[index]?.obs_date && observationData?.map_data?.[index]?.timezone){
             disabledEquipment = true;
@@ -185,14 +182,6 @@ const AddObservation = () => {
                         }
                     }
                 }
-                // if(observationData?.image_type === 3){
-                //     if(observationArray.data[1]){
-                //         observationArray.data[1][name] = (value === 'on') ? true : (value === '' ? false: value);
-                //     }
-                //     if(observationArray.data[2]){
-                //         observationArray.data[2][name] = (value === 'on') ? true : value;
-                //     }
-                // }
             }
         }
         setObservationImages(observationArray);
@@ -324,9 +313,6 @@ const AddObservation = () => {
             activeTab === Tabs.ObservationImages) && !(activeTab === Tabs.DateTimeLocation && !(observationType?.image_type === 3)))
     }
 
-    // const handleCameraUpdateUrl = () => {
-    //     navigate(from, { replace: true });
-    // }
 
     // Set Progress Bar
     useEffect(() => {
