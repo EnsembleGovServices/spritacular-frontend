@@ -84,7 +84,7 @@ const AddObservation = () => {
             break;
         }
     }
-    console.log(disabledLocation,disabledEquipment,next);
+    // console.log(disabledLocation,disabledEquipment,next);
     const disabledLocationTab = (observationData?.image_type !== 3) ?  disabledLocation && next : next;
     const disabledEquipmentTab = disabledLocation && next && disabledEquipment;
 

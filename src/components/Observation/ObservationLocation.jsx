@@ -35,7 +35,7 @@ const ObservationLocation = (props) => {
     const [angleDegree, setAngleDegree] = useState(false);
 
     const handleValue = (value) => {
-        console.log(value.short_address);
+        // console.log(value.short_address);
         setAddress(value);
         if(observationImages?.data){
             let observationAddress = {...observationImages};
