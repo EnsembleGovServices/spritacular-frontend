@@ -29,6 +29,7 @@ import ObservationProgress from "../../components/Observation/ObservationProgres
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
 import Loader from "../../components/Shared/Loader";
+import cloneDeep from "lodash.clonedeep";
 
 
 // const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
@@ -59,8 +60,9 @@ const AddObservation = () => {
     const [reset, setReset] = useState(false);
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
-
     const navigate = useNavigate();
+    const formData = new FormData();
+
 
     let disabledLocation = false;
     for (let index = 0; index < observationData?.map_data?.length; index++) {
@@ -188,10 +190,44 @@ const AddObservation = () => {
 
     }
 
-    const handlesetDraft = () => {
+    const handlesetDraft = (e) => {
         let ObservationData = {...observationData};
-        ObservationData.isDraft = 1;
         setObservationData(ObservationData);
+        saveDraft(e).then(r => r);
+    }
+
+    const saveDraft = async (e) => {
+        const cloneDeep = require('lodash.clonedeep');
+        e.preventDefault();
+        setIsLoading(true);
+        setDraft(1);
+        const finalData = cloneDeep(observationData);
+        finalData?.map_data?.map((item, index) => {
+            delete item["image"];
+            formData.append("image_"+index, item.item);
+            return true;
+        })
+
+        finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id  : null);
+        finalData.camera.aperture = cameraDetails?.aperture ? cameraDetails?.aperture : null;
+        formData.append("data", JSON.stringify(finalData));
+        setSuccess(null);
+        setError(null);
+        await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth?.token?.access}`
+            }
+        }).then((response) => {
+            setSuccess(response);
+            setIsLoading(false);
+            setTimeout(function () {
+                handleReset();
+            }, 1000)
+        }).catch((error) => {
+            console.log(error.response);
+        })
+        return false;
     }
 
     const handleSubmit = async (e) => {
@@ -199,8 +235,6 @@ const AddObservation = () => {
         e.preventDefault();
         setIsLoading(true);
         setDraft(0);
-
-        const formData = new FormData();
         const finalData = cloneDeep(observationData);
         finalData?.map_data?.map((item, index) => {
             delete item["image"];
@@ -353,7 +387,7 @@ const AddObservation = () => {
                         <div className="common-top-button-wrapper-inner">
                             <Button className="gray-outline-btn" onClick={handleReset} disabled={!observationImages?.data}>Cancel</Button>
                             <div className="top-right-btn">
-                                <Button className="gray-outline-btn me-2 me-sm-3" onClick={handlesetDraft} disabled={!next}>Save as draft</Button>
+                                <Button className="gray-outline-btn me-2 me-sm-3" onClick={(e)=> handlesetDraft(e)} disabled={!next}>Save as draft</Button>
                                 <Button type="submit" disabled={(!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture)) }>Submit</Button>
                             </div>
                         </div>
