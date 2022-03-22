@@ -96,7 +96,7 @@ class Map extends Component{
 				console.error(error);
 			}
 		);
-		console.log(this.state);
+		// console.log(this.state);
 	};
 	/**
 	 * Component should only update ( meaning re-render ), when the user selects the address, or drags the pin
@@ -254,7 +254,7 @@ class Map extends Component{
 	 * @param place
 	 */
 	onPlaceSelected = ( place ) => {
-		console.log( 'plc', place );
+		// console.log( 'plc', place );
 		const address = place.formatted_address,
 		      addressArray =  place.address_components,
 		      city = this.getCity( addressArray ),

@@ -11,10 +11,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose,data,activeType} = props;
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
-    console.log(data);
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
-        console.log(tab);
         if (activeTab !== tab) {
             setActiveImageTab(tab);
         }

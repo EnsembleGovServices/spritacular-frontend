@@ -52,7 +52,7 @@ class LocationSearchInput extends React.Component {
        addressArray['countryCode'] = country['short_name'];
        this.props.handleLocations(addressArray);
        this.setState({ addressArray });
-       console.log(addressArray)
+      //  console.log(addressArray)
     });
   };
 

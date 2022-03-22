@@ -5,7 +5,6 @@ import moment from 'moment';
 
 const ObservationMoreDetails = (props) => {
     const {data} = props;
-    console.log(data);
     return (
         <div className="more-details">
             <Row>

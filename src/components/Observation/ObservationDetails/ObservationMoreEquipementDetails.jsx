@@ -3,7 +3,6 @@ import { Icon } from '@iconify/react';
 
 const ObservationMoreEquipementDetails = (props) => {
     const {data} = props;
-    console.log(data);
     return (
         <>
             <Row>

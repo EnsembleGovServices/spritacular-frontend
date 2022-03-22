@@ -67,7 +67,6 @@ const AddObservation = () => {
 
     var disabledLocation = false;
     for (let index = 0; index < observationData?.map_data?.length; index++) {
-        console.log(index);
         if(observationData?.map_data?.[index] && observationData?.map_data?.[index]?.category_map?.category.length > 0 ){
             disabledLocation = true;
         }else{
@@ -223,10 +222,6 @@ const AddObservation = () => {
         finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id  : null);
         formData.append("data", JSON.stringify(finalData));
 
-
-        console.log('finalData', finalData);
-        console.log('formData', formData.getAll('data'));
-
         await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
             headers: {
                 'Content-Type': 'application/json',
@@ -292,7 +287,6 @@ const AddObservation = () => {
     }
 
     const removeItem = (id) => {
-        console.log(id);
         let newImage = [];
         observationData?.map_data?.filter(item => item.id !== id).map((item, index) => {
             return newImage.push(item);
