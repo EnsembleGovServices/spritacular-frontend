@@ -188,9 +188,9 @@ const AddObservation = () => {
     }
 
     const handlesetDraft = () => {
-        let ObservationData = {...observationData};
-        ObservationData.is_draft = 1;
-        setObservationData(ObservationData);
+        // let ObservationData = {...observationData};
+        // ObservationData.is_draft = 1;
+        // setObservationData(ObservationData);
         setIsLoading(true);
         sendData(1).then(r => r);
     }
@@ -200,6 +200,9 @@ const AddObservation = () => {
         e.preventDefault();
         setIsLoading(true);
         setDraft(0);
+        // let ObservationData = {...observationData};
+        // ObservationData.is_draft = 0;
+        // setObservationData(ObservationData);
         sendData(0).then(r => r);
     }
 
@@ -212,8 +215,9 @@ const AddObservation = () => {
             formData.append("image_"+index, item.item);
             return true;
         })
-
-        finalData.is_draft = draft;
+        if(draft === 1){
+            finalData.is_draft = draft;
+        }
         finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id  : null);
         formData.append("data", JSON.stringify(finalData));
 
