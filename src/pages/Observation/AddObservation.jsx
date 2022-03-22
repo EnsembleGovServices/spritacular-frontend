@@ -296,12 +296,14 @@ const AddObservation = () => {
                 ...prev,
                 selected_image_id: newImage?.[0].id,
                 selected_image_index: 0,
+                observation_count: newImage.length
             }
         });
 
         setObservationImages(prev => {
             return {
                 ...prev,
+                observation_count: newImage.length,
                 selected_image_id: newImage?.[0].id,
                 selected_image_index: 0,
                 data: newImage

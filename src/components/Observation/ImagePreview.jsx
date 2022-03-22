@@ -16,11 +16,13 @@ const ImagePreview = (props) =>{
                 return(
                     <div key={index} className="upload-multiple-observation">
                         <div className="observation-image position-relative">
-                            <button type="button" className="text-black border-0 rounded-0 shadow-none p-0 position-absolute btn" ref={imageDelete} onClick={()=> remove(item?.id)}>
+                            {observationImages?.observation_count > 1 &&
+                                <button type="button" className="text-black border-0 rounded-0 shadow-none p-0 position-absolute btn" ref={imageDelete} onClick={()=> remove(item?.id)}>
                                 <span>
                                     <Icon icon="ci:close-big" />
                                 </span>
-                            </button>
+                                </button>
+                            }
                             <LazyLoad src={item?.image} alt={item?.name} />
                         </div>
                     </div>
