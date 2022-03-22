@@ -114,6 +114,7 @@ const EquipmentDetails = (props) =>{
             </Col>
             <Col md={12}>
                 <Button className="gray-outline-btn me-2"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
+                <Button type="submit" disabled={(!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture)) }>Submit</Button>
             </Col>
         </Row>
     )
