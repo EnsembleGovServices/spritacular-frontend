@@ -37,6 +37,7 @@ import ObservationAfterImageUpload from "../../components/Observation/Observatio
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
 import {useLocation, useNavigate} from "react-router-dom";
 import Loader from "../../components/Shared/Loader";
+import { PropTypes } from 'prop-types';
 
 
 const AddObservation = () => {
@@ -432,7 +433,7 @@ const AddObservation = () => {
                                             {next ?
                                                 <ObservationAfterImageUpload remove={removeItem} obvType={observationType} error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
-                                                <ObservationImages proceedNext={()=> handleContinue()}/>
+                                                <ObservationImages remove={removeItem} proceedNext={()=> handleContinue()}/>
                                             }
                                         </TabPane>
                                         <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
@@ -475,7 +476,7 @@ const AddObservation = () => {
 
                             {showUploadedPreview() &&
                                 <Col md={2}>
-                                    <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} />
+                                    <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
                                 </Col>
                             }
                         </Row>
@@ -485,4 +486,5 @@ const AddObservation = () => {
         </div>
     )
 }
+
 export default AddObservation;

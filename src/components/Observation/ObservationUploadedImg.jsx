@@ -2,6 +2,7 @@ import useObservations from "../../hooks/useObservations";
 import {useLayoutEffect, useState, useRef} from "react";
 import LazyLoad from "../Upload/LazyLoad";
 import { Icon } from '@iconify/react';
+import { PropTypes } from 'prop-types';
 
 const ObservationUploadedImg = (props) => {
     const {obvType, remove, className}=props;
@@ -31,14 +32,14 @@ const ObservationUploadedImg = (props) => {
         <>
             {preview?.map((item, index) => {
                 return(
-                    <div className={className ? `${className} d-flex justify-content-end` : "d-flex justify-content-end"} key={index}>
-                        <button type="button" disabled={obvType?.image_type === 3} className={`position-relative d-flex p-0 shadow-none mb-2 selected-image ${activeTab === item?.id ? 'active-tab' : ''}`} onClick={()=> toggleTab(item?.id,index)}>
+                    <div className={`selected-image_wrapper d-flex justify-content-end mb-2 position-relative ${className ? className : ''}`} key={index}>
+                        <button type="button" disabled={obvType?.image_type === 3} className={`position-relative d-flex p-0 shadow-none selected-image ${activeTab === item?.id ? 'active-tab' : ''}`} onClick={()=> toggleTab(item?.id,index)}>
                             <LazyLoad src={item?.image} alt={item?.name} />
-                            <button type="button" className="remove-btn text-black border-0 p-0 position-absolute btn" ref={imageDelete} onClick={()=> remove(item?.id)}>
-                                <span>
-                                    <Icon icon="ci:close-big" />
-                                </span>
-                            </button>
+                        </button>
+                        <button type="button" className="remove-btn text-black border-0 p-0 position-absolute btn" ref={imageDelete} onClick={()=> remove(item?.id)}>
+                            <span>
+                                <Icon icon="ci:close-big" />
+                            </span>
                         </button>
                     </div>
                 )
@@ -46,4 +47,7 @@ const ObservationUploadedImg = (props) => {
         </>
     )
 }
+ObservationUploadedImg.propTypes = {
+    remove: PropTypes.func,
+};
 export default ObservationUploadedImg;

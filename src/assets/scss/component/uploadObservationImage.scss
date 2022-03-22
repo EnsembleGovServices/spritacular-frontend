@@ -284,6 +284,23 @@
 .other-textfield{
   max-width: 470px;
 }
+.selected-image_wrapper {
+  &:hover{
+    .remove-btn{
+      opacity: 1;
+    }
+  }
+  .remove-btn{
+    opacity: 0;
+    z-index: 2;
+    font-size: 24px;
+    line-height: 24px;
+    right: -10px;
+    top: -10px;
+    background: $white;
+    box-shadow: 0px 2px 4px $light-grey;
+  }
+}
 .selected-image{
   width: 160px;
   height: 160px;
@@ -322,21 +339,6 @@
       z-index: 0;
       border-radius: 10px;
    }
-  }
-  &:hover{
-    .remove-btn{
-      opacity: 1;
-    }
-  }
-  .remove-btn{
-    opacity: 0;
-    z-index: 2;
-    font-size: 24px;
-    line-height: 24px;
-    right: -10px;
-    top: -10px;
-    background: $white;
-    box-shadow: 0px 2px 4px $light-grey;
   }
   img{
     width: calc(100% - 8px);

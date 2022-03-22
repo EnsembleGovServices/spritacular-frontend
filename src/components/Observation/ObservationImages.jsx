@@ -6,7 +6,7 @@ import useObservations from "../../hooks/useObservations";
 import ObservationUploadedImg from "./ObservationUploadedImg";
 
 const ObservationImages = (props) =>{
-    const {proceedNext} = props;
+    const {proceedNext, remove} = props;
     const [isMultiple] = useState(false);
     const { observationImages } = useObservations();
 
@@ -17,7 +17,7 @@ const ObservationImages = (props) =>{
                     <ObservationUploadImg imageFormat={true} maxLimit={true} multiple={isMultiple}/>
                 </Col>
                 {observationImages?.data?.length && <Col sm={3}>
-                    <ObservationUploadedImg className="sm-selected_image" />
+                    <ObservationUploadedImg className="sm-selected_image" remove={remove} />
                 </Col>}
                 
                 <Col sm={12}>

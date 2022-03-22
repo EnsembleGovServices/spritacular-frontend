@@ -12,6 +12,8 @@ import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
 import ObservationDetails from './ObservationDetails';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Images from './../../static/images';
 
 const MyObservations = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
@@ -162,6 +164,10 @@ const MyObservations = () => {
             Would you like to help us sift through observations and endorse their validity?
             <Link to={routeUrls.getStarted} className="btn btn-outline-primary">Get Trained</Link>
           </UncontrolledAlert> */}
+          <div className="data-not-found">
+              <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
+              <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
+            </div>
           <Row className="">
             {observationList && observationList?.map((cardItems, index)=> {
               if(cardItems?.images.length > 0){
