@@ -1,5 +1,5 @@
 import useObservations from "../../hooks/useObservations";
-import {useLayoutEffect, useState, useRef} from "react";
+import {useLayoutEffect, useState} from "react";
 import LazyLoad from "../Upload/LazyLoad";
 import { Icon } from '@iconify/react';
 import { PropTypes } from 'prop-types';
@@ -9,7 +9,6 @@ const ObservationUploadedImg = (props) => {
     const {observationImages, setObservationImages} = useObservations();
     const [preview, setPreview] = useState([]);
     const [activeTab, setActiveTab] = useState(observationImages?.selected_image_id ?? null);
-    const imageDelete = useRef(null);
     // Toggle Tabs
     const toggleTab = (tab,index=0) => {
         setActiveTab(tab);
@@ -37,7 +36,7 @@ const ObservationUploadedImg = (props) => {
                             <LazyLoad src={item?.image} alt={item?.name} />
                         </button>
                         {observationImages?.observation_count > 1 &&
-                            <button type="button" className="remove-btn text-black border-0 p-0 position-absolute btn" ref={imageDelete} onClick={()=> remove(item?.id)}>
+                            <button type="button" className="remove-btn text-black border-0 p-0 position-absolute btn" onClick={()=> remove(item?.id)}>
                             <span>
                                 <Icon icon="ci:close-big" />
                             </span>
