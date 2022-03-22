@@ -18,7 +18,7 @@ import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import {baseURL, cameraSettingFields, routeUrls} from "../../helpers/url";
-import {Tabs} from "../../helpers/observation";
+import {MultiImageTabs, Tabs} from "../../helpers/observation";
 
 // const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
 // const EquipmentDetails = lazy(()=> import('../../components/Observation/EquipmentDetails'))
@@ -321,6 +321,12 @@ const AddObservation = () => {
         });
     }
 
+    const showUploadedPreview = () => {
+        return !(!(observationImages?.data &&
+            next &&
+            activeTab === Tabs.ObservationImages) && !(activeTab === Tabs.DateTimeLocation && !(observationType?.image_type === 3)))
+    }
+
     // const handleCameraUpdateUrl = () => {
     //     navigate(from, { replace: true });
     // }
@@ -418,6 +424,7 @@ const AddObservation = () => {
                                     </Nav>
                                 </div>
                             </Col>
+
                             <Col md={observationImages?.data?.length > 0 && next && !(activeTab === Tabs.EquipmentDetails) ? 7 : 9}>
                                 <div className="observation-form-right-tab">
                                     <TabContent activeTab={activeTab}>
@@ -465,7 +472,8 @@ const AddObservation = () => {
                                     </TabContent>
                                 </div>
                             </Col>
-                            {(observationImages?.data && next && ((!(activeTab === Tabs.EquipmentDetails) && !(activeTab === Tabs.DateTimeLocation)) || (!(activeTab === Tabs.DateTimeLocation)) && observationData?.image_type !== 3)) &&
+
+                            {showUploadedPreview() &&
                                 <Col md={2}>
                                     <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} />
                                 </Col>
