@@ -11,6 +11,7 @@ const ObservationUploadImg = (props) =>{
     const [error, setError] = useState(null);
 
     const handleUploadImage = (e) => {
+        setError(null);
         const fileList = e.target.files;
         Array.from(fileList).forEach((item,id) => {
             const reader = new FileReader();
@@ -18,20 +19,15 @@ const ObservationUploadImg = (props) =>{
                 const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
                 const baseImage = `data:image/png;base64,${base64String}`;
                 const random = (Math.random() + 1).toString(36).substring(7) + (Math.random() + 1).toString(36).substring(20);
+                const fileSize = (item.size / (1024*1024)).toFixed(2);
 
-                images?.map((image, index) => {
-                    if (image?.lastModified === item?.lastModified) {
-                        setError((prev) => {
-                            return {
-                                ...prev,
-                                duplicate: 'Image has been already added',
-                            }
-                        })
-                    }
+                const repeatCheck = images?.map((image, index) => {
+                    return image?.lastModified === item?.lastModified;
                 });
 
-
-                if (images?.length < 3) {
+                const duplicate = repeatCheck.includes(true);
+                
+                if (images?.length < 3 && fileSize < 5 && !duplicate) {
                     setImages(prevState => [
                         ...prevState, {
                             'id' : random,
@@ -55,11 +51,28 @@ const ObservationUploadImg = (props) =>{
                             }
                         }
                     ])
-                } else {
+                }
+                if (images?.length > 3) {
                     setError((prev) => {
                         return {
                             ...prev,
-                            message: 'You have reached the limit, delete image(s) to add new again.',
+                            count: 'You have reached the limit, delete some image, maximum upload allowed is 3',
+                        }
+                    })
+                }
+                if (fileSize > 5) {
+                    setError((prev) => {
+                        return {
+                            ...prev,
+                            size: 'You have exceeded the max file size limit (5mb)',
+                        }
+                    })
+                }
+                if (duplicate) {
+                    setError((prev) => {
+                        return {
+                            ...prev,
+                            duplicate: 'You have already added the image, please choose other image',
                         }
                     })
                 }
@@ -123,11 +136,14 @@ const ObservationUploadImg = (props) =>{
                         <p className="image-progree_bar"><b>65%</b> uploading..</p>
                     </div> */}
                 </div>
-                {error?.message &&
-                    <span className="text-danger d-block small my-1 d-inline-block">{error?.message} </span>
+                {error?.count &&
+                    <span className="text-danger d-block small my-1 d-inline-block">{error?.count} </span>
+                }
+                {error?.size &&
+                    <span className="text-danger d-block small my-1 d-inline-block">{error?.size}</span>
                 }
                 {error?.duplicate &&
-                    <span className="text-danger d-block small my-1 d-inline-block">{error?.duplicate}</span>
+                    <span className="text-info d-block small my-1 d-inline-block">{error?.duplicate}</span>
                 }
             </div>
         </>
