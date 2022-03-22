@@ -122,6 +122,20 @@
         top: -2px;
         font-size: 24px;
         line-height: 24px;
+        background-color: $white;
+        transition: $transition;
+        &:hover{
+          background-color: $primary;
+          transition: $transition;
+          svg{
+            color: $white;
+            transition: $transition;
+          }
+        }
+        svg{
+          color: $black;
+          transition: $transition;
+        }
       }
     }
   }
@@ -275,6 +289,7 @@
   height: 160px;
   border-radius: 10px;
   background: $white;
+  border: 2px solid $body-bg;
   &[disabled]{
     cursor: no-drop;
     &.active-tab{
@@ -295,6 +310,7 @@
     }
   }
   &.active-tab{
+    border: 0;
    &::before{
       content: "";
       position: absolute;
@@ -304,23 +320,43 @@
       bottom: 0;
       background: linear-gradient(90deg, #E82C95 0.28%, #8C61E5 100%);
       z-index: 0;
+      border-radius: 10px;
    }
+  }
+  &:hover{
+    .remove-btn{
+      opacity: 1;
+    }
+  }
+  .remove-btn{
+    opacity: 0;
+    z-index: 2;
+    font-size: 24px;
+    line-height: 24px;
+    right: -10px;
+    top: -10px;
+    background: $white;
+    box-shadow: 0px 2px 4px $light-grey;
   }
   img{
     width: calc(100% - 8px);
     height: calc(100% - 8px);
     object-fit: cover;
-    object-position: top;
+    object-position: center;
     position: relative;
     z-index: 1;
     top: 4px;
     left: 4px;
-    border-radius: 6px;
+    border-radius: 7px;
     outline: 2px solid $white;
     background-color: #fff;
   }
 }
-
+.sm-selected_image{
+  .selected-image{
+    height: 96px;
+  }
+}
 // Custom checkbox design for choose image category START
 .checkbox-wrapper{
   .inputGroup {

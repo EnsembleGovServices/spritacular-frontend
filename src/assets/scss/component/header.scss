@@ -167,7 +167,7 @@
         line-height: 26px;
         &.iconify--fe{
           transform: rotate(0deg);
-          transition: all 0.3s ease;
+          transition: $transition;
         }
       }
     }
@@ -176,7 +176,7 @@
         svg{
           &.iconify--fe{
             transform: rotate(-180deg);
-            transition: all 0.3s ease;
+            transition: $transition;
           }
         }
       }
