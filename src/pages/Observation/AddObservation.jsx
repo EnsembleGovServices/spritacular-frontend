@@ -189,7 +189,7 @@ const AddObservation = () => {
 
     const handlesetDraft = () => {
         let ObservationData = {...observationData};
-        ObservationData.isDraft = 1;
+        ObservationData.is_draft = 1;
         setObservationData(ObservationData);
         setIsLoading(true);
         sendData(1);
@@ -213,7 +213,7 @@ const AddObservation = () => {
             return true;
         })
 
-        finalData.isDraft = draft;
+        finalData.is_draft = draft;
         finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id  : null);
         formData.append("data", JSON.stringify(finalData));
 
