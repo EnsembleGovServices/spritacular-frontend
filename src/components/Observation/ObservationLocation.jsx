@@ -320,18 +320,18 @@ const ObservationLocation = (props) => {
             </Col>
             <Col md={12} className="mb-5">
                 <h6>How accurate is your timing? <span className="required">Required</span></h6>
-                {/*<FormGroup>*/}
-                {/*    <Label htmlFor="Date">Uncertainty in Time</Label>*/}
-                {/*    <Input*/}
-                {/*        id="Date"*/}
-                {/*        type="text"*/}
-                {/*        name="uncertainity_time"*/}
-                {/*        value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.uncertainity_time:''}*/}
-                {/*        placeholder="e.g. +/- 3 sec  or  +/- 1 min" */}
-                {/*        className="w-100"*/}
-                {/*        onChange={(e)=>handleImageInput(e)}*/}
-                {/*    />*/}
-                {/*</FormGroup>*/}
+                <FormGroup>
+                    <Label className="text-uppercase" htmlFor="Date">Uncertainty in Time</Label>
+                    <Input
+                        id="Date"
+                        type="text"
+                        name="uncertainity_time"
+                        value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.uncertainity_time:''}
+                        placeholder="e.g. +/- 3 sec  or  +/- 1 min"
+                        className="w-100"
+                        onChange={(e)=>handleImageInput(e)}
+                    />
+                </FormGroup>
             </Col>
             <Col md={12} className="mb-5">
 
