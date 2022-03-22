@@ -29,6 +29,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
                 <label>Focal Length<span className="required">Required</span></label>
                 <Input
                 type="text"
+                maxLength={10}
                 name="focal_length"
                 value={updateSetting?.focal_length}
                 placeholder="35 mm"
@@ -44,11 +45,11 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <FormGroup>
                 <label>Aperture<span className="required">Required</span></label>
                 <Input
-                type="text"
+                type="number"
                 name="aperture"
                 // required
-                value={updateSetting?.aperture}
-                placeholder="35 mm"
+                value={updateSetting?.aperture ? updateSetting?.aperture : updateSetting?.aperture === null ?? ''}
+                placeholder="1.4"
                 onChange={(e)=>handleInput1(e)}
                 />
                 {error?.data?.aperture &&
@@ -66,7 +67,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <FormGroup>
                 <label>ISO</label>
                 <Input
-                type="text"
+                type="number"
                 name="iso"
                 value={updateSetting?.iso}
                 placeholder="100"
@@ -89,7 +90,7 @@ const EquipmentForm = ({handleInput1,updateSetting,error}) => {
             <Col md="6">
             <FormGroup>
                 <label>Frame Rate (frames per second)</label>
-                <Input type="text" name="fps" value={updateSetting?.fps} placeholder="24" onChange={(e)=>handleInput1(e)}/>
+                <Input type="number" name="fps" value={updateSetting?.fps} placeholder="24" onChange={(e)=>handleInput1(e)}/>
             </FormGroup>
             </Col>
             <Col md="12">

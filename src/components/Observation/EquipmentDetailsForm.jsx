@@ -22,7 +22,7 @@ const EquipmentDetailsForm = (props) =>{
                 <FormGroup>
                     <h6>Elevation angle of your camera in degrees</h6>
                     <Input
-                    type="text"
+                    type="number"
                     name="elevation_angle"
                     value={observationData?.elevation_angle ?? ''}
                     placeholder="e.g. 20"

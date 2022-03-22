@@ -32,7 +32,7 @@ const ObservationLocation = (props) => {
     const [isLoaded,setIsLoaded] = useState(false);
     const {observationImages, setObservationImages,observationData} = useObservations();
     const [isActiveDire, setActiveDire] = useState(null);
-    const [angleDegree, setAngleDegree] = useState(false);
+    const [angleDegree, setAngleDegree] = useState(0);
 
     useEffect(()=> {
         if(observationImages?.data){
@@ -117,7 +117,7 @@ const ObservationLocation = (props) => {
             setActiveDire(index);
             
 
-            if (observationImages?.data[observationImages?.selected_image_index]?.is_precise_az === false) {
+            if (observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0) {
                 observationArray.data[observationImages?.selected_image_index]['azimuth'] = getAngleName;
 
                 if(observationData?.image_type === 3){
@@ -329,8 +329,8 @@ const ObservationLocation = (props) => {
                     <Input
                         id="Date"
                         type="text"
-                        name="uncertainity_time"
-                        value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.uncertainity_time:''}
+                        name="time_accuracy"
+                        value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.time_accuracy:''}
                         placeholder="e.g. +/- 3 sec  or  +/- 1 min"
                         className="w-100"
                         onChange={(e)=>handleImageInput(e)}
@@ -352,8 +352,8 @@ const ObservationLocation = (props) => {
                         <input
                             id="checkbox2"
                             type="checkbox"
-                            name="is_precise_az"
-                            checked={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.is_precise_az :''}
+                            name="is_precise_azimuth"
+                            checked={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth :''}
                             className="hidden"
                             onChange={(e)=>handleImageInput(e)}
                             onClick={()=> setAngleDegree(!angleDegree)}
@@ -366,7 +366,7 @@ const ObservationLocation = (props) => {
                     </div>
                 </FormGroup>
 
-                {(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_az === false) ?
+                {(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0) ?
                     <FormGroup>
                         <Label className="justify-content-center mb-3 text-uppercase">Look Direction</Label>
                         <div className="compass-wrapper">

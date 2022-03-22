@@ -14,10 +14,11 @@ import {
 } from "reactstrap";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
-import {baseURL, cameraSettingFields, routeUrls} from "../../helpers/url";
+import {baseURL, cameraSettingFields} from "../../helpers/url";
 import {Tabs} from "../../helpers/observation";
 
 import ObservationLocation from "../../components/Observation/ObservationLocation";
@@ -27,9 +28,16 @@ import ObservationImages from "../../components/Observation/ObservationImages";
 import ObservationProgress from "../../components/Observation/ObservationProgress";
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
-import {useLocation, useNavigate} from "react-router-dom";
 import Loader from "../../components/Shared/Loader";
 
+
+// const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
+// const EquipmentDetails = lazy(()=> import('../../components/Observation/EquipmentDetails'))
+// const ObservationUploadedImg = lazy(()=> import('../../components/Observation/ObservationUploadedImg'))
+// const ObservationImages = lazy(()=> import('../../components/Observation/ObservationImages'))
+// const ObservationProgress = lazy(()=> import('../../components/Observation/ObservationProgress'))
+// const ObservationAfterImageUpload = lazy(()=> import('../../components/Observation/ObservationAfterImageUpload'))
+// const EquipmentDetailsForm = lazy(()=> import('../../components/Observation/EquipmentDetailsForm'))
 
 const AddObservation = () => {
     const { auth } = useAuth();
@@ -53,10 +61,8 @@ const AddObservation = () => {
     const [error, setError] = useState(null);
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || routeUrls.profile;
 
-    var disabledLocation = false;
+    let disabledLocation = false;
     for (let index = 0; index < observationData?.map_data?.length; index++) {
         if(observationData?.map_data?.[index] && observationData?.map_data?.[index]?.category_map?.category.length > 0 ){
             disabledLocation = true;
@@ -66,7 +72,7 @@ const AddObservation = () => {
         }
     }
 
-    var disabledEquipment = false;
+    let disabledEquipment = false;
     for (let index = 0; index < observationData?.map_data?.length; index++) {
         if(observationData?.map_data?.[index] && observationData?.map_data?.[index]?.azimuth && observationData?.map_data?.[index]?.obs_time && observationData?.map_data?.[index]?.obs_date && observationData?.map_data?.[index]?.timezone){
             disabledEquipment = true;
@@ -142,15 +148,14 @@ const AddObservation = () => {
                     }
                 }
             }else{
-                if(name === 'is_precise_az'){
-                    // console.log('hihi');
-                    observationArray.data[observationImages?.selected_image_index][name] = e.target.checked;
+                if(name === 'is_precise_azimuth'){
+                    observationArray.data[observationImages?.selected_image_index][name] = (e.target.checked === true) ? 1: 0;
                     if(observationData?.image_type === 3){
                         if(observationArray.data[1]){
-                           observationArray.data[1]['is_precise_az'] = e.target.checked;
+                           observationArray.data[1]['is_precise_azimuth'] = (e.target.checked === true) ? 1: 0;
                         }
                         if(observationArray.data[2]){
-                            observationArray.data[2]['is_precise_az'] = e.target.checked;
+                            observationArray.data[2]['is_precise_azimuth'] = (e.target.checked === true) ? 1: 0;
                         }
                     }
                     if(e.target.checked === false){
@@ -176,14 +181,6 @@ const AddObservation = () => {
                         }
                     }
                 }
-                // if(observationData?.image_type === 3){
-                //     if(observationArray.data[1]){
-                //         observationArray.data[1][name] = (value === 'on') ? true : (value === '' ? false: value);
-                //     }
-                //     if(observationArray.data[2]){
-                //         observationArray.data[2][name] = (value === 'on') ? true : value;
-                //     }
-                // }
             }
         }
         setObservationImages(observationArray);
@@ -192,16 +189,22 @@ const AddObservation = () => {
 
     const handlesetDraft = () => {
         let ObservationData = {...observationData};
-        ObservationData.isDraft = 1;
+        ObservationData.is_draft = 1;
         setObservationData(ObservationData);
+        setIsLoading(true);
+        sendData(1).then(r => r);
     }
 
-    const handleSubmit = async (e) => {
-        const cloneDeep = require('lodash.clonedeep');
+    const handleSubmit =  (e) => {
+       
         e.preventDefault();
         setIsLoading(true);
         setDraft(0);
+        sendData(0).then(r => r);
+    }
 
+    const sendData = async (draft) => {
+        const cloneDeep = require('lodash.clonedeep');
         const formData = new FormData();
         const finalData = cloneDeep(observationData);
         finalData?.map_data?.map((item, index) => {
@@ -210,6 +213,7 @@ const AddObservation = () => {
             return true;
         })
 
+        finalData.is_draft = draft;
         finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id  : null);
         formData.append("data", JSON.stringify(finalData));
 
@@ -315,9 +319,6 @@ const AddObservation = () => {
             activeTab === Tabs.ObservationImages) && !(activeTab === Tabs.DateTimeLocation && !(observationType?.image_type === 3)))
     }
 
-    // const handleCameraUpdateUrl = () => {
-    //     navigate(from, { replace: true });
-    // }
 
     // Set Progress Bar
     useEffect(() => {

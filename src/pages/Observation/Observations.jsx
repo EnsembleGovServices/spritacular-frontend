@@ -18,7 +18,7 @@ const Observations = () => {
     useEffect(()=> {
         let data = (observationImages?.data) ? [...observationImages?.data] : []
         setObservationData({
-            isDraft: observationSteps?.is_draft ? 1 : 0,
+            is_draft: observationSteps?.is_draft ? 1 : 0,
             image_type: observationType?.image_type,
             map_data: data,
             elevation_angle: null,
