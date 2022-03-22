@@ -35,10 +35,11 @@ const ObservationLocation = (props) => {
     const [angleDegree, setAngleDegree] = useState(false);
 
     useEffect(()=> {
-        fref.current.handleChangeLatLng(observationImages?.data[observationImages?.selected_image_index]?.latitude,observationImages?.data[observationImages?.selected_image_index]?.longitude);
-    },[observationImages?.selected_image_index]);
+        if(observationImages?.data){
+            fref.current.handleChangeLatLng(observationImages?.data[observationImages?.selected_image_index]?.latitude,observationImages?.data[observationImages?.selected_image_index]?.longitude);
+        }
+    },[observationImages?.data?.[observationImages?.selected_image_index]]);
     const handleValue = (value) => {
-        // console.log(value.short_address);
         setAddress(value);
         if(observationImages?.data){
             let observationAddress = {...observationImages};
