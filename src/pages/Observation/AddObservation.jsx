@@ -149,13 +149,13 @@ const AddObservation = () => {
                 }
             }else{
                 if(name === 'is_precise_azimuth'){
-                    observationArray.data[observationImages?.selected_image_index][name] = (e.target.checked == true) ? 1: 0;
+                    observationArray.data[observationImages?.selected_image_index][name] = (e.target.checked === true) ? 1: 0;
                     if(observationData?.image_type === 3){
                         if(observationArray.data[1]){
-                           observationArray.data[1]['is_precise_azimuth'] = (e.target.checked == true) ? 1: 0;
+                           observationArray.data[1]['is_precise_azimuth'] = (e.target.checked === true) ? 1: 0;
                         }
                         if(observationArray.data[2]){
-                            observationArray.data[2]['is_precise_azimuth'] = (e.target.checked == true) ? 1: 0;
+                            observationArray.data[2]['is_precise_azimuth'] = (e.target.checked === true) ? 1: 0;
                         }
                     }
                     if(e.target.checked === false){
@@ -192,7 +192,7 @@ const AddObservation = () => {
         ObservationData.is_draft = 1;
         setObservationData(ObservationData);
         setIsLoading(true);
-        sendData(1);
+        sendData(1).then(r => r);
     }
 
     const handleSubmit =  (e) => {
@@ -200,7 +200,7 @@ const AddObservation = () => {
         e.preventDefault();
         setIsLoading(true);
         setDraft(0);
-        sendData(0);
+        sendData(0).then(r => r);
     }
 
     const sendData = async (draft) => {
