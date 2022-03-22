@@ -11,7 +11,7 @@ import ObservationCategory from "./ObservationCategory";
 
 
 const ObservationLocation = (props) => {
-    const { toggleTab,handleImageInput, error, step, obvType } = props;
+    const { toggleTab,handleImageInput, error, step, obvType,disableNext } = props;
     const fref = useRef()
     const [address1,setAddress] = useState({
         address: '204, Mote Mangal Karyalay Rd, Bhavani Peth, Shobhapur, Kasba Peth, Pune, Maharashtra 411011, India',
@@ -149,7 +149,7 @@ const ObservationLocation = (props) => {
                 <FormGroup>
                     <Row>
                         <Col lg={7} className="order-2 order-lg-1">
-                            <h6>Where did you make the observation?</h6>
+                            <h6>Where did you make the observation? <span className="required">Required</span></h6>
                         </Col>
                         {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
                             <FormGroup>
@@ -233,7 +233,7 @@ const ObservationLocation = (props) => {
             <Col md={12} className="mb-5">
                 <Row>
                     <Col lg={7} className="order-2 order-lg-1">
-                        <h6>Please enter date and time for your observation</h6>
+                        <h6>Please enter date and time for your observation<span className="required">Required</span></h6>
                     </Col>
                     {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
                         <FormGroup>
@@ -404,7 +404,7 @@ const ObservationLocation = (props) => {
                 }
                 <FormGroup className="mt-5">
                     <Button className="gray-outline-btn me-2" onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
-                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)} disabled={((!(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.azimuth && observationData?.map_data?.[0]?.category_map?.category.length > 0 && !(observationImages?.data[observationImages?.selected_image_index]?.obs_date === null) && !(observationImages?.data[observationImages?.selected_image_index]?.obs_time === null) )))}>Continue</Button>
+                    <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)} disabled ={!disableNext}>Continue</Button>
                 </FormGroup>
             </Col>
         </>
