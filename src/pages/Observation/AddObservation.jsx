@@ -151,15 +151,14 @@ const AddObservation = () => {
                     }
                 }
             }else{
-                if(name === 'is_precise_az'){
-                    // console.log('hihi');
-                    observationArray.data[observationImages?.selected_image_index][name] = e.target.checked;
+                if(name === 'is_precise_azimuth'){
+                    observationArray.data[observationImages?.selected_image_index][name] = (e.target.checked == true) ? 1: 0;
                     if(observationData?.image_type === 3){
                         if(observationArray.data[1]){
-                           observationArray.data[1]['is_precise_az'] = e.target.checked;
+                           observationArray.data[1]['is_precise_azimuth'] = (e.target.checked == true) ? 1: 0;
                         }
                         if(observationArray.data[2]){
-                            observationArray.data[2]['is_precise_az'] = e.target.checked;
+                            observationArray.data[2]['is_precise_azimuth'] = (e.target.checked == true) ? 1: 0;
                         }
                     }
                     if(e.target.checked === false){
@@ -203,14 +202,20 @@ const AddObservation = () => {
         let ObservationData = {...observationData};
         ObservationData.isDraft = 1;
         setObservationData(ObservationData);
+        setIsLoading(true);
+        sendData(1);
     }
 
-    const handleSubmit = async (e) => {
-        const cloneDeep = require('lodash.clonedeep');
+    const handleSubmit =  (e) => {
+       
         e.preventDefault();
         setIsLoading(true);
         setDraft(0);
+        sendData(0);
+    }
 
+    const sendData = async (draft) => {
+        const cloneDeep = require('lodash.clonedeep');
         const formData = new FormData();
         const finalData = cloneDeep(observationData);
         finalData?.map_data?.map((item, index) => {
@@ -219,6 +224,7 @@ const AddObservation = () => {
             return true;
         })
 
+        finalData.isDraft = draft;
         finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id  : null);
         formData.append("data", JSON.stringify(finalData));
 

@@ -30,7 +30,7 @@ const MyObservations = () => {
   const [selectedObservationId,setSelectedObservationId] = useState();
   const { auth } = useAuth();
   useEffect(() => {
-    // getObservationType('verified');
+    getObservationType('verified');
   },[isLoaded]);
 
 
