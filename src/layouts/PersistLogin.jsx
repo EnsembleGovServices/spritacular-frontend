@@ -39,13 +39,14 @@ const PersistLogin = (props) => {
 
 
     useEffect(() => {
-        if (auth?.token?.access) {
+        if (auth?.token?.access && !sessionStorage.getItem('camera')) {
             axios.get(baseURL.api + '/users/camera_setting/', {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${auth?.token?.access}`
                 }
             }).then((response) => {
+                sessionStorage.setItem('camera', true);
                 setAuth(prev => {
                     return {
                         ...prev,

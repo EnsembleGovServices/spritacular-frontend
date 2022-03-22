@@ -323,7 +323,7 @@ const ObservationLocation = (props) => {
                 </Row>
             </Col>
             <Col md={12} className="mb-5">
-                <h6>How accurate is your timing? <span className="required">Required</span></h6>
+                <h6>How accurate is your timing?</h6>
                 <FormGroup>
                     <Label className="text-uppercase" htmlFor="Date">Uncertainty in Time</Label>
                     <Input

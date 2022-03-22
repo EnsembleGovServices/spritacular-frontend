@@ -46,9 +46,9 @@ const CameraSetting = (props) => {
             }).catch((error) => {
                 setError(error.response)
                 executeScroll();
-    
             })
         } else {
+            sessionStorage.removeItem('camera');
             await axios.post(baseURL.api+'/users/camera_setting/', updateSetting, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,8 +57,10 @@ const CameraSetting = (props) => {
                 withCredentials: true,
             }).then((success) => {
                 setSuccess(success)
+                sessionStorage.setItem('camera', true);
                 executeScroll();
             }).catch((error) => {
+                sessionStorage.removeItem('camera');
                 setError(error.response)
                 executeScroll();
     

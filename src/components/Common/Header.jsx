@@ -45,6 +45,7 @@ const Header = (props) => {
     setPersist(false);
     localStorage.removeItem("persist");
     localStorage.removeItem("refresh");
+    sessionStorage.removeItem("camera");
     setIsRegisterModal(false);
     setIsLoginModal(false);
     setShowUserProfilePopup(true)

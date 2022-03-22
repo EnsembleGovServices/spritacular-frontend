@@ -79,6 +79,7 @@ const ObservationUploadImg = (props) =>{
         if (images.length > 0) {
             setObservationImages({
                 data: images,
+                observation_count: images.length,
                 selected_image_id: images?.[0]?.id,
                 selected_image_index:0
             });
@@ -102,7 +103,7 @@ const ObservationUploadImg = (props) =>{
                                     <ul>
                                         <li>
                                             Common Image File Formats (JPEG or
-                                            JPG, PNG, TIFF)
+                                            JPG, PNG)
                                         </li>
                                     </ul>
                                 }
@@ -113,7 +114,7 @@ const ObservationUploadImg = (props) =>{
                             type="file"
                             name="file"
                             id="UploadFile"
-                            accept="image/jpg, image/tiff, image/jpeg, image/png"
+                            accept="image/jpg, image/jpeg, image/png"
                             multiple={multiple}
                             onChange={(e)=> handleUploadImage(e)}
                         />
