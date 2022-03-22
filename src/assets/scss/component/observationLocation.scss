@@ -8,9 +8,11 @@
     .form-label{
         @include sm-text;
         margin-right: 0;
-        text-transform: uppercase;
         display: flex;
         align-items: center;
+        &.form-check-label {
+            @include lg-text;
+        }
     }
     .selected-address {
         font-weight: 500;

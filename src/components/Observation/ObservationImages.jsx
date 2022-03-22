@@ -17,7 +17,7 @@ const ObservationImages = (props) =>{
                     <ObservationUploadImg imageFormat={true} maxLimit={true} multiple={isMultiple}/>
                 </Col>
                 {observationImages?.data?.length && <Col sm={3}>
-                    <ObservationUploadedImg />
+                    <ObservationUploadedImg className="sm-selected_image" />
                 </Col>}
                 
                 <Col sm={12}>

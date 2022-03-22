@@ -182,7 +182,7 @@ const Footer = () => {
               </Col>
               <Col sm={12}>
                 <Link to={''} className="d-inline-block w-100">
-                  <LazyLoadImage alt="Ensemble" effect="blur"  src={Images.Ensemble} width="120" />
+                  Powered by <LazyLoadImage alt="Ensemble" effect="blur"  src={Images.Ensemble} width="120" className="ms-2"/>
                 </Link>
               </Col>
             </Row>

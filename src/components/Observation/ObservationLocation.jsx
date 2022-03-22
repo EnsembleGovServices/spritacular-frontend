@@ -153,11 +153,12 @@ const ObservationLocation = (props) => {
                         </Col>
                         {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
                             <FormGroup>
-                                <Label check className="mb-0">
+                                <Label check className="mb-0 justify-content-end">
                                     <Input
                                         type="checkbox"
                                         name="Same as the first image"
                                         onChange={(e) => handleCopyData(e,['latitude','longitude'])}
+                                        className="me-2 mt-0"
                                     />
                                     Same as the first image
                                 </Label>
@@ -184,7 +185,7 @@ const ObservationLocation = (props) => {
                 <Row>
                     <Col md={6} lg={4}>
                         <FormGroup>
-                            <Label className="form-label" htmlFor="LAT" sm={2} >LAT</Label>
+                            <Label className="form-label text-uppercase" htmlFor="LAT" sm={2} >LAT</Label>
                             <Col sm={10}>
                                 <Input
                                     // value={address1?.markerPosition?.lat}
@@ -200,7 +201,7 @@ const ObservationLocation = (props) => {
                     </Col>
                     <Col md={6} lg={4}>
                         <FormGroup>
-                            <Label className="form-label" htmlFor="LAT" sm={2} >LON</Label>
+                            <Label className="form-label text-uppercase" htmlFor="LAT" sm={2} >LON</Label>
                             <Col sm={10}>
                                 <Input
                                     // value={address1?.markerPosition?.lng}
@@ -233,15 +234,16 @@ const ObservationLocation = (props) => {
             <Col md={12} className="mb-5">
                 <Row>
                     <Col lg={7} className="order-2 order-lg-1">
-                        <h6>Please enter date and time for your observation<span className="required">Required</span></h6>
+                        <h6>Please enter date and time for your observation <span className="required">Required</span></h6>
                     </Col>
                     {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col lg={5} className="order-1 order-lg-2 mb-2 mb-lg-0">
                         <FormGroup>
-                            <Label check className="mb-0">
+                            <Label check className="mb-0 justify-content-end">
                                 <Input
                                     type="checkbox"
                                     name="Same as the first image"
                                     onChange={(e) => handleCopyData(e,['obs_date','obs_time','timezone'])}
+                                    className="me-2 mt-0"
                                 />
                                 Same as the first image
                             </Label>
@@ -251,7 +253,7 @@ const ObservationLocation = (props) => {
                 <Row>
                     <Col md={6} lg={4}>
                         <FormGroup>
-                            <Label htmlFor="Date">Date</Label>
+                            <Label className="text-uppercase" htmlFor="Date">Date</Label>
                             <Input
                                 id="Date"
                                 type="date"
@@ -273,7 +275,7 @@ const ObservationLocation = (props) => {
                     </Col>
                     <Col md={6} lg={4}>
                         <FormGroup>
-                            <Label htmlFor="Time">Time</Label>
+                            <Label className="text-uppercase" htmlFor="Time">Time</Label>
                             <Input
                                 id="Time"
                                 type="time"
@@ -295,7 +297,7 @@ const ObservationLocation = (props) => {
                     </Col>
                     <Col md={6} lg={4}>
                         <FormGroup>
-                            <Label htmlFor="TIME ZONE">TIME ZONE</Label>
+                            <Label className="text-uppercase" htmlFor="TIME ZONE">TIME ZONE</Label>
                             <Input type="select" name="timezone" className="w-100"
                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
                                    onChange={(e)=>handleImageInput(e)}>
@@ -316,7 +318,7 @@ const ObservationLocation = (props) => {
                 </Row>
             </Col>
             <Col md={12} className="mb-5">
-                <h6>How accurate is your timing?</h6>
+                <h6>How accurate is your timing? <span className="required">Required</span></h6>
                 {/*<FormGroup>*/}
                 {/*    <Label htmlFor="Date">Uncertainty in Time</Label>*/}
                 {/*    <Input*/}
@@ -361,7 +363,7 @@ const ObservationLocation = (props) => {
 
                 {(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_az === false) ?
                     <FormGroup>
-                        <Label className="justify-content-center mb-3">Look Direction</Label>
+                        <Label className="justify-content-center mb-3 text-uppercase">Look Direction</Label>
                         <div className="compass-wrapper">
                             {
                                 directionValue?.map((direction, index)=>{
