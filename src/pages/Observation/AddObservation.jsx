@@ -18,15 +18,7 @@ import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import {baseURL, cameraSettingFields, routeUrls} from "../../helpers/url";
-import {MultiImageTabs, Tabs} from "../../helpers/observation";
-
-// const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
-// const EquipmentDetails = lazy(()=> import('../../components/Observation/EquipmentDetails'))
-// const ObservationUploadedImg = lazy(()=> import('../../components/Observation/ObservationUploadedImg'))
-// const ObservationImages = lazy(()=> import('../../components/Observation/ObservationImages'))
-// const ObservationProgress = lazy(()=> import('../../components/Observation/ObservationProgress'))
-// const ObservationAfterImageUpload = lazy(()=> import('../../components/Observation/ObservationAfterImageUpload'))
-// const EquipmentDetailsForm = lazy(()=> import('../../components/Observation/EquipmentDetailsForm'))
+import {Tabs} from "../../helpers/observation";
 
 import ObservationLocation from "../../components/Observation/ObservationLocation";
 import EquipmentDetails from "../../components/Observation/EquipmentDetails";
@@ -37,7 +29,6 @@ import ObservationAfterImageUpload from "../../components/Observation/Observatio
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
 import {useLocation, useNavigate} from "react-router-dom";
 import Loader from "../../components/Shared/Loader";
-import { PropTypes } from 'prop-types';
 
 
 const AddObservation = () => {

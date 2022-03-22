@@ -8,25 +8,13 @@ import useObservations from "../../hooks/useObservations";
 
 
 const EquipmentDetailsForm = (props) =>{
-    const {toggleTab,handleInput,handleOtherCamera,getCameraDetail,cameraDetails, error, step } = props;
+    const {toggleTab,handleInput,handleOtherCamera,cameraDetails, error, step } = props;
     const {
         observationData,
     } = useObservations();
     return (
         <>
         <Row className="mt-4">
-            {/* <Col sm="12">
-                <FormGroup check>
-                <Label check className="mb-4">
-                    <Input
-                        type="checkbox"
-                        name="Pull data from my profile"
-                        onClick={getCameraDetail}
-                    />
-                    Pull data from my profile
-                </Label>
-                </FormGroup>
-            </Col> */}
             <EquipmentForm step={step} handleInput1={handleInput} updateSetting={cameraDetails} error={error}/>
 
             <Col md="12">
@@ -71,6 +59,7 @@ const EquipmentDetailsForm = (props) =>{
             </Col>
             <Col md={12}>
                 <Button className="gray-outline-btn me-2"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
+                <Button type="submit" disabled={(!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture)) }>Submit</Button>
             </Col>
         </Row>
         </>
