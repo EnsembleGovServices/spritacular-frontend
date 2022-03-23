@@ -272,6 +272,9 @@
         padding: 12px;
         border-radius: 6px;
         @include lg-text;
+        span{
+            width: calc(100% - 18px);
+        }
         svg{
             font-size: 16px;
             line-height: 26px;
@@ -293,13 +296,11 @@
     }
     .dropdown-item{
         font-weight: 400;
-        padding: 3px 0;
+        padding: 10px 0;
         word-break: break-word;
         width: 100%;
         white-space: normal;
-        border-bottom: 1px solid #ededed;
         @include md-text;
-        margin-bottom: 2px;
     }
     .dropdown-menu{
         max-height: 300px;

@@ -184,11 +184,11 @@ const MyObservations = () => {
                     <Label className="text-uppercase" htmlFor="SortBy">Sort by</Label>
                     <Dropdown id="SortBy" className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
                         <DropdownToggle className="shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                        1 week ago observations
-                            <Icon icon="fe:arrow-down" className="down-arrow"/>
+                          <span className="text-truncate">1 week ago observations</span>
+                          <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                         </DropdownToggle>
-                        <DropdownMenu onChange={(e) => {getObservationData(e)}}>
-                            <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="search" placeholder="search placeholder" /></DropdownItem>
+                        <DropdownMenu onChange={(e) => {getObservationData(e)}} className="py-0 shadow">
+                            <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="search" className="px-2 " placeholder="Search Placeholder" /></DropdownItem>
                             <DropdownItem  className="px-2 fw-normal" disabled defaultValue>Recent observations</DropdownItem>
                             <DropdownItem  className="px-2 fw-normal" value='1'>1 week ago observations</DropdownItem>
                             <DropdownItem  className="px-2 fw-normal" value='2'>2 week ago observations</DropdownItem>

@@ -102,8 +102,10 @@
         }
         .dropdown-with-search {
             .btn{
-                border-radius: 6px;
                 padding: 13px 20px 13px 12px;
+                span{
+                    max-width: 170px;
+                }
             }
         }
     }
