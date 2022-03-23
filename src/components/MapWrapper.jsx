@@ -34,6 +34,7 @@ class Map extends Component{
 	 * Get the current address from the default map position and set those values in the state
 	 */
 	componentDidMount() {
+		
 		Geocode.fromLatLng( this.state.mapPosition.lat , this.state.mapPosition.lng ).then(
 			response => {
 				const address = response.results[0].formatted_address,
@@ -286,7 +287,7 @@ class Map extends Component{
 
 
 	render(){
-		const AsyncMap = withScriptjs(
+		const AsyncMap = 
 			withGoogleMap(
 				props => (
 					<>
@@ -331,7 +332,7 @@ class Map extends Component{
 						</GoogleMap>
 					</>
 				)
-			)
+			
 		);
 		let map;
 		if( this.props.center.lat !== undefined ) {

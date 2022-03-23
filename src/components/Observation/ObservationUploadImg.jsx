@@ -20,9 +20,8 @@ const ObservationUploadImg = (props) =>{
                 const baseImage = `data:image/png;base64,${base64String}`;
                 const random = (Math.random() + 1).toString(36).substring(7) + (Math.random() + 1).toString(36).substring(20);
                 const fileSize = (item.size / (1024*1024)).toFixed(2);
-
                 const repeatCheck = images?.map((image, index) => {
-                    return image?.lastModified === item?.lastModified;
+                    return image?.lastModified === item?.lastModified && image?.name === item?.name;
                 });
 
                 const duplicate = repeatCheck.includes(true);
@@ -33,6 +32,7 @@ const ObservationUploadImg = (props) =>{
                             'id' : random,
                             'image' : baseImage,
                             'lastModified': item?.lastModified,
+                            'name': item?.name,
                             'item': item,
                             'latitude': 18.5204,
                             'longitude': 73.8567,
