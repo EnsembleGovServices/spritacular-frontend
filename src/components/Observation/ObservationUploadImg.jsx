@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import {useEffect, useState} from "react";
 
 const ObservationUploadImg = (props) =>{
-    const {multiple, maxLimit, imageFormat}=props;
+    const {multiple, maxLimit, imageFormat, detectImage}=props;
     const {setObservationImages, observationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
@@ -83,10 +83,10 @@ const ObservationUploadImg = (props) =>{
     };
 
     useEffect(() => {
-            let images = (observationImages?.data) ? [...observationImages?.data] : []
-            setImages(images)
-        },
-        [])
+        let images = (observationImages?.data) ? [...observationImages?.data] : []
+        setImages(images)
+   },[detectImage])
+
 
     useEffect(()=> {
         if (images.length > 0) {
@@ -98,7 +98,6 @@ const ObservationUploadImg = (props) =>{
             });
         }
     }, [images, setObservationImages])
-
 
     return (
         <>
