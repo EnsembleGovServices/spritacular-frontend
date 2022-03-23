@@ -137,7 +137,6 @@ const AddObservation = () => {
                 value = e.target.value;
             // console.log(e.target.checked,name);
 
-
             if(name === 'is_other'){
                 observationArray.data[observationImages?.selected_image_index].category_map[name] = e.target.checked;
                 if(observationData?.image_type === 3){
@@ -148,7 +147,8 @@ const AddObservation = () => {
                         observationArray.data[2].category_map[name] = e.target.checked;
                     }
                 }
-            }else{
+            }
+            else{
                 if(name === 'is_precise_azimuth'){
                     observationArray.data[observationImages?.selected_image_index][name] = (e.target.checked === true) ? 1: 0;
                     if(observationData?.image_type === 3){
@@ -377,10 +377,10 @@ const AddObservation = () => {
                     <Container>
                         <Row>
                             <Col md={3}>
-
-                                <ObservationProgress step={observationSteps}/>
-
+                                
                                 <div className="observation-form-left-tab">
+                                    <ObservationProgress step={observationSteps}/>
+
                                     <Nav tabs className="flex-column">
                                         <NavItem>
                                             <NavLink
@@ -423,7 +423,7 @@ const AddObservation = () => {
                             </Col>
 
                             <Col md={observationImages?.data?.length > 0 && next && !(activeTab === Tabs.EquipmentDetails) ? 7 : 9}>
-                                <div className="observation-form-right-tab">
+                                <div className="observation-form-middle-tab">
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
@@ -472,7 +472,9 @@ const AddObservation = () => {
 
                             {showUploadedPreview() &&
                                 <Col md={2}>
-                                    <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
+                                    <div className="observation-form-right-tab">
+                                        <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
+                                    </div>
                                 </Col>
                             }
                         </Row>

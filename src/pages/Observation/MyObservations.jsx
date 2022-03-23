@@ -15,6 +15,10 @@ import ObservationDetails from './ObservationDetails';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Images from './../../static/images';
 import ObservationDetailPage from "./ObservationDetailPage";
+import { Dropdown } from 'reactstrap';
+import { DropdownToggle } from 'reactstrap';
+import { DropdownMenu } from 'reactstrap';
+import { DropdownItem } from 'reactstrap';
 
 const MyObservations = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
@@ -30,7 +34,9 @@ const MyObservations = () => {
   const [isLoaded,setIsLoaded] = useState(true);
   const [activeType,setActiveType] = useState('verified');
   const [selectedObservationId,setSelectedObservationId] = useState();
+  const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
   const { auth } = useAuth();
+
   useEffect(() => {
     getObservationData(null);
     getObservationType('verified');
@@ -176,7 +182,22 @@ const MyObservations = () => {
               <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mt-2 mt-md-0">
                   <FormGroup className="form-group sort-by-select">
                     <Label className="text-uppercase" htmlFor="SortBy">Sort by</Label>
-                    <Input id="SortBy" type="select" name="observationSortBy" defaultValue="" onChange={(e) => {getObservationData(e)}}>
+                    <Dropdown id="SortBy" className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
+                        <DropdownToggle className="shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
+                          <span className="text-truncate">1 week ago observations</span>
+                          <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
+                        </DropdownToggle>
+                        <DropdownMenu onChange={(e) => {getObservationData(e)}} className="py-0 shadow">
+                            <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="search" className="px-2 " placeholder="Search Placeholder" /></DropdownItem>
+                            <DropdownItem  className="px-2 fw-normal" disabled defaultValue>Recent observations</DropdownItem>
+                            <DropdownItem  className="px-2 fw-normal" value='1'>1 week ago observations</DropdownItem>
+                            <DropdownItem  className="px-2 fw-normal" value='2'>2 week ago observations</DropdownItem>
+                            <DropdownItem  className="px-2 fw-normal" value='3'>3 week ago observations</DropdownItem>
+                            <DropdownItem  className="px-2 fw-normal" value='4'>4 week ago observations</DropdownItem>
+                            <DropdownItem  className="px-2 fw-normal" value='1'>1 months ago observations</DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                    {/* <Input id="SortBy" type="select" name="observationSortBy" defaultValue="" onChange={(e) => {getObservationData(e)}}>
                       <option disabled defaultValue>
                         Recent observations
                       </option>
@@ -185,7 +206,7 @@ const MyObservations = () => {
                       <option value='3'>3 week ago observations</option>
                       <option value='4'>4 week ago observations</option>
                       <option value='1'>1 months ago observations</option>
-                    </Input>
+                    </Input> */}
                   </FormGroup>  
                   <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary ms-2 ms-xl-4 shadow-none">
                     <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload

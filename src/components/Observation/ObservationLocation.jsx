@@ -1,14 +1,25 @@
 import "../../assets/scss/component/observationLocation.scss";
-import {Col, FormGroup, Input, Label, Row, Button, FormFeedback, Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from "reactstrap";
-import {useState, useEffect,useRef} from 'react';
+import {
+    Button,
+    Col,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    FormGroup,
+    Input,
+    Label,
+    Row
+} from "reactstrap";
+import {useEffect, useRef, useState} from 'react';
 import useObservations from "../../hooks/useObservations";
-import  MapWrapper from '../MapWrapper';
+import MapWrapper from '../MapWrapper';
 import ReactCountryFlags from '../ReactCountryFlag';
 import Images from "../../static/images";
-import {Tabs, directionValue} from "../../helpers/observation";
+import {directionValue, Tabs} from "../../helpers/observation";
 import {timezone} from "../../helpers/timezone";
 import ObservationCategory from "./ObservationCategory";
-import { Icon } from '@iconify/react';
+import {Icon} from '@iconify/react';
 
 
 const ObservationLocation = (props) => {
@@ -35,6 +46,7 @@ const ObservationLocation = (props) => {
     const [isActiveDire, setActiveDire] = useState(null);
     const [angleDegree, setAngleDegree] = useState(0);
     const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
+    const [searchTimeZone, setSearchTimeZone] = useState("");
 
     useEffect(()=> {
         if(observationImages?.data){
@@ -137,16 +149,28 @@ const ObservationLocation = (props) => {
         // console.log(keys);
         let copyImages = {...observationImages};
         keys.map((k) => {
-        if(e.target.checked){
-            copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
-            copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
-            copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
-        }else{
-            copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
-        }
+            if(e.target.checked){
+                copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
+                copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
+                copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
+            }else{
+                copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
+            }
+            return false;
         });
-            setObservationImages(copyImages);
+        setObservationImages(copyImages);
     }
+
+    const findTimeZone = (e) => {
+        let value = e.target.value.toLowerCase();
+        setSearchTimeZone(value);
+    }
+
+    useEffect(()=> {
+        if (isTimezoneOpen === false) {
+            setSearchTimeZone("");
+        }
+    }, [isTimezoneOpen])
 
     const errorData = error ? Object.values(error?.data) : {};
 
@@ -305,24 +329,19 @@ const ObservationLocation = (props) => {
                         <FormGroup>
                             <Label className="text-uppercase" htmlFor="TIME ZONE">TIME ZONE</Label>
                             <Dropdown className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
-                                <DropdownToggle className="shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                    {(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
-                                    <Icon icon="fe:arrow-down" className="down-arrow"/>
+                                <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
+                                    <span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>
+                                    <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                 </DropdownToggle>
-                                <DropdownMenu >
-                                    <DropdownItem header><Input type="search" placeholder="search placeholder" /></DropdownItem>
-                                    {timezone?.map((item, index) => {
-                                        return <DropdownItem key={index} value={item} onChange={(e)=>handleImageInput(e)}>{item}</DropdownItem>
+                                <DropdownMenu className="py-0 shadow">
+                                    <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" className="p-2" onChange={(e)=> findTimeZone(e)} placeholder="Search Timezone" /></DropdownItem>
+                                    {timezone?.filter(item => {
+                                        return item.toLowerCase().indexOf(searchTimeZone.toLowerCase()) !== -1;
+                                    }).map((item, index) => {
+                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e)=>handleImageInput(e)}>{item}</DropdownItem>
                                     })}
                                 </DropdownMenu>
                             </Dropdown>
-                            {/* <Input type="select" name="timezone" className="w-100"
-                                   value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
-                                   onChange={(e)=>handleImageInput(e)}>
-                                {timezone?.map((item, index) => {
-                                    return <option key={index} value={item}>{item}</option>
-                                })}
-                            </Input> */}
                             {error && errorData?.map((item, index) => {
                                 if (step?.selected_image_index === index) {
                                     return(
