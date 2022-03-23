@@ -157,4 +157,17 @@
         top: 0;
         padding: 14px;
     }
+    .dropdown-with-search {
+        .btn{
+            span{
+                width: calc(100% - 18px);
+            }
+        }
+        .dropdown-item{
+            border-bottom: 1px solid #ededed;
+            &:last-child{
+                border-bottom: 0;
+            }
+        }
+    }
 }

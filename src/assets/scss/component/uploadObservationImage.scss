@@ -9,6 +9,10 @@
   .observation-form-left-tab {
     max-width: 180px;
     width: 100%;
+    position: sticky;
+    left: 0;
+    right: 0;
+    top: 140px;
     .nav-tabs {
       border-bottom: none;
       .nav-item {
@@ -197,7 +201,7 @@
     }
   }
 }
-.observation-form-right-tab{
+.observation-form-middle-tab{
   .nav-tabs{
     margin: 0 -6px 40px;
     border: 0;
@@ -480,4 +484,11 @@
       }
     }
   }
+}
+
+.observation-form-right-tab{
+  position: sticky;
+  left: 0;
+  right: 0;
+  top: 140px;
 }

@@ -330,11 +330,11 @@ const ObservationLocation = (props) => {
                             <Label className="text-uppercase" htmlFor="TIME ZONE">TIME ZONE</Label>
                             <Dropdown className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
                                 <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                    {(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}
-                                    <Icon icon="fe:arrow-down" className="down-arrow"/>
+                                    <span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>
+                                    <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                 </DropdownToggle>
-                                <DropdownMenu>
-                                    <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" onChange={(e)=> findTimeZone(e)} placeholder="search placeholder" /></DropdownItem>
+                                <DropdownMenu className="py-0 shadow">
+                                    <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" className="p-2" onChange={(e)=> findTimeZone(e)} placeholder="Search Timezone" /></DropdownItem>
                                     {timezone?.filter(item => {
                                         return item.toLowerCase().indexOf(searchTimeZone.toLowerCase()) !== -1;
                                     }).map((item, index) => {
