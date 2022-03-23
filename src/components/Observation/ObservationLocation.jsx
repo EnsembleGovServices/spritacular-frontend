@@ -1,5 +1,5 @@
 import "../../assets/scss/component/observationLocation.scss";
-import {Col, FormGroup, Input, Label, Row, Button, FormFeedback} from "reactstrap";
+import {Col, FormGroup, Input, Label, Row, Button, FormFeedback, Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from "reactstrap";
 import {useState, useEffect,useRef} from 'react';
 import useObservations from "../../hooks/useObservations";
 import  MapWrapper from '../MapWrapper';
@@ -8,6 +8,7 @@ import Images from "../../static/images";
 import {Tabs, directionValue} from "../../helpers/observation";
 import {timezone} from "../../helpers/timezone";
 import ObservationCategory from "./ObservationCategory";
+import { Icon } from '@iconify/react';
 
 
 const ObservationLocation = (props) => {
@@ -33,6 +34,7 @@ const ObservationLocation = (props) => {
     const {observationImages, setObservationImages,observationData} = useObservations();
     const [isActiveDire, setActiveDire] = useState(null);
     const [angleDegree, setAngleDegree] = useState(0);
+    const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
 
     useEffect(()=> {
         if(observationImages?.data){
@@ -222,8 +224,7 @@ const ObservationLocation = (props) => {
                     </Col>
                     <Col md={6} lg={4}>
                         <div className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
-                        <ReactCountryFlags country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code: null} />
-                            {/* <img src={Images.Flag} alt="USA Flag"/>  */}
+                            <ReactCountryFlags country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code: null} />
                             <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                         </div>
                     </Col>
@@ -303,13 +304,25 @@ const ObservationLocation = (props) => {
                     <Col md={6} lg={4}>
                         <FormGroup>
                             <Label className="text-uppercase" htmlFor="TIME ZONE">TIME ZONE</Label>
-                            <Input type="select" name="timezone" className="w-100"
+                            <Dropdown className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
+                                <DropdownToggle className="shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
+                                    {(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
+                                    <Icon icon="fe:arrow-down" className="down-arrow"/>
+                                </DropdownToggle>
+                                <DropdownMenu >
+                                    <DropdownItem header><Input type="search" placeholder="search placeholder" /></DropdownItem>
+                                    {timezone?.map((item, index) => {
+                                        return <DropdownItem key={index} value={item} onChange={(e)=>handleImageInput(e)}>{item}</DropdownItem>
+                                    })}
+                                </DropdownMenu>
+                            </Dropdown>
+                            {/* <Input type="select" name="timezone" className="w-100"
                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
                                    onChange={(e)=>handleImageInput(e)}>
                                 {timezone?.map((item, index) => {
                                     return <option key={index} value={item}>{item}</option>
                                 })}
-                            </Input>
+                            </Input> */}
                             {error && errorData?.map((item, index) => {
                                 if (step?.selected_image_index === index) {
                                     return(

@@ -157,4 +157,43 @@
         top: 0;
         padding: 14px;
     }
+    .dropdown-with-search{
+        .btn{
+            background-color: $input-bg;
+            padding: 12px;
+            border-radius: 6px;
+            @include lg-text;
+            svg{
+                font-size: 16px;
+                line-height: 26px;
+                &.iconify--fe{
+                    transform: rotate(0deg);
+                    transition: $transition;
+                }
+            }
+        }
+        &.show{
+            .btn-secondary{
+                svg{
+                    &.iconify--fe{
+                        transform: rotate(-180deg);
+                        transition: $transition;
+                    }
+                }
+            }
+        }
+        .dropdown-header{
+            padding: 0 5px;
+        }
+        .dropdown-item{
+            font-weight: 400;
+            padding: 3px 5px;
+        }
+        .dropdown-menu{
+            height: 300px;
+            overflow-y: auto;
+            width: 100%;
+            @include customScrollBar;
+        }
+    }
 }
