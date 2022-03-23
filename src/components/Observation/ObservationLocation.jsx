@@ -305,14 +305,14 @@ const ObservationLocation = (props) => {
                         <FormGroup>
                             <Label className="text-uppercase" htmlFor="TIME ZONE">TIME ZONE</Label>
                             <Dropdown className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
-                                <DropdownToggle className="shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
+                                <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                                     {(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
                                     <Icon icon="fe:arrow-down" className="down-arrow"/>
                                 </DropdownToggle>
                                 <DropdownMenu >
-                                    <DropdownItem header><Input type="search" placeholder="search placeholder" /></DropdownItem>
+                                    <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="search" placeholder="search placeholder" /></DropdownItem>
                                     {timezone?.map((item, index) => {
-                                        return <DropdownItem key={index} value={item} onChange={(e)=>handleImageInput(e)}>{item}</DropdownItem>
+                                        return <DropdownItem className="px-2 fw-normal" key={index} value={item} onChange={(e)=>handleImageInput(e)}>{item}</DropdownItem>
                                     })}
                                 </DropdownMenu>
                             </Dropdown>

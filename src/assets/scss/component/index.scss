@@ -264,3 +264,49 @@
     }
 }
 // Data not found Css End
+
+// Dropdown with search box css Start
+.dropdown-with-search{
+    .btn{
+        background-color: $input-bg;
+        padding: 12px;
+        border-radius: 6px;
+        @include lg-text;
+        svg{
+            font-size: 16px;
+            line-height: 26px;
+            &.iconify--fe{
+                transform: rotate(0deg);
+                transition: $transition;
+            }
+        }
+    }
+    &.show{
+        .btn-secondary{
+            svg{
+                &.iconify--fe{
+                    transform: rotate(-180deg);
+                    transition: $transition;
+                }
+            }
+        }
+    }
+    .dropdown-item{
+        font-weight: 400;
+        padding: 3px 0;
+        word-break: break-word;
+        width: 100%;
+        white-space: normal;
+        border-bottom: 1px solid #ededed;
+        @include md-text;
+        margin-bottom: 2px;
+    }
+    .dropdown-menu{
+        max-height: 300px;
+        overflow-y: auto;
+        width: 100%;
+        padding-top: 0;
+        @include customScrollBar;
+    }
+}
+// Dropdown with search box css End

@@ -38,7 +38,7 @@ const Header = (props) => {
   const [notificationDropdown, setNotificationDropdown] = useState(false);
 
   const location = useLocation();
-  const homeUrl = location.pathname === "";
+  const homeUrl = location.pathname === '/';
 
   const Logout = () => {
     setAuth("");
