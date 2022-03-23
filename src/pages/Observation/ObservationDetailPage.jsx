@@ -30,15 +30,9 @@ const ObservationDetailPage = (props) => {
             {observationList.length > 0 && observationList?.map((cardItems, index)=> {
               if(cardItems?.images.length > 0){
                 return (
-                    <>
-                    {cardItems?.images?.map((image,id) => {
-                      return ( <Col key={id} sm={6} md={4} xl={3} className="mb-4">
-                          <ObservationCard cardItems = {image} cardData={cardItems} index={index} userProfile={cardItems.user_data} handleClick={handleObservationDetailModal}/>
+                      <Col key={index} sm={6} md={4} xl={3} className="mb-4">
+                          <ObservationCard cardItems = {cardItems} cardData={cardItems?.images[0]} index={index} userProfile={cardItems.user_data} handleClick={handleObservationDetailModal}/>
                       </Col>)
-                      })
-                    }
-                    </>
-                  );
               }
               else{
                 return;

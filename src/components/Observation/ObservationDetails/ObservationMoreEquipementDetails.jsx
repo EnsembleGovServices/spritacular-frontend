@@ -21,7 +21,7 @@ const ObservationMoreEquipementDetails = (props) => {
                             <h6 className="m-0 text-uppercase fw-normal">Focal Length</h6>
                         </Col>
                         <Col md={6}>
-                            <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold">{data?.focal_length} mm</p>
+                            <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold">{(data?.focal_length) ? data?.focal_length + ' mm' : ''} </p>
                         </Col>
                     </Row>
                     <div className="border-line my-2"></div>
@@ -48,7 +48,7 @@ const ObservationMoreEquipementDetails = (props) => {
                             <h6 className="m-0 text-uppercase fw-normal">Shutter Speed</h6>
                         </Col>
                         <Col md={6}>
-                            <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold">{data?.shutter_speed} sec</p>
+                            <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold">{(data?.shutter_speed) ? data?.shutter_speed + '  sec' : ''}</p>
                         </Col>
                     </Row>
                     <div className="border-line my-2"></div>
@@ -57,7 +57,7 @@ const ObservationMoreEquipementDetails = (props) => {
                             <h6 className="m-0 text-uppercase fw-normal">Frame Rate</h6>
                         </Col>
                         <Col md={6}>
-                            <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold">{data?.fps} FPS</p>
+                            <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold">{(data?.fps) ? data?.fps + ' FPS' : ''}</p>
                         </Col>
                     </Row>
                     <div className="border-line my-2"></div>
