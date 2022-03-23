@@ -377,10 +377,10 @@ const AddObservation = () => {
                     <Container>
                         <Row>
                             <Col md={3}>
-
-                                <ObservationProgress step={observationSteps}/>
-
+                                
                                 <div className="observation-form-left-tab">
+                                    <ObservationProgress step={observationSteps}/>
+
                                     <Nav tabs className="flex-column">
                                         <NavItem>
                                             <NavLink
@@ -423,7 +423,7 @@ const AddObservation = () => {
                             </Col>
 
                             <Col md={observationImages?.data?.length > 0 && next && !(activeTab === Tabs.EquipmentDetails) ? 7 : 9}>
-                                <div className="observation-form-right-tab">
+                                <div className="observation-form-middle-tab">
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
@@ -472,7 +472,9 @@ const AddObservation = () => {
 
                             {showUploadedPreview() &&
                                 <Col md={2}>
-                                    <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
+                                    <div className="observation-form-right-tab">
+                                        <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
+                                    </div>
                                 </Col>
                             }
                         </Row>
