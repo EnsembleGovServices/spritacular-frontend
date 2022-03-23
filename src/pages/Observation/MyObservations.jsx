@@ -32,7 +32,7 @@ const MyObservations = () => {
   const [selectedObservationId,setSelectedObservationId] = useState();
   const { auth } = useAuth();
   useEffect(() => {
-    getObservationData();
+    getObservationData(null);
     getObservationType('verified');
   },[isLoaded]);
 
@@ -42,35 +42,41 @@ const MyObservations = () => {
     setActiveType(type);
     if(type == 'unverified'){
 
-      unverifiedList = observationList.filter((item) => {
+      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
         return (item.is_submit == true);
       });
     }
     if(type == 'verified'){
 
-      unverifiedList = observationList.filter((item) => {
+      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
         return (item.is_verified == true);
       });
     }
     if(type == 'denied'){
 
-      unverifiedList = observationList.filter((item) => {
+      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
         return (item.is_reject == true);
       });
     }
     if(type == 'draft'){
 
-      unverifiedList = observationList.filter((item) => {
+      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
         return (item.is_submit == false);
       });
     }
     setCurrentObservationList(unverifiedList);
   }
   
-  const getObservationData = () => {
+  const getObservationData = (value) => {
+    if(value !== null){
+      value = value.target.value;
+    }
+    else{
+      value = 1;
+    }
     setActiveType('verified');
     getObservationType('verified');
-    axios.get(baseURL.api+'/observation/observation_collection/',{
+    axios.get(baseURL.api+'/observation/observation_collection/?sortBy='+value,{
       headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth?.token?.access}`,
@@ -170,15 +176,15 @@ const MyObservations = () => {
               <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mt-2 mt-md-0">
                   <FormGroup className="form-group sort-by-select">
                     <Label className="text-uppercase" htmlFor="SortBy">Sort by</Label>
-                    <Input id="SortBy" type="select" name="observationSortBy" defaultValue="" onChange={getObservationData}>
+                    <Input id="SortBy" type="select" name="observationSortBy" defaultValue="" onChange={(e) => {getObservationData(e)}}>
                       <option disabled defaultValue>
                         Recent observations
                       </option>
-                      <option>1 week ago observations</option>
-                      <option>2 week ago observations</option>
-                      <option>3 week ago observations</option>
-                      <option>4 week ago observations</option>
-                      <option>1 months ago observations</option>
+                      <option value='1'>1 week ago observations</option>
+                      <option value='2'>2 week ago observations</option>
+                      <option value='3'>3 week ago observations</option>
+                      <option value='4'>4 week ago observations</option>
+                      <option value='1'>1 months ago observations</option>
                     </Input>
                   </FormGroup>  
                   <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary ms-2 ms-xl-4 shadow-none">
