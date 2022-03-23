@@ -146,7 +146,7 @@ const ObservationCategory = (props) => {
                                         <label htmlFor={imagItem.id}>
                                             <img src={`${imagItem.image}`} alt={imagItem.name} />
                                             {imagItem.name}
-                                            <ImagePopover />
+                                            <ImagePopover index={imagItem.id} />
                                         </label>
                                     </div>
                                 </div>
