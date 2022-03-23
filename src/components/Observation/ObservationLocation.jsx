@@ -1,14 +1,25 @@
 import "../../assets/scss/component/observationLocation.scss";
-import {Col, FormGroup, Input, Label, Row, Button, FormFeedback, Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from "reactstrap";
-import {useState, useEffect,useRef} from 'react';
+import {
+    Button,
+    Col,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    FormGroup,
+    Input,
+    Label,
+    Row
+} from "reactstrap";
+import {useEffect, useRef, useState} from 'react';
 import useObservations from "../../hooks/useObservations";
-import  MapWrapper from '../MapWrapper';
+import MapWrapper from '../MapWrapper';
 import ReactCountryFlags from '../ReactCountryFlag';
 import Images from "../../static/images";
-import {Tabs, directionValue} from "../../helpers/observation";
+import {directionValue, Tabs} from "../../helpers/observation";
 import {timezone} from "../../helpers/timezone";
 import ObservationCategory from "./ObservationCategory";
-import { Icon } from '@iconify/react';
+import {Icon} from '@iconify/react';
 
 
 const ObservationLocation = (props) => {
@@ -155,9 +166,11 @@ const ObservationLocation = (props) => {
         setSearchTimeZone(value);
     }
 
-    const test = (e) => {
-      console.log(e.target.value)
-    }
+    useEffect(()=> {
+        if (isTimezoneOpen === false) {
+            setSearchTimeZone("");
+        }
+    }, [isTimezoneOpen])
 
     const errorData = error ? Object.values(error?.data) : {};
 
@@ -329,13 +342,6 @@ const ObservationLocation = (props) => {
                                     })}
                                 </DropdownMenu>
                             </Dropdown>
-                            {/* <Input type="select" name="timezone" className="w-100"
-                                   value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.timezone:''}
-                                   onChange={(e)=>handleImageInput(e)}>
-                                {timezone?.map((item, index) => {
-                                    return <option key={index} value={item}>{item}</option>
-                                })}
-                            </Input> */}
                             {error && errorData?.map((item, index) => {
                                 if (step?.selected_image_index === index) {
                                     return(
