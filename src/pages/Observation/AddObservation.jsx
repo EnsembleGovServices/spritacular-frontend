@@ -59,6 +59,7 @@ const AddObservation = () => {
     const [reset, setReset] = useState(false);
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
+    const [deletedImage, setDeletedImage] = useState(null);
 
     const navigate = useNavigate();
 
@@ -315,6 +316,9 @@ const AddObservation = () => {
                 map_data: newImage
             }
         });
+
+        setDeletedImage(id);
+
     }
 
     const showUploadedPreview = () => {
@@ -425,7 +429,7 @@ const AddObservation = () => {
                                             {next ?
                                                 <ObservationAfterImageUpload remove={removeItem} obvType={observationType} error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
-                                                <ObservationImages remove={removeItem} proceedNext={()=> handleContinue()}/>
+                                                <ObservationImages detectImage={deletedImage} remove={removeItem} proceedNext={()=> handleContinue()}/>
                                             }
                                         </TabPane>
                                         <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
