@@ -19,6 +19,7 @@ import ObservationDetailPage from "./ObservationDetailPage";
 const MyObservations = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
   const [observationList,setObservationList] = useState({});
+  const [currentObservationList,setCurrentObservationList] = useState({});
   const [observationCount,setObservationCount] = useState({
     verified: 0,
     unverified: 0,
@@ -31,13 +32,45 @@ const MyObservations = () => {
   const [selectedObservationId,setSelectedObservationId] = useState();
   const { auth } = useAuth();
   useEffect(() => {
+    getObservationData();
     getObservationType('verified');
   },[isLoaded]);
 
 
   const getObservationType = (type) => {
+    let unverifiedList;
     setActiveType(type);
-    axios.get(baseURL.api+'/observation/observation_collection/?observation_type='+type,{
+    if(type == 'unverified'){
+
+      unverifiedList = observationList.filter((item) => {
+        return (item.is_submit == true);
+      });
+    }
+    if(type == 'verified'){
+
+      unverifiedList = observationList.filter((item) => {
+        return (item.is_verified == true);
+      });
+    }
+    if(type == 'denied'){
+
+      unverifiedList = observationList.filter((item) => {
+        return (item.is_reject == true);
+      });
+    }
+    if(type == 'draft'){
+
+      unverifiedList = observationList.filter((item) => {
+        return (item.is_submit == false);
+      });
+    }
+    setCurrentObservationList(unverifiedList);
+  }
+  
+  const getObservationData = () => {
+    setActiveType('verified');
+    getObservationType('verified');
+    axios.get(baseURL.api+'/observation/observation_collection/',{
       headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth?.token?.access}`,
@@ -57,8 +90,8 @@ const MyObservations = () => {
   }).catch((error) => {
       console.log(error.response);
   })
-  }
-  
+}
+
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);
@@ -137,7 +170,7 @@ const MyObservations = () => {
               <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mt-2 mt-md-0">
                   <FormGroup className="form-group sort-by-select">
                     <Label className="text-uppercase" htmlFor="SortBy">Sort by</Label>
-                    <Input id="SortBy" type="select" name="timezone" defaultValue="" >
+                    <Input id="SortBy" type="select" name="observationSortBy" defaultValue="" onChange={getObservationData}>
                       <option disabled defaultValue>
                         Recent observations
                       </option>
@@ -190,7 +223,7 @@ const MyObservations = () => {
             })
             }
           </Row> */}
-          <ObservationDetailPage  observationList={observationList} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
+          <ObservationDetailPage  observationList={currentObservationList} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
         </Container> 
          {isObservationDetailModal && <ObservationDetails data={observationList[selectedObservationId]}  activeType={activeType}modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />}
          </>

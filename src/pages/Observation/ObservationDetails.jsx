@@ -7,9 +7,11 @@ import "../../assets/scss/component/observationDetails.scss";
 import ObservationMoreDetails from "../../components/Observation/ObservationDetails/ObservationMoreDetails";
 import ObservationMoreEquipementDetails from "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { getCategoryImage } from "../../helpers";
 
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose,data,activeType} = props;
+    console.log(data);
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
@@ -32,7 +34,7 @@ const ObservationDetails = (props) =>{
                     <Button className="close-icon bg-transparent rounded-0 border-0 shadow-none p-0 me-3" onClick={() => handleClose()}>
                         <img src={Images.Modalcloseicon} alt="close-icon" />
                     </Button>
-                    {data?.category_data[0]} <Badge className="text-uppercase">{activeType}</Badge>
+                    {(data?.category_data[0]) && data?.category_data[0]} <Badge className="text-uppercase">{activeType}</Badge>
                 </ModalHeader>
                 <ModalBody>
                     <Row className="h-100">
@@ -51,8 +53,9 @@ const ObservationDetails = (props) =>{
                                     </div>
                                 </Col>
                                 <Col xs={6} className="justify-content-end d-flex align-items-center">
-                                    <i className="observation_type rounded-circle bg-white"><LazyLoadImage effect="blur" src={Images.GiganticJet} alt="Sprite" className="rounded-circle" /></i>
-                                    <h6 className="ps-2 mb-0 text-truncate">{data?.category_data[0]}</h6>
+                                    <i className="observation_type rounded-circle bg-white">
+                                        <LazyLoadImage effect="blur" src={(data?.category_data[0]) ? getCategoryImage(data?.category_data[0]): ' '} className="rounded-circle" /></i>
+                                    <h6 className="ps-2 mb-0 text-truncate">{(data?.category_data[0]) ? data?.category_data[0] : null}</h6>
                                 </Col>
                             </Row>
                         </Col>

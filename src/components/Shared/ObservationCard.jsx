@@ -6,36 +6,12 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import ReactCountryFlags from "../ReactCountryFlag";
 import moment from 'moment';
+import { getCategoryImage } from "../../helpers";
 
 
 const ObservationCard = (props) => {
     const {cardItems, handleClick,userProfile,cardData,index} = props;
-    const getCategoryImage = (key) => {
-        switch (key) {
-            case 'Sprite':
-                    return Images.Sprite;
-                break;
-            case 'Bluejet':
-                return Images.Bluejet;
-            break;
-            case 'SpriteOb':
-                return Images.SpriteOb;
-            break;
-            case 'GiganticJet':
-                return Images.GiganticJet;
-            break;
-            case 'SecondaryJet':
-                return Images.SecondaryJet;
-            break;
-            case 'Jet':
-                return Images.Jet;
-            break;
-        
-            default:
-                return Images.Sprite
-                break;
-        }
-    }
+
     return(
         <>
             <Card className="observation_card overflow-hidden">
@@ -56,14 +32,14 @@ const ObservationCard = (props) => {
                         {/* <LazyLoadImage alt="Card cap" src={cardItems.image} effect="blur" className="img-fluid card-img" /> */}
                         <CardBody className="position-relative observation-card_body">
                             <i className="position-absolute observation_type rounded-circle bg-white">
-                                <img  src={(userProfile) ? getCategoryImage(cardData?.category_data[0]): Images.Sprite} alt="Sprite" className="rounded-circle" />
+                                <img src={ `/assets/images/category/${'SPrite'.toLowerCase().replaceAll(" ", "")}.png`} alt="Sprite" className="rounded-circle" />
                                 {/* <LazyLoadImage effect="blur" src={(userProfile) ? getCategoryImage(cardData?.category_data[0]): Images.Sprite} alt="Sprite" className="rounded-circle" /> */}
                             </i>
                             <Row className="card-details">
                                 <Col className="col-12 col-lg-6">
                                     <div className="card_desc">
-                                        <CardTitle className="font-bold">{(cardItems?.obs_date_time_as_per_utc) ? moment.utc(moment(cardItems?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY"): cardItems.obs_date}</CardTitle> 
-                                        <CardSubtitle>{(cardItems?.obs_date_time_as_per_utc) ? moment.utc(moment(cardItems?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): cardItems.obs_time} <Badge className="bg-black text-white p-1">{(cardItems?.obs_date_time_as_per_utc)  ? 'UTC': "UTC"}</Badge></CardSubtitle>
+                                        <CardTitle className="font-bold">{(cardItems?.obs_date_time_as_per_utc) ? moment.utc(moment(cardItems?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY") : (cardItems?.obs_date) ? cardItems?.obs_date : null }</CardTitle> 
+                                        <CardSubtitle>{(cardItems?.obs_date_time_as_per_utc) ? moment.utc(moment(cardItems?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): (cardItems?.obs_time) ? cardItems?.obs_time : null} <Badge className="bg-black text-white p-1">{(cardItems?.obs_date_time_as_per_utc)  ? 'UTC': "UTC"}</Badge></CardSubtitle>
                                     </div>
                                 </Col>
                                 <Col className="col-12 col-lg-6 justify-content-end d-flex" >
