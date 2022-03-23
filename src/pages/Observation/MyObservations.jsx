@@ -170,7 +170,7 @@ const MyObservations = () => {
         <Container>
           <div className="filtered-data_wrapper">
             <Row>
-            <Col sm={12} md={7} lg={6}>
+            <Col sm={12} md={7} lg={6} className="order-2 order-md-1">
                 <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
                   <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('verified')}}>Verified ({observationCount.verified})</span>     
                   <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('unverified')}}>Unverified ({observationCount.unverified})</span>     
@@ -178,18 +178,18 @@ const MyObservations = () => {
                   <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('draft')}}>Drafts ({observationCount.draft})</span>     
                 </div>
               </Col>
-              <Col sm={12} md={5} lg={6} className="text-end">
+              <Col sm={12} md={5} lg={6} className="text-end order-1 order-md-2">
               <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mt-2 mt-md-0">
                   <FormGroup className="form-group sort-by-select">
                     <Label className="text-uppercase" htmlFor="SortBy">Sort by</Label>
                     <Dropdown id="SortBy" className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
                         <DropdownToggle className="shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                          <span className="text-truncate">1 week ago observations</span>
+                          <span className="text-truncate">Recent observations</span>
                           <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                         </DropdownToggle>
                         <DropdownMenu onChange={(e) => {getObservationData(e)}} className="py-0 shadow">
-                            <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="search" className="px-2 " placeholder="Search Placeholder" /></DropdownItem>
-                            <DropdownItem  className="px-2 fw-normal" disabled defaultValue>Recent observations</DropdownItem>
+                            <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="search" className="px-2 " placeholder="Recent Observations" /></DropdownItem>
+                            <DropdownItem  className="px-2 fw-normal" value='recent'>Recent observations</DropdownItem>
                             <DropdownItem  className="px-2 fw-normal" value='1'>1 week ago observations</DropdownItem>
                             <DropdownItem  className="px-2 fw-normal" value='2'>2 week ago observations</DropdownItem>
                             <DropdownItem  className="px-2 fw-normal" value='3'>3 week ago observations</DropdownItem>

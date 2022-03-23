@@ -376,8 +376,7 @@ const AddObservation = () => {
                 <section className="upload-observation-form-inner">
                     <Container>
                         <Row>
-                            <Col md={3}>
-                                
+                            <Col md={3} sm={12}>
                                 <div className="observation-form-left-tab">
                                     <ObservationProgress step={observationSteps}/>
 
@@ -422,7 +421,7 @@ const AddObservation = () => {
                                 </div>
                             </Col>
 
-                            <Col md={observationImages?.data?.length > 0 && next && !(activeTab === Tabs.EquipmentDetails) ? 7 : 9}>
+                            <Col md={observationImages?.data?.length > 0 && next && !(activeTab === Tabs.EquipmentDetails) ? 7 : 9} sm={observationImages?.data?.length > 0 && next && !(activeTab === Tabs.EquipmentDetails) ? 9 : 12}>
                                 <div className="observation-form-middle-tab">
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
@@ -471,7 +470,7 @@ const AddObservation = () => {
                             </Col>
 
                             {showUploadedPreview() &&
-                                <Col md={2}>
+                                <Col md={2} sm={3}>
                                     <div className="observation-form-right-tab">
                                         <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
                                     </div>

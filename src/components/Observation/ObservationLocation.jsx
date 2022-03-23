@@ -47,10 +47,12 @@ const ObservationLocation = (props) => {
     const [angleDegree, setAngleDegree] = useState(0);
     const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
     const [searchTimeZone, setSearchTimeZone] = useState("");
+    const [checkSameLocation, setCheckSameLocation] = useState(false);
+    const [checkSameDateTime, setCheckSameDateTime] = useState(false);
 
     useEffect(()=> {
         if(observationImages?.data){
-            fref.current.handleChangeLatLng(observationImages?.data[observationImages?.selected_image_index]?.latitude,observationImages?.data[observationImages?.selected_image_index]?.longitude);
+            fref.current.handleChangeLatLng(observationImages?.data[observationImages?.selected_image_index]?.latitude , observationImages?.data[observationImages?.selected_image_index]?.longitude);
         }
     },[observationImages?.data?.[observationImages?.selected_image_index]]);
     const handleValue = (value) => {
@@ -153,8 +155,20 @@ const ObservationLocation = (props) => {
                 copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
                 copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
                 copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
+                if(k === 'obs_time' || k === 'obs_date' || k === 'timezone'){
+                    setCheckSameDateTime(true);
+                }
+                if(k === 'latitude' || k === 'longitude'){
+                    setCheckSameLocation(true);
+                }
             }else{
                 copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
+                if(k === 'obs_time' || k === 'obs_date' || k === 'timezone'){
+                    setCheckSameDateTime(false);
+                }
+                if(k === 'latitude' || k === 'longitude'){
+                    setCheckSameLocation(false);
+                }
             }
             return false;
         });
@@ -182,13 +196,128 @@ const ObservationLocation = (props) => {
                         <Col xxl={7} className="order-2 order-xxl-1">
                             <h6>Where did you make the observation? <span className="required">Required</span></h6>
                         </Col>
+                        {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && 
+                            <Col xxl={5} className="order-1 order-xxl-2 mb-2 mb-xxl-0">
+                                <FormGroup>
+                                    <Label check className="mb-0 justify-content-end">
+                                        <Input
+                                            type="checkbox"
+                                            name="Same as the first image"
+                                            onChange={(e) => handleCopyData(e,['latitude','longitude'])}
+                                            className="me-2 mt-0"
+                                        />
+                                        Same as the first image
+                                    </Label>
+                                </FormGroup>
+                            </Col>
+                        }
+                    </Row>
+                    { checkSameLocation && 
+                        <Row className="border same-data_row">
+                            <Col md={6}>
+                                <Row className="flex-nowrap">
+                                    <div className="border-end w-auto">
+                                        <FormGroup className="form-group d-flex align-items-center">
+                                            <Label className="form-label text-uppercase mb-0 me-2" htmlFor="LAT">LAT</Label>
+                                            <span className="fw-bold text-truncate data-value">12.34</span>
+                                        </FormGroup>
+                                    </div>
+                                    <div className="w-auto">
+                                        <FormGroup className="form-group d-flex align-items-center">
+                                            <Label className="form-label text-uppercase mb-0 me-2" htmlFor="LON">LON</Label>
+                                            <span className="fw-bold text-truncate data-value">15.55</span>
+                                        </FormGroup>
+                                    </div>
+                                </Row>
+                            </Col>
+                            <Col md={6}>
+                                <div className="selected-address d-flex align-items-center justify-content-start justify-content-lg-end">
+                                    {/* <ReactCountryFlags country='' /> */}
+                                    <span>India</span>
+                                </div>
+                            </Col>
+                        </Row>
+                    }
+                    { !checkSameLocation && 
+                        <MapWrapper
+                            google={props.google}
+                            center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
+                            height="400px"
+                            containerPosition={"relative"}
+                            mapRadius="10px"
+                            zoom={15}
+                            handleState={handleValue}
+                            isLoaded={isLoaded}
+                            mapContainer="map-search-container"
+                            searchInputClass="search-input-class"
+                            ref={fref}
+                        /> 
+                    }
+                </FormGroup>
+            </Col>
+            { !checkSameLocation && 
+                <Col md={12} className="mb-5">
+                    <h6>If you know the precise coordinates of your observation location, please enter below</h6>
+                    <Row>
+                        <Col md={6} lg={4}>
+                            <FormGroup className="d-flex">
+                                <Label className="form-label text-uppercase" htmlFor="LAT" sm={2} >LAT</Label>
+                                <Col sm={10}>
+                                    <Input
+                                        // value={address1?.markerPosition?.lat}
+                                        value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat}
+                                        id="LAT"
+                                        type="number"
+                                        name="latitude"
+                                        placeholder="Edmon, OK, USA"
+                                        onChange={(e)=> {handleImageInput(e); handleChangeLat(e);}}
+                                    />
+                                </Col>
+                            </FormGroup>
+                        </Col>
+                        <Col md={6} lg={4}>
+                            <FormGroup className="d-flex">
+                                <Label className="form-label text-uppercase" htmlFor="LON" sm={2} >LON</Label>
+                                <Col sm={10}>
+                                    <Input
+                                        // value={address1?.markerPosition?.lng}
+                                        value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :address1?.markerPosition?.lng}
+                                        id="LON"
+                                        type="number"
+                                        name="longitude"
+                                        placeholder="Edmon, OK, USA"
+                                        onChange={(e)=> {handleImageInput(e); handleChangeLng(e);}}
+                                    />
+                                </Col>
+                            </FormGroup>
+                        </Col>
+                        <Col md={6} lg={4}>
+                            <div className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
+                                <ReactCountryFlags country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code: null} />
+                                <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
+                            </div>
+                        </Col>
+                    </Row>
+                </Col>
+            }
+            {observationData?.image_type === 3 &&
+            <Row className="mb-4">
+                <ObservationCategory obvType={obvType} error={error} />
+            </Row>
+            }
+            
+                <Col md={12} className="mb-5">
+                    <Row>
+                        <Col xxl={7} className="order-2 order-xxl-1">
+                            <h6>Please enter date and time for your observation <span className="required">Required</span></h6>
+                        </Col>
                         {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col xxl={5} className="order-1 order-xxl-2 mb-2 mb-xxl-0">
                             <FormGroup>
                                 <Label check className="mb-0 justify-content-end">
                                     <Input
                                         type="checkbox"
                                         name="Same as the first image"
-                                        onChange={(e) => handleCopyData(e,['latitude','longitude'])}
+                                        onChange={(e) => handleCopyData(e,['obs_date','obs_time','timezone'])}
                                         className="me-2 mt-0"
                                     />
                                     Same as the first image
@@ -196,164 +325,107 @@ const ObservationLocation = (props) => {
                             </FormGroup>
                         </Col>}
                     </Row>
-                     <MapWrapper
-                        google={props.google}
-                        center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
-                        height="400px"
-                        containerPosition={"relative"}
-                        mapRadius="10px"
-                        zoom={15}
-                        handleState={handleValue}
-                        isLoaded={isLoaded}
-                        mapContainer="map-search-container"
-                        searchInputClass="search-input-class"
-                        ref={fref}
-                    /> 
-                </FormGroup>
-            </Col>
-            <Col md={12} className="mb-5">
-                <h6>If you know the precise coordinates of your observation location, please enter below</h6>
-                <Row>
-                    <Col md={6} lg={4}>
-                        <FormGroup>
-                            <Label className="form-label text-uppercase" htmlFor="LAT" sm={2} >LAT</Label>
-                            <Col sm={10}>
-                                <Input
-                                    // value={address1?.markerPosition?.lat}
-                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat}
-                                    id="LAT"
-                                    type="number"
-                                    name="latitude"
-                                    placeholder="Edmon, OK, USA"
-                                    onChange={(e)=> {handleImageInput(e); handleChangeLat(e);}}
-                                />
-                            </Col>
-                        </FormGroup>
-                    </Col>
-                    <Col md={6} lg={4}>
-                        <FormGroup>
-                            <Label className="form-label text-uppercase" htmlFor="LAT" sm={2} >LON</Label>
-                            <Col sm={10}>
-                                <Input
-                                    // value={address1?.markerPosition?.lng}
-                                    value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :address1?.markerPosition?.lng}
-                                    id="LON"
-                                    type="number"
-                                    name="longitude"
-                                    placeholder="Edmon, OK, USA"
-                                    onChange={(e)=> {handleImageInput(e); handleChangeLng(e);}}
-                                />
-                            </Col>
-                        </FormGroup>
-                    </Col>
-                    <Col md={6} lg={4}>
-                        <div className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
-                            <ReactCountryFlags country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code: null} />
-                            <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
-                        </div>
-                    </Col>
-                </Row>
-            </Col>
-
-            {observationData?.image_type === 3 &&
-            <Row className="mb-4">
-                <ObservationCategory obvType={obvType} error={error} />
-            </Row>
-            }
-
-            <Col md={12} className="mb-5">
-                <Row>
-                    <Col xxl={7} className="order-2 order-xxl-1">
-                        <h6>Please enter date and time for your observation <span className="required">Required</span></h6>
-                    </Col>
-                    {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 && <Col xxl={5} className="order-1 order-xxl-2 mb-2 mb-xxl-0">
-                        <FormGroup>
-                            <Label check className="mb-0 justify-content-end">
-                                <Input
-                                    type="checkbox"
-                                    name="Same as the first image"
-                                    onChange={(e) => handleCopyData(e,['obs_date','obs_time','timezone'])}
-                                    className="me-2 mt-0"
-                                />
-                                Same as the first image
-                            </Label>
-                        </FormGroup>
-                    </Col>}
-                </Row>
-                <Row>
-                    <Col md={6} lg={4}>
-                        <FormGroup>
-                            <Label className="text-uppercase" htmlFor="Date">Date</Label>
-                            <Input
-                                id="Date"
-                                type="date"
-                                name="obs_date"
-                                value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
-                                className="w-100"
-                                placeholder="12/20/2021"
-                                onChange={(e)=>handleImageInput(e)}
-                            />
-                            {error && errorData?.map((item, index) => {
-                                if (step?.selected_image_index === index) {
-                                    return(
-                                        <span key={index} className="text-danger small">{item?.obs_date}</span>
-                                    )
-                                }
-                                return true;
-                            })}
-                        </FormGroup>
-                    </Col>
-                    <Col md={6} lg={4}>
-                        <FormGroup>
-                            <Label className="text-uppercase" htmlFor="Time">Time</Label>
-                            <Input
-                                id="Time"
-                                type="time"
-                                name="obs_time"
-                                value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
-                                className="w-100"
-                                placeholder="10:21:00 am"
-                                onChange={(e)=>handleImageInput(e)}
-                            />
-                            {error && errorData?.map((item, index) => {
-                                if (step?.selected_image_index === index) {
-                                    return(
-                                        <span key={index} className="text-danger small">{item?.obs_time}</span>
-                                    )
-                                }
-                                return true;
-                            })}
-                        </FormGroup>
-                    </Col>
-                    <Col md={6} lg={4}>
-                        <FormGroup>
-                            <Label className="text-uppercase" htmlFor="TIME ZONE">TIME ZONE</Label>
-                            <Dropdown className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
-                                <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                    <span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>
-                                    <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
-                                </DropdownToggle>
-                                <DropdownMenu className="py-0 shadow">
-                                    <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" className="p-2" onChange={(e)=> findTimeZone(e)} placeholder="Search Timezone" /></DropdownItem>
-                                    {timezone?.filter(item => {
-                                        return item.toLowerCase().indexOf(searchTimeZone.toLowerCase()) !== -1;
-                                    }).map((item, index) => {
-                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e)=>handleImageInput(e)}>{item}</DropdownItem>
+                    { !checkSameDateTime && 
+                        <Row>
+                            <Col md={6} lg={4}>
+                                <FormGroup>
+                                    <Label className="text-uppercase" htmlFor="Date">Date</Label>
+                                    <Input
+                                        id="Date"
+                                        type="date"
+                                        name="obs_date"
+                                        value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
+                                        className="w-100"
+                                        placeholder="12/20/2021"
+                                        onChange={(e)=>handleImageInput(e)}
+                                    />
+                                    {error && errorData?.map((item, index) => {
+                                        if (step?.selected_image_index === index) {
+                                            return(
+                                                <span key={index} className="text-danger small">{item?.obs_date}</span>
+                                            )
+                                        }
+                                        return true;
                                     })}
-                                </DropdownMenu>
-                            </Dropdown>
-                            {error && errorData?.map((item, index) => {
-                                if (step?.selected_image_index === index) {
-                                    return(
-                                        <span key={index} className="text-danger small">{item?.timezone}</span>
-                                    )
-                                }
-                                return true;
-                            })}
-                        </FormGroup>
-                    </Col>
-                </Row>
-            </Col>
+                                </FormGroup>
+                            </Col>
+                            <Col md={6} lg={4}>
+                                <FormGroup>
+                                    <Label className="text-uppercase" htmlFor="Time">Time</Label>
+                                    <Input
+                                        id="Time"
+                                        type="time"
+                                        name="obs_time"
+                                        value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
+                                        className="w-100"
+                                        placeholder="10:21:00 am"
+                                        onChange={(e)=>handleImageInput(e)}
+                                    />
+                                    {error && errorData?.map((item, index) => {
+                                        if (step?.selected_image_index === index) {
+                                            return(
+                                                <span key={index} className="text-danger small">{item?.obs_time}</span>
+                                            )
+                                        }
+                                        return true;
+                                    })}
+                                </FormGroup>
+                            </Col>
+                            <Col md={6} lg={4}>
+                                <FormGroup>
+                                    <Label className="text-uppercase" htmlFor="TIME ZONE">TIME ZONE</Label>
+                                    <Dropdown className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
+                                        <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
+                                            <span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>
+                                            <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
+                                        </DropdownToggle>
+                                        <DropdownMenu className="py-0 shadow">
+                                            <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" className="p-2" onChange={(e)=> findTimeZone(e)} placeholder="Search Timezone" /></DropdownItem>
+                                            {timezone?.filter(item => {
+                                                return item.toLowerCase().indexOf(searchTimeZone.toLowerCase()) !== -1;
+                                            }).map((item, index) => {
+                                                return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e)=>handleImageInput(e)}>{item}</DropdownItem>
+                                            })}
+                                        </DropdownMenu>
+                                    </Dropdown>
+                                    {error && errorData?.map((item, index) => {
+                                        if (step?.selected_image_index === index) {
+                                            return(
+                                                <span key={index} className="text-danger small">{item?.timezone}</span>
+                                            )
+                                        }
+                                        return true;
+                                    })}
+                                </FormGroup>
+                            </Col>
+                        </Row>
+                    }
+                    {checkSameDateTime && 
+                        <Row className="border same-data_row">
+                            <Col md={6}>
+                                <Row className="flex-nowrap">
+                                    <div className="border-end w-auto">
+                                        <FormGroup className="form-group d-flex align-items-center">
+                                            <Label className="form-label text-uppercase mb-0 me-2" htmlFor="Date">Date</Label>
+                                            <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}</span>
+                                        </FormGroup>
+                                    </div>
+                                    <div className="w-auto">
+                                        <FormGroup className="form-group d-flex align-items-center">
+                                            <Label className="form-label text-uppercase mb-0 me-2" htmlFor="Time">Time</Label>
+                                            <span className="fw-bold text-truncate data-value">{observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}</span>
+                                        </FormGroup>
+                                    </div>
+                                </Row>
+                            </Col>
+                            <Col md={6}>
+                                <div className="selected-address d-flex align-items-center justify-content-start justify-content-lg-end">
+                                    <span className="opacity-75">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>
+                                </div>
+                            </Col>
+                        </Row>
+                    }
+                </Col>
             <Col md={12} className="mb-5">
                 <h6>How accurate is your timing?</h6>
                 <FormGroup>

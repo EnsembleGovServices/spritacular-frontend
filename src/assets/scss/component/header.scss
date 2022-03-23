@@ -350,7 +350,7 @@
   }
   &.bg-color-menu, &.bg-not-home {
     background-color: $white;
-    // @include box-shadow($box-shadow);
+    box-shadow: 0px 2px 4px #ccc;
     .on-scroll-logo {
       display: inline-block;
     }

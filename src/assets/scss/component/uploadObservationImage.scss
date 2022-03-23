@@ -13,8 +13,14 @@
     left: 0;
     right: 0;
     top: 140px;
+    @include media-breakpoint-down(md){
+      max-width: 100%;
+    }
     .nav-tabs {
       border-bottom: none;
+      @include media-breakpoint-down(md){
+        flex-direction: row !important;
+      }
       .nav-item {
         .nav-link {
           border-radius: $border-radius;
@@ -152,7 +158,7 @@
   position: sticky;
   z-index: 9;
   margin-bottom: 60px;
-  @include media-breakpoint-down(sm)  {
+  @include media-breakpoint-down(md)  {
     top: 64px;
     margin-bottom: 30px;
   }

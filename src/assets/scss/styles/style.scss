@@ -73,7 +73,7 @@ body.modal-open {
 }
 .main-content {
   margin-top: 70px;
-  @include media-breakpoint-down(sm)  {
+  @include media-breakpoint-down(md)  {
     margin-top: 64px;
   }
 }

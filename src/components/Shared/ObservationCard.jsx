@@ -14,7 +14,7 @@ const ObservationCard = (props) => {
     return(
         <>
             <Card className="observation_card overflow-hidden">
-                <Button className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start" onClick={(e) => {userProfile &&  handleClick(index)}} >
+                <div className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start" onClick={(e) => {userProfile &&  handleClick(index)}} >
                     { !userProfile && <div className="observation_country">
                         <Badge className="bg-black text-white">
                             {/* <img src={cardData.userCountryIcon} alt="Flag" className="me-1" />  */}
@@ -68,7 +68,7 @@ const ObservationCard = (props) => {
                             </Col>
                         </Row>
                     </CardFooter>}
-                </Button>
+                </div>
             </Card>
         </>
     )
