@@ -137,7 +137,6 @@ const AddObservation = () => {
                 value = e.target.value;
             // console.log(e.target.checked,name);
 
-
             if(name === 'is_other'){
                 observationArray.data[observationImages?.selected_image_index].category_map[name] = e.target.checked;
                 if(observationData?.image_type === 3){
@@ -148,7 +147,8 @@ const AddObservation = () => {
                         observationArray.data[2].category_map[name] = e.target.checked;
                     }
                 }
-            }else{
+            }
+            else{
                 if(name === 'is_precise_azimuth'){
                     observationArray.data[observationImages?.selected_image_index][name] = (e.target.checked === true) ? 1: 0;
                     if(observationData?.image_type === 3){
