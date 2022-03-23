@@ -31,7 +31,7 @@ const ObservationLocation = (props) => {
         area: '',
         state: '',
         country: 'IN',
-        short_address: 'Maharashtra, India',
+        short_address: 'Pune,Maharashtra,India',
         mapPosition: {
             lat: 18.5204,
             lng: 73.8567
@@ -47,12 +47,18 @@ const ObservationLocation = (props) => {
     const [angleDegree, setAngleDegree] = useState(0);
     const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
     const [searchTimeZone, setSearchTimeZone] = useState("");
+    const [sameAsMap, setSameAsMap] = useState(false);
 
     useEffect(()=> {
         if(observationImages?.data){
             fref.current.handleChangeLatLng(observationImages?.data[observationImages?.selected_image_index]?.latitude,observationImages?.data[observationImages?.selected_image_index]?.longitude);
         }
-    },[observationImages?.data?.[observationImages?.selected_image_index]]);
+      
+    },[observationImages?.data?.[observationImages?.selected_image_index],observationImages?.selected_image_index]);
+
+    useEffect(()=> {
+        setSameAsMap(false);
+    },[observationImages?.selected_image_index]);
     const handleValue = (value) => {
         setAddress(value);
         if(observationImages?.data){
@@ -146,7 +152,9 @@ const ObservationLocation = (props) => {
         }
     }
     const handleCopyData = (e,keys) => {
-        // console.log(keys);
+        if(keys.includes('location','latitude','longitude')){
+            setSameAsMap(e.target.checked);
+        }
         let copyImages = {...observationImages};
         keys.map((k) => {
             if(e.target.checked){
@@ -155,6 +163,10 @@ const ObservationLocation = (props) => {
                 copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
             }else{
                 copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
+                copyImages.data[copyImages?.selected_image_index]['latitude'] = 18.5204;
+                copyImages.data[copyImages?.selected_image_index]['longitude'] = 73.8567;
+                copyImages.data[copyImages?.selected_image_index]['location'] = 'Pune,Maharashtra,India';
+                copyImages.data[copyImages?.selected_image_index]['country_code'] = 'IN';
             }
             return false;
         });
@@ -188,7 +200,7 @@ const ObservationLocation = (props) => {
                                     <Input
                                         type="checkbox"
                                         name="Same as the first image"
-                                        onChange={(e) => handleCopyData(e,['latitude','longitude'])}
+                                        onChange={(e) => handleCopyData(e,['latitude','longitude','location','country_code'])}
                                         className="me-2 mt-0"
                                     />
                                     Same as the first image
@@ -196,7 +208,7 @@ const ObservationLocation = (props) => {
                             </FormGroup>
                         </Col>}
                     </Row>
-                     <MapWrapper
+                     {(sameAsMap === false  || observationImages?.selected_image_index == 0) && <MapWrapper
                         google={props.google}
                         center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
                         height="400px"
@@ -208,7 +220,7 @@ const ObservationLocation = (props) => {
                         mapContainer="map-search-container"
                         searchInputClass="search-input-class"
                         ref={fref}
-                    /> 
+                    /> }
                 </FormGroup>
             </Col>
             <Col md={12} className="mb-5">

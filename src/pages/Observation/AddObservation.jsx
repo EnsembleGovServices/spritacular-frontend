@@ -91,6 +91,14 @@ const AddObservation = () => {
         if (activeTab !== tab) {
             setActiveTab(tab);
         }
+        // setObservationImages(prev => {
+        //     return {
+        //         ...prev,
+        //         selected_image_id:tab,
+        //         selected_image_index:0
+        //     }
+        // });
+        // console.log("hello");
         window.scrollTo(0, 0);
     };
 

@@ -36,7 +36,7 @@ const ObservationUploadImg = (props) =>{
                             'item': item,
                             'latitude': 18.5204,
                             'longitude': 73.8567,
-                            'location': 'Maharashtra, India',
+                            'location': 'Pune,Maharashtra,India',
                             'country_code': 'IN',
                             'obs_date': null,
                             'obs_time': null,
