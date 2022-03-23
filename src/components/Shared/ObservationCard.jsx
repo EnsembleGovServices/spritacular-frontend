@@ -27,6 +27,9 @@ const ObservationCard = (props) => {
                         <Icon icon="fluent:square-multiple-20-regular" color="black" />
                         {/* <Icon icon="ep:copy-document" color="black" /> */}
                     </div> }
+                    { userProfile && <Button className="multiple-image_icon border-0 edit-icon">
+                        <Icon icon="eva:edit-2-outline" />
+                    </Button> }
                     {cardData?.is_verified && <div className="verify-card"><Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" /></div>}
                         <img alt="Card cap" src={cardItems.image} className="img-fluid card-img" />
                         {/* <LazyLoadImage alt="Card cap" src={cardItems.image} effect="blur" className="img-fluid card-img" /> */}

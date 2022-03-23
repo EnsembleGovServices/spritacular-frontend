@@ -38,7 +38,7 @@
         right: 0;
         top: 0;
         z-index: 1;
-        background: #FFFFFF;
+        background: $white;
         opacity: 0.64;
         border-radius: 0px 8px 0px 8px;
         width: 24px;
@@ -48,8 +48,17 @@
         justify-content: center;
         padding: 4px;
         svg{
-            transform: rotate(180deg);
+            color: $black;
         }
+        &:hover{
+            background: $black;
+            svg{
+                color: $white;
+            }
+        }
+    }
+    .edit-icon{
+        opacity: 0;
     }
     .lazy-load-image-background {
         background-color: $gray2;
@@ -60,6 +69,9 @@
     }
     .card-link{
         &:hover .observation_country{
+            opacity: 1;
+        }
+        &:hover .edit-icon{
             opacity: 1;
         }
     }
