@@ -59,3 +59,39 @@ export const directionValue = [
     {name: 'W', angle: 270, default : false},
     {name: 'NW', angle: 315, default : false},
 ]
+
+export const getdirectionDegree = (key) => {
+    
+    let degree;
+    switch (key) {
+        case 'N':
+            degree = 360;
+            break;
+        case 'NE':
+            degree = 45;
+            break;
+        case 'E':
+            degree = 90;
+            break;
+        case 'SE':
+            degree = 135;
+            break;
+        case 'S':
+            degree = 180;
+            break;
+        case 'SW':
+            degree = 235;
+            break;
+        case 'W':
+            degree = 270;
+            break;
+        case 'NW':
+            degree = 315;
+            break;
+    
+        default:
+            degree = key;
+            break;
+    }
+    return degree
+}
