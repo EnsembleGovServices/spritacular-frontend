@@ -17,14 +17,12 @@ const ObservationCard = (props) => {
                 <div className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start" onClick={(e) => {userProfile &&  handleClick(index)}} >
                     { !userProfile && <div className="observation_country">
                         <Badge className="bg-black text-white">
-                            {/* <img src={cardData.userCountryIcon} alt="Flag" className="me-1" />  */}
                             <ReactCountryFlags country={cardData?.country_code} />
                             {cardData?.location}
                         </Badge>
                     </div> }
                     { userProfile && cardItems?.image_type === 3 && <div className="multiple-image_icon">
-                        <Icon icon="fluent:square-multiple-20-regular" color="black" />
-                        {/* <Icon icon="ep:copy-document" color="black" /> */}
+                        <Icon icon="codicon:list-filter" color="black" />
                     </div> }
                     { userProfile && <Button className="multiple-image_icon border-0 edit-icon">
                         <Icon icon="eva:edit-2-outline" />
@@ -63,7 +61,9 @@ const ObservationCard = (props) => {
                             <Col sm={6}>
                                 <div className="card-user_location" style={{"--card-location-angle": `${getdirectionDegree(cardData.azimuth)}deg` }}>
                                     <h6 className="me-1 mb-0">{cardData.azimuth}°</h6>
-                                    <span className="card-direction rounded-circle position-relative d-inline-block"></span>
+                                    <span className="card-direction rounded-circle position-relative d-flex justify-content-center align-items-start">
+                                        <span className="direction-dot"></span>
+                                    </span>
                                 </div>
                             </Col>
                         </Row>
