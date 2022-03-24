@@ -37,11 +37,13 @@ const ObservationDetails = (props) =>{
                         </Button>
                         {(data?.category_data[0]) ? data?.category_data[0] : null} <Badge className="text-uppercase">{activeType}</Badge>
                     </div>
-                    <div>
-                        <Button variant="primary" onClick={() => handleContinueEdit({id: data?.id, type: activeType})}>
-                            Continue Editing
-                        </Button>
-                    </div>
+                    {activeType === "draft" &&
+                        <div>
+                            <Button variant="primary" onClick={() => handleContinueEdit({id: data?.id, type: activeType})}>
+                                Continue Editing
+                            </Button>
+                        </div>
+                    }
                 </ModalHeader>
                 <ModalBody>
                     <Row className="h-100">
