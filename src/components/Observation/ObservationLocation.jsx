@@ -51,7 +51,8 @@ const ObservationLocation = (props) => {
     const [sameAsDateTime, setSameAsDateTime] = useState(false);
 
     useEffect(()=> {
-        if(observationImages?.data){
+        
+        if(observationImages?.data && sameAsMap === false){
             fref.current.handleChangeLatLng(observationImages?.data[observationImages?.selected_image_index]?.latitude , observationImages?.data[observationImages?.selected_image_index]?.longitude);
         }
       
@@ -59,6 +60,7 @@ const ObservationLocation = (props) => {
 
     useEffect(()=> {
         setSameAsMap(false);
+        setSameAsDateTime(false);
     },[observationImages?.selected_image_index]);
     const handleValue = (value) => {
         setAddress(value);
@@ -163,14 +165,16 @@ const ObservationLocation = (props) => {
         keys.map((k) => {
             if(e.target.checked){
                 copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
-                copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
-                copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
+                // copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
+                // copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
             }else{
                 copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
-                copyImages.data[copyImages?.selected_image_index]['latitude'] = 18.5204;
-                copyImages.data[copyImages?.selected_image_index]['longitude'] = 73.8567;
-                copyImages.data[copyImages?.selected_image_index]['location'] = 'Pune,Maharashtra,India';
-                copyImages.data[copyImages?.selected_image_index]['country_code'] = 'IN';
+                if(keys.includes('location','latitude','longitude')){
+                    copyImages.data[copyImages?.selected_image_index]['latitude'] = 18.5204;
+                    copyImages.data[copyImages?.selected_image_index]['longitude'] = 73.8567;
+                    copyImages.data[copyImages?.selected_image_index]['location'] = 'Pune,Maharashtra,India';
+                    copyImages.data[copyImages?.selected_image_index]['country_code'] = 'IN';
+                }
             }
             return false;
         });
@@ -189,7 +193,7 @@ const ObservationLocation = (props) => {
     }, [isTimezoneOpen])
 
     const errorData = error ? Object.values(error?.data) : {};
-
+    console.log(sameAsDateTime,'hi');
     return (
         <>
             <Col md="12">
@@ -205,6 +209,7 @@ const ObservationLocation = (props) => {
                                         <Input
                                             type="checkbox"
                                             name="Same as the first image"
+                                            checked={sameAsMap}
                                             onChange={(e) => handleCopyData(e,['latitude','longitude','location','country_code'])}
                                             className="me-2 mt-0"
                                         />
@@ -214,14 +219,61 @@ const ObservationLocation = (props) => {
                             </Col>
                         }
                     </Row>
-                    {(sameAsMap !== false && !(observationImages?.selected_image_index === 0)) &&
+                    {
+                    // (sameAsMap !== false && !(observationImages?.selected_image_index === 0)) &&
+                    //     <Row className="border same-data_row">
+                    //         <Col md={6}>
+                    //             <Row className="flex-nowrap">
+                    //                 <div className="border-end w-auto">
+                    //                     <FormGroup className="form-group d-flex align-items-center">
+                    //                         <Label className="form-label text-uppercase mb-0 me-2" htmlFor="LAT">LAT</Label>
+                    //                         <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat}</span>
+                    //                     </FormGroup>
+                    //                 </div>
+                    //                 <div className="w-auto">
+                    //                     <FormGroup className="form-group d-flex align-items-center">
+                    //                         <Label className="form-label text-uppercase mb-0 me-2" htmlFor="LON">LON</Label>
+                    //                         <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :address1?.markerPosition?.lng}</span>
+                    //                     </FormGroup>
+                    //                 </div>
+                    //             </Row>
+                    //         </Col>
+                    //         <Col md={6}>
+                    //             <div className="selected-address d-flex align-items-center justify-content-start justify-content-lg-end">
+                    //                 <ReactCountryFlags country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code: null} />
+                    //                 <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
+                    //             </div>
+                    //         </Col>
+                    //     </Row>
+                    //     : 
+                    //     <></>
+                    }
+                    {console.log(sameAsMap)}
+                    {
+                    (sameAsMap == false  || observationImages?.selected_image_index == 0 ) ?
+                        <MapWrapper
+                            google={props.google}
+                            center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
+                            height="400px"
+                            containerPosition={"relative"}
+                            mapRadius="10px"
+                            zoom={15}
+                            handleState={handleValue}
+                            isLoaded={isLoaded}
+                            mapContainer="map-search-container"
+                            searchInputClass="search-input-class"
+                            ref={fref}
+                        /> 
+                        :
                         <Row className="border same-data_row">
+                        {console.log('hihihih')}
                             <Col md={6}>
                                 <Row className="flex-nowrap">
                                     <div className="border-end w-auto">
                                         <FormGroup className="form-group d-flex align-items-center">
                                             <Label className="form-label text-uppercase mb-0 me-2" htmlFor="LAT">LAT</Label>
-                                            <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat}</span>
+                                            <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat
+                                            }</span>
                                         </FormGroup>
                                     </div>
                                     <div className="w-auto">
@@ -239,23 +291,7 @@ const ObservationLocation = (props) => {
                                 </div>
                             </Col>
                         </Row>
-                    }
-                    {(sameAsMap === false  || observationImages?.selected_image_index === 0) &&
-                        <MapWrapper
-                            google={props.google}
-                            center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
-                            height="400px"
-                            containerPosition={"relative"}
-                            mapRadius="10px"
-                            zoom={15}
-                            handleState={handleValue}
-                            isLoaded={isLoaded}
-                            mapContainer="map-search-container"
-                            searchInputClass="search-input-class"
-                            ref={fref}
-                        /> 
-                    }
-
+                        }
                 </FormGroup>
             </Col>
             {(sameAsMap === false  || observationImages?.selected_image_index === 0) &&
@@ -320,6 +356,7 @@ const ObservationLocation = (props) => {
                                 <Input
                                     type="checkbox"
                                     name="Same as the first image"
+                                    checked={sameAsDateTime}
                                     onChange={(e) => handleCopyData(e,['obs_date','obs_time','timezone'])}
                                     className="me-2 mt-0"
                                 />
@@ -328,7 +365,8 @@ const ObservationLocation = (props) => {
                         </FormGroup>
                     </Col>}
                 </Row>
-                { !sameAsDateTime ? 
+                {
+                (sameAsDateTime === false  || observationImages?.selected_image_index === 0)  ?
                     <Row>
                         <Col md={6} lg={4}>
                             <FormGroup>
