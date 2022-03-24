@@ -2,6 +2,8 @@ import { Badge, Button, Col, Row } from "reactstrap";
 import { Icon } from '@iconify/react';
 import ReactCountryFlags from "../../../components/ReactCountryFlag";
 import moment from 'moment';
+import {getdirectionDegree} from "../../../helpers/observation";
+
 
 const ObservationMoreDetails = (props) => {
     const {data} = props;
@@ -16,7 +18,7 @@ const ObservationMoreDetails = (props) => {
                         <Col md={9} className="text-end">
                             <p className="selected_direction rounded-circle mb-0 d-inline-flex align-items-center justify-content-center fw-bold">
                                 <span>{data?.images[0]?.azimuth}</span>
-                                <i style={{'--selected-angle': '180deg'}} className="direction_arrow d-flex align-items-center justify-content-center position-absolute left-0 right-0 top-0 bottom-0"></i>
+                                <i style={{'--selected-angle': `${getdirectionDegree(data?.images[0]?.azimuth)}deg` }} className="direction_arrow d-flex align-items-center justify-content-center position-absolute left-0 right-0 top-0 bottom-0"></i>
                             </p>
                         </Col>
                     </Row>
