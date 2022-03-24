@@ -30,6 +30,8 @@ const ObservationUploadImg = (props) =>{
                     setImages(prevState => [
                         ...prevState, {
                             'id' : random,
+                            'sameAsFirstMap': false,
+                            'sameAsFirstDate': false,
                             'image' : baseImage,
                             'lastModified': item?.lastModified,
                             'name': item?.name,

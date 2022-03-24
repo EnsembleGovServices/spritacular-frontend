@@ -52,15 +52,19 @@ const ObservationLocation = (props) => {
 
     useEffect(()=> {
         
-        if(observationImages?.data && sameAsMap === false){
+        if(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap == false){
             fref.current.handleChangeLatLng(observationImages?.data[observationImages?.selected_image_index]?.latitude , observationImages?.data[observationImages?.selected_image_index]?.longitude);
         }
       
     },[observationImages?.data?.[observationImages?.selected_image_index],observationImages?.selected_image_index]);
 
     useEffect(()=> {
-        setSameAsMap(false);
-        setSameAsDateTime(false);
+        // setSameAsMap(false);
+        // setSameAsDateTime(false);
+        if(observationImages?.data && observationImages?.selected_image_index !== 0){
+            handleCopyData(observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap,['latitude','longitude','location','country_code']);
+            handleCopyData(observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate,['obs_date','obs_time','timezone']);
+        }
     },[observationImages?.selected_image_index]);
     const handleValue = (value) => {
         setAddress(value);
@@ -155,30 +159,38 @@ const ObservationLocation = (props) => {
         }
     }
     const handleCopyData = (e,keys) => {
-        if(keys.includes('location','latitude','longitude')){
-            setSameAsMap(e.target.checked);
-        }
-        if(keys.includes('obs_time','obs_date','timezone')){
-            setSameAsDateTime(e.target.checked);
-        }
-        let copyImages = {...observationImages};
-        keys.map((k) => {
-            if(e.target.checked){
-                copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
-                // copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
-                // copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
-            }else{
-                copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
-                if(keys.includes('location','latitude','longitude')){
-                    copyImages.data[copyImages?.selected_image_index]['latitude'] = 18.5204;
-                    copyImages.data[copyImages?.selected_image_index]['longitude'] = 73.8567;
-                    copyImages.data[copyImages?.selected_image_index]['location'] = 'Pune,Maharashtra,India';
-                    copyImages.data[copyImages?.selected_image_index]['country_code'] = 'IN';
-                }
+        console.log("ihi");
+        if(observationImages){
+
+            let observationMap = {...observationImages};
+            if(keys.includes('location','latitude','longitude','country_code')){
+                setSameAsMap(e);
+                observationMap.data[observationImages?.selected_image_index].sameAsFirstMap = e;
             }
-            return false;
-        });
-        setObservationImages(copyImages);
+            if(keys.includes('obs_time','obs_date','timezone')){
+                setSameAsDateTime(e);
+                observationMap.data[observationImages?.selected_image_index].sameAsFirstDate = e;
+            }
+            setObservationImages(observationMap);
+            let copyImages = {...observationImages};
+            keys.map((k) => {
+                if(e){
+                    copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
+                    // copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
+                    // copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
+                }else{
+                    copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
+                    if(keys.includes('location','latitude','longitude')){
+                        copyImages.data[copyImages?.selected_image_index]['latitude'] = 18.5204;
+                        copyImages.data[copyImages?.selected_image_index]['longitude'] = 73.8567;
+                        copyImages.data[copyImages?.selected_image_index]['location'] = 'Pune,Maharashtra,India';
+                        copyImages.data[copyImages?.selected_image_index]['country_code'] = 'IN';
+                    }
+                }
+                return false;
+            });
+            setObservationImages(copyImages);
+        }
     }
 
     const findTimeZone = (e) => {
@@ -193,7 +205,6 @@ const ObservationLocation = (props) => {
     }, [isTimezoneOpen])
 
     const errorData = error ? Object.values(error?.data) : {};
-    console.log(sameAsDateTime,'hi');
     return (
         <>
             <Col md="12">
@@ -209,8 +220,8 @@ const ObservationLocation = (props) => {
                                         <Input
                                             type="checkbox"
                                             name="Same as the first image"
-                                            checked={sameAsMap}
-                                            onChange={(e) => handleCopyData(e,['latitude','longitude','location','country_code'])}
+                                            checked={observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap}
+                                            onChange={(e) => handleCopyData(e.target.checked,['latitude','longitude','location','country_code'])}
                                             className="me-2 mt-0"
                                         />
                                         Same as the first image
@@ -220,37 +231,10 @@ const ObservationLocation = (props) => {
                         }
                     </Row>
                     {
-                    // (sameAsMap !== false && !(observationImages?.selected_image_index === 0)) &&
-                    //     <Row className="border same-data_row">
-                    //         <Col md={6}>
-                    //             <Row className="flex-nowrap">
-                    //                 <div className="border-end w-auto">
-                    //                     <FormGroup className="form-group d-flex align-items-center">
-                    //                         <Label className="form-label text-uppercase mb-0 me-2" htmlFor="LAT">LAT</Label>
-                    //                         <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat}</span>
-                    //                     </FormGroup>
-                    //                 </div>
-                    //                 <div className="w-auto">
-                    //                     <FormGroup className="form-group d-flex align-items-center">
-                    //                         <Label className="form-label text-uppercase mb-0 me-2" htmlFor="LON">LON</Label>
-                    //                         <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :address1?.markerPosition?.lng}</span>
-                    //                     </FormGroup>
-                    //                 </div>
-                    //             </Row>
-                    //         </Col>
-                    //         <Col md={6}>
-                    //             <div className="selected-address d-flex align-items-center justify-content-start justify-content-lg-end">
-                    //                 <ReactCountryFlags country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code: null} />
-                    //                 <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
-                    //             </div>
-                    //         </Col>
-                    //     </Row>
-                    //     : 
-                    //     <></>
-                    }
-                    {console.log(sameAsMap)}
-                    {
-                    (sameAsMap == false  || observationImages?.selected_image_index == 0 ) ?
+                    (
+                        // sameAsMap == false
+                        (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap == false ) 
+                        || observationImages?.selected_image_index == 0 ) ?
                         <MapWrapper
                             google={props.google}
                             center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
@@ -266,7 +250,6 @@ const ObservationLocation = (props) => {
                         /> 
                         :
                         <Row className="border same-data_row">
-                        {console.log('hihihih')}
                             <Col md={6}>
                                 <Row className="flex-nowrap">
                                     <div className="border-end w-auto">
@@ -294,7 +277,11 @@ const ObservationLocation = (props) => {
                         }
                 </FormGroup>
             </Col>
-            {(sameAsMap === false  || observationImages?.selected_image_index === 0) &&
+            {
+            (
+                // sameAsMap == false
+                ( observationImages?.data &&  observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap == false)
+              || observationImages?.selected_image_index === 0) &&
                 <Col md={12} className="mb-5">
                     <h6>If you know the precise coordinates of your observation location, please enter below</h6>
                     <Row>
@@ -357,7 +344,7 @@ const ObservationLocation = (props) => {
                                     type="checkbox"
                                     name="Same as the first image"
                                     checked={sameAsDateTime}
-                                    onChange={(e) => handleCopyData(e,['obs_date','obs_time','timezone'])}
+                                    onChange={(e) => handleCopyData(e.target.checked,['obs_date','obs_time','timezone'])}
                                     className="me-2 mt-0"
                                 />
                                 Same as the first image
@@ -366,7 +353,9 @@ const ObservationLocation = (props) => {
                     </Col>}
                 </Row>
                 {
-                (sameAsDateTime === false  || observationImages?.selected_image_index === 0)  ?
+                // (sameAsDateTime == false
+                    (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate == false  
+                    || observationImages?.selected_image_index === 0)  ?
                     <Row>
                         <Col md={6} lg={4}>
                             <FormGroup>
