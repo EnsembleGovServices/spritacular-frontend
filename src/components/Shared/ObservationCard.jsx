@@ -6,6 +6,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import ReactCountryFlags from "../ReactCountryFlag";
 import moment from 'moment';
+import {getdirectionDegree} from "../../helpers/observation";
 
 
 const ObservationCard = (props) => {
@@ -60,8 +61,8 @@ const ObservationCard = (props) => {
                                 <h6 className="mb-0">{cardData.location}</h6>
                             </Col>
                             <Col sm={6}>
-                                <div className="card-user_location" style={{"--card-location-angle": '0deg'}}>
-                                    <h6 className="me-1 mb-0">{cardData.azimuth}</h6>
+                                <div className="card-user_location" style={{"--card-location-angle": `${getdirectionDegree(cardData.azimuth)}deg` }}>
+                                    <h6 className="me-1 mb-0">{cardData.azimuth}°</h6>
                                     <span className="card-direction rounded-circle position-relative d-inline-block"></span>
                                 </div>
                             </Col>

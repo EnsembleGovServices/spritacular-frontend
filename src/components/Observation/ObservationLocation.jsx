@@ -537,10 +537,12 @@ const ObservationLocation = (props) => {
                     </FormGroup>
                 :
                     <FormGroup>
-                        <Label htmlFor="Date">Azimuth Angle</Label>
+                        <Label htmlFor="Azimuth">Azimuth Angle</Label>
                         <Input
-                            id="Date"
-                            type="text"
+                            id="Azimuth"
+                            type="number"
+                            min={0}
+                            max={360}
                             name="azimuth"
                             value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.azimuth:''}
                             placeholder="120°"
