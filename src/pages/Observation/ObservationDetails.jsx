@@ -10,7 +10,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { getCategoryImage } from "../../helpers";
 
 const ObservationDetails = (props) =>{
-    const {modalClass, open, handleClose,data,activeType} = props;
+    const {modalClass, open, handleClose,data,activeType, handleContinueEdit} = props;
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
@@ -18,6 +18,7 @@ const ObservationDetails = (props) =>{
             setActiveImageTab(tab);
         }
     };
+
     return (
         <>
             <Modal 
@@ -29,11 +30,18 @@ const ObservationDetails = (props) =>{
                 size="xl"
                 toggle={handleClose}
             >
-                <ModalHeader>
-                    <Button className="close-icon bg-transparent rounded-0 border-0 shadow-none p-0 me-3" onClick={() => handleClose()}>
-                        <img src={Images.Modalcloseicon} alt="close-icon" />
-                    </Button>
-                    {(data?.category_data[0]) ? data?.category_data[0] : null} <Badge className="text-uppercase">{activeType}</Badge>
+                <ModalHeader className="d-flex justify-content-between align-items-center w-100">
+                    <div>
+                        <Button className="close-icon bg-transparent rounded-0 border-0 shadow-none p-0 me-3" onClick={() => handleClose()}>
+                            <img src={Images.Modalcloseicon} alt="close-icon" />
+                        </Button>
+                        {(data?.category_data[0]) ? data?.category_data[0] : null} <Badge className="text-uppercase">{activeType}</Badge>
+                    </div>
+                    <div>
+                        <Button variant="primary" onClick={() => handleContinueEdit({id: data?.id, type: activeType})}>
+                            Continue Editing
+                        </Button>
+                    </div>
                 </ModalHeader>
                 <ModalBody>
                     <Row className="h-100">

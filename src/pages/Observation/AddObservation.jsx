@@ -14,11 +14,11 @@ import {
 } from "reactstrap";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
-import {baseURL, cameraSettingFields} from "../../helpers/url";
+import {baseURL, cameraSettingFields, routeUrls} from "../../helpers/url";
 import {Tabs} from "../../helpers/observation";
 
 import ObservationLocation from "../../components/Observation/ObservationLocation";
@@ -51,17 +51,19 @@ const AddObservation = () => {
         setObservationData,
         observationType
     } = useObservations();
+    const location = useLocation();
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
     const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
     const [draft, setDraft] = useState(true);
+    const [updateMode, setUpdateMode] = useState(false);
     const [reset, setReset] = useState(false);
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
     const [deletedImage, setDeletedImage] = useState(null);
-
-    const navigate = useNavigate();
+    
 
     let disabledLocation = false;
     for (let index = 0; index < observationData?.map_data?.length; index++) {
@@ -85,6 +87,8 @@ const AddObservation = () => {
     // console.log(disabledLocation,disabledEquipment,next);
     const disabledLocationTab = (observationData?.image_type !== 3) ?  disabledLocation && next : next;
     const disabledEquipmentTab = disabledLocation && next && disabledEquipment;
+
+
 
     // Toggle Tabs
     const toggleTab = (tab) => {
@@ -197,9 +201,6 @@ const AddObservation = () => {
     }
 
     const handlesetDraft = () => {
-        // let ObservationData = {...observationData};
-        // ObservationData.is_draft = 1;
-        // setObservationData(ObservationData);
         setIsLoading(true);
         sendData(1).then(r => r);
     }
@@ -287,7 +288,11 @@ const AddObservation = () => {
         setReset(true);
         setObservationSteps({
             total: 3,
-            active: 1
+            active: 1,
+            mode: {
+                update: true,
+                id: false
+            }
         })
         setObservationImages([])
         setObservationData(null)
@@ -335,6 +340,31 @@ const AddObservation = () => {
             activeTab === Tabs.ObservationImages) && !(activeTab === Tabs.DateTimeLocation && !(observationType?.image_type === 3)))
     }
 
+    const getObservationDataForUpdate = async (obvId) => {
+        await axios.get(baseURL.api+`/observation/get_draft_data/${obvId}/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth?.token?.access}`
+            }
+        })
+            .then(response => {
+                console.log(response?.data?.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+    
+    useEffect(() => {
+        let id = observationSteps?.mode?.id,
+            updateUrl = location.pathname === `/${routeUrls.observationsUpdate}`,
+            obvType = observationSteps?.mode?.type;
+
+        if (updateUrl && obvType === "draft") {
+            getObservationDataForUpdate(id).then(r => r)
+        }
+    }, [location.pathname, observationSteps?.mode, updateMode])
+    
 
     // Set Progress Bar
     useEffect(() => {

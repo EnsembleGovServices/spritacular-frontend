@@ -31,5 +31,6 @@ export const routeUrls = {
     profile: 'profile',
     myObservations: 'observations',
     // gallery: 'gallery',
-    observationsAdd: 'observations/add'
+    observationsAdd: 'observations/add',
+    observationsUpdate: 'observations/update',
 }

@@ -51,6 +51,7 @@ const App = () => {
           <Route element={<Observations />}>
             <Route exact path={routeUrls.myObservations} element={<MyObservations />} />
             <Route exact path={routeUrls.observationsAdd} element={<AddObservation />} />
+            <Route exact path={routeUrls.observationsUpdate} element={<AddObservation />} />
           </Route>
         </Route>
       </Route>
