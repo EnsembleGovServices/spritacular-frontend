@@ -62,8 +62,9 @@ const ObservationDetails = (props) =>{
                                     </div>
                                 </Col>
                                 <Col xs={6} className="justify-content-end d-flex align-items-center">
-                                    <i className="observation_type rounded-circle bg-white">
-                                        <LazyLoadImage effect="blur" src={(data?.category_data[0]) ? getCategoryImage(data?.category_data[0]): ''} className="rounded-circle" /></i>
+                                    {/*<i className="observation_type rounded-circle bg-white">*/}
+                                    {/*    <LazyLoadImage effect="blur" src={(data?.category_data[0]) ? getCategoryImage(data?.category_data[0]): ''} className="rounded-circle" />*/}
+                                    {/*</i>*/}
                                     <h6 className="ps-2 mb-0 text-truncate">{(data?.category_data[0]) ? data?.category_data[0] : null}</h6>
                                 </Col>
                             </Row>
