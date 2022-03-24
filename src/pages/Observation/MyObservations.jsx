@@ -39,7 +39,9 @@ const MyObservations = () => {
   const { auth } = useAuth();
   const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
   const navigate = useNavigate();
-
+  const [loadMore,setLoadMore] = useState(0);
+  const [pageSize,setPageSize] = useState(10);
+  const [currobservationList,setcurrobservationList] = useState([]);
   useEffect(() => {
     getObservationData(null);
     getObservationType('verified');
@@ -70,6 +72,7 @@ const MyObservations = () => {
   const getObservationType = (type) => {
     let unverifiedList;
     setActiveType(type);
+    setLoadMore(pageSize);
     if(type === 'unverified'){
 
       unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
@@ -95,6 +98,10 @@ const MyObservations = () => {
       });
     }
     setCurrentObservationList(unverifiedList);
+    if(unverifiedList){
+      let data = unverifiedList.slice(0,pageSize);
+      setcurrobservationList(data);
+    }
   }
   
   const getObservationData = (value) => {
@@ -105,7 +112,7 @@ const MyObservations = () => {
       value = 1;
     }
     setActiveType('verified');
-    getObservationType('verified');
+    
     axios.get(baseURL.api+'/observation/observation_collection/?sortBy='+value,{
       headers: {
           'Content-Type': 'application/json',
@@ -121,7 +128,7 @@ const MyObservations = () => {
       draft: success?.data?.draft_count,
       total: success?.data?.verified_count+success?.data?.unverified_count+success?.data?.denied_count+success?.data?.draft_count
     })
-
+    getObservationType('verified');
     setIsLoaded(false);
   }).catch((error) => {
       console.log(error.response);
@@ -132,6 +139,23 @@ const MyObservations = () => {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);
   };
+  const handlLoadMore = (value) => {
+    console.log(currentObservationList.length,'fds');
+    if(currentObservationList.length > 0){
+
+      let length;
+      if(value > currentObservationList.length){
+        length = currentObservationList.length;
+      }
+      else{
+        length = value;
+      }
+      setLoadMore(length);
+      let currentData = currentObservationList.slice(loadMore,length);
+      setcurrobservationList([...currobservationList,...currentData]);
+    }
+  }
+  console.log(currobservationList);
   return(
       <>
         {observationCount.total === 0 &&  <Container>
@@ -241,39 +265,13 @@ const MyObservations = () => {
           </div>
         </Container>
         <Container>
-          {/* <UncontrolledAlert color="success" data-dismiss="alert" dismissible="true" className="text-center">
-              Observation uploaded successfully
-          </UncontrolledAlert>
-          <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center">
-            Would you like to help us sift through observations and endorse their validity?
-            <Link to={routeUrls.getStarted} className="btn btn-outline-primary">Get Trained</Link>
-          </UncontrolledAlert> */}
           {observationCount[`${activeType}`] ===  0 &&
            <div className="data-not-found">
               <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
               <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
             </div>}
-          {/* <Row className="">
-            {observationList && observationList?.map((cardItems, index)=> {
-              if(cardItems?.images.length > 0){
-                return (
-                    <>
-                    {cardItems?.images?.map((image,id) => {
-                      return ( <Col key={id} sm={6} md={4} xl={3} className="mb-4">
-                          <ObservationCard cardItems = {image} cardData={cardItems} index={index} userProfile={cardItems.user_data} handleClick={handleObservationDetailModal}/>
-                      </Col>)
-                      })
-                    }
-                    </>
-                  );
-              }
-              else{
-                return;
-              }
-            })
-            }
-          </Row> */}
-          <ObservationDetailPage  observationList={currentObservationList} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
+          <ObservationDetailPage  observationList={currobservationList}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
+         {loadMore < currentObservationList.length && <button onClick={() => {handlLoadMore(loadMore+pageSize)}}>Load More</button>}
         </Container> 
          {isObservationDetailModal && <ObservationDetails data={currentObservationList[selectedObservationId]}  activeType={activeType} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} handleContinueEdit={handleObservationEdit} />}
          </>

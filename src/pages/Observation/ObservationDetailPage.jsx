@@ -19,7 +19,6 @@ const ObservationDetailPage = (props) => {
   const {observationList,isObservationDetailModal,setSelectedObservationId,setObservationDetailModal} = props;
   const { auth } = useAuth();
 
-  
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);
