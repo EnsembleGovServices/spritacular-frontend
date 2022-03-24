@@ -56,15 +56,22 @@ const MyObservations = () => {
   const cleaningUpObservationDataForDraftSaving = async (data) => {
     setObservationImages([]);
     setObservationData([]);
-    await setObservationSteps({
-      total: 3,
-      active: 1,
-      mode: {
-        update: true,
-        ...data
-      }
-    })
+    await updateStateForDraft(data)
     return true;
+  }
+
+  const updateStateForDraft = (data) => {
+    setObservationSteps(prev => {
+      return {
+        ...prev,
+        total: 3,
+        active: 1,
+        mode: {
+          update: true,
+          ...data
+        }
+      }
+    });
   }
 
   const getObservationType = (type) => {

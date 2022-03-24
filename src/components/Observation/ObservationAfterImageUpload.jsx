@@ -139,13 +139,13 @@ const ObservationAfterImageUpload = (props) => {
                                 <ImagePreview remove={remove} />
                             </Col>
 
-                            {obvType?.image_type !== 3 &&
+                            {/*{obvType?.image_type !== 3 &&*/}
                             <Col sm={12}>
                                 <Row>
                                     <ObservationCategory obvType={obvType} error={error} />
                                 </Row>
                             </Col>
-                            }
+                            {/*}*/}
 
                             <Col sm={12}>
                                 <FormGroup check className="mb-3">
