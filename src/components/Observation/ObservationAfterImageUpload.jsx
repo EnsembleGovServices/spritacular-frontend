@@ -161,11 +161,13 @@ const ObservationAfterImageUpload = (props) => {
                     </TabPane>
                     <TabPane tabId={MultiImageTabs.ImageSequence}>
                         <Row>
+                            {isMultiple &&
                             <Col sm={12}>
                                 <div className="small-upload_box mb-3">
                                     <ObservationUploadImg detectImage={detectImage} imageFormat={false} maxLimit={false} multiple={false} />
                                 </div>
                             </Col>
+                            }
                             <Col sm={12}>
                                 <ImagePreview remove={remove}/>
                             </Col>
