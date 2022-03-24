@@ -13,6 +13,7 @@ import ObservationDetails from './Observation/ObservationDetails';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Images from './../static/images';
 import ObservationDetailPage from "./Observation/ObservationDetailPage";
+import { LoadMore } from '../components/Shared/LoadMore';
 
 const MyObservations = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
@@ -20,6 +21,9 @@ const MyObservations = () => {
   const [isLoaded,setIsLoaded] = useState(true);
   const [selectedObservationId,setSelectedObservationId] = useState();
   const { auth } = useAuth();
+  const [loadMore,setLoadMore] = useState(0);
+  const [pageSize,setPageSize] = useState(10);
+  const [currobservationList,setcurrobservationList] = useState([]);
   useEffect(() => {
     getObservationType();
   },[isLoaded]);
@@ -34,10 +38,30 @@ const MyObservations = () => {
       
   }).then((success) => {
     setObservationList(success?.data?.data);
+    let data = success?.data?.data.slice(0,pageSize);
+    setLoadMore(pageSize);
+      setcurrobservationList(data);
     setIsLoaded(false);
   }).catch((error) => {
       console.log(error.response);
   })
+  }
+
+  const handlLoadMore = () => {
+    let value = loadMore + pageSize;
+    if(observationList.length > 0){
+
+      let length;
+      if(value > observationList.length){
+        length = observationList.length;
+      }
+      else{
+        length = value;
+      }
+      setLoadMore(length);
+      let currentData = observationList.slice(loadMore,length);
+      setcurrobservationList([...currobservationList,...currentData]);
+    }
   }
   
   const handleObservationDetailModal = (id) => {
@@ -166,7 +190,8 @@ const MyObservations = () => {
             })
             }
           </Row> */}
-          <ObservationDetailPage  observationList={observationList} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
+          <ObservationDetailPage  observationList={currobservationList} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
+          {loadMore < observationList.length && <LoadMore handlLoadMore={handlLoadMore} />}
         </Container> 
          {isObservationDetailModal && <ObservationDetails data={observationList[selectedObservationId]}  activeType={''} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />}
          </>

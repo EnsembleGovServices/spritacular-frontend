@@ -20,6 +20,7 @@ import { DropdownToggle } from 'reactstrap';
 import { DropdownMenu } from 'reactstrap';
 import { DropdownItem } from 'reactstrap';
 import useObservations from "../../hooks/useObservations";
+import { LoadMore } from "../../components/Shared/LoadMore";
 
 const MyObservations = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
@@ -139,8 +140,8 @@ const MyObservations = () => {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);
   };
-  const handlLoadMore = (value) => {
-    console.log(currentObservationList.length,'fds');
+  const handlLoadMore = () => {
+    let value = loadMore + pageSize;
     if(currentObservationList.length > 0){
 
       let length;
@@ -155,7 +156,6 @@ const MyObservations = () => {
       setcurrobservationList([...currobservationList,...currentData]);
     }
   }
-  console.log(currobservationList);
   return(
       <>
         {observationCount.total === 0 &&  <Container>
@@ -271,7 +271,7 @@ const MyObservations = () => {
               <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
             </div>}
           <ObservationDetailPage  observationList={currobservationList}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
-         {loadMore < currentObservationList.length && <button onClick={() => {handlLoadMore(loadMore+pageSize)}}>Load More</button>}
+         {loadMore < currentObservationList.length && <LoadMore handlLoadMore={handlLoadMore} />}
         </Container> 
          {isObservationDetailModal && <ObservationDetails data={currentObservationList[selectedObservationId]}  activeType={activeType} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} handleContinueEdit={handleObservationEdit} />}
          </>
