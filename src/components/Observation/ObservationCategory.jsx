@@ -107,7 +107,7 @@ const ObservationCategory = (props) => {
         const {index} = props;
         return(
             <div className="ms-2">
-                <Button id={`popover${index}`} type="button" className="bg-transparent p-0 border-0 shadow-none">
+                <Button id={`popover${index}`} type="button" className="bg-transparent p-0 border-0 shadow-none d-flex">
                     <Icon icon="charm:info" color="#adb4c2" width="15" height="15" />
                 </Button>
                 <UncontrolledPopover

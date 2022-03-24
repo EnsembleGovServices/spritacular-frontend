@@ -417,7 +417,6 @@ const AddObservation = () => {
                             <Col md={3} sm={12}>
                                 <div className="observation-form-left-tab">
                                     <ObservationProgress step={observationSteps}/>
-
                                     <Nav tabs className="flex-column">
                                         <NavItem>
                                             <NavLink
@@ -464,12 +463,17 @@ const AddObservation = () => {
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
-                                                <ObservationAfterImageUpload detectImage={deletedImage} remove={removeItem} obvType={observationType} error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
+                                                <ObservationAfterImageUpload showUploadedPreview={showUploadedPreview} obvType={observationType} step={observationSteps} error={error} detectImage={deletedImage} remove={removeItem} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
                                                 <ObservationImages detectImage={deletedImage} remove={removeItem} proceedNext={()=> handleContinue()}/>
                                             }
                                         </TabPane>
                                         <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
+                                            {showUploadedPreview() &&
+                                                <div className="observation-form-right-tab d-flex justify-content-end d-sm-none position-relative position-sm-sticky">
+                                                    <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
+                                                </div>
+                                            }
                                             <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
@@ -508,7 +512,7 @@ const AddObservation = () => {
                             </Col>
 
                             {showUploadedPreview() &&
-                                <Col md={2} sm={3}>
+                                <Col md={2} sm={3} className="d-none d-sm-block">
                                     <div className="observation-form-right-tab">
                                         <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
                                     </div>

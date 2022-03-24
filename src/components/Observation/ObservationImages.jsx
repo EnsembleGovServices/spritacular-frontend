@@ -13,13 +13,14 @@ const ObservationImages = (props) =>{
     return (
         <>
             <Row>
-                <Col sm={observationImages?.data?.length ? 9 : 12}>
+                <Col sm={observationImages?.data?.length ? 9 : 12} className="order-2 order-sm-1">
                     <ObservationUploadImg detectImage={detectImage} imageFormat={true} maxLimit={true} multiple={isMultiple}/>
                 </Col>
-                {observationImages?.data?.length && <Col sm={3}>
+                {observationImages?.data?.length && <Col sm={3}  className="order-1 order-sm-2 d-flex d-sm-block justify-content-end">
                     <ObservationUploadedImg className="sm-selected_image" remove={remove} />
                 </Col>}
-                
+            </Row>
+            <Row>
                 <Col sm={12}>
                     <div className="mt-5">
                         <Button disabled={!observationImages?.data?.length} onClick={proceedNext}>Continue</Button>

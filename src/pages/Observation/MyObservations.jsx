@@ -211,14 +211,13 @@ const MyObservations = () => {
                           <span className="text-truncate">Recent observations</span>
                           <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                         </DropdownToggle>
-                        <DropdownMenu onChange={(e) => {getObservationData(e)}} className="py-0 shadow">
-                            <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="search" className="px-2 " placeholder="Recent Observations" /></DropdownItem>
-                            <DropdownItem  className="px-2 fw-normal" value='recent'>Recent observations</DropdownItem>
-                            <DropdownItem  className="px-2 fw-normal" value='1'>1 week ago observations</DropdownItem>
-                            <DropdownItem  className="px-2 fw-normal" value='2'>2 week ago observations</DropdownItem>
-                            <DropdownItem  className="px-2 fw-normal" value='3'>3 week ago observations</DropdownItem>
-                            <DropdownItem  className="px-2 fw-normal" value='4'>4 week ago observations</DropdownItem>
-                            <DropdownItem  className="px-2 fw-normal" value='1'>1 months ago observations</DropdownItem>
+                        <DropdownMenu onChange={(e) => {getObservationData(e)}} className="shadow">
+                            <DropdownItem  className="fw-normal" value='recent'>Recent observations</DropdownItem>
+                            <DropdownItem  className="fw-normal" value='1'>1 week ago observations</DropdownItem>
+                            <DropdownItem  className="fw-normal" value='2'>2 week ago observations</DropdownItem>
+                            <DropdownItem  className="fw-normal" value='3'>3 week ago observations</DropdownItem>
+                            <DropdownItem  className="fw-normal" value='4'>4 week ago observations</DropdownItem>
+                            <DropdownItem  className="fw-normal" value='1'>1 months ago observations</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                     {/* <Input id="SortBy" type="select" name="observationSortBy" defaultValue="" onChange={(e) => {getObservationData(e)}}>
