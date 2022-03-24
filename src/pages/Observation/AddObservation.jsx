@@ -210,32 +210,62 @@ const AddObservation = () => {
         finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id  : null);
         formData.append("data", JSON.stringify(finalData));
 
-        await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${auth?.token?.access}`
-            }
-        }).then((response) => {
-            setError(null);
-            setSuccess({
-                data: response?.data,
-                status: response?.status,
-                message: response?.message
+        if (!updateMode) {
+            await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${auth?.token?.access}`
+                }
+            }).then((response) => {
+                setError(null);
+                setSuccess({
+                    data: response?.data,
+                    status: response?.status,
+                    message: response?.message
+                })
+                setIsLoading(false);
+                window.scrollTo(0, 0);
+                setTimeout(function () {
+                    handleReset();
+                }, 3000)
+            }).catch((error) => {
+                console.log(error.response);
+                setIsLoading(false);
+                setError({
+                    data: error?.response?.data,
+                    status: error?.response?.status,
+                    message: error?.message
+                })
             })
-            setIsLoading(false);
-            window.scrollTo(0, 0);
-            setTimeout(function () {
-                handleReset();
-            }, 3000)
-        }).catch((error) => {
-            console.log(error.response);
-            setIsLoading(false);
-            setError({
-                data: error?.response?.data,
-                status: error?.response?.status,
-                message: error?.message
+
+        } else {
+            await axios.get(baseURL.api+`/observation/get_draft_data/${observationSteps?.mode?.id}/`,formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${auth?.token?.access}`
+                }
+            }).then((response) => {
+                setError(null);
+                setSuccess({
+                    data: response?.data,
+                    status: response?.status,
+                    message: response?.message
+                })
+                setIsLoading(false);
+                window.scrollTo(0, 0);
+                setTimeout(function () {
+                    handleReset();
+                }, 3000)
+            }).catch((error) => {
+                console.log(error.response);
+                setIsLoading(false);
+                setError({
+                    data: error?.response?.data,
+                    status: error?.response?.status,
+                    message: error?.message
+                })
             })
-        })
+        }
 
     }
 
@@ -468,7 +498,7 @@ const AddObservation = () => {
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
-                                                <ObservationAfterImageUpload showUploadedPreview={showUploadedPreview} obvType={observationType} step={observationSteps} error={error} detectImage={deletedImage} remove={removeItem} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
+                                                <ObservationAfterImageUpload  showUploadedPreview={showUploadedPreview} obvType={observationType} step={observationSteps} error={error} detectImage={deletedImage} remove={removeItem} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
                                                 <ObservationImages detectImage={deletedImage} remove={removeItem} proceedNext={()=> handleContinue()}/>
                                             }

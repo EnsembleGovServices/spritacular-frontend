@@ -128,7 +128,7 @@ const ObservationAfterImageUpload = (props) => {
                             {isMultiple &&
                                 <Col sm={12}>
                                     <div className="small-upload_box mb-3">
-                                        <ObservationUploadImg imageFormat={false} maxLimit={false} multiple={false} />
+                                        <ObservationUploadImg detectImage={detectImage} imageFormat={false} maxLimit={false} multiple={false} />
                                     </div>
                                 </Col>
                             }

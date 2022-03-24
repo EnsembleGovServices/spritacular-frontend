@@ -331,11 +331,11 @@ const ObservationLocation = (props) => {
                     </Row>
                 </Col>
             }
-            {/*{observationData?.image_type === 3 &&*/}
-            {/*<Row className="mb-4">*/}
-            {/*    <ObservationCategory obvType={obvType} error={error} />*/}
-            {/*</Row>*/}
-            {/*}*/}
+            {observationData?.image_type === 3 &&
+            <Row className="mb-4">
+                <ObservationCategory obvType={obvType} error={error} />
+            </Row>
+            }
             
             <Col md={12} className="mb-5">
                 <Row>
