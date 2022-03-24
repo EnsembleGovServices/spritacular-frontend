@@ -2,6 +2,8 @@ import { Badge, Button, Col, Row } from "reactstrap";
 import { Icon } from '@iconify/react';
 import ReactCountryFlags from "../../../components/ReactCountryFlag";
 import moment from 'moment';
+import {getdirectionDegree} from "../../../helpers/observation";
+
 
 const ObservationMoreDetails = (props) => {
     const {data} = props;
@@ -16,7 +18,7 @@ const ObservationMoreDetails = (props) => {
                         <Col md={9} className="text-end">
                             <p className="selected_direction rounded-circle mb-0 d-inline-flex align-items-center justify-content-center fw-bold">
                                 <span>{data?.images[0]?.azimuth}</span>
-                                <i style={{'--selected-angle': '180deg'}} className="direction_arrow d-flex align-items-center justify-content-center position-absolute left-0 right-0 top-0 bottom-0"></i>
+                                <i style={{'--selected-angle': `${getdirectionDegree(data?.images[0]?.azimuth)}deg` }} className="direction_arrow d-flex align-items-center justify-content-center position-absolute left-0 right-0 top-0 bottom-0"></i>
                             </p>
                         </Col>
                     </Row>
@@ -41,15 +43,15 @@ const ObservationMoreDetails = (props) => {
                         <Col md={9}>
                             <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold text-end">
                             <ReactCountryFlags country= {data?.images[0]?.country_code} />
-                                {data?.images[0]?.location}</p>
+                                <span className="ms-1">{data?.images[0]?.location}</span></p>
                         </Col>
                     </Row>
                     <div className="border-line my-2 mb-4"></div>
                     <Row>
                         <Col sm={12}>
-                            <Button disabled className="w-100 d-flex align-items-center justify-content-center py-2 mb-3">
+                            <Button disabled className="like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3">
                                 <Icon icon="heroicons-solid:thumb-up" width="25" height="25" className="me-2" /> 
-                                Like
+                                <span>Like</span>
                             </Button>
                         </Col>
                         <Col sm={12}>
