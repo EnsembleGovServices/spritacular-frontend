@@ -464,7 +464,7 @@ const AddObservation = () => {
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
-                                                <ObservationAfterImageUpload remove={removeItem} obvType={observationType} error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
+                                                <ObservationAfterImageUpload detectImage={deletedImage} remove={removeItem} obvType={observationType} error={error} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
                                                 <ObservationImages detectImage={deletedImage} remove={removeItem} proceedNext={()=> handleContinue()}/>
                                             }
