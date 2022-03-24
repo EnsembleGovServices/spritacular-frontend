@@ -7,13 +7,15 @@
     height: 100%;
     border-radius: 8px 0px 0px 8px;
     .modal-header{
-        padding: 16px 20px 12px;
+        padding: 10px 20px 20px;
         border-radius: 0;
+        margin-bottom: 15px;
     }
     .modal-title{
         font-weight: 700;
         @include sm-title;
-        @include vstart;
+        @include vspace;
+        width: 100%;
         .badge {
             font-weight: 400;
             @include sm-text;
@@ -57,6 +59,13 @@
             height: 100%;
             width: 100%;
             object-fit: cover;
+        }
+    }
+    .like-btn{
+        span{
+            @include md-text;
+            position: relative;
+            top: 2px;
         }
     }
     .tab-content{
@@ -104,7 +113,7 @@
             .nav-link{
                 font-style: normal;
                 font-weight: 400;
-                @include md-text;
+                @include lg-text;
                 padding: 0;
                 color: #181818;
                 border: 0;

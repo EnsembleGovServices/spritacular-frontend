@@ -81,9 +81,9 @@ const ObservationMoreEquipementDetails = (props) => {
                     <div className="border-line my-2 mb-4"></div>
                     <Row className="align-items-center mt-3">
                         <Col sm={12}>
-                            <Button disabled className="w-100 d-flex align-items-center justify-content-center py-2 mb-3">
+                            <Button disabled className="like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3">
                                 <Icon icon="heroicons-solid:thumb-up" width="25" height="25" className="me-2" /> 
-                                Vote this observation
+                                <span>Vote this observation</span>
                             </Button>
                         </Col>
                         <Col sm={12}>
