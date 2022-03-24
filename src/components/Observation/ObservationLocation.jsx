@@ -52,7 +52,7 @@ const ObservationLocation = (props) => {
 
     useEffect(()=> {
         
-        if(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap == false){
+        if(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap === false){
             fref.current.handleChangeLatLng(observationImages?.data[observationImages?.selected_image_index]?.latitude , observationImages?.data[observationImages?.selected_image_index]?.longitude);
         }
       
@@ -232,62 +232,67 @@ const ObservationLocation = (props) => {
                     </Row>
                     {
                     (
-                        // sameAsMap == false
-                        (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap == false ) 
-                        || observationImages?.selected_image_index == 0 ) ?
-                        <MapWrapper
-                            google={props.google}
-                            center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
-                            height="400px"
-                            containerPosition={"relative"}
-                            mapRadius="10px"
-                            zoom={15}
-                            handleState={handleValue}
-                            isLoaded={isLoaded}
-                            mapContainer="map-search-container"
-                            searchInputClass="search-input-class"
-                            ref={fref}
-                        /> 
+                        // sameAsMap === false
+                        (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap === false ) 
+                        || observationImages?.selected_image_index === 0 ) ?
+                        <div className="location_map">
+                            <MapWrapper
+                                google={props.google}
+                                center={{ lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: address1?.markerPosition?.lat), lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: address1?.markerPosition?.lng) }}
+                                height="100%"
+                                containerPosition={"relative"}
+                                mapRadius="10px"
+                                zoom={15}
+                                handleState={handleValue}
+                                isLoaded={isLoaded}
+                                mapContainer="map-search-container"
+                                searchInputClass="search-input-class"
+                                ref={fref}
+                            /> 
+                        </div>
                         :
-                        <Row className="border same-data_row">
-                            <Col md={6}>
-                                <Row className="flex-nowrap">
-                                    <div className="border-end w-auto">
-                                        <FormGroup className="form-group d-flex align-items-center">
-                                            <Label className="form-label text-uppercase mb-0 me-2" htmlFor="LAT">LAT</Label>
-                                            <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat
-                                            }</span>
-                                        </FormGroup>
+
+                        <div  className="border same-data_row">
+                            <Row>
+                                <Col lg={6}>
+                                    <Row className="flex-nowrap">
+                                        <div className="border-end w-auto">
+                                            <FormGroup className="form-group d-flex align-items-center">
+                                                <Label className="form-label text-uppercase mb-0 me-2" htmlFor="LAT">LAT</Label>
+                                                <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat
+                                                }</span>
+                                            </FormGroup>
+                                        </div>
+                                        <div className="w-auto">
+                                            <FormGroup className="form-group d-flex align-items-center">
+                                                <Label className="form-label text-uppercase mb-0 me-2" htmlFor="LON">LON</Label>
+                                                <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :address1?.markerPosition?.lng}</span>
+                                            </FormGroup>
+                                        </div>
+                                    </Row>
+                                </Col>
+                                <Col lg={6}>
+                                    <div className="selected-address d-block d-lg-flex align-items-center justify-content-start justify-content-lg-end mt-2 mt-lg-0">
+                                        <ReactCountryFlags country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code: null} />
+                                        <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                                     </div>
-                                    <div className="w-auto">
-                                        <FormGroup className="form-group d-flex align-items-center">
-                                            <Label className="form-label text-uppercase mb-0 me-2" htmlFor="LON">LON</Label>
-                                            <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude :address1?.markerPosition?.lng}</span>
-                                        </FormGroup>
-                                    </div>
-                                </Row>
-                            </Col>
-                            <Col md={6}>
-                                <div className="selected-address d-flex align-items-center justify-content-start justify-content-lg-end">
-                                    <ReactCountryFlags country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code: null} />
-                                    <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
-                                </div>
-                            </Col>
-                        </Row>
+                                </Col>
+                            </Row>
+                        </div>
                         }
                 </FormGroup>
             </Col>
             {
             (
-                // sameAsMap == false
-                ( observationImages?.data &&  observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap == false)
+                // sameAsMap === false
+                ( observationImages?.data &&  observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap === false)
               || observationImages?.selected_image_index === 0) &&
                 <Col md={12} className="mb-5">
                     <h6>If you know the precise coordinates of your observation location, please enter below</h6>
                     <Row>
                         <Col md={6} lg={4}>
                             <FormGroup className="d-flex">
-                                <Label className="form-label text-uppercase" htmlFor="LAT" sm={2} >LAT</Label>
+                                <Label className="form-label text-uppercase me-1" htmlFor="LAT" sm={2} >LAT</Label>
                                 <Col sm={10}>
                                     <Input
                                         // value={address1?.markerPosition?.lat}
@@ -303,7 +308,7 @@ const ObservationLocation = (props) => {
                         </Col>
                         <Col md={6} lg={4}>
                             <FormGroup className="d-flex">
-                                <Label className="form-label text-uppercase" htmlFor="LON" sm={2} >LON</Label>
+                                <Label className="form-label text-uppercase me-1" htmlFor="LON" sm={2} >LON</Label>
                                 <Col sm={10}>
                                     <Input
                                         // value={address1?.markerPosition?.lng}
@@ -353,8 +358,8 @@ const ObservationLocation = (props) => {
                     </Col>}
                 </Row>
                 {
-                // (sameAsDateTime == false
-                    (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate == false  
+                // (sameAsDateTime === false
+                    (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate === false  
                     || observationImages?.selected_image_index === 0)  ?
                     <Row>
                         <Col md={6} lg={4}>
@@ -430,29 +435,31 @@ const ObservationLocation = (props) => {
                         </Col>
                     </Row>
                     :
-                    <Row className="border same-data_row">
-                        <Col md={6}>
-                            <Row className="flex-nowrap">
-                                <div className="border-end w-auto">
-                                    <FormGroup className="form-group d-flex align-items-center">
-                                        <Label className="form-label text-uppercase mb-0 me-2" htmlFor="Date">Date</Label>
-                                        <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}</span>
-                                    </FormGroup>
+                    <div  className="border same-data_row">
+                        <Row>
+                            <Col lg={6}>
+                                <Row className="flex-nowrap">
+                                    <div className="border-end w-auto">
+                                        <FormGroup className="form-group d-flex align-items-center">
+                                            <Label className="form-label text-uppercase mb-0 me-2" htmlFor="Date">Date</Label>
+                                            <span className="fw-bold text-truncate data-value">{(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}</span>
+                                        </FormGroup>
+                                    </div>
+                                    <div className="w-auto">
+                                        <FormGroup className="form-group d-flex align-items-center">
+                                            <Label className="form-label text-uppercase mb-0 me-2" htmlFor="Time">Time</Label>
+                                            <span className="fw-bold text-truncate data-value">{observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}</span>
+                                        </FormGroup>
+                                    </div>
+                                </Row>
+                            </Col>
+                            <Col lg={6}>
+                                <div className="selected-address mt-2 mt-lg-0 text-end d-block">
+                                    <span className="opacity-75">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone}` : ''}</span>
                                 </div>
-                                <div className="w-auto">
-                                    <FormGroup className="form-group d-flex align-items-center">
-                                        <Label className="form-label text-uppercase mb-0 me-2" htmlFor="Time">Time</Label>
-                                        <span className="fw-bold text-truncate data-value">{observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}</span>
-                                    </FormGroup>
-                                </div>
-                            </Row>
-                        </Col>
-                        <Col md={6}>
-                            <div className="selected-address d-flex align-items-center justify-content-start justify-content-lg-end">
-                                <span className="opacity-75">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>
-                            </div>
-                        </Col>
-                    </Row>
+                            </Col>
+                        </Row>
+                    </div>
                 }
             </Col>
             <Col md={12} className="mb-5">

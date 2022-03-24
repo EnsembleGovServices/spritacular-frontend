@@ -19,10 +19,11 @@ import useObservations from "../../hooks/useObservations";
 import ObservationCategory from "./ObservationCategory";
 import ImagePreview from "./ImagePreview";
 import PropTypes from "prop-types";
+import ObservationUploadedImg from './ObservationUploadedImg';
 
 
 const ObservationAfterImageUpload = (props) => {
-    const { toggleTab,handleImageInput, error, disableNext, obvType, remove, detectImage } = props;
+    const { toggleTab,handleImageInput, error, disableNext, obvType, remove, detectImage, step, showUploadedPreview  } = props;
     const {observationImages, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
@@ -131,14 +132,19 @@ const ObservationAfterImageUpload = (props) => {
                                     </div>
                                 </Col>
                             }
+                            { showUploadedPreview && 
+                                <div className="d-flex justify-content-end d-sm-none"><ObservationUploadedImg  obvType={obvType} step={step} error={error} remove={remove} /></div>
+                            }
                             <Col sm={12}>
                                 <ImagePreview remove={remove} />
                             </Col>
 
                             {obvType?.image_type !== 3 &&
-                            <Row>
-                                <ObservationCategory obvType={obvType} error={error} />
-                            </Row>
+                            <Col sm={12}>
+                                <Row>
+                                    <ObservationCategory obvType={obvType} error={error} />
+                                </Row>
+                            </Col>
                             }
 
                             <Col sm={12}>
@@ -167,6 +173,9 @@ const ObservationAfterImageUpload = (props) => {
                                     <ObservationUploadImg detectImage={detectImage} imageFormat={false} maxLimit={false} multiple={false} />
                                 </div>
                             </Col>
+                            }
+                            { showUploadedPreview && 
+                                <div className="d-flex justify-content-end d-sm-none"><ObservationUploadedImg  obvType={obvType} step={step} error={error} remove={remove} /></div>
                             }
                             <Col sm={12}>
                                 <ImagePreview remove={remove}/>

@@ -101,6 +101,11 @@
             padding: 13px 20px 13px 12px;
         }
         .dropdown-with-search {
+            min-width: 230px;
+            .dropdown-item{
+                padding: 10px 22px;
+                font-size: 15px;
+            }
             .btn{
                 padding: 13px 20px 13px 12px;
                 span{
