@@ -9,7 +9,10 @@ const Observations = () => {
     });
     const [observationSteps, setObservationSteps] = useState({
         total: 3,
-        active: 1
+        active: 1,
+        mode: {
+            update: false
+        }
     });
     const [observationImages, setObservationImages] = useState([]);
     const [observationCategory, setObservationCategory] = useState([]);

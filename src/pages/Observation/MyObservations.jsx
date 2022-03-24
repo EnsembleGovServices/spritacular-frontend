@@ -3,7 +3,7 @@ import InitialUploadObservations from "../InitialUploadObservations";
 import { Col, Container, Row, UncontrolledAlert } from 'reactstrap';
 import ObservationCard from "../../components/Shared/ObservationCard";
 import { FormGroup, Label, Input } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { routeUrls } from './../../helpers/url';
 import { Icon } from '@iconify/react';
 import "../../assets/scss/component/myObservation.scss";
@@ -19,6 +19,7 @@ import { Dropdown } from 'reactstrap';
 import { DropdownToggle } from 'reactstrap';
 import { DropdownMenu } from 'reactstrap';
 import { DropdownItem } from 'reactstrap';
+import useObservations from "../../hooks/useObservations";
 
 const MyObservations = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
@@ -36,38 +37,61 @@ const MyObservations = () => {
   const [selectedObservationId,setSelectedObservationId] = useState();
   const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
   const { auth } = useAuth();
+  const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getObservationData(null);
     getObservationType('verified');
   },[isLoaded]);
 
+  const handleObservationEdit = (data) => {
+    cleaningUpObservationDataForDraftSaving(data).then(r => r);
+    setObservationDetailModal(false);
+    setTimeout(function () {
+      navigate('/observations/update');
+    }, 100)
+  }
+
+  const cleaningUpObservationDataForDraftSaving = async (data) => {
+    setObservationImages([]);
+    setObservationData([]);
+    await setObservationSteps({
+      total: 3,
+      active: 1,
+      mode: {
+        update: true,
+        ...data
+      }
+    })
+    return true;
+  }
 
   const getObservationType = (type) => {
     let unverifiedList;
     setActiveType(type);
-    if(type == 'unverified'){
+    if(type === 'unverified'){
 
       unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
-        return (item.is_submit == true);
+        return (item.is_submit === true);
       });
     }
-    if(type == 'verified'){
+    if(type === 'verified'){
 
       unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
-        return (item.is_verified == true);
+        return (item.is_verified === true);
       });
     }
-    if(type == 'denied'){
+    if(type === 'denied'){
 
       unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
-        return (item.is_reject == true);
+        return (item.is_reject === true);
       });
     }
-    if(type == 'draft'){
+    if(type === 'draft'){
 
       unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
-        return (item.is_submit == false);
+        return (item.is_submit === false);
       });
     }
     setCurrentObservationList(unverifiedList);
@@ -225,7 +249,7 @@ const MyObservations = () => {
             Would you like to help us sift through observations and endorse their validity?
             <Link to={routeUrls.getStarted} className="btn btn-outline-primary">Get Trained</Link>
           </UncontrolledAlert> */}
-          {observationCount[`${activeType}`] ==  0 &&
+          {observationCount[`${activeType}`] ===  0 &&
            <div className="data-not-found">
               <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
               <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
@@ -252,7 +276,7 @@ const MyObservations = () => {
           </Row> */}
           <ObservationDetailPage  observationList={currentObservationList} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
         </Container> 
-         {isObservationDetailModal && <ObservationDetails data={currentObservationList[selectedObservationId]}  activeType={activeType}modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />}
+         {isObservationDetailModal && <ObservationDetails data={currentObservationList[selectedObservationId]}  activeType={activeType} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} handleContinueEdit={handleObservationEdit} />}
          </>
          }
       </>
