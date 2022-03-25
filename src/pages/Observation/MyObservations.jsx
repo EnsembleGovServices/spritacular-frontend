@@ -128,7 +128,6 @@ const MyObservations = () => {
       draft: success?.data?.draft_count,
       total: success?.data?.verified_count+success?.data?.unverified_count+success?.data?.denied_count+success?.data?.draft_count
     })
-
     setIsLoaded(false);
   }).catch((error) => {
       console.log(error.response);
