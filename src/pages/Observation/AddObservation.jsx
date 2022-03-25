@@ -30,15 +30,6 @@ import ObservationAfterImageUpload from "../../components/Observation/Observatio
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
 import Loader from "../../components/Shared/Loader";
 
-
-// const ObservationLocation = lazy(()=> import('../../components/Observation/ObservationLocation'))
-// const EquipmentDetails = lazy(()=> import('../../components/Observation/EquipmentDetails'))
-// const ObservationUploadedImg = lazy(()=> import('../../components/Observation/ObservationUploadedImg'))
-// const ObservationImages = lazy(()=> import('../../components/Observation/ObservationImages'))
-// const ObservationProgress = lazy(()=> import('../../components/Observation/ObservationProgress'))
-// const ObservationAfterImageUpload = lazy(()=> import('../../components/Observation/ObservationAfterImageUpload'))
-// const EquipmentDetailsForm = lazy(()=> import('../../components/Observation/EquipmentDetailsForm'))
-
 const AddObservation = () => {
     const { auth } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
@@ -57,13 +48,13 @@ const AddObservation = () => {
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
     const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
-    const [draft, setDraft] = useState(true);
     const [updateMode, setUpdateMode] = useState(false);
     const [reset, setReset] = useState(false);
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
     const [deletedImage, setDeletedImage] = useState(null);
-    
+    const [draft, setDraft] = useState(true);
+    const [draftData, setDraftData] = useState();
 
     let disabledLocation = false;
     for (let index = 0; index < observationData?.map_data?.length; index++) {
@@ -84,7 +75,6 @@ const AddObservation = () => {
             break;
         }
     }
-    // console.log(disabledLocation,disabledEquipment,next);
     const disabledLocationTab = (observationData?.image_type !== 3) ?  disabledLocation && next : next;
     const disabledEquipmentTab = disabledLocation && next && disabledEquipment;
 
@@ -95,14 +85,6 @@ const AddObservation = () => {
         if (activeTab !== tab) {
             setActiveTab(tab);
         }
-        // setObservationImages(prev => {
-        //     return {
-        //         ...prev,
-        //         selected_image_id:tab,
-        //         selected_image_index:0
-        //     }
-        // });
-        // console.log("hello");
         window.scrollTo(0, 0);
     };
 
@@ -210,9 +192,6 @@ const AddObservation = () => {
         e.preventDefault();
         setIsLoading(true);
         setDraft(0);
-        // let ObservationData = {...observationData};
-        // ObservationData.is_draft = 0;
-        // setObservationData(ObservationData);
         sendData(0).then(r => r);
     }
 
@@ -231,32 +210,62 @@ const AddObservation = () => {
         finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id  : null);
         formData.append("data", JSON.stringify(finalData));
 
-        await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${auth?.token?.access}`
-            }
-        }).then((response) => {
-            setError(null);
-            setSuccess({
-                data: response?.data,
-                status: response?.status,
-                message: response?.message
+        if (!updateMode) {
+            await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${auth?.token?.access}`
+                }
+            }).then((response) => {
+                setError(null);
+                setSuccess({
+                    data: response?.data,
+                    status: response?.status,
+                    message: response?.message
+                })
+                setIsLoading(false);
+                window.scrollTo(0, 0);
+                setTimeout(function () {
+                    handleReset();
+                }, 3000)
+            }).catch((error) => {
+                console.log(error.response);
+                setIsLoading(false);
+                setError({
+                    data: error?.response?.data,
+                    status: error?.response?.status,
+                    message: error?.message
+                })
             })
-            setIsLoading(false);
-            window.scrollTo(0, 0);
-            setTimeout(function () {
-                handleReset();
-            }, 3000)
-        }).catch((error) => {
-            console.log(error.response);
-            setIsLoading(false);
-            setError({
-                data: error?.response?.data,
-                status: error?.response?.status,
-                message: error?.message
+
+        } else {
+            await axios.get(baseURL.api+`/observation/get_draft_data/${observationSteps?.mode?.id}/`,formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${auth?.token?.access}`
+                }
+            }).then((response) => {
+                setError(null);
+                setSuccess({
+                    data: response?.data,
+                    status: response?.status,
+                    message: response?.message
+                })
+                setIsLoading(false);
+                window.scrollTo(0, 0);
+                setTimeout(function () {
+                    handleReset();
+                }, 3000)
+            }).catch((error) => {
+                console.log(error.response);
+                setIsLoading(false);
+                setError({
+                    data: error?.response?.data,
+                    status: error?.response?.status,
+                    message: error?.message
+                })
             })
-        })
+        }
 
     }
 
@@ -292,7 +301,8 @@ const AddObservation = () => {
             mode: {
                 update: true,
                 id: false
-            }
+            },
+
         })
         setObservationImages([])
         setObservationData(null)
@@ -349,11 +359,24 @@ const AddObservation = () => {
         })
             .then(response => {
                 console.log(response?.data?.data)
+                let data = response?.data?.data;
+                setDraftData({
+                    image_type: data.image_type,
+                    elevation_angle: data.elevation_angle,
+                    video_url: data.video_url,
+                    camera: data.camera_data,
+                    question_field_one: data.question_field_one,
+                    question_field_two: data.question_field_two,
+                    story: data.story,
+                    map_data: data.images
+                })
             })
             .catch(error => {
                 console.log(error)
             })
     }
+
+
     
     useEffect(() => {
         let id = observationSteps?.mode?.id,
@@ -363,8 +386,20 @@ const AddObservation = () => {
         if (updateUrl && obvType === "draft") {
             getObservationDataForUpdate(id).then(r => r)
         }
-    }, [location.pathname, observationSteps?.mode, updateMode])
-    
+    }, [location.pathname, updateMode]);
+
+
+    useEffect(()=> {
+        let existingObvImageData = {...observationImages};
+        setObservationImages({
+            ...existingObvImageData,
+            data: draftData?.map_data,
+            selected_image_id: draftData?.map_data[0].id,
+            selected_image_index: 0,
+            observation_count: 1
+        });
+    }, [draftData, setObservationImages])
+
 
     // Set Progress Bar
     useEffect(() => {
@@ -463,7 +498,7 @@ const AddObservation = () => {
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
-                                                <ObservationAfterImageUpload showUploadedPreview={showUploadedPreview} obvType={observationType} step={observationSteps} error={error} detectImage={deletedImage} remove={removeItem} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
+                                                <ObservationAfterImageUpload  showUploadedPreview={showUploadedPreview} obvType={observationType} step={observationSteps} error={error} detectImage={deletedImage} remove={removeItem} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
                                                 <ObservationImages detectImage={deletedImage} remove={removeItem} proceedNext={()=> handleContinue()}/>
                                             }

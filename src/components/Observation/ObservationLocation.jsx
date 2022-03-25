@@ -411,7 +411,8 @@ const ObservationLocation = (props) => {
                                 <Label className="text-uppercase" htmlFor="TIME ZONE">TIME ZONE</Label>
                                 <Dropdown className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
                                     <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                        <span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>
+                                        {/*<span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>*/}
+                                        <span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone}` : ''}</span>
                                         <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                     </DropdownToggle>
                                     <DropdownMenu className="py-0 shadow">

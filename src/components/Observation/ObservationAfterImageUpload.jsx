@@ -128,7 +128,7 @@ const ObservationAfterImageUpload = (props) => {
                             {isMultiple &&
                                 <Col sm={12}>
                                     <div className="small-upload_box mb-3">
-                                        <ObservationUploadImg imageFormat={false} maxLimit={false} multiple={false} />
+                                        <ObservationUploadImg detectImage={detectImage} imageFormat={false} maxLimit={false} multiple={false} />
                                     </div>
                                 </Col>
                             }
@@ -139,13 +139,13 @@ const ObservationAfterImageUpload = (props) => {
                                 <ImagePreview remove={remove} />
                             </Col>
 
-                            {obvType?.image_type !== 3 &&
+                            {/*{obvType?.image_type !== 3 &&*/}
                             <Col sm={12}>
                                 <Row>
                                     <ObservationCategory obvType={obvType} error={error} />
                                 </Row>
                             </Col>
-                            }
+                            {/*}*/}
 
                             <Col sm={12}>
                                 <FormGroup check className="mb-3">

@@ -36,11 +36,13 @@ const ObservationDetails = (props) =>{
                         </Button>
                         {(data?.category_data[0]) ? data?.category_data[0] : null} <Badge className="text-uppercase">{activeType}</Badge>
                     </div>
-                    <div>
-                        <Button variant="primary" onClick={() => handleContinueEdit({id: data?.id, type: activeType})}>
-                            Continue Editing
-                        </Button>
-                    </div>
+                    {activeType === "draft" &&
+                        <div>
+                            <Button variant="primary" onClick={() => handleContinueEdit({id: data?.id, type: activeType})}>
+                                Continue Editing
+                            </Button>
+                        </div>
+                    }
                 </ModalHeader>
                 <ModalBody>
                     <Row className="h-100">
@@ -58,8 +60,9 @@ const ObservationDetails = (props) =>{
                                     </div>
                                 </Col>
                                 <Col xs={6} className="justify-content-end d-flex align-items-center">
-                                    <i className="observation_type rounded-circle bg-white">
-                                        <LazyLoadImage effect="blur" src={(data?.category_data[0]) ? getCategoryImage(data?.category_data[0]): ''} className="rounded-circle" /></i>
+                                    {/*<i className="observation_type rounded-circle bg-white">*/}
+                                    {/*    <LazyLoadImage effect="blur" src={(data?.category_data[0]) ? getCategoryImage(data?.category_data[0]): ''} className="rounded-circle" />*/}
+                                    {/*</i>*/}
                                     <h6 className="ps-2 mb-0 text-truncate">{(data?.category_data[0]) ? data?.category_data[0] : null}</h6>
                                 </Col>
                             </Row>
