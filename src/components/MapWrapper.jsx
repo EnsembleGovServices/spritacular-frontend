@@ -12,7 +12,10 @@ Geocode.enableDebug();
 class Map extends Component{
 
 	constructor( props ){
+		
 		super( props );
+		this.country = null;
+		this.address = null;
 		this.state = {
 			address: '',
 			city: '',
@@ -46,7 +49,7 @@ class Map extends Component{
 					  short_address = [city,state,this.getCountry(addressArray)['long_name']].filter(x => x !== undefined && x !== null ).toString();
 
 				// console.log( 'city', city, area, state );
-
+				console.log(short_address,'ffdf');
 				this.setState( {
 					address: ( address ) ? address : '',
 					area: ( area ) ? area : '',
@@ -54,12 +57,30 @@ class Map extends Component{
 					state: ( state ) ? state : '',
 					country: (country) ? country: '',
 					short_address: (short_address)? short_address : '',
+					markerPosition: {
+						lat: this.state.mapPosition.lat,
+						lng: this.state.mapPosition.lng
+					},
+					mapPosition: {
+						lat: this.state.mapPosition.lat,
+						lng: this.state.mapPosition.lng
+					},
+					
 				} )
+				this.country = country;
+				this.address = short_address;
+				if(response){
+
+					this.props.handleState(false,[this.country,this.address,]);
+				}
 			},
 			error => {
 				console.error( error );
 			}
 		);
+		// if(this.country != null){
+			
+		// }
 		
 	};
 
@@ -91,13 +112,13 @@ class Map extends Component{
 						lng: newLng
 					},
 				} )
-				this.props.handleState(this.state);
+				this.props.handleState(true,this.state);
 			},
 			error => {
 				console.error(error);
 			}
 		);
-		// console.log(this.state);
+		
 	};
 	/**
 	 * Component should only update ( meaning re-render ), when the user selects the address, or drags the pin
@@ -242,7 +263,7 @@ class Map extends Component{
 						lng: newLng
 					},
 				} )
-				this.props.handleState(this.state);
+				this.props.handleState(true,this.state);
 			},
 			error => {
 				console.error(error);
@@ -282,7 +303,7 @@ class Map extends Component{
 				lng: lngValue
 			},
 		})
-		this.props.handleState(this.state);
+		this.props.handleState(true,this.state);
 	};
 
 
