@@ -186,18 +186,7 @@ const Register = (props) => {
                             <FormFeedback>{error?.data?.password}</FormFeedback>
                         </FormGroup>
                         <FormGroup>
-                            {/* <Input
-                                required
-                                type="select"
-                                name="location"
-                                onChange={(e) => handleInput(e)}
-                            >
-                                <option value="Ahmedabad">Ahmedabad</option>
-                                <option value="Pune">Pune</option>
-                                <option value="Bombay">Bombay</option>
-                            </Input> */}
                             <PlacesAutocomplete handleLocations={handleLocations} error = {error}/>
-                            
                         </FormGroup>
                         <FormGroup check>
                             <Label check>
