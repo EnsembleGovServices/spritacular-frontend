@@ -241,7 +241,7 @@ const AddObservation = () => {
             })
 
         } else {
-            await axios.get(baseURL.api+`/observation/get_draft_data/${observationSteps?.mode?.id}/`,formData, {
+            await axios.put(baseURL.api+`/observation/update_observation/${observationSteps?.mode?.id}/`,formData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${auth?.token?.access}`
@@ -362,6 +362,7 @@ const AddObservation = () => {
             .then(response => {
                 console.log(response?.data?.data)
                 let data = response?.data?.data;
+                setUpdateMode(true);
                 setDraftData({
                     image_type: data.image_type,
                     elevation_angle: data.elevation_angle,
