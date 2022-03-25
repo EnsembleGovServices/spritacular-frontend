@@ -11,6 +11,7 @@ import {getdirectionDegree} from "../../helpers/observation";
 
 const ObservationCard = (props) => {
     const {cardItems, handleClick,userProfile,cardData,index} = props;
+    console.log(cardItems?.category_data);// `/assets/images/category/${cardData?.category_data[0].toLowerCase().replaceAll(" ", "")}.png`);
     return(
         <>
             <Card className="observation_card overflow-hidden">
@@ -31,15 +32,18 @@ const ObservationCard = (props) => {
                         <img alt="Card cap" src={cardData?.image} className="img-fluid card-img" />
                         {/* <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" /> */}
                         <CardBody className="position-relative observation-card_body">
-                            <i className="position-absolute observation_type rounded-circle bg-white">
-                                <img src={ `/assets/images/category/${'SPrite'.toLowerCase().replaceAll(" ", "")}.png`} alt="Sprite" className="rounded-circle" />
+                           {cardItems?.category_data.length > 0 && cardItems?.category_data.map((item) => {
+                               {console.log(item)}
+                            return (<i className="position-absolute observation_type rounded-circle bg-white">
+                                <img src={  `/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt="Sprite" className="rounded-circle" />
                                 {/* <LazyLoadImage effect="blur" src={(userProfile) ? getCategoryImage(cardData?.category_data[0]): Images.Sprite} alt="Sprite" className="rounded-circle" /> */}
-                            </i>
+                            </i>)
+                           })}
                             <Row className="card-details">
                                 <Col xs={6} lg={6} className="">
                                     <div className="card_desc">
                                         <CardTitle className="font-bold">{(cardData?.obs_date_time_as_per_utc) ? moment.utc(moment(cardData?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY") : (cardData?.obs_date) ? cardData?.obs_date : null }</CardTitle> 
-                                        <CardSubtitle>{(cardData?.obs_date_time_as_per_utc) ? moment.utc(moment(cardData?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): (cardData?.obs_time) ? cardData?.obs_time : null} <Badge className="bg-black text-white p-1">{(cardData?.obs_date_time_as_per_utc)  ? 'UTC': "UTC"}</Badge></CardSubtitle>
+                                        <CardSubtitle>{(cardData?.obs_date_time_as_per_utc) ? moment.utc(moment(cardData?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): (cardData?.obs_time) ? cardData?.obs_time : null} <Badge className="bg-black text-white p-1">{(cardData?.obs_date_time_as_per_utc)  ? 'UTC': (cardData?.obs_time) ?  "UTC" : ''}</Badge></CardSubtitle>
                                     </div>
                                 </Col>
                                 <Col xs={6} lg={6} className=" justify-content-end d-flex" >
