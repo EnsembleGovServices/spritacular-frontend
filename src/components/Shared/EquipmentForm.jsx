@@ -1,6 +1,7 @@
-import {FormFeedback, FormGroup, Input, Col} from "reactstrap";
+import {FormGroup, Input, Col} from "reactstrap";
 
-const EquipmentForm = ({handleInput1,updateSetting,error}) => {
+const EquipmentForm = (props) => {
+    const {handleInput1, updateSetting, error} = props;
     return(
         <>
          <Col md="12">

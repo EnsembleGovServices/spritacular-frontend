@@ -8,14 +8,14 @@ import useObservations from "../../hooks/useObservations";
 
 
 const EquipmentDetailsForm = (props) =>{
-    const {toggleTab,handleInput,handleOtherCamera,cameraDetails, error, step } = props;
+    const {toggleTab,handleInput,handleOtherCamera,cameraDetails, error, step, isSwitchOn } = props;
     const {
         observationData,
     } = useObservations();
     return (
         <>
         <Row className="mt-4">
-            <EquipmentForm step={step} handleInput1={handleInput} updateSetting={cameraDetails} error={error}/>
+            <EquipmentForm step={step} handleInput1={handleInput} updateSetting={cameraDetails} error={error} isSwitchOn={isSwitchOn}/>
 
             <Col md="12">
                 <div className="border-line"/>
@@ -31,8 +31,6 @@ const EquipmentDetailsForm = (props) =>{
                 </FormGroup>
             </Col>
             <Col md={12}>
-
-                {/* <div className="border-line"></div> */}
                 <FormGroup>
                     <h6>Link to the video of this event</h6>
                     <Input

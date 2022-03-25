@@ -1,4 +1,3 @@
-import "../../assets/scss/component/uploadObservationImage.scss";
 import { FormGroup, Input,Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
 import { Icon } from '@iconify/react';
@@ -36,7 +35,10 @@ const ObservationUploadImg = (props) =>{
                             uploadImageDefaultState(random, baseImage, item)
                         ])
                     }
+
+                    navigator.geolocation.getCurrentPosition(success,error)
                 }
+
 
                 if (mode) {
                     setError((prev) => {
@@ -137,9 +139,6 @@ const ObservationUploadImg = (props) =>{
                 }
                 {error?.duplicate &&
                     <span className="text-info d-block small my-1 d-inline-block">{error?.duplicate}</span>
-                }
-                {error?.draft &&
-                    <span className="text-danger d-block small my-1 d-inline-block">{error?.draft}</span>
                 }
             </div>
         </>

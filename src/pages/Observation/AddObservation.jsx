@@ -199,6 +199,7 @@ const AddObservation = () => {
     }
 
     const sendData = async (draft) => {
+        
         const cloneDeep = require('lodash.clonedeep');
         const formData = new FormData();
         const finalData = cloneDeep(observationData);
@@ -548,7 +549,7 @@ const AddObservation = () => {
                                                     <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
                                                 </div>
                                             }
-                                            <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>
+                                            {observationImages?.data && <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>}
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                             <FormGroup check className="d-flex align-items-center position-relative">
@@ -570,11 +571,7 @@ const AddObservation = () => {
                                                     To enable this feature, you need to update it in your profile setting.
                                                 </span>
                                             }
-                                            {isSwitchOn ?
-                                                <EquipmentDetails step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={auth?.camera}/>
-                                                :
-                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}  handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
-                                            }
+                                                <EquipmentDetailsForm step={observationSteps} isSwitchOn={isSwitchOn} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}  handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
                                         </TabPane>
                                     </TabContent>
                                 </div>

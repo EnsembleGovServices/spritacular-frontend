@@ -24,7 +24,7 @@ const ObservationDetailPage = (props) => {
             elementType={"ul"}
             options={masonryOptions}
             disableImagesLoaded={false}
-            updateOnEachImageLoad={false}
+            updateOnEachImageLoad={true}
           >
             {observationList.length > 0 && observationList?.map((cardItems, index)=> {
               return(

@@ -11,12 +11,14 @@ const ObservationUploadedImg = (props) => {
     const [activeTab, setActiveTab] = useState(observationImages?.selected_image_id ?? null);
     // Toggle Tabs
     const toggleTab = (tab,index=0) => {
+       
         setActiveTab(tab);
         setObservationImages(prev => {
             return {
                 ...prev,
                 selected_image_id: tab,
-                selected_image_index:index
+                selected_image_index:index,
+
             }
         });
     };
