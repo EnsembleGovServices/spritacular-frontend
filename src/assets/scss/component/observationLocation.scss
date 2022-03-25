@@ -22,6 +22,11 @@
             width: 24px;
             margin-right: 8px;
         }
+        span{
+            width: calc(100% - 30px);
+            display: block;
+            word-break: break-word;
+        }
     }
     .btn-secondary{
         &:not(.gray-outline-btn){

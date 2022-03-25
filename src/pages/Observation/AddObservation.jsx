@@ -10,11 +10,13 @@ import {
     TabContent,
     TabPane,
     FormGroup,
-    UncontrolledAlert
+    UncontrolledAlert,
+    Label,
+    Input
 } from "reactstrap";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import {useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
@@ -513,23 +515,18 @@ const AddObservation = () => {
                                             <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
-                                            <FormGroup className="d-flex align-items-center position-relative">
-                                                <div className="custom-switch">
-                                                    <input
-                                                        id="checkbox0"
+                                            <FormGroup check className="d-flex align-items-center position-relative">
+                                                <Label check>
+                                                    <Input
+                                                        required
                                                         type="checkbox"
-                                                        className="hidden"
+                                                        name="profileData"
+                                                        checked={isSwitchOn}
                                                         disabled={!auth?.camera}
                                                         onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e).then(r => r);}}
                                                     />
-                                                    <label
-                                                        className="switchbox"
-                                                        htmlFor="checkbox0"
-                                                    />
-                                                    <span>
-                                                    I used the same camera, camera settings, and lens listed in my profile
-                                                </span>
-                                                </div>
+                                                    Pull data from my profile
+                                                </Label>
                                             </FormGroup>
                                             {!auth?.camera &&
                                                 <span className="block text-danger small">

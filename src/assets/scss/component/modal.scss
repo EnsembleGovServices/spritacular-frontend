@@ -184,7 +184,9 @@
     &.modal-content-page{
         margin: 0 auto;
     }
-
+    &.registerModal {
+        max-width: 470px;
+    }
 }
 
 .login-main {

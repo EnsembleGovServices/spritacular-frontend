@@ -248,27 +248,8 @@ const MyObservations = () => {
            <div className="data-not-found">
               <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
               <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
-            </div>}
-          {/* <Row className="">
-            {observationList && observationList?.map((cardItems, index)=> {
-              if(cardItems?.images.length > 0){
-                return (
-                    <>
-                    {cardItems?.images?.map((image,id) => {
-                      return ( <Col key={id} sm={6} md={4} xl={3} className="mb-4">
-                          <ObservationCard cardItems = {image} cardData={cardItems} index={index} userProfile={cardItems.user_data} handleClick={handleObservationDetailModal}/>
-                      </Col>)
-                      })
-                    }
-                    </>
-                  );
-              }
-              else{
-                return;
-              }
-            })
-            }
-          </Row> */}
+            </div>
+          }
           <ObservationDetailPage  observationList={currentObservationList} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
         </Container> 
          {isObservationDetailModal && <ObservationDetails data={currentObservationList[selectedObservationId]}  activeType={activeType} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} handleContinueEdit={handleObservationEdit} />}
