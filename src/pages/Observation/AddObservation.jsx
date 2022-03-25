@@ -198,6 +198,7 @@ const AddObservation = () => {
     }
 
     const sendData = async (draft) => {
+        
         const cloneDeep = require('lodash.clonedeep');
         const formData = new FormData();
         const finalData = cloneDeep(observationData);
@@ -512,7 +513,7 @@ const AddObservation = () => {
                                                     <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
                                                 </div>
                                             }
-                                            <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>
+                                            {observationImages?.data && <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>}
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                             <FormGroup check className="d-flex align-items-center position-relative">
