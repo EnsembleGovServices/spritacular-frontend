@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Badge, Button, Col, Modal, ModalBody, ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import Images from './../../static/images';
 import { imageDetails } from "../../helpers/observation";
-import LazyLoad from "../../components/Upload/LazyLoad";
 import "../../assets/scss/component/observationDetails.scss";
 import ObservationMoreDetails from "../../components/Observation/ObservationDetails/ObservationMoreDetails";
 import ObservationMoreEquipementDetails from "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails";
@@ -49,7 +48,6 @@ const ObservationDetails = (props) =>{
                     <Row className="h-100">
                         <Col md={6}>
                             <div className="preview-detail mb-2">
-                                {/* <LazyLoad src={data?.images[0].image} alt="card details" ></LazyLoad> */}
                                 <LazyLoadImage effect="blur" src={data?.images[0].image} alt="card details" className="test" />
                             </div>
                             <Row>
