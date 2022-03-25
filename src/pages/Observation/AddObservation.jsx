@@ -534,11 +534,7 @@ const AddObservation = () => {
                                                     To enable this feature, you need to update it in your profile setting.
                                                 </span>
                                             }
-                                            {isSwitchOn ?
-                                                <EquipmentDetails step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={auth?.camera}/>
-                                                :
-                                                <EquipmentDetailsForm step={observationSteps} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}  handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
-                                            }
+                                                <EquipmentDetailsForm step={observationSteps} isSwitchOn={isSwitchOn} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}  handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
                                         </TabPane>
                                     </TabContent>
                                 </div>
