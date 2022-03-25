@@ -28,8 +28,8 @@ const ObservationCard = (props) => {
                         <Icon icon="eva:edit-2-outline" />
                     </Button> }
                     {cardItems?.is_verified && <div className="verify-card"><Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" /></div>}
-                        {/* <img alt="Card cap" src={cardData?.image} className="img-fluid card-img" /> */}
-                        <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" />
+                        <img alt="Card cap" src={cardData?.image} className="img-fluid card-img" />
+                        {/* <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" /> */}
                         <CardBody className="position-relative observation-card_body">
                             <i className="position-absolute observation_type rounded-circle bg-white">
                                 <img src={ `/assets/images/category/${'SPrite'.toLowerCase().replaceAll(" ", "")}.png`} alt="Sprite" className="rounded-circle" />
