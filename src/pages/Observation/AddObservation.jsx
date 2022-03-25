@@ -318,34 +318,37 @@ const AddObservation = () => {
         observationData?.map_data?.filter(item => item.id !== id).map((item, index) => {
             return newImage.push(item);
         })
-        setObservationSteps(prev => {
-            return {
-                ...prev,
-                selected_image_id: newImage?.[0].id,
-                selected_image_index: 0,
-                observation_count: newImage.length
-            }
-        });
+        if(newImage.length > 0){
 
-        setObservationImages(prev => {
-            return {
-                ...prev,
-                observation_count: newImage.length,
-                selected_image_id: newImage?.[0].id,
-                selected_image_index: 0,
-                data: newImage
-            }
-        });
-
-        setObservationData(prev => {
-            return {
-                ...prev,
-                map_data: newImage
-            }
-        });
-
-        setDeletedImage(id);
-
+            setObservationSteps(prev => {
+                return {
+                    ...prev,
+                    selected_image_id: newImage?.[0].id,
+                    selected_image_index: 0,
+                    observation_count: newImage.length
+                }
+            });
+            setObservationImages(prev => {
+                return {
+                    ...prev,
+                    observation_count: newImage.length,
+                    selected_image_id: newImage?.[0].id,
+                    selected_image_index: 0,
+                    data: newImage
+                }
+            });
+            setObservationData(prev => {
+                return {
+                    ...prev,
+                    map_data: newImage
+                }
+            });
+            setDeletedImage(id);
+        }
+        else{
+            // navigate('/'); 
+            window.location.reload();
+        }
     }
 
     const showUploadedPreview = () => {
