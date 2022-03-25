@@ -205,7 +205,6 @@ const ObservationLocation = (props) => {
             setObservationImages(observationAddress);
         }
     },[observationData?.image_type]);
-    console.log(observationImages,address1);
     const selectDirection = (index) => {
         const directionWrapper = document.querySelector('.compass-wrapper');
         const directionId = document.getElementById(`directionValue${index}`);
