@@ -509,7 +509,7 @@ const AddObservation = () => {
                                                     <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
                                                 </div>
                                             }
-                                            <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>
+                                            {observationImages?.data && <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>}
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                             <FormGroup className="d-flex align-items-center position-relative">

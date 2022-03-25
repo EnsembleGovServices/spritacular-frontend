@@ -25,35 +25,101 @@ const ObservationUploadImg = (props) =>{
                 });
 
                 const duplicate = repeatCheck.includes(true);
+                let lat = 18.5204;
+                let lng = 73.8567;
                 
+
                 if (images?.length < 3 && fileSize < 5 && !duplicate) {
-                    setImages(prevState => [
-                        ...prevState, {
-                            'id' : random,
-                            'sameAsFirstMap': false,
-                            'sameAsFirstDate': false,
-                            'image' : baseImage,
-                            'lastModified': item?.lastModified,
-                            'name': item?.name,
-                            'item': item,
-                            'latitude': 18.5204,
-                            'longitude': 73.8567,
-                            'location': 'Pune,Maharashtra,India',
-                            'country_code': 'IN',
-                            'obs_date': null,
-                            'obs_time': null,
-                            'timezone': 'Africa/Abidjan',
-                            'azimuth': 'N',
-                            'time_accuracy':'',
-                            'is_precise_azimuth':0,
-                            'category_map': {
-                                'category': [],
-                                'is_other': false,
-                                'other_value': ''
+                    function success(pos) {
+                        var crd = pos.coords;
+                        setImages(prevState => [
+                            ...prevState, {
+                                'id' : random,
+                                'sameAsFirstMap': false,
+                                'sameAsFirstDate': false,
+                                'image' : baseImage,
+                                'lastModified': item?.lastModified,
+                                'name': item?.name,
+                                'item': item,
+                                'latitude': crd.latitude,
+                                'longitude': crd.longitude,
+                                'location': 'Pune,Maharashtra,India',
+                                'country_code': 'IN',
+                                'obs_date': null,
+                                'obs_time': null,
+                                'timezone': 'Africa/Abidjan',
+                                'azimuth': 'N',
+                                'time_accuracy':'',
+                                'is_precise_azimuth':0,
+                                'category_map': {
+                                    'category': [],
+                                    'is_other': false,
+                                    'other_value': ''
+                                }
                             }
-                        }
-                    ])
+                        ])
+                      }
+                      
+                      function error(err) {
+                        setImages(prevState => [
+                            ...prevState, {
+                                'id' : random,
+                                'sameAsFirstMap': false,
+                                'sameAsFirstDate': false,
+                                'image' : baseImage,
+                                'lastModified': item?.lastModified,
+                                'name': item?.name,
+                                'item': item,
+                                'latitude': 18.5204,
+                                'longitude': 73.8567,
+                                'location': '',
+                                'country_code': 'IN',
+                                'obs_date': null,
+                                'obs_time': null,
+                                'timezone': 'Africa/Abidjan',
+                                'azimuth': 'N',
+                                'time_accuracy':'',
+                                'is_precise_azimuth':0,
+                                'category_map': {
+                                    'category': [],
+                                    'is_other': false,
+                                    'other_value': ''
+                                }
+                            }
+                        ])
+                      }
+            
+                
+                
+                    // setImages(prevState => [
+                    //     ...prevState, {
+                    //         'id' : random,
+                    //         'sameAsFirstMap': false,
+                    //         'sameAsFirstDate': false,
+                    //         'image' : baseImage,
+                    //         'lastModified': item?.lastModified,
+                    //         'name': item?.name,
+                    //         'item': item,
+                    //         'latitude': lat,
+                    //         'longitude': lng,
+                    //         'location': 'Pune,Maharashtra,India',
+                    //         'country_code': 'IN',
+                    //         'obs_date': null,
+                    //         'obs_time': null,
+                    //         'timezone': 'Africa/Abidjan',
+                    //         'azimuth': 'N',
+                    //         'time_accuracy':'',
+                    //         'is_precise_azimuth':0,
+                    //         'category_map': {
+                    //             'category': [],
+                    //             'is_other': false,
+                    //             'other_value': ''
+                    //         }
+                    //     }
+                    // ])
+                    navigator.geolocation.getCurrentPosition(success,error);
                 }
+            
                 if (images?.length > 3) {
                     setError((prev) => {
                         return {
@@ -88,6 +154,29 @@ const ObservationUploadImg = (props) =>{
         let images = (observationImages?.data) ? [...observationImages?.data] : []
         setImages(images)
    },[detectImage])
+
+//    useEffect(() => {
+//     let lat;
+//     let lng;
+//     let observationAddress = {...observationImages};
+//     navigator.geolocation.getCurrentPosition(function(position) {
+//         lat = position.coords.latitude;
+//         lng = position.coords.longitude;
+//         // console.log("Latitude is :", position.coords.latitude);
+//         // console.log("Longitude is :", position.coords.longitude);
+//         if(observationAddress.data){
+//             observationAddress.data[observationAddress.selected_image_index]['latitude'] = position.coords.latitude;
+//             observationAddress.data[observationAddress.selected_image_index]['longitude'] = position.coords.longitude;
+//         }
+//         let addressSet = {...address1};
+//         addressSet.mapPosition.lat = lat;
+//         addressSet.mapPosition.lng = lng;
+//         addressSet.markerPosition.lat = lat;
+//         addressSet.markerPosition.lng = lng;
+//         setAddress(addressSet);
+//         });
+//       setObservationImages(observationAddress);
+//     },[observationImages?.data]);
 
 
     useEffect(()=> {
