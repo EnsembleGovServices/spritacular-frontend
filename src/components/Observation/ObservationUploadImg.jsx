@@ -3,12 +3,14 @@ import useObservations from "../../hooks/useObservations";
 import { Icon } from '@iconify/react';
 import {useEffect, useState} from "react";
 import {uploadImageDefaultState} from "../../helpers/observation";
+import PropTypes from "prop-types";
 
 const ObservationUploadImg = (props) =>{
     const {multiple, maxLimit, imageFormat, detectImage, mode}=props;
     const {setObservationImages, observationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
+    const [userLocation, setUserLocation] = useState();
 
     const handleUploadImage = (e) => {
         setError(null);
@@ -23,21 +25,37 @@ const ObservationUploadImg = (props) =>{
                 const repeatCheck = images?.map((image, index) => {
                     return image?.lastModified === item?.lastModified && image?.name === item?.name;
                 });
-
                 const duplicate = repeatCheck.includes(true);
-                
+
+                const success = async (position) => {
+                    let coordinates =  position.coords;
+                    console.log('latitude', coordinates?.latitude)
+                    await setUserLocation({
+                        latitude: coordinates?.latitude,
+                        longitude: coordinates?.longitude
+                    })
+
+                }
+
+                const error = async (error) => {
+                    await setUserLocation({})
+                    console.warn(`ERROR(${error.code}): ${error.message}`)
+                }
+
+
                 if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate) {
+                    navigator.geolocation.getCurrentPosition(success,error)
+
                     if (mode) {
-                       return setImages([uploadImageDefaultState(random, baseImage, item)])
+                       return setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
                     } else {
                         setImages(prevState => [
                             ...prevState,
-                            uploadImageDefaultState(random, baseImage, item)
+                            uploadImageDefaultState(random, baseImage, item, userLocation)
                         ])
                     }
-
-                    navigator.geolocation.getCurrentPosition(success,error)
                 }
+
 
 
                 if (mode) {
@@ -79,9 +97,13 @@ const ObservationUploadImg = (props) =>{
     };
 
     useEffect(() => {
-        let images = (observationImages?.data) ? [...observationImages?.data] : []
+        let images = (observationImages?.data) ? [...observationImages?.data] : [];
+        observationImages?.data?.map((item, index) => {
+            return item.latitude = userLocation?.latitude,
+                item.longitude = userLocation?.longitude
+        })
         setImages(images)
-   },[detectImage, mode])
+   },[detectImage, mode, userLocation])
 
 
     useEffect(()=> {
@@ -93,7 +115,7 @@ const ObservationUploadImg = (props) =>{
                 selected_image_index:0
             });
         }
-    }, [images, setObservationImages])
+    }, [images, setObservationImages, userLocation])
 
     return (
         <>
@@ -144,4 +166,10 @@ const ObservationUploadImg = (props) =>{
         </>
     )
 }
+
+ObservationUploadImg.propTypes = {
+    userLocation: PropTypes.object,
+};
+
+
 export default ObservationUploadImg;

@@ -16,7 +16,7 @@ export const imageDetails = {
     Comments : "Comments",
 }
 
-export const uploadImageDefaultState = (random, baseImage, item) => {
+export const uploadImageDefaultState = (random, baseImage, item, userLocation) => {
     return {
         id : random,
         sameAsFirstMap: false,
@@ -25,8 +25,8 @@ export const uploadImageDefaultState = (random, baseImage, item) => {
         lastModified: item?.lastModified,
         name: item?.name,
         item: item,
-        latitude: 18.5204,
-        longitude: 73.8567,
+        latitude: userLocation ? userLocation.latitude : '28.5204',
+        longitude: userLocation ? userLocation.longitude : '25.8567',
         location: 'Pune, Maharashtra, India',
         country_code: 'IN',
         obs_date: null,
