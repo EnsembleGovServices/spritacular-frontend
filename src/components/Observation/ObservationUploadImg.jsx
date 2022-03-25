@@ -1,11 +1,12 @@
+import "../../assets/scss/component/uploadObservationImage.scss";
 import { FormGroup, Input,Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
-import "../../assets/scss/component/uploadObservationImage.scss";
 import { Icon } from '@iconify/react';
 import {useEffect, useState} from "react";
+import {uploadImageDefaultState} from "../../helpers/observation";
 
 const ObservationUploadImg = (props) =>{
-    const {multiple, maxLimit, imageFormat, detectImage}=props;
+    const {multiple, maxLimit, imageFormat, detectImage, mode}=props;
     const {setObservationImages, observationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
@@ -26,35 +27,26 @@ const ObservationUploadImg = (props) =>{
 
                 const duplicate = repeatCheck.includes(true);
                 
-                if (images?.length < 3 && fileSize < 5 && !duplicate) {
-                    setImages(prevState => [
-                        ...prevState, {
-                            'id' : random,
-                            'sameAsFirstMap': false,
-                            'sameAsFirstDate': false,
-                            'image' : baseImage,
-                            'lastModified': item?.lastModified,
-                            'name': item?.name,
-                            'item': item,
-                            'latitude': 18.5204,
-                            'longitude': 73.8567,
-                            'location': 'Pune,Maharashtra,India',
-                            'country_code': 'IN',
-                            'obs_date': null,
-                            'obs_time': null,
-                            'timezone': 'Africa/Abidjan',
-                            'azimuth': 'N',
-                            'time_accuracy':'',
-                            'is_precise_azimuth':0,
-                            'category_map': {
-                                'category': [],
-                                'is_other': false,
-                                'other_value': ''
-                            }
-                        }
-                    ])
+                if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate) {
+                    if (mode) {
+                       return setImages([uploadImageDefaultState(random, baseImage, item)])
+                    } else {
+                        setImages(prevState => [
+                            ...prevState,
+                            uploadImageDefaultState(random, baseImage, item)
+                        ])
+                    }
                 }
-                if (images?.length > 3) {
+
+                if (mode) {
+                    setError((prev) => {
+                        return {
+                            ...prev,
+                            draft: 'You can not add new image',
+                        }
+                    })
+                }
+                if (images?.length > 2) {
                     setError((prev) => {
                         return {
                             ...prev,
@@ -87,7 +79,7 @@ const ObservationUploadImg = (props) =>{
     useEffect(() => {
         let images = (observationImages?.data) ? [...observationImages?.data] : []
         setImages(images)
-   },[detectImage])
+   },[detectImage, mode])
 
 
     useEffect(()=> {
@@ -145,6 +137,9 @@ const ObservationUploadImg = (props) =>{
                 }
                 {error?.duplicate &&
                     <span className="text-info d-block small my-1 d-inline-block">{error?.duplicate}</span>
+                }
+                {error?.draft &&
+                    <span className="text-danger d-block small my-1 d-inline-block">{error?.draft}</span>
                 }
             </div>
         </>

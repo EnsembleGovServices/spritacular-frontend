@@ -42,7 +42,8 @@ const AddObservation = () => {
         setObservationImages,
         observationData,
         setObservationData,
-        observationType
+        observationType,
+        setObservationType
     } = useObservations();
     const location = useLocation();
     const navigate = useNavigate();
@@ -352,6 +353,14 @@ const AddObservation = () => {
             activeTab === Tabs.ObservationImages) && !(activeTab === Tabs.DateTimeLocation && !(observationType?.image_type === 3)))
     }
 
+
+    const getFileName = (url) => {
+        return url
+            .split(/[#?]/)[0]
+            .split("/")
+            .pop()
+            .trim();
+    }
     const getObservationDataForUpdate = async (obvId) => {
         await axios.get(baseURL.api+`/observation/get_draft_data/${obvId}/`, {
             headers: {
@@ -360,9 +369,8 @@ const AddObservation = () => {
             }
         })
             .then(response => {
-                console.log(response?.data?.data)
                 let data = response?.data?.data;
-                setUpdateMode(true);
+                console.log(data);
                 setDraftData({
                     image_type: data.image_type,
                     elevation_angle: data.elevation_angle,
@@ -372,13 +380,34 @@ const AddObservation = () => {
                     question_field_two: data.question_field_two,
                     story: data.story,
                     map_data: data.images
-                })
+                });
+                setUpdateMode(true);
+                // setNext(true);
             })
             .catch(error => {
                 console.log(error)
             })
     }
 
+    useEffect(()=> {
+        draftData?.map_data?.map((item, index) => {
+            let imageUrl = item.image,
+                fileName = getFileName(imageUrl);
+
+            // fileName = getFileName(imageUrl).split(".")[0];
+
+            console.log(fileName);
+            return fetch(imageUrl)
+                .then(async response => {
+                    const contentType = response.headers.get('content-type')
+                    const blob = await response.blob()
+                    const file = new File([blob], fileName, { contentType })
+                    item.item = file;
+                    return file;
+                })
+                .catch(error => console.log(`Error converting the CDN image to file object at index [${index}]`))
+        })
+    }, [draftData])
 
     
     useEffect(() => {
@@ -393,13 +422,19 @@ const AddObservation = () => {
 
 
     useEffect(()=> {
-        let existingObvImageData = {...observationImages};
+        let existingObvImageData = {...observationImages},
+            obvType = {...observationType};
+
+        setObservationType({
+            ...obvType,
+            image_type: draftData?.image_type
+        });
         setObservationImages({
             ...existingObvImageData,
             data: draftData?.map_data,
             selected_image_id: draftData?.map_data[0].id,
             selected_image_index: 0,
-            observation_count: 1
+            observation_count: draftData?.map_data.length
         });
     }, [draftData, setObservationImages])
 
@@ -429,6 +464,7 @@ const AddObservation = () => {
 
     return(
         <div className="position-relative">
+            <h3 className="px-4 py-3 text-center">{updateMode ? 'update mode hai' : 'nahi h update mode'}</h3>
             {isLoading &&
                 <Loader fixContent={true} />
             }
@@ -503,7 +539,7 @@ const AddObservation = () => {
                                             {next ?
                                                 <ObservationAfterImageUpload  showUploadedPreview={showUploadedPreview} obvType={observationType} step={observationSteps} error={error} detectImage={deletedImage} remove={removeItem} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
-                                                <ObservationImages detectImage={deletedImage} remove={removeItem} proceedNext={()=> handleContinue()}/>
+                                                <ObservationImages mode={updateMode} detectImage={deletedImage} remove={removeItem} proceedNext={()=> handleContinue()}/>
                                             }
                                         </TabPane>
                                         <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">

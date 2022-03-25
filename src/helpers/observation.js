@@ -15,6 +15,34 @@ export const imageDetails = {
     Equipment : "Equipment",
     Comments : "Comments",
 }
+
+export const uploadImageDefaultState = (random, baseImage, item) => {
+    return {
+        id : random,
+        sameAsFirstMap: false,
+        sameAsFirstDate: false,
+        image : baseImage,
+        lastModified: item?.lastModified,
+        name: item?.name,
+        item: item,
+        latitude: 18.5204,
+        longitude: 73.8567,
+        location: 'Pune, Maharashtra, India',
+        country_code: 'IN',
+        obs_date: null,
+        obs_time: null,
+        timezone: 'Africa/Abidjan',
+        azimuth: 'N',
+        time_accuracy:'',
+        is_precise_azimuth:0,
+        category_map: {
+            category: [],
+            is_other: false,
+            other_value: ''
+        }
+    }
+}
+
 export const CategoryList = [
     {
         id: 1,
