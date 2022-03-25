@@ -86,7 +86,6 @@ const ObservationLocation = (props) => {
                 lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: null),
                 lng :Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: null)
             })
-            console.log(initialAddress);
             setAddress(address);
             if(observationImages?.data){
                 let observationAddress = {...observationImages};
@@ -172,9 +171,41 @@ const ObservationLocation = (props) => {
             let addressState = {...address1};
             observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.short_address;
             observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
+
+            if(observationData?.image_type === 3){
+                if(observationAddress.data[1]){
+                    observationAddress.data[1]['location'] = address1?.short_address;
+                    observationAddress.data[1]['country_code'] = address1?.country;
+                }
+                if(observationAddress.data[2]){
+                    observationAddress.data[2]['location'] = address1?.short_address;
+                    observationAddress.data[2]['country_code'] = address1?.country;
+                }
+            }
             setObservationImages(observationAddress);
         }
     },[address1]);
+    useEffect(() => {
+        let observationAddress = {...observationImages};        
+        if(observationAddress?.data){
+            let addressState = {...address1};
+            // observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.short_address;
+            // observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
+
+            if(observationData?.image_type === 3){
+                if(observationAddress.data[1]){
+                    observationAddress.data[1]['location'] = observationAddress.data[0]['location'];
+                    observationAddress.data[1]['country_code'] = observationAddress.data[0]['country_code'];
+                }
+                if(observationAddress.data[2]){
+                    observationAddress.data[2]['location'] = observationAddress.data[0]['location'];
+                    observationAddress.data[2]['country_code'] = observationAddress.data[0]['country_code'];
+                }
+            }
+            setObservationImages(observationAddress);
+        }
+    },[observationData?.image_type]);
+    console.log(observationImages,address1);
     const selectDirection = (index) => {
         const directionWrapper = document.querySelector('.compass-wrapper');
         const directionId = document.getElementById(`directionValue${index}`);

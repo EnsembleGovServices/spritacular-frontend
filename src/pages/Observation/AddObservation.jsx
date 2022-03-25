@@ -198,6 +198,7 @@ const AddObservation = () => {
     }
 
     const sendData = async (draft) => {
+        
         const cloneDeep = require('lodash.clonedeep');
         const formData = new FormData();
         const finalData = cloneDeep(observationData);
