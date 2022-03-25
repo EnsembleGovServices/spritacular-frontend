@@ -220,16 +220,6 @@ const MyObservations = () => {
                             <DropdownItem  className="fw-normal" value='1'>1 months ago observations</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
-                    {/* <Input id="SortBy" type="select" name="observationSortBy" defaultValue="" onChange={(e) => {getObservationData(e)}}>
-                      <option disabled defaultValue>
-                        Recent observations
-                      </option>
-                      <option value='1'>1 week ago observations</option>
-                      <option value='2'>2 week ago observations</option>
-                      <option value='3'>3 week ago observations</option>
-                      <option value='4'>4 week ago observations</option>
-                      <option value='1'>1 months ago observations</option>
-                    </Input> */}
                   </FormGroup>  
                   <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary ms-2 ms-xl-4 shadow-none">
                     <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload
