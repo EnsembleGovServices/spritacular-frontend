@@ -13,8 +13,8 @@ const ObservationUploadImg = (props) =>{
     const [error, setError] = useState(null);
     const { auth } = useAuth();
     const [userLocation, setUserLocation] = useState({
-        latitude: auth?.user?.location_metadata?.lat,
-        longitude: auth?.user?.location_metadata?.lng
+        latitude: (auth?.user?.location_metadata?.lat) ? auth?.user?.location_metadata?.lat : 28.5204,
+        longitude: (auth?.user?.location_metadata?.lng) ? auth?.user?.location_metadata?.lng : 25.8567
     });
     const handleUploadImage = (e) => {
         setError(null);
