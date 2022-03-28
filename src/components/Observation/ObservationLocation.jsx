@@ -20,6 +20,7 @@ import {directionValue, Tabs} from "../../helpers/observation";
 import {timezone} from "../../helpers/timezone";
 import ObservationCategory from "./ObservationCategory";
 import {Icon} from '@iconify/react';
+import {getdirectionDegree,getdirectionAngle} from "../../helpers/observation";
 
 
 const ObservationLocation = (props) => {
@@ -30,8 +31,8 @@ const ObservationLocation = (props) => {
         city: '',
         area: '',
         state: '',
-        country: '',
-        short_address: '',
+        country: 'IN',
+        short_address: 'Pune Maharastra Indias',
         mapPosition: {
             lat: null,
             lng: null
@@ -153,6 +154,7 @@ const ObservationLocation = (props) => {
             //  },3000);
             fref.current.handleChangeLatLng(e.target.value,address1.markerPosition.lng);
     }
+    
     const handleChangeLng = (e) => {
         handleImageInput(e);
         let name = e.target.name,
@@ -214,22 +216,22 @@ const ObservationLocation = (props) => {
         }else{
             directionWrapper.classList.add("active-arrow");
             setActiveDire(index);
-            
 
             if (observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0) {
-                observationArray.data[observationImages?.selected_image_index]['azimuth'] = getAngleName;
+                observationArray.data[observationImages?.selected_image_index]['azimuth'] = getdirectionDegree(getAngleName);
 
                 if(observationData?.image_type === 3){
                     if(observationArray.data[1]){
-                        observationArray.data[1]['azimuth'] = getAngleName;
+                        observationArray.data[1]['azimuth'] = getdirectionDegree(getAngleName);
                     }
                     if(observationArray.data[2]){
-                        observationArray.data[2]['azimuth'] = getAngleName;
+                        observationArray.data[2]['azimuth'] = getdirectionDegree(getAngleName);
                     }
                 }
             }
         }
     }
+    console.log(observationImages);
     const handleCopyData = (e,keys) => {
         if(observationImages){
 
@@ -586,7 +588,7 @@ const ObservationLocation = (props) => {
                                 directionValue?.map((direction, index)=>{
                                     return(
                                         <Button
-                                            className={`${direction.name}-direction ${observationArray.data[observationImages?.selected_image_index]['azimuth'] === direction.name ? 'active_direction' : ''}`}
+                                            className={`${direction.name}-direction ${getdirectionAngle(observationArray.data[observationImages?.selected_image_index]['azimuth']) === direction.name ? 'active_direction' : ''}`}
                                             onClick={()=> selectDirection(index)}
                                             key={index}
                                             id= {`directionValue${index}`}
@@ -598,7 +600,7 @@ const ObservationLocation = (props) => {
                             }
                             <div className="center-dot rounded-circle" />
                             <div className="rotate-arrow-wrap">
-                                <div className="rotate-arrow-inner" style={{ "--directionAngle": directionValue.filter((item) => item.name === observationArray.data[observationImages?.selected_image_index]['azimuth']).map((dirData) => {
+                                <div className="rotate-arrow-inner" style={{ "--directionAngle": directionValue.filter((item) => item.name === getdirectionAngle(observationArray.data[observationImages?.selected_image_index]['azimuth'])).map((dirData) => {
                                         return dirData.angle;
                                     }) + 'deg' }}>
                                     <div className="rotate-arrow main"><img src={Images.compassArrow} alt="Compass Arrow" /> </div>

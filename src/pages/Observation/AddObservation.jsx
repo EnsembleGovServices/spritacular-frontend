@@ -118,7 +118,7 @@ const AddObservation = () => {
             }
         });
     }
-
+    
     const handleImageInput = (e,address = null) => {
         let observationArray = {...observationImages};
         if(e === 'address'){
@@ -184,6 +184,7 @@ const AddObservation = () => {
         setObservationImages(observationArray);
 
     }
+    // console.log(observationImages);
 
     const handlesetDraft = () => {
         setIsLoading(true);
