@@ -4,16 +4,15 @@
     height: calc(100% - 29px);
 }
 .comment-wrapper{
+    padding-bottom: 45px;
+    height: 100%;
     .comment-area{
-        height: calc(100% - 45px);
-        ul{
-            li{
-                border-bottom: 1px solid $light-grey1;
-                padding-bottom: 12px;
-                margin-bottom: 12px;
-                &:last-child{
-                    border-bottom: 0;
-                }
+        li{
+            border-bottom: 1px solid $light-grey1;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            &:last-child{
+                border-bottom: 0;
             }
         }
     }
