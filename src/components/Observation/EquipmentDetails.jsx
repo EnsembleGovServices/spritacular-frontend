@@ -4,7 +4,6 @@ import "../../assets/scss/component/observationEquipment.scss";
 
 const EquipmentDetails = (props) =>{
     const {toggleTab,cameraDetails } = props;
-    // console.log(cameraDetails);
     return (
         <Row className="mt-4">
             <Col md={12}>

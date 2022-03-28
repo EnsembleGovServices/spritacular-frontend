@@ -1,14 +1,16 @@
 import { FormGroup, Input,Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
-import "../../assets/scss/component/uploadObservationImage.scss";
 import { Icon } from '@iconify/react';
 import {useEffect, useState} from "react";
+import {uploadImageDefaultState} from "../../helpers/observation";
+import PropTypes from "prop-types";
 
 const ObservationUploadImg = (props) =>{
-    const {multiple, maxLimit, imageFormat, detectImage}=props;
+    const {multiple, maxLimit, imageFormat, detectImage, mode}=props;
     const {setObservationImages, observationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
+    const [userLocation, setUserLocation] = useState();
 
     const handleUploadImage = (e) => {
         setError(null);
@@ -23,104 +25,48 @@ const ObservationUploadImg = (props) =>{
                 const repeatCheck = images?.map((image, index) => {
                     return image?.lastModified === item?.lastModified && image?.name === item?.name;
                 });
-
                 const duplicate = repeatCheck.includes(true);
-                let lat = 18.5204;
-                let lng = 73.8567;
-                
 
-                if (images?.length < 3 && fileSize < 5 && !duplicate) {
-                    function success(pos) {
-                        var crd = pos.coords;
-                        setImages(prevState => [
-                            ...prevState, {
-                                'id' : random,
-                                'sameAsFirstMap': false,
-                                'sameAsFirstDate': false,
-                                'image' : baseImage,
-                                'lastModified': item?.lastModified,
-                                'name': item?.name,
-                                'item': item,
-                                'latitude': crd.latitude,
-                                'longitude': crd.longitude,
-                                'location': 'Pune,Maharashtra,India',
-                                'country_code': 'IN',
-                                'obs_date': null,
-                                'obs_time': null,
-                                'timezone': 'Africa/Abidjan',
-                                'azimuth': 'N',
-                                'time_accuracy':'',
-                                'is_precise_azimuth':0,
-                                'category_map': {
-                                    'category': [],
-                                    'is_other': false,
-                                    'other_value': ''
-                                }
-                            }
-                        ])
-                      }
-                      
-                      function error(err) {
-                        setImages(prevState => [
-                            ...prevState, {
-                                'id' : random,
-                                'sameAsFirstMap': false,
-                                'sameAsFirstDate': false,
-                                'image' : baseImage,
-                                'lastModified': item?.lastModified,
-                                'name': item?.name,
-                                'item': item,
-                                'latitude': 18.5204,
-                                'longitude': 73.8567,
-                                'location': '',
-                                'country_code': 'IN',
-                                'obs_date': null,
-                                'obs_time': null,
-                                'timezone': 'Africa/Abidjan',
-                                'azimuth': 'N',
-                                'time_accuracy':'',
-                                'is_precise_azimuth':0,
-                                'category_map': {
-                                    'category': [],
-                                    'is_other': false,
-                                    'other_value': ''
-                                }
-                            }
-                        ])
-                      }
-            
-                
-                
-                    // setImages(prevState => [
-                    //     ...prevState, {
-                    //         'id' : random,
-                    //         'sameAsFirstMap': false,
-                    //         'sameAsFirstDate': false,
-                    //         'image' : baseImage,
-                    //         'lastModified': item?.lastModified,
-                    //         'name': item?.name,
-                    //         'item': item,
-                    //         'latitude': lat,
-                    //         'longitude': lng,
-                    //         'location': 'Pune,Maharashtra,India',
-                    //         'country_code': 'IN',
-                    //         'obs_date': null,
-                    //         'obs_time': null,
-                    //         'timezone': 'Africa/Abidjan',
-                    //         'azimuth': 'N',
-                    //         'time_accuracy':'',
-                    //         'is_precise_azimuth':0,
-                    //         'category_map': {
-                    //             'category': [],
-                    //             'is_other': false,
-                    //             'other_value': ''
-                    //         }
-                    //     }
-                    // ])
-                    navigator.geolocation.getCurrentPosition(success,error);
+                const success = async (position) => {
+                    let coordinates =  position.coords;
+                    console.log('latitude', coordinates?.latitude)
+                    await setUserLocation({
+                        latitude: coordinates?.latitude,
+                        longitude: coordinates?.longitude
+                    })
+
                 }
-            
-                if (images?.length > 3) {
+
+                const error = async (error) => {
+                    await setUserLocation({})
+                    console.warn(`ERROR(${error.code}): ${error.message}`)
+                }
+
+
+                if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate) {
+                    navigator.geolocation.getCurrentPosition(success,error)
+
+                    if (mode) {
+                       return setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
+                    } else {
+                        setImages(prevState => [
+                            ...prevState,
+                            uploadImageDefaultState(random, baseImage, item, userLocation)
+                        ])
+                    }
+                }
+
+
+
+                if (mode) {
+                    setError((prev) => {
+                        return {
+                            ...prev,
+                            draft: 'You can not add new image',
+                        }
+                    })
+                }
+                if (images?.length > 2) {
                     setError((prev) => {
                         return {
                             ...prev,
@@ -151,32 +97,13 @@ const ObservationUploadImg = (props) =>{
     };
 
     useEffect(() => {
-        let images = (observationImages?.data) ? [...observationImages?.data] : []
+        let images = (observationImages?.data) ? [...observationImages?.data] : [];
+        observationImages?.data?.map((item, index) => {
+            return item.latitude = userLocation?.latitude,
+                item.longitude = userLocation?.longitude
+        })
         setImages(images)
-   },[detectImage])
-
-//    useEffect(() => {
-//     let lat;
-//     let lng;
-//     let observationAddress = {...observationImages};
-//     navigator.geolocation.getCurrentPosition(function(position) {
-//         lat = position.coords.latitude;
-//         lng = position.coords.longitude;
-//         // console.log("Latitude is :", position.coords.latitude);
-//         // console.log("Longitude is :", position.coords.longitude);
-//         if(observationAddress.data){
-//             observationAddress.data[observationAddress.selected_image_index]['latitude'] = position.coords.latitude;
-//             observationAddress.data[observationAddress.selected_image_index]['longitude'] = position.coords.longitude;
-//         }
-//         let addressSet = {...address1};
-//         addressSet.mapPosition.lat = lat;
-//         addressSet.mapPosition.lng = lng;
-//         addressSet.markerPosition.lat = lat;
-//         addressSet.markerPosition.lng = lng;
-//         setAddress(addressSet);
-//         });
-//       setObservationImages(observationAddress);
-//     },[observationImages?.data]);
+   },[detectImage, mode, userLocation])
 
 
     useEffect(()=> {
@@ -188,7 +115,7 @@ const ObservationUploadImg = (props) =>{
                 selected_image_index:0
             });
         }
-    }, [images, setObservationImages])
+    }, [images, setObservationImages, userLocation])
 
     return (
         <>
@@ -239,4 +166,10 @@ const ObservationUploadImg = (props) =>{
         </>
     )
 }
+
+ObservationUploadImg.propTypes = {
+    userLocation: PropTypes.object,
+};
+
+
 export default ObservationUploadImg;
