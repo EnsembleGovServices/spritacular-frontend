@@ -14,7 +14,7 @@ const EquipmentDetailsForm = (props) =>{
     } = useObservations();
     return (
         <>
-        <Row className="mt-4">
+        <Row>
             <EquipmentForm step={step} handleInput1={handleInput} updateSetting={cameraDetails} error={error} isSwitchOn={isSwitchOn}/>
 
             <Col md="12">

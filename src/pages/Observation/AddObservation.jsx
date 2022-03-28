@@ -555,26 +555,22 @@ const AddObservation = () => {
                                             {observationImages?.data && <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>}
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
-                                            <FormGroup check className="d-flex align-items-center position-relative">
-                                                <Label check>
-                                                    <Input
-                                                        required
-                                                        type="checkbox"
-                                                        name="profileData"
-                                                        checked={isSwitchOn}
-                                                        disabled={!auth?.camera}
-                                                        onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e).then(r => r);}}
-                                                    />
-                                                    Pull data from my profile
-                                                </Label>
-                                            </FormGroup>
-                                            {!auth?.camera &&
-                                                <span className="block text-danger small">
-                                                    You don't have <b>camera setting</b> saved in your profile.
-                                                    To enable this feature, you need to update it in your profile setting.
-                                                </span>
+                                            {auth?.camera &&
+                                                <FormGroup check className="d-flex align-items-center position-relative mb-3">
+                                                    <Label check>
+                                                        <Input
+                                                            required
+                                                            type="checkbox"
+                                                            name="profileData"
+                                                            checked={isSwitchOn}
+                                                            disabled={!auth?.camera}
+                                                            onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e).then(r => r);}}
+                                                        />
+                                                        Pull data from my profile
+                                                    </Label>
+                                                </FormGroup>
                                             }
-                                                <EquipmentDetailsForm step={observationSteps} isSwitchOn={isSwitchOn} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}  handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
+                                            <EquipmentDetailsForm step={observationSteps} isSwitchOn={isSwitchOn} error={error} handleInput={handleInput} toggleTab={toggleTab} cameraDetails={cameraDetails}  handleOtherCamera={handleOtherCamera} getCameraDetail={getCameraDetail}/>
                                         </TabPane>
                                     </TabContent>
                                 </div>
