@@ -410,7 +410,7 @@ const AddObservation = () => {
                     return file;
                 })
                 .catch(error => console.log(`Error converting the CDN image to file object at index [${index}]`))
-        })
+        });
     }, [draftData])
 
     
@@ -431,7 +431,7 @@ const AddObservation = () => {
 
         setObservationType({
             ...obvType,
-            image_type: draftData?.image_type
+            image_type: draftData?.image_type === 2 ? 1 : draftData?.image_type
         });
         setObservationImages({
             ...existingObvImageData,
@@ -541,7 +541,7 @@ const AddObservation = () => {
                                     <TabContent activeTab={activeTab}>
                                         <TabPane tabId={Tabs.ObservationImages}>
                                             {next ?
-                                                <ObservationAfterImageUpload  showUploadedPreview={showUploadedPreview} obvType={observationType} step={observationSteps} error={error} detectImage={deletedImage} remove={removeItem} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
+                                                <ObservationAfterImageUpload mode={updateMode}  showUploadedPreview={showUploadedPreview} obvType={observationType} step={observationSteps} error={error} detectImage={deletedImage} remove={removeItem} toggleTab={toggleTab} disableNext={disabledLocationTab} handleImageInput = {handleImageInput} />
                                                 :
                                                 <ObservationImages mode={updateMode} detectImage={deletedImage} remove={removeItem} proceedNext={()=> handleContinue()}/>
                                             }

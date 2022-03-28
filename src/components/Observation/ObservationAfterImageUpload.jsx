@@ -23,8 +23,8 @@ import ObservationUploadedImg from './ObservationUploadedImg';
 
 
 const ObservationAfterImageUpload = (props) => {
-    const { toggleTab,handleImageInput, error, disableNext, obvType, remove, detectImage, step, showUploadedPreview  } = props;
-    const {observationImages, setObservationCategory, setObservationType} = useObservations();
+    const { toggleTab,handleImageInput, error, disableNext, obvType, remove, detectImage, step, showUploadedPreview, mode  } = props;
+    const {observationImages, observationType, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
     const [isOther] = useState(false);
@@ -49,48 +49,61 @@ const ObservationAfterImageUpload = (props) => {
                 is_other: isOther
             }
         })
-        if (isMultiple && activeTab === MultiImageTabs.MultipleImages) {
-            setObservationType((prev) => {
-                return {
-                    ...prev,
-                    image_type: 2
-                }
-            })
-        } else if (!isMultiple)  {
-            setObservationType((prev) => {
-                return {
-                    ...prev,
-                    image_type: 1
-                }
-            })
+
+        if (!mode) {
+            if (isMultiple && activeTab === MultiImageTabs.MultipleImages) {
+                setObservationType((prev) => {
+                    return {
+                        ...prev,
+                        image_type: 2
+                    }
+                })
+            } else if (!isMultiple)  {
+                setObservationType((prev) => {
+                    return {
+                        ...prev,
+                        image_type: 1
+                    }
+                })
+            } else {
+                setObservationType((prev) => {
+                    return {
+                        ...prev,
+                        image_type: 3
+                    }
+                })
+            }
         } else {
             setObservationType((prev) => {
                 return {
                     ...prev,
-                    image_type: 3
+                    image_type: observationType?.image_type === 3 ? 3 : 2
                 }
-            })
+            });
+            setActiveImageTab(observationType?.image_type === 3 ? MultiImageTabs.ImageSequence : MultiImageTabs.MultipleImages);
         }
     }, [activeTab, isMultiple, isOther, setObservationCategory, setObservationType])
 
     return (
         <Row>
-            <Col sm={12}>
-                <FormGroup className="d-flex align-items-center position-relative">
-                    <div className="custom-switch">
-                        <input
-                            id="toggleMultiple"
-                            type="checkbox"
-                            className="hidden"
-                            checked={isMultiple}
-                            onChange={(e)=> setIsMultiple(!isMultiple)}
-                        />
-                        <label className="switchbox" htmlFor="toggleMultiple" />
-                        <span>Multiple Observations (limit to 3)</span>
-                    </div>
-                </FormGroup>
-            </Col>
-            {isMultiple &&
+            {!mode &&
+                <Col sm={12}>
+                    <FormGroup className="d-flex align-items-center position-relative">
+                        <div className="custom-switch">
+                            <input
+                                id="toggleMultiple"
+                                type="checkbox"
+                                className="hidden"
+                                checked={isMultiple}
+                                onChange={(e)=> setIsMultiple(!isMultiple)}
+                            />
+                            <label className="switchbox" htmlFor="toggleMultiple" />
+                            <span>Multiple Observations (limit to 3)</span>
+                        </div>
+                    </FormGroup>
+                </Col>
+            }
+            {isMultiple && !mode &&
                 <Col sm={12}>
                     <Nav tabs>
                         <NavItem>
