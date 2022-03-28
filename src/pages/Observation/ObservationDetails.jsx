@@ -6,6 +6,7 @@ import "../../assets/scss/component/observationDetails.scss";
 import ObservationMoreDetails from "../../components/Observation/ObservationDetails/ObservationMoreDetails";
 import ObservationMoreEquipementDetails from "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Comments from "../../components/Observation/ObservationDetails/Comments";
 
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose, data, activeType, handleContinueEdit, cardItems} = props;
@@ -115,8 +116,8 @@ const ObservationDetails = (props) =>{
                                 <TabPane tabId={imageDetails.Equipment}>
                                     <ObservationMoreEquipementDetails data={data?.camera_data} />
                                 </TabPane>
-                                <TabPane tabId={imageDetails.Comments}>
-                                    <p className="text-center">No comment found</p>
+                                <TabPane tabId={imageDetails.Comments} className="h-100">
+                                    <Comments />
                                 </TabPane>
                             </TabContent>
                         </Col>
