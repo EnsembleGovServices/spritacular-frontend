@@ -4,14 +4,18 @@ import { Icon } from '@iconify/react';
 import {useEffect, useState} from "react";
 import {uploadImageDefaultState} from "../../helpers/observation";
 import PropTypes from "prop-types";
+import useAuth from "../../hooks/useAuth";
 
 const ObservationUploadImg = (props) =>{
     const {multiple, maxLimit, imageFormat, detectImage, mode}=props;
     const {setObservationImages, observationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
-    const [userLocation, setUserLocation] = useState();
-
+    const { auth } = useAuth();
+    const [userLocation, setUserLocation] = useState({
+        latitude: auth?.user?.location_metadata?.lat,
+        longitude: auth?.user?.location_metadata?.lng
+    });
     const handleUploadImage = (e) => {
         setError(null);
         const fileList = e.target.files;
@@ -26,25 +30,7 @@ const ObservationUploadImg = (props) =>{
                     return image?.lastModified === item?.lastModified && image?.name === item?.name;
                 });
                 const duplicate = repeatCheck.includes(true);
-
-                const success = async (position) => {
-                    let coordinates =  position.coords;
-                    console.log('latitude', coordinates?.latitude)
-                    await setUserLocation({
-                        latitude: coordinates?.latitude,
-                        longitude: coordinates?.longitude
-                    })
-
-                }
-
-                const error = async (error) => {
-                    await setUserLocation({})
-                    console.warn(`ERROR(${error.code}): ${error.message}`)
-                }
-
-
                 if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate) {
-                    navigator.geolocation.getCurrentPosition(success,error)
 
                     if (mode) {
                        return setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
