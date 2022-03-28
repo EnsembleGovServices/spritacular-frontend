@@ -29,8 +29,8 @@ const ObservationCard = (props) => {
                         <Icon icon="eva:edit-2-outline" />
                     </Button> }
                     {cardItems?.is_verified && <div className="verify-card"><Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" /></div>}
-                        {/* <img alt="Card cap" src={cardData?.image} className="img-fluid card-img" /> */}
-                        <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" />
+                        <img alt="Card cap" src={cardData?.image} className="img-fluid card-img" />
+                        {/* <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" /> */}
                         <CardBody className="position-relative observation-card_body">
                            <div className="position-absolute observation_type d-flex align-items-center">
                                 {cardItems?.category_data.length > 0 && cardItems?.category_data.map((item, index) => {
@@ -51,7 +51,8 @@ const ObservationCard = (props) => {
                                 <Col xs={6} lg={6} className=" justify-content-end d-flex" >
                                     <div className="d-flex card-user_details align-items-center overflow-hidden">
                                         <h6 className="pe-2 mb-0 text-truncate">{(userProfile) ? userProfile?.first_name + ' ' + userProfile?.last_name : cardData.username}</h6>
-                                        <i className="profile-icon rounded-circle"><LazyLoadImage effect="blur" src={(userProfile) ? userProfile?.profile_image : Images.Profile} width='100%' height='100%' alt="Profile" className="rounded-circle" /></i>
+                                        <i className="profile-icon rounded-circle">
+                                            <LazyLoadImage effect="blur" src={(userProfile) ? userProfile?.profile_image : Images.Profile} width='100%' height='100%' alt="Profile" className="rounded-circle" /></i>
                                         {/* User sort name  */}
                                         {/* <i className="profile-text rounded-circle bg-black text-white">JD</i> */}
                                     </div>
