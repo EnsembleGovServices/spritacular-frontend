@@ -357,7 +357,6 @@ const AddObservation = () => {
             activeTab === Tabs.ObservationImages) && !(activeTab === Tabs.DateTimeLocation && !(observationType?.image_type === 3)))
     }
 
-
     const getFileName = (url) => {
         return url
             .split(/[#?]/)[0]
@@ -365,6 +364,7 @@ const AddObservation = () => {
             .pop()
             .trim();
     }
+
     const getObservationDataForUpdate = async (obvId) => {
         await axios.get(baseURL.api+`/observation/get_draft_data/${obvId}/`, {
             headers: {
@@ -397,10 +397,6 @@ const AddObservation = () => {
         draftData?.map_data?.map((item, index) => {
             let imageUrl = item.image,
                 fileName = getFileName(imageUrl);
-
-            // fileName = getFileName(imageUrl).split(".")[0];
-
-            console.log(fileName);
             return fetch(imageUrl)
                 .then(async response => {
                     const contentType = response.headers.get('content-type')
@@ -413,11 +409,14 @@ const AddObservation = () => {
         });
     }, [draftData])
 
-    
     useEffect(() => {
         let id = observationSteps?.mode?.id,
             updateUrl = location.pathname === `/${routeUrls.observationsUpdate}`,
             obvType = observationSteps?.mode?.type;
+
+        if (!updateMode && updateUrl) {
+            navigate('/observations');
+        }
 
         if (updateUrl && obvType === "draft") {
             getObservationDataForUpdate(id).then(r => r)
