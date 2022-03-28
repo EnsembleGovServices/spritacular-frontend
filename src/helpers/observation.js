@@ -25,8 +25,8 @@ export const uploadImageDefaultState = (random, baseImage, item, userLocation) =
         lastModified: item?.lastModified,
         name: item?.name,
         item: item,
-        latitude: userLocation ? userLocation.latitude : '28.5204',
-        longitude: userLocation ? userLocation.longitude : '25.8567',
+        latitude: userLocation ? userLocation.latitude : 28.5204,
+        longitude: userLocation ? userLocation.longitude : 25.8567,
         location: 'Pune, Maharashtra, India',
         country_code: 'IN',
         obs_date: null,
@@ -122,4 +122,40 @@ export const getdirectionDegree = (key) => {
             break;
     }
     return degree
+}
+
+export const getdirectionAngle = (key) => {
+    
+    let angle;
+    switch (key) {
+        case 360:
+            angle = 'N';
+            break;
+        case 45:
+            angle = 'NE';
+            break;
+        case 90:
+            angle = 'E';
+            break;
+        case 135:
+            angle = 'SE';
+            break;
+        case 180:
+            angle = 'S';
+            break;
+        case 235:
+            angle = 'SW';
+            break;
+        case 270:
+            angle = 'W';
+            break;
+        case 315:
+            angle = 'NW';
+            break;
+    
+        default:
+            angle = key;
+            break;
+    }
+    return angle
 }
