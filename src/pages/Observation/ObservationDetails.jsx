@@ -11,7 +11,7 @@ import Comments from "../../components/Observation/ObservationDetails/Comments";
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose, data, activeType, handleContinueEdit, cardItems} = props;
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
-    const [tooltipOpen, setTooltipOpen] = useState(false);
+    const [tooltipOpen, setTooltipOpen] = useState([]);
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
         if (activeTab !== tab) {
@@ -19,6 +19,19 @@ const ObservationDetails = (props) =>{
         }
     };
 
+    const handleToggleChange = (e) => {
+        if (!tooltipOpen[e]) {
+                    setTooltipOpen({
+                    ...tooltipOpen,
+                    [e]: {
+                      isOpen: true
+                    }
+                  });
+                } else {
+                    setTooltipOpen([]);
+                }
+        
+    } 
     return (
         <>
             <Modal 
@@ -67,7 +80,7 @@ const ObservationDetails = (props) =>{
                                                 return (<i id={item.toLowerCase().replaceAll(" ", "")} className="rounded-circle bg-white ms-2" key={index}>
                                                     {/* <img src={`/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt={item} className="rounded-circle" /> */}
                                                     <LazyLoadImage effect="blur" src={`/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt={item} />
-                                                    <Tooltip flip target={item.toLowerCase().replaceAll(" ", "")} isOpen={tooltipOpen} toggle={()=> (setTooltipOpen(!tooltipOpen))} >{item}</Tooltip>
+                                                    <Tooltip flip target={item.toLowerCase().replaceAll(" ", "")} isOpen={tooltipOpen[item]?.isOpen} toggle={()=> (handleToggleChange(item))} >{item}</Tooltip>
                                                 </i>)
                                             })}
                                         </div>

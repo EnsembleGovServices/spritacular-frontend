@@ -42,7 +42,8 @@
         }
     }
     .modal-body{
-        padding: 0 20px 12px;
+        padding: 0 20px 22px;
+        // overflow: hidden;
     }
     h5{
         @include md-text;
