@@ -12,10 +12,10 @@ const ObservationMoreDetails = (props) => {
             <Row>
                 <Col md={12}>
                     <Row className="align-items-center">
-                        <Col md={3}>
+                        <Col sm={3}>
                             <h6 className="m-0 text-uppercase fw-normal">Azimuth</h6>
                         </Col>
-                        <Col md={9} className="text-end">
+                        <Col sm={9} className="text-end">
                             <p className="selected_direction rounded-circle mb-0 d-inline-flex align-items-center justify-content-center fw-bold">
                                 <span>{data?.images[0]?.azimuth}</span>
                                 <i style={{'--selected-angle': `${getdirectionDegree(data?.images[0]?.azimuth)}deg` }} className="direction_arrow d-flex align-items-center justify-content-center position-absolute left-0 right-0 top-0 bottom-0"></i>
@@ -24,10 +24,10 @@ const ObservationMoreDetails = (props) => {
                     </Row>
                     <div className="border-line my-2"></div>
                     <Row className="align-items-center">
-                        <Col md={3}>
+                        <Col sm={3}>
                             <h6 className="m-0 text-uppercase fw-normal">When</h6>
                         </Col>
-                        <Col md={9}>
+                        <Col sm={9}>
                             <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold text-end position-relative">{(data?.images[0]?.obs_date_time_as_per_utc) ? moment.utc(moment(data?.images[0]?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY"): null}  
                                 <span className="d-flex align-items-center justify-content-end fw-normal ms-1"> {(data?.images[0]?.obs_date_time_as_per_utc) ? moment.utc(moment(data?.images[0]?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): null}  
                                     <Badge className="bg-black text-white p-1 fw-normal ms-1">{(data?.images[0]?.obs_date_time_as_per_utc) ?'UTC': null}</Badge>
@@ -37,10 +37,10 @@ const ObservationMoreDetails = (props) => {
                     </Row>
                     <div className="border-line my-2"></div>
                     <Row className="align-items-center">
-                        <Col md={3}>
+                        <Col sm={3}>
                             <h6 className="m-0 text-uppercase fw-normal">LOCATION</h6>
                         </Col>
-                        <Col md={9}>
+                        <Col sm={9}>
                             <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold text-end">
                             <ReactCountryFlags country= {data?.images[0]?.country_code} />
                                 <span className="ms-1">{data?.images[0]?.location}</span></p>
