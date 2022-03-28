@@ -117,7 +117,6 @@ const ObservationUploadImg = (props) =>{
                     //         }
                     //     }
                     // ])
-                    navigator.geolocation.getCurrentPosition(success,error);
                 }
 
                 if (images?.length > 3) {
@@ -154,30 +153,6 @@ const ObservationUploadImg = (props) =>{
         let images = (observationImages?.data) ? [...observationImages?.data] : []
         setImages(images)
     },[detectImage])
-
-//    useEffect(() => {
-//     let lat;
-//     let lng;
-//     let observationAddress = {...observationImages};
-//     navigator.geolocation.getCurrentPosition(function(position) {
-//         lat = position.coords.latitude;
-//         lng = position.coords.longitude;
-//         // console.log("Latitude is :", position.coords.latitude);
-//         // console.log("Longitude is :", position.coords.longitude);
-//         if(observationAddress.data){
-//             observationAddress.data[observationAddress.selected_image_index]['latitude'] = position.coords.latitude;
-//             observationAddress.data[observationAddress.selected_image_index]['longitude'] = position.coords.longitude;
-//         }
-//         let addressSet = {...address1};
-//         addressSet.mapPosition.lat = lat;
-//         addressSet.mapPosition.lng = lng;
-//         addressSet.markerPosition.lat = lat;
-//         addressSet.markerPosition.lng = lng;
-//         setAddress(addressSet);
-//         });
-//       setObservationImages(observationAddress);
-//     },[observationImages?.data]);
-
 
     useEffect(()=> {
         if (images.length > 0) {

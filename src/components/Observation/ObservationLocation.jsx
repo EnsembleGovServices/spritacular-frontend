@@ -76,7 +76,6 @@ const ObservationLocation = (props) => {
 
     const handleValue = (flag,value) => {
         if(!flag){
-            console.log(value);
             let address = {...address1};
             address.country_code = value[0];
             address.short_address = value[1];
