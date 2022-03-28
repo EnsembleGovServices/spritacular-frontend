@@ -33,4 +33,5 @@ export const routeUrls = {
     // gallery: 'gallery',
     observationsAdd: 'observations/add',
     observationsUpdate: 'observations/update',
+    dashboard: 'dashboard',
 }
