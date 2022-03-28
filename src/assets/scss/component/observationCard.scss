@@ -62,7 +62,8 @@
     }
     .lazy-load-image-background {
         background-color: $gray2;
-        filter: blur(0);
+        // filter: blur(0);
+        width: 100%;
     }
     .card-img{
         border-radius: 8px 8px 0 0;
@@ -79,11 +80,13 @@
         padding: 15px 11px 11px;
         .observation_type{
             top: -15px;
-            box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
-            width: 22px;
-            height: 22px;
             left: 7px;
-            overflow: hidden;
+            i{
+                overflow: hidden;
+                box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
+                width: 22px;
+                height: 22px;
+            }
             img {
                 width: 100%;
                 height: 100%;
@@ -150,15 +153,12 @@
                 height: 16px;
                 border: 1px solid #B9BFCB;
                 transform: rotate(var(--card-location-angle));
-                &::before{
-                    content: "";
-                    position: absolute;
+                .direction-dot{
                     width: 3px;
                     height: 3px;
                     background: #B9BFCB;
                     border-radius: 50%;
-                    left: 5px;
-                    top: 2px;
+                    margin-top: 1px;
                 }
             }
         }

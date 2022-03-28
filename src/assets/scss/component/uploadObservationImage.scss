@@ -302,13 +302,6 @@
   }
   textarea{
     resize: none;
-    background: transparent;
-    padding: 0 0 10px 0;
-    @include md-text;
-    border-radius: 0;
-    &:focus{
-      background: transparent;
-    }
   }
 }
 

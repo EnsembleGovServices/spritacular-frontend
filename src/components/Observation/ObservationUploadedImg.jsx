@@ -11,12 +11,14 @@ const ObservationUploadedImg = (props) => {
     const [activeTab, setActiveTab] = useState(observationImages?.selected_image_id ?? null);
     // Toggle Tabs
     const toggleTab = (tab,index=0) => {
+       
         setActiveTab(tab);
         setObservationImages(prev => {
             return {
                 ...prev,
                 selected_image_id: tab,
-                selected_image_index:index
+                selected_image_index:index,
+
             }
         });
     };
@@ -36,13 +38,13 @@ const ObservationUploadedImg = (props) => {
                             <button type="button" disabled={obvType?.image_type === 3} className={`preview-btn position-relative d-flex p-0 shadow-none  ${activeTab === item?.id ? 'active-tab' : ''}`} onClick={()=> toggleTab(item?.id,index)}>
                                 <LazyLoad src={item?.image} alt={item?.name} />
                             </button>
-                            {observationImages?.observation_count > 1 &&
+                            {/* {observationImages?.observation_count > 1 && */}
                                 <button type="button" className="remove-btn text-black border-0 p-0 position-absolute btn" onClick={()=> remove(item?.id)}>
                                 <span>
                                     <Icon icon="ci:close-big" />
                                 </span>
                                 </button>
-                            }
+                            {/* } */}
                         </div>
                     </div>
                 )

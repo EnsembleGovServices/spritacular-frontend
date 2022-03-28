@@ -1,21 +1,15 @@
 import { FormGroup, Input,Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
+import "../../assets/scss/component/uploadObservationImage.scss";
 import { Icon } from '@iconify/react';
 import {useEffect, useState} from "react";
-import {uploadImageDefaultState} from "../../helpers/observation";
-import PropTypes from "prop-types";
-import useAuth from "../../hooks/useAuth";
 
 const ObservationUploadImg = (props) =>{
-    const {multiple, maxLimit, imageFormat, detectImage, mode}=props;
+    const {multiple, maxLimit, imageFormat, detectImage}=props;
     const {setObservationImages, observationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
-    const { auth } = useAuth();
-    const [userLocation, setUserLocation] = useState({
-        latitude: (auth?.user?.location_metadata?.lat) ? auth?.user?.location_metadata?.lat : 18.5204303,
-        longitude: (auth?.user?.location_metadata?.lng) ? auth?.user?.location_metadata?.lng : 73.8567437
-    });
+
     const handleUploadImage = (e) => {
         setError(null);
         const fileList = e.target.files;
@@ -29,30 +23,103 @@ const ObservationUploadImg = (props) =>{
                 const repeatCheck = images?.map((image, index) => {
                     return image?.lastModified === item?.lastModified && image?.name === item?.name;
                 });
-                const duplicate = repeatCheck.includes(true);
-                if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate) {
 
-                    if (mode) {
-                       return setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
-                    } else {
+                const duplicate = repeatCheck.includes(true);
+                let lat = 18.5204;
+                let lng = 73.8567;
+
+
+                if (images?.length < 3 && fileSize < 5 && !duplicate) {
+                    function success(pos) {
+                        var crd = pos.coords;
                         setImages(prevState => [
-                            ...prevState,
-                            uploadImageDefaultState(random, baseImage, item, userLocation)
+                            ...prevState, {
+                                'id' : random,
+                                'sameAsFirstMap': false,
+                                'sameAsFirstDate': false,
+                                'image' : baseImage,
+                                'lastModified': item?.lastModified,
+                                'name': item?.name,
+                                'item': item,
+                                'latitude': crd.latitude,
+                                'longitude': crd.longitude,
+                                'location': 'Pune,Maharashtra,India',
+                                'country_code': 'IN',
+                                'obs_date': null,
+                                'obs_time': null,
+                                'timezone': 'Africa/Abidjan',
+                                'azimuth': 'N',
+                                'time_accuracy':'',
+                                'is_precise_azimuth':0,
+                                'category_map': {
+                                    'category': [],
+                                    'is_other': false,
+                                    'other_value': ''
+                                }
+                            }
                         ])
                     }
+
+                    function error(err) {
+                        setImages(prevState => [
+                            ...prevState, {
+                                'id' : random,
+                                'sameAsFirstMap': false,
+                                'sameAsFirstDate': false,
+                                'image' : baseImage,
+                                'lastModified': item?.lastModified,
+                                'name': item?.name,
+                                'item': item,
+                                'latitude': 18.5204,
+                                'longitude': 73.8567,
+                                'location': '',
+                                'country_code': 'IN',
+                                'obs_date': null,
+                                'obs_time': null,
+                                'timezone': 'Africa/Abidjan',
+                                'azimuth': 'N',
+                                'time_accuracy':'',
+                                'is_precise_azimuth':0,
+                                'category_map': {
+                                    'category': [],
+                                    'is_other': false,
+                                    'other_value': ''
+                                }
+                            }
+                        ])
+                    }
+
+
+
+                    // setImages(prevState => [
+                    //     ...prevState, {
+                    //         'id' : random,
+                    //         'sameAsFirstMap': false,
+                    //         'sameAsFirstDate': false,
+                    //         'image' : baseImage,
+                    //         'lastModified': item?.lastModified,
+                    //         'name': item?.name,
+                    //         'item': item,
+                    //         'latitude': lat,
+                    //         'longitude': lng,
+                    //         'location': 'Pune,Maharashtra,India',
+                    //         'country_code': 'IN',
+                    //         'obs_date': null,
+                    //         'obs_time': null,
+                    //         'timezone': 'Africa/Abidjan',
+                    //         'azimuth': 'N',
+                    //         'time_accuracy':'',
+                    //         'is_precise_azimuth':0,
+                    //         'category_map': {
+                    //             'category': [],
+                    //             'is_other': false,
+                    //             'other_value': ''
+                    //         }
+                    //     }
+                    // ])
                 }
 
-
-
-                if (mode) {
-                    setError((prev) => {
-                        return {
-                            ...prev,
-                            draft: 'You can not add new image',
-                        }
-                    })
-                }
-                if (images?.length > 2) {
+                if (images?.length > 3) {
                     setError((prev) => {
                         return {
                             ...prev,
@@ -83,14 +150,9 @@ const ObservationUploadImg = (props) =>{
     };
 
     useEffect(() => {
-        let images = (observationImages?.data) ? [...observationImages?.data] : [];
-        observationImages?.data?.map((item, index) => {
-            return item.latitude = userLocation?.latitude,
-                item.longitude = userLocation?.longitude
-        })
+        let images = (observationImages?.data) ? [...observationImages?.data] : []
         setImages(images)
-   },[detectImage, mode, userLocation])
-
+    },[detectImage])
 
     useEffect(()=> {
         if (images.length > 0) {
@@ -101,7 +163,7 @@ const ObservationUploadImg = (props) =>{
                 selected_image_index:0
             });
         }
-    }, [images, setObservationImages, userLocation])
+    }, [images, setObservationImages])
 
     return (
         <>
@@ -112,8 +174,8 @@ const ObservationUploadImg = (props) =>{
                             <div className="upload-info">
                                 <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
                                 <p>Drag and drop images or click to upload</p>
-                                { maxLimit === true && 
-                                    <span className="text-black">Max. Image Size: 5MB</span> 
+                                { maxLimit === true &&
+                                    <span className="text-black">Max. Image Size: 5MB</span>
                                 }
                                 {imageFormat === true &&
                                     <ul>
@@ -152,10 +214,4 @@ const ObservationUploadImg = (props) =>{
         </>
     )
 }
-
-ObservationUploadImg.propTypes = {
-    userLocation: PropTypes.object,
-};
-
-
 export default ObservationUploadImg;

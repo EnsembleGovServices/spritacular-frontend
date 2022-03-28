@@ -37,6 +37,7 @@
     "react-google-autocomplete": "^2.6.1",
     "react-google-maps": "^9.4.5",
     "react-lazy-load-image-component": "^1.5.1",
+    "react-masonry-component": "^6.3.0",
     "react-places-autocomplete": "^7.3.0",
     "reactstrap": "^9.0.1"
   },

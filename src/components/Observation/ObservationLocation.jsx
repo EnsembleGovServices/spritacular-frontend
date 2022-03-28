@@ -20,31 +20,38 @@ import {directionValue, Tabs} from "../../helpers/observation";
 import {timezone} from "../../helpers/timezone";
 import ObservationCategory from "./ObservationCategory";
 import {Icon} from '@iconify/react';
+import {getdirectionDegree,getdirectionAngle} from "../../helpers/observation";
 
 
 const ObservationLocation = (props) => {
     const { toggleTab,handleImageInput, error, step, obvType,disableNext } = props;
     const fref = useRef()
     const [address1,setAddress] = useState({
-        address: '204, Mote Mangal Karyalay Rd, Bhavani Peth, Shobhapur, Kasba Peth, Pune, Maharashtra 411011, India',
+        address: '',
         city: '',
         area: '',
         state: '',
         country: 'IN',
-        short_address: 'Pune,Maharashtra,India',
+        short_address: 'Pune Maharastra Indias',
         mapPosition: {
-            lat: 18.5204,
-            lng: 73.8567
+            lat: null,
+            lng: null
         },
         markerPosition: {
-            lat: 18.5204,
-            lng: 73.8567
+            lat: null,
+            lng: null
         }
+    });
+    const [initialAddress,setInitialAddress] = useState({
+        country: '',
+        short_address: '',
+       lat:null,
+       lng:null
     });
     const [isLoaded,setIsLoaded] = useState(false);
     const {observationImages, setObservationImages,observationData} = useObservations();
     const [isActiveDire, setActiveDire] = useState(null);
-    const [angleDegree, setAngleDegree] = useState(0);
+    const [angleDegree, setAngleDegree] = useState(false);
     const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
     const [searchTimeZone, setSearchTimeZone] = useState("");
     const [sameAsMap, setSameAsMap] = useState(false);
@@ -65,32 +72,67 @@ const ObservationLocation = (props) => {
             handleCopyData(observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap,['latitude','longitude','location','country_code']);
             handleCopyData(observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate,['obs_date','obs_time','timezone']);
         }
-    },[observationImages?.selected_image_index]);
-    const handleValue = (value) => {
-        setAddress(value);
-        if(observationImages?.data){
-            let observationAddress = {...observationImages};
-            if(observationAddress?.data){
-                observationAddress.data[observationAddress.selected_image_index]['latitude'] = value.markerPosition.lat;
-                observationAddress.data[observationAddress.selected_image_index]['longitude'] = value.markerPosition.lng;
-                observationAddress.data[observationAddress.selected_image_index]['location'] = value.short_address;
-                observationAddress.data[observationAddress.selected_image_index]['country_code'] = value.country;
 
-                if(observationData?.image_type === 3){
-                    if(observationAddress.data[1]){
-                        observationAddress.data[1]['latitude'] = value.markerPosition.lat;
-                        observationAddress.data[1]['longitude'] = value.markerPosition.lng;
-                        observationAddress.data[1]['location'] = value.short_address;
-                        observationAddress.data[1]['country_code'] = value.country;
+    },[observationImages?.selected_image_index]);
+
+    const handleValue = (flag,value) => {
+        if(!flag){
+            let address = {...address1};
+            address.country_code = value[0];
+            address.short_address = value[1];
+            setInitialAddress({
+                country: value[0],
+                address:value[1],
+                lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude: null),
+                lng :Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude: null)
+            })
+            setAddress(address);
+            if(observationImages?.data){
+                let observationAddress = {...observationImages};
+                if(observationAddress?.data){
+                    observationAddress.data[observationAddress.selected_image_index]['location'] = value[1];
+                    observationAddress.data[observationAddress.selected_image_index]['country_code'] = value[0];
+    
+                    if(observationData?.image_type === 3){
+                        if(observationAddress.data[1]){
+                            observationAddress.data[1]['location'] = value[1];
+                            observationAddress.data[1]['country_code'] = value[0];
+                        }
+                        if(observationAddress.data[2]){
+                            observationAddress.data[2]['location'] = value[1];
+                            observationAddress.data[2]['country_code'] = value[0];
+                        }
                     }
-                    if(observationAddress.data[2]){
-                        observationAddress.data[2]['latitude'] = value.markerPosition.lat;
-                        observationAddress.data[2]['longitude'] = value.markerPosition.lng;
-                        observationAddress.data[2]['location'] = value.short_address;
-                        observationAddress.data[2]['country_code'] = value.country;
-                    }
+                    setObservationImages(observationAddress);
                 }
-                setObservationImages(observationAddress);
+            }
+        }
+        else{
+            setAddress(value);
+            if(observationImages?.data){
+                let observationAddress = {...observationImages};
+                if(observationAddress?.data){
+                    observationAddress.data[observationAddress.selected_image_index]['latitude'] = value.markerPosition.lat;
+                    observationAddress.data[observationAddress.selected_image_index]['longitude'] = value.markerPosition.lng;
+                    observationAddress.data[observationAddress.selected_image_index]['location'] = value.short_address;
+                    observationAddress.data[observationAddress.selected_image_index]['country_code'] = value.country;
+    
+                    if(observationData?.image_type === 3){
+                        if(observationAddress.data[1]){
+                            observationAddress.data[1]['latitude'] = value.markerPosition.lat;
+                            observationAddress.data[1]['longitude'] = value.markerPosition.lng;
+                            observationAddress.data[1]['location'] = value.short_address;
+                            observationAddress.data[1]['country_code'] = value.country;
+                        }
+                        if(observationAddress.data[2]){
+                            observationAddress.data[2]['latitude'] = value.markerPosition.lat;
+                            observationAddress.data[2]['longitude'] = value.markerPosition.lng;
+                            observationAddress.data[2]['location'] = value.short_address;
+                            observationAddress.data[2]['country_code'] = value.country;
+                        }
+                    }
+                    setObservationImages(observationAddress);
+                }
             }
         }
     }
@@ -112,6 +154,7 @@ const ObservationLocation = (props) => {
             //  },3000);
             fref.current.handleChangeLatLng(e.target.value,address1.markerPosition.lng);
     }
+    
     const handleChangeLng = (e) => {
         handleImageInput(e);
         let name = e.target.name,
@@ -129,9 +172,40 @@ const ObservationLocation = (props) => {
             let addressState = {...address1};
             observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.short_address;
             observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
+
+            if(observationData?.image_type === 3){
+                if(observationAddress.data[1]){
+                    observationAddress.data[1]['location'] = address1?.short_address;
+                    observationAddress.data[1]['country_code'] = address1?.country;
+                }
+                if(observationAddress.data[2]){
+                    observationAddress.data[2]['location'] = address1?.short_address;
+                    observationAddress.data[2]['country_code'] = address1?.country;
+                }
+            }
             setObservationImages(observationAddress);
         }
     },[address1]);
+    useEffect(() => {
+        let observationAddress = {...observationImages};        
+        if(observationAddress?.data){
+            let addressState = {...address1};
+            // observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.short_address;
+            // observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
+
+            if(observationData?.image_type === 3){
+                if(observationAddress.data[1]){
+                    observationAddress.data[1]['location'] = observationAddress.data[0]['location'];
+                    observationAddress.data[1]['country_code'] = observationAddress.data[0]['country_code'];
+                }
+                if(observationAddress.data[2]){
+                    observationAddress.data[2]['location'] = observationAddress.data[0]['location'];
+                    observationAddress.data[2]['country_code'] = observationAddress.data[0]['country_code'];
+                }
+            }
+            setObservationImages(observationAddress);
+        }
+    },[observationData?.image_type]);
     const selectDirection = (index) => {
         const directionWrapper = document.querySelector('.compass-wrapper');
         const directionId = document.getElementById(`directionValue${index}`);
@@ -142,24 +216,23 @@ const ObservationLocation = (props) => {
         }else{
             directionWrapper.classList.add("active-arrow");
             setActiveDire(index);
-            
 
             if (observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0) {
-                observationArray.data[observationImages?.selected_image_index]['azimuth'] = getAngleName;
+                observationArray.data[observationImages?.selected_image_index]['azimuth'] = getdirectionDegree(getAngleName);
 
                 if(observationData?.image_type === 3){
                     if(observationArray.data[1]){
-                        observationArray.data[1]['azimuth'] = getAngleName;
+                        observationArray.data[1]['azimuth'] = getdirectionDegree(getAngleName);
                     }
                     if(observationArray.data[2]){
-                        observationArray.data[2]['azimuth'] = getAngleName;
+                        observationArray.data[2]['azimuth'] = getdirectionDegree(getAngleName);
                     }
                 }
             }
         }
     }
+
     const handleCopyData = (e,keys) => {
-        console.log("ihi");
         if(observationImages){
 
             let observationMap = {...observationImages};
@@ -181,10 +254,10 @@ const ObservationLocation = (props) => {
                 }else{
                     copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
                     if(keys.includes('location','latitude','longitude')){
-                        copyImages.data[copyImages?.selected_image_index]['latitude'] = 18.5204;
-                        copyImages.data[copyImages?.selected_image_index]['longitude'] = 73.8567;
-                        copyImages.data[copyImages?.selected_image_index]['location'] = 'Pune,Maharashtra,India';
-                        copyImages.data[copyImages?.selected_image_index]['country_code'] = 'IN';
+                        copyImages.data[copyImages?.selected_image_index]['latitude'] = initialAddress.lat;
+                        copyImages.data[copyImages?.selected_image_index]['longitude'] = initialAddress.lng;
+                        copyImages.data[copyImages?.selected_image_index]['location'] = initialAddress.short_address;
+                        copyImages.data[copyImages?.selected_image_index]['country_code'] = initialAddress.country;
                     }
                 }
                 return false;
@@ -232,7 +305,6 @@ const ObservationLocation = (props) => {
                     </Row>
                     {
                     (
-                        // sameAsMap === false
                         (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap === false ) 
                         || observationImages?.selected_image_index === 0 ) ?
                         <div className="location_map">
@@ -273,7 +345,7 @@ const ObservationLocation = (props) => {
                                 </Col>
                                 <Col lg={6}>
                                     <div className="selected-address d-block d-lg-flex align-items-center justify-content-start justify-content-lg-end mt-2 mt-lg-0">
-                                        <ReactCountryFlags country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code: null} />
+                                        <ReactCountryFlags country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code: address1?.country_code} />
                                         <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                                     </div>
                                 </Col>
@@ -411,7 +483,8 @@ const ObservationLocation = (props) => {
                                 <Label className="text-uppercase" htmlFor="TIME ZONE">TIME ZONE</Label>
                                 <Dropdown className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
                                     <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                        <span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>
+                                        {/*<span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>*/}
+                                        <span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone}` : ''}</span>
                                         <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                     </DropdownToggle>
                                     <DropdownMenu className="py-0 shadow">
@@ -493,7 +566,8 @@ const ObservationLocation = (props) => {
                             id="checkbox2"
                             type="checkbox"
                             name="is_precise_azimuth"
-                            checked={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth :''}
+                            // checked={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth :''}
+                            checked={angleDegree}
                             className="hidden"
                             onChange={(e)=>handleImageInput(e)}
                             onClick={()=> setAngleDegree(!angleDegree)}
@@ -506,7 +580,7 @@ const ObservationLocation = (props) => {
                     </div>
                 </FormGroup>
 
-                {(observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0) ?
+                {(angleDegree === false && observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0) ?
                     <FormGroup>
                         <Label className="justify-content-center mb-3 text-uppercase">Look Direction</Label>
                         <div className="compass-wrapper">
@@ -514,7 +588,7 @@ const ObservationLocation = (props) => {
                                 directionValue?.map((direction, index)=>{
                                     return(
                                         <Button
-                                            className={`${direction.name}-direction ${observationArray.data[observationImages?.selected_image_index]['azimuth'] === direction.name ? 'active_direction' : ''}`}
+                                            className={`${direction.name}-direction ${getdirectionAngle(observationArray.data[observationImages?.selected_image_index]['azimuth']) === direction.name ? 'active_direction' : ''}`}
                                             onClick={()=> selectDirection(index)}
                                             key={index}
                                             id= {`directionValue${index}`}
@@ -526,7 +600,7 @@ const ObservationLocation = (props) => {
                             }
                             <div className="center-dot rounded-circle" />
                             <div className="rotate-arrow-wrap">
-                                <div className="rotate-arrow-inner" style={{ "--directionAngle": directionValue.filter((item) => item.name === observationArray.data[observationImages?.selected_image_index]['azimuth']).map((dirData) => {
+                                <div className="rotate-arrow-inner" style={{ "--directionAngle": directionValue.filter((item) => item.name === getdirectionAngle(observationArray.data[observationImages?.selected_image_index]['azimuth'])).map((dirData) => {
                                         return dirData.angle;
                                     }) + 'deg' }}>
                                     <div className="rotate-arrow main"><img src={Images.compassArrow} alt="Compass Arrow" /> </div>

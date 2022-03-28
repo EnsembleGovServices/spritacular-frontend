@@ -367,6 +367,7 @@ const Header = (props) => {
           open={persist && auth ? false : isRegisterModal}
           handleClose={handleRegisterModal}
           handleLoginModal={handleLoginModal}
+          modalClass="registerModal"
         />
       )}
 
