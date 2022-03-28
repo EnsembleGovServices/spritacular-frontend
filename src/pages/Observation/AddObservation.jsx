@@ -414,13 +414,14 @@ const AddObservation = () => {
             updateUrl = location.pathname === `/${routeUrls.observationsUpdate}`,
             obvType = observationSteps?.mode?.type;
 
-        if (!updateMode && updateUrl) {
-            navigate('/observations');
-        }
-
         if (updateUrl && obvType === "draft") {
             getObservationDataForUpdate(id).then(r => r)
         }
+
+        if (updateUrl && obvType !== "draft") {
+            return navigate('/observations');
+        }
+
     }, [location.pathname, updateMode]);
 
 
