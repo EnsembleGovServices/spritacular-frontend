@@ -19,7 +19,7 @@ const UpdateProfile = (props) => {
         email: "",
         location: "",
         place_uid:"",
-        extra_fields: {
+        location_metadata: {
             address: "",
             lat: "",
             lng: "",
@@ -47,7 +47,7 @@ const UpdateProfile = (props) => {
             location: location['address'],
             place_uid: location['placeId'],
             country_code: location['countryCode'],
-            extra_fields: {
+            location_metadata: {
                 lat: location['lat'],
                 lng: location['lng'],
             }
@@ -65,9 +65,9 @@ const UpdateProfile = (props) => {
             location: updateUser?.location,
             place_uid: updateUser?.place_uid,
             country_code: updateUser?.country_code,
-            extra_fields: {
-                lat: updateUser?.extra_fields?.lat,
-                lng: updateUser?.extra_fields?.lng,
+            location_metadata: {
+                lat: updateUser?.location_metadata?.lat,
+                lng: updateUser?.location_metadata?.lng,
                 
             }
         }, {

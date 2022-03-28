@@ -32,7 +32,14 @@ const ObservationCard = (props) => {
                         {/* <img alt="Card cap" src={cardData?.image} className="img-fluid card-img" /> */}
                         <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" />
                         <CardBody className="position-relative observation-card_body">
-                            <div className="position-absolute observation_type d-flex align-items-center">
+                           {/* {cardItems?.category_data.length > 0 && cardItems?.category_data.map((item, index) => {
+                               {console.log(item)}
+                            return <div key={index} className="position-absolute observation_type rounded-circle bg-white">
+                                <img src={  `/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt="Sprite" className="rounded-circle" />
+                                <LazyLoadImage effect="blur" src={(userProfile) ? getCategoryImage(cardData?.category_data[0]): Images.Sprite} alt="Sprite" className="rounded-circle" />
+                            </div>
+                           })} */}
+                           <div className="position-absolute observation_type d-flex align-items-center">
                                 {cardItems?.category_data.length > 0 && cardItems?.category_data.map((item, index) => {
                                     return (<i className="rounded-circle bg-white me-1" key={index}>
                                         <img src={  `/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt="Sprite" className="rounded-circle" />

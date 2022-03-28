@@ -18,7 +18,7 @@ const Register = (props) => {
         email: "",
         location: "",
         place_uid:"",
-        extra_fields: {
+        location_metadata: {
             address: "",
             lat: "",
             lng: "",
@@ -43,7 +43,7 @@ const Register = (props) => {
             location: location['address'],
             place_uid: location['placeId'],
             country_code: location['countryCode'],
-            extra_fields: {
+            location_metadata: {
                 lat: location['lat'],
                 lng: location['lng'],
                 
