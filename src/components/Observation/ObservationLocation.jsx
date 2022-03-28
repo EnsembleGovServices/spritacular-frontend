@@ -231,7 +231,7 @@ const ObservationLocation = (props) => {
             }
         }
     }
-    console.log(observationImages);
+
     const handleCopyData = (e,keys) => {
         if(observationImages){
 
