@@ -2,7 +2,7 @@ import ObservationCard from "../../components/Shared/ObservationCard";
 import Masonry from 'react-masonry-component';
 
 const ObservationDetailPage = (props) => {
-  const {observationList,isObservationDetailModal,setSelectedObservationId,setObservationDetailModal} = props;
+  const {observationList, isObservationDetailModal, setSelectedObservationId, setObservationDetailModal, activeType} = props;
 
   // Masory Options
   const masonryOptions = {
@@ -30,7 +30,7 @@ const ObservationDetailPage = (props) => {
               return(
                   cardItems?.images.length > 0 &&
                   <li key={index} className="photo-item mb-4">
-                    <ObservationCard cardItems = {cardItems} cardData={cardItems?.images[0]} index={index} userProfile={cardItems.user_data} handleClick={handleObservationDetailModal}/>
+                    <ObservationCard cardItems={cardItems} cardData={cardItems?.images[0]} index={index} userProfile={cardItems.user_data} handleClick={handleObservationDetailModal} activeType={activeType} />
                   </li>
                 )
               })

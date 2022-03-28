@@ -1,6 +1,5 @@
-// import { useState } from 'react';
 import InitialUploadObservations from "../InitialUploadObservations";
-import { Col, Container, FormGroup, Input, Label, Row, UncontrolledAlert } from 'reactstrap';
+import { Col, Container, Row, UncontrolledAlert } from 'reactstrap';
 import {Link, useNavigate} from 'react-router-dom';
 import "../../assets/scss/component/myObservation.scss";
 import { useEffect, useState } from "react";
@@ -174,11 +173,21 @@ const MyObservations = () => {
               <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
             </div>
           }
-          <ObservationDetailPage  observationList={currentObservationList} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
+          <ObservationDetailPage  observationList={currentObservationList} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} activeType={activeType} />
         </Container> 
-         {isObservationDetailModal && <ObservationDetails data={currentObservationList[selectedObservationId]}  activeType={activeType} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} handleContinueEdit={handleObservationEdit} />}
-         </>
-         }
+        {isObservationDetailModal && 
+          <ObservationDetails 
+            data={currentObservationList[selectedObservationId]}  
+            activeType={activeType} 
+            modalClass="observation-details_modal" 
+            open={isObservationDetailModal} 
+            handleClose={handleObservationDetailModal} 
+            handleContinueEdit={handleObservationEdit} 
+            // cardItems={cardItems}  
+          />
+        }
+        </>
+        }
       </>
   )
 }

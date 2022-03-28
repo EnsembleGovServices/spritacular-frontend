@@ -10,8 +10,8 @@ import {getdirectionDegree} from "../../helpers/observation";
 
 
 const ObservationCard = (props) => {
-    const {cardItems, handleClick,userProfile,cardData,index} = props;
-    console.log(cardItems?.category_data);// `/assets/images/category/${cardData?.category_data[0].toLowerCase().replaceAll(" ", "")}.png`);
+    const {cardItems, handleClick, userProfile, cardData, index, activeType} = props;
+    console.log("test",cardItems?.category_data);// `/assets/images/category/${cardData?.category_data[0].toLowerCase().replaceAll(" ", "")}.png`);
     return(
         <>
             <Card className="observation_card overflow-hidden">
@@ -25,20 +25,21 @@ const ObservationCard = (props) => {
                     { userProfile && cardItems?.image_type === 3 && <div className="multiple-image_icon">
                         <Icon icon="codicon:list-filter" color="black" />
                     </div> }
-                    { userProfile && <Button className="multiple-image_icon border-0 edit-icon">
+                    { userProfile && activeType === "draft" && <Button className="multiple-image_icon border-0 edit-icon">
                         <Icon icon="eva:edit-2-outline" />
                     </Button> }
                     {cardItems?.is_verified && <div className="verify-card"><Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" /></div>}
-                        <img alt="Card cap" src={cardData?.image} className="img-fluid card-img" />
-                        {/* <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" /> */}
+                        {/* <img alt="Card cap" src={cardData?.image} className="img-fluid card-img" /> */}
+                        <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" />
                         <CardBody className="position-relative observation-card_body">
-                           {cardItems?.category_data.length > 0 && cardItems?.category_data.map((item) => {
-                               {console.log(item)}
-                            return (<i className="position-absolute observation_type rounded-circle bg-white">
-                                <img src={  `/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt="Sprite" className="rounded-circle" />
-                                {/* <LazyLoadImage effect="blur" src={(userProfile) ? getCategoryImage(cardData?.category_data[0]): Images.Sprite} alt="Sprite" className="rounded-circle" /> */}
-                            </i>)
-                           })}
+                            <div className="position-absolute observation_type d-flex align-items-center">
+                                {cardItems?.category_data.length > 0 && cardItems?.category_data.map((item, index) => {
+                                    return (<i className="rounded-circle bg-white me-1" key={index}>
+                                        <img src={  `/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt="Sprite" className="rounded-circle" />
+                                        {/* <LazyLoadImage effect="blur" src={(userProfile) ? getCategoryImage(cardData?.category_data[0]): Images.Sprite} alt="Sprite" className="rounded-circle" /> */}
+                                    </i>)
+                                })}
+                            </div>
                             <Row className="card-details">
                                 <Col xs={6} lg={6} className="">
                                     <div className="card_desc">

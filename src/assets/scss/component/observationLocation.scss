@@ -23,7 +23,7 @@
             margin-right: 8px;
         }
         span{
-            width: calc(100% - 30px);
+            max-width: calc(100% - 30px);
             display: block;
             word-break: break-word;
         }

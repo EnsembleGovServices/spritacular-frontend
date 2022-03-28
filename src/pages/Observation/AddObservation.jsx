@@ -437,10 +437,10 @@ const AddObservation = () => {
                 <Loader fixContent={true} />
             }
             {success &&
-                <UncontrolledAlert color="success" data-dismiss="alert" dismissible="true" className="text-center">
+                <UncontrolledAlert color="success" data-dismiss="alert" dismissible="true" className="text-center mt-3 d-inline-block w-100">
                     {success?.data?.success}
                 </UncontrolledAlert>
-            }
+            } 
             <Form className="observation-form upload-observation-form-main" onSubmit={handleSubmit}>
                 <div className="common-top-button-wrapper">
                     <Container>
