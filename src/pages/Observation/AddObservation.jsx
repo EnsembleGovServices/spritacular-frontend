@@ -3,20 +3,20 @@ import {
     Col,
     Container,
     Form,
+    FormGroup,
+    Input,
+    Label,
     Nav,
     NavItem,
     NavLink,
     Row,
     TabContent,
     TabPane,
-    FormGroup,
-    UncontrolledAlert,
-    Label,
-    Input
+    UncontrolledAlert
 } from "reactstrap";
 import "../../assets/scss/component/uploadObservationImage.scss";
 import {useEffect, useState} from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
@@ -24,7 +24,6 @@ import {baseURL, cameraSettingFields, routeUrls} from "../../helpers/url";
 import {Tabs} from "../../helpers/observation";
 
 import ObservationLocation from "../../components/Observation/ObservationLocation";
-import EquipmentDetails from "../../components/Observation/EquipmentDetails";
 import ObservationUploadedImg from "../../components/Observation/ObservationUploadedImg";
 import ObservationImages from "../../components/Observation/ObservationImages";
 import ObservationProgress from "../../components/Observation/ObservationProgress";
@@ -394,6 +393,14 @@ const AddObservation = () => {
             })
     }
 
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+
+
     useEffect(()=> {
         draftData?.map_data?.map((item, index) => {
             let imageUrl = item.image,
@@ -402,13 +409,19 @@ const AddObservation = () => {
                 .then(async response => {
                     const contentType = response.headers.get('content-type')
                     const blob = await response.blob()
-                    const file = new File([blob], fileName, { contentType })
-                    item.item = file;
+                    const file = new File([blob], fileName, { contentType });
+                    const image = await toBase64(file).catch(error => console.log(error));
+                    setTimeout(function () {
+                        item.item = file;
+                        item.image = image;
+                        item.name = file.name;
+                        item.lastModified = file.lastModified;
+                    }, 500)
                     return file;
                 })
-                .catch(error => console.log(`Error converting the CDN image to file object at index [${index}]`))
+                .catch(error => console.log(`Error converting the CDN image to file object at index [${index}] [${error}]`))
         });
-    }, [draftData])
+    }, [draftData, setObservationImages])
 
     useEffect(() => {
         let id = observationSteps?.mode?.id,

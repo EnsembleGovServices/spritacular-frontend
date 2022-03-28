@@ -341,6 +341,9 @@
     .remove-btn{
       opacity: 1;
     }
+    .replace-image_wrapper{
+      opacity: 1;
+    }
   }
   .remove-btn{
     opacity: 0;
@@ -433,6 +436,17 @@
       height: 90px;
     }
   }
+}
+
+.replace-image_wrapper{
+  z-index: 2;
+  top: -7px;
+  width: 22px;
+  height: 22px;
+  right: 19px;
+  box-shadow: 0px 2px 4px #666666;
+  padding: 3px;
+  opacity: 0;
 }
 // Custom checkbox design for choose image category START
 .checkbox-wrapper{

@@ -45,7 +45,8 @@ const Login = (props) => {
 
                 navigate(from, { replace: true });
                 // toast.success('Logged in successfully', toastConfig());
-                localStorage.setItem('refresh', response?.data?.refresh)
+                localStorage.setItem('refresh', response?.data?.refresh);
+                localStorage.removeItem('camera');
             })
             .catch((error) => {
                 if (!error?.response) {

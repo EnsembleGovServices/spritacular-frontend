@@ -82,6 +82,8 @@ const ObservationUploadImg = (props) =>{
         })
     };
 
+
+
     useEffect(() => {
         let images = (observationImages?.data) ? [...observationImages?.data] : [];
         observationImages?.data?.map((item, index) => {
