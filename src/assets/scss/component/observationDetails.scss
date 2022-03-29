@@ -68,7 +68,7 @@
         }
     }
     .preview-detail{
-        height: calc( 100% - 38px);
+        height: calc( 100% - 52px);
         border-radius: $border-radius;
         overflow: hidden;
         @include media-breakpoint-down(md){

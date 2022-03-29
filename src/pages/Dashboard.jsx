@@ -90,16 +90,15 @@ const Dashboard = () =>{
                             />
                         }
                     </div>
-                        {isObservationDetailModal && 
-                        <ObservationDetails 
-                            data={observationList[selectedObservationId]}  
-                            modalClass="observation-details_modal" 
-                            open={isObservationDetailModal} 
-                            handleClose={handleObservationDetailModal} 
-                            handleContinueEdit={handleObservationEdit} 
-                        />
-                        }
-                    {/* </Col> */}
+                    {isObservationDetailModal && 
+                    <ObservationDetails 
+                        data={observationList[selectedObservationId]}  
+                        modalClass="observation-details_modal" 
+                        open={isObservationDetailModal} 
+                        handleClose={handleObservationDetailModal} 
+                        handleContinueEdit={handleObservationEdit} 
+                    />
+                    }
                 </div>
             </Container>
         </>
