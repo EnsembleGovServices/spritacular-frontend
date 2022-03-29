@@ -337,12 +337,24 @@
   max-width: 470px;
 }
 .selected-image_wrapper {
-  &:hover{
-    .remove-btn{
-      opacity: 1;
-    }
-    .replace-image_wrapper{
-      opacity: 1;
+  .selected-image{
+    &:hover{
+      .preview-btn{
+        img{
+          transform: scale(1.2);
+          transition: $transition;
+        }
+      }
+      .remove-btn{
+        opacity: 1;
+        right: -7px;
+        transition: $transition;
+      }
+      .replace-image_wrapper{
+        opacity: 1;
+        right: -7px;
+        transition: $transition;
+      }
     }
   }
   .remove-btn{
@@ -351,16 +363,20 @@
     font-size: 19px;
     line-height: 19px;
     right: -7px;
-    top: -7px;
+    right: -100%;
+    top: 0;
     background: $white;
     box-shadow: 0px 2px 4px $light-grey;
+    transition: $transition;
   }
 }
 .selected-image{
   width: 160px;
   height: 160px;
-  border-radius: 10px;
+  border-radius: 6px;
   background: $white;
+  position: relative;
+  padding: 3px;
   @include media-breakpoint-down(xl){
     width: 100px;
     height: 100px;
@@ -369,11 +385,33 @@
     width: 90px;
     height: 90px;
   }
-  .preview-btn{
-    height: 100%;
-    width: 100%;
+  &::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
     border-radius: 10px;
+    background: $banner-bg;
+  }
+  &.active-tab{
+    &::before{
+      background: linear-gradient(90deg, #E82C95 0.28%, #8C61E5 100%);
+    }
+  }
+  .preview-btn{
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    position: relative;
+    z-index: 1;
+    top: 2px;
+    left: 2px;
+    border-radius: 6px;
     border: 0;
+    overflow: hidden;
+    outline: 2px solid $white;
     &[disabled]{
       cursor: no-drop;
       &.active-tab{
@@ -392,35 +430,18 @@
         opacity: 0.9;
       }
     }
-    &::before{
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      z-index: 0;
-      border-radius: 10px;
-      background: $banner-bg;
-    }
-    &.active-tab{
-      &::before{
-        background: linear-gradient(90deg, #E82C95 0.28%, #8C61E5 100%);
-      }
+    &:focus{
+      outline: 2px solid $white;
     }
   }
   img{
-    width: calc(100% - 8px);
-    height: calc(100% - 8px);
+    height: 100%;
+    width: 100%;
     object-fit: cover;
     object-position: center;
-    position: relative;
-    z-index: 1;
-    top: 4px;
-    left: 4px;
-    border-radius: 7px;
-    outline: 2px solid $white;
     background-color: #fff;
+    transition: $transition;
+    overflow: hidden;
   }
 }
 .sm-selected_image{
@@ -438,13 +459,15 @@
 
 .replace-image_wrapper{
   z-index: 2;
-  top: -7px;
+  top: 25px;
   width: 22px;
   height: 22px;
   right: 19px;
+  right: -100%;
   box-shadow: 0px 2px 4px #666666;
   padding: 3px;
   opacity: 0;
+  transition: $transition;
 }
 // Custom checkbox design for choose image category START
 .checkbox-wrapper{
@@ -566,5 +589,11 @@
   top: 140px;
   @include media-breakpoint-down(sm){
     top: 0;
+  }
+}
+
+.update-mode_view{
+  .sm-selected_image{
+    justify-content: flex-start !important;
   }
 }
