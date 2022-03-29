@@ -548,6 +548,7 @@ const ObservationLocation = (props) => {
                         className="w-100"
                         onChange={(e)=>handleImageInput(e)}
                     />
+                    <span className="d-inline-block mt-1 fs-6 opacity-75 ex-text"><b className="me-1">e.g.</b> +/- 3 sec  or  +/- 1 min</span>
                 </FormGroup>
             </Col>
             <Col md={12} className="mb-5">
@@ -623,6 +624,7 @@ const ObservationLocation = (props) => {
                             className="degree-input"
                             onChange={(e)=>handleImageInput(e)}
                         />
+                        <span className="d-inline-block mt-1 fs-6 opacity-75 ex-text"><b className="me-1">e.g.</b> 120°</span>
                     </FormGroup>
                 }
                 <FormGroup className="mt-5">

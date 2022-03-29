@@ -11,7 +11,6 @@ import {getdirectionDegree} from "../../helpers/observation";
 
 const ObservationCard = (props) => {
     const {cardItems, handleClick, userProfile, cardData, index, activeType} = props;
-    console.log("test",cardItems?.category_data);// `/assets/images/category/${cardData?.category_data[0].toLowerCase().replaceAll(" ", "")}.png`);
     return(
         <>
             <Card className="observation_card overflow-hidden">

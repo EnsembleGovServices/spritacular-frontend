@@ -384,12 +384,11 @@
           right: 0;
           top: 0;
           bottom: 0;
-          background: transparent;
+          background: $banner-bg;
           z-index: 0;
         }
       }
       img{
-        outline-color: $gray3;
         opacity: 0.9;
       }
     }
@@ -402,13 +401,12 @@
       bottom: 0;
       z-index: 0;
       border-radius: 10px;
-      background: $body-bg;
+      background: $banner-bg;
     }
     &.active-tab{
       &::before{
         background: linear-gradient(90deg, #E82C95 0.28%, #8C61E5 100%);
       }
-     
     }
   }
   img{
