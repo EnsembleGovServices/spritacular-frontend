@@ -156,13 +156,13 @@ const AddObservation = () => {
                         }
                     }
                     if(e.target.checked === false){
-                        observationArray.data[observationImages?.selected_image_index]['azimuth'] = 'N';
+                        observationArray.data[observationImages?.selected_image_index]['azimuth'] = observationArray?.data?.[observationImages?.selected_image_index]['azimuth'];
                         if(observationData?.image_type === 3){
                             if(observationArray.data[1]){
-                               observationArray.data[1]['azimuth'] = 'N';
+                               observationArray.data[1]['azimuth'] = observationArray?.data?.[0]['azimuth'];
                             }
                             if(observationArray.data[2]){
-                                observationArray.data[2]['azimuth'] = 'N';
+                                observationArray.data[2]['azimuth'] = observationArray?.data?.[0]['azimuth'];
                             }
                         }
                     }

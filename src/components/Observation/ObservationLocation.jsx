@@ -230,6 +230,7 @@ const ObservationLocation = (props) => {
                 }
             }
         }
+        setObservationImages(observationArray);
     }
 
     const handleCopyData = (e,keys) => {
@@ -252,12 +253,15 @@ const ObservationLocation = (props) => {
                     // copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
                     // copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
                 }else{
-                    copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
-                    if(keys.includes('location','latitude','longitude')){
-                        copyImages.data[copyImages?.selected_image_index]['latitude'] = initialAddress.lat;
-                        copyImages.data[copyImages?.selected_image_index]['longitude'] = initialAddress.lng;
-                        copyImages.data[copyImages?.selected_image_index]['location'] = initialAddress.short_address;
-                        copyImages.data[copyImages?.selected_image_index]['country_code'] = initialAddress.country;
+                    if(observationData?.image_type !== 3){
+                        
+                        copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
+                        if(keys.includes('location','latitude','longitude')){
+                            copyImages.data[copyImages?.selected_image_index]['latitude'] = initialAddress.lat;
+                            copyImages.data[copyImages?.selected_image_index]['longitude'] = initialAddress.lng;
+                            copyImages.data[copyImages?.selected_image_index]['location'] = initialAddress.short_address;
+                            copyImages.data[copyImages?.selected_image_index]['country_code'] = initialAddress.country;
+                        }
                     }
                 }
                 return false;
@@ -594,16 +598,19 @@ const ObservationLocation = (props) => {
                         <span>I know the precise azimuth angle in degrees</span>
                     </div>
                 </FormGroup>
-
-                {(angleDegree === false && observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0) ?
+                
+                {(angleDegree === false && (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0 ||  observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === false)) ?
                     <FormGroup>
                         <Label className="justify-content-center mb-3 text-uppercase">Look Direction</Label>
+                        
                         <div className="compass-wrapper">
                             {
                                 directionValue?.map((direction, index)=>{
                                     return(
+                                       
                                         <Button
-                                            className={`${direction.name}-direction ${getdirectionAngle(observationArray.data[observationImages?.selected_image_index]['azimuth']) === direction.name ? 'active_direction' : ''}`}
+                                        
+                                            className={`${direction.name}-direction ${getdirectionAngle(Number(observationArray.data[observationImages?.selected_image_index]['azimuth'])) === direction.name ? 'active_direction' : ''}`}
                                             onClick={()=> selectDirection(index)}
                                             key={index}
                                             id= {`directionValue${index}`}
@@ -615,7 +622,7 @@ const ObservationLocation = (props) => {
                             }
                             <div className="center-dot rounded-circle" />
                             <div className="rotate-arrow-wrap">
-                                <div className="rotate-arrow-inner" style={{ "--directionAngle": directionValue.filter((item) => item.name === getdirectionAngle(observationArray.data[observationImages?.selected_image_index]['azimuth'])).map((dirData) => {
+                                <div className="rotate-arrow-inner" style={{ "--directionAngle": directionValue.filter((item) => item.name === getdirectionAngle(Number(observationArray.data[observationImages?.selected_image_index]['azimuth']))).map((dirData) => {
                                         return dirData.angle;
                                     }) + 'deg' }}>
                                     <div className="rotate-arrow main"><img src={Images.compassArrow} alt="Compass Arrow" /> </div>
