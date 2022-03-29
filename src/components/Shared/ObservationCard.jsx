@@ -66,7 +66,7 @@ const ObservationCard = (props) => {
                             </Col>
                             <Col xs={6} lg={3}>
                                 <div className="card-user_location" style={{"--card-location-angle": `${getdirectionDegree(cardData.azimuth)}deg` }}>
-                                    <h6 className="me-1 mb-0">{cardData.azimuth}°</h6>
+                                    <h6 className="me-1 mb-0">{cardData.azimuth}{Number(cardData.azimuth) ? '°': ''}</h6>
                                     <span className="card-direction rounded-circle position-relative d-flex justify-content-center align-items-start">
                                         <span className="direction-dot"></span>
                                     </span>
