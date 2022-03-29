@@ -482,7 +482,7 @@ const AddObservation = () => {
 
     return(
         <div className="position-relative">
-            <h3 className="px-4 py-3 text-center">{updateMode ? 'update mode hai' : 'nahi h update mode'}</h3>
+            {/*<h3 className="px-4 py-3 text-center">{updateMode ? 'update mode hai' : 'nahi h update mode'}</h3>*/}
             {isLoading &&
                 <Loader fixContent={true} />
             }
