@@ -210,14 +210,13 @@ const ObservationLocation = (props) => {
         const directionWrapper = document.querySelector('.compass-wrapper');
         const directionId = document.getElementById(`directionValue${index}`);
         let getAngleName = directionId.getAttribute("data-name");
-
         if(isActiveDire === index){
             directionWrapper.classList.remove("active-arrow");
         }else{
             directionWrapper.classList.add("active-arrow");
             setActiveDire(index);
 
-            if (observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0) {
+            if (observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0 || observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === false) {
                 observationArray.data[observationImages?.selected_image_index]['azimuth'] = getdirectionDegree(getAngleName);
 
                 if(observationData?.image_type === 3){
