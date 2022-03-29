@@ -12,7 +12,6 @@ const ObservationUploadedImg = (props) => {
     const [activeTab, setActiveTab] = useState(observationImages?.selected_image_id ?? null);
     // Toggle Tabs
     const toggleTab = (tab,index=0) => {
-       
         setActiveTab(tab);
         setObservationImages(prev => {
             return {
@@ -36,11 +35,11 @@ const ObservationUploadedImg = (props) => {
                 return(
                     <div className={`selected-image_wrapper d-flex justify-content-end mb-2 ms-2 ms-sm-0 position-relative ${className ? className : ''}`} key={index}>
                         <div className="selected-image">
-                            <button type="button" disabled={obvType?.image_type === 3} className={`preview-btn position-relative d-flex p-0 shadow-none  ${activeTab === item?.id ? 'active-tab' : ''}`} onClick={()=> toggleTab(item?.id,index)}>
+                            <button type="button" className={`preview-btn position-relative d-flex p-0 shadow-none  ${activeTab === item?.id ? 'active-tab' : ''}`} onClick={()=> toggleTab(item?.id,index)}>
                                 <LazyLoad src={item?.image} alt={item?.name} />
                             </button>
                             {/* {observationImages?.observation_count > 1 && */}
-                                <ObservationUpdateUploadedImages existingItem={item} />
+                                <ObservationUpdateUploadedImages item={item} index={index} />
                                 <button type="button" className="remove-btn text-black border-0 p-0 position-absolute btn" onClick={()=> remove(item?.id)}>
                                 <span>
                                     <Icon icon="ci:close-big" />
@@ -55,6 +54,6 @@ const ObservationUploadedImg = (props) => {
     )
 }
 ObservationUploadedImg.propTypes = {
-    remove: PropTypes.func,
+    remove: PropTypes.func
 };
 export default ObservationUploadedImg;
