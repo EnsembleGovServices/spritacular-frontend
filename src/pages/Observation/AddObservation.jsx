@@ -374,7 +374,7 @@ const AddObservation = () => {
         })
             .then(response => {
                 let data = response?.data?.data;
-                console.log(data);
+                // console.log(data);
                 setDraftData({
                     image_type: data.image_type,
                     elevation_angle: data.elevation_angle,
@@ -591,7 +591,7 @@ const AddObservation = () => {
                             </Col>
 
                             {showUploadedPreview() &&
-                                <Col md={2} sm={3} className="d-none d-sm-block">
+                                <Col md={2} sm={3} className="d-none d-sm-block overflow-hidden">
                                     <div className="observation-form-right-tab">
                                         <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
                                     </div>
