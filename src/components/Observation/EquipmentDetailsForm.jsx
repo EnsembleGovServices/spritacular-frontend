@@ -28,7 +28,7 @@ const EquipmentDetailsForm = (props) =>{
                     placeholder="e.g. 20"
                     onChange={(e)=>handleOtherCamera(e)}
                     />
-                    <span className="d-inline-block mt-1 fs-6 opacity-75 ex-text"><b className="me-1">e.g.</b>20</span>
+                    <span className="d-inline-block mt-1 opacity-75 ex-text"><b className="me-1">e.g.</b>20</span>
                 </FormGroup>
             </Col>
             <Col md={12}>
@@ -41,7 +41,7 @@ const EquipmentDetailsForm = (props) =>{
                     onChange={(e)=>handleOtherCamera(e)}
                     placeholder="e.g. https://www.youtube.com/watch?v=PjZ2Y2nn000"
                     />
-                    <span className="d-inline-block mt-1 fs-6 opacity-75 ex-text"><b className="me-1">e.g.</b>https://www.youtube.com/watch?v=PjZ2Y2nn000</span>
+                    <span className="d-inline-block mt-1 opacity-75 ex-text"><b className="me-1">e.g.</b>https://www.youtube.com/watch?v=PjZ2Y2nn000</span>
                 </FormGroup>
             </Col>
             <Col md={12}>
