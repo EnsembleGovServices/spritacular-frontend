@@ -34,8 +34,8 @@ const ObservationUploadedImg = (props) => {
             {preview?.map((item, index) => {
                 return(
                     <div className={`selected-image_wrapper d-flex justify-content-end mb-2 ms-2 ms-sm-0 position-relative ${className ? className : ''}`} key={index}>
-                        <div className="selected-image">
-                            <button type="button" className={`preview-btn position-relative d-flex p-0 shadow-none  ${activeTab === item?.id ? 'active-tab' : ''}`} onClick={()=> toggleTab(item?.id,index)}>
+                        <div className={`selected-image  ${activeTab === item?.id ? 'active-tab' : ''}`}>
+                            <button type="button" className='preview-btn position-relative d-flex p-0 shadow-none' onClick={()=> toggleTab(item?.id,index)}>
                                 <LazyLoad src={item?.image} alt={item?.name} />
                             </button>
                             {/* {observationImages?.observation_count > 1 && */}

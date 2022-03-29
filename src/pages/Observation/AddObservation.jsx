@@ -591,7 +591,7 @@ const AddObservation = () => {
                             </Col>
 
                             {showUploadedPreview() &&
-                                <Col md={2} sm={3} className="d-none d-sm-block">
+                                <Col md={2} sm={3} className="d-none d-sm-block overflow-hidden">
                                     <div className="observation-form-right-tab">
                                         <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
                                     </div>
