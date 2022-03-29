@@ -22,6 +22,7 @@ import TutorialsDetail from "./pages/TutorialsDetail";
 import InitialUploadObservations from "./pages/InitialUploadObservations";
 import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 import InformativePage from './layouts/InformativePage';
+import Dashboard from "./pages/Dashboard";
 
 
 const App = () => {
@@ -53,6 +54,7 @@ const App = () => {
             <Route exact path={routeUrls.observationsAdd} element={<AddObservation />} />
             <Route exact path={routeUrls.observationsUpdate} element={<AddObservation />} />
           </Route>
+          <Route exact path={routeUrls.dashboard} element={<Dashboard />} />
         </Route>
       </Route>
       <Route path="*" element={<Error />} />

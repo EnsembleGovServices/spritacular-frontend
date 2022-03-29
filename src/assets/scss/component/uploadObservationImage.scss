@@ -341,6 +341,9 @@
     .remove-btn{
       opacity: 1;
     }
+    .replace-image_wrapper{
+      opacity: 1;
+    }
   }
   .remove-btn{
     opacity: 0;
@@ -381,12 +384,11 @@
           right: 0;
           top: 0;
           bottom: 0;
-          background: transparent;
+          background: $banner-bg;
           z-index: 0;
         }
       }
       img{
-        outline-color: $gray3;
         opacity: 0.9;
       }
     }
@@ -399,13 +401,12 @@
       bottom: 0;
       z-index: 0;
       border-radius: 10px;
-      background: $body-bg;
+      background: $banner-bg;
     }
     &.active-tab{
       &::before{
         background: linear-gradient(90deg, #E82C95 0.28%, #8C61E5 100%);
       }
-     
     }
   }
   img{
@@ -433,6 +434,17 @@
       height: 90px;
     }
   }
+}
+
+.replace-image_wrapper{
+  z-index: 2;
+  top: -7px;
+  width: 22px;
+  height: 22px;
+  right: 19px;
+  box-shadow: 0px 2px 4px #666666;
+  padding: 3px;
+  opacity: 0;
 }
 // Custom checkbox design for choose image category START
 .checkbox-wrapper{

@@ -37,18 +37,13 @@ import BlogTwo from "../assets/images/Blog-Two.png";
 import UserProfile from "../assets/images/profile-pic.png";
 import GetStartedTopImage from "../assets/images/how-it-works-page.png";
 import UploadPlaceholder from "../assets/images/UploadPlaceholder.png";
-// import SpriteOb from "../assets/images/sprite.png";
-// import Bluejet from "../assets/images/bluejet.png";
-// import Elev from "../assets/images/elev.png";
-// import Halo from "../assets/images/halo.png";
-// import GiganticJet from "../assets/images/giganticjet.png";
-// import SecondaryJet from "../assets/images/secondaryjet.png";
 import ObservationImageOne from "../assets/images/observation-image-one.png";
 import compassArrow from "../assets/images/compass-arrow.svg";
 import PageNotFound from "../assets/images/404-error.svg";
 import ErrorBG from "../assets/images/error_bg.svg";
 import Ensemble from "../assets/images/ensemble.png";
 import NoDataFound from "../assets/images/no-data.svg";
+import Filter from "../assets/images/filter.png";
 
 const Images = {
   Logo,
@@ -90,18 +85,13 @@ const Images = {
   UserProfile,
   GetStartedTopImage,
   UploadPlaceholder,
-  // SpriteOb,
-  // Bluejet,
-  // Elev,
-  // Halo,
-  // GiganticJet,
-  // SecondaryJet,
   ObservationImageOne,
   compassArrow,
   PageNotFound,
   ErrorBG,
   Ensemble,
-  NoDataFound
+  NoDataFound,
+  Filter
 };
 
 export default Images;

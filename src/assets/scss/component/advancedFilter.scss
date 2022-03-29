@@ -1,0 +1,34 @@
+@import "../global/config.scss";
+
+.advanced-filter{
+    background: #FFFFFF;
+    box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.03), inset -1px 0px 0px #E0E3E8;
+    padding: 18px 16px;
+    max-width: 255px;
+    width: 100%;
+    margin-right: 60px;
+    .form-label{
+        @include md-text;
+        margin-bottom: 5px !important;
+    }
+    .form-control,
+    .form-select{
+        @include md-text;
+        padding: 6px 10px;
+    }
+    .collapse-btn{
+        @include sm-text;
+        color: $grey;
+        &.open{
+            svg{
+                transform: rotate(-180deg);
+                transition: $transition;
+            }
+        }
+        svg{
+            transition: $transition;
+            width: 20px;
+            height: 20px;
+        }
+    }
+}

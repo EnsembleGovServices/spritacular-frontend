@@ -3,6 +3,7 @@ import {useLayoutEffect, useState} from "react";
 import LazyLoad from "../Upload/LazyLoad";
 import { Icon } from '@iconify/react';
 import { PropTypes } from 'prop-types';
+import ObservationUpdateUploadedImages from "./ObservationUpdateUploadedImages";
 
 const ObservationUploadedImg = (props) => {
     const {obvType, remove, className}=props;
@@ -39,6 +40,7 @@ const ObservationUploadedImg = (props) => {
                                 <LazyLoad src={item?.image} alt={item?.name} />
                             </button>
                             {/* {observationImages?.observation_count > 1 && */}
+                                <ObservationUpdateUploadedImages existingItem={item} />
                                 <button type="button" className="remove-btn text-black border-0 p-0 position-absolute btn" onClick={()=> remove(item?.id)}>
                                 <span>
                                     <Icon icon="ci:close-big" />
