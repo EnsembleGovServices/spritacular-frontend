@@ -11,7 +11,7 @@ import {
     Label,
     Row
 } from "reactstrap";
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import useObservations from "../../hooks/useObservations";
 import MapWrapper from '../MapWrapper';
 import ReactCountryFlags from '../ReactCountryFlag';
@@ -24,7 +24,7 @@ import {getdirectionDegree,getdirectionAngle} from "../../helpers/observation";
 
 
 const ObservationLocation = (props) => {
-    const { toggleTab,handleImageInput, error, step, obvType,disableNext } = props;
+    const { toggleTab,handleImageInput, error, step, obvType,disableNext, mode } = props;
     const fref = useRef()
     const [address1,setAddress] = useState({
         address: '',
@@ -278,6 +278,20 @@ const ObservationLocation = (props) => {
     }, [isTimezoneOpen])
 
     const errorData = error ? Object.values(error?.data) : {};
+
+    useEffect(() => {
+        const id = observationImages?.data?.[0].id;
+        if (obvType?.image_type === 3 && mode && step.active === 2) {
+            setObservationImages(prev => {
+                return {
+                    ...prev,
+                    selected_image_id: id,
+                    selected_image_index: 0
+                }
+            });
+        }
+    },[mode, disableNext, observationImages?.data, obvType?.image_type, setObservationImages, step.active])
+
     return (
         <>
             <Col md="12">

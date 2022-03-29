@@ -566,7 +566,7 @@ const AddObservation = () => {
                                                     <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
                                                 </div>
                                             }
-                                            {observationImages?.data && <ObservationLocation obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>}
+                                            {observationImages?.data && <ObservationLocation mode={updateMode} obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>}
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
                                             {auth?.camera &&
