@@ -374,7 +374,7 @@ const AddObservation = () => {
         })
             .then(response => {
                 let data = response?.data?.data;
-                console.log(data);
+                // console.log(data);
                 setDraftData({
                     image_type: data.image_type,
                     elevation_angle: data.elevation_angle,
