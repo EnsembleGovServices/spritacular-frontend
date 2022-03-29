@@ -355,7 +355,7 @@ const AddObservation = () => {
     const showUploadedPreview = () => {
         return !(!(observationImages?.data &&
             next &&
-            activeTab === Tabs.ObservationImages) && !(activeTab === Tabs.DateTimeLocation && !(observationType?.image_type === 3)))
+            activeTab === Tabs.ObservationImages) && !(activeTab === Tabs.DateTimeLocation && !(observationType?.image_type === 3) && !(observationType?.image_type === 1)))
     }
 
     const getFileName = (url) => {
