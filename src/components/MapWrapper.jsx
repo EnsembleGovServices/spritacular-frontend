@@ -7,7 +7,7 @@ import Autocomplete from 'react-google-autocomplete';
 import { GoogleMapsAPI } from '../config';
 import getCity, {getPostalCode, getState , getCountry, getArea} from '../helpers';
 Geocode.setApiKey(GoogleMapsAPI);
-Geocode.enableDebug();
+// Geocode.enableDebug();
 
 class Map extends Component{
 

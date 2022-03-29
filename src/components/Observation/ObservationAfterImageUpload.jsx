@@ -86,22 +86,24 @@ const ObservationAfterImageUpload = (props) => {
 
     return (
         <Row>
-            <Col sm={12}>
-                <FormGroup className="d-flex align-items-center position-relative">
-                    <div className="custom-switch">
-                        <input
-                            id="toggleMultiple"
-                            type="checkbox"
-                            className="hidden"
-                            checked={isMultiple}
-                            onChange={(e)=> setIsMultiple(!isMultiple)}
-                        />
-                        <label className="switchbox" htmlFor="toggleMultiple" />
-                        <span>Multiple Observations (limit to 3)</span>
-                    </div>
-                </FormGroup>
-            </Col>
-            {isMultiple &&
+            {!mode &&
+                <Col sm={12}>
+                    <FormGroup className="d-flex align-items-center position-relative">
+                        <div className="custom-switch">
+                            <input
+                                id="toggleMultiple"
+                                type="checkbox"
+                                className="hidden"
+                                checked={isMultiple}
+                                onChange={(e)=> setIsMultiple(!isMultiple)}
+                            />
+                            <label className="switchbox" htmlFor="toggleMultiple" />
+                            <span>Multiple Observations (limit to 3)</span>
+                        </div>
+                    </FormGroup>
+                </Col>
+            }
+            {isMultiple && !mode && obvType.image_type === 3 &&
                 <Col sm={12}>
                     <Nav tabs>
                         <NavItem>
