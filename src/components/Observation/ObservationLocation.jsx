@@ -281,7 +281,7 @@ const ObservationLocation = (props) => {
 
     useEffect(() => {
         const id = observationImages?.data?.[0].id;
-        if (obvType?.image_type === 3 && mode && step.active === 2) {
+        if (obvType?.image_type === 3 && step.active === 2) {
             setObservationImages(prev => {
                 return {
                     ...prev,
@@ -290,7 +290,7 @@ const ObservationLocation = (props) => {
                 }
             });
         }
-    },[mode, disableNext, observationImages?.data, obvType?.image_type, setObservationImages, step.active])
+    },[observationImages?.data, obvType?.image_type, setObservationImages, step.active])
 
     return (
         <>
