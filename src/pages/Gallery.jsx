@@ -21,7 +21,7 @@ import {observationStatus} from "../helpers/timezone";
 import cloneDeep from "lodash.clonedeep";
 
 
-const MyObservations = () => {
+const Gallery = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false);
   const [observationList,setObservationList] = useState([]);
   const [isLoaded,setIsLoaded] = useState(true);
@@ -259,4 +259,4 @@ const MyObservations = () => {
         </>
   )
 }
-export default MyObservations;
+export default Gallery;
