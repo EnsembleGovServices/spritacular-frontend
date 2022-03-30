@@ -40,7 +40,7 @@ const ObservationUploadedImg = (props) => {
                             </button>
                             {/* {observationImages?.observation_count > 1 && */}
                                 <ObservationUpdateUploadedImages item={item} index={index} />
-                                <button type="button" className="remove-btn text-black border-0 p-0 position-absolute btn" onClick={()=> remove(item?.id)}>
+                                <button type="button" className="remove-btn text-black border-0 position-absolute btn" onClick={()=> remove(item?.id)}>
                                 <span>
                                     <Icon icon="ci:close-big" />
                                 </span>

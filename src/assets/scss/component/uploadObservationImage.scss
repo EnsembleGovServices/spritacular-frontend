@@ -360,14 +360,19 @@
   .remove-btn{
     opacity: 0;
     z-index: 2;
-    font-size: 19px;
-    line-height: 19px;
+    width: 22px;
+    height: 22px;
     right: -7px;
     right: -100%;
     top: 0;
     background: $white;
     box-shadow: 0px 2px 4px $light-grey;
     transition: $transition;
+    padding: 3px;
+    span{
+      display: block;
+      line-height: 0;
+    }
   }
 }
 .selected-image{
@@ -459,7 +464,7 @@
 
 .replace-image_wrapper{
   z-index: 2;
-  top: 25px;
+  top: 30px;
   width: 22px;
   height: 22px;
   right: 19px;

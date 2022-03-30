@@ -1,12 +1,12 @@
-import "../../../assets/scss/component/comments.scss";
 import {useEffect, useRef, useState} from "react";
-import {Button, FormGroup} from "reactstrap";
-import { Icon } from '@iconify/react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import axios from "../../../api/axios";
 import {baseURL} from "../../../helpers/url";
+import axios from "../../../api/axios";
 import moment from "moment";
 import useAuth from "../../../hooks/useAuth";
+import {Button, FormGroup} from "reactstrap";
+import "../../../assets/scss/component/comments.scss";
+import { Icon } from '@iconify/react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 
 const Comments = (props) => {
@@ -71,7 +71,7 @@ const Comments = (props) => {
             return(
                 <li key={index} className="d-flex align-items-center w-100">
                     <i className="profile-icon rounded-circle me-0"><LazyLoadImage effect="blur" src={item?.user_data?.profile_image} width='100%' height='100%' alt="Profile" className="rounded-circle" /></i>
-                    <div className="commentor_details d-flex justify-content-between align-items-center">
+                    <div className="commentor_details d-flex justify-content-between align-items-start">
                         <div className="comment-profile_details">
                             <h6 className="mb-1 text-truncate text-black">{item?.user_data?.first_name} {item?.user_data?.last_name}</h6>
                             <p className="mb-0 fw-normal">{item?.text}</p>
@@ -91,10 +91,10 @@ const Comments = (props) => {
         <>
             <div className="comment-wrapper position-relative">
                 <ul className="comment-area p-0 m-0">
-                    {comments?.data?.length ? showMessages() : 'No comments yet!'}
+                    {comments?.data?.length ? showMessages() : <p className="text-center">No comments yet!</p>}
                 </ul>
                 <form onSubmit={sendComment}>
-                    <FormGroup className="typing-area d-flex justify-content-between align-items-center position-absolute end-0 start-0 bottom-0">
+                    <FormGroup className="typing-area d-flex justify-content-between align-items-center start-0 bottom-0">
                         <input
                             className="form-control"
                             type="text"

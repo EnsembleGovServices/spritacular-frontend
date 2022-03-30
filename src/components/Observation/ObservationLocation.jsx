@@ -608,14 +608,20 @@ const ObservationLocation = (props) => {
                                     return(
                                        
                                         <Button
-                                        
                                             className={`${direction.name}-direction ${getdirectionAngle(Number(observationArray.data[observationImages?.selected_image_index]['azimuth'])) === direction.name ? 'active_direction' : ''}`}
                                             onClick={()=> selectDirection(index)}
                                             key={index}
                                             id= {`directionValue${index}`}
                                             data-angle={direction.angle}
                                             data-name={direction.name}
-                                        >{direction.name}</Button>
+                                        >
+                                            <span className="d-block">
+                                                {direction.name}
+                                            </span>
+                                            <span className="d-block direction-angle">
+                                                {direction.angle}°
+                                            </span>
+                                        </Button>
                                     )
                                 })
                             }

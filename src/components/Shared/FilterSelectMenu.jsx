@@ -5,7 +5,7 @@ import { routeUrls } from "../../helpers/url";
 import Images from './../../static/images';
 
 const FilterSelectMenu = (props) =>{
-    const {filterShow, handleFilterOpen,dashboardFilter} =  props;
+    const {filterShow, handleFilterOpen, dashboardFilter, handleListView, handleGridView, listView, gridView} =  props;
     return (
         <>
             <div className="observation-filter_wrapper">
@@ -13,7 +13,7 @@ const FilterSelectMenu = (props) =>{
                     <Row>
                         <Col sm={12} md={8} className="d-flex align-items-center">
                             {dashboardFilter && <FormGroup className={`m-0 d-flex align-items-center h-100 form-group p-0 ${filterShow ? 'filter-open' : ''}`}>
-                                <Button onClick={()=>handleFilterOpen()} className="border-0 rounded-0 bg-transparent text-black shadow-none text-start w-100">
+                                <Button onClick={()=>handleFilterOpen()} className="border-0 rounded-0 bg-transparent text-black shadow-none text-start w-100 d-flex align-items-center">
                                     <img src={Images.Filter} alt="Filter" /> {filterShow && <span className="ms-3" >Advanced Filter</span> }</Button>
                             </FormGroup>}
                             <FormGroup className="m-0 d-inline-block form-group">
@@ -58,8 +58,8 @@ const FilterSelectMenu = (props) =>{
                                 {dashboardFilter &&
                                     <>
                                         <div className="view-switch-wrap">
-                                            <Button className="bg-transparent rounded-0 border-0 p-0 shadow-none"><Icon icon="mdi:view-grid-outline" /></Button>
-                                            <Button className="bg-transparent rounded-0 border-0 p-0 shadow-none ms-3"><Icon icon="ic:sharp-list" /></Button>
+                                            <Button onClick={()=> handleGridView()} className="bg-transparent rounded-0 border-0 p-0 shadow-none"><Icon icon="mdi:view-grid-outline" color={gridView ? '#900' : '#000'} /></Button>
+                                            <Button onClick={()=> handleListView()} className="bg-transparent rounded-0 border-0 p-0 shadow-none ms-3"><Icon icon="ic:sharp-list" color={listView ? '#900' : '#000'} /></Button>
                                         </div>
                                         <div className="border-start ps-3 ms-3">
                                             <Button className="btn btn-secondary shadow-none" disabled>

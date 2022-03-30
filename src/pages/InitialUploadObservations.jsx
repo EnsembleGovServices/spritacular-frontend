@@ -14,7 +14,7 @@ const InitialUploadObservations = () => {
   const handleObvAdd = (e) => {
     e.preventDefault();
     setIsCleanUp(true);
-    return navigate(routeUrls.observationsAdd);
+    return navigate('/'+routeUrls.observationsAdd);
   }
 
 

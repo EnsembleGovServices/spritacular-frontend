@@ -18,25 +18,22 @@ const ObservationDetailPage = (props) => {
     setSelectedObservationId(id);
   };
   return(
-        <>
-          <Masonry
-            className={"photo-list p-0"}
-            elementType={"ul"}
-            options={masonryOptions}
-            disableImagesLoaded={false}
-            updateOnEachImageLoad={true}
-          >
-            {observationList.length > 0 && observationList?.map((cardItems, index)=> {
+      <Masonry
+          className={"photo-list p-0"}
+          elementType={"ul"}
+          options={masonryOptions}
+          disableImagesLoaded={false}
+          updateOnEachImageLoad={true}
+      >
+          {observationList.length > 0 && observationList?.map((cardItems, index)=> {
               return(
-                  cardItems?.images.length > 0 &&
                   <li key={index} className="photo-item mb-4">
-                    <ObservationCard cardItems={cardItems} cardData={cardItems?.images[0]} index={index} userProfile={cardItems.user_data} handleClick={handleObservationDetailModal} activeType={activeType} />
+                      <ObservationCard cardItems={cardItems} cardData={cardItems?.images[0]} index={index} userProfile={cardItems.user_data} handleClick={handleObservationDetailModal} activeType={activeType} />
                   </li>
-                )
-              })
-            }
-          </Masonry>
-        </>
+              )
+          })
+          }
+      </Masonry>
   )
 }
 export default ObservationDetailPage;
