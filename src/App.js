@@ -38,7 +38,7 @@ const App = () => {
           <Route exact path={routeUrls.home} element={<Home />} />
           <Route exact path={routeUrls.about} element={<About />} />
           <Route exact path={routeUrls.getStarted} element={<GetStarted />} />
-          <Route exact path={routeUrls.home} element={<Gallery />} />
+          <Route exact path={routeUrls.gallery} element={<Gallery />} />
           <Route exact path={routeUrls.blog} element={<Blog />} />
           <Route exact path={routeUrls.tutorials} element={<Tutorials />} />
           <Route exact path={routeUrls.tutorialsDetail} element={<TutorialsDetail />} />

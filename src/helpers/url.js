@@ -30,7 +30,7 @@ export const routeUrls = {
     login: 'login',
     profile: 'profile',
     myObservations: 'observations',
-    // gallery: 'gallery',
+    gallery: 'gallery',
     observationsAdd: 'observations/add',
     observationsUpdate: 'observations/update',
     dashboard: 'dashboard',

@@ -1,4 +1,3 @@
-import { Button} from 'reactstrap';
 import "../assets/scss/component/myObservation.scss";
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
@@ -8,6 +7,7 @@ import ObservationDetails from './Observation/ObservationDetails';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Images from './../static/images';
 import ObservationDetailPage from "./Observation/ObservationDetailPage";
+import { LoadMore } from '../components/Shared/LoadMore';
 import "../assets/scss/component/gallery.scss";
 
 const MyObservations = () => {
@@ -15,8 +15,8 @@ const MyObservations = () => {
   const [observationList,setObservationList] = useState([]);
   const [isLoaded,setIsLoaded] = useState(true);
   const [selectedObservationId,setSelectedObservationId] = useState();
-  const cardPerPage = 1;
-  const onLoadCardShow = 2;
+  const cardPerPage = 10;
+  const onLoadCardShow = 10;
   const [galleryCardToShow, setGalleryCardToShow] = useState([]);
   const [next, setNext] = useState(0);
 
@@ -36,6 +36,9 @@ const MyObservations = () => {
   },[observationList])
 
   const { auth } = useAuth();
+  const [loadMore,setLoadMore] = useState(0);
+  const [pageSize,setPageSize] = useState(10);
+  const [currobservationList,setcurrobservationList] = useState([]);
   useEffect(() => {
     getObservationType();
   },[isLoaded]);
@@ -54,12 +57,33 @@ const MyObservations = () => {
       },
       
   }).then((success) => {
-    const varifiedData = success?.data?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
-    setObservationList(varifiedData);
+    setObservationList(success?.data?.data);
+    let data = success?.data?.data.slice(0,pageSize);
+    setLoadMore(pageSize);
+      setcurrobservationList(data);
+    // const varifiedData = success?.data?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
+    // setObservationList(varifiedData);
     setIsLoaded(false);
   }).catch((error) => {
       console.log(error.response);
   })
+  }
+
+  const handlLoadMore = () => {
+    let value = loadMore + pageSize;
+    if(observationList.length > 0){
+
+      let length;
+      if(value > observationList.length){
+        length = observationList.length;
+      }
+      else{
+        length = value;
+      }
+      setLoadMore(length);
+      let currentData = observationList.slice(loadMore,length);
+      setcurrobservationList([...currobservationList,...currentData]);
+    }
   }
   
   const handleObservationDetailModal = (id) => {
@@ -80,7 +104,7 @@ const MyObservations = () => {
           {galleryCardToShow.length === observationList.length ? 
             <h5 className='text-center fw-bold mt-4 opacity-75'>No more data available</h5>
             : 
-            <Button className='gray-outline-btn d-block mx-auto fw-normal' onClick={()=> handleLoadMoreData()}>Load more</Button>
+            <LoadMore handlLoadMore={handleLoadMoreData} /> 
           }
           {isObservationDetailModal && <ObservationDetails data={observationList[selectedObservationId]}  activeType={''} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />}
         </div>
