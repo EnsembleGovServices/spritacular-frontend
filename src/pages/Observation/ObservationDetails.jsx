@@ -8,11 +8,13 @@ import ObservationMoreEquipementDetails from "../../components/Observation/Obser
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Comments from "../../components/Observation/ObservationDetails/Comments";
 import { Icon } from "@iconify/react";
+import useObservations from "../../hooks/useObservations";
 
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose, data, activeType, handleContinueEdit } = props;
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
     const [tooltipOpen, setTooltipOpen] = useState([]);
+    const {observationType} = useObservations();
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
         if (activeTab !== tab) {
@@ -121,7 +123,7 @@ const ObservationDetails = (props) =>{
                                             toggleImageDetailsTab(imageDetails.Comments);
                                         }}
                                     >
-                                        Comments
+                                        Comments {observationType?.comment_count === 0 ? '' : (observationType?.comment_count)}
                                     </NavLink>
                                 </NavItem>
                             </Nav>

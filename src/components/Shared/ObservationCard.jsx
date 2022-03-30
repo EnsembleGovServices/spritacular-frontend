@@ -7,6 +7,7 @@ import { Icon } from "@iconify/react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import ReactCountryFlags from "../ReactCountryFlag";
 import { getdirectionDegree } from "../../helpers/observation";
+import CardImageCarousel from "./CardImageCarousel";
 
 const ObservationCard = (props) => {
     const { cardItems, handleClick, userProfile, cardData, index, activeType } = props;
@@ -42,7 +43,15 @@ const ObservationCard = (props) => {
                             <Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" />
                         </div>
                     )}
-                    <img alt="Card cap" src={cardData?.image} className="img-fluid card-img" />
+                    {/* <img 
+                        alt="Card cap"  
+                        src={cardData?.image} 
+                        className="img-fluid card-img" 
+                        onClick={(e) => {
+                            userProfile && handleClick(index);
+                        }}
+                    /> */}
+                    <CardImageCarousel carouselData={cardData?.image} />
                     {/* <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" /> */}
                     <CardBody className="position-relative observation-card_body">
                         <div className="position-absolute observation_type d-flex align-items-center">

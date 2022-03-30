@@ -1,6 +1,6 @@
 import "../../assets/scss/component/myObservation.scss";
 import InitialUploadObservations from "../InitialUploadObservations";
-import { Col, Container, Row } from 'reactstrap';
+import { Col, Container, Row, UncontrolledAlert } from 'reactstrap';
 import {Link, useNavigate} from 'react-router-dom';
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
@@ -133,7 +133,7 @@ const MyObservations = () => {
   }).catch((error) => {
       console.log(error.response);
   })
-}
+  }
 
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
@@ -163,45 +163,50 @@ const MyObservations = () => {
         </Container>}
         {observationCount.total > 0 && 
         <>
-        <Container>
-          <div className="filtered-data_wrapper">
-            <Row>
-              <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
-                <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
-                  <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('verified')}}>Verified ({observationCount.verified})</span>     
-                  <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('unverified')}}>Unverified ({observationCount.unverified})</span>     
-                  <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('denied')}}>Denied ({observationCount.denied})</span>     
-                  <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('draft')}}>Drafts ({observationCount.draft})</span>     
-                </div>
-              </Col>
-              <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
-                <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mt-2 mt-md-0">
-                  <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary ms-2 ms-xl-4 shadow-none">
-                  <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload
-                  Observations
-                  </Link>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-        <Container>
-          {observationCount[`${activeType}`] ===  0 &&
-           <div className="data-not-found">
-              <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
-              <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
-            </div>}
-          <ObservationDetailPage  observationList={currobservationList}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
-         {loadMore < currentObservationList.length && <LoadMore handlLoadMore={handlLoadMore} />}
-        </Container>
+          <Container>
+            <div className="filtered-data_wrapper">
+              <Row>
+                <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
+                  <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
+                    <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('verified')}}>Verified ({observationCount.verified})</span>     
+                    <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('unverified')}}>Unverified ({observationCount.unverified})</span>     
+                    <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('denied')}}>Denied ({observationCount.denied})</span>     
+                    <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('draft')}}>Drafts ({observationCount.draft})</span>     
+                  </div>
+                </Col>
+                <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
+                  <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mt-2 mt-md-0">
+                    <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary ms-2 ms-xl-4 shadow-none">
+                    <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload
+                    Observations
+                    </Link>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          </Container>
+          <Container>
+            <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center">
+              Would you like to help us sift through observations and endorse their validity?
+              <Link to={'/'+routeUrls.tutorials} className="btn btn-outline-primary">Get Trained</Link>
+            </UncontrolledAlert>
+          </Container>
+          <Container>
+            {observationCount[`${activeType}`] ===  0 &&
+            <div className="data-not-found">
+                <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
+                <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
+              </div>}
+            <ObservationDetailPage  observationList={currobservationList}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
+          {loadMore < currentObservationList.length && <LoadMore handlLoadMore={handlLoadMore} />}
+          </Container>
           <ObservationDetails
-              data={currentObservationList[selectedObservationId]}
-              activeType={activeType}
-              modalClass="observation-details_modal"
-              open={isObservationDetailModal}
-              handleClose={handleObservationDetailModal}
-              handleContinueEdit={handleObservationEdit}
-              // cardItems={cardItems}
+            data={currentObservationList[selectedObservationId]}
+            activeType={activeType}
+            modalClass="observation-details_modal"
+            open={isObservationDetailModal}
+            handleClose={handleObservationDetailModal}
+            handleContinueEdit={handleObservationEdit}
           />
         </>
         }
