@@ -61,8 +61,10 @@ const MyObservations = () => {
     let data = success?.data?.data.slice(0,pageSize);
     setLoadMore(pageSize);
       setcurrobservationList(data);
-    // const varifiedData = success?.data?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
-    // setObservationList(varifiedData);
+      if(!auth.user){
+        const varifiedData = success?.data?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
+        setObservationList(varifiedData);
+      }
     setIsLoaded(false);
   }).catch((error) => {
       console.log(error.response);

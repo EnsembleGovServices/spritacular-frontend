@@ -183,7 +183,6 @@ const AddObservation = () => {
         setObservationImages(observationArray);
 
     }
-    // console.log(observationImages);
 
     const handlesetDraft = () => {
         setIsLoading(true);
