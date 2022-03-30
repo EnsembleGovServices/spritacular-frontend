@@ -71,23 +71,6 @@ const MyObservations = () => {
   })
   }
 
-  const handlLoadMore = () => {
-    let value = loadMore + pageSize;
-    if(observationList.length > 0){
-
-      let length;
-      if(value > observationList.length){
-        length = observationList.length;
-      }
-      else{
-        length = value;
-      }
-      setLoadMore(length);
-      let currentData = observationList.slice(loadMore,length);
-      setcurrobservationList([...currobservationList,...currentData]);
-    }
-  }
-  
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);

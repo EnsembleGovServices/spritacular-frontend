@@ -1,7 +1,7 @@
-import InitialUploadObservations from "../InitialUploadObservations";
-import { Col, Container, Row, UncontrolledAlert } from 'reactstrap';
-import {Link, useNavigate} from 'react-router-dom';
 import "../../assets/scss/component/myObservation.scss";
+import InitialUploadObservations from "../InitialUploadObservations";
+import { Col, Container, Row } from 'reactstrap';
+import {Link, useNavigate} from 'react-router-dom';
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
@@ -15,6 +15,7 @@ import { LoadMore } from "../../components/Shared/LoadMore";
 import { Icon } from "@iconify/react";
 
 const MyObservations = () => {
+  const { auth } = useAuth();
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
   const [observationList,setObservationList] = useState({});
   const [currentObservationList,setCurrentObservationList] = useState({});
@@ -28,7 +29,6 @@ const MyObservations = () => {
   const [isLoaded,setIsLoaded] = useState(true);
   const [activeType,setActiveType] = useState('verified');
   const [selectedObservationId,setSelectedObservationId] = useState();
-  const { auth } = useAuth();
   const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
   const navigate = useNavigate();
   const [loadMore,setLoadMore] = useState(0);
@@ -128,7 +128,7 @@ const MyObservations = () => {
       draft: draftCount.length,
       total: success?.data?.data.length
     })
-    getObservationType('verified');
+    getObservationType('unverified');
     setIsLoaded(false);
   }).catch((error) => {
       console.log(error.response);
@@ -165,7 +165,7 @@ const MyObservations = () => {
         <Container>
           <div className="filtered-data_wrapper">
             <Row>
-            <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
+              <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
                 <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
                   <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('verified')}}>Verified ({observationCount.verified})</span>     
                   <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('unverified')}}>Unverified ({observationCount.unverified})</span>     

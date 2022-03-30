@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
 import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import { routeUrls } from "./helpers/url";
 
 import PersistLogin from "./layouts/PersistLogin";
@@ -19,7 +19,6 @@ import AddObservation from "./pages/Observation/AddObservation";
 import Observations from "./pages/Observation/Observations";
 import Error from "./components/Error";
 import TutorialsDetail from "./pages/TutorialsDetail";
-import InitialUploadObservations from "./pages/InitialUploadObservations";
 import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 import InformativePage from './layouts/InformativePage';
 import Dashboard from "./pages/Dashboard";
