@@ -593,3 +593,10 @@ export const timezone = [
     'WET',
     'Zulu'
 ]
+
+export const observationStatus = [
+    'Verified',
+    'Unverified',
+    'Draft',
+    'Denied'
+]
