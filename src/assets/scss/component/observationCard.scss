@@ -50,12 +50,6 @@
         svg{
             color: $black;
         }
-        &:hover{
-            background: $black;
-            svg{
-                color: $white;
-            }
-        }
     }
     .edit-icon{
         opacity: 0;

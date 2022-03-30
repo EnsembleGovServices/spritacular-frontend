@@ -7,6 +7,7 @@ import ObservationMoreDetails from "../../components/Observation/ObservationDeta
 import ObservationMoreEquipementDetails from "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Comments from "../../components/Observation/ObservationDetails/Comments";
+import { Icon } from "@iconify/react";
 
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose, data, activeType, handleContinueEdit } = props;
@@ -48,7 +49,8 @@ const ObservationDetails = (props) =>{
                         <Button className="close-icon bg-transparent rounded-0 border-0 shadow-none p-0 me-3" onClick={() => handleClose()}>
                             <img src={Images.Modalcloseicon} alt="close-icon" />
                         </Button>
-                        {(data?.category_data[0]) ? data?.category_data[0] : null} <Badge className="text-uppercase">{activeType}</Badge>
+                        {(data?.category_data[0]) ? data?.category_data[0] : null} 
+                        <Badge className={`text-uppercase ${activeType === 'verified' ? 'badge-success' : ''}`}>{activeType === 'verified' && <Icon icon="mdi:check-decagram" color="#27ae60" className="me-1" width="13" height="13" />}{activeType}</Badge>
                     </div>
                     {activeType === "draft" &&
                         <div>

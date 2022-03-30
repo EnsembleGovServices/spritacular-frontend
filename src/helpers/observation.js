@@ -78,7 +78,7 @@ export const CategoryList = [
 ]
 
 export const directionValue = [
-    {name: 'N', angle: 360, default : true},
+    {name: 'N', angle: 0, default : true},
     {name: 'NE', angle: 45, default : false},
     {name: 'E', angle: 90, default : false},
     {name: 'SE', angle: 135, default : false},
@@ -93,7 +93,7 @@ export const getdirectionDegree = (key) => {
     let degree;
     switch (key) {
         case 'N':
-            degree = 360;
+            degree = 0;
             break;
         case 'NE':
             degree = 45;
@@ -128,7 +128,7 @@ export const getdirectionAngle = (key) => {
     
     let angle;
     switch (key) {
-        case 360:
+        case 0:
             angle = 'N';
             break;
         case 45:

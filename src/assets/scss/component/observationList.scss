@@ -1,0 +1,85 @@
+@import "../global/config.scss";
+
+table{
+    &.list-view{
+        color: $black;
+        tr{
+            border-bottom: 1px solid $light-grey1;
+        }
+        th{
+            font-weight: 700;
+            @include sm-text;
+            text-transform: uppercase;
+            color: $grey;
+        }
+        .check-box{
+            width: 20px;
+            padding-left: 0;
+        }
+        td {
+            font-weight: 500;
+            @include md-text;
+            color: $grey;
+        }
+        .observation-card {
+            width: 181px;
+            height: 144px;
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            .multiple-image_icon {
+                position: absolute;
+                right: 0;
+                top: 0;
+                z-index: 1;
+                background: #fff;
+                opacity: 0.64;
+                border-radius: 0 6px 0 8px;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 4px;
+            }
+            .verify-card {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 4px 0 8px;
+                padding: 5px;
+                line-height: 0;
+                z-index: 1;
+            }
+            .card-img {
+                height: 100%;
+                border-radius: $border-radius;
+                object-fit: cover;
+            }
+        }
+        .observation_type {
+            i{
+                width: 22px;
+                height: 22px;
+                padding: 1px;
+                box-shadow: 0px 0px 4px rgba(0,0,0,0.25);
+            }
+        }
+        .location-value {
+            font-style: normal;
+            font-weight: 900;
+            font-size: 20px;
+            line-height: 23px;
+            color: #000000;
+        }
+        .card-subtitle{
+            .badge{
+                font-weight: 500;
+                @include xs-text;
+                padding: 1px 3px;
+                border-radius: 2px;
+            }
+        }
+    }
+}
