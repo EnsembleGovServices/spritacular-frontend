@@ -130,7 +130,7 @@ const ObservationDetails = (props) =>{
                                     <ObservationMoreEquipementDetails data={data?.camera_data} />
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Comments} className="h-100">
-                                    <Comments />
+                                    <Comments obvId={data?.id} />
                                 </TabPane>
                             </TabContent>
                         </Col>
