@@ -73,6 +73,8 @@ table{
         .observationType-box{
             width: 280px;
             .observation_type {
+                white-space: nowrap;
+                max-height: 110px;
                 i{
                     width: 22px;
                     height: 22px;
