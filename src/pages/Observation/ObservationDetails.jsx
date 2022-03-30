@@ -65,7 +65,8 @@ const ObservationDetails = (props) =>{
                         <Col md={6}>
                             <div className="mb-4 mb-md-0 h-100">
                                 <div className="preview-detail mb-3 mb-md-2">
-                                    <LazyLoadImage effect="blur" src={data?.images[0].image} alt="card details" className="test" />
+                                    <img src={data?.images[0].image} alt="card details" className="img-fluid" />
+                                    {/*<LazyLoadImage effect="blur" src={data?.images[0].image} alt="card details" className="test" />*/}
                                 </div>
                                 <Row>
                                     <Col sm={6} className="justify-content-start d-flex align-items-center mb-2 mb-sm-0">

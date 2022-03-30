@@ -128,7 +128,7 @@ const MyObservations = () => {
       draft: draftCount.length,
       total: success?.data?.data.length
     })
-    getObservationType('unverified');
+    getObservationType('verified');
     setIsLoaded(false);
   }).catch((error) => {
       console.log(error.response);
@@ -155,6 +155,7 @@ const MyObservations = () => {
       setcurrobservationList([...currobservationList,...currentData]);
     }
   }
+
   return(
       <>
         {observationCount.total === 0 &&  <Container>
@@ -177,7 +178,7 @@ const MyObservations = () => {
                 <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mt-2 mt-md-0">
                   <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary ms-2 ms-xl-4 shadow-none">
                   <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload
-                  Observation
+                  Observations
                   </Link>
                 </div>
               </Col>
@@ -192,18 +193,16 @@ const MyObservations = () => {
             </div>}
           <ObservationDetailPage  observationList={currobservationList}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
          {loadMore < currentObservationList.length && <LoadMore handlLoadMore={handlLoadMore} />}
-        </Container> 
-        {isObservationDetailModal && 
-          <ObservationDetails 
-            data={currentObservationList[selectedObservationId]}  
-            activeType={activeType} 
-            modalClass="observation-details_modal" 
-            open={isObservationDetailModal} 
-            handleClose={handleObservationDetailModal} 
-            handleContinueEdit={handleObservationEdit} 
-            // cardItems={cardItems}  
+        </Container>
+          <ObservationDetails
+              data={currentObservationList[selectedObservationId]}
+              activeType={activeType}
+              modalClass="observation-details_modal"
+              open={isObservationDetailModal}
+              handleClose={handleObservationDetailModal}
+              handleContinueEdit={handleObservationEdit}
+              // cardItems={cardItems}
           />
-        }
         </>
         }
       </>

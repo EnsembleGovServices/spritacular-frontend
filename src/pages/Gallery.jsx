@@ -83,7 +83,8 @@ const MyObservations = () => {
               <div className="data-not-found">
                 <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
                 <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
-              </div>}
+              </div>
+            }
             <ObservationDetailPage observationList={galleryCardToShow} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
           </div>
           {galleryCardToShow.length === observationList.length ? 
