@@ -8,14 +8,13 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import {Suspense, lazy, useEffect} from 'react';
+import {Suspense, lazy, useEffect, useLayoutEffect} from 'react';
 import classnames from "classnames";
 import {useState} from "react";
 import useAuth from "../hooks/useAuth";
 import "../assets/scss/component/camerasettings.scss";
 import ImageUpload from "../components/Upload/ImageUpload";
-import axios from "../api/axios";
-import {baseURL, cameraSettingFields} from "../helpers/url";
+import {cameraSettingFields} from "../helpers/url";
 import ReactCountryFlags from "../components/ReactCountryFlag";
 
 const UpdateProfile = lazy(()=> import('../components/Account/UpdateProfile'))
@@ -44,13 +43,16 @@ const Profile = () => {
       setCameraDetails(auth?.user?.camera);
     } else {
       setIsDetailExist(false);
-      setCameraDetails("")
     }
   }
 
   useEffect(()=> {
     setUser(auth?.user);
   }, [auth])
+
+  useLayoutEffect(()=> {
+    fetchCameraDetails().then(r => r)
+  }, [auth?.user?.camera])
 
   return (
     <>
