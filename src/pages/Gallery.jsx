@@ -17,7 +17,7 @@ import { FormGroup, Label, Input } from 'reactstrap';
 import {Link, useNavigate} from 'react-router-dom';
 import { routeUrls } from '../helpers/url';
 import { Icon } from '@iconify/react';
-import {observationStatus} from "../helpers/timezone";
+  import {observationStatus,countries} from "../helpers/timezone";
 import cloneDeep from "lodash.clonedeep";
 
 
@@ -27,11 +27,11 @@ const MyObservations = () => {
   const [isLoaded,setIsLoaded] = useState(true);
   const [selectedObservationId,setSelectedObservationId] = useState();
   const [galleryCardToShow, setGalleryCardToShow] = useState([]);
-  const [searchTimeZone, setSearchTimeZone] = useState("");
-  const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
+  const [searchCountry, setSearchCountry] = useState("");
+  const [isCountryOpen, setIsCountryOpen] = useState(false);
   const [isStatusOpen, setIsStatusOpen] = useState(false);
   const [isTypeOpen, setIsTypeOpen] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState({});
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [category,setCategory] = useState([]);
@@ -40,12 +40,25 @@ const MyObservations = () => {
   const { auth } = useAuth();
   const [loadMore,setLoadMore] = useState(10);
   const [pageSize,setPageSize] = useState(10);
+
+
   
   useEffect(() => {
     setLoadMore(pageSize);
-    getObservationType(selectedCountry,selectedCategory,selectedStatus);
+    getObservationType(selectedCountry?.code,selectedCategory,selectedStatus);
     fetchCategory();
   },[isLoaded]);
+
+  const findCountry = (e) => {
+    let value = e.target.value.toLowerCase();
+    setSearchCountry(value);
+}
+
+useEffect(()=> {
+  if (isCountryOpen === false) {
+      setSearchCountry("");
+  }
+}, [isCountryOpen])
 
   const fetchCategory = async () => {
     await axios.get(baseURL.api+'/observation/get_category_list/', {
@@ -129,7 +142,8 @@ const MyObservations = () => {
       //     return (item.is_submit === false && item.is_verified === false && item.is_reject === false);
       //   });
       // }
-      getObservationType(selectedCountry,selectedCategory,value);
+      
+      getObservationType(selectedCountry.code,selectedCategory,value);
       
     }
     if(type === 'category') {
@@ -138,10 +152,11 @@ const MyObservations = () => {
       //     return item.category_data.includes(value);
       //   }
       // });
-      getObservationType(selectedCountry,value,selectedStatus);
+      getObservationType(selectedCountry.code,value,selectedStatus);
     }
-
-   
+    if(type === 'country'){
+      getObservationType(value.code,selectedCategory,selectedStatus);
+    }   
     // setCurrentObservationList(unverifiedList);
     // if(unverifiedList){
     //   let data = unverifiedList.slice(0,pageSize);
@@ -165,17 +180,17 @@ const MyObservations = () => {
                     <option>Country 3</option>
                     <option>Country 4</option>
                   </Input> */}
-                  <Dropdown className="dropdown-with-search" toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen} >
+                  <Dropdown className="dropdown-with-search" toggle={() => setIsCountryOpen(!isCountryOpen)} isOpen={isCountryOpen} >
                                     <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                        <span className="text-truncate"></span>
+                                        <span className="text-truncate">{selectedCountry.name}</span>
                                         <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                     </DropdownToggle>
                                     <DropdownMenu className="py-0 shadow">
-                                        <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" className="p-2"  placeholder="Search Timezone" /></DropdownItem>
-                                        {observationStatus?.filter(item => {
-                                            return item;
+                                        <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" className="p-2"  placeholder="Search Timezone" onChange={(e)=> findCountry(e)} /></DropdownItem>
+                                        {countries?.filter(item => {
+                                            return item.name.toLowerCase().indexOf(searchCountry.toLowerCase()) !== -1;
                                         }).map((item, index) => {
-                                            return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} >{item}</DropdownItem>
+                                            return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item.name} onClick={(e) => {setSelectedCountry(item); handleFilterValue(item,'country');}}>{item.name}</DropdownItem>
                                         })}
                                     </DropdownMenu>
                                 </Dropdown>
