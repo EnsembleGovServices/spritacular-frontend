@@ -24,6 +24,18 @@ const Dashboard = () =>{
     const [ listView, setListView ] = useState(false);
     const [ gridView, setGridView ] = useState(true);
 
+    const [searchCountry, setSearchCountry] = useState("");
+    const [isFilterOpen,setIsFilterOpen] = useState({
+      isCountryOpen:false,
+      isTypeOpen:false,
+      isStatusOpen:false
+    })
+    const [selectedFilters,setSelectedFilters] = useState({
+      country:{},
+      type:'',
+      status:''
+    })
+
     const getObservationData = (value) => {
         axios.get(baseURL.api+'/observation/observation_collection/?sort_by='+value,{
             headers:{
@@ -82,16 +94,36 @@ const Dashboard = () =>{
         setGridView(true)
         setListView(false)
     }
+    const findCountry = (e) => {
+        let value = e.target.value.toLowerCase();
+        setSearchCountry(value);
+    }
+    const handleFilterValue = (value,type) => {
+        // setLoadMore(pageSize);
+        if(type === 'status'){    
+        //   getObservationType(selectedFilters.country?.code,selectedFilters.type,value);
+        }
+    
+        if(type === 'category') {
+        //   getObservationType(selectedFilters.country?.code,value,selectedFilters.status);
+        }
+    
+        if(type === 'country'){
+        //   getObservationType(value.code,selectedFilters.type,selectedFilters.status);
+        }   
+      }
     return (
         <>
             <FilterSelectMenu 
                 dashboardFilter={true} 
+                galleryFilter={true} 
                 filterShow={filterShow} 
                 handleFilterOpen={handleFilterOpen} 
                 handleListView={handleListView} 
                 handleGridView={handleGridView} 
                 listView={listView}
                 gridView={gridView}
+                isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}
             />
             <div className='observation-dashboard_content'>
                 <Container>

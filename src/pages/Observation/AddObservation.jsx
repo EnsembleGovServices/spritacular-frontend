@@ -571,7 +571,7 @@ const AddObservation = () => {
                                                             type="checkbox"
                                                             name="profileData"
                                                             checked={isSwitchOn}
-                                                            disabled={!auth?.camera}
+                                                            disabled={!auth?.user?.camera}
                                                             onChange = {(e)=> {setSwitchOn(!isSwitchOn);getCameraDetail(e).then(r => r);}}
                                                         />
                                                         Pull data from my profile
