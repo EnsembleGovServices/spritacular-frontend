@@ -51,7 +51,7 @@ const ObservationCard = (props) => {
                             userProfile && handleClick(index);
                         }}
                     />
-                    {userProfile && <CardImageCarousel carouselData={cardData?.image} />}
+                    {/* {userProfile && <CardImageCarousel carouselData={cardData?.image} />} */}
                     {/* <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" /> */}
                     <CardBody className="position-relative observation-card_body">
                         <div className="position-absolute observation_type d-flex align-items-center">
