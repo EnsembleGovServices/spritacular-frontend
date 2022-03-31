@@ -567,7 +567,6 @@ const AddObservation = () => {
                                                 <FormGroup check className="d-flex align-items-center position-relative mb-3">
                                                     <Label check>
                                                         <Input
-                                                            required
                                                             type="checkbox"
                                                             name="profileData"
                                                             checked={isSwitchOn}
