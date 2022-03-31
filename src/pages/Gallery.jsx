@@ -4,18 +4,10 @@ import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import {baseURL} from "../helpers/url";
 import ObservationDetails from './Observation/ObservationDetails';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Images from './../static/images';
 import ObservationDetailPage from "./Observation/ObservationDetailPage";
 import { LoadMore } from '../components/Shared/LoadMore';
 import "../assets/scss/component/gallery.scss";
-import { Col, Container, Row, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, } from 'reactstrap';
-import { FormGroup, Label, Input } from 'reactstrap';
-import {Link} from 'react-router-dom';
-import { routeUrls } from '../helpers/url';
-import { Icon } from '@iconify/react';
-import {observationStatus,countries} from "../helpers/timezone";
-import cloneDeep from "lodash.clonedeep";
 import FilterSelectMenu from "../components/Shared/FilterSelectMenu";
 import useObservationsData from "../hooks/useObservationsData";
 
@@ -130,7 +122,7 @@ useEffect(()=> {
           <div>
             {galleryCardToShow.length ===  0 &&
               <div className="data-not-found">
-                <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
+                <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
                 <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
               </div>
             }

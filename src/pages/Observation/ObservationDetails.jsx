@@ -5,10 +5,8 @@ import { imageDetails } from "../../helpers/observation";
 import "../../assets/scss/component/observationDetails.scss";
 import ObservationMoreDetails from "../../components/Observation/ObservationDetails/ObservationMoreDetails";
 import ObservationMoreEquipementDetails from "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Comments from "../../components/Observation/ObservationDetails/Comments";
 import { Icon } from "@iconify/react";
-import useObservations from "../../hooks/useObservations";
 import useObservationsData from "../../hooks/useObservationsData";
 
 const ObservationDetails = (props) =>{
@@ -69,12 +67,11 @@ const ObservationDetails = (props) =>{
                             <div className="mb-4 mb-md-0 h-100">
                                 <div className="preview-detail mb-3 mb-md-2">
                                     <img src={data?.images[0].image} alt="card details" className="img-fluid" />
-                                    {/*<LazyLoadImage effect="blur" src={data?.images[0].image} alt="card details" className="test" />*/}
                                 </div>
                                 <Row>
                                     <Col sm={6} className="justify-content-start d-flex align-items-center mb-2 mb-sm-0">
                                         <div className="d-flex card-user_details align-items-center overflow-hidden">
-                                            <i className="profile-icon rounded-circle"><LazyLoadImage effect="blur" width="100%" height="100%" src={data?.user_data?.profile_image} alt="Profile" className="rounded-circle" /></i>
+                                            <i className="profile-icon rounded-circle"><img width="100%" height="100%" src={data?.user_data?.profile_image} alt="Profile" className="rounded-circle" /></i>
                                             {/* User sort name  */}
                                             {/* <i className="profile-text rounded-circle bg-black text-white">JD</i> */}
                                             <h5 className="pe-2 mb-0 text-truncate fw-normal text-black">{data?.user_data?.first_name + ' ' + data?.user_data?.last_name}</h5>
@@ -84,13 +81,11 @@ const ObservationDetails = (props) =>{
                                         <div className="observation_type d-flex align-items-center">
                                             {data?.category_data.length > 0 && data?.category_data.map((item, index) => {
                                                 return (<i id={item.toLowerCase().replaceAll(" ", "")} className="rounded-circle bg-white ms-2" key={index}>
-                                                    {/* <img src={`/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt={item} className="rounded-circle" /> */}
-                                                    <LazyLoadImage effect="blur" src={`/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt={item} />
+                                                    <img src={`/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt={item} />
                                                     <Tooltip flip target={item.toLowerCase().replaceAll(" ", "")} isOpen={tooltipOpen[item]?.isOpen} toggle={()=> (handleToggleChange(item))} >{item}</Tooltip>
                                                 </i>)
                                             })}
                                         </div>
-                                        {/* <h5 className="ps-2 mb-0 text-truncate fw-normal text-black">{(data?.category_data[0]) ? data?.category_data[0] : null}</h5> */}
                                     </Col>
                                 </Row>
                             </div>

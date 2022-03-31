@@ -331,13 +331,6 @@
     top: -90px;
   }
   .observation_card {
-    .lazy-load-image-background{
-      &.blur{
-        &.lazy-load-image-loaded{
-          display: block !important;
-        }
-      }
-    }
     .card-img {
       height: 180px;
       object-fit: cover;

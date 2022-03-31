@@ -1,7 +1,5 @@
 import { Container, Row, Col, Button } from "reactstrap";
 import Images from "../../static/images";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const HomeHowItWorks = () => {
   return (
@@ -30,12 +28,12 @@ const HomeHowItWorks = () => {
               </div>
             </Col>
             <Col md={6} xs={12} className="works-gap">
-              <LazyLoadImage alt="Register/SignUp demo" effect="blur"  src={Images.Register} className="w-100" />
+              <img alt="Register/SignUp demo"  src={Images.Register} className="w-100" />
             </Col>
           </Row>
           <Row>
             <Col md={6} xs={12} className="works-gap order-2 order-md-1">
-              <LazyLoadImage alt="How it works under Register" effect="blur"  src={Images.HowitworksSecond} className="w-100" />
+              <img alt="How it works under Register"  src={Images.HowitworksSecond} className="w-100" />
             </Col>
             <Col md={6} xs={12} className="works-gap order-1 order-md-2">
               <div className="how-it-work-text-info">
@@ -73,14 +71,14 @@ const HomeHowItWorks = () => {
             </Col>
             <Col md={6} xs={12} className="works-gap">
               <div className="shadow-lg shadow-sm p-3  bg-white rounded">
-                <LazyLoadImage alt="Share" effect="blur"  src={Images.Dragdrop} className="w-100" />
+                <img alt="Share"  src={Images.Dragdrop} className="w-100" />
               </div>
             </Col>
           </Row>
           <Row>
             <Col md={6} xs={12} className="works-gap order-2 order-md-1">
               <div className="shadow-lg shadow-sm p-3  bg-white rounded ">
-                <LazyLoadImage alt="Jet" effect="blur"  src={Images.Jet} className="w-100" />
+                <img alt="Jet"  src={Images.Jet} className="w-100" />
               </div>
             </Col>
             <Col md={6} xs={12} className="works-gap order-1 order-md-2">

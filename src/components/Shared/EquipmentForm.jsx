@@ -88,6 +88,7 @@ const EquipmentForm = (props) => {
                 name="shutter_speed"
                 value={updateSetting?.shutter_speed}
                 placeholder="1/15"
+                maxLength={10}
                 onChange={(e)=>handleInput1(e)}
                 />
                 <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>1/15</span>

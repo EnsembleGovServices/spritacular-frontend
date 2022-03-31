@@ -82,12 +82,6 @@
         @include media-breakpoint-down(md){
             height: auto;
         }
-        .lazy-load-image-background{
-            height: 100%;
-            @include media-breakpoint-down(md){
-                width: 100%;
-            }
-        }
         img{
             height: 100%;
             width: 100%;
@@ -182,10 +176,6 @@
                 width: 100%;
                 height: 100%;
                 object-fit: contain;
-            }
-            .lazy-load-image-background{
-                width: 100%;
-                height: 100%;
             }
         }
     }

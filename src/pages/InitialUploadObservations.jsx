@@ -1,7 +1,6 @@
 import { Form, FormGroup, Label } from "reactstrap";
 import { Icon } from "@iconify/react";
 import "../assets/scss/component/initialUploadobservations.scss";
-import Images from "../static/images";
 import { useNavigate } from "react-router-dom";
 import { routeUrls } from './../helpers/url';
 import useObservations from "../hooks/useObservations";
