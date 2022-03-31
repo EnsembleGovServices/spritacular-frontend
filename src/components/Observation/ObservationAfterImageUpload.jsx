@@ -170,16 +170,16 @@ const ObservationAfterImageUpload = (props) => {
                                     </Col>
                                 }
                                 { showUploadedPreview &&
-                                    <div className="d-flex justify-content-end d-sm-none"><ObservationUploadedImg  obvType={obvType} step={step} error={error} remove={remove} /></div>
+                                    <Col sm={12}>
+                                        <div className="d-flex justify-content-end d-sm-none"><ObservationUploadedImg  obvType={obvType} step={step} error={error} remove={remove} /></div>
+                                    </Col>
                                 }
                                 <Col sm={12}>
                                     <ImagePreview remove={remove} />
                                 </Col>
 
                                 <Col sm={12}>
-                                    <Row>
-                                        <ObservationCategory obvType={obvType} error={error} />
-                                    </Row>
+                                    <ObservationCategory obvType={obvType} error={error} />
                                 </Col>
 
                                 <Col sm={12}>
@@ -210,7 +210,9 @@ const ObservationAfterImageUpload = (props) => {
                                     </Col>
                                 }
                                 { showUploadedPreview &&
-                                    <div className="d-flex justify-content-end d-sm-none"><ObservationUploadedImg  obvType={obvType} step={step} error={error} remove={remove} /></div>
+                                    <Col sm={12}>
+                                        <div className="d-flex justify-content-end d-sm-none"><ObservationUploadedImg  obvType={obvType} step={step} error={error} remove={remove} /></div>
+                                    </Col>
                                 }
                                 <Col sm={12}>
                                     <ImagePreview remove={remove}/>

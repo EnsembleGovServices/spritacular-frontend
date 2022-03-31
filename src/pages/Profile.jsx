@@ -75,7 +75,6 @@ const Profile = () => {
                       <h5>{user.first_name} {user?.last_name}</h5>
                       <p>{user?.email}</p>
                       <div className="d-flex align-items-center justify-content-center">
-                        {/* <img src={Images.UsaFlag} alt="" /> */}
                         <ReactCountryFlags country={user?.country_code} />
                         <span>{user?.location}</span>
                       </div>
