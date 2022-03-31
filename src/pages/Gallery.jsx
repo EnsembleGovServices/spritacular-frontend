@@ -15,6 +15,8 @@ import {Link} from 'react-router-dom';
 import { routeUrls } from '../helpers/url';
 import { Icon } from '@iconify/react';
 import {observationStatus,countries} from "../helpers/timezone";
+import cloneDeep from "lodash.clonedeep";
+import FilterSelectMenu from "../components/Shared/FilterSelectMenu";
 import useObservationsData from "../hooks/useObservationsData";
 
 
@@ -26,23 +28,27 @@ const Gallery = () => {
   const [selectedObservationId,setSelectedObservationId] = useState();
   const [galleryCardToShow, setGalleryCardToShow] = useState([]);
   const [searchCountry, setSearchCountry] = useState("");
-  const [isCountryOpen, setIsCountryOpen] = useState(false);
-  const [isStatusOpen, setIsStatusOpen] = useState(false);
-  const [isTypeOpen, setIsTypeOpen] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState({});
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [category,setCategory] = useState([]);
+  const [isFilterOpen,setIsFilterOpen] = useState({
+    isCountryOpen:false,
+    isTypeOpen:false,
+    isStatusOpen:false
+  })
+  const [selectedFilters,setSelectedFilters] = useState({
+    country:{},
+    type:'',
+    status:''
+  })
+
   const [currentObservationList,setCurrentObservationList] = useState({});
   const { auth } = useAuth();
   const [loadMore,setLoadMore] = useState(10);
   const [pageSize,setPageSize] = useState(10);
 
+
   
   useEffect(() => {
     setLoadMore(pageSize);
-    getObservationType(selectedCountry?.code,selectedCategory,selectedStatus);
-    fetchCategory();
+    getObservationType(selectedFilters.country?.code,selectedFilters.type,selectedFilters.status);
   },[isLoaded]);
 
   const findCountry = (e) => {
@@ -51,23 +57,10 @@ const Gallery = () => {
 }
 
 useEffect(()=> {
-  if (isCountryOpen === false) {
+  if (isFilterOpen.isCountryOpen === false) {
       setSearchCountry("");
   }
-}, [isCountryOpen])
-
-  const fetchCategory = async () => {
-    await axios.get(baseURL.api+'/observation/get_category_list/', {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${auth?.token?.access}`
-        }
-    })
-    .then((response)=> {
-      setCategory(response?.data);
-    })
-    .catch((error)=> {console.log(error)})
-}
+}, [isFilterOpen.isCountryOpen])
 
   const handleLoadMoreData = () => {
     let value = loadMore + pageSize;
@@ -112,133 +105,26 @@ useEffect(()=> {
     setSelectedObservationId(id);
   };
 
-  useEffect(()=> {
-    console.log('test')
-    setObservationListData({
-      test: 'this is test'
-    })
-  }, [])
-
   const handleFilterValue = (value,type) => {
     setLoadMore(pageSize);
     if(type === 'status'){
-    
-      // value = value.toLowerCase();
-      // if(value === 'unverified'){
-      //   unverifiedList = list.length > 0 && list?.filter((item) => {
-      //     return (item.is_submit === true && item.is_verified === false && item.is_reject === false);
-      //   });
-      // }
-      // if(value === 'verified'){
-      //   unverifiedList = list.length > 0 && list?.filter((item) => {
-      //     return (item.is_verified === true && item.is_reject === false);
-      //   });
-      // }
-      // if(value === 'denied'){
-      //   unverifiedList = list.length > 0 && list?.filter((item) => {
-      //     return (item.is_reject === true && item.is_verified === false);
-      //   });
-      // }
-      // if(value === 'draft'){
-      //   unverifiedList = list.length > 0 && list?.filter((item) => {
-      //     return (item.is_submit === false && item.is_verified === false && item.is_reject === false);
-      //   });
-      // }
-      
-      getObservationType(selectedCountry.code,selectedCategory,value);
-      
+      getObservationType(selectedFilters.country?.code,selectedFilters.type,value);
     }
+
     if(type === 'category') {
-      // unverifiedList = list.length > 0 && list?.filter((item) => {
-      //   if(item.category_data){
-      //     return item.category_data.includes(value);
-      //   }
-      // });
-      getObservationType(selectedCountry.code,value,selectedStatus);
+      getObservationType(selectedFilters.country?.code,value,selectedFilters.status);
     }
+
     if(type === 'country'){
-      getObservationType(value.code,selectedCategory,selectedStatus);
-    }   
-    // setCurrentObservationList(unverifiedList);
-    // if(unverifiedList){
-    //   let data = unverifiedList.slice(0,pageSize);
-    //   setGalleryCardToShow(data);
-    // }
+      getObservationType(value.code,selectedFilters.type,selectedFilters.status);
+    }
   }
   return(
     <>
-     {auth.user && <div className="observation-filter_wrapper">
-          <Container>
-            <Row>
-              <Col sm={12} md={8}>
-                <FormGroup className="m-0 d-inline-block form-group">
-                  <Label className="text-uppercase" htmlFor="Country">Country</Label>
-                  {/* <Input id="Country" type="select" name="timezone" className="bg-transparent p-0 custom-select" defaultValue="" >
-                    <option disabled defaultValue>
-                      All countries
-                    </option>
-                    <option>Country 1</option>
-                    <option>Country 2</option>
-                    <option>Country 3</option>
-                    <option>Country 4</option>
-                  </Input> */}
-                  <Dropdown className="dropdown-with-search" toggle={() => setIsCountryOpen(!isCountryOpen)} isOpen={isCountryOpen} >
-                                    <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                        <span className="text-truncate">{selectedCountry.name}</span>
-                                        <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
-                                    </DropdownToggle>
-                                    <DropdownMenu className="py-0 shadow">
-                                        <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" className="p-2"  placeholder="Search Timezone" onChange={(e)=> findCountry(e)} /></DropdownItem>
-                                        {countries?.filter(item => {
-                                            return item.name.toLowerCase().indexOf(searchCountry.toLowerCase()) !== -1;
-                                        }).map((item, index) => {
-                                            return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item.name} onClick={(e) => {setSelectedCountry(item); handleFilterValue(item,'country');}}>{item.name}</DropdownItem>
-                                        })}
-                                    </DropdownMenu>
-                                </Dropdown>
-                </FormGroup>  
-                <FormGroup className="m-0 d-inline-block form-group">
-                  <Label className="text-uppercase" htmlFor="TransientLuminousEvent">Transient Luminous Event</Label>
-                  <Dropdown className="dropdown-with-search" toggle={() => setIsTypeOpen(!isTypeOpen)} isOpen={isTypeOpen} >
-                      <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                      <span className="text-truncate">{selectedCategory}</span>
-                          <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
-                      </DropdownToggle>
-                      <DropdownMenu className="py-0 shadow">
-                          
-                          {category?.map((item, index) => {
-                              return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value ={item.name} onClick={(e) => {setSelectedCategory(e.target.value); handleFilterValue(e.target.value,'category');}} >{item.name}</DropdownItem>
-                          })}
-                      </DropdownMenu>
-                  </Dropdown>
-                </FormGroup>  
-                <FormGroup className="m-0 d-inline-block form-group">
-                  <Label className="text-uppercase" htmlFor="ObservationStatus">Observation Status</Label>
-                  <Dropdown className="dropdown-with-search" toggle={() => setIsStatusOpen(!isStatusOpen)} isOpen={isStatusOpen} >
-                      <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                          <span className="text-truncate">{selectedStatus}</span>
-                          <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
-                      </DropdownToggle>
-                      <DropdownMenu className="py-0 shadow">
-                          
-                          {observationStatus?.map((item, index) => {
-                              return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e) => {setSelectedStatus(e.target.value); handleFilterValue(e.target.value,'status');}} >{item}</DropdownItem>
-                          })}
-                      </DropdownMenu>
-                  </Dropdown>
-                </FormGroup>               
-              </Col>
-              <Col sm={12} md={4} className="text-end">
-                <div className="d-flex align-items-center justify-content-end h-100 ">
-                  <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary shadow-none mt-2 mt-md-0">
-                    <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload
-                    Observation
-                  </Link>
-                </div>
-              </Col>
-            </Row>
-          </Container>
-        </div> }
+
+     {auth.user &&
+     <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
+}
         <div className='gallery-page'>
           <h4 className='text-black fw-bold'>Recent Observations</h4>
           <div>

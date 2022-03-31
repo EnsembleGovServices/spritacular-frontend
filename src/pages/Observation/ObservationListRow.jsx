@@ -18,7 +18,7 @@ const ObservationListRow = (props) => {
                     { cardItems?.image_type === 3 && <div className="multiple-image_icon"><Icon icon="codicon:list-filter" color="black" /></div>}
                     {cardItems?.is_verified && <div className="verify-card"><Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" /></div>}
                     {/* <img alt="Card cap" src={cardData?.image} className="img-fluid card-img" /> */}
-                    <CardImageCarousel carouselData={cardData?.image} />
+                    <CardImageCarousel carouselData={cardItems?.images} />
                 </div>
             </td>
             <td valign="middle" className="observationType-box">
