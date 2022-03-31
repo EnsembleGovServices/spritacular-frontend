@@ -563,7 +563,7 @@ const AddObservation = () => {
                                             {observationImages?.data && <ObservationLocation mode={updateMode} obvType={observationType} step={observationSteps} error={error}  toggleTab={toggleTab} handleImageInput={handleImageInput} disableNext={disabledEquipmentTab}/>}
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails} className="observation_equipment">
-                                            {auth?.camera &&
+                                            {auth?.user?.camera &&
                                                 <FormGroup check className="d-flex align-items-center position-relative mb-3">
                                                     <Label check>
                                                         <Input
