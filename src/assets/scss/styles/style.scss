@@ -118,4 +118,7 @@ body.modal-open {
   }
 }
 
+.ex-text{
+  @include sm-text;
+}
 @import "../component/index.scss";

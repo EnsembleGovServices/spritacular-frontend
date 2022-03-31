@@ -57,7 +57,6 @@ const UserProfilePopup = (props) => {
               </h4>
               <FormText>{user?.email}</FormText>
               <div className="user-country d-flex align-items-center">
-                {/* <img src={Images.UsaFlag} alt="Usa-Flag" /> */}
                 <ReactCountryFlags country={user?.country_code} />
                 <p>{user?.location}</p>
               </div>

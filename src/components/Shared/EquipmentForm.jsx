@@ -14,7 +14,7 @@ const EquipmentForm = (props) => {
                 // required
                 value={updateSetting?.camera_type} 
                 onChange={(e)=>handleInput1(e)} />
-                <span className="d-inline-block mt-1 opacity-75 ex-text"><b className="me-1">e.g.</b>Canon</span>
+                <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>Canon</span>
                 {error?.data?.camera_type &&
                     <span className="text-danger small">{error?.data?.camera_type}</span>
                 }
@@ -38,7 +38,7 @@ const EquipmentForm = (props) => {
                 // required
                 onChange={(e)=>handleInput1(e)}
                 />
-                <span className="d-inline-block mt-1 opacity-75 ex-text"><b className="me-1">e.g.</b>35 mm</span>
+                <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>35 mm</span>
                 {error?.data?.focal_length &&
                     <span className="text-danger small">{error?.data?.focal_length}</span>
                 }
@@ -55,7 +55,7 @@ const EquipmentForm = (props) => {
                 placeholder="1.4"
                 onChange={(e)=>handleInput1(e)}
                 />
-                <span className="d-inline-block mt-1 opacity-75 ex-text"><b className="me-1">e.g.</b>1.4</span>
+                <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>1.4</span>
                 {error?.data?.aperture &&
                     <span className="text-danger small">{error?.data?.aperture}</span>
                 }
@@ -77,7 +77,7 @@ const EquipmentForm = (props) => {
                 placeholder="100"
                 onChange={(e)=>handleInput1(e)}
                 />
-                <span className="d-inline-block mt-1 opacity-75 ex-text"><b className="me-1">e.g.</b>100</span>
+                <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>100</span>
             </FormGroup>
             </Col>
             <Col md="6">
@@ -90,7 +90,7 @@ const EquipmentForm = (props) => {
                 placeholder="1/15"
                 onChange={(e)=>handleInput1(e)}
                 />
-                <span className="d-inline-block mt-1 opacity-75 ex-text"><b className="me-1">e.g.</b>1/15</span>
+                <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>1/15</span>
             </FormGroup>
             </Col>
             <Col md="6">
@@ -110,7 +110,7 @@ const EquipmentForm = (props) => {
                 placeholder="Camera Time"
                 onChange={(e)=>handleInput1(e)}
                 />
-                <span className="d-inline-block mt-1 opacity-75 ex-text"><b className="me-1">e.g.</b>Camera Time</span>
+                <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>Camera Time</span>
             </FormGroup>
             </Col>
             <Col md="12">
@@ -127,7 +127,7 @@ const EquipmentForm = (props) => {
                 placeholder="Polarizing Filter"
                 onChange={(e)=>handleInput1(e)}
                 />
-                <span className="d-inline-block mt-1 opacity-75 ex-text"><b className="me-1">e.g.</b>Polarizing Filter</span>
+                <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>Polarizing Filter</span>
             </FormGroup>
             </Col>
             </>
