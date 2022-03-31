@@ -43,15 +43,15 @@ const ObservationCard = (props) => {
                             <Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" />
                         </div>
                     )}
-                    {/* <img 
+                    <img 
                         alt="Card cap"  
                         src={cardData?.image} 
                         className="img-fluid card-img" 
                         onClick={(e) => {
                             userProfile && handleClick(index);
                         }}
-                    /> */}
-                    <CardImageCarousel carouselData={cardData?.image} />
+                    />
+                    {userProfile && <CardImageCarousel carouselData={cardData?.image} />}
                     {/* <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" /> */}
                     <CardBody className="position-relative observation-card_body">
                         <div className="position-absolute observation_type d-flex align-items-center">
