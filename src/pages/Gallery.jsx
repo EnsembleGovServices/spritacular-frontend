@@ -26,13 +26,17 @@ const Gallery = () => {
   const [selectedObservationId,setSelectedObservationId] = useState();
   const [galleryCardToShow, setGalleryCardToShow] = useState([]);
   const [searchCountry, setSearchCountry] = useState("");
-  const [isCountryOpen, setIsCountryOpen] = useState(false);
-  const [isStatusOpen, setIsStatusOpen] = useState(false);
-  const [isTypeOpen, setIsTypeOpen] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState({});
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [category,setCategory] = useState([]);
+  const [isFilterOpen,setIsFilterOpen] = useState({
+    isCountryOpen:false,
+    isTypeOpen:false,
+    isStatusOpen:false
+  })
+  const [selectedFilters,setSelectedFilters] = useState({
+    country:{},
+    type:'',
+    status:''
+  })
+  
   const [currentObservationList,setCurrentObservationList] = useState({});
   const { auth } = useAuth();
   const [loadMore,setLoadMore] = useState(10);
@@ -42,8 +46,7 @@ const Gallery = () => {
   
   useEffect(() => {
     setLoadMore(pageSize);
-    getObservationType(selectedCountry?.code,selectedCategory,selectedStatus);
-    fetchCategory();
+    getObservationType(selectedFilters.country?.code,selectedFilters.type,selectedFilters.status);
   },[isLoaded]);
 
   const findCountry = (e) => {
@@ -52,23 +55,10 @@ const Gallery = () => {
 }
 
 useEffect(()=> {
-  if (isCountryOpen === false) {
+  if (isFilterOpen.isCountryOpen === false) {
       setSearchCountry("");
   }
-}, [isCountryOpen])
-
-  const fetchCategory = async () => {
-    await axios.get(baseURL.api+'/observation/get_category_list/', {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${auth?.token?.access}`
-        }
-    })
-    .then((response)=> {
-      setCategory(response?.data);
-    })
-    .catch((error)=> {console.log(error)})
-}
+}, [isFilterOpen.isCountryOpen])
 
   const handleLoadMoreData = () => {
     let value = loadMore + pageSize;
@@ -116,22 +106,22 @@ useEffect(()=> {
   const handleFilterValue = (value,type) => {
     setLoadMore(pageSize);
     if(type === 'status'){    
-      getObservationType(selectedCountry.code,selectedCategory,value);
+      getObservationType(selectedFilters.country?.code,selectedFilters.type,value);
     }
 
     if(type === 'category') {
-      getObservationType(selectedCountry.code,value,selectedStatus);
+      getObservationType(selectedFilters.country?.code,value,selectedFilters.status);
     }
-    
+
     if(type === 'country'){
-      getObservationType(value.code,selectedCategory,selectedStatus);
+      getObservationType(value.code,selectedFilters.type,selectedFilters.status);
     }   
   }
   return(
     <>
     
      {auth.user &&
-     <FilterSelectMenu galleryFilter={true} isCountryOpen={isCountryOpen} selectedCountry={selectedCountry} searchCountry={searchCountry} countries={countries} setIsCountryOpen={setIsCountryOpen}findCountry={findCountry} setSelectedCountry={setSelectedCountry} handleFilterValue={handleFilterValue} setIsTypeOpen={setIsTypeOpen} isTypeOpen={isTypeOpen}category={category}selectedCategory={selectedCategory}setSelectedCategory={setSelectedCategory} isStatusOpen={isStatusOpen}setIsStatusOpen={setIsStatusOpen}selectedStatus={selectedStatus}observationStatus={observationStatus} setSelectedStatus={setSelectedStatus}/>
+     <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
 }
         <div className='gallery-page'>
           <h4 className='text-black fw-bold'>Recent Observations</h4>

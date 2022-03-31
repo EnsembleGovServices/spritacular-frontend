@@ -3,9 +3,35 @@ import { Link } from "react-router-dom";
 import { Button, Col, Container, FormGroup, Input, Label, Row,Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { routeUrls } from "../../helpers/url";
 import Images from './../../static/images';
+import {observationStatus,countries} from "./../../helpers/timezone";
+import { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
 
 const FilterSelectMenu = (props) =>{
-    const {filterShow, handleFilterOpen, galleryFilter,isCountryOpen,selectedCountry,searchCountry,countries,setIsCountryOpen,findCountry,setSelectedCountry,handleFilterValue,dashboardFilter, handleListView, handleGridView, listView, gridView,setIsTypeOpen,isTypeOpen,category,selectedCategory,setSelectedCategory,isStatusOpen,setIsStatusOpen,selectedStatus,observationStatus,setSelectedStatus} =  props;
+    const {filterShow, handleFilterOpen, galleryFilter,isFilterOpen,setIsFilterOpen,selectedFilters,setSelectedFilters,searchCountry,findCountry,handleFilterValue,dashboardFilter, handleListView, handleGridView, listView, gridView} =  props;
+
+    const [category,setCategory] = useState([]);
+    const { auth } = useAuth();
+
+
+    const fetchCategory = async () => {
+        await axios.get(baseURL.api+'/observation/get_category_list/', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth?.token?.access}`
+            }
+        })
+        .then((response)=> {
+          setCategory(response?.data);
+        })
+        .catch((error)=> {console.log(error)})
+    }
+    
+    useEffect(() => {
+        fetchCategory();
+      },[]);
     return (
         <>
             <div className="observation-filter_wrapper">
@@ -19,9 +45,9 @@ const FilterSelectMenu = (props) =>{
                             { galleryFilter && 
                             <FormGroup className="m-0 d-inline-block form-group">
                                 <Label className="text-uppercase" htmlFor="Country">Country</Label>
-                                <Dropdown className="dropdown-with-search" toggle={() => setIsCountryOpen(!isCountryOpen)} isOpen={isCountryOpen} >
+                                <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isCountryOpen:!isFilterOpen.isCountryOpen})} isOpen={isFilterOpen.isCountryOpen} >
                                     <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                        <span className="text-truncate">{selectedCountry.name}</span>
+                                        <span className="text-truncate">{selectedFilters.country?.name}</span>
                                         <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                     </DropdownToggle>
                                     <DropdownMenu className="py-0 shadow">
@@ -29,7 +55,7 @@ const FilterSelectMenu = (props) =>{
                                         {countries?.filter(item => {
                                             return item.name.toLowerCase().indexOf(searchCountry.toLowerCase()) !== -1;
                                         }).map((item, index) => {
-                                            return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item.name} onClick={(e) => {setSelectedCountry(item); handleFilterValue(item,'country');}}>{item.name}</DropdownItem>
+                                            return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item.name} onClick={(e) => {setSelectedFilters({...selectedFilters,country:item}); handleFilterValue(item,'country');}}>{item.name}</DropdownItem>
                                         })}
                                     </DropdownMenu>
                                 </Dropdown>
@@ -37,15 +63,15 @@ const FilterSelectMenu = (props) =>{
                             {galleryFilter && 
                             <FormGroup className="m-0 d-inline-block form-group">
                             <Label className="text-uppercase" htmlFor="TransientLuminousEvent">Transient Luminous Event</Label>
-                            <Dropdown className="dropdown-with-search" toggle={() => setIsTypeOpen(!isTypeOpen)} isOpen={isTypeOpen} >
+                            <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isTypeOpen:!isFilterOpen.isTypeOpen})} isOpen={isFilterOpen.isTypeOpen} >
                                 <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                <span className="text-truncate">{selectedCategory}</span>
+                                <span className="text-truncate">{selectedFilters.type}</span>
                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                 </DropdownToggle>
                                 <DropdownMenu className="py-0 shadow">
                                     
                                     {category?.map((item, index) => {
-                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value ={item.name} onClick={(e) => {setSelectedCategory(e.target.value); handleFilterValue(e.target.value,'category');}} >{item.name}</DropdownItem>
+                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value ={item.name} onClick={(e) => {setSelectedFilters({...selectedFilters,type:e.target.value}); handleFilterValue(e.target.value,'category');}} >{item.name}</DropdownItem>
                                     })}
                                 </DropdownMenu>
                             </Dropdown>
@@ -53,15 +79,15 @@ const FilterSelectMenu = (props) =>{
                            {galleryFilter &&  
                            <FormGroup className="m-0 d-inline-block form-group">
                            <Label className="text-uppercase" htmlFor="ObservationStatus">Observation Status</Label>
-                           <Dropdown className="dropdown-with-search" toggle={() => setIsStatusOpen(!isStatusOpen)} isOpen={isStatusOpen} >
+                           <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isStatusOpen:!isFilterOpen.isStatusOpen})} isOpen={isFilterOpen.isStatusOpen} >
                                <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                   <span className="text-truncate">{selectedStatus}</span>
+                                   <span className="text-truncate">{selectedFilters.status}</span>
                                    <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                </DropdownToggle>
                                <DropdownMenu className="py-0 shadow">
                                    
                                    {observationStatus?.map((item, index) => {
-                                       return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e) => {setSelectedStatus(e.target.value); handleFilterValue(e.target.value,'status');}} >{item}</DropdownItem>
+                                       return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e) => {setSelectedFilters({...selectedFilters,status:e.target.value}); handleFilterValue(e.target.value,'status');}} >{item}</DropdownItem>
                                    })}
                                </DropdownMenu>
                            </Dropdown>
