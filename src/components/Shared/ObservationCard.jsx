@@ -1,10 +1,8 @@
 import "../../assets/scss/component/observationCard.scss";
-import "react-lazy-load-image-component/src/effects/blur.css";
 import Images from "../../static/images";
 import { Card, CardBody, CardTitle, CardSubtitle, Row, Col, Badge, CardFooter, Button } from "reactstrap";
 import moment from "moment";
 import { Icon } from "@iconify/react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import ReactCountryFlags from "../ReactCountryFlag";
 import { getdirectionDegree } from "../../helpers/observation";
 import CardImageCarousel from "./CardImageCarousel";
@@ -52,7 +50,6 @@ const ObservationCard = (props) => {
                         }}
                     />}
                     {userProfile && cardItems?.image_type === 3 && <CardImageCarousel carouselData={cardItems?.images} />}
-                    {/* <LazyLoadImage alt="Card cap" src={cardData?.image} effect="blur" className="img-fluid card-img" /> */}
                     <CardBody className="position-relative observation-card_body">
                         <div className="position-absolute observation_type d-flex align-items-center">
                             {cardItems?.category_data.length > 0 &&
@@ -81,7 +78,7 @@ const ObservationCard = (props) => {
                                 <div className="d-flex card-user_details align-items-center overflow-hidden">
                                     <h6 className="pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</h6>
                                     <i className="profile-icon rounded-circle">
-                                        <LazyLoadImage effect="blur" src={userProfile ? userProfile?.profile_image : Images.Profile} width="100%" height="100%" alt="Profile" className="rounded-circle" />
+                                        <img src={userProfile ? userProfile?.profile_image : Images.Profile} width="100%" height="100%" alt="Profile" className="rounded-circle" />
                                     </i>
                                 </div>
                             </Col>

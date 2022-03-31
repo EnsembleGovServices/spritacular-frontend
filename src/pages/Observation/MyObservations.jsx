@@ -7,7 +7,6 @@ import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import {baseURL, routeUrls} from "../../helpers/url";
 import ObservationDetails from './ObservationDetails';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Images from './../../static/images';
 import ObservationDetailPage from "./ObservationDetailPage";
 import useObservations from "../../hooks/useObservations";
@@ -194,7 +193,7 @@ const MyObservations = () => {
           <Container>
             {observationCount[`${activeType}`] ===  0 &&
             <div className="data-not-found">
-                <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
+                <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
                 <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
               </div>}
             <ObservationDetailPage  observationList={currobservationList}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>

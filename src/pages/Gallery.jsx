@@ -4,7 +4,6 @@ import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import {baseURL} from "../helpers/url";
 import ObservationDetails from './Observation/ObservationDetails';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Images from './../static/images';
 import ObservationDetailPage from "./Observation/ObservationDetailPage";
 import { LoadMore } from '../components/Shared/LoadMore';
@@ -121,7 +120,7 @@ useEffect(()=> {
           <div>
             {galleryCardToShow.length ===  0 &&
               <div className="data-not-found">
-                <LazyLoadImage src={Images.NoDataFound} alt="No data found" className="mb-3"/>
+                <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
                 <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
               </div>
             }
