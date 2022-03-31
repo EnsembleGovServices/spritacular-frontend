@@ -1,4 +1,4 @@
-import {UncontrolledAlert, Button, FormFeedback, FormGroup, Input, Row,Col} from "reactstrap";
+import {UncontrolledAlert, Button, FormGroup, Row} from "reactstrap";
 import axios from "../../api/axios";
 import {useEffect, useState ,useRef} from "react";
 import {baseURL, cameraSettingFields} from "../../helpers/url";

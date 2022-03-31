@@ -11,7 +11,7 @@ import {
     Label,
     Row
 } from "reactstrap";
-import {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import useObservations from "../../hooks/useObservations";
 import MapWrapper from '../MapWrapper';
 import ReactCountryFlags from '../ReactCountryFlag';
@@ -24,7 +24,7 @@ import {getdirectionDegree,getdirectionAngle} from "../../helpers/observation";
 
 
 const ObservationLocation = (props) => {
-    const { toggleTab,handleImageInput, error, step, obvType,disableNext, mode } = props;
+    const { toggleTab,handleImageInput, error, step, obvType,disableNext } = props;
     const fref = useRef()
     const [address1,setAddress] = useState({
         address: '',
@@ -189,10 +189,6 @@ const ObservationLocation = (props) => {
     useEffect(() => {
         let observationAddress = {...observationImages};        
         if(observationAddress?.data){
-            let addressState = {...address1};
-            // observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.short_address;
-            // observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
-
             if(observationData?.image_type === 3){
                 if(observationAddress.data[1]){
                     observationAddress.data[1]['location'] = observationAddress.data[0]['location'];
@@ -373,7 +369,6 @@ const ObservationLocation = (props) => {
             </Col>
             {
             (
-                // sameAsMap === false
                 ( observationImages?.data &&  observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap === false)
               || observationImages?.selected_image_index === 0) &&
                 <Col md={12} className="mb-5">
@@ -447,7 +442,6 @@ const ObservationLocation = (props) => {
                     </Col>}
                 </Row>
                 {
-                // (sameAsDateTime === false
                     (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate === false  
                     || observationImages?.selected_image_index === 0)  ?
                     <Row>

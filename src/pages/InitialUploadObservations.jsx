@@ -1,8 +1,8 @@
-import { Container, Form, FormGroup, Label } from "reactstrap";
+import { Form, FormGroup, Label } from "reactstrap";
 import { Icon } from "@iconify/react";
 import "../assets/scss/component/initialUploadobservations.scss";
 import Images from "../static/images";
-import {Link, useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { routeUrls } from './../helpers/url';
 import useObservations from "../hooks/useObservations";
 import {useEffect, useState} from "react";
@@ -30,7 +30,7 @@ const InitialUploadObservations = () => {
     })
     setObservationImages([])
     setObservationData(null)
-  }, [isCleanUp])
+  }, [isCleanUp, setObservationData, setObservationImages, setObservationSteps])
 
 
   return (

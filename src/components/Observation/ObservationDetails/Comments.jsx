@@ -20,7 +20,6 @@ const Comments = (props) => {
     const {setObservationType} = useObservations();
 
     const getComments = async () => {
-        // setLoading(true);
         await axios.get(baseURL.api+'/observation/comment/'+obvId+'/', {
             headers: {
                 'Content-Type': 'application/json',
@@ -29,11 +28,9 @@ const Comments = (props) => {
         })
             .then((response)=> {
                 setComments(response?.data);
-                // setLoading(false);
             })
             .catch((error)=> {
                 console.log(error);
-                // setLoading(false);
             })
     }
 

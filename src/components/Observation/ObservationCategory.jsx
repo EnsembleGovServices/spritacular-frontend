@@ -1,7 +1,6 @@
 import {Col, FormGroup,PopoverBody, PopoverHeader,UncontrolledPopover, Collapse, Button} from "reactstrap";
 import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
-// import ImageCarousel from "../../components/Shared/ImageCarousel";
 import { Icon } from "@iconify/react";
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
@@ -20,7 +19,6 @@ const ObservationCategory = (props) => {
     const [oldCategory, setOldCategory] = useState([]);
     const [isChecked, setIsChecked] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('' || []);
-    const [popoverOpen, setPopoverOpen] = useState(false);
     const ObservationData = {...observationImages};
     const errorData = error ? Object.values(error?.data) : {};
     
@@ -49,15 +47,6 @@ const ObservationCategory = (props) => {
         }
         setObservationImages(ObservationData);
     }
-
-    // const toggle = (index) =>{
-    //     if(popoverOpen === index){
-    //         setPopoverOpen(false);
-    //     }else{
-    //         setPopoverOpen(index);
-    //     }
-    // }
-
 
     const updatedCategory = () => {
         let newCategory = [];
@@ -140,8 +129,6 @@ const ObservationCategory = (props) => {
                     trigger="click"
                     target={`popover${index}`}
                     placement="top"
-                    // toggle={()=>toggle(index)}
-                    // isOpen={popoverOpen === index}
                 >
                     {({ contentUpdate, popoverId }) => (
                         <PopoverContent contentUpdate={contentUpdate} popoverId={`popover${index}`} />

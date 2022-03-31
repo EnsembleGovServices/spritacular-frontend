@@ -1,11 +1,10 @@
 /* eslint-disable no-undef */
 
 import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "react-google-maps";
+import { withGoogleMap, GoogleMap, InfoWindow, Marker } from "react-google-maps";
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
 import { GoogleMapsAPI } from '../config';
-import getCity, {getPostalCode, getState , getCountry, getArea} from '../helpers';
 Geocode.setApiKey(GoogleMapsAPI);
 // Geocode.enableDebug();
 
@@ -48,7 +47,6 @@ class Map extends Component{
 					  country = this.getCountry(addressArray)['short_name'],
 					  short_address = [city,state,this.getCountry(addressArray)['long_name']].filter(x => x !== undefined && x !== null ).toString();
 
-				// console.log( 'city', city, area, state );
 				console.log(short_address,'ffdf');
 				this.setState( {
 					address: ( address ) ? address : '',
@@ -78,10 +76,6 @@ class Map extends Component{
 				console.error( error );
 			}
 		);
-		// if(this.country != null){
-			
-		// }
-		
 	};
 
 	handleChangeLatLng(newLat,newLng) {
@@ -276,7 +270,6 @@ class Map extends Component{
 	 * @param place
 	 */
 	onPlaceSelected = ( place ) => {
-		// console.log( 'plc', place );
 		const address = place.formatted_address,
 		      addressArray =  place.address_components,
 		      city = this.getCity( addressArray ),
@@ -286,7 +279,6 @@ class Map extends Component{
 			  short_address = [city,state,this.getCountry(addressArray)['long_name']].filter(x => x !== undefined && x !== null ).toString(),
 		      latValue = place.geometry.location.lat(),
 		      lngValue = place.geometry.location.lng();
-		// Set these values in the state.
 		this.setState({
 			address: ( address ) ? address : '',
 			area: ( area ) ? area : '',
@@ -319,7 +311,6 @@ class Map extends Component{
 									   disableDefaultUI: true,
 								   }}
 						>
-							{/*Marker*/}
 							<Marker google={this.props.google}
 									name={'Dolores park'}
 									draggable={true}
@@ -328,7 +319,6 @@ class Map extends Component{
 							/>
 							<Marker />
 
-							{/* For Auto complete Search Box */}
 							<div className="search-input-container">
 								<Autocomplete
 									style={{
@@ -338,7 +328,6 @@ class Map extends Component{
 									onPlaceSelected={ this.onPlaceSelected }
 									types={['(regions)']}
 									placeholder="Type address"
-									// value="india"
 								/>
 								<InfoWindow
 									onClose={this.onInfoWindowClose}
