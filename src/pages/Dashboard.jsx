@@ -86,6 +86,7 @@ const Dashboard = () =>{
         <>
             <FilterSelectMenu 
                 dashboardFilter={true} 
+                galleryFilter={true} 
                 filterShow={filterShow} 
                 handleFilterOpen={handleFilterOpen} 
                 handleListView={handleListView} 
