@@ -8,6 +8,8 @@ import "../../../assets/scss/component/comments.scss";
 import { Icon } from '@iconify/react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import useObservations from './../../../hooks/useObservations';
+import useObservationsData from "../../../hooks/useObservationsData";
+import observationUpdateUploadedImages from "../ObservationUpdateUploadedImages";
 
 
 const Comments = (props) => {
@@ -17,7 +19,7 @@ const Comments = (props) => {
     const [message, setMessage] = useState();
     const [signal, setSignal] = useState(false);
     const commentBox = useRef(null);
-    const {setObservationType} = useObservations();
+    const {observationComments, setObservationComments} = useObservationsData();
 
     const getComments = async () => {
         await axios.get(baseURL.api+'/observation/comment/'+obvId+'/', {
@@ -59,12 +61,13 @@ const Comments = (props) => {
     }, [signal])
 
     useEffect(() => {
-        setObservationType((prev) => {
+        setObservationComments((prev) => {
             return {
                 ...prev,
-                comment_count: comments?.data ? comments?.data?.length : 0
+                comment_count: comments?.data ? comments?.data?.length : 0,
             }
         })
+
     }, [comments])
 
 

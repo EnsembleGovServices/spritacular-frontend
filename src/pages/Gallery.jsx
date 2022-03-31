@@ -15,10 +15,11 @@ import {Link} from 'react-router-dom';
 import { routeUrls } from '../helpers/url';
 import { Icon } from '@iconify/react';
 import {observationStatus,countries} from "../helpers/timezone";
-import cloneDeep from "lodash.clonedeep";
+import useObservationsData from "../hooks/useObservationsData";
 
 
 const Gallery = () => {
+  const {setObservationListData} = useObservationsData();
   const [isObservationDetailModal, setObservationDetailModal] = useState(false);
   const [observationList,setObservationList] = useState([]);
   const [isLoaded,setIsLoaded] = useState(true);
@@ -36,7 +37,6 @@ const Gallery = () => {
   const { auth } = useAuth();
   const [loadMore,setLoadMore] = useState(10);
   const [pageSize,setPageSize] = useState(10);
-
 
   
   useEffect(() => {
@@ -111,6 +111,13 @@ useEffect(()=> {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);
   };
+
+  useEffect(()=> {
+    console.log('test')
+    setObservationListData({
+      test: 'this is test'
+    })
+  }, [])
 
   const handleFilterValue = (value,type) => {
     setLoadMore(pageSize);
