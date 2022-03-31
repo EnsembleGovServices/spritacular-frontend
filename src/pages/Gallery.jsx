@@ -9,19 +9,10 @@ import Images from './../static/images';
 import ObservationDetailPage from "./Observation/ObservationDetailPage";
 import { LoadMore } from '../components/Shared/LoadMore';
 import "../assets/scss/component/gallery.scss";
-import { Col, Container, Row, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, } from 'reactstrap';
-import { FormGroup, Label, Input } from 'reactstrap';
-import {Link} from 'react-router-dom';
-import { routeUrls } from '../helpers/url';
-import { Icon } from '@iconify/react';
-import {observationStatus,countries} from "../helpers/timezone";
-import cloneDeep from "lodash.clonedeep";
 import FilterSelectMenu from "../components/Shared/FilterSelectMenu";
-import useObservationsData from "../hooks/useObservationsData";
 
 
 const Gallery = () => {
-  const {setObservationListData} = useObservationsData();
   const [isObservationDetailModal, setObservationDetailModal] = useState(false);
   const [observationList,setObservationList] = useState([]);
   const [isLoaded,setIsLoaded] = useState(true);
