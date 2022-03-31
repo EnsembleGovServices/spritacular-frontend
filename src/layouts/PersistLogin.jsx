@@ -5,8 +5,6 @@ import useAuth from '../hooks/useAuth';
 import Header from "../components/Common/Header";
 import Footer from "../components/Common/Footer";
 import Loader from "../components/Shared/Loader";
-import axios from "../api/axios";
-import {baseURL} from "../helpers/url";
 
 // const Header = lazy(()=> import('../components/Common/Header'))
 // const Footer = lazy(()=> import('../components/Common/Footer'))
@@ -16,7 +14,7 @@ const PersistLogin = (props) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const refresh = useRefreshToken();
-    const { auth, persist, setAuth } = useAuth();
+    const { auth, persist } = useAuth();
     const { persistValue } = props;
     useEffect(() => {
         let isMounted = true;
@@ -36,28 +34,6 @@ const PersistLogin = (props) => {
         !auth?.token?.access ? verifyRefreshToken() : setIsLoading(false);
         return () => isMounted = false;
     }, [auth, auth?.token?.access, persist, refresh])
-
-
-    useEffect(() => {
-        if (auth?.token?.access && !sessionStorage.getItem('camera')) {
-            axios.get(baseURL.api + '/users/camera_setting/', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${auth?.token?.access}`
-                }
-            }).then((response) => {
-                sessionStorage.setItem('camera', true);
-                setAuth(prev => {
-                    return {
-                        ...prev,
-                        camera: response?.data
-                    }
-                });
-            }).catch((error) => {
-                console.log(error.response);
-            })
-        }
-    }, [auth?.token?.access, setAuth])
 
 
     useEffect(() => {

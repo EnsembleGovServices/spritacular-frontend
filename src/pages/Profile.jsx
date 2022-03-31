@@ -39,17 +39,13 @@ const Profile = () => {
     }
   };
   const fetchCameraDetails = async () => {
-    await axios.get(baseURL.api+'/users/camera_setting/', {
-      headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${auth?.token?.access}`
-      }
-      }).then((success) => {
-              setIsDetailExist(true);
-          setCameraDetails(success.data);
-      }).catch((error) => {
-          console.log(error.response);
-      })
+    if (auth?.user?.camera) {
+      setIsDetailExist(true);
+      setCameraDetails(auth?.user?.camera);
+    } else {
+      setIsDetailExist(false);
+      setCameraDetails("")
+    }
   }
 
   useEffect(()=> {
