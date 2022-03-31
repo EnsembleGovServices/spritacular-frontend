@@ -41,10 +41,7 @@ const InitialUploadObservations = () => {
             <FormGroup>
               <Label htmlFor="UploadFile">
                 <div className="upload-info">
-                  <img
-                    src={Images.UploadPlaceholder}
-                    alt="UploadPlaceholder"
-                  />
+                  <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
                   <p>No observations yet.</p>
                   <button onClick={(e)=> handleObvAdd(e)} className="btn btn-secondary">
                     <Icon icon="heroicons-outline:upload"  width="25" height="22" /> Upload

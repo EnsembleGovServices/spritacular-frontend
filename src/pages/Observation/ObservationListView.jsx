@@ -27,7 +27,9 @@ const ObservationListView = (props) => {
                     <tbody>
                         {observationList.length > 0 && observationList?.map((cardItems, index)=>{
                             return(
-                                <ObservationListRow cardItems={cardItems} cardData={cardItems?.images[0]} index={index} />
+                                <tr key={index}>
+                                    <ObservationListRow cardItems={cardItems} cardData={cardItems?.images[0]} />
+                                </tr>
                             )
                         })
                         }

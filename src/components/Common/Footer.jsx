@@ -4,6 +4,7 @@ import Images from "../../static/images";
 import "../../assets/scss/component/footer.scss";
 import { routeUrls } from './../../helpers/url';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Icon } from "@iconify/react";
 
 const Footer = () => {
   return (
@@ -173,7 +174,7 @@ const Footer = () => {
                           className="d-inline-block ms-3"
                           title="Twitter"
                         >
-                          <img src={Images.Twitter} alt="Twitter" />{" "}
+                          <Icon icon="arcticons:twitter" color="#fff" width="28" height="28" />
                         </Link>
                       </li>
                     </List>
