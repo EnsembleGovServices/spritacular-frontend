@@ -9,11 +9,9 @@ import ObservationDetailPage from "./Observation/ObservationDetailPage";
 import { LoadMore } from '../components/Shared/LoadMore';
 import "../assets/scss/component/gallery.scss";
 import FilterSelectMenu from "../components/Shared/FilterSelectMenu";
-import useObservationsData from "../hooks/useObservationsData";
 
 
 const Gallery = () => {
-  const {setObservationListData} = useObservationsData();
   const [isObservationDetailModal, setObservationDetailModal] = useState(false);
   const [observationList,setObservationList] = useState([]);
   const [isLoaded,setIsLoaded] = useState(true);

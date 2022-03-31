@@ -48,6 +48,14 @@ const PersistLogin = (props) => {
 
     return (
         <>
+            <observationViewContext.Provider value={
+                {
+                    observationListData,
+                    setObservationListData,
+                    observationComments,
+                    setObservationComments
+                }
+            }>
             {!persist ? (
                 <>
                     <Header />
@@ -58,22 +66,15 @@ const PersistLogin = (props) => {
                 </>
             ) : isLoading ? <Loader fixContent={true} /> : (
                 <>
-                    <observationViewContext.Provider value={
-                        {
-                            observationListData,
-                            setObservationListData,
-                            observationComments,
-                            setObservationComments
-                        }
-                    }>
                         <Header />
                         <div className="main-content">
                             <Outlet />
                         </div>
                     {persistValue && <Footer />}
-                    </observationViewContext.Provider>
+
                 </>
             )}
+                </observationViewContext.Provider>
         </>
     )
 }
