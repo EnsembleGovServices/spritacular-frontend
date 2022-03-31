@@ -1,12 +1,15 @@
 import {Col, FormGroup,PopoverBody, PopoverHeader,UncontrolledPopover, Collapse, Button} from "reactstrap";
 import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
-import ImageCarousel from "../../components/Shared/ImageCarousel";
 import { Icon } from "@iconify/react";
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import Images from "../../static/images";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
 
 const ObservationCategory = (props) => {
     const {error, obvType}=props;
@@ -16,10 +19,8 @@ const ObservationCategory = (props) => {
     const [oldCategory, setOldCategory] = useState([]);
     const [isChecked, setIsChecked] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('' || []);
-    const [popoverOpen, setPopoverOpen] = useState(false);
     const ObservationData = {...observationImages};
     const errorData = error ? Object.values(error?.data) : {};
-
     
     const fetchCategory = async () => {
             await axios.get(baseURL.api+'/observation/get_category_list/', {
@@ -47,15 +48,6 @@ const ObservationCategory = (props) => {
         setObservationImages(ObservationData);
     }
 
-    // const toggle = (index) =>{
-    //     if(popoverOpen === index){
-    //         setPopoverOpen(false);
-    //     }else{
-    //         setPopoverOpen(index);
-    //     }
-    // }
-
-
     const updatedCategory = () => {
         let newCategory = [];
         oldCategory?.map((item, index) => {
@@ -74,7 +66,30 @@ const ObservationCategory = (props) => {
             }
         });
     }
-
+    const ImageCarousel = (props) =>{
+        const {className} = props;
+        const items= [
+            { src: Images.card1 },
+            { src: Images.card2 },
+            { src: Images.card3 }
+        ]
+    
+        const carouselContent = items.map((item, index) => {
+            return (
+                <SwiperSlide key={index}>
+                    <img src={item.src} alt="carousel" />
+                </SwiperSlide>
+            );
+          });
+    
+        return (
+            <>
+                <Swiper navigation={true} modules={[Navigation]} className={`className ${className ? className : ''}`}>
+                    {carouselContent}
+                </Swiper>
+            </>
+        )
+    }
     const PopoverContent = ({ contentUpdate, popoverId }) => {
 
         const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
@@ -111,11 +126,9 @@ const ObservationCategory = (props) => {
                     <Icon icon="charm:info" color="#adb4c2" width="15" height="15" />
                 </Button>
                 <UncontrolledPopover
-                    trigger="hover"
+                    trigger="click"
                     target={`popover${index}`}
                     placement="top"
-                    // toggle={()=>toggle(index)}
-                    // isOpen={popoverOpen === index}
                 >
                     {({ contentUpdate, popoverId }) => (
                         <PopoverContent contentUpdate={contentUpdate} popoverId={`popover${index}`} />

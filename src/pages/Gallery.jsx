@@ -9,19 +9,16 @@ import Images from './../static/images';
 import ObservationDetailPage from "./Observation/ObservationDetailPage";
 import { LoadMore } from '../components/Shared/LoadMore';
 import "../assets/scss/component/gallery.scss";
-import { Col, Container, Row, UncontrolledAlert, Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle, } from 'reactstrap';
+import { Col, Container, Row, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, } from 'reactstrap';
 import { FormGroup, Label, Input } from 'reactstrap';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { routeUrls } from '../helpers/url';
 import { Icon } from '@iconify/react';
-  import {observationStatus,countries} from "../helpers/timezone";
+import {observationStatus,countries} from "../helpers/timezone";
 import cloneDeep from "lodash.clonedeep";
 
 
-const MyObservations = () => {
+const Gallery = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false);
   const [observationList,setObservationList] = useState([]);
   const [isLoaded,setIsLoaded] = useState(true);
@@ -36,7 +33,6 @@ const MyObservations = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [category,setCategory] = useState([]);
   const [currentObservationList,setCurrentObservationList] = useState({});
-  const [filteredList,setFilteredList] = useState([]);
   const { auth } = useAuth();
   const [loadMore,setLoadMore] = useState(10);
   const [pageSize,setPageSize] = useState(10);
@@ -118,7 +114,6 @@ useEffect(()=> {
 
   const handleFilterValue = (value,type) => {
     setLoadMore(pageSize);
-    var unverifiedList ;
     if(type === 'status'){
     
       // value = value.toLowerCase();
@@ -197,15 +192,6 @@ useEffect(()=> {
                 </FormGroup>  
                 <FormGroup className="m-0 d-inline-block form-group">
                   <Label className="text-uppercase" htmlFor="TransientLuminousEvent">Transient Luminous Event</Label>
-                  {/* <Input id="TransientLuminousEvent" type="select" name="timezone" className="bg-transparent p-0 custom-select" defaultValue="" >
-                    <option disabled defaultValue>
-                    All types
-                    </option>
-                    <option>Types 1</option>
-                    <option>Types 2</option>
-                    <option>Types 3</option>
-                    <option>Types 4</option>
-                  </Input> */}
                   <Dropdown className="dropdown-with-search" toggle={() => setIsTypeOpen(!isTypeOpen)} isOpen={isTypeOpen} >
                       <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                       <span className="text-truncate">{selectedCategory}</span>
@@ -221,15 +207,6 @@ useEffect(()=> {
                 </FormGroup>  
                 <FormGroup className="m-0 d-inline-block form-group">
                   <Label className="text-uppercase" htmlFor="ObservationStatus">Observation Status</Label>
-                  {/* <Input id="ObservationStatus" type="select" name="timezone" className="bg-transparent p-0 custom-select" defaultValue="" >
-                    <option disabled defaultValue>
-                    All status
-                    </option>
-                    <option>Status 1</option>
-                    <option>Status 2</option>
-                    <option>Status 3</option>
-                    <option>Status 4</option>
-                  </Input> */}
                   <Dropdown className="dropdown-with-search" toggle={() => setIsStatusOpen(!isStatusOpen)} isOpen={isStatusOpen} >
                       <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                           <span className="text-truncate">{selectedStatus}</span>
@@ -274,4 +251,4 @@ useEffect(()=> {
         </>
   )
 }
-export default MyObservations;
+export default Gallery;

@@ -42,6 +42,10 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px $input-bg inset;
   transition: background-color 5000s ease-in-out 0s;
 }
+input[type=file], 
+input[type=file]::-webkit-file-upload-button { 
+    cursor: pointer; 
+}
 ::selection{
   color: #fff;
   background-color: #9900004a;

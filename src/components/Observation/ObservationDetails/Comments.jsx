@@ -7,6 +7,7 @@ import {Button, FormGroup} from "reactstrap";
 import "../../../assets/scss/component/comments.scss";
 import { Icon } from '@iconify/react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import useObservations from './../../../hooks/useObservations';
 
 
 const Comments = (props) => {
@@ -16,9 +17,9 @@ const Comments = (props) => {
     const [message, setMessage] = useState();
     const [signal, setSignal] = useState(false);
     const commentBox = useRef(null);
+    const {setObservationType} = useObservations();
 
     const getComments = async () => {
-        // setLoading(true);
         await axios.get(baseURL.api+'/observation/comment/'+obvId+'/', {
             headers: {
                 'Content-Type': 'application/json',
@@ -27,11 +28,9 @@ const Comments = (props) => {
         })
             .then((response)=> {
                 setComments(response?.data);
-                // setLoading(false);
             })
             .catch((error)=> {
                 console.log(error);
-                // setLoading(false);
             })
     }
 
@@ -54,12 +53,19 @@ const Comments = (props) => {
             })
     }
 
-
     useEffect(()=> {
         commentBox.current.focus = true;
         getComments().then(r => r);
     }, [signal])
 
+    useEffect(() => {
+        setObservationType((prev) => {
+            return {
+                ...prev,
+                comment_count: comments?.data ? comments?.data?.length : 0
+            }
+        })
+    }, [comments])
 
 
     const handleCommentText = (e) => {

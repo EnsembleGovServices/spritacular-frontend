@@ -1,4 +1,4 @@
-import {Alert, Button, Form, FormFeedback, FormGroup, Input, Label, UncontrolledAlert} from "reactstrap";
+import { Button, Form, FormFeedback, FormGroup, Input, Label, UncontrolledAlert} from "reactstrap";
 import axios from "../../api/axios";
 import {useEffect, useState} from "react";
 import {baseURL} from "../../helpers/url";
@@ -12,20 +12,6 @@ const UpdateProfile = (props) => {
     const [updateUser, setUpdatedUser] = useState()
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
-    
-    const [userRegistration, setUserRegistration] = useState({
-        first_name: "",
-        last_name: "",
-        email: "",
-        location: "",
-        place_uid:"",
-        location_metadata: {
-            address: "",
-            lat: "",
-            lng: "",
-            countryCode: ""
-        }
-    });
 
     const handleInput = (e) => {
         e.preventDefault();
@@ -37,7 +23,6 @@ const UpdateProfile = (props) => {
         })
     }
     useEffect(()=> {
-        // console.log(user?.user?.location);
         setUpdatedUser(user?.user)
     }, [user?.user])
 
@@ -137,15 +122,6 @@ const UpdateProfile = (props) => {
 
                 <FormGroup>
                     <Label htmlFor="location">Location</Label>
-                    {/* <Input type="select" name="location" onChange={(e)=>handleInput(e)}>
-                        <option disabled defaultValue>
-                            Please Select Your Country
-                        </option>
-                        <option value="Australia">Australia</option>
-                        <option value="Bahrain">Bahrain</option>
-                        <option value="Canada">Canada</option>
-                        <option value="Denmark">Denmark</option>
-                    </Input> */}
                     <PlacesAutocomplete handleLocations={handleLocations} address={user?.user?.location}/>
                     <FormFeedback>{error?.data?.location}</FormFeedback>
                 </FormGroup>

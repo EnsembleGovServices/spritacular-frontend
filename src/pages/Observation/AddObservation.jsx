@@ -131,7 +131,6 @@ const AddObservation = () => {
         }else{
             let name = e.target.name,
                 value = e.target.value;
-            // console.log(e.target.checked,name);
 
             if(name === 'is_other'){
                 observationArray.data[observationImages?.selected_image_index].category_map[name] = e.target.checked;
@@ -345,7 +344,6 @@ const AddObservation = () => {
             setDeletedImage(id);
         }
         else{
-            // navigate('/'); 
             window.location.reload();
         }
     }
@@ -373,7 +371,6 @@ const AddObservation = () => {
         })
             .then(response => {
                 let data = response?.data?.data;
-                // console.log(data);
                 setDraftData({
                     image_type: data.image_type,
                     elevation_angle: data.elevation_angle,
@@ -385,7 +382,6 @@ const AddObservation = () => {
                     map_data: data.images
                 });
                 setUpdateMode(true);
-                // setNext(true);
             })
             .catch(error => {
                 console.log(error)
@@ -481,7 +477,6 @@ const AddObservation = () => {
 
     return(
         <div className="position-relative">
-            {/*<h3 className="px-4 py-3 text-center">{updateMode ? 'update mode hai' : 'nahi h update mode'}</h3>*/}
             {isLoading &&
                 <Loader fixContent={true} />
             }

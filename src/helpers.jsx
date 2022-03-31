@@ -1,5 +1,3 @@
-import Images from "./static/images";
-
 const getCity = ( addressArray ) => {
     let city = '';
     for( let i = 0; i < addressArray.length; i++ ) {

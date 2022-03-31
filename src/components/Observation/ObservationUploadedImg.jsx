@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 import ObservationUpdateUploadedImages from "./ObservationUpdateUploadedImages";
 
 const ObservationUploadedImg = (props) => {
-    const {obvType, remove, className}=props;
+    const { remove, className }=props;
     const {observationImages, setObservationImages} = useObservations();
     const [preview, setPreview] = useState([]);
     const [activeTab, setActiveTab] = useState(observationImages?.selected_image_id ?? null);
