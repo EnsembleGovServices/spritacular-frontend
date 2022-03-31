@@ -8,6 +8,12 @@
 .observation-filter_wrapper{
     background: #F6F7F8;
     margin-bottom: 25px;
+    position: sticky;
+    left: 0;
+    right: 0;
+    top: 70px;
+    width: 100%;
+    z-index: 15;
     @include media-breakpoint-down(md){
         padding: 10px;
     }

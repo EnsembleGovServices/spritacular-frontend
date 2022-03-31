@@ -32,13 +32,19 @@ const AdvancedFilter = () => {
                                         <Col xs={12}>
                                             <FormGroup>
                                                 <Label className='fw-normal text-black'>From</Label>
-                                                <Input type="date"  />
+                                                <div className='d-flex justify-content-between date-time_row'>
+                                                    <Input type="date" />
+                                                    <Input type="time" />
+                                                </div>
                                             </FormGroup>
                                         </Col>
                                         <Col xs={12}>
                                             <FormGroup>
                                                 <Label className='fw-normal text-black'>To</Label>
-                                                <Input type="date"  />
+                                                <div className='d-flex justify-content-between date-time_row'>
+                                                    <Input type="date" />
+                                                    <Input type="time" />
+                                                </div>
                                             </FormGroup>
                                         </Col>
                                     </Row>

@@ -123,7 +123,7 @@ const ObservationDetails = (props) =>{
                                             toggleImageDetailsTab(imageDetails.Comments);
                                         }}
                                     >
-                                        Comments {observationType?.comment_count === 0 ? '' : (observationType?.comment_count)}
+                                        Comments {observationType?.comment_count === 0 ? '' : `(${observationType?.comment_count})`}
                                     </NavLink>
                                 </NavItem>
                             </Nav>

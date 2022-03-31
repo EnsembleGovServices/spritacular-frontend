@@ -122,3 +122,7 @@ body.modal-open {
   @include sm-text;
 }
 @import "../component/index.scss";
+
+// Slider
+@import "node_modules/swiper/swiper.scss";
+@import "node_modules/swiper/modules/navigation/navigation.scss";

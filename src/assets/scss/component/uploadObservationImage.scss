@@ -598,9 +598,17 @@
     }
   }
   &:hover{
-    .swiper-button-prev,
+    .swiper-button-prev{
+      opacity: 1;
+      left: 10px;
+      transition: $transition;
+      &.swiper-button-disabled{
+        opacity: 0.35;
+      }
+    }
     .swiper-button-next{
       opacity: 1;
+      right: 10px;
       &.swiper-button-disabled{
         opacity: 0.35;
       }
@@ -615,6 +623,10 @@
     background-size: contain;
     background-repeat: no-repeat;
     opacity: 0;
+    transform: translateY(-50%);
+    margin-top: 0;
+    right: -100%;
+    transition: $transition;
     &::after{
       display: none;
     }
@@ -630,7 +642,11 @@
     border-radius: 50%;
     background-size: contain;
     background-repeat: no-repeat;
+    transform: translateY(-50%);
+    margin-top: 0;
     opacity: 0;
+    left: -100%;
+    transition: $transition;
     &::after{
       display: none;
     }

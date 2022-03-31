@@ -1,4 +1,5 @@
-import {Col, FormGroup,PopoverBody, PopoverHeader,UncontrolledPopover, Collapse, Button} from "reactstrap";
+
+import {Col, FormGroup,PopoverBody, PopoverHeader,UncontrolledPopover, Collapse, Button, Row} from "reactstrap";
 import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import { Icon } from "@iconify/react";
@@ -8,8 +9,7 @@ import useAuth from "../../hooks/useAuth";
 import Images from "../../static/images";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
+
 
 const ObservationCategory = (props) => {
     const {error, obvType}=props;
@@ -80,7 +80,7 @@ const ObservationCategory = (props) => {
                     <img src={item.src} alt="carousel" />
                 </SwiperSlide>
             );
-          });
+        });
     
         return (
             <>
@@ -216,7 +216,9 @@ const ObservationCategory = (props) => {
                     <span className="required">Required</span>
                 </p>
             </FormGroup>
-            {showCategory()}
+            <Row>
+                {showCategory()}
+            </Row>
         </>
     )
 

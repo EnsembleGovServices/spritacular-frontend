@@ -100,7 +100,7 @@ const Dashboard = () =>{
                             < AdvancedFilter />
                         }
                         
-                        <div className='dashboard-card'>
+                        <div className='dashboard-card overflow-hidden'>
                             {listView && <ObservationListView 
                                 observationList={observationList} 
                                 isObservationDetailModal={isObservationDetailModal} 

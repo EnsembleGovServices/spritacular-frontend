@@ -1,7 +1,8 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
+// import "../../../node_modules/swiper/swiper.scss";
+// import 'swiper/css';
+// import 'swiper/css/virtual';
 
 const CardImageCarousel = (props) =>{
     const {carouselData} = props;
@@ -15,7 +16,7 @@ const CardImageCarousel = (props) =>{
 
     return (
         <>
-            <Swiper navigation={true} modules={[Navigation]}>
+            <Swiper navigation={true} modules={[Navigation]} scrollbar={{ draggable: false }}>
                 {/* {carouselContent} */}
                 <SwiperSlide>
                     <img src={carouselData} alt="carousel" />

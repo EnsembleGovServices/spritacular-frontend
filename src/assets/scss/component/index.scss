@@ -330,3 +330,11 @@
     }
 }
 // Masonary View Css End
+
+.table-responsive{
+    @include customScrollBar;
+    &::-webkit-scrollbar{
+        height: 7px;
+        width: 7px;
+    }
+}
