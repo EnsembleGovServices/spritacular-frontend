@@ -6,7 +6,7 @@ import {getdirectionDegree} from "../../../helpers/observation";
 
 
 const ObservationMoreDetails = (props) => {
-    const {data} = props;
+    const {data, obvCommentCount} = props;
     return (
         <div className="more-details">
             <Row>
@@ -58,7 +58,7 @@ const ObservationMoreDetails = (props) => {
                             <div className="d-flex align-items-center justify-content-center user-review">
                                 <span className="me-3 d-flex" ><Icon icon="heroicons-solid:thumb-up" width="17" height="17" className="me-1" /> 2,250 </span>
                                 <span className="me-3 d-flex" ><Icon icon="heroicons-solid:eye" width="17" height="17" className="me-1" /> 100K </span>
-                                <span className="d-flex" ><Icon icon="mdi:message" width="17" height="17" className="me-1" /> 5 </span>
+                                <span className="d-flex" ><Icon icon="mdi:message" width="17" height="17" className="me-1" /> {obvCommentCount} </span>
                             </div>
                         </Col>
                     </Row>

@@ -125,10 +125,10 @@ const ObservationDetails = (props) =>{
                             </Nav>
                             <TabContent activeTab={activeTab}>
                                 <TabPane tabId={imageDetails.Details}>
-                                    <ObservationMoreDetails data={data}/>
+                                    <ObservationMoreDetails obvCommentCount={observationComments?.comment_count} data={data}/>
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Equipment}>
-                                    <ObservationMoreEquipementDetails data={data?.camera_data} />
+                                    <ObservationMoreEquipementDetails obvCommentCount={observationComments?.comment_count} data={data?.camera_data} />
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Comments} className="h-100">
                                     <Comments obvId={data?.id} />
