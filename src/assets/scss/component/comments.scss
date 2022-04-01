@@ -1,0 +1,51 @@
+@import "../global/config.scss";
+
+.comment-wrapper{
+    height: calc(100vh - 138px);
+    .comment-area{
+        height: calc(100% - 45px);
+        overflow: hidden;
+        overflow-y: auto;
+        @include customScrollBar;
+        li{
+            border-bottom: 1px solid $light-grey1;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            &:last-child{
+                border-bottom: 0;
+            }
+        }
+    }
+    .commentor_details{
+        width: calc(100% - 30px);
+        padding-left: 10px;
+        h6{
+            font-weight: 500;
+            @include md-text;
+        }
+        p{
+            @include md-text;
+            color: $light-grey;
+        }
+    }
+    .typing-area{
+        margin-bottom: 0 !important;
+        .form-control{
+            line-height: 19px;
+        }
+    }
+    .comment-profile_details {
+        width: calc(100% - 52px);
+    }
+    .comment-time{
+        @include sm-text;
+        max-width: 52px;
+        width: 100%;
+    }
+    .send-btn{
+        background-color: #F4F5F6;
+        svg{
+            transform: rotate(45deg);
+        }
+    }
+}

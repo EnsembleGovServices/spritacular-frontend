@@ -4,7 +4,6 @@ import "../../assets/scss/component/observationEquipment.scss";
 
 const EquipmentDetails = (props) =>{
     const {toggleTab,cameraDetails } = props;
-    // console.log(cameraDetails);
     return (
         <Row className="mt-4">
             <Col md={12}>
@@ -22,7 +21,7 @@ const EquipmentDetails = (props) =>{
                         <h6 className="m-0">Focal Length<span className="required">Required</span></h6>
                     </Col>
                     <Col md={6}>
-                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.focal_length}</p>
+                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.focal_length} mm</p>
                     </Col>
                 </Row>
                 <div className="border-line my-2"/>
@@ -31,7 +30,7 @@ const EquipmentDetails = (props) =>{
                         <h6 className="m-0">Aperture<span className="required">Required</span></h6>
                     </Col>
                     <Col md={6}>
-                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.aperture}</p>
+                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.aperture} mm</p>
                     </Col>
                 </Row>
                 <div className="border-line my-2"/>
@@ -58,7 +57,7 @@ const EquipmentDetails = (props) =>{
                         <h6 className="m-0">Frame Rate</h6>
                     </Col>
                     <Col md={6}>
-                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.fps}</p>
+                        <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.fps} fps</p>
                     </Col>
                 </Row>
                 <div className="border-line my-2"/>
@@ -114,6 +113,7 @@ const EquipmentDetails = (props) =>{
             </Col>
             <Col md={12}>
                 <Button className="gray-outline-btn me-2"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
+                <Button type="submit" disabled={(!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture)) }>Submit</Button>
             </Col>
         </Row>
     )

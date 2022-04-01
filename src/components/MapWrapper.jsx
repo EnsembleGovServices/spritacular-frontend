@@ -1,18 +1,20 @@
 /* eslint-disable no-undef */
 
 import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker } from "react-google-maps";
+import { withGoogleMap, GoogleMap, InfoWindow, Marker } from "react-google-maps";
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
 import { GoogleMapsAPI } from '../config';
-import getCity, {getPostalCode, getState , getCountry, getArea} from '../helpers';
 Geocode.setApiKey(GoogleMapsAPI);
-Geocode.enableDebug();
+// Geocode.enableDebug();
 
 class Map extends Component{
 
 	constructor( props ){
+		
 		super( props );
+		this.country = null;
+		this.address = null;
 		this.state = {
 			address: '',
 			city: '',
@@ -34,6 +36,7 @@ class Map extends Component{
 	 * Get the current address from the default map position and set those values in the state
 	 */
 	componentDidMount() {
+		
 		Geocode.fromLatLng( this.state.mapPosition.lat , this.state.mapPosition.lng ).then(
 			response => {
 				const address = response.results[0].formatted_address,
@@ -44,8 +47,7 @@ class Map extends Component{
 					  country = this.getCountry(addressArray)['short_name'],
 					  short_address = [city,state,this.getCountry(addressArray)['long_name']].filter(x => x !== undefined && x !== null ).toString();
 
-				// console.log( 'city', city, area, state );
-
+				console.log(short_address,'ffdf');
 				this.setState( {
 					address: ( address ) ? address : '',
 					area: ( area ) ? area : '',
@@ -53,13 +55,27 @@ class Map extends Component{
 					state: ( state ) ? state : '',
 					country: (country) ? country: '',
 					short_address: (short_address)? short_address : '',
+					markerPosition: {
+						lat: this.state.mapPosition.lat,
+						lng: this.state.mapPosition.lng
+					},
+					mapPosition: {
+						lat: this.state.mapPosition.lat,
+						lng: this.state.mapPosition.lng
+					},
+					
 				} )
+				this.country = country;
+				this.address = short_address;
+				if(response){
+
+					this.props.handleState(false,[this.country,this.address,]);
+				}
 			},
 			error => {
 				console.error( error );
 			}
 		);
-		
 	};
 
 	handleChangeLatLng(newLat,newLng) {
@@ -90,13 +106,13 @@ class Map extends Component{
 						lng: newLng
 					},
 				} )
-				this.props.handleState(this.state);
+				this.props.handleState(true,this.state);
 			},
 			error => {
 				console.error(error);
 			}
 		);
-		console.log(this.state);
+		
 	};
 	/**
 	 * Component should only update ( meaning re-render ), when the user selects the address, or drags the pin
@@ -141,11 +157,13 @@ class Map extends Component{
 	};
 	getCountry = ( addressArray ) => {
 		let country = [];
+		country['long_name'] = '';
+		country['short_name'] = '';
 		for( let i = 0; i < addressArray.length; i++ ) {
 			for( let i = 0; i < addressArray.length; i++ ) {
 				if ( addressArray[ i ].types[0] && 'country' === addressArray[ i ].types[0] ) {
 					country['long_name'] = addressArray[ i ].long_name;
-					country['short_name'] = addressArray[ i ].short_name;
+					country['short_name'] = (addressArray[ i ].short_name) ? addressArray[ i ].short_name: '';
 					return country;
 				}
 			}
@@ -239,7 +257,7 @@ class Map extends Component{
 						lng: newLng
 					},
 				} )
-				this.props.handleState(this.state);
+				this.props.handleState(true,this.state);
 			},
 			error => {
 				console.error(error);
@@ -252,7 +270,6 @@ class Map extends Component{
 	 * @param place
 	 */
 	onPlaceSelected = ( place ) => {
-		console.log( 'plc', place );
 		const address = place.formatted_address,
 		      addressArray =  place.address_components,
 		      city = this.getCity( addressArray ),
@@ -262,7 +279,6 @@ class Map extends Component{
 			  short_address = [city,state,this.getCountry(addressArray)['long_name']].filter(x => x !== undefined && x !== null ).toString(),
 		      latValue = place.geometry.location.lat(),
 		      lngValue = place.geometry.location.lng();
-		// Set these values in the state.
 		this.setState({
 			address: ( address ) ? address : '',
 			area: ( area ) ? area : '',
@@ -279,12 +295,12 @@ class Map extends Component{
 				lng: lngValue
 			},
 		})
-		this.props.handleState(this.state);
+		this.props.handleState(true,this.state);
 	};
 
 
 	render(){
-		const AsyncMap = withScriptjs(
+		const AsyncMap = 
 			withGoogleMap(
 				props => (
 					<>
@@ -295,7 +311,6 @@ class Map extends Component{
 									   disableDefaultUI: true,
 								   }}
 						>
-							{/*Marker*/}
 							<Marker google={this.props.google}
 									name={'Dolores park'}
 									draggable={true}
@@ -304,7 +319,6 @@ class Map extends Component{
 							/>
 							<Marker />
 
-							{/* For Auto complete Search Box */}
 							<div className="search-input-container">
 								<Autocomplete
 									style={{
@@ -314,14 +328,13 @@ class Map extends Component{
 									onPlaceSelected={ this.onPlaceSelected }
 									types={['(regions)']}
 									placeholder="Type address"
-									// value="india"
 								/>
 								<InfoWindow
 									onClose={this.onInfoWindowClose}
 									position={{ lat: ( this.state.markerPosition.lat + 0.0018 ), lng: this.state.markerPosition.lng }}
 								>
 									<div>
-										<span style={{ padding: 0, margin: 0 }}>{ this.state.address }</span>
+										<span style={{ padding: 0, margin: 0 }}>{ this.state.short_address }</span>
 									</div>
 								</InfoWindow>
 							</div>
@@ -329,7 +342,7 @@ class Map extends Component{
 						</GoogleMap>
 					</>
 				)
-			)
+			
 		);
 		let map;
 		if( this.props.center.lat !== undefined ) {

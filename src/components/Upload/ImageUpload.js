@@ -20,7 +20,6 @@ const ImageUpload = (props) => {
     setFile(file);
     setProgress('0')
   };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const fileUpload = useCallback(async () => {
         setError('');
         const formData = new FormData();

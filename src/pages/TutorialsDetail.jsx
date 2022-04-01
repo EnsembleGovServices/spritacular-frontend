@@ -13,7 +13,8 @@ import { routeUrls } from './../helpers/url';
 
 const TutorialsDetail = () => {
   return (
-    <>
+    <div className="tutorial-details_page position-relative">
+      <div className="comman-banner"></div>
       <section className="tutorial-detail-main">
         <Container>
           <div className="breadcrumb-main">
@@ -52,129 +53,122 @@ const TutorialsDetail = () => {
                 porta mauris lacinia facilisis.
               </p>
             </Col>
-            <Col md={12}>
-              <h3>Observation Fields</h3>
-            </Col>
           </Row>
-          <div className="border-line">
-            <Row>
-              <Col md={4}>
-                <h4>Location</h4>
-              </Col>
-              <Col md={8}>
-                <p>It will be automatically located by Google plugin</p>
-                <ol>
-                  <li>
-                    Country{" "}
-                    <Badge className="badge-required" color="secondary">
-                      Required
-                    </Badge>
-                  </li>
-                  <li>
-                    Geographic Coordinates
-                    <Badge className="badge-required" color="secondary">
-                      Required
-                    </Badge>
-                  </li>
-                </ol>
-              </Col>
-            </Row>
-          </div>
-          <div className="border-line">
-            <Row>
-              <Col md={4}>
-                <h4>Observation Time</h4>
-              </Col>
-              <Col md={8}>
-                <p className="mb-0">
-                  Data and time of your observation
+          <Col md={12}>
+            <h3>Observation Fields</h3>
+          </Col>
+          <div className="border-line"></div>
+          <Row>
+            <Col md={4}>
+              <h4>Location</h4>
+            </Col>
+            <Col md={8}>
+              <p>It will be automatically located by Google plugin</p>
+              <ol>
+                <li>
+                  Country{" "}
                   <Badge className="badge-required" color="secondary">
                     Required
                   </Badge>
-                </p>
-              </Col>
-            </Row>
-          </div>
-          <div className="border-line">
-            <Row>
-              <Col md={4}>
-                <h4>Camera Details</h4>
-              </Col>
-              <Col md={8}>
-                <ol>
-                  <li>
-                    Camera Type
-                    <Badge className="badge-required" color="secondary">
-                      Required
-                    </Badge>
-                  </li>
-                  <li>Frame Rate</li>
-                  <li>ISO</li>
-                  <li>Field-to-view</li>
-                  <li>Shutter Speed</li>
-                  <li>
-                    Lens Type
-                    <Badge className="badge-required" color="secondary">
-                      Required
-                    </Badge>
-                  </li>
-                </ol>
-              </Col>
-            </Row>
-          </div>
-          <div className="border-line">
-            <Row>
-              <Col md={4}>
-                <h4>Direction/Azimuth</h4>
-              </Col>
-              <Col md={8}>
-                <p className="mb-0">N, S, E, W, NE, SE, SW, NW</p>
-              </Col>
-            </Row>
-          </div>
-          <div className="border-line">
-            <Row>
-              <Col md={4}>
-                <h4>Special Equipments</h4>
-              </Col>
-              <Col md={8}>
-                <p className="mb-0">
-                  If you use any special equipment or filters, please provide
-                  note about that
-                </p>
-              </Col>
-            </Row>
-          </div>
-          <div className="border-line">
-            <Row>
-              <Col md={4}>
-                <h4>Comments</h4>
-              </Col>
-              <Col md={8}>
-                <p className="mb-0">
-                  Describe precisely how you captured your video/image.
-                  (observations set up, camera settings, and steps you take to
-                  capture your observation)
-                </p>
-              </Col>
-            </Row>
-          </div>
-          <div className="border-line">
-            <Row>
-              <Col md={4}>
-                <h4>Image/Video File</h4>
-              </Col>
-              <Col md={8}>
-                <p className="mb-0">
-                  Please make sure to upload your raw (unprocessed) image or
-                  video of your observation.
-                </p>
-              </Col>
-            </Row>
-          </div>
+                </li>
+                <li>
+                  Geographic Coordinates
+                  <Badge className="badge-required" color="secondary">
+                    Required
+                  </Badge>
+                </li>
+              </ol>
+            </Col>
+          </Row>
+          <div className="border-line"></div>
+          <Row>
+            <Col md={4}>
+              <h4>Observation Time</h4>
+            </Col>
+            <Col md={8}>
+              <p className="mb-0">
+                Data and time of your observation
+                <Badge className="badge-required" color="secondary">
+                  Required
+                </Badge>
+              </p>
+            </Col>
+          </Row>
+          <div className="border-line"></div>
+          <Row>
+            <Col md={4}>
+              <h4>Camera Details</h4>
+            </Col>
+            <Col md={8}>
+              <ol>
+                <li>
+                  Camera Type
+                  <Badge className="badge-required" color="secondary">
+                    Required
+                  </Badge>
+                </li>
+                <li>Frame Rate</li>
+                <li>ISO</li>
+                <li>Field-to-view</li>
+                <li>Shutter Speed</li>
+                <li>
+                  Lens Type
+                  <Badge className="badge-required" color="secondary">
+                    Required
+                  </Badge>
+                </li>
+              </ol>
+            </Col>
+          </Row>
+          <div className="border-line"></div>
+          <Row>
+            <Col md={4}>
+              <h4>Direction/Azimuth</h4>
+            </Col>
+            <Col md={8}>
+              <p className="mb-0">N, S, E, W, NE, SE, SW, NW</p>
+            </Col>
+          </Row>
+          <div className="border-line"></div>
+          <Row>
+            <Col md={4}>
+              <h4>Special Equipments</h4>
+            </Col>
+            <Col md={8}>
+              <p className="mb-0">
+                If you use any special equipment or filters, please provide
+                note about that
+              </p>
+            </Col>
+          </Row>
+          <div className="border-line"></div>
+          <Row>
+            <Col md={4}>
+              <h4>Comments</h4>
+            </Col>
+            <Col md={8}>
+              <p className="mb-0">
+                Describe precisely how you captured your video/image.
+                (observations set up, camera settings, and steps you take to
+                capture your observation)
+              </p>
+            </Col>
+          </Row>
+          <div className="border-line"></div>
+          <Row>
+            <Col md={4}>
+              <h4>Image/Video File</h4>
+            </Col>
+            <Col md={8}>
+              <p className="mb-0">
+                Please make sure to upload your raw (unprocessed) image or
+                video of your observation.
+              </p>
+            </Col>
+          </Row>
         </Container>
       </section>
-    </>
+    </div>
   );
 };
 export default TutorialsDetail;

@@ -13,7 +13,7 @@ const RegisterPopup = (props) => {
   const { open, handleClose, handleLoginModal, modalClass } = props;
   return (
     <Modal
-      className={modalClass ? modalClass : "common-modal"}
+      className={`common-modal ${ modalClass ? modalClass : '' }`}
       isOpen={open}
       toggle={handleClose}
       backdrop={true}

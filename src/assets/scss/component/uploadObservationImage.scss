@@ -9,8 +9,23 @@
   .observation-form-left-tab {
     max-width: 180px;
     width: 100%;
+    position: sticky;
+    left: 0;
+    right: 0;
+    top: 140px;
+    @include media-breakpoint-down(md){
+      max-width: 100%;
+      position: relative;
+      top: 0;
+    }
     .nav-tabs {
       border-bottom: none;
+      @include media-breakpoint-down(md){
+        flex-direction: row !important;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin-bottom: 15px;
+      }
       .nav-item {
         .nav-link {
           border-radius: $border-radius;
@@ -23,6 +38,13 @@
           cursor: pointer;
           background-color: $white;
           transition: $modal-transition;
+          @include media-breakpoint-down(lg){
+            font-size: 13px;
+            line-height: 18px;
+          }
+          @include media-breakpoint-down(md){
+            white-space: nowrap;
+          }
           &:hover,
           &.active {
             background-color: $lightPink;
@@ -45,6 +67,9 @@
       margin: 0 auto;
       width: 100%;
       min-height: 305px;
+      @include media-breakpoint-down(md){
+        min-height: 220px;
+      }
     }
     input[type=file] {
         opacity: 0;
@@ -68,7 +93,7 @@
       overflow: hidden;
       width: 100%;
       height: 100%;
-      border-radius: 50%;
+      border-radius: 0;
       .upload-info{
         text-align: center;
         // z-index: 99;
@@ -81,6 +106,9 @@
         }
         ul {
           margin-top: 80px;
+          @include media-breakpoint-down(md){
+            margin-top: 30px;
+          }
           li {
             color: $black;
             @include md-text;
@@ -112,6 +140,10 @@
       justify-content: center;
       align-items: center;
       margin-bottom: 60px;
+      @include media-breakpoint-down(md){
+        margin-bottom: 40px;
+        height: 200px;
+      }
       img{
         width: 100%;
         height: 100%;
@@ -122,6 +154,20 @@
         top: -2px;
         font-size: 24px;
         line-height: 24px;
+        background-color: $white;
+        transition: $transition;
+        &:hover{
+          background-color: $primary;
+          transition: $transition;
+          svg{
+            color: $white;
+            transition: $transition;
+          }
+        }
+        svg{
+          color: $black;
+          transition: $transition;
+        }
       }
     }
   }
@@ -134,7 +180,7 @@
   position: sticky;
   z-index: 9;
   margin-bottom: 60px;
-  @include media-breakpoint-down(sm)  {
+  @include media-breakpoint-down(md)  {
     top: 64px;
     margin-bottom: 30px;
   }
@@ -175,21 +221,38 @@
           margin-right: 17px;
           width: 36px;
           height: 36px;
+          @include media-breakpoint-down(sm) {
+            margin-right: 5px;
+            width: 30px;
+            height: 30px;
+          }
         }
         p{
           margin: 0;
+          @include media-breakpoint-down(sm) {
+            font-size: 13px;
+          }
         }
       }
     }
   }
 }
-.observation-form-right-tab{
+.observation-form-middle-tab{
   .nav-tabs{
     margin: 0 -6px 40px;
     border: 0;
+    @include media-breakpoint-down(md){
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
     .nav-item{
       width: 50%;
       padding: 0 6px;
+      cursor: pointer;
+      @include media-breakpoint-down(md){
+        margin-bottom: 15px;
+        width: 100%;
+      }
       .nav-link{
         background: #F9F9F9;
         border: 1px solid #DDDDDD;
@@ -201,6 +264,14 @@
         font-weight: 600;
         @include lg-text;
         color: black;
+        height: 100%;
+        @include media-breakpoint-down(xxl){
+          padding: 8px;
+        }
+        @include media-breakpoint-down(md){
+          padding: 6px 8px;
+          min-height: 50px;
+        }
         p{
           font-weight: normal;
           @include md-text;
@@ -217,24 +288,20 @@
     padding: 13px 47px;
     font-weight: 500;
     @include lg-text;
+    @include media-breakpoint-down(md) {
+      padding: 8px 35px;
+    }
   }
 }
 .upload-observation-form-inner{
   .gray-outline-btn{
     padding: 13px 32px;
-    @include media-breakpoint-down(lg){
-        padding: 10px 30px;
+    @include media-breakpoint-down(md){
+        padding: 8px 30px;
     }
   }
   textarea{
     resize: none;
-    background: transparent;
-    padding: 0 0 10px 0;
-    @include md-text;
-    border-radius: 0;
-    &:focus{
-      background: transparent;
-    }
   }
 }
 
@@ -269,48 +336,153 @@
 .other-textfield{
   max-width: 470px;
 }
+.selected-image_wrapper {
+  .selected-image{
+    &:hover{
+      .preview-btn{
+        img{
+          transform: scale(1.2);
+          transition: $transition;
+        }
+      }
+      .remove-btn{
+        opacity: 1;
+        right: -7px;
+        transition: $transition;
+      }
+      .replace-image_wrapper{
+        opacity: 1;
+        right: -7px;
+        transition: $transition;
+      }
+    }
+  }
+  .remove-btn{
+    opacity: 0;
+    z-index: 2;
+    width: 22px;
+    height: 22px;
+    right: -7px;
+    right: -100%;
+    top: 0;
+    background: $white;
+    box-shadow: 0px 2px 4px $light-grey;
+    transition: $transition;
+    padding: 3px;
+    span{
+      display: block;
+      line-height: 0;
+    }
+  }
+}
 .selected-image{
   width: 160px;
   height: 160px;
-  border-radius: 10px;
+  border-radius: 6px;
   background: $white;
-  overflow: hidden;
   position: relative;
-  cursor: pointer;
-  margin-left: auto;
-  margin-right: 0;
-  &.active-tab{
-   &::before{
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      background: linear-gradient(90deg, #E82C95 0.28%, #8C61E5 100%);
-      z-index: 0;
-   }
+  padding: 3px;
+  @include media-breakpoint-down(xl){
+    width: 100px;
+    height: 100px;
   }
-  img{
-    width: calc(100% - 8px);
-    height: calc(100% - 8px);
-    object-fit: cover;
-    object-position: top;
+  @include media-breakpoint-down(sm){
+    width: 90px;
+    height: 90px;
+  }
+  &::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+    border-radius: 10px;
+    background: $banner-bg;
+  }
+  &.active-tab{
+    &::before{
+      background: linear-gradient(90deg, #E82C95 0.28%, #8C61E5 100%);
+    }
+  }
+  .preview-btn{
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
     position: relative;
     z-index: 1;
-    top: 4px;
-    left: 4px;
+    top: 2px;
+    left: 2px;
     border-radius: 6px;
+    border: 0;
+    overflow: hidden;
     outline: 2px solid $white;
+    &[disabled]{
+      cursor: no-drop;
+      &.active-tab{
+        &::before{
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          background: $banner-bg;
+          z-index: 0;
+        }
+      }
+      img{
+        opacity: 0.9;
+      }
+    }
+    &:focus{
+      outline: 2px solid $white;
+    }
+  }
+  img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    background-color: #fff;
+    transition: $transition;
+    overflow: hidden;
+  }
+}
+.sm-selected_image{
+  .selected-image{
+    height: 96px;
+    @include media-breakpoint-down(md){
+      height: 68px;
+    }
+    @include media-breakpoint-down(sm){
+      width: 90px;
+      height: 90px;
+    }
   }
 }
 
+.replace-image_wrapper{
+  z-index: 2;
+  top: 30px;
+  width: 22px;
+  height: 22px;
+  right: 19px;
+  right: -100%;
+  box-shadow: 0px 2px 4px #666666;
+  padding: 3px;
+  opacity: 0;
+  transition: $transition;
+}
 // Custom checkbox design for choose image category START
 .checkbox-wrapper{
   .inputGroup {
     display: block;
     margin: 10px 0;
     position: relative;
+    @include media-breakpoint-down(sm){
+      margin: 0;
+    }
     label {
       background-color: $white;
       padding: 12px 30px;
@@ -330,6 +502,10 @@
       border-radius: $border-radius;
       @media(max-width:1023px){
         padding: 8px 10px;
+      }
+      @include media-breakpoint-down(md){
+        font-size: 12px;
+        line-height: 16px;
       }
       &:after {
         width: 22px;
@@ -364,6 +540,7 @@
         @media(max-width:1023px){
           width: 20px;
           height: 20px;
+          margin-right: 4px;
         }
       }
     }
@@ -398,15 +575,98 @@
   }
 }
 // Custom checkbox design for choose image category END
-
-.popover-carousel{
-  &.carousel{
+.popover-carousel {
+  &.swiper {
+    max-height: 165px;
+    border-radius: 6px;
     margin-bottom: 8px;
-    .carousel-item{
+    .swiper-slide{
       img{
         max-height: 165px;
         min-height: 165px;
       }
     }
+  }
+}
+.swiper {
+  .swiper-slide{
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  &:hover{
+    .swiper-button-prev{
+      opacity: 1;
+      left: 10px;
+      transition: $transition;
+      &.swiper-button-disabled{
+        opacity: 0.35;
+      }
+    }
+    .swiper-button-next{
+      opacity: 1;
+      right: 10px;
+      &.swiper-button-disabled{
+        opacity: 0.35;
+      }
+    }
+  }
+  .swiper-button-next{
+    background-image: url('data:image/svg+xml,%3Csvg xmlns=\"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\" width=\"1em\" height=\"1em\" preserveAspectRatio=\"xMidYMid meet\" viewBox=\"0 0 24 24\"%3E%3Cpath fill=\"currentColor\" d=\"M10.707 17.707L16.414 12l-5.707-5.707l-1.414 1.414L13.586 12l-4.293 4.293z\"%2F%3E%3C%2Fsvg%3E');
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border-radius: 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transform: translateY(-50%);
+    margin-top: 0;
+    right: -100%;
+    transition: $transition;
+    &::after{
+      display: none;
+    }
+    &.swiper-button-disabled{
+      opacity: 0;
+    }
+  }
+  .swiper-button-prev{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns=\"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\" width=\"1em\" height=\"1em\" preserveAspectRatio=\"xMidYMid meet\" viewBox=\"0 0 24 24\"%3E%3Cpath fill=\"currentColor\" d=\"M13.293 6.293L7.586 12l5.707 5.707l1.414-1.414L10.414 12l4.293-4.293z\"%2F%3E%3C%2Fsvg%3E");
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border-radius: 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: translateY(-50%);
+    margin-top: 0;
+    opacity: 0;
+    left: -100%;
+    transition: $transition;
+    &::after{
+      display: none;
+    }
+    &.swiper-button-disabled{
+      opacity: 0;
+    }
+  }
+}
+
+.observation-form-right-tab{
+  left: 0;
+  right: 0;
+  top: 140px;
+  @include media-breakpoint-down(sm){
+    top: 0;
+  }
+}
+
+.update-mode_view{
+  .sm-selected_image{
+    justify-content: flex-start !important;
   }
 }

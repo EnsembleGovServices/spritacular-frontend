@@ -13,19 +13,38 @@ body {
   font-family: $FontFamily;
   background-color: $white;
 }
-::-webkit-input-placeholder { 
+input.form-control::-webkit-input-placeholder, input::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeholder { 
   color: #000;
   opacity: 0.32;
 }
 
-:-ms-input-placeholder { 
+// input.form-control:-ms-input-placeholder { 
+input.form-control:-ms-input-placeholder, input:-ms-input-placeholder, textarea.form-control:-ms-input-placeholder { 
   color: #000;
   opacity: 0.32;
 }
 
-::placeholder {
+// input.form-control::placeholder {
+input.form-control::placeholder, input::placeholder, textarea.form-control::placeholder { 
   color: #000; 
   opacity: 0.32;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: $black;
+  -webkit-box-shadow: 0 0 0px 1000px $input-bg inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+input[type=file], 
+input[type=file]::-webkit-file-upload-button { 
+    cursor: pointer; 
 }
 ::selection{
   color: #fff;
@@ -73,7 +92,7 @@ body.modal-open {
 }
 .main-content {
   margin-top: 70px;
-  @include media-breakpoint-down(sm)  {
+  @include media-breakpoint-down(md)  {
     margin-top: 64px;
   }
 }
@@ -95,8 +114,15 @@ body.modal-open {
 
 .setplaceholdersize {
   input::placeholder {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
+.ex-text{
+  @include sm-text;
+}
 @import "../component/index.scss";
+
+// Slider
+@import "node_modules/swiper/swiper.scss";
+@import "node_modules/swiper/modules/navigation/navigation.scss";

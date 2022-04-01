@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import {createContext, useEffect, useMemo, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 
 export const ObservationContext = createContext({});
 
@@ -9,7 +9,10 @@ const Observations = () => {
     });
     const [observationSteps, setObservationSteps] = useState({
         total: 3,
-        active: 1
+        active: 1,
+        mode: {
+            update: false
+        }
     });
     const [observationImages, setObservationImages] = useState([]);
     const [observationCategory, setObservationCategory] = useState([]);
@@ -18,7 +21,7 @@ const Observations = () => {
     useEffect(()=> {
         let data = (observationImages?.data) ? [...observationImages?.data] : []
         setObservationData({
-            isDraft: observationSteps?.is_draft ? 1 : 0,
+            // is_draft: observationSteps?.is_draft ? 1 : 0,
             image_type: observationType?.image_type,
             map_data: data,
             elevation_angle: null,

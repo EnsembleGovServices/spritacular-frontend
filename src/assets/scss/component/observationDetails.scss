@@ -1,4 +1,15 @@
 @import "../global/config.scss";
+.modal.fade{
+    .observation-details_modal{
+        transform: translateX(100%);
+    }
+}
+.modal.show{
+    .observation-details_modal{
+        transform: none;
+    }
+}
+
 .observation-details_modal{
     max-width: 750px;
     width: 100%;
@@ -7,13 +18,19 @@
     height: 100%;
     border-radius: 8px 0px 0px 8px;
     .modal-header{
-        padding: 16px 20px 12px;
+        padding: 10px 20px 20px;
         border-radius: 0;
+        margin-bottom: 15px;
+        @include media-breakpoint-down(md){
+            padding: 15px 20px 15px;
+            box-shadow: 0px 2px 4px #ccc;
+        }
     }
     .modal-title{
         font-weight: 700;
         @include sm-title;
-        @include vstart;
+        @include vspace;
+        width: 100%;
         .badge {
             font-weight: 400;
             @include sm-text;
@@ -22,10 +39,22 @@
             border-radius: 4px;
             padding: 2px 4px;
             margin-left: 8px;
+            &.badge-success{
+                background: #E2F8EB !important;
+                color: $black;
+            }
+        }
+        .editing-btn{
+            font-size: 15px;
+            line-height: 20px;
         }
     }
     .modal-body{
-        padding: 0 20px 12px;
+        padding: 0 20px 22px;
+        // overflow: hidden;
+    }
+    h5{
+        @include md-text;
     }
     h6{
         font-weight: 400;
@@ -38,12 +67,124 @@
         color: $black;
 
     }
+    .profile-icon{
+        width: 30px;
+        height: 30px;
+        margin-right: 6px;
+        img{
+            object-fit: cover;
+        }
+    }
+    .preview-detail{
+        height: calc( 100% - 42px);
+        border-radius: $border-radius;
+        overflow: hidden;
+        @include media-breakpoint-down(md){
+            height: auto;
+        }
+        img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+    .like-btn{
+        span{
+            @include md-text;
+            position: relative;
+            top: 2px;
+        }
+    }
+    .tab-content{
+        @include media-breakpoint-down(md){
+            padding: 0 0 20px;
+        }
+        .tab-pane{
+            padding-top: 12px;
+            .selected_direction{
+                background: #F3F4F6;
+                width: 40px;
+                height: 40px;
+                padding: 10px;
+                margin-left: auto;
+                margin-right: 0;
+                position: relative;
+                span{
+                    @include sm-text;
+                    background-image: linear-gradient(180deg, #C01E37 0%, #F052C1 125%);
+                    background-size: 100%;
+                    -webkit-background-clip: text;
+                    -moz-background-clip: text;
+                    -webkit-text-fill-color: transparent; 
+                    -moz-text-fill-color: transparent;
+                    
+                }
+                .direction_arrow{
+                    transform: rotate(var(--selected-angle));
+                    &::after{
+                        content: "";
+                        background-color: transparent;
+                        border-color: transparent;
+                        border-style: solid;
+                        line-height: 0;
+                        border-width: 0 6px 6px;
+                        border-top-color: transparent;
+                        border-bottom-color: #C01E37;
+                        position: absolute;
+                        top: 0;
+                    }
+                }
+            }
+        }
+    }
+    .nav-tabs{
+        justify-content: space-between;
+        .nav-item{
+            .nav-link{
+                font-style: normal;
+                font-weight: 400;
+                @include lg-text;
+                padding: 0;
+                color: #181818;
+                border: 0;
+                border-bottom: 3px solid transparent;
+                cursor: pointer;
+                padding-bottom: 3px;
+                &.active{
+                    font-weight: 700;
+                    color: $secondary;
+                    background-color: transparent;
+                    border-color: $secondary;
+                    &:hover{
+                        border-color: $secondary;
+                    }
+                }
+                &:hover{
+                    border-color: transparent;
+                    color: $secondary;
+                }
+            }
+        }
+    }
+    .observation_type{
+        i{
+            overflow: hidden;
+            box-shadow: 0px 0px 4px rgb(0 0 0 / 25%);
+            width: 22px;
+            height: 22px;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+    }
 }
 .border-line{
     height: 1px;
     width: 100%;
-    background: #EAEAEA;
-    margin: 8px 0;
+    margin: 11px 0 !important;
+    background: $light-grey1;
 }
 .user-review{
     font-weight: 400;
@@ -56,4 +197,13 @@
     border: 1px solid #F09EAD;
     border-radius: 6px;
     padding: 16px;
+    h5{
+        font-weight: 400;
+        @include md-text;
+    }
+    button{
+        font-weight: 400;
+        @include md-text;
+        padding: 7px 16px;
+    }
 }

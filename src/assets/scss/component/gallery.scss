@@ -1,0 +1,26 @@
+@import "../global/config.scss";
+
+.gallery-page{
+    padding: 80px 50px 140px;
+    @include media-breakpoint-down(lg){
+        padding: 50px 30px 110px;
+    }
+    @include media-breakpoint-down(md){
+        padding: 40px 15px 110px;
+    }
+    h4{
+        @include lg-title;
+        margin-bottom: 42px;
+        @include media-breakpoint-down(lg){
+            margin-bottom: 30px;
+        }
+        @include media-breakpoint-down(md){
+            margin-bottom: 20px;
+        }
+    }
+    .gray-outline-btn{
+        padding: 9px 19px;
+        @include md-text;
+        margin-top: 10px;
+    }
+}

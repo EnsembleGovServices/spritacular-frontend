@@ -6,43 +6,30 @@ import EquipmentForm from '../Shared/EquipmentForm';
 import useObservations from "../../hooks/useObservations";
 
 const EquipmentDetailsForm = (props) =>{
-    const {toggleTab,handleInput,handleOtherCamera,getCameraDetail,cameraDetails, error, step } = props;
+    const {toggleTab,handleInput,handleOtherCamera,cameraDetails, error, step, isSwitchOn } = props;
     const {
         observationData,
     } = useObservations();
     return (
         <>
-        <Row className="mt-4">
-            {/* <Col sm="12">
-                <FormGroup check>
-                <Label check className="mb-4">
-                    <Input
-                        type="checkbox"
-                        name="Pull data from my profile"
-                        onClick={getCameraDetail}
-                    />
-                    Pull data from my profile
-                </Label>
-                </FormGroup>
-            </Col> */}
-            <EquipmentForm step={step} handleInput1={handleInput} updateSetting={cameraDetails} error={error}/>
+        <Row>
+            <EquipmentForm step={step} handleInput1={handleInput} updateSetting={cameraDetails} error={error} isSwitchOn={isSwitchOn}/>
 
             <Col md="12">
                 <div className="border-line"/>
                 <FormGroup>
                     <h6>Elevation angle of your camera in degrees</h6>
                     <Input
-                    type="text"
+                    type="number"
                     name="elevation_angle"
                     value={observationData?.elevation_angle ?? ''}
                     placeholder="e.g. 20"
                     onChange={(e)=>handleOtherCamera(e)}
                     />
+                    <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>20</span>
                 </FormGroup>
             </Col>
             <Col md={12}>
-
-                {/* <div className="border-line"></div> */}
                 <FormGroup>
                     <h6>Link to the video of this event</h6>
                     <Input
@@ -52,6 +39,7 @@ const EquipmentDetailsForm = (props) =>{
                     onChange={(e)=>handleOtherCamera(e)}
                     placeholder="e.g. https://www.youtube.com/watch?v=PjZ2Y2nn000"
                     />
+                    <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>https://www.youtube.com/watch?v=PjZ2Y2nn000</span>
                 </FormGroup>
             </Col>
             <Col md={12}>
@@ -69,6 +57,7 @@ const EquipmentDetailsForm = (props) =>{
             </Col>
             <Col md={12}>
                 <Button className="gray-outline-btn me-2"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
+                <Button type="submit" disabled={(!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture)) }>Submit</Button>
             </Col>
         </Row>
         </>

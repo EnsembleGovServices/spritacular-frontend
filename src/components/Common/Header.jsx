@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import "../../assets/scss/component/header.scss";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import LoginPopup from "../Popup/LoginPopup";
 import RegisterPopup from "../Popup/RegisterPopup";
@@ -38,16 +38,18 @@ const Header = (props) => {
   const [communityDropdown, setCommunityDropdown] = useState(false);
   const [notificationDropdown, setNotificationDropdown] = useState(false);
   const location = useLocation();
-  const homeUrl = location.pathname === "";
-
+  const homeUrl = location.pathname === '/';
+  const navigate = useNavigate();
   const Logout = () => {
     setAuth("");
     setPersist(false);
+    navigate('/');
     localStorage.removeItem("persist");
     localStorage.removeItem("refresh");
+    sessionStorage.removeItem("camera");
     setIsRegisterModal(false);
     setIsLoginModal(false);
-    setShowUserProfilePopup(true)
+    setShowUserProfilePopup(true);
   };
 
   useEffect(() => {
@@ -368,6 +370,7 @@ const Header = (props) => {
           open={persist && auth ? false : isRegisterModal}
           handleClose={handleRegisterModal}
           handleLoginModal={handleLoginModal}
+          modalClass="registerModal"
         />
       )}
 

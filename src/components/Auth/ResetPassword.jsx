@@ -1,19 +1,13 @@
-import {Button, Form, FormGroup, FormFeedback, FormText, Input} from "reactstrap";
+import {Button, Form, FormGroup, FormFeedback, Input} from "reactstrap";
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
 import {useEffect, useState} from "react";
-import useAuth from "../../hooks/useAuth";
-import {useLocation, useNavigate} from "react-router-dom";
-import { routeUrls } from './../../helpers/url';
+import {useNavigate} from "react-router-dom";
 
 const ResetPassword = (props) => {
-    const {cp,token} = props;
-    const { setAuth, persist, setPersist } = useAuth();
+    const {token} = props;
 
     const navigate = useNavigate();
-    const location = useLocation();
-
-    const from = location.state?.from?.pathname || routeUrls.home;
 
     const [user, setUser] = useState({
         token: "",

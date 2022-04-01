@@ -61,3 +61,7 @@ export const getCountry = ( addressArray ) => {
         }
     }
 };
+
+export const getCategoryImage = (key) => {
+    return `/assets/images/category/${key.toLowerCase().replaceAll(" ", "")}.png`;
+}

@@ -1,23 +1,26 @@
 import { Outlet } from "react-router-dom";
-import {useState, useEffect} from "react";
+import {useState, useEffect, createContext} from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
 import Header from "../components/Common/Header";
 import Footer from "../components/Common/Footer";
 import Loader from "../components/Shared/Loader";
-import axios from "../api/axios";
-import {baseURL} from "../helpers/url";
 
 // const Header = lazy(()=> import('../components/Common/Header'))
 // const Footer = lazy(()=> import('../components/Common/Footer'))
 // const Loader = lazy(()=> import('../components/Shared/Loader'))
 
-const PersistLogin = (props) => {
+export const observationViewContext = createContext({});
 
-    const [isLoading, setIsLoading] = useState(true);
+const PersistLogin = (props) => {
     const refresh = useRefreshToken();
-    const { auth, persist, setAuth } = useAuth();
+    const { auth, persist } = useAuth();
     const { persistValue } = props;
+    const [isLoading, setIsLoading] = useState(true);
+    const [observationListData, setObservationListData] = useState(null);
+    const [observationComments, setObservationComments] = useState({
+        comment_count: 0
+    });
     useEffect(() => {
         let isMounted = true;
         const verifyRefreshToken = async () => {
@@ -37,28 +40,6 @@ const PersistLogin = (props) => {
         return () => isMounted = false;
     }, [auth, auth?.token?.access, persist, refresh])
 
-
-    useEffect(() => {
-        if (auth?.token?.access) {
-            axios.get(baseURL.api + '/users/camera_setting/', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${auth?.token?.access}`
-                }
-            }).then((response) => {
-                setAuth(prev => {
-                    return {
-                        ...prev,
-                        camera: response?.data
-                    }
-                });
-            }).catch((error) => {
-                console.log(error.response);
-            })
-        }
-    }, [auth?.token?.access, setAuth])
-
-
     useEffect(() => {
         // console.log(`isLoading: ${isLoading}`)
         // console.log(`aT: ${JSON.stringify(auth?.token?.access)}`)
@@ -67,6 +48,14 @@ const PersistLogin = (props) => {
 
     return (
         <>
+            <observationViewContext.Provider value={
+                {
+                    observationListData,
+                    setObservationListData,
+                    observationComments,
+                    setObservationComments
+                }
+            }>
             {!persist ? (
                 <>
                     <Header />
@@ -77,14 +66,15 @@ const PersistLogin = (props) => {
                 </>
             ) : isLoading ? <Loader fixContent={true} /> : (
                 <>
-                    <Header />
-                    <div className="main-content">
-                        <Outlet />
-                    </div>
+                        <Header />
+                        <div className="main-content">
+                            <Outlet />
+                        </div>
                     {persistValue && <Footer />}
-                    
+
                 </>
             )}
+                </observationViewContext.Provider>
         </>
     )
 }
