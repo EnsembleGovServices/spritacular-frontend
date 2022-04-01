@@ -193,6 +193,7 @@ const MyObservations = () => {
             <ObservationDetailPage  observationList={currobservationList}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
           {loadMore < currentObservationList.length && <LoadMore handlLoadMore={handlLoadMore} />}
           </Container>
+          {currentObservationList[selectedObservationId]?.images.length > 0 && 
           <ObservationDetails
             data={currentObservationList[selectedObservationId]}
             activeType={activeType}
@@ -200,7 +201,7 @@ const MyObservations = () => {
             open={isObservationDetailModal}
             handleClose={handleObservationDetailModal}
             handleContinueEdit={handleObservationEdit}
-          />
+          />}
         </>
         }
       </>
