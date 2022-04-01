@@ -1,10 +1,12 @@
 @import "../global/config.scss";
 
 .upload-observation-main{
-    min-height: calc(100vh - 70px);
-    padding: 40px 0;
-    @include media-breakpoint-down(md){
-        min-height: calc(100vh - 64px);
+    &.initial-upload_box{
+        min-height: calc(100vh - 70px);
+        padding: 40px 0;
+        @include media-breakpoint-down(md){
+            min-height: calc(100vh - 64px);
+        }
     }
     .upload-ob-inner{
         position: relative;

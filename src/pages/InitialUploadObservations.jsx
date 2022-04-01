@@ -34,7 +34,7 @@ const InitialUploadObservations = () => {
 
   return (
     <>
-      <section className="upload-observation-main d-flex justify-content-center align-items-center h-100">
+      <section className="initial-upload_box upload-observation-main d-flex justify-content-center align-items-center h-100">
           <Container>
           <div className="upload-ob-inner">
             <Form>
