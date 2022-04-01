@@ -88,10 +88,10 @@ const ObservationCard = (props) => {
                     {userProfile && (
                         <CardFooter>
                             <Row>
-                                <Col xs={6} lg={9}>
+                                <Col xs={6} lg={8}>
                                     <h6 className="mb-0">{cardData?.location}</h6>
                                 </Col>
-                                <Col xs={6} lg={3}>
+                                <Col xs={6} lg={4}>
                                     <div className="card-user_location" style={{ "--card-location-angle": `${getdirectionDegree(cardData?.azimuth)}deg` }}>
                                         <h6 className="me-1 mb-0">
                                             {cardData?.azimuth}
