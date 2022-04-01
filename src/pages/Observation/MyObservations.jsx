@@ -1,6 +1,6 @@
 import "../../assets/scss/component/myObservation.scss";
 import InitialUploadObservations from "../InitialUploadObservations";
-import { Col, Container, Row, UncontrolledAlert } from 'reactstrap';
+import { Col, Container, Row } from 'reactstrap';
 import {Link, useNavigate} from 'react-router-dom';
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";

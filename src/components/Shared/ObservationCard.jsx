@@ -41,14 +41,16 @@ const ObservationCard = (props) => {
                             <Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" />
                         </div>
                     )}
-                    { !(cardItems?.image_type === 3) &&<img 
-                        alt="Card cap"  
-                        src={cardData?.image} 
-                        className="img-fluid card-img" 
-                        onClick={(e) => {
-                            userProfile && handleClick(index);
-                        }}
-                    />}
+                    { !(cardItems?.image_type === 3) &&
+                        <img
+                            alt="Card cap"
+                            src={cardData?.image}
+                            className="img-fluid card-img"
+                            onClick={(e) => {
+                                userProfile && handleClick(index);
+                            }}
+                        />
+                    }
                     {userProfile && cardItems?.image_type === 3 && <CardImageCarousel carouselData={cardItems?.images} />}
                     <CardBody className="position-relative observation-card_body">
                         <div className="position-absolute observation_type d-flex align-items-center">

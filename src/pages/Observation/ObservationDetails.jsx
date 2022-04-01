@@ -74,7 +74,7 @@ const ObservationDetails = (props) =>{
                         <Col md={6}>
                             <div className="mb-4 mb-md-0 h-100">
                                 <div className="preview-detail mb-3 mb-md-2">
-                                    <img src={data?.images[0].image} alt="card details" className="img-fluid" />
+                                    {data?.images?.length === 0 ? <img src={Images.NotAvailable} alt="No image available" className="object-contain img-fluid"/> : <img src={data?.images?.[0]?.image} alt="card details" className="img-fluid" />}
                                 </div>
                                 <Row>
                                     <Col sm={6} className="justify-content-start d-flex align-items-center mb-2 mb-sm-0">
@@ -87,10 +87,10 @@ const ObservationDetails = (props) =>{
                                     </Col>
                                     <Col sm={6} className="justify-content-end d-flex align-items-center">
                                         <div className="observation_type d-flex align-items-center">
-                                            {data?.category_data.length > 0 && data?.category_data.map((item, index) => {
-                                                return (<i id={item.toLowerCase().replaceAll(" ", "")} className="rounded-circle bg-white ms-2" key={index}>
-                                                    <img src={`/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt={item} />
-                                                    <Tooltip flip target={item.toLowerCase().replaceAll(" ", "")} isOpen={tooltipOpen[item]?.isOpen} toggle={()=> (handleToggleChange(item))} >{item}</Tooltip>
+                                            {data?.category_data?.map((item, index) => {
+                                                return (<i id={item?.toLowerCase().replaceAll(" ", "")} className="rounded-circle bg-white ms-2" key={index}>
+                                                    <img src={`/assets/images/category/${item?.toLowerCase().replaceAll(" ", "")}.png`} alt={item} />
+                                                    <Tooltip flip target={item?.toLowerCase().replaceAll(" ", "")} isOpen={tooltipOpen[item]?.isOpen} toggle={()=> (handleToggleChange(item))} >{item}</Tooltip>
                                                 </i>)
                                             })}
                                         </div>
