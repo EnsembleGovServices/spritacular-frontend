@@ -11,7 +11,7 @@ export const baseURL = {
 export const cameraSettingFields = {
     camera_type: '',
     focal_length: '',
-    aperture: '',
+    aperture: null,
     iso: '',
     shutter_speed: '',
     fps: '',
@@ -30,5 +30,8 @@ export const routeUrls = {
     login: 'login',
     profile: 'profile',
     myObservations: 'observations',
-    observationsAdd: 'observations/add'
+    gallery: 'gallery',
+    observationsAdd: 'observations/add',
+    observationsUpdate: 'observations/update',
+    // dashboard: 'dashboard',
 }

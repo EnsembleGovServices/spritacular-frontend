@@ -1,11 +1,13 @@
-import {UncontrolledAlert, Button, FormFeedback, FormGroup, Input, Row,Col} from "reactstrap";
+import {UncontrolledAlert, Button, FormGroup, Row} from "reactstrap";
 import axios from "../../api/axios";
-import {useEffect, useState ,useRef} from "react";
+import {useEffect, useState, useRef} from "react";
 import {baseURL, cameraSettingFields} from "../../helpers/url";
 import EquipmentForm from '../Shared/EquipmentForm'
+import useAuth from "../../hooks/useAuth";
 
 
 const CameraSetting = (props) => {
+    const {setAuth, auth} = useAuth();
     const {cameraDetails, user, isDetailExist} = props;
     const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)   
     const myRef = useRef(null);
@@ -13,9 +15,9 @@ const CameraSetting = (props) => {
         scrollToRef(myRef);
     }
     const [updateSetting, setUpdateSetting] = useState(cameraSettingFields);
+    const [updatedData, setUpdateData] = useState();
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
-
     const handleInput = (e) => {
         let name = e.target.name,
             value = e.target.value;
@@ -24,63 +26,131 @@ const CameraSetting = (props) => {
             [name]:value,
         })
     }
+
+
+
     useEffect(()=> {
         setUpdateSetting(cameraDetails)
     }, [cameraDetails])
+
+    const resetToExistingCameraDetails = () => {
+        setSuccess('');
+        setError('');
+      if (isDetailExist) {
+          setUpdateSetting(cameraDetails);
+          setSuccess({
+              reset: 'Existing camera details restored successfully',
+              status: 200
+          })
+      } else {
+          setError({
+              reset: 'Nothing to restore',
+              status: 200
+          });
+      }
+
+      executeScroll();
+    }
 
     const handleCameraUpdate = async (e) => {
         e.preventDefault();
         setSuccess('');
         setError('');
-        
-        if(isDetailExist){
-            await axios.patch(baseURL.api+'/users/camera_setting/', updateSetting, {
+
+        if (isDetailExist) {
+            await axios.patch(baseURL.api + '/users/camera_setting/', updateSetting, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user?.token?.access}`
                 },
                 withCredentials: true,
-            }).then((success) => {
-                setSuccess(success)
+            }).then((response) => {
+                setUpdateData(response.data);
+                setSuccess({
+                    updated: 'Camera settings updated successfully',
+                    status: response?.status
+                })
                 executeScroll();
             }).catch((error) => {
-                setError(error.response)
+                setError({
+                    data: error?.response.data,
+                    status: error?.response?.status
+                })
                 executeScroll();
-    
             })
-        } else {
+        } else  {
             await axios.post(baseURL.api+'/users/camera_setting/', updateSetting, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user?.token?.access}`
                 },
                 withCredentials: true,
-            }).then((success) => {
-                setSuccess(success)
+            }).then((response) => {
+                setSuccess({
+                    status: 201,
+                    data: response.data,
+                    created: 'Camera settings added successfully.'
+                })
+                setAuth((prev)=> {
+                    return {
+                        user: {
+                            ...prev,
+                            camera: updatedData
+                        }
+                    }
+                })
                 executeScroll();
             }).catch((error) => {
                 setError(error.response)
                 executeScroll();
-    
             })
+            executeScroll();
         }
     }
+
+
+    useEffect(()=> {
+        setAuth((prev)=> {
+            return {
+                user: {
+                    ...prev,
+                    camera: updatedData
+                }
+            }
+        })
+    }, [updatedData])
 
     return(
         <>
             {success && (success?.status === 200 || success?.status === 201) &&
-                <UncontrolledAlert variant="success" data-dismiss="alert" dismissible="true">
-                    Camera settings updated successfully
+                <UncontrolledAlert color="success" data-dismiss="alert" dismissible="true">
+                    {success?.updated &&
+                        success?.updated
+                    }
+                    {success?.created &&
+                        success?.created
+                    }
+                    {success?.reset &&
+                        success?.reset
+                    }
                 </UncontrolledAlert>
             }
-                    <form onSubmit={handleCameraUpdate} ref={myRef}> 
+
+            {error && error?.reset &&
+                <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true">
+                    {error?.reset &&
+                        error?.reset
+                    }
+                </UncontrolledAlert>
+            }
+                    <form onSubmit={handleCameraUpdate} ref={myRef}>
                         <Row>
                          <EquipmentForm handleInput1={handleInput} updateSetting={updateSetting} error={error}/>
                      </Row>
 
                 <FormGroup className="profile-bottom-btn ">
-                    <Button className="discard-btn">Discard</Button>
-                    <Button className="save-btn" type="submit">Save Changes</Button>
+                    <Button className="discard-btn" type="button" onClick={resetToExistingCameraDetails}>Discard</Button>
+                    <Button className="save-btn" type="submit" disabled={!(updateSetting.aperture && updateSetting.focal_length && updateSetting.camera_type)}>Save Changes</Button>
                 </FormGroup>
             </form>
         </>

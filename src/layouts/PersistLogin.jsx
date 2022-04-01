@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { useState, useEffect } from "react";
+import {useState, useEffect, createContext} from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
 import Header from "../components/Common/Header";
@@ -10,13 +10,17 @@ import Loader from "../components/Shared/Loader";
 // const Footer = lazy(()=> import('../components/Common/Footer'))
 // const Loader = lazy(()=> import('../components/Shared/Loader'))
 
-const PersistLogin = (props) => {
+export const observationViewContext = createContext({});
 
-    const [isLoading, setIsLoading] = useState(true);
+const PersistLogin = (props) => {
     const refresh = useRefreshToken();
     const { auth, persist } = useAuth();
     const { persistValue } = props;
-    
+    const [isLoading, setIsLoading] = useState(true);
+    const [observationListData, setObservationListData] = useState(null);
+    const [observationComments, setObservationComments] = useState({
+        comment_count: 0
+    });
     useEffect(() => {
         let isMounted = true;
         const verifyRefreshToken = async () => {
@@ -33,7 +37,6 @@ const PersistLogin = (props) => {
             }
         }
         !auth?.token?.access ? verifyRefreshToken() : setIsLoading(false);
-
         return () => isMounted = false;
     }, [auth, auth?.token?.access, persist, refresh])
 
@@ -45,6 +48,14 @@ const PersistLogin = (props) => {
 
     return (
         <>
+            <observationViewContext.Provider value={
+                {
+                    observationListData,
+                    setObservationListData,
+                    observationComments,
+                    setObservationComments
+                }
+            }>
             {!persist ? (
                 <>
                     <Header />
@@ -55,14 +66,15 @@ const PersistLogin = (props) => {
                 </>
             ) : isLoading ? <Loader fixContent={true} /> : (
                 <>
-                    <Header />
-                    <div className="main-content">
-                        <Outlet />
-                    </div>
+                        <Header />
+                        <div className="main-content">
+                            <Outlet />
+                        </div>
                     {persistValue && <Footer />}
-                    
+
                 </>
             )}
+                </observationViewContext.Provider>
         </>
     )
 }

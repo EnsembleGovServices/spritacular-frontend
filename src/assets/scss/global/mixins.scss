@@ -21,6 +21,11 @@
   justify-content: flex-start;
 }
 
+@mixin vend {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 // Title Fonts 
 @mixin xl-title {
   font-size: 48px;
@@ -88,6 +93,18 @@
   @include media-breakpoint-down(md){
     font-size: 18px;
     line-height: 22px;
+  }
+}
+@mixin xsm-title {
+  font-size: 20px;
+  line-height: 23px;
+  @media (max-width: 1023px){
+    font-size: 18px;
+    line-height: 24px;
+  }
+  @include media-breakpoint-down(md){
+    font-size: 15px;
+    line-height: 20px;
   }
 }
 // Description fonts 

@@ -14,9 +14,9 @@ import {useState} from "react";
 import useAuth from "../hooks/useAuth";
 import "../assets/scss/component/camerasettings.scss";
 import ImageUpload from "../components/Upload/ImageUpload";
-import axios from "../api/axios";
 import {baseURL, cameraSettingFields} from "../helpers/url";
 import ReactCountryFlags from "../components/ReactCountryFlag";
+import axios from "../api/axios";
 
 const UpdateProfile = lazy(()=> import('../components/Account/UpdateProfile'))
 const CameraSetting = lazy(()=> import('../components/Account/CameraSetting'))
@@ -39,21 +39,21 @@ const Profile = () => {
     }
   };
   const fetchCameraDetails = async () => {
-    await axios.get(baseURL.api+'/users/camera_setting/', {
-      headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${auth?.token?.access}`
-      }
-      }).then((success) => {
-              setIsDetailExist(true);
-          setCameraDetails(success.data);
-      }).catch((error) => {
-          console.log(error.response);
-      })
+    if (auth?.user?.camera) {
+      setIsDetailExist(true);
+      setCameraDetails(auth?.user?.camera);
+    } else {
+      setIsDetailExist(false);
+    }
   }
+  
+
 
   useEffect(()=> {
     setUser(auth?.user);
+    if (auth?.user?.camera) {
+      setIsDetailExist(true);
+    }
   }, [auth])
 
   return (
@@ -77,7 +77,6 @@ const Profile = () => {
                       <h5>{user.first_name} {user?.last_name}</h5>
                       <p>{user?.email}</p>
                       <div className="d-flex align-items-center justify-content-center">
-                        {/* <img src={Images.UsaFlag} alt="" /> */}
                         <ReactCountryFlags country={user?.country_code} />
                         <span>{user?.location}</span>
                       </div>

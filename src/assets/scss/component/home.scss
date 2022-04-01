@@ -6,7 +6,7 @@
   height: 530px;
   background-repeat: no-repeat;
   transform: skew(0deg, 0deg);
-  margin-top: -60px;
+  margin-top: -70px;
   position: relative;
   @media (max-width: 580px) {
     height: 420px;
@@ -29,20 +29,6 @@
     padding: 160px 0px 60px;
     @media (max-width: 575px) {
       padding: 80px 0px 60px;
-    }
-    .border-line {
-      &::after {
-       /* content: "";
-        background-image: url(../../images/banner-line.png);
-        background-repeat: no-repeat;
-        position: absolute;
-        height: 200px;
-        width: 230px;
-        top: 40px;
-        left: 0;
-        background-size: 100%;
-        */
-      }
     }
     .banner-text {
       max-width: 645px;
@@ -67,7 +53,7 @@
         display: block;
         margin: 0 auto;
         margin-top: 70px;
-        transition: all 0.3s ease 0s;
+        transition: $transition;
         font-weight: 600;
         @include buttonOutlineSecodary;
         @media (max-width: 1023px) {
@@ -345,7 +331,7 @@
     top: -90px;
   }
   .observation_card {
-    .card-img-top {
+    .card-img {
       height: 180px;
       object-fit: cover;
       object-position: center;

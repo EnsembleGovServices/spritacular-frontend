@@ -18,7 +18,7 @@ const Register = (props) => {
         email: "",
         location: "",
         place_uid:"",
-        extra_fields: {
+        location_metadata: {
             address: "",
             lat: "",
             lng: "",
@@ -43,7 +43,7 @@ const Register = (props) => {
             location: location['address'],
             place_uid: location['placeId'],
             country_code: location['countryCode'],
-            extra_fields: {
+            location_metadata: {
                 lat: location['lat'],
                 lng: location['lng'],
                 
@@ -186,18 +186,7 @@ const Register = (props) => {
                             <FormFeedback>{error?.data?.password}</FormFeedback>
                         </FormGroup>
                         <FormGroup>
-                            {/* <Input
-                                required
-                                type="select"
-                                name="location"
-                                onChange={(e) => handleInput(e)}
-                            >
-                                <option value="Ahmedabad">Ahmedabad</option>
-                                <option value="Pune">Pune</option>
-                                <option value="Bombay">Bombay</option>
-                            </Input> */}
-                            <PlacesAutocomplete handleLocations={handleLocations}/>
-                            <FormFeedback>Location is required</FormFeedback>
+                            <PlacesAutocomplete handleLocations={handleLocations} error = {error}/>
                         </FormGroup>
                         <FormGroup check>
                             <Label check>

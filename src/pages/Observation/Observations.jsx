@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import {createContext, useEffect, useMemo, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 
 export const ObservationContext = createContext({});
 
@@ -9,45 +9,41 @@ const Observations = () => {
     });
     const [observationSteps, setObservationSteps] = useState({
         total: 3,
-        active: 1
+        active: 1,
+        mode: {
+            update: false
+        }
     });
     const [observationImages, setObservationImages] = useState([]);
     const [observationCategory, setObservationCategory] = useState([]);
-    const [observationData, setObservationData] = useState([]);
+    const [observationData, setObservationData] = useState({});
 
     useEffect(()=> {
+        let data = (observationImages?.data) ? [...observationImages?.data] : []
         setObservationData({
-            isDraft: observationSteps?.is_draft ? 1 : 0,
+            // is_draft: observationSteps?.is_draft ? 1 : 0,
             image_type: observationType?.image_type,
-            map_data: {
-                ...observationImages?.data
-            }
+            map_data: data,
+            elevation_angle: null,
+            video_url : ''
         })
     }, [observationImages?.data, observationSteps?.is_draft, observationType?.image_type])
 
     return(
         <ObservationContext.Provider value={
-            useMemo(()=> (
-                {
-                    observationType,
-                    setObservationType,
-                    observationSteps,
-                    setObservationSteps,
-                    observationImages,
-                    setObservationImages,
-                    observationCategory,
-                    setObservationCategory,
-                    observationData,
-                    setObservationData
-                }
-            ), [
-                        observationType,
-                        observationSteps,
-                        observationImages,
-                        observationCategory,
-                        observationData
-                    ]
-            )}>
+            {
+                observationType,
+                setObservationType,
+                observationSteps,
+                setObservationSteps,
+                observationImages,
+                setObservationImages,
+                observationCategory,
+                setObservationCategory,
+                observationData,
+                setObservationData
+            }
+        }>
             <Outlet />
         </ObservationContext.Provider>
     )

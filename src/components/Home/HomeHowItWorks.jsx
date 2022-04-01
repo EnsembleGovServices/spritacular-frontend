@@ -28,20 +28,12 @@ const HomeHowItWorks = () => {
               </div>
             </Col>
             <Col md={6} xs={12} className="works-gap">
-              <img
-                src={Images.Register}
-                alt="Register/SignUp demo"
-                className="w-100"
-              />
+              <img alt="Register/SignUp demo"  src={Images.Register} className="w-100" />
             </Col>
           </Row>
           <Row>
             <Col md={6} xs={12} className="works-gap order-2 order-md-1">
-              <img
-                src={Images.HowitworksSecond}
-                alt="How it works under Register"
-                className="w-100"
-              />
+              <img alt="How it works under Register"  src={Images.HowitworksSecond} className="w-100" />
             </Col>
             <Col md={6} xs={12} className="works-gap order-1 order-md-2">
               <div className="how-it-work-text-info">
@@ -79,14 +71,14 @@ const HomeHowItWorks = () => {
             </Col>
             <Col md={6} xs={12} className="works-gap">
               <div className="shadow-lg shadow-sm p-3  bg-white rounded">
-                <img src={Images.Dragdrop} alt="Share" className="w-100" />
+                <img alt="Share"  src={Images.Dragdrop} className="w-100" />
               </div>
             </Col>
           </Row>
           <Row>
             <Col md={6} xs={12} className="works-gap order-2 order-md-1">
               <div className="shadow-lg shadow-sm p-3  bg-white rounded ">
-                <img src={Images.Jet} alt="jet" className="w-100" />
+                <img alt="Jet"  src={Images.Jet} className="w-100" />
               </div>
             </Col>
             <Col md={6} xs={12} className="works-gap order-1 order-md-2">

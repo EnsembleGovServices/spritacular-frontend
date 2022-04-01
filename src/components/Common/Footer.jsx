@@ -3,6 +3,7 @@ import { Col, Container, Row, List } from "reactstrap";
 import Images from "../../static/images";
 import "../../assets/scss/component/footer.scss";
 import { routeUrls } from './../../helpers/url';
+import { Icon } from "@iconify/react";
 
 const Footer = () => {
   return (
@@ -172,12 +173,17 @@ const Footer = () => {
                           className="d-inline-block ms-3"
                           title="Twitter"
                         >
-                          <img src={Images.Twitter} alt="Twitter" />{" "}
+                          <Icon icon="arcticons:twitter" color="#fff" width="28" height="28" />
                         </Link>
                       </li>
                     </List>
                   </Col>
                 </Row>
+              </Col>
+              <Col sm={12}>
+                <Link to={''} className="d-inline-block w-100">
+                  Powered by <img alt="Ensemble" src={Images.Ensemble} width="120" className="ms-2"/>
+                </Link>
               </Col>
             </Row>
           </Container>

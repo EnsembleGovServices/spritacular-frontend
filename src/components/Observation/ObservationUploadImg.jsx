@@ -1,17 +1,23 @@
-import { Col, FormGroup, Input,Label } from "reactstrap";
+import { FormGroup, Input,Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
-import "../../assets/scss/component/uploadObservationImage.scss";
 import { Icon } from '@iconify/react';
 import {useEffect, useState} from "react";
+import {uploadImageDefaultState} from "../../helpers/observation";
+import PropTypes from "prop-types";
+import useAuth from "../../hooks/useAuth";
 
 const ObservationUploadImg = (props) =>{
-    const {multiple, maxLimit, imageFormat}=props;
+    const {multiple, maxLimit, imageFormat, detectImage, mode}=props;
     const {setObservationImages, observationImages} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
-
-
+    const { auth } = useAuth();
+    const [userLocation, setUserLocation] = useState({
+        latitude: (auth?.user?.location_metadata?.lat) ? auth?.user?.location_metadata?.lat : 18.5204303,
+        longitude: (auth?.user?.location_metadata?.lng) ? auth?.user?.location_metadata?.lng : 73.8567437
+    });
     const handleUploadImage = (e) => {
+        setError(null);
         const fileList = e.target.files;
         Array.from(fileList).forEach((item,id) => {
             const reader = new FileReader();
@@ -19,48 +25,54 @@ const ObservationUploadImg = (props) =>{
                 const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
                 const baseImage = `data:image/png;base64,${base64String}`;
                 const random = (Math.random() + 1).toString(36).substring(7) + (Math.random() + 1).toString(36).substring(20);
-
-                images?.map((image, index) => {
-                    if (image?.lastModified === item?.lastModified) {
-                        setError((prev) => {
-                            return {
-                                ...prev,
-                                duplicate: 'Image has been already added',
-                            }
-                        })
-                    }
+                const fileSize = (item.size / (1024*1024)).toFixed(2);
+                const repeatCheck = images?.map((image, index) => {
+                    return image?.lastModified === item?.lastModified && image?.name === item?.name;
                 });
+                const duplicate = repeatCheck.includes(true);
+                if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate) {
+
+                    if (mode) {
+                       return setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
+                    } else {
+                        setImages(prevState => [
+                            ...prevState,
+                            uploadImageDefaultState(random, baseImage, item, userLocation)
+                        ])
+                    }
+                }
 
 
-                if (images?.length < 3) {
-                    setImages(prevState => [
-                        ...prevState, {
-                            'id' : random,
-                            'image' : baseImage,
-                            'lastModified': item?.lastModified,
-                            'item': item,
-                            'latitude': 18.5204,
-                            'longitude': 73.8567,
-                            'location': 'Maharashtra, India',
-                            'country_code': 'IN',
-                            'obs_date': null,
-                            'obs_time': null,
-                            'timezone': '',
-                            'azimuth': '',
-                            'uncertainity_time':'',
-                            'is_precise_az':false,
-                            'category_map': {
-                                'category': [],
-                                'is_other': false,
-                                'other_value': ''
-                            }
-                        }
-                    ])
-                } else {
+
+                if (mode) {
                     setError((prev) => {
                         return {
                             ...prev,
-                            message: 'You have reached the limit, delete image(s) to add new again.',
+                            draft: 'You can not add new image',
+                        }
+                    })
+                }
+                if (images?.length > 2) {
+                    setError((prev) => {
+                        return {
+                            ...prev,
+                            count: 'You have reached the limit, delete some image, maximum upload allowed is 3',
+                        }
+                    })
+                }
+                if (fileSize > 5) {
+                    setError((prev) => {
+                        return {
+                            ...prev,
+                            size: 'You have exceeded the max file size limit (5mb)',
+                        }
+                    })
+                }
+                if (duplicate) {
+                    setError((prev) => {
+                        return {
+                            ...prev,
+                            duplicate: 'You have already added the image, please choose other image',
                         }
                     })
                 }
@@ -70,24 +82,31 @@ const ObservationUploadImg = (props) =>{
         })
     };
 
+
+
     useEffect(() => {
-        let images = (observationImages?.data) ? [...observationImages?.data] : []
+        let images = (observationImages?.data) ? [...observationImages?.data] : [];
+        observationImages?.data?.map((item, index) => {
+            return item.latitude = userLocation?.latitude,
+                item.longitude = userLocation?.longitude
+        })
         setImages(images)
-    }, [])
+   },[detectImage, mode, userLocation])
+
 
     useEffect(()=> {
         if (images.length > 0) {
             setObservationImages({
                 data: images,
+                observation_count: images.length,
                 selected_image_id: images?.[0]?.id,
                 selected_image_index:0
             });
         }
-    }, [images, setObservationImages])
-
+    }, [images, setObservationImages, userLocation])
 
     return (
-        <Col sm="12">
+        <>
             <div className="upload-observation-main">
                 <div className="upload-ob-inner">
                     <FormGroup>
@@ -102,7 +121,7 @@ const ObservationUploadImg = (props) =>{
                                     <ul>
                                         <li>
                                             Common Image File Formats (JPEG or
-                                            JPG, PNG, TIFF)
+                                            JPG, PNG)
                                         </li>
                                     </ul>
                                 }
@@ -113,7 +132,7 @@ const ObservationUploadImg = (props) =>{
                             type="file"
                             name="file"
                             id="UploadFile"
-                            accept="image/jpg, image/tiff, image/jpeg, image/png"
+                            accept="image/jpg, image/jpeg, image/png"
                             multiple={multiple}
                             onChange={(e)=> handleUploadImage(e)}
                         />
@@ -122,14 +141,23 @@ const ObservationUploadImg = (props) =>{
                         <p className="image-progree_bar"><b>65%</b> uploading..</p>
                     </div> */}
                 </div>
-                {error?.message &&
-                    <span className="text-danger d-block small my-1 d-inline-block">{error?.message} </span>
+                {error?.count &&
+                    <span className="text-danger d-block small my-1 d-inline-block">{error?.count} </span>
+                }
+                {error?.size &&
+                    <span className="text-danger d-block small my-1 d-inline-block">{error?.size}</span>
                 }
                 {error?.duplicate &&
-                    <span className="text-danger d-block small my-1 d-inline-block">{error?.duplicate}</span>
+                    <span className="text-info d-block small my-1 d-inline-block">{error?.duplicate}</span>
                 }
             </div>
-        </Col>
+        </>
     )
 }
+
+ObservationUploadImg.propTypes = {
+    userLocation: PropTypes.object,
+};
+
+
 export default ObservationUploadImg;
