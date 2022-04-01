@@ -89,17 +89,18 @@ const ObservationCard = (props) => {
                         <CardFooter>
                             <Row>
                                 <Col xs={6} lg={9}>
-                                    <h6 className="mb-0">{cardData.location}</h6>
+                                    <h6 className="mb-0">{cardData?.location}</h6>
                                 </Col>
                                 <Col xs={6} lg={3}>
-                                    <div className="card-user_location" style={{ "--card-location-angle": `${getdirectionDegree(cardData.azimuth)}deg` }}>
+                                    <div className="card-user_location" style={{ "--card-location-angle": `${getdirectionDegree(cardData?.azimuth)}deg` }}>
                                         <h6 className="me-1 mb-0">
-                                            {cardData.azimuth}
-                                            {Number(cardData.azimuth) ? "°" : ""}
+                                            {cardData?.azimuth}
+                                            {Number(cardData?.azimuth) ? "°" : ""}
                                         </h6>
+                                        {cardData?.azimuth && 
                                         <span className="card-direction rounded-circle position-relative d-flex justify-content-center align-items-start">
                                             <span className="direction-dot"/>
-                                        </span>
+                                        </span>}
                                     </div>
                                 </Col>
                             </Row>
