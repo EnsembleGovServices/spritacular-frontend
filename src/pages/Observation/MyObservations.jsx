@@ -211,7 +211,6 @@ const MyObservations = () => {
               handleContinueEdit={handleObservationEdit}
           />
 
-
         </>
         }
       </>

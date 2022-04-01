@@ -4,7 +4,7 @@ import Masonry from 'react-masonry-component';
 const ObservationDetailPage = (props) => {
   const {observationList, isObservationDetailModal, setSelectedObservationId, setObservationDetailModal, activeType} = props;
 
-  // Masory Options
+  // Masonry Options
   const masonryOptions = {
     columnWidth: 1,
     gutter: 0,
