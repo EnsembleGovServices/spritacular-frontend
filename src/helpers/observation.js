@@ -32,7 +32,7 @@ export const uploadImageDefaultState = (random, baseImage, item, userLocation) =
         obs_date: null,
         obs_time: null,
         timezone: 'Africa/Abidjan',
-        azimuth: 360,
+        azimuth: 0,
         time_accuracy:'',
         is_precise_azimuth:0,
         category_map: {
