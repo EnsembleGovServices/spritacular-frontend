@@ -319,6 +319,9 @@
         margin: 0 0 10px;
         padding: 0 12px;
         @include media-breakpoint-down(xxl){
+            width: 25%;
+        }
+        @include media-breakpoint-down(lg){
             width: 33%;
         }
         @include media-breakpoint-down(md){
