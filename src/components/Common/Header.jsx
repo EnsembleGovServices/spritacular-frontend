@@ -172,7 +172,7 @@ const Header = (props) => {
               </Link>
             </NavItem>
             <NavItem>
-              <Link to={routeUrls.gallery} title="Gallery" className="nav-link text-capitalize">
+              <Link to={routeUrls.home} title="Gallery" className="nav-link text-capitalize">
                 Gallery
               </Link>
             </NavItem>

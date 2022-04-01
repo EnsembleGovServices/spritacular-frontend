@@ -2,13 +2,16 @@ import "../assets/scss/component/myObservation.scss";
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
-import {baseURL} from "../helpers/url";
+import {baseURL,routeUrls} from "../helpers/url";
 import ObservationDetails from './Observation/ObservationDetails';
 import Images from './../static/images';
 import ObservationDetailPage from "./Observation/ObservationDetailPage";
 import { LoadMore } from '../components/Shared/LoadMore';
 import "../assets/scss/component/gallery.scss";
 import FilterSelectMenu from "../components/Shared/FilterSelectMenu";
+import { Col, Container, Row, UncontrolledAlert } from 'reactstrap';
+import {Link, useNavigate} from 'react-router-dom';
+
 
 
 const Gallery = () => {
@@ -115,6 +118,12 @@ useEffect(()=> {
      {auth.user &&
      <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
 }
+<Container>
+            <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center">
+              Would you like to help us sift through observations and endorse their validity?
+              <Link to={'/'+routeUrls.tutorials} className="btn btn-outline-primary">Get Trained</Link>
+            </UncontrolledAlert>
+          </Container>
         <div className='gallery-page'>
           <h4 className='text-black fw-bold'>Recent Observations</h4>
           <div>
