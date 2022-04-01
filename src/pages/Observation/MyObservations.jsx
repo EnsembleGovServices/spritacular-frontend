@@ -167,9 +167,7 @@ const MyObservations = () => {
 
   return(
       <>
-        {observationCount.total === 0 &&  <Container>
-          <InitialUploadObservations />
-        </Container>}
+        {observationCount.total === 0 &&  <InitialUploadObservations /> }
         {observationCount.total > 0 && 
         <>
           <Container>

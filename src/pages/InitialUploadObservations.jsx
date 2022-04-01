@@ -1,4 +1,4 @@
-import { Form, FormGroup, Label } from "reactstrap";
+import {Container, Form, FormGroup, Label} from "reactstrap";
 import { Icon } from "@iconify/react";
 import "../assets/scss/component/initialUploadobservations.scss";
 import { useNavigate } from "react-router-dom";
@@ -34,23 +34,25 @@ const InitialUploadObservations = () => {
 
   return (
     <>
-      <section className="upload-observation-main">
-        <div className="upload-ob-inner">
-          <Form>
-            <FormGroup>
-              <Label htmlFor="UploadFile">
-                <div className="upload-info">
-                  <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
-                  <p>No observations yet.</p>
-                  <button onClick={(e)=> handleObvAdd(e)} className="btn btn-secondary">
-                    <Icon icon="heroicons-outline:upload"  width="25" height="22" /> Upload
-                    Observation
-                  </button>
-                </div>
-              </Label>
-            </FormGroup>
-          </Form>
-        </div>
+      <section className="upload-observation-main d-flex justify-content-center align-items-center h-100">
+          <Container>
+          <div className="upload-ob-inner">
+            <Form>
+              <FormGroup>
+                <Label htmlFor="UploadFile">
+                  <div className="upload-info">
+                    <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
+                    <p>No observations yet.</p>
+                    <button onClick={(e)=> handleObvAdd(e)} className="btn btn-secondary">
+                      <Icon icon="heroicons-outline:upload"  width="25" height="22" /> Upload
+                      Observation
+                    </button>
+                  </div>
+                </Label>
+              </FormGroup>
+            </Form>
+          </div>
+          </Container>
       </section>
     </>
   );
