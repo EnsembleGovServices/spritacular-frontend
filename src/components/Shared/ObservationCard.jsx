@@ -78,7 +78,7 @@ const ObservationCard = (props) => {
                                 <div className="d-flex card-user_details align-items-center overflow-hidden">
                                     <h6 className="pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</h6>
                                     <i className="profile-icon rounded-circle">
-                                        <img src={userProfile ? userProfile?.profile_image : Images.Profile} width="100%" height="100%" alt="Profile" className="rounded-circle" />
+                                        <img src={userProfile?.profile_image ? userProfile?.profile_image : Images.DefaultProfile} width="100%" height="100%" alt="Profile" className="rounded-circle" />
                                     </i>
                                 </div>
                             </Col>

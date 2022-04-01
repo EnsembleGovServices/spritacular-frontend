@@ -7,6 +7,7 @@ import {Button, FormGroup} from "reactstrap";
 import "../../../assets/scss/component/comments.scss";
 import { Icon } from '@iconify/react';
 import useObservationsData from "../../../hooks/useObservationsData";
+import Images from './../../../static/images';
 
 const Comments = (props) => {
     const { auth } = useAuth();
@@ -75,7 +76,7 @@ const Comments = (props) => {
         return comments?.data?.filter(item => item?.is_active).map((item, index) => {
             return(
                 <li key={index} className="d-flex align-items-center w-100">
-                    <i className="profile-icon rounded-circle me-0"><img src={item?.user_data?.profile_image} width='100%' height='100%' alt="Profile" className="rounded-circle" /></i>
+                    <i className="profile-icon rounded-circle me-0"><img src={item?.user_data?.profile_image ? item?.user_data?.profile_image : Images.DefaultProfile} width='100%' height='100%' alt="Profile" className="rounded-circle" /></i>
                     <div className="commentor_details d-flex justify-content-between align-items-start">
                         <div className="comment-profile_details">
                             <h6 className="mb-1 text-truncate text-black">{item?.user_data?.first_name} {item?.user_data?.last_name}</h6>
