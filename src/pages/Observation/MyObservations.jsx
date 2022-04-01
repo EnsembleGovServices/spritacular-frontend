@@ -138,6 +138,7 @@ const MyObservations = () => {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);
   };
+
   const handlLoadMore = () => {
     let value = loadMore + pageSize;
     if(currentObservationList.length > 0){
@@ -154,6 +155,15 @@ const MyObservations = () => {
       setcurrobservationList([...currobservationList,...currentData]);
     }
   }
+
+  useEffect(()=> {
+    if (isObservationDetailModal) {
+      document.body.classList.add('overflow-hidden');
+    }
+    else{
+      document.body.classList.remove('overflow-hidden');
+    }
+  }, [isObservationDetailModal])
 
   return(
       <>
@@ -193,15 +203,17 @@ const MyObservations = () => {
             <ObservationDetailPage  observationList={currobservationList}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
           {loadMore < currentObservationList.length && <LoadMore handlLoadMore={handlLoadMore} />}
           </Container>
-          {currentObservationList[selectedObservationId]?.images.length > 0 && 
+
           <ObservationDetails
-            data={currentObservationList[selectedObservationId]}
-            activeType={activeType}
-            modalClass="observation-details_modal"
-            open={isObservationDetailModal}
-            handleClose={handleObservationDetailModal}
-            handleContinueEdit={handleObservationEdit}
-          />}
+              data={currentObservationList[selectedObservationId]}
+              activeType={activeType}
+              modalClass="observation-details_modal"
+              open={isObservationDetailModal}
+              handleClose={handleObservationDetailModal}
+              handleContinueEdit={handleObservationEdit}
+          />
+
+
         </>
         }
       </>

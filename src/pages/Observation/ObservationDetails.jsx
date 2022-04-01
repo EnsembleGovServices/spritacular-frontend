@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect, createRef, useRef} from "react";
 import { Badge, Button, Col, Modal, ModalBody, ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane, Tooltip } from "reactstrap";
 import Images from './../../static/images';
 import { imageDetails } from "../../helpers/observation";
@@ -14,6 +14,7 @@ const ObservationDetails = (props) =>{
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
     const [tooltipOpen, setTooltipOpen] = useState([]);
     const {observationComments} = useObservationsData();
+    const obvDetailsModal = useRef(null);
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
         if (activeTab !== tab) {
@@ -33,14 +34,12 @@ const ObservationDetails = (props) =>{
             setTooltipOpen([]);
         }
         
-    } 
+    }
+
+
     useEffect(()=>{
         setActiveImageTab(imageDetails.Details)
-        if(open){
-            document.body.style.overflow = 'hidden';
-        }else{
-            document.body.style.overflow = 'unset';
-        }
+
     },[open])
     return (
         <>
@@ -52,6 +51,7 @@ const ObservationDetails = (props) =>{
                 scrollable
                 size="xl"
                 toggle={handleClose}
+                ref={obvDetailsModal}
             >
                 <ModalHeader className="d-flex justify-content-between align-items-center w-100">
                     <div>
