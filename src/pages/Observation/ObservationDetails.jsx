@@ -79,7 +79,7 @@ const ObservationDetails = (props) =>{
                                 <Row>
                                     <Col sm={6} className="justify-content-start d-flex align-items-center mb-2 mb-sm-0">
                                         <div className="d-flex card-user_details align-items-center overflow-hidden">
-                                            <i className="profile-icon rounded-circle"><img width="100%" height="100%" src={data?.user_data?.profile_image} alt="Profile" className="rounded-circle" /></i>
+                                            <i className="profile-icon rounded-circle"><img width="100%" height="100%" src={data?.user_data?.profile_image ? data?.user_data?.profile_image : Images.DefaultProfile} alt="Profile" className="rounded-circle" /></i>
                                             {/* User sort name  */}
                                             {/* <i className="profile-text rounded-circle bg-black text-white">JD</i> */}
                                             <h5 className="pe-2 mb-0 text-truncate fw-normal text-black">{data?.user_data?.first_name + ' ' + data?.user_data?.last_name}</h5>

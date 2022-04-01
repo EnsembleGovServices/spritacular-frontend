@@ -38,6 +38,7 @@ import Ensemble from "../assets/images/ensemble.png";
 import NoDataFound from "../assets/images/no-data.svg";
 import RemoveData from "../assets/images/remove-data.svg";
 import Filter from "../assets/images/filter.png";
+import DefaultProfile from "../assets/images/profile.svg";
 
 const Images = {
   Logo,
@@ -79,7 +80,8 @@ const Images = {
   Ensemble,
   NoDataFound,
   Filter,
-  RemoveData
+  RemoveData,
+  DefaultProfile
 };
 
 export default Images;
