@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Badge, Button, Col, Modal, ModalBody, ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane, Tooltip } from "reactstrap";
 import Images from './../../static/images';
 import { imageDetails } from "../../helpers/observation";
@@ -23,17 +23,25 @@ const ObservationDetails = (props) =>{
 
     const handleToggleChange = (e) => {
         if (!tooltipOpen[e]) {
-                    setTooltipOpen({
-                    ...tooltipOpen,
-                    [e]: {
-                      isOpen: true
-                    }
-                  });
-                } else {
-                    setTooltipOpen([]);
-                }
+            setTooltipOpen({
+            ...tooltipOpen,
+            [e]: {
+                isOpen: true
+            }
+            });
+        } else {
+            setTooltipOpen([]);
+        }
         
     } 
+    useEffect(()=>{
+        setActiveImageTab(imageDetails.Details)
+        if(open){
+            document.body.style.overflow = 'hidden';
+        }else{
+            document.body.style.overflow = 'unset';
+        }
+    },[open])
     return (
         <>
             <Modal 
@@ -130,7 +138,7 @@ const ObservationDetails = (props) =>{
                                 <TabPane tabId={imageDetails.Equipment}>
                                     <ObservationMoreEquipementDetails obvCommentCount={observationComments?.comment_count} data={data?.camera_data} />
                                 </TabPane>
-                                <TabPane tabId={imageDetails.Comments} className="h-100">
+                                <TabPane tabId={imageDetails.Comments}>
                                     <Comments obvId={data?.id} />
                                 </TabPane>
                             </TabContent>
