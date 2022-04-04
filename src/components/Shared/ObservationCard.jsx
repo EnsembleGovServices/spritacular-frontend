@@ -52,7 +52,7 @@ const ObservationCard = (props) => {
                             }}
                         />
                     }
-                    {userProfile && cardItems?.image_type === 3 && <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick} />}
+                    {userProfile && cardItems?.image_type === 3 && <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick} handleIndex={index} />}
                     <CardBody className="position-relative observation-card_body">
                         <div className="position-absolute observation_type d-flex align-items-center">
                             {cardItems?.category_data.length > 0 &&
