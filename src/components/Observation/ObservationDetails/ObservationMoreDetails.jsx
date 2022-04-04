@@ -7,6 +7,7 @@ import {useState} from "react";
 import axios from "../../../api/axios";
 import {baseURL} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
+import RejectObvservationPopup from "../../Popup/RejectObvservationPopup";
 
 
 const ObservationMoreDetails = (props) => {
@@ -14,6 +15,7 @@ const ObservationMoreDetails = (props) => {
     const {data, obvCommentCount} = props;
     const [like, setLike] = useState(false);
     const formData = new FormData();
+    const [openRejectPopup, setOpenRejectPopup] =  useState(false);
 
 
     // await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', formData, {
@@ -39,7 +41,9 @@ const ObservationMoreDetails = (props) => {
             })
     }
 
-
+    const handleCloseRejectPopup = () =>{
+        setOpenRejectPopup(!openRejectPopup)
+    }
 
 
     return (
@@ -63,8 +67,8 @@ const ObservationMoreDetails = (props) => {
                             <h6 className="m-0 text-uppercase fw-normal">When</h6>
                         </Col>
                         <Col sm={9}>
-                            <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold text-end position-relative">{(data?.images[0]?.obs_date_time_as_per_utc) ? moment.utc(moment(data?.images[0]?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY"): null}  
-                                <span className="d-flex align-items-center justify-content-end fw-normal ms-1"> {(data?.images[0]?.obs_date_time_as_per_utc) ? moment.utc(moment(data?.images[0]?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): null}  
+                            <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold text-end position-relative">{(data?.images[0]?.obs_date_time_as_per_utc) ? moment.utc(moment(data?.images[0]?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY"): null}
+                                <span className="d-flex align-items-center justify-content-end fw-normal ms-1"> {(data?.images[0]?.obs_date_time_as_per_utc) ? moment.utc(moment(data?.images[0]?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): null}
                                     <Badge className="bg-black text-white p-1 fw-normal ms-1">{(data?.images[0]?.obs_date_time_as_per_utc) ?'UTC': null}</Badge>
                                 </span>
                             </p>
@@ -90,9 +94,15 @@ const ObservationMoreDetails = (props) => {
                             </button>
                         </Col>
                         <Col sm={12}>
-                            <div className="d-flex align-items-center justify-content-center user-review">
-                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:thumb-up" width="17" height="17" className="me-1" /> 2,250 </span>
-                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:eye" width="17" height="17" className="me-1" /> 100K </span>
+                            <div className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
+                                <Button color="success" className="me-2 text-uppercase fw-bold px-5"><Icon icon="ci:circle-check-outline" className='me-1' />Approve</Button>
+                                <Button color="primary" className='text-uppercase fw-bold px-4' onClick={()=> {handleCloseRejectPopup()}} outline><Icon icon="zondicons:close-outline" className='me-1' />Reject</Button>
+                            </div>
+                        </Col>
+                        <Col sm={12}>
+                            <div className="d-flex align-items-center justify-content-center user-review mb-2">
+                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:thumb-up" width="17" height="17" className="me-2" /> 2,250 </span>
+                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:eye" width="17" height="17" className="me-2" /> 100K </span>
                                 <span className="d-flex" ><Icon icon="mdi:message" width="17" height="17" className="me-1" /> {obvCommentCount} </span>
                             </div>
                         </Col>
@@ -107,6 +117,7 @@ const ObservationMoreDetails = (props) => {
                     </div>
                 </Col>
             </Row>
+            <RejectObvservationPopup openRejectModal={openRejectPopup} handleCloseRejectObs={handleCloseRejectPopup} />
         </div>
     )
 }

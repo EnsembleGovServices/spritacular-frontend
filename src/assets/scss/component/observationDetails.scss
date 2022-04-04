@@ -186,6 +186,26 @@
             }
         }
     }
+    .verify-btns{
+        .btn{
+            @include md-text;
+            padding: 12px;
+            .iconify{
+                font-size: 17px;
+            }
+            &.btn-success{
+                background: #27AE60;
+                color: $white;
+                &:hover{
+                    color: #27AE60;
+                    background: $white;
+                }
+                .iconify{
+                    font-size: 20px;
+                }
+            }
+        }
+    }
 }
 .border-line{
     height: 1px;
