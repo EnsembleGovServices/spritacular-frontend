@@ -47,14 +47,14 @@ const ObservationMoreDetails = (props) => {
     // }
 
     useEffect(()=> {
-        let data = observationListData?.activeObservation,
+        let data = observationListData?.active,
             alreadyLiked = data?.like_watch_count_data?.is_like,
             existingLike = data?.like_watch_count_data?.like_count;
 
         setObservationListData((prev)=> {
             return {
                 ...prev,
-                activeObservation: {
+                active: {
                     ...data,
                     like_watch_count_data: {
                         ...data?.like_watch_count_data,
@@ -67,15 +67,30 @@ const ObservationMoreDetails = (props) => {
 
 
         const oldObvData = observationListData?.list;
-        console.log(oldObvData)
+        if (data?.id) {
+            oldObvData?.filter(openedItem => {
+                return openedItem?.id === data?.id;
+            }).map((item, index) => {
+                    item.like_watch_count_data.is_like = like;
+                    item.like_watch_count_data.like_count = like ? (alreadyLiked ? existingLike : existingLike + 1) : existingLike === 0 ? 0 : existingLike - 1;
+              return item;
+            })
 
+            setObservationListData((prev) => {
+                return {
+                    ...prev,
+                    list: oldObvData
+                }
+            })
+        }
 
-    }, [like])
+    }, [like]);
 
 
 
     return (
         <div className="more-details">
+            <h1>{data?.id}</h1>
             <Row>
                 <Col md={12}>
                     <Row className="align-items-center">

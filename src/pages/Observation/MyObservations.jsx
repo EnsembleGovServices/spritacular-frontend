@@ -61,11 +61,12 @@ const MyObservations = () => {
     setObservationListData((prev) => {
       return {
         ...prev,
-        activeObservation: currentObservationList[selectedObservationId]
+        active: currentObservationList[selectedObservationId]
       }
     })
 
-  }, [isObservationDetailModal])
+  }, [isObservationDetailModal]);
+
 
   useEffect(() => {
     getObservationData(null);
@@ -259,7 +260,7 @@ const MyObservations = () => {
           </Container>
 
           <ObservationDetails
-              data={observationListData?.activeObservation}
+              data={observationListData?.active}
               activeType={observationListData?.activeType}
               modalClass="observation-details_modal"
               open={isObservationDetailModal}
