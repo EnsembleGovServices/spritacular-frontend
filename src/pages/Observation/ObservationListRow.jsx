@@ -43,9 +43,9 @@ const ObservationListRow = (props) => {
                     <CardSubtitle className="d-flex align-items-center">{(cardData?.obs_date_time_as_per_utc) ? moment.utc(moment(cardData?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): (cardData?.obs_time) ? cardData?.obs_time : null} <Badge className="bg-black text-white ms-1">{(cardData?.obs_date_time_as_per_utc)  ? 'UTC': (cardData?.obs_time) ?  "UTC" : ''}</Badge></CardSubtitle>
                 </div>
             </td>
-            <td valign="middle"><h6 className="mb-0 text-center">{cardData.azimuth}</h6></td>
-            <td valign="middle"><h4 className="mb-0 location-value">{parseFloat(cardData.latitude).toFixed(1)}</h4></td>
-            <td valign="middle"><h4 className="mb-0 location-value">{parseFloat(cardData.longitude).toFixed(1)}</h4></td>
+            <td valign="middle"><h6 className="mb-0 text-center">{cardData?.azimuth}</h6></td>
+            <td valign="middle"><h4 className="mb-0 location-value">{parseFloat(cardData?.latitude).toFixed(1)}</h4></td>
+            <td valign="middle"><h4 className="mb-0 location-value">{parseFloat(cardData?.longitude).toFixed(1)}</h4></td>
         </>
     )
 }
