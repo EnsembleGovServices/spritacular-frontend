@@ -50,7 +50,7 @@ const MyObservations = () => {
       console.log(response);
     })
   }
-
+console.log(currobservationList);
 
   useEffect(() => {
     let watched = !currentObservationList[selectedObservationId]?.like_watch_count_data?.is_watch;
@@ -112,6 +112,7 @@ const MyObservations = () => {
         activeType: type
       }
     })
+    // console.log(observationListData);
 
     setLoadMore(pageSize);
     if(type === 'unverified'){
@@ -162,7 +163,7 @@ const MyObservations = () => {
     const unVarifiedCount = success?.data?.data?.filter((item) => (item.is_reject === false && item.is_submit === true && item.is_verified === false));
     const draftCount = success?.data?.data?.filter((item) => item.is_submit === false && item.is_reject === false && item.is_verified === false);
 
-    setObservationList(success?.data?.data);
+    // setObservationList(success?.data?.data);
     setObservationCount({
       verified: varifiedCount.length,
       unverified: unVarifiedCount.length,
