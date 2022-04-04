@@ -1,6 +1,6 @@
 import {UncontrolledAlert, Button, FormGroup, Row} from "reactstrap";
 import axios from "../../api/axios";
-import {useEffect, useState, useRef, useLayoutEffect} from "react";
+import {useEffect, useState, useRef} from "react";
 import {baseURL, cameraSettingFields} from "../../helpers/url";
 import EquipmentForm from '../Shared/EquipmentForm'
 import useAuth from "../../hooks/useAuth";
@@ -46,7 +46,7 @@ const CameraSetting = (props) => {
           setError({
               reset: 'Nothing to restore',
               status: 200
-          })
+          });
       }
 
       executeScroll();
@@ -57,26 +57,55 @@ const CameraSetting = (props) => {
         setSuccess('');
         setError('');
 
-        await axios.patch(baseURL.api+'/users/camera_setting/', updateSetting, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${user?.token?.access}`
-            },
-            withCredentials: true,
-        }).then((response) => {
-            setUpdateData(response.data);
-            setSuccess({
-                updated: 'Camera settings updated successfully',
-                status: response?.status
+        if (isDetailExist) {
+            await axios.patch(baseURL.api + '/users/camera_setting/', updateSetting, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user?.token?.access}`
+                },
+                withCredentials: true,
+            }).then((response) => {
+                setUpdateData(response.data);
+                setSuccess({
+                    updated: 'Camera settings updated successfully',
+                    status: response?.status
+                })
+                executeScroll();
+            }).catch((error) => {
+                setError({
+                    data: error?.response.data,
+                    status: error?.response?.status
+                })
+                executeScroll();
+            })
+        } else  {
+            await axios.post(baseURL.api+'/users/camera_setting/', updateSetting, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user?.token?.access}`
+                },
+                withCredentials: true,
+            }).then((response) => {
+                setSuccess({
+                    status: 201,
+                    data: response.data,
+                    created: 'Camera settings added successfully.'
+                })
+                setAuth((prev)=> {
+                    return {
+                        user: {
+                            ...prev,
+                            camera: updatedData
+                        }
+                    }
+                })
+                executeScroll();
+            }).catch((error) => {
+                setError(error.response)
+                executeScroll();
             })
             executeScroll();
-        }).catch((error) => {
-            setError({
-                data: error?.response.data,
-                status: error?.response?.status
-            })
-            executeScroll();
-        })
+        }
     }
 
 
@@ -97,6 +126,9 @@ const CameraSetting = (props) => {
                 <UncontrolledAlert color="success" data-dismiss="alert" dismissible="true">
                     {success?.updated &&
                         success?.updated
+                    }
+                    {success?.created &&
+                        success?.created
                     }
                     {success?.reset &&
                         success?.reset
