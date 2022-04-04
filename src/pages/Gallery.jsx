@@ -27,7 +27,7 @@ const Gallery = () => {
     isStatusOpen:false
   })
   const [selectedFilters,setSelectedFilters] = useState({
-    country:{},
+    country:{name:'',code:''},
     type:'',
     status:''
   })
@@ -36,13 +36,13 @@ const Gallery = () => {
   const { auth } = useAuth();
   const [loadMore,setLoadMore] = useState(10);
   const [pageSize,setPageSize] = useState(10);
+  const [nextPageUrl,setNextPageUrl] = useState('/observation/gallery/?country=&categpry=&status=');
 
-
-  
   useEffect(() => {
     setLoadMore(pageSize);
-    getObservationType(selectedFilters.country?.code,selectedFilters.type,selectedFilters.status);
+    getObservationType('',selectedFilters.type,selectedFilters.status,true);
   },[isLoaded]);
+  // console.log(nextPageUrl);
 
   const findCountry = (e) => {
     let value = e.target.value.toLowerCase();
@@ -56,43 +56,62 @@ useEffect(()=> {
 }, [isFilterOpen.isCountryOpen])
 
   const handleLoadMoreData = () => {
-    let value = loadMore + pageSize;
-    if(currentObservationList.length > 0){
+    // console.log(nextPageUrl.split('api'));
+        getObservationType(selectedFilters.country?.code,selectedFilters.type,selectedFilters.status,false);
+    // let value = loadMore + pageSize;
+    // if(currentObservationList.length > 0){
 
-      let length;
-      if(value > currentObservationList.length){
-        length = currentObservationList.length;
-      }
-      else{
-        length = value;
-      }
-      setLoadMore(length);
-      let currentData = currentObservationList.slice(loadMore,length);
-      setGalleryCardToShow([...galleryCardToShow,...currentData]);
-    }
+    //   let length;
+    //   if(value > currentObservationList.length){
+    //     length = currentObservationList.length;
+    //   }
+    //   else{
+    //     length = value;
+    //   }
+    //   setLoadMore(length);
+    //   let currentData = currentObservationList.slice(loadMore,length);
+    //   setGalleryCardToShow([...galleryCardToShow,...currentData]);
+    // }
   }
-  const getObservationType = (country,category,status) => {
-    axios.get(baseURL.api+'/observation/observation_collection/?country='+country+'&categpry='+category+'&status='+status,{
+  const getObservationType = (country,category,status,reset=false) => {
+    var url;
+    if(reset === true || !nextPageUrl){
+      url = '/observation/gallery/?country='+country+'&category='+category+'&status='+status+'&page=1';
+    }else{
+      url = nextPageUrl;
+    }
+    axios.get(baseURL.api+url,{
       headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth?.token?.access}`,
       },
       
   }).then((success) => {
-    setObservationList(success?.data?.data);
-    let data = success?.data?.data.slice(0,pageSize);
-    setCurrentObservationList(success?.data?.data);
-    setGalleryCardToShow(data);
-      if(!auth.user){
-        const varifiedData = success?.data?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
-        setObservationList(varifiedData);
+    if(success?.data?.results != undefined){
+      if(success?.data?.next){
+        setNextPageUrl(success?.data?.next.split('api')[1]);
+      }else{
+        setNextPageUrl(null);
       }
-    setIsLoaded(false);
+      setObservationList(success?.data?.results);
+      let data = success?.data?.results?.slice(0,pageSize);
+      setCurrentObservationList(success?.data?.results);
+      setGalleryCardToShow(data);
+        if(!auth.user){
+          const varifiedData = success?.data?.results?.filter((item) => (item.is_verified === true && item.is_reject === false));
+          setObservationList(varifiedData);
+        }
+      setIsLoaded(false);
+    }
+    else{
+      setObservationList([])
+      setGalleryCardToShow([])
+    }
   }).catch((error) => {
       console.log(error.response);
   })
   }
-  
+  // console.log(observationList);
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);
@@ -101,15 +120,15 @@ useEffect(()=> {
   const handleFilterValue = (value,type) => {
     setLoadMore(pageSize);
     if(type === 'status'){
-      getObservationType(selectedFilters.country?.code,selectedFilters.type,value);
+      getObservationType(selectedFilters.country?.code,selectedFilters.type,value,true);
     }
 
     if(type === 'category') {
-      getObservationType(selectedFilters.country?.code,value,selectedFilters.status);
+      getObservationType(selectedFilters.country?.code,value,selectedFilters.status,true);
     }
 
     if(type === 'country'){
-      getObservationType(value.code,selectedFilters.type,selectedFilters.status);
+      getObservationType(value.code,selectedFilters.type,selectedFilters.status,true);
     }
   }
   return(
@@ -135,9 +154,9 @@ useEffect(()=> {
             }
             <ObservationDetailPage observationList={galleryCardToShow} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
           </div>
-          {loadMore < currentObservationList.length &&
+          {nextPageUrl &&
             <LoadMore handlLoadMore={handleLoadMoreData} /> 
-          }
+           }
           {isObservationDetailModal && <ObservationDetails data={observationList[selectedObservationId]}  activeType={''} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />}
         </div>
         </>

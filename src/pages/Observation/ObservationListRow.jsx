@@ -3,14 +3,33 @@ import { Icon } from "@iconify/react";
 import ReactCountryFlags from "../../components/ReactCountryFlag";
 import moment from 'moment';
 import CardImageCarousel from "../../components/Shared/CardImageCarousel";
+import { useState, useEffect } from "react";
+
 
 const ObservationListRow = (props) => {
-    const { cardItems, cardData } = props;
+    const { cardItems, cardData, allChecked, childFunc, setCheckedIds, checkedIds} = props;
+    const [currentChecked,setCurrentChecked] = useState(false);
+    const setChecked = () => {
+        if(allChecked){
+            return allChecked;
+        }
+        else{
+            return currentChecked;
+        }
+    }
+
+    useEffect(() => {
+        childFunc.current = handleCurrentCheckbox;
+      }, [])
+
+    const handleCurrentCheckbox = () => {
+        setCurrentChecked(false);
+    }
     return (
         <>
             <th valign="middle" className="check-box">
                 <FormGroup check className="mb-0">
-                    <Input type="checkbox" name="is_other" className="me-0" />
+                    <Input type="checkbox" data-id={cardItems.id} name={`is_other_${cardItems.id}`} className="me-0" checked={setChecked()} onChange={(e) => {setCurrentChecked(e.target.checked);setCheckedIds([...checkedIds,cardItems.id]);}} />
                 </FormGroup>
             </th>
             <td valign="middle" className="observationCard-box">
