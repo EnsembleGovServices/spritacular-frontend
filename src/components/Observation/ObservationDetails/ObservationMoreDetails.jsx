@@ -15,8 +15,14 @@ const ObservationMoreDetails = (props) => {
     const [like, setLike] = useState(false);
     const formData = new FormData();
 
+
+    // await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', formData, {
+
+
+
+
     const handleLike = async (id) => {
-        formData.set('is_like', like ? 1 : 0);
+        formData.set('is_like', like ? 0 : 1);
         console.log(id)
         await axios.post(baseURL.api+'/observation/like/'+id+'/', formData, {
             headers: {
@@ -78,7 +84,7 @@ const ObservationMoreDetails = (props) => {
                     <div className="border-line my-2 mb-4"></div>
                     <Row>
                         <Col sm={12}>
-                            <button className="btn btn-outline-primary like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3" onClick={()=> handleLike(data?.id)}>
+                            <button className={`btn btn-${like ? '' : 'outline-'}primary like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3`} onClick={()=> handleLike(data?.id)}>
                                 <Icon icon={`heroicons-${like ? 'solid' : 'outline'}:thumb-up`} width="25" height="25" className="me-2" />
                                 <span>{like ? 'Liked' : 'Like'}</span>
                             </button>

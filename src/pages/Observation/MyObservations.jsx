@@ -12,9 +12,12 @@ import ObservationDetailPage from "./ObservationDetailPage";
 import useObservations from "../../hooks/useObservations";
 import { LoadMore } from "../../components/Shared/LoadMore";
 import { Icon } from "@iconify/react";
+import useObservationsData from "../../hooks/useObservationsData";
 
 const MyObservations = () => {
   const { auth } = useAuth();
+  const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
+  const { observationListData, setObservationListData } = useObservationsData();
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
   const [observationList,setObservationList] = useState({});
   const [currentObservationList,setCurrentObservationList] = useState({});
@@ -28,11 +31,42 @@ const MyObservations = () => {
   const [isLoaded,setIsLoaded] = useState(true);
   const [activeType,setActiveType] = useState('verified');
   const [selectedObservationId,setSelectedObservationId] = useState();
-  const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
   const navigate = useNavigate();
   const [loadMore,setLoadMore] = useState(0);
   const [pageSize,setPageSize] = useState(10);
   const [currobservationList,setcurrobservationList] = useState([]);
+  const formData = new FormData();
+
+
+  const handleWatchCounter = async (id) => {
+    console.log('hitting api')
+    formData.set('is_watch', true);
+    await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', formData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${auth?.token?.access}`
+      }
+    }).then((response) => {
+      console.log(response);
+    })
+  }
+
+
+  useEffect(() => {
+    let watched = !currentObservationList[selectedObservationId]?.like_watch_count_data?.is_watch;
+    if (isObservationDetailModal && watched) {
+      handleWatchCounter(currentObservationList[selectedObservationId].id).then(r => r)
+    }
+
+    setObservationListData((prev) => {
+      return {
+        ...prev,
+        activeObservation: currentObservationList[selectedObservationId]
+      }
+    })
+
+  }, [isObservationDetailModal])
+
   useEffect(() => {
     getObservationData(null);
     getObservationType('verified');
@@ -70,6 +104,14 @@ const MyObservations = () => {
   const getObservationType = (type) => {
     let unverifiedList;
     setActiveType(type);
+
+    setObservationListData((prev) => {
+      return {
+        ...prev,
+        activeType: type
+      }
+    })
+
     setLoadMore(pageSize);
     if(type === 'unverified'){
       unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
@@ -203,8 +245,8 @@ const MyObservations = () => {
           </Container>
 
           <ObservationDetails
-              data={currentObservationList[selectedObservationId]}
-              activeType={activeType}
+              data={observationListData?.activeObservation}
+              activeType={observationListData?.activeType}
               modalClass="observation-details_modal"
               open={isObservationDetailModal}
               handleClose={handleObservationDetailModal}
