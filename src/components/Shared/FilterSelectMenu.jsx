@@ -46,12 +46,14 @@ const FilterSelectMenu = (props) =>{
                             <FormGroup className="m-0 d-inline-block form-group">
                                 <Label className="text-uppercase" htmlFor="Country">Country</Label>
                                 <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isCountryOpen:!isFilterOpen.isCountryOpen})} isOpen={isFilterOpen.isCountryOpen} >
+                                    {console.log(selectedFilters.country?.name)}
                                     <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                        <span className="text-truncate">{selectedFilters.country?.name}</span>
+                                        <span className="text-truncate">{(selectedFilters.country?.name !== undefined ?selectedFilters.country?.name: 'Please select' )}</span>
+                                        
                                         <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                     </DropdownToggle>
                                     <DropdownMenu className="py-0 shadow">
-                                        <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" className="p-2"  placeholder="Search Timezone" onChange={(e)=> findCountry(e)} /></DropdownItem>
+                                        <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" className="p-2"  placeholder="Search Country" onChange={(e)=> findCountry(e)} /></DropdownItem>
                                         {countries?.filter(item => {
                                             return item.name.toLowerCase().indexOf(searchCountry.toLowerCase()) !== -1;
                                         }).map((item, index) => {
@@ -65,7 +67,7 @@ const FilterSelectMenu = (props) =>{
                             <Label className="text-uppercase" htmlFor="TransientLuminousEvent">Transient Luminous Event</Label>
                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isTypeOpen:!isFilterOpen.isTypeOpen})} isOpen={isFilterOpen.isTypeOpen} >
                                 <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                <span className="text-truncate">{selectedFilters.type}</span>
+                                <span className="text-truncate">{(selectedFilters.type) ?selectedFilters.type: 'Please select' }</span>
                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                 </DropdownToggle>
                                 <DropdownMenu className="py-0 shadow">
@@ -81,7 +83,7 @@ const FilterSelectMenu = (props) =>{
                            <Label className="text-uppercase" htmlFor="ObservationStatus">Observation Status</Label>
                            <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isStatusOpen:!isFilterOpen.isStatusOpen})} isOpen={isFilterOpen.isStatusOpen} >
                                <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                   <span className="text-truncate">{selectedFilters.status}</span>
+                                   <span className="text-truncate">{(selectedFilters.status) ? selectedFilters.status: 'Please select'}</span>
                                    <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                </DropdownToggle>
                                <DropdownMenu className="py-0 shadow">

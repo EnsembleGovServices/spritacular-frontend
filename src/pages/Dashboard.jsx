@@ -135,13 +135,18 @@ const Dashboard = () =>{
                 handleGridView={handleGridView} 
                 listView={listView}
                 gridView={gridView}
-                isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}
+                isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen}
+                selectedFilters={selectedFilters}
+                setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry}
+                findCountry={findCountry} handleFilterValue={handleFilterValue}
             />
             <div className='observation-dashboard_content'>
                 <Container>
                     <div className='d-flex'>
                         {filterShow && 
-                            < AdvancedFilter />
+                            < AdvancedFilter selectedFilters={selectedFilters}
+                            setSelectedFilters={setSelectedFilters} 
+                            handleFilterValue={handleFilterValue}/>
                         }
                         
                         <div className='dashboard-card overflow-hidden'>
