@@ -43,8 +43,8 @@ const FilterSelectMenu = (props) =>{
                                     <img src={Images.Filter} alt="Filter" /> {filterShow && <span className="ms-3" >Advanced Filter</span> }</Button>
                             </FormGroup>}
                             { galleryFilter && 
-                            <FormGroup className="m-0 d-inline-block form-group">
-                                <Label className="text-uppercase" htmlFor="Country">Country</Label>
+                            <FormGroup className="m-0 d-inline-block form-group country-menu">
+                                <Label className="text-uppercase px-3" htmlFor="Country">Country</Label>
                                 <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isCountryOpen:!isFilterOpen.isCountryOpen})} isOpen={isFilterOpen.isCountryOpen} >
                                     {console.log(selectedFilters.country?.name)}
                                     <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
@@ -64,7 +64,7 @@ const FilterSelectMenu = (props) =>{
                           </FormGroup> }
                             {galleryFilter && 
                             <FormGroup className="m-0 d-inline-block form-group">
-                            <Label className="text-uppercase" htmlFor="TransientLuminousEvent">Transient Luminous Event</Label>
+                            <Label className="text-uppercase px-3" htmlFor="TransientLuminousEvent">Transient Luminous Event</Label>
                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isTypeOpen:!isFilterOpen.isTypeOpen})} isOpen={isFilterOpen.isTypeOpen} >
                                 <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                                 <span className="text-truncate">{(selectedFilters.type) ?selectedFilters.type: 'Please select' }</span>
@@ -80,7 +80,7 @@ const FilterSelectMenu = (props) =>{
                           </FormGroup>  }
                            {galleryFilter &&  
                            <FormGroup className="m-0 d-inline-block form-group">
-                           <Label className="text-uppercase" htmlFor="ObservationStatus">Observation Status</Label>
+                           <Label className="text-uppercase px-3" htmlFor="ObservationStatus">Observation Status</Label>
                            <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isStatusOpen:!isFilterOpen.isStatusOpen})} isOpen={isFilterOpen.isStatusOpen} >
                                <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                                    <span className="text-truncate">{(selectedFilters.status) ? selectedFilters.status: 'Please select'}</span>

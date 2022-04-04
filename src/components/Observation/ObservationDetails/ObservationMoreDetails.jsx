@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import axios from "../../../api/axios";
 import {baseURL} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
+import RejectObvservationPopup from "../../Popup/RejectObvservationPopup";
 import useObservationsData from "../../../hooks/useObservationsData";
 
 
@@ -16,6 +17,7 @@ const ObservationMoreDetails = (props) => {
     const [like, setLike] = useState(data?.like_watch_count_data?.is_like);
     const formData = new FormData();
     const {setObservationListData, observationListData} = useObservationsData();
+    const [openRejectPopup, setOpenRejectPopup] =  useState(false);
 
 
     // await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', formData, {
@@ -41,56 +43,13 @@ const ObservationMoreDetails = (props) => {
             })
     }
 
-    // like_watch_count_data: {
-    //     is_like: like,
-    //         like_count: like ? existingData?.like_watch_count_data?.like_count + 1 : existingData?.like_watch_count_data?.like_count - 1
-    // }
-
-    useEffect(()=> {
-        let data = observationListData?.active,
-            alreadyLiked = data?.like_watch_count_data?.is_like,
-            existingLike = data?.like_watch_count_data?.like_count;
-
-        setObservationListData((prev)=> {
-            return {
-                ...prev,
-                active: {
-                    ...data,
-                    like_watch_count_data: {
-                        ...data?.like_watch_count_data,
-                        is_like: like,
-                        like_count: like ? (alreadyLiked ? existingLike : existingLike + 1) : existingLike === 0 ? 0 : existingLike - 1
-                    }
-                }
-            }
-        });
-
-
-        const oldObvData = observationListData?.list;
-        if (data?.id) {
-            oldObvData?.filter(openedItem => {
-                return openedItem?.id === data?.id;
-            }).map((item, index) => {
-                    item.like_watch_count_data.is_like = like;
-                    item.like_watch_count_data.like_count = like ? (alreadyLiked ? existingLike : existingLike + 1) : existingLike === 0 ? 0 : existingLike - 1;
-              return item;
-            })
-
-            setObservationListData((prev) => {
-                return {
-                    ...prev,
-                    list: oldObvData
-                }
-            })
-        }
-
-    }, [like]);
-
+    const handleCloseRejectPopup = () =>{
+        setOpenRejectPopup(!openRejectPopup)
+    }
 
 
     return (
         <div className="more-details">
-            <h1>{data?.id}</h1>
             <Row>
                 <Col md={12}>
                     <Row className="align-items-center">
@@ -110,8 +69,8 @@ const ObservationMoreDetails = (props) => {
                             <h6 className="m-0 text-uppercase fw-normal">When</h6>
                         </Col>
                         <Col sm={9}>
-                            <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold text-end position-relative">{(data?.images[0]?.obs_date_time_as_per_utc) ? moment.utc(moment(data?.images[0]?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY"): null}  
-                                <span className="d-flex align-items-center justify-content-end fw-normal ms-1"> {(data?.images[0]?.obs_date_time_as_per_utc) ? moment.utc(moment(data?.images[0]?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): null}  
+                            <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold text-end position-relative">{(data?.images[0]?.obs_date_time_as_per_utc) ? moment.utc(moment(data?.images[0]?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY"): null}
+                                <span className="d-flex align-items-center justify-content-end fw-normal ms-1"> {(data?.images[0]?.obs_date_time_as_per_utc) ? moment.utc(moment(data?.images[0]?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): null}
                                     <Badge className="bg-black text-white p-1 fw-normal ms-1">{(data?.images[0]?.obs_date_time_as_per_utc) ?'UTC': null}</Badge>
                                 </span>
                             </p>
@@ -135,6 +94,12 @@ const ObservationMoreDetails = (props) => {
                                 <Icon icon={`heroicons-${like ? 'solid' : 'outline'}:thumb-up`} width="25" height="25" className="me-2" />
                                 <span>{like ? 'Liked' : 'Like'}</span>
                             </button>
+                        </Col>
+                        <Col sm={12}>
+                            <div className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
+                                <Button color="success" className="me-2 text-uppercase fw-bold px-5"><Icon icon="ci:circle-check-outline" className='me-1' />Approve</Button>
+                                <Button color="primary" className='text-uppercase fw-bold px-4' onClick={()=> {handleCloseRejectPopup()}} outline><Icon icon="zondicons:close-outline" className='me-1' />Reject</Button>
+                            </div>
                         </Col>
                         <Col sm={12}>
                             <div className="d-flex align-items-center justify-content-center user-review">

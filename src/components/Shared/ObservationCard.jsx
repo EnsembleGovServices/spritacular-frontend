@@ -6,18 +6,14 @@ import { Icon } from "@iconify/react";
 import ReactCountryFlags from "../ReactCountryFlag";
 import { getdirectionDegree } from "../../helpers/observation";
 import CardImageCarousel from "./CardImageCarousel";
+import Tippy from "@tippyjs/react";
 
 const ObservationCard = (props) => {
     const { cardItems, handleClick, userProfile, cardData, index, activeType } = props;
     return (
         <>
             <Card className="observation_card overflow-hidden">
-                <div
-                    className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start"
-                    onClick={(e) => {
-                        userProfile && handleClick(index);
-                    }}
-                >
+                <div className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start" >
                     {!userProfile && (
                         <div className="observation_country">
                             <Badge className="bg-black text-white">
@@ -41,8 +37,9 @@ const ObservationCard = (props) => {
                             <Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" />
                         </div>
                     )}
-                    { !(cardItems?.image_type === 3) &&
-                        <img
+                    { cardItems?.image_type === 3 
+                        ? <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick} handleIndex={index} />    
+                        : <img
                             alt="Card cap"
                             src={cardData?.image}
                             className="img-fluid card-img"
@@ -51,7 +48,6 @@ const ObservationCard = (props) => {
                             }}
                         />
                     }
-                    {userProfile && cardItems?.image_type === 3 && <CardImageCarousel carouselData={cardItems?.images} />}
                     <CardBody className="position-relative observation-card_body">
                         <div className="position-absolute observation_type d-flex align-items-center">
                             {cardItems?.category_data.length > 0 &&
@@ -59,10 +55,13 @@ const ObservationCard = (props) => {
                                     let image = `/assets/images/category/${item?.toLowerCase().replaceAll(" ", "")}.png`;
                                     return (
                                         <i className="rounded-circle bg-white me-1" key={index}>
-                                            <img src={image} alt={item} className="rounded-circle" />
+                                            <Tippy content={item}>
+                                                <img src={image} alt={item} className="rounded-circle" />
+                                            </Tippy>
                                         </i>
                                     );
-                                })}
+                                })
+                            }
                         </div>
                         <Row className="card-details">
                             <Col xs={6} lg={6} className="">
@@ -78,7 +77,9 @@ const ObservationCard = (props) => {
                             </Col>
                             <Col xs={6} lg={6} className=" justify-content-end d-flex">
                                 <div className="d-flex card-user_details align-items-center overflow-hidden">
-                                    <h6 className="pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</h6>
+                                    <Tippy content={userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}>
+                                        <h6 className="pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</h6>
+                                    </Tippy>
                                     <i className="profile-icon rounded-circle">
                                         <img src={userProfile?.profile_image ? userProfile?.profile_image : Images.DefaultProfile} width="100%" height="100%" alt="Profile" className="rounded-circle" />
                                     </i>
@@ -89,23 +90,21 @@ const ObservationCard = (props) => {
 
                     {userProfile && (
                         <CardFooter>
-                            <Row>
-                                <Col xs={6} lg={8}>
-                                    <h6 className="mb-0">{cardData?.location}</h6>
-                                </Col>
-                                <Col xs={6} lg={4}>
-                                    <div className="card-user_location" style={{ "--card-location-angle": `${getdirectionDegree(cardData?.azimuth)}deg` }}>
-                                        <h6 className="me-1 mb-0">
-                                            {cardData?.azimuth}
-                                            {Number(cardData?.azimuth) ? "°" : ""}
-                                        </h6>
-                                        {cardData?.azimuth && 
-                                        <span className="card-direction rounded-circle position-relative d-flex justify-content-center align-items-start">
-                                            <span className="direction-dot"/>
-                                        </span>}
-                                    </div>
-                                </Col>
-                            </Row>
+                            <div className="location-details">
+                                <h6 className="mb-0">{cardData?.location}</h6>
+                            </div>
+                            <div className="direction-details">
+                                <div className="card-user_location" style={{ "--card-location-angle": `${getdirectionDegree(cardData?.azimuth)}deg` }}>
+                                    <h6 className="me-1 mb-0">
+                                        {cardData?.azimuth}
+                                        {Number(cardData?.azimuth) ? "°" : ""}
+                                    </h6>
+                                    {cardData?.azimuth && 
+                                    <span className="card-direction rounded-circle position-relative d-flex justify-content-center align-items-start">
+                                        <span className="direction-dot"/>
+                                    </span>}
+                                </div>
+                            </div>
                         </CardFooter>
                     )}
                 </div>
