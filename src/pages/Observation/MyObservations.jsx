@@ -61,11 +61,12 @@ const MyObservations = () => {
     setObservationListData((prev) => {
       return {
         ...prev,
-        activeObservation: currentObservationList[selectedObservationId]
+        active: currentObservationList[selectedObservationId]
       }
     })
 
-  }, [isObservationDetailModal])
+  }, [isObservationDetailModal]);
+
 
   useEffect(() => {
     getObservationData(null);
@@ -169,6 +170,20 @@ const MyObservations = () => {
       draft: draftCount.length,
       total: success?.data?.data.length
     })
+
+      // Global State
+      setObservationListData({
+        list: success?.data?.data,
+        count: {
+          verified: varifiedCount.length,
+          unverified: unVarifiedCount.length,
+          denied: deniedCount.length,
+          draft: draftCount.length,
+          total: success?.data?.data.length
+        }
+      })
+
+
     getObservationType('verified');
     setIsLoaded(false);
   }).catch((error) => {
@@ -210,17 +225,17 @@ const MyObservations = () => {
   return(
       <>
         {observationCount.total === 0 &&  <InitialUploadObservations /> }
-        {observationCount.total > 0 && 
+        {observationCount.total > 0 &&
         <>
           <Container>
             <div className="filtered-data_wrapper">
               <Row>
                 <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
                   <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
-                    <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('verified')}}>Verified ({observationCount.verified})</span>     
-                    <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('unverified')}}>Unverified ({observationCount.unverified})</span>     
-                    <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('denied')}}>Denied ({observationCount.denied})</span>     
-                    <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('draft')}}>Drafts ({observationCount.draft})</span>     
+                    <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('verified')}}>Verified ({observationCount.verified})</span>
+                    <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('unverified')}}>Unverified ({observationCount.unverified})</span>
+                    <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('denied')}}>Denied ({observationCount.denied})</span>
+                    <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('draft')}}>Drafts ({observationCount.draft})</span>
                   </div>
                 </Col>
                 <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
@@ -245,7 +260,7 @@ const MyObservations = () => {
           </Container>
 
           <ObservationDetails
-              data={observationListData?.activeObservation}
+              data={observationListData?.active}
               activeType={observationListData?.activeType}
               modalClass="observation-details_modal"
               open={isObservationDetailModal}

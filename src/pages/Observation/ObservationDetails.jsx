@@ -15,7 +15,7 @@ const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose, data, activeType, handleContinueEdit } = props;
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
     const [tooltipOpen, setTooltipOpen] = useState([]);
-    const {observationComments} = useObservationsData();
+    const {observationComments, observationListData} = useObservationsData();
     const obvDetailsModal = useRef(null);
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {

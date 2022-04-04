@@ -360,3 +360,36 @@
         }
     }
 }
+
+//Reject Modal Css
+.reject-modal{
+    max-width: 420px;
+    margin: 15px auto;
+    @include media-breakpoint-down(sm){
+        margin: 15px;
+    }
+    .modal-header{
+        .modal-title{
+            font-weight: 600;
+            @include xl-text;
+        }
+        .btn-close{
+            &:focus{
+                box-shadow: none;
+            }
+        }
+    }
+    .form-label{
+        @include sm-text;
+        color: $black;
+    }
+    .form-check-label{
+        @include lg-text;
+        color: $black;
+    }
+    .btn{
+        font-weight: 500;
+        @include md-text;
+        padding: 12px 35px;
+    }
+}
