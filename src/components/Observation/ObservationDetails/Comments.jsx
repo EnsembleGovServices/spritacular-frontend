@@ -27,11 +27,17 @@ const Comments = (props) => {
         })
             .then((response)=> {
                 setComments(response?.data);
+                setObservationComments((prev) => {
+                    return {
+                        ...prev,
+                        comments: response?.data?.data
+                    }
+                })
             })
             .catch((error)=> {
                 console.log(error);
             })
-    }
+    };
 
     const sendComment = async (e) => {
         e.preventDefault();
@@ -61,7 +67,7 @@ const Comments = (props) => {
         setObservationComments((prev) => {
             return {
                 ...prev,
-                comment_count: comments?.data ? comments?.data?.length : 0,
+                comment_count: comments?.data ? comments?.data?.length : 0
             }
         })
 
@@ -73,7 +79,7 @@ const Comments = (props) => {
       setMessage(value);
     }
     const showMessages = () => {
-        return comments?.data?.filter(item => item?.is_active).map((item, index) => {
+        return observationComments?.comments?.filter(item => item?.is_active).map((item, index) => {
             return(
                 <li key={index} className="d-flex align-items-center w-100">
                     <i className="profile-icon rounded-circle me-0"><img src={item?.user_data?.profile_image ? item?.user_data?.profile_image : Images.DefaultProfile} width='100%' height='100%' alt="Profile" className="rounded-circle" /></i>
@@ -97,7 +103,7 @@ const Comments = (props) => {
         <>
             <div className="comment-wrapper position-relative">
                 <ul className="comment-area p-0 m-0">
-                    {comments?.data?.length ? showMessages() : <p className="text-center">No comments yet!</p>}
+                    {observationComments?.comments?.length ? showMessages() : <p className="text-center">No comments yet!</p>}
                 </ul>
                 <form onSubmit={sendComment}>
                     <FormGroup className="typing-area d-flex justify-content-between align-items-center start-0 bottom-0">
