@@ -3,17 +3,19 @@ import { Icon } from '@iconify/react';
 import ReactCountryFlags from "../../../components/ReactCountryFlag";
 import moment from 'moment';
 import {getdirectionDegree} from "../../../helpers/observation";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "../../../api/axios";
 import {baseURL} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
+import useObservationsData from "../../../hooks/useObservationsData";
 
 
 const ObservationMoreDetails = (props) => {
-    const {auth} = useAuth();
     const {data, obvCommentCount} = props;
-    const [like, setLike] = useState(false);
+    const {auth} = useAuth();
+    const [like, setLike] = useState(data?.like_watch_count_data?.is_like);
     const formData = new FormData();
+    const {setObservationListData, observationListData} = useObservationsData();
 
 
     // await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', formData, {
@@ -23,7 +25,7 @@ const ObservationMoreDetails = (props) => {
 
     const handleLike = async (id) => {
         formData.set('is_like', like ? 0 : 1);
-        console.log(id)
+        // console.log(id)
         await axios.post(baseURL.api+'/observation/like/'+id+'/', formData, {
             headers: {
                 'Content-Type': 'application/json',
@@ -31,14 +33,44 @@ const ObservationMoreDetails = (props) => {
             }
         })
             .then((response)=> {
-                console.log(response);
-                setLike(!like)
+                // console.log(response);
+                setLike(!like);
             })
             .catch((error)=> {
                 console.log(error);
             })
     }
 
+    // like_watch_count_data: {
+    //     is_like: like,
+    //         like_count: like ? existingData?.like_watch_count_data?.like_count + 1 : existingData?.like_watch_count_data?.like_count - 1
+    // }
+
+    useEffect(()=> {
+        let data = observationListData?.activeObservation,
+            alreadyLiked = data?.like_watch_count_data?.is_like,
+            existingLike = data?.like_watch_count_data?.like_count;
+
+        setObservationListData((prev)=> {
+            return {
+                ...prev,
+                activeObservation: {
+                    ...data,
+                    like_watch_count_data: {
+                        ...data?.like_watch_count_data,
+                        is_like: like,
+                        like_count: like ? (alreadyLiked ? existingLike : existingLike + 1) : existingLike === 0 ? 0 : existingLike - 1
+                    }
+                }
+            }
+        });
+
+
+        const oldObvData = observationListData?.list;
+        console.log(oldObvData)
+
+
+    }, [like])
 
 
 
@@ -91,8 +123,8 @@ const ObservationMoreDetails = (props) => {
                         </Col>
                         <Col sm={12}>
                             <div className="d-flex align-items-center justify-content-center user-review">
-                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:thumb-up" width="17" height="17" className="me-1" /> 2,250 </span>
-                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:eye" width="17" height="17" className="me-1" /> 100K </span>
+                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:thumb-up" width="17" height="17" className="me-1" /> {data?.like_watch_count_data?.like_count} </span>
+                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:eye" width="17" height="17" className="me-1" /> {data?.like_watch_count_data?.watch_count} </span>
                                 <span className="d-flex" ><Icon icon="mdi:message" width="17" height="17" className="me-1" /> {obvCommentCount} </span>
                             </div>
                         </Col>
