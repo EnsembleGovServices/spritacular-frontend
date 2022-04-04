@@ -117,6 +117,9 @@ body.modal-open {
     font-size: 16px;
   }
 }
+.object-contain {
+  object-fit: contain !important;
+}
 
 .ex-text{
   @include sm-text;

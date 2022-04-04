@@ -70,12 +70,13 @@ const AdvancedFilter = () => {
                                         <Col xs={12}>
                                             <FormGroup className="m-0 d-inline-block form-group w-100">
                                                 <Label htmlFor="CameraType">Camera Type</Label>
-                                                <Input id="CameraType" type="select" name="timezone" className="custom-select w-100" defaultValue="" >
-                                                    <option disabled defaultValue>All</option>
-                                                    <option>Canon</option>
-                                                    <option>Nikon</option>
-                                                    <option>Fujifilm</option>
-                                                </Input>
+                                                <Input  
+                                                    type="text"
+                                                    name="camera_type"
+                                                    placeholder="Canon"
+                                                    // value={} 
+                                                    // onChange={(e)=>handleInput1(e)} 
+                                                    />
                                             </FormGroup> 
                                         </Col>
                                         <Col xs={12}>
