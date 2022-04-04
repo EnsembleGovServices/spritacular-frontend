@@ -17,7 +17,10 @@ const PersistLogin = (props) => {
     const { auth, persist } = useAuth();
     const { persistValue } = props;
     const [isLoading, setIsLoading] = useState(true);
-    const [observationListData, setObservationListData] = useState(null);
+    const [observationListData, setObservationListData] = useState({
+        activeObservation: {},
+        activeType: ''
+    });
     const [observationComments, setObservationComments] = useState({
         comment_count: 0
     });

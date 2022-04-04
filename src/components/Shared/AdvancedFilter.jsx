@@ -3,7 +3,10 @@ import { Icon } from '@iconify/react';
 import { Button, Card, CardBody, Col, Collapse, FormGroup, Input, Label, Row } from "reactstrap";
 import "../../assets/scss/component/advancedFilter.scss";
 
-const AdvancedFilter = () => {
+const AdvancedFilter = (props) => {
+    const {
+        selectedFilters,setSelectedFilters,handleFilterValue
+    } = props;
     const [isDateTimeOpen, setIsDateTimeOpen] = useState(true);
     const [isEquipmentDetailsOpen, setIsEquipmentDetailsOpen] = useState(true);
     return (
@@ -12,7 +15,8 @@ const AdvancedFilter = () => {
                 <Col xs={12}>
                     <FormGroup>
                         <Label className='fw-normal text-black'>User ID</Label>
-                        <Input type="text"  />
+                        <Input type="text"  onChange={(e) => {setSelectedFilters({...selectedFilters,userId:e.target.value}); // handleFilterValue(e.target.value,'country');
+                        }}/>
                     </FormGroup>
                 </Col>
                 <Col xs={12}>
@@ -20,6 +24,7 @@ const AdvancedFilter = () => {
                         <Button
                             color="primary"
                             onClick={()=>setIsDateTimeOpen(!isDateTimeOpen)}
+                            
                             className={`collapse-btn fw-bold text-uppercase bg-transparent w-100 mb-0 rounded-0 border-0 shadow-none text-black p-0 d-flex justify-content-between align-items-center ${isDateTimeOpen ? 'open' : ''}`}
                         >
                             Observation Date/time
@@ -33,8 +38,12 @@ const AdvancedFilter = () => {
                                             <FormGroup>
                                                 <Label className='fw-normal text-black'>From</Label>
                                                 <div className='d-flex justify-content-between date-time_row'>
-                                                    <Input type="date" />
-                                                    <Input type="time" />
+                                                    <Input type="date" 
+                                                    onChange={(e) => {setSelectedFilters({...selectedFilters,obs_start_date:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                }}/>
+                                                    <Input type="time" 
+                                                    onChange={(e) => {setSelectedFilters({...selectedFilters,obs_start_time:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                }}/>
                                                 </div>
                                             </FormGroup>
                                         </Col>
@@ -42,8 +51,12 @@ const AdvancedFilter = () => {
                                             <FormGroup>
                                                 <Label className='fw-normal text-black'>To</Label>
                                                 <div className='d-flex justify-content-between date-time_row'>
-                                                    <Input type="date" />
-                                                    <Input type="time" />
+                                                    <Input type="date" 
+                                                    onChange={(e) => {setSelectedFilters({...selectedFilters,obs_end_date:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                }}/>
+                                                    <Input type="time" 
+                                                    onChange={(e) => {setSelectedFilters({...selectedFilters,obs_end_time:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                }}/>
                                                 </div>
                                             </FormGroup>
                                         </Col>
@@ -74,15 +87,16 @@ const AdvancedFilter = () => {
                                                     type="text"
                                                     name="camera_type"
                                                     placeholder="Canon"
-                                                    // value={} 
-                                                    // onChange={(e)=>handleInput1(e)} 
+                                                    onChange={(e) => {setSelectedFilters({...selectedFilters,camera_type:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                }}
                                                     />
                                             </FormGroup> 
                                         </Col>
                                         <Col xs={12}>
                                             <FormGroup className="m-0 d-inline-block form-group w-100">
                                                 <Label htmlFor="FrameRate">Frame Rate</Label>
-                                                <Input id="FrameRate" type="select" name="timezone" className="custom-select w-100" defaultValue="" >
+                                                <Input id="FrameRate" type="select" name="timezone" className="custom-select w-100" defaultValue="" onChange={(e) => {setSelectedFilters({...selectedFilters,fps:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                }}>
                                                     <option disabled defaultValue>All</option>
                                                     <option>24 FPS</option>
                                                     <option>30 FPS</option>
@@ -94,13 +108,15 @@ const AdvancedFilter = () => {
                                         <Col xs={12}>
                                             <FormGroup>
                                                 <Label className='fw-normal text-black'>ISO</Label>
-                                                <Input type="text"  />
+                                                <Input type="text" onChange={(e) => {setSelectedFilters({...selectedFilters,iso:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                }} />
                                             </FormGroup>
                                         </Col>
                                         <Col xs={12}>
                                             <FormGroup className="m-0 d-inline-block form-group w-100">
                                                 <Label htmlFor="FOV">FOV (Field of View)</Label>
-                                                <Input id="FOV" type="select" name="timezone" className="custom-select w-100" defaultValue="" >
+                                                <Input id="FOV" type="select" name="timezone" className="custom-select w-100" defaultValue="" onChange={(e) => {setSelectedFilters({...selectedFilters,fov:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                }}>
                                                     <option disabled defaultValue>All</option>
                                                     <option>10 mm</option>
                                                     <option>11 mm</option>
@@ -111,13 +127,15 @@ const AdvancedFilter = () => {
                                         <Col xs={12}>
                                             <FormGroup>
                                                 <Label className='fw-normal text-black'>Shutter Speed</Label>
-                                                <Input type="text"  />
+                                                <Input type="text"  onChange={(e) => {setSelectedFilters({...selectedFilters,shutter_speed:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                }}/>
                                             </FormGroup>
                                         </Col>
                                         <Col xs={12}>
                                             <FormGroup className="m-0 d-inline-block form-group w-100">
                                                 <Label htmlFor="LensType">Lens Type</Label>
-                                                <Input id="LensType" type="select" name="timezone" className="custom-select w-100" defaultValue="" >
+                                                <Input id="LensType" type="select" name="timezone" className="custom-select w-100" defaultValue="" onChange={(e) => {setSelectedFilters({...selectedFilters,lens_type:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                }}>
                                                     <option disabled defaultValue>All</option>
                                                     <option>Wide angle</option>
                                                     <option>Standard</option>
