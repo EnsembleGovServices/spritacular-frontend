@@ -28,12 +28,24 @@ const Dashboard = () =>{
     const [isFilterOpen,setIsFilterOpen] = useState({
       isCountryOpen:false,
       isTypeOpen:false,
-      isStatusOpen:false
+      isStatusOpen:false,
+
     })
     const [selectedFilters,setSelectedFilters] = useState({
       country:{},
       type:'',
-      status:''
+      status:'',
+      userId: '',
+      obs_start_date: null,
+      obs_end_date: null,
+      obs_start_time: null,
+      obs_end_time: null,
+      camera_type:null,
+      fps: null,
+      iso:null,
+      fov:null,
+      shutter_speed:null,
+      lens_type:null,
     })
 
     const getObservationData = (value) => {
@@ -148,7 +160,7 @@ const Dashboard = () =>{
                                 />
                             }
                         </div>
-                        {isObservationDetailModal && 
+                        {isObservationDetailModal && observationList[selectedObservationId].images.length > 0 &&
                         <ObservationDetails 
                             data={observationList[selectedObservationId]}  
                             modalClass="observation-details_modal" 
