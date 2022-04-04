@@ -3,6 +3,25 @@
 .dashboard-card{
     flex: 1 1 auto;
     padding-top: 50px;
+    &.sm-card{
+        .photo-list{
+            .photo-item{
+                width: 25%;
+                @include media-breakpoint-down(xxl){
+                    width: 33%;
+                }
+                @include media-breakpoint-down(lg){
+                    width: 50%;
+                }
+                @include media-breakpoint-down(md){
+                    width: 50%;
+                }
+                @include media-breakpoint-down(sm){
+                    width: 100%;
+                }
+            }
+        }   
+    }
 }
 .filter-open{
     min-width: 255px;

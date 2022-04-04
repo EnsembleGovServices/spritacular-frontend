@@ -43,15 +43,15 @@ const FilterSelectMenu = (props) =>{
                                     <img src={Images.Filter} alt="Filter" /> {filterShow && <span className="ms-3" >Advanced Filter</span> }</Button>
                             </FormGroup>}
                             { galleryFilter && 
-                            <FormGroup className="m-0 d-inline-block form-group">
-                                <Label className="text-uppercase" htmlFor="Country">Country</Label>
+                            <FormGroup className="m-0 d-inline-block form-group country-menu">
+                                <Label className="text-uppercase px-3" htmlFor="Country">Country</Label>
                                 <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isCountryOpen:!isFilterOpen.isCountryOpen})} isOpen={isFilterOpen.isCountryOpen} >
                                     <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                                         <span className="text-truncate">{selectedFilters.country?.name}</span>
                                         <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                     </DropdownToggle>
                                     <DropdownMenu className="py-0 shadow">
-                                        <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" className="p-2"  placeholder="Search Timezone" onChange={(e)=> findCountry(e)} /></DropdownItem>
+                                        <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input type="text" className="p-2"  placeholder="Search Country" onChange={(e)=> findCountry(e)} /></DropdownItem>
                                         {countries?.filter(item => {
                                             return item.name.toLowerCase().indexOf(searchCountry.toLowerCase()) !== -1;
                                         }).map((item, index) => {
@@ -61,37 +61,37 @@ const FilterSelectMenu = (props) =>{
                                 </Dropdown>
                           </FormGroup> }
                             {galleryFilter && 
-                            <FormGroup className="m-0 d-inline-block form-group">
-                            <Label className="text-uppercase" htmlFor="TransientLuminousEvent">Transient Luminous Event</Label>
-                            <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isTypeOpen:!isFilterOpen.isTypeOpen})} isOpen={isFilterOpen.isTypeOpen} >
-                                <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                <span className="text-truncate">{selectedFilters.type}</span>
-                                    <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
-                                </DropdownToggle>
-                                <DropdownMenu className="py-0 shadow">
-                                    
-                                    {category?.map((item, index) => {
-                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value ={item.name} onClick={(e) => {setSelectedFilters({...selectedFilters,type:e.target.value}); handleFilterValue(e.target.value,'category');}} >{item.name}</DropdownItem>
-                                    })}
-                                </DropdownMenu>
-                            </Dropdown>
-                          </FormGroup>  }
+                            <FormGroup className="m-0 d-inline-block form-group type-menu">
+                                <Label className="text-uppercase px-3" htmlFor="TransientLuminousEvent">Transient Luminous Event</Label>
+                                <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isTypeOpen:!isFilterOpen.isTypeOpen})} isOpen={isFilterOpen.isTypeOpen} >
+                                    <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
+                                    <span className="text-truncate">{selectedFilters.type === '' ? 'All types' : selectedFilters.type}</span>
+                                        <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
+                                    </DropdownToggle>
+                                    <DropdownMenu className="py-0 shadow">
+                                        
+                                        {category?.map((item, index) => {
+                                            return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value ={item.name} onClick={(e) => {setSelectedFilters({...selectedFilters,type:e.target.value}); handleFilterValue(e.target.value,'category');}} >{item.name}</DropdownItem>
+                                        })}
+                                    </DropdownMenu>
+                                </Dropdown>
+                            </FormGroup>  }
                            {galleryFilter &&  
-                           <FormGroup className="m-0 d-inline-block form-group">
-                           <Label className="text-uppercase" htmlFor="ObservationStatus">Observation Status</Label>
-                           <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isStatusOpen:!isFilterOpen.isStatusOpen})} isOpen={isFilterOpen.isStatusOpen} >
-                               <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                   <span className="text-truncate">{selectedFilters.status}</span>
-                                   <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
-                               </DropdownToggle>
-                               <DropdownMenu className="py-0 shadow">
-                                   
-                                   {observationStatus?.map((item, index) => {
-                                       return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e) => {setSelectedFilters({...selectedFilters,status:e.target.value}); handleFilterValue(e.target.value,'status');}} >{item}</DropdownItem>
-                                   })}
-                               </DropdownMenu>
-                           </Dropdown>
-                         </FormGroup> }
+                           <FormGroup className="m-0 d-inline-block form-group status-menu">
+                                <Label className="text-uppercase px-3" htmlFor="ObservationStatus">Observation Status</Label>
+                                <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isStatusOpen:!isFilterOpen.isStatusOpen})} isOpen={isFilterOpen.isStatusOpen} >
+                                    <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
+                                        <span className="text-truncate">{selectedFilters.status === '' ? 'All status' : selectedFilters.status}</span>
+                                        <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
+                                    </DropdownToggle>
+                                    <DropdownMenu className="py-0 shadow">
+                                        
+                                        {observationStatus?.map((item, index) => {
+                                            return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e) => {setSelectedFilters({...selectedFilters,status:e.target.value}); handleFilterValue(e.target.value,'status');}} >{item}</DropdownItem>
+                                        })}
+                                    </DropdownMenu>
+                                </Dropdown>
+                            </FormGroup> }
                         </Col>
                         <Col sm={12} md={4} className="text-end">
                             <div className="d-flex align-items-center justify-content-end h-100 ">
