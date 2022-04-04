@@ -19,7 +19,6 @@ const MyObservations = () => {
   const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
   const { observationListData, setObservationListData } = useObservationsData();
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
-  const [observationList,setObservationList] = useState({});
   const [currentObservationList,setCurrentObservationList] = useState({});
   const [observationCount,setObservationCount] = useState({
     verified: 0,
@@ -50,7 +49,6 @@ const MyObservations = () => {
       console.log(response);
     })
   }
-console.log(currobservationList);
 
   useEffect(() => {
     let watched = !currentObservationList[selectedObservationId]?.like_watch_count_data?.is_watch;
@@ -112,26 +110,25 @@ console.log(currobservationList);
         activeType: type
       }
     })
-    // console.log(observationListData);
 
     setLoadMore(pageSize);
     if(type === 'unverified'){
-      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
+      unverifiedList = observationListData?.list?.length > 0 && observationListData?.list?.filter((item) => {
         return (item.is_submit === true && item.is_verified === false && item.is_reject === false);
       });
     }
     if(type === 'verified'){
-      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
+      unverifiedList = observationListData?.list?.length > 0 && observationListData?.list?.filter((item) => {
         return (item.is_verified === true && item.is_reject === false);
       });
     }
     if(type === 'denied'){
-      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
+      unverifiedList = observationListData?.list?.length > 0 && observationListData?.list?.filter((item) => {
         return (item.is_reject === true && item.is_verified === false);
       });
     }
     if(type === 'draft'){
-      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
+      unverifiedList = observationListData?.list?.length > 0 && observationListData?.list?.filter((item) => {
         return (item.is_submit === false && item.is_verified === false && item.is_reject === false);
       });
     }
@@ -163,7 +160,6 @@ console.log(currobservationList);
     const unVarifiedCount = success?.data?.data?.filter((item) => (item.is_reject === false && item.is_submit === true && item.is_verified === false));
     const draftCount = success?.data?.data?.filter((item) => item.is_submit === false && item.is_reject === false && item.is_verified === false);
 
-    // setObservationList(success?.data?.data);
     setObservationCount({
       verified: varifiedCount.length,
       unverified: unVarifiedCount.length,
