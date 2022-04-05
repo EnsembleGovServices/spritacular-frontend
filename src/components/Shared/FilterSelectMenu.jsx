@@ -39,7 +39,7 @@ const FilterSelectMenu = (props) =>{
                     <div className='d-flex'>
                         <div>
                             {dashboardFilter && <FormGroup className={`filter-btn m-0 d-flex align-items-center h-100 form-group p-0 ${filterShow ? 'filter-open' : ''}`}>
-                                <Button onClick={()=>handleFilterOpen()} className="border-0 rounded-0 bg-transparent text-black shadow-none text-start w-100 d-flex align-items-center">
+                                <Button onClick={()=>handleFilterOpen()} className="border-0 rounded-0 bg-transparent text-black shadow-none text-start w-auto w-md-100 d-flex align-items-center">
                                     <img src={Images.Filter} alt="Filter" /> {filterShow && <span className="ms-0 ms-md-3" >Advanced Filter</span> }</Button>
                             </FormGroup>}
                         </div>
@@ -86,7 +86,7 @@ const FilterSelectMenu = (props) =>{
                                             <Label className="text-uppercase px-2 px-xl-3" htmlFor="ObservationStatus">Observation Status</Label>
                                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isStatusOpen:!isFilterOpen.isStatusOpen})} isOpen={isFilterOpen.isStatusOpen} >
                                                 <DropdownToggle className="px-2 px-xl-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                                    <span className="text-truncate">{(selectedFilters.status) ? selectedFilters.status: 'All status'}</span>
+                                                    <span className="text-truncate">{(selectedFilters.status) ? selectedFilters.status.charAt(0).toUpperCase() + selectedFilters.status.slice(1): 'All status'}</span>
                                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                 </DropdownToggle>
                                                 <DropdownMenu className="py-0 shadow">
