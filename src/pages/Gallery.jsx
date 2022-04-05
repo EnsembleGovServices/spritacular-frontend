@@ -135,7 +135,7 @@ useEffect(()=> {
     <>
 
      {auth.user &&
-     <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
+     <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters} setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
 }
 <Container>
             <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center">
@@ -157,7 +157,13 @@ useEffect(()=> {
           {nextPageUrl &&
             <LoadMore handlLoadMore={handleLoadMoreData} /> 
            }
-          {isObservationDetailModal && <ObservationDetails data={observationList[selectedObservationId]}  activeType={''} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />}
+          <ObservationDetails
+              data={observationList[selectedObservationId]}
+              activeType={''}
+              modalClass="observation-details_modal"
+              open={isObservationDetailModal}
+              handleClose={handleObservationDetailModal}
+          />
         </div>
         </>
   )
