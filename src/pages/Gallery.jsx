@@ -80,11 +80,13 @@ useEffect(() => {
     }else{
       url = nextPageUrl;
     }
+    var headers = {};
+    headers['Content-Type'] = 'application/json';
+    if(auth.user){
+      headers['Authorization'] = `Bearer ${auth?.token?.access}`;
+    }
     axios.get(baseURL.api+url,{
-      headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${auth?.token?.access}`,
-      },
+      headers: headers,
       
   }).then((success) => {
     if(success?.data?.results?.data != undefined){
