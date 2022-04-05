@@ -1,6 +1,6 @@
 
-import {Col, FormGroup,PopoverBody, PopoverHeader,UncontrolledPopover, Collapse, Button, Row} from "reactstrap";
-import {useEffect, useState} from "react";
+import {Col, FormGroup,PopoverBody, PopoverHeader, Collapse, Button, Row} from "reactstrap";
+import { useEffect, useRef, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import { Icon } from "@iconify/react";
 import axios from "../../api/axios";
@@ -21,6 +21,9 @@ const ObservationCategory = (props) => {
     const [selectedCategory, setSelectedCategory] = useState('' || []);
     const ObservationData = {...observationImages};
     const errorData = error ? Object.values(error?.data) : {};
+    const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
+    const tippyRef = useRef();
+
     const fetchCategory = async () => {
             await axios.get(baseURL.api+'/observation/get_category_list/', {
                 headers: {
@@ -33,7 +36,6 @@ const ObservationCategory = (props) => {
             })
             .catch((error)=> {console.log(error)})
     }
-
     const onCategoryChange=(e)=>{
         const value = parseFloat(e.target.id);
         setIsChecked({...isChecked,[e.target.name]: e.target.checked});
@@ -46,7 +48,6 @@ const ObservationCategory = (props) => {
         }
         setObservationImages(ObservationData);
     }
-
     const updatedCategory = () => {
         let newCategory = [];
         oldCategory?.map((item, index) => {
@@ -89,14 +90,11 @@ const ObservationCategory = (props) => {
             </>
         )
     }
-    const PopoverContent = ({ contentUpdate, popoverId }) => {
-
-        const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
-        
+    const PopoverContent = () => {
         return (
           <>
             <PopoverHeader>What is sprite? 
-                 <Button className="bg-transparent p-0 border-0 text-black shadow-none" ><Icon icon="codicon:chrome-close" width="15" height="15" /></Button>
+                 {/*<button className="bg-transparent p-0 border-0 text-black shadow-none"><Icon icon="codicon:chrome-close" width="15" height="15" /></button>*/}
             </PopoverHeader>
             <PopoverBody>
                 <p style={{'--line-clamb': isPopoverContentOpen === true ? 'unset' : '2'}}>
@@ -104,8 +102,6 @@ const ObservationCategory = (props) => {
                 </p>
                 <Collapse
                 isOpen={isPopoverContentOpen}
-                onEntered={contentUpdate}
-                onExited={contentUpdate}
                 >
                 <ImageCarousel className="popover-carousel" />
               </Collapse>
@@ -116,29 +112,6 @@ const ObservationCategory = (props) => {
           </>
         );
     };
-    
-    const ImagePopover = (props) => {
-        const {index} = props;
-        return(
-            <div className="ms-2">
-                <Button id={`popover${index}`} type="button" className="bg-transparent p-0 border-0 shadow-none d-flex">
-                    <Icon icon="charm:info" color="#adb4c2" width="15" height="15" />
-                </Button>
-                <UncontrolledPopover
-                    trigger="click"
-                    target={`popover${index}`}
-                    placement="top"
-                >
-                    {({ contentUpdate, popoverId }) => (
-                        <PopoverContent contentUpdate={contentUpdate} popoverId={`popover${index}`} />
-                    )}
-                </UncontrolledPopover>
-                {/*<Tippy visible={false} trigger="click" content={index}>*/}
-                {/*    <span id={index} ><Icon icon="charm:info" color="#adb4c2" width="15" height="15" /></span>*/}
-                {/*</Tippy>*/}
-            </div>
-        )
-    }
 
     const showCategory = () => {
         return observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
@@ -161,7 +134,20 @@ const ObservationCategory = (props) => {
                                         <label htmlFor={imagItem.id}>
                                             <img src={`${imagItem.image}`} alt={imagItem.name} />
                                             {imagItem.name}
-                                            <ImagePopover index={imagItem.id} />
+                                            <div className="ms-2 text-dark ">
+
+                                                <Tippy
+                                                    content={<PopoverContent />}
+                                                    interactive={true}
+                                                    appendTo={document.body}
+                                                    animation="perspective"
+                                                    theme="light-border"
+                                                    reference={tippyRef}
+                                                >
+                                                    <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2" width="15" height="15" /></span>
+                                                </Tippy>
+                                            </div>
+
                                         </label>
                                     </div>
                                 </div>
