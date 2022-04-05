@@ -21,13 +21,6 @@ const ObservationCategory = (props) => {
     const [selectedCategory, setSelectedCategory] = useState('' || []);
     const ObservationData = {...observationImages};
     const errorData = error ? Object.values(error?.data) : {};
-    const [visible, setVisible] = useState(true);
-
-
-
-    const show = () => setVisible(true);
-    const hide = () => setVisible(false);
-    
     const fetchCategory = async () => {
             await axios.get(baseURL.api+'/observation/get_category_list/', {
                 headers: {
@@ -103,7 +96,7 @@ const ObservationCategory = (props) => {
         return (
           <>
             <PopoverHeader>What is sprite? 
-                 <Button className="bg-transparent p-0 border-0 text-black shadow-none" onClick={visible ? hide : show}><Icon icon="codicon:chrome-close" width="15" height="15" /></Button>
+                 <Button className="bg-transparent p-0 border-0 text-black shadow-none" ><Icon icon="codicon:chrome-close" width="15" height="15" /></Button>
             </PopoverHeader>
             <PopoverBody>
                 <p style={{'--line-clamb': isPopoverContentOpen === true ? 'unset' : '2'}}>
@@ -111,8 +104,8 @@ const ObservationCategory = (props) => {
                 </p>
                 <Collapse
                 isOpen={isPopoverContentOpen}
-                // onEntered={contentUpdate}
-                // onExited={contentUpdate}
+                onEntered={contentUpdate}
+                onExited={contentUpdate}
                 >
                 <ImageCarousel className="popover-carousel" />
               </Collapse>
@@ -128,21 +121,21 @@ const ObservationCategory = (props) => {
         const {index} = props;
         return(
             <div className="ms-2">
-                {/*<Button id={`popover${index}`} type="button" className="bg-transparent p-0 border-0 shadow-none d-flex">*/}
-                {/*    <Icon icon="charm:info" color="#adb4c2" width="15" height="15" />*/}
-                {/*</Button>*/}
-                {/*<UncontrolledPopover*/}
-                {/*    trigger="click"*/}
-                {/*    target={`popover${index}`}*/}
-                {/*    placement="top"*/}
-                {/*>*/}
-                {/*    {({ contentUpdate, popoverId }) => (*/}
-                {/*        <PopoverContent contentUpdate={contentUpdate} popoverId={`popover${index}`} />*/}
-                {/*    )}*/}
-                {/*</UncontrolledPopover>*/}
-                <Tippy visible={visible} trigger="click" interactive="true" content={<PopoverContent id={index} popoverId={`popover${index}`} />}>
-                    <span id={index} onClick={visible ? hide : show}><Icon icon="charm:info" color="#adb4c2" width="15" height="15" /></span>
-                </Tippy>
+                <Button id={`popover${index}`} type="button" className="bg-transparent p-0 border-0 shadow-none d-flex">
+                    <Icon icon="charm:info" color="#adb4c2" width="15" height="15" />
+                </Button>
+                <UncontrolledPopover
+                    trigger="click"
+                    target={`popover${index}`}
+                    placement="top"
+                >
+                    {({ contentUpdate, popoverId }) => (
+                        <PopoverContent contentUpdate={contentUpdate} popoverId={`popover${index}`} />
+                    )}
+                </UncontrolledPopover>
+                {/*<Tippy visible={false} trigger="click" content={index}>*/}
+                {/*    <span id={index} ><Icon icon="charm:info" color="#adb4c2" width="15" height="15" /></span>*/}
+                {/*</Tippy>*/}
             </div>
         )
     }
