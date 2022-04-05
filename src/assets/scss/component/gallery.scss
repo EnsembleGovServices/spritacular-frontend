@@ -1,7 +1,7 @@
 @import "../global/config.scss";
 
 .gallery-page{
-    padding: 80px 50px 140px;
+    padding: 80px 0 140px;
     @include media-breakpoint-down(lg){
         padding: 50px 30px 110px;
     }

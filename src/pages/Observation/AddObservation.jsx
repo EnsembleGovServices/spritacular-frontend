@@ -556,7 +556,7 @@ const AddObservation = () => {
                                         </TabPane>
                                         <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
                                             {showUploadedPreview() &&
-                                                <div className="observation-form-right-tab d-flex justify-content-end d-sm-none position-relative position-sm-sticky">
+                                                <div className="observation-form-right-tab d-flex justify-content-start justify-content-sm-end d-sm-none position-relative position-sm-sticky">
                                                     <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
                                                 </div>
                                             }

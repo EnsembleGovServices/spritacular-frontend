@@ -144,33 +144,34 @@ useEffect(() => {
      {auth.user &&
      <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
 }
-<Container>
+        <Container>
             <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center">
               Would you like to help us sift through observations and endorse their validity?
               <Link to={'/'+routeUrls.tutorials} className="btn btn-outline-primary">Get Trained</Link>
             </UncontrolledAlert>
-          </Container>
-        <div className='gallery-page'>
-          <h4 className='text-black fw-bold'>Recent Observations</h4>
-          <div>
-            {observationGalleryData?.list?.length ===  0 &&
-              <div className="data-not-found">
-                <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
-                <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
+            <div className='gallery-page'>
+              <h4 className='text-black fw-bold'>Recent Observations</h4>
+              <div>
+                {observationGalleryData?.list?.length ===  0 &&
+                    <div className="data-not-found">
+                      <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
+                      <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
+                    </div>
+                }
+                <ObservationDetailPage observationList={observationGalleryData?.list} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
               </div>
-            }
-            <ObservationDetailPage observationList={observationGalleryData?.list} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
-          </div>
-          {nextPageUrl &&
-            <LoadMore handlLoadMore={handleLoadMoreData} /> 
-           }
-          {isObservationDetailModal && <ObservationDetails 
-          data={observationGalleryData?.active}  
-          activeType={''} 
-          modalClass="observation-details_modal" 
-          open={isObservationDetailModal} 
-          handleClose={handleObservationDetailModal} />}
-        </div>
+              {nextPageUrl &&
+                  <LoadMore handleLoadMore={handleLoadMoreData} />
+              }
+              {isObservationDetailModal && <ObservationDetails
+                  data={observationGalleryData?.active}
+                  activeType={''}
+                  modalClass="observation-details_modal"
+                  open={isObservationDetailModal}
+                  handleClose={handleObservationDetailModal} />}
+            </div>
+        </Container>
+
         </>
   )
 }

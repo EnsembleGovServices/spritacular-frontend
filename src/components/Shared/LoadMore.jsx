@@ -1,8 +1,8 @@
 import { Button} from 'reactstrap';
 
 export const LoadMore = (props) => {
-    const {handlLoadMore} = props;
+    const {handleLoadMore} = props;
     return (
-        <Button className='gray-outline-btn d-block mx-auto fw-normal' onClick={()=> handlLoadMore()}>Load more</Button>
+        <Button className='gray-outline-btn d-block mx-auto fw-normal' onClick={()=> handleLoadMore()}>Load more</Button>
     )
 };

@@ -1,11 +1,8 @@
 import ObservationCard from "../../components/Shared/ObservationCard";
 import Masonry from 'react-masonry-component';
-import useObservationsData from "../../hooks/useObservationsData";
-
 
 const ObservationDetailPage = (props) => {
   const {observationList, isObservationDetailModal, setSelectedObservationId, setObservationDetailModal, activeType} = props;
-  const { observationListData, setObservationListData } = useObservationsData();
 
 
   // Masonry Options

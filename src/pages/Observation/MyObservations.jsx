@@ -20,13 +20,6 @@ const MyObservations = () => {
   const { observationListData, setObservationListData } = useObservationsData();
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
   const [currentObservationList,setCurrentObservationList] = useState({});
-  const [observationCount,setObservationCount] = useState({
-    verified: 0,
-    unverified: 0,
-    denied: 0,
-    draft: 0,
-    total:0,
-  });
   const [isLoaded,setIsLoaded] = useState(true);
   const [activeType,setActiveType] = useState('verified');
   const [selectedObservationId,setSelectedObservationId] = useState();
@@ -160,7 +153,7 @@ setIsLoaded(false);
     // getObservationData(activeType);
   };
 
-  const handlLoadMore = () => {
+  const handleLoadMore = () => {
     getObservationData(activeType,false);
   }
 
@@ -207,7 +200,7 @@ setIsLoaded(false);
                 <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
               </div>}
             <ObservationDetailPage  observationList={observationListData?.list}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
-          {nextPageUrl && <LoadMore handlLoadMore={handlLoadMore} />}
+          {nextPageUrl && <LoadMore handleLoadMore={handleLoadMore} />}
           </Container>
 
          {isObservationDetailModal && <ObservationDetails
