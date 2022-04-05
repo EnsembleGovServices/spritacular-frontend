@@ -55,6 +55,21 @@ useEffect(()=> {
   }
 }, [isFilterOpen.isCountryOpen])
 
+useEffect(() => {
+  // let watched = !currentObservationList[selectedObservationId]?.like_watch_count_data?.is_watch;
+  // if (isObservationDetailModal && watched) {
+  //   handleWatchCounter(observationListData?.list[selectedObservationId].id).then(r => r)
+  // }
+
+  setObservationGalleryData((prev) => {
+    return {
+      ...prev,
+      active: observationGalleryData?.list?.[selectedObservationId]
+    }
+  })
+
+}, [isObservationDetailModal]);
+
   const handleLoadMoreData = () => {
         getObservationType(selectedFilters.country?.code,selectedFilters.type,selectedFilters.status,false);
   }
@@ -72,31 +87,31 @@ useEffect(()=> {
       },
       
   }).then((success) => {
-    if(success?.data?.results != undefined){
+    if(success?.data?.results?.data != undefined){
       if(success?.data?.next){
         setNextPageUrl(success?.data?.next.split('api')[1]);
       }else{
         setNextPageUrl(null);
       }
-      let records = success?.data?.results;
+      let records = success?.data?.results?.data;
       let prevData;
       
-      if(observationGalleryData.length > 0 && reset == false){
-        prevData = [...observationGalleryData];
+      if(observationGalleryData?.list?.length > 0 && reset == false){
+        prevData = [...observationGalleryData?.list];
         prevData = [...prevData,...records];
       }else{
-        prevData = success?.data?.results;
+        prevData = success?.data?.results?.data;
       }
-      setObservationGalleryData(prevData);
+      setObservationGalleryData({list:prevData});
         if(!auth.user){
           const varifiedData = success?.data?.results?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
-          setObservationGalleryData(varifiedData);
+          setObservationGalleryData({list:varifiedData});
         }
       setIsLoaded(false);
     }
     else{
       setNextPageUrl(null);
-      setObservationGalleryData([])
+      setObservationGalleryData({list:[]})
     }
   }).catch((error) => {
       console.log(error.response);
@@ -138,18 +153,23 @@ useEffect(()=> {
         <div className='gallery-page'>
           <h4 className='text-black fw-bold'>Recent Observations</h4>
           <div>
-            {observationGalleryData.length ===  0 &&
+            {observationGalleryData?.list?.length ===  0 &&
               <div className="data-not-found">
                 <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
                 <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
               </div>
             }
-            <ObservationDetailPage observationList={observationGalleryData} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
+            <ObservationDetailPage observationList={observationGalleryData?.list} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
           </div>
           {nextPageUrl &&
             <LoadMore handlLoadMore={handleLoadMoreData} /> 
            }
-          {isObservationDetailModal && <ObservationDetails data={observationGalleryData[selectedObservationId]}  activeType={''} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />}
+          {isObservationDetailModal && <ObservationDetails 
+          data={observationGalleryData?.active}  
+          activeType={''} 
+          modalClass="observation-details_modal" 
+          open={isObservationDetailModal} 
+          handleClose={handleObservationDetailModal} />}
         </div>
         </>
   )
