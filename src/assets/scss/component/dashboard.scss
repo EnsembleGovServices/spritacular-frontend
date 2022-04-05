@@ -25,6 +25,9 @@
 }
 .filter-open{
     min-width: 255px;
+    @include media-breakpoint-down(xl){
+        min-width: 200px;
+    }
     span{
         color: $grey;
     }

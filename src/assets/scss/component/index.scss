@@ -190,33 +190,44 @@
             }
         }
     }
-    .popover-header{
-        background: $white;
-        font-style: normal;
-        font-weight: 600;
-        @include lg-text;
-        color: $black;
-        @include vspace;
-        border: 0;
-        padding: 15px 20px 6px;
-        border-radius: 8px;
+
+}
+.popover-header{
+    background: $white;
+    font-style: normal;
+    font-weight: 600;
+    @include lg-text;
+    color: $black;
+    @include vspace;
+    border: 0;
+    padding: 15px 20px 6px;
+    border-radius: 8px;
+}
+.popover-body{
+    padding: 6px 20px 20px;
+    p{
+        color: $gray3;
+        @include md-text;
+        margin-bottom: 8px;
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamb);
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
-    .popover-body{
-        padding: 6px 20px 20px;
-        p{
-            color: $gray3;
-            @include md-text;
-            margin-bottom: 8px;
-            display: -webkit-box;
-            -webkit-line-clamp: var(--line-clamb);
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .btn-secondary{
-            font-weight: 500;
-            @include md-text;
-        }
+    .btn-secondary{
+        font-weight: 500;
+        @include md-text;
     }
+}
+.tippy-box{
+    background: $white;
+    border: 1px solid #F4F4F4;
+    box-shadow: 0px 24px 48px rgb(0 0 0 / 6%);
+    border-radius: 8px;
+    z-index: 999;
+}
+.tippy-arrow{
+    color: $white;
 }
 // Popover Design End
 

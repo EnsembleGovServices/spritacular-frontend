@@ -2,16 +2,22 @@ import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import { Button, Card, CardBody, Col, Collapse, FormGroup, Input, Label, Row } from "reactstrap";
 import "../../assets/scss/component/advancedFilter.scss";
+import Images from "../../static/images";
 
 const AdvancedFilter = (props) => {
     const {
-        selectedFilters,setSelectedFilters,handleFilterValue
+        selectedFilters,setSelectedFilters, handleFilterValue, handleFilterOpen
     } = props;
     const [isDateTimeOpen, setIsDateTimeOpen] = useState(true);
     const [isEquipmentDetailsOpen, setIsEquipmentDetailsOpen] = useState(true);
     return (
         <div className='advanced-filter'>
             <Row>
+                <Col xs={12} className='d-flex justify-content-end d-md-none'>
+                    <Button className="close-icon bg-transparent shadow-none border-0 rounded-0" onClick={()=>handleFilterOpen()}>
+                        <img src={Images.Modalcloseicon} alt="close-icon" />
+                    </Button>
+                </Col>
                 <Col xs={12}>
                     <FormGroup>
                         <Label className='fw-normal text-black'>User ID</Label>
