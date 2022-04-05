@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import ReactCountryFlags from "../../../components/ReactCountryFlag";
 import moment from 'moment';
 import {getdirectionDegree} from "../../../helpers/observation";
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import axios from "../../../api/axios";
 import {baseURL} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
@@ -18,6 +18,7 @@ const ObservationMoreDetails = (props) => {
     const [like, setLike] = useState(data?.like_watch_count_data?.is_like);
     const formData = new FormData();
     const [openRejectPopup, setOpenRejectPopup] =  useState(false);
+    const { observationListData, setObservationListData } = useObservationsData();
 
 
     // await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', formData, {
