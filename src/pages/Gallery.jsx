@@ -9,8 +9,8 @@ import ObservationDetailPage from "./Observation/ObservationDetailPage";
 import { LoadMore } from '../components/Shared/LoadMore';
 import "../assets/scss/component/gallery.scss";
 import FilterSelectMenu from "../components/Shared/FilterSelectMenu";
-import { Col, Container, Row, UncontrolledAlert } from 'reactstrap';
-import {Link, useNavigate} from 'react-router-dom';
+import { Container, UncontrolledAlert } from 'reactstrap';
+import {Link} from 'react-router-dom';
 import useObservationsData from "../hooks/useObservationsData";
 
 

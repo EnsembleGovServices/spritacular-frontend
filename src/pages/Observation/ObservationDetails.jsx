@@ -1,5 +1,5 @@
-import {useState, useEffect, createRef, useRef} from "react";
-import { Badge, Button, Col, Modal, ModalBody, ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane, Tooltip } from "reactstrap";
+import {useState, useEffect, useRef} from "react";
+import { Badge, Button, Col, Modal, ModalBody, ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import Images from './../../static/images';
 import { imageDetails } from "../../helpers/observation";
 import "../../assets/scss/component/observationDetails.scss";
@@ -14,8 +14,7 @@ import CardImageCarousel from "../../components/Shared/CardImageCarousel";
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose, data, activeType, handleContinueEdit } = props;
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
-    const [tooltipOpen, setTooltipOpen] = useState([]);
-    const {observationComments, observationListData} = useObservationsData();
+    const {observationComments} = useObservationsData();
     const obvDetailsModal = useRef(null);
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
@@ -23,21 +22,6 @@ const ObservationDetails = (props) =>{
             setActiveImageTab(tab);
         }
     };
-
-    const handleToggleChange = (e) => {
-        if (!tooltipOpen[e]) {
-            setTooltipOpen({
-            ...tooltipOpen,
-            [e]: {
-                isOpen: true
-            }
-            });
-        } else {
-            setTooltipOpen([]);
-        }
-        
-    }
-
 
     useEffect(()=>{
         setActiveImageTab(imageDetails.Details)
@@ -93,7 +77,7 @@ const ObservationDetails = (props) =>{
                                         {data?.category_data.length > 0 && data?.category_data.map((item, index) => {
                                             return (
                                                 <i id={item.toLowerCase().replaceAll(" ", "")} className="rounded-circle bg-white ms-2 cursor-pointer" key={index}>
-                                                    <Tippy content={item}>
+                                                    <Tippy animation="perspective" content={item}>
                                                         <img src={`/assets/images/category/${item.toLowerCase().replaceAll(" ", "")}.png`} alt={item} />
                                                     </Tippy>
                                                 </i>

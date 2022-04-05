@@ -55,7 +55,7 @@ const ObservationCard = (props) => {
                                     let image = `/assets/images/category/${item?.toLowerCase().replaceAll(" ", "")}.png`;
                                     return (
                                         <i className="rounded-circle bg-white me-1" key={index}>
-                                            <Tippy content={item}>
+                                            <Tippy animation="perspective" content={item}>
                                                 <img src={image} alt={item} className="rounded-circle" />
                                             </Tippy>
                                         </i>
@@ -77,7 +77,7 @@ const ObservationCard = (props) => {
                             </Col>
                             <Col xs={6} lg={6} className=" justify-content-end d-flex">
                                 <div className="d-flex card-user_details align-items-center overflow-hidden">
-                                    <Tippy content={userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}>
+                                    <Tippy animation="perspective" content={userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}>
                                         <h6 className="pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</h6>
                                     </Tippy>
                                     <i className="profile-icon rounded-circle">

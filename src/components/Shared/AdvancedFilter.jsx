@@ -6,7 +6,7 @@ import Images from "../../static/images";
 
 const AdvancedFilter = (props) => {
     const {
-        selectedFilters,setSelectedFilters, handleFilterValue, handleFilterOpen
+        selectedFilters,setSelectedFilters, handleFilterOpen
     } = props;
     const [isDateTimeOpen, setIsDateTimeOpen] = useState(true);
     const [isEquipmentDetailsOpen, setIsEquipmentDetailsOpen] = useState(true);

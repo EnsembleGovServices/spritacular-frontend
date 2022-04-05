@@ -3,12 +3,13 @@ import { Icon } from '@iconify/react';
 import ReactCountryFlags from "../../../components/ReactCountryFlag";
 import moment from 'moment';
 import {getdirectionDegree} from "../../../helpers/observation";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import axios from "../../../api/axios";
 import {baseURL} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
-import RejectObvservationPopup from "../../Popup/RejectObvservationPopup";
 import useObservationsData from "../../../hooks/useObservationsData";
+import RejectObvservationPopup from "../../Popup/RejectObvservationPopup";
+import ObservationLikeViewCounter from "./ObservationLikeViewCounter";
 
 
 const ObservationMoreDetails = (props) => {
@@ -16,7 +17,6 @@ const ObservationMoreDetails = (props) => {
     const {auth} = useAuth();
     const [like, setLike] = useState(data?.like_watch_count_data?.is_like);
     const formData = new FormData();
-    const {setObservationListData, observationListData} = useObservationsData();
     const [openRejectPopup, setOpenRejectPopup] =  useState(false);
 
 
@@ -43,10 +43,54 @@ const ObservationMoreDetails = (props) => {
             })
     }
 
+    // like_watch_count_data: {
+    //     is_like: like,
+    //         like_count: like ? existingData?.like_watch_count_data?.like_count + 1 : existingData?.like_watch_count_data?.like_count - 1
+    // }
+
+    useEffect(()=> {
+        let data = observationListData?.active,
+            alreadyLiked = data?.like_watch_count_data?.is_like,
+            existingLike = data?.like_watch_count_data?.like_count;
+
+        setObservationListData((prev)=> {
+            return {
+                ...prev,
+                active: {
+                    ...data,
+                    like_watch_count_data: {
+                        ...data?.like_watch_count_data,
+                        is_like: like,
+                        like_count: like ? (alreadyLiked ? existingLike : existingLike + 1) : existingLike === 0 ? 0 : existingLike - 1
+                    }
+                }
+            }
+        });
+
+
+        const newObvData = observationListData?.list;
+        if (data?.id) {
+            newObvData?.filter(openedItem => {
+                return openedItem?.id === data?.id;
+            }).map((item, index) => {
+                    item.like_watch_count_data.is_like = like;
+                    item.like_watch_count_data.like_count = like ? (alreadyLiked ? existingLike : existingLike + 1) : existingLike === 0 ? 0 : existingLike - 1;
+              return item;
+            })
+
+            setObservationListData((prev) => {
+                return {
+                    ...prev,
+                    list: newObvData
+                }
+            })
+        }
+
+    }, [like]);
+
     const handleCloseRejectPopup = () =>{
         setOpenRejectPopup(!openRejectPopup)
     }
-
 
     return (
         <div className="more-details">
@@ -102,11 +146,12 @@ const ObservationMoreDetails = (props) => {
                             </div>
                         </Col>
                         <Col sm={12}>
-                            <div className="d-flex align-items-center justify-content-center user-review">
-                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:thumb-up" width="17" height="17" className="me-1" /> {data?.like_watch_count_data?.like_count} </span>
-                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:eye" width="17" height="17" className="me-1" /> {data?.like_watch_count_data?.watch_count} </span>
-                                <span className="d-flex" ><Icon icon="mdi:message" width="17" height="17" className="me-1" /> {obvCommentCount} </span>
-                            </div>
+                            {/*<div className="d-flex align-items-center justify-content-center user-review">*/}
+                            {/*    <span className="me-3 d-flex" ><Icon icon="heroicons-solid:thumb-up" width="17" height="17" className="me-1" /> {data?.like_watch_count_data?.like_count} </span>*/}
+                            {/*    <span className="me-3 d-flex" ><Icon icon="heroicons-solid:eye" width="17" height="17" className="me-1" /> {data?.like_watch_count_data?.watch_count} </span>*/}
+                            {/*    <span className="d-flex" ><Icon icon="mdi:message" width="17" height="17" className="me-1" /> {obvCommentCount} </span>*/}
+                            {/*</div>*/}
+                            <ObservationLikeViewCounter likeView={observationListData?.active?.like_watch_count_data} commentCount={obvCommentCount} />
                         </Col>
                     </Row>
                     <div className="border-line my-4"></div>
@@ -119,6 +164,12 @@ const ObservationMoreDetails = (props) => {
                     </div>
                 </Col>
             </Row>
+
+            <RejectObvservationPopup
+                openRejectModal={openRejectPopup}
+                handleCloseRejectObs={handleCloseRejectPopup}
+            />
+
         </div>
     )
 }

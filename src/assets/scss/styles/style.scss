@@ -5,6 +5,15 @@
 // Importing variables & Bootstrap functions & utilities
 @import "../global/config";
 
+// Tooltip
+@import 'tippy.js/dist/tippy.css';
+
+// Slider
+@import "node_modules/swiper/swiper.scss";
+@import "node_modules/swiper/modules/navigation/navigation.scss";
+@import '~tippy.js/animations/perspective.css';
+@import "~tippy.js/themes/light-border.css";
+
 body {
   margin: 0;
   padding: 0;
@@ -126,9 +135,3 @@ body.modal-open {
 }
 @import "../component/index.scss";
 
-// Slider
-@import "node_modules/swiper/swiper.scss";
-@import "node_modules/swiper/modules/navigation/navigation.scss";
-
-// Tooltip 
-@import 'tippy.js/dist/tippy.css';
