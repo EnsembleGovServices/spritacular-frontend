@@ -49,14 +49,14 @@ const Dashboard = () =>{
     })
 
     const getObservationData = (value) => {
-        axios.get(baseURL.api+'/observation/observation_collection/?sort_by='+value,{
+        axios.get(baseURL.api+'/observation/gallery/',{
             headers:{
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${auth?.token?.access}`
             },
 
         }).then((success)=>{
-            setObservationList(success?.data?.data)
+            setObservationList(success?.data?.results?.data)
         }).catch((error)=>{
             console.log(error.response);
         })
