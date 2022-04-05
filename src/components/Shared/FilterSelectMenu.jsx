@@ -50,7 +50,6 @@ const FilterSelectMenu = (props) =>{
                                         <FormGroup className="m-0 d-inline-block form-group country-menu">
                                             <Label className="text-uppercase px-2 px-xl-3" htmlFor="Country">Country</Label>
                                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isCountryOpen:!isFilterOpen.isCountryOpen})} isOpen={isFilterOpen.isCountryOpen} >
-                                                {console.log(selectedFilters.country?.name)}
                                                 <DropdownToggle className="px-2 px-xl-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                                                     <span className="text-truncate">{(selectedFilters.country?.name !== undefined ? selectedFilters.country?.name: 'All countries' )}</span>
 

@@ -68,12 +68,38 @@
     .date-time_row{
         background: $input-bg;
         border-radius: $border-radius;
-        input{
-            &:first-child{
-                width: 60%;
+        .date-box{
+            width: 60%;
+        }
+        .time-box{
+            width: 40%;
+        }
+        input[type="date"]{
+            padding-left: 33px;
+            &::-webkit-calendar-picker-indicator{
+                position: absolute;
+                top: 4px;
+                left: -17px;
+                width: 20px;
+                height: 22px;
+                button{
+                    border: none;
+                    background: transparent;
+                }
             }
-            &:last-child{
-                width: 40%;
+        }
+        input[type="time"]{
+            padding-left: 33px;
+            &::-webkit-calendar-picker-indicator{
+                position: absolute;
+                top: 4px;
+                left: -5px;
+                width: 20px;
+                height: 22px;
+                button{
+                    border: none;
+                    background: transparent;
+                }
             }
         }
     }
