@@ -31,7 +31,7 @@ const Gallery = () => {
     status:''
   })
 
-  const { observationGalleryData, setObservationGalleryData } = useObservationsData();
+  const { observationListData, setObservationListData } = useObservationsData();
 
   const [currentObservationList,setCurrentObservationList] = useState({});
   const { auth } = useAuth();
@@ -61,10 +61,10 @@ useEffect(() => {
   //   handleWatchCounter(observationListData?.list[selectedObservationId].id).then(r => r)
   // }
 
-  setObservationGalleryData((prev) => {
+  setObservationListData((prev) => {
     return {
       ...prev,
-      active: observationGalleryData?.list?.[selectedObservationId]
+      active: observationListData?.list?.[selectedObservationId]
     }
   })
 
@@ -96,22 +96,22 @@ useEffect(() => {
       let records = success?.data?.results?.data;
       let prevData;
       
-      if(observationGalleryData?.list?.length > 0 && reset == false){
-        prevData = [...observationGalleryData?.list];
+      if(observationListData?.list?.length > 0 && reset == false){
+        prevData = [...observationListData?.list];
         prevData = [...prevData,...records];
       }else{
         prevData = success?.data?.results?.data;
       }
-      setObservationGalleryData({list:prevData});
+      setObservationListData({list:prevData});
         if(!auth.user){
           const varifiedData = success?.data?.results?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
-          setObservationGalleryData({list:varifiedData});
+          setObservationListData({list:varifiedData});
         }
       setIsLoaded(false);
     }
     else{
       setNextPageUrl(null);
-      setObservationGalleryData({list:[]})
+      setObservationListData({list:[]})
     }
   }).catch((error) => {
       console.log(error.response);
@@ -123,7 +123,7 @@ useEffect(() => {
   };
 
   const handleFilterValue = (value,type) => {
-    setObservationGalleryData([])
+    setObservationListData([])
     setLoadMore(pageSize);
     if(type == 'status'){
       value = value.toLowerCase();
@@ -152,19 +152,19 @@ useEffect(() => {
             <div className='gallery-page'>
               <h4 className='text-black fw-bold'>Recent Observations</h4>
               <div>
-                {observationGalleryData?.list?.length ===  0 &&
+                {observationListData?.list?.length ===  0 &&
                     <div className="data-not-found">
                       <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
                       <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
                     </div>
                 }
-                <ObservationDetailPage observationList={observationGalleryData?.list} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
+                <ObservationDetailPage observationList={observationListData?.list} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
               </div>
               {nextPageUrl &&
                   <LoadMore handleLoadMore={handleLoadMoreData} />
               }
               {isObservationDetailModal && <ObservationDetails
-                  data={observationGalleryData?.active}
+                  data={observationListData?.active}
                   activeType={''}
                   modalClass="observation-details_modal"
                   open={isObservationDetailModal}
