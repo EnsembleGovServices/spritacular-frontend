@@ -236,7 +236,7 @@ const MyObservations = () => {
                   </div>
                 </Col>
                 <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
-                  <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mt-2 mt-md-0">
+                  <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mb-2 mb-md-0">
                     <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary ms-2 ms-xl-4 shadow-none">
                     <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload
                     Observations

@@ -144,9 +144,12 @@ const Dashboard = () =>{
                 <Container>
                     <div className='d-flex'>
                         {filterShow && 
-                            < AdvancedFilter selectedFilters={selectedFilters}
-                            setSelectedFilters={setSelectedFilters} 
-                            handleFilterValue={handleFilterValue}/>
+                            <AdvancedFilter
+                                selectedFilters={selectedFilters}
+                                setSelectedFilters={setSelectedFilters}
+                                handleFilterValue={handleFilterValue}
+                                handleFilterOpen={handleFilterOpen}
+                            />
                         }
                         
                         <div className={`dashboard-card overflow-hidden ${filterShow ? 'sm-card' : ''}`}>
