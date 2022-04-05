@@ -64,6 +64,7 @@ const MyObservations = () => {
     })
 
   }, [isObservationDetailModal]);
+  console.log(observationListData.active);
 
 
   useEffect(() => {
@@ -191,6 +192,7 @@ const MyObservations = () => {
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);
+    getObservationType(activeType);
   };
 
   const handlLoadMore = () => {

@@ -21,6 +21,7 @@ const PersistLogin = (props) => {
         active: {},
         activeType: ''
     });
+    const [observationGalleryData, setObservationGalleryData] = useState({});
     const [observationComments, setObservationComments] = useState({
         comment_count: 0
     });
@@ -56,7 +57,9 @@ const PersistLogin = (props) => {
                     observationListData,
                     setObservationListData,
                     observationComments,
-                    setObservationComments
+                    setObservationComments,
+                    observationGalleryData,
+                    setObservationGalleryData
                 }
             }>
             {!persist ? (

@@ -46,7 +46,6 @@ const FilterSelectMenu = (props) =>{
                             <FormGroup className="m-0 d-inline-block form-group country-menu">
                                 <Label className="text-uppercase px-3" htmlFor="Country">Country</Label>
                                 <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isCountryOpen:!isFilterOpen.isCountryOpen})} isOpen={isFilterOpen.isCountryOpen} >
-                                    {console.log(selectedFilters.country?.name)}
                                     <DropdownToggle className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                                         <span className="text-truncate">{(selectedFilters.country?.name !== undefined ?selectedFilters.country?.name: 'Please select' )}</span>
                                         
@@ -89,7 +88,7 @@ const FilterSelectMenu = (props) =>{
                                <DropdownMenu className="py-0 shadow">
                                    
                                    {observationStatus?.map((item, index) => {
-                                       return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e) => {setSelectedFilters({...selectedFilters,status:e.target.value}); handleFilterValue(e.target.value,'status');}} >{item}</DropdownItem>
+                                       return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e) => {setSelectedFilters({...selectedFilters,status:e.target.value.toLowerCase()}); handleFilterValue(e.target.value,'status');}} >{item}</DropdownItem>
                                    })}
                                </DropdownMenu>
                            </Dropdown>
