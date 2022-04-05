@@ -39,7 +39,7 @@ const FilterSelectMenu = (props) =>{
                     <div className='d-flex'>
                         <div>
                             {dashboardFilter && <FormGroup className={`filter-btn m-0 d-flex align-items-center h-100 form-group p-0 ${filterShow ? 'filter-open' : ''}`}>
-                                <Button onClick={()=>handleFilterOpen()} className="border-0 rounded-0 bg-transparent text-black shadow-none text-start w-100 d-flex align-items-center">
+                                <Button onClick={()=>handleFilterOpen()} className="border-0 rounded-0 bg-transparent text-black shadow-none text-start w-auto w-md-100 d-flex align-items-center">
                                     <img src={Images.Filter} alt="Filter" /> {filterShow && <span className="ms-0 ms-md-3" >Advanced Filter</span> }</Button>
                             </FormGroup>}
                         </div>
