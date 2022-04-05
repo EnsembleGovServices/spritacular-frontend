@@ -44,6 +44,43 @@ const ObservationMoreDetails = (props) => {
             })
     }
 
+    const handleWatchCounter = async (id) => {
+        console.log('hitting api')
+        await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', null, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth?.token?.access}`
+            }
+        }).then((response) => {
+            console.log(response);
+            let data = observationListData?.active,
+                alreadyWatched = data?.like_watch_count_data?.is_watch,
+                existingWatchCount = data?.like_watch_count_data?.watch_count;
+
+            setObservationListData((prev)=> {
+                return {
+                    ...prev,
+                    active: {
+                        ...data,
+                        like_watch_count_data: {
+                            ...data?.like_watch_count_data,
+                            watch_count: alreadyWatched ? existingWatchCount : existingWatchCount + 1
+                        }
+                    }
+                }
+            });
+        })
+    };
+
+
+    useEffect(()=> {
+        let watched = !(observationListData?.active?.like_watch_count_data?.is_watch);
+        if (watched) {
+            handleWatchCounter(observationListData?.active?.id).then(r => r)
+        }
+    }, [])
+
+
     // like_watch_count_data: {
     //     is_like: like,
     //         like_count: like ? existingData?.like_watch_count_data?.like_count + 1 : existingData?.like_watch_count_data?.like_count - 1
@@ -68,8 +105,8 @@ const ObservationMoreDetails = (props) => {
             }
         });
 
-
         const newObvData = observationListData?.list;
+
         if (data?.id) {
             newObvData?.filter(openedItem => {
                 return openedItem?.id === data?.id;

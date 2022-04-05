@@ -29,25 +29,9 @@ const MyObservations = () => {
 
 
 
-  const handleWatchCounter = async (id) => {
-    console.log('hitting api')
-    formData.set('is_watch', true);
-    await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', formData, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${auth?.token?.access}`
-      }
-    }).then((response) => {
-      console.log(response);
-    })
-  }
+
 
   useEffect(() => {
-    let watched = !currentObservationList[selectedObservationId]?.like_watch_count_data?.is_watch;
-    if (isObservationDetailModal && watched) {
-      handleWatchCounter(observationListData?.list[selectedObservationId].id).then(r => r)
-    }
-
     setObservationListData((prev) => {
       return {
         ...prev,
@@ -94,7 +78,7 @@ setIsLoaded(false);
   
   const getObservationData = (value,reset=false) => {
     setActiveType(value);
-    var url;
+    let url;
     if(reset === true || !nextPageUrl){
       url = '/observation/observation_collection/?type='+value+'&page=1';
     }else{
@@ -119,21 +103,24 @@ setIsLoaded(false);
     let records = data?.data;
       let prevData;
 
-    if(observationListData?.list?.length > 0 && reset == false){
+    if(observationListData?.list?.length > 0 && reset === false){
       prevData = [...observationListData.list];
       prevData = [...prevData,...records];
     }else{
       prevData = data?.data;
     }
       // Global State
-      setObservationListData({
-        list: prevData,
-        count: {
-          verified: data?.verified_count,
-          unverified: data?.unverified_count,
-          denied: data?.denied_count,
-          draft: data?.draft_count,
-          total: data?.verified_count + data?.unverified_count+ data?.denied_count + data?.draft_count
+      setObservationListData((prev) => {
+        return {
+          ...prev,
+          list: prevData,
+          count: {
+            verified: data?.verified_count,
+            unverified: data?.unverified_count,
+            denied: data?.denied_count,
+            draft: data?.draft_count,
+            total: data?.verified_count + data?.unverified_count+ data?.denied_count + data?.draft_count
+          }
         }
       })
 
@@ -146,11 +133,6 @@ setIsLoaded(false);
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);
-    // setObservationListData({
-    //   ...observationListData,
-    //   active: observationListData.list[id]
-    // })
-    // getObservationData(activeType);
   };
 
   const handleLoadMore = () => {
@@ -203,14 +185,14 @@ setIsLoaded(false);
           {nextPageUrl && <LoadMore handleLoadMore={handleLoadMore} />}
           </Container>
 
-         {isObservationDetailModal && <ObservationDetails
+         <ObservationDetails
               data={observationListData?.active}
               activeType={activeType}
               modalClass="observation-details_modal"
               open={isObservationDetailModal}
               handleClose={handleObservationDetailModal}
               handleContinueEdit={handleObservationEdit}
-          />}
+          />
 
         </>
         }
