@@ -9,7 +9,7 @@ import useAuth from "../../hooks/useAuth";
 import Images from "../../static/images";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-
+import Tippy from "@tippyjs/react";
 
 const ObservationCategory = (props) => {
     const {error, obvType}=props;
@@ -21,7 +21,6 @@ const ObservationCategory = (props) => {
     const [selectedCategory, setSelectedCategory] = useState('' || []);
     const ObservationData = {...observationImages};
     const errorData = error ? Object.values(error?.data) : {};
-    
     const fetchCategory = async () => {
             await axios.get(baseURL.api+'/observation/get_category_list/', {
                 headers: {
@@ -97,7 +96,7 @@ const ObservationCategory = (props) => {
         return (
           <>
             <PopoverHeader>What is sprite? 
-                {/* <Button className="bg-transparent p-0 border-0 text-black shadow-none"><Icon icon="codicon:chrome-close" width="15" height="15" /></Button> */}
+                 <Button className="bg-transparent p-0 border-0 text-black shadow-none" ><Icon icon="codicon:chrome-close" width="15" height="15" /></Button>
             </PopoverHeader>
             <PopoverBody>
                 <p style={{'--line-clamb': isPopoverContentOpen === true ? 'unset' : '2'}}>
@@ -134,6 +133,9 @@ const ObservationCategory = (props) => {
                         <PopoverContent contentUpdate={contentUpdate} popoverId={`popover${index}`} />
                     )}
                 </UncontrolledPopover>
+                {/*<Tippy visible={false} trigger="click" content={index}>*/}
+                {/*    <span id={index} ><Icon icon="charm:info" color="#adb4c2" width="15" height="15" /></span>*/}
+                {/*</Tippy>*/}
             </div>
         )
     }

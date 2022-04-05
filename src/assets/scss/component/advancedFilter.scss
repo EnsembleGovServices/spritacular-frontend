@@ -18,6 +18,28 @@
     @include customScrollBar;
     @include media-breakpoint-down(xl){
         margin-right: 30px;
+        max-width: 200px;
+    }
+    @include media-breakpoint-down(lg){
+        top: 198px;
+    }
+    @include media-breakpoint-down(md){
+        background-color: $white;
+        display: flex !important;
+        flex-basis: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        position: fixed;
+        height: 100vh !important;
+        z-index: 999;
+        overflow-y: auto;
+        align-items: flex-start;
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        transform: translateX(0);
+        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
     }
     .form-label{
         @include md-text;
