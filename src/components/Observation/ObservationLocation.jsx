@@ -448,15 +448,18 @@ const ObservationLocation = (props) => {
                         <Col md={6} lg={4}>
                             <FormGroup>
                                 <Label className="text-uppercase" htmlFor="Date">Date</Label>
-                                <Input
-                                    id="Date"
-                                    type="date"
-                                    name="obs_date"
-                                    value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
-                                    className="w-100"
-                                    placeholder="12/20/2021"
-                                    onChange={(e)=>handleImageInput(e)}
-                                />
+                                <div className="position-relative">
+                                    <Input
+                                        id="Date"
+                                        type="date"
+                                        name="obs_date"
+                                        value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
+                                        className="w-100"
+                                        placeholder="12/20/2021"
+                                        onChange={(e)=>handleImageInput(e)}
+                                    />
+                                </div>
+
                                 {error && errorData?.map((item, index) => {
                                     if (step?.selected_image_index === index) {
                                         return(
@@ -470,15 +473,17 @@ const ObservationLocation = (props) => {
                         <Col md={6} lg={4}>
                             <FormGroup>
                                 <Label className="text-uppercase" htmlFor="Time">Time</Label>
-                                <Input
-                                    id="Time"
-                                    type="time"
-                                    name="obs_time"
-                                    value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
-                                    className="w-100"
-                                    placeholder="10:21:00 am"
-                                    onChange={(e)=>handleImageInput(e)}
-                                />
+                                <div className="position-relative">
+                                    <Input
+                                        id="Time"
+                                        type="time"
+                                        name="obs_time"
+                                        value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
+                                        className="w-100"
+                                        placeholder="10:21:00 am"
+                                        onChange={(e)=>handleImageInput(e)}
+                                    />
+                                </div>
                                 {error && errorData?.map((item, index) => {
                                     if (step?.selected_image_index === index) {
                                         return(

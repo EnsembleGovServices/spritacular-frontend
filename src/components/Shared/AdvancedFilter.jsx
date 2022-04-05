@@ -44,12 +44,16 @@ const AdvancedFilter = (props) => {
                                             <FormGroup>
                                                 <Label className='fw-normal text-black'>From</Label>
                                                 <div className='d-flex justify-content-between date-time_row'>
-                                                    <Input type="date" 
-                                                    onChange={(e) => {setSelectedFilters({...selectedFilters,obs_start_date:e.target.value}); // handleFilterValue(e.target.value,'country');
-                                                }}/>
-                                                    <Input type="time" 
-                                                    onChange={(e) => {setSelectedFilters({...selectedFilters,obs_start_time:e.target.value}); // handleFilterValue(e.target.value,'country');
-                                                }}/>
+                                                    <div className="position-relative date-box">
+                                                        <Input type="date"
+                                                        onChange={(e) => {setSelectedFilters({...selectedFilters,obs_start_date:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                        }}/>
+                                                    </div>
+                                                    <div className="position-relative time-box">
+                                                        <Input type="time"
+                                                        onChange={(e) => {setSelectedFilters({...selectedFilters,obs_start_time:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                        }}/>
+                                                    </div>
                                                 </div>
                                             </FormGroup>
                                         </Col>
@@ -57,12 +61,16 @@ const AdvancedFilter = (props) => {
                                             <FormGroup>
                                                 <Label className='fw-normal text-black'>To</Label>
                                                 <div className='d-flex justify-content-between date-time_row'>
-                                                    <Input type="date" 
-                                                    onChange={(e) => {setSelectedFilters({...selectedFilters,obs_end_date:e.target.value}); // handleFilterValue(e.target.value,'country');
-                                                }}/>
-                                                    <Input type="time" 
-                                                    onChange={(e) => {setSelectedFilters({...selectedFilters,obs_end_time:e.target.value}); // handleFilterValue(e.target.value,'country');
-                                                }}/>
+                                                    <div className="position-relative date-box">
+                                                        <Input type="date"
+                                                        onChange={(e) => {setSelectedFilters({...selectedFilters,obs_end_date:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                        }}/>
+                                                    </div>
+                                                    <div className="position-relative time-box">
+                                                        <Input type="time"
+                                                        onChange={(e) => {setSelectedFilters({...selectedFilters,obs_end_time:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                        }}/>
+                                                    </div>
                                                 </div>
                                             </FormGroup>
                                         </Col>
@@ -109,7 +117,7 @@ const AdvancedFilter = (props) => {
                                                     <option>50 FPS</option>
                                                     <option>60 FPS</option>
                                                 </Input>
-                                            </FormGroup> 
+                                            </FormGroup>
                                         </Col>
                                         <Col xs={12}>
                                             <FormGroup>
