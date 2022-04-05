@@ -93,7 +93,7 @@ const FilterSelectMenu = (props) =>{
                                                 <DropdownMenu className="py-0 shadow">
 
                                                     {observationStatus?.map((item, index) => {
-                                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e) => {setSelectedFilters({...selectedFilters,status:e.target.value}); handleFilterValue(e.target.value,'status');}} >{item}</DropdownItem>
+                                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e) => {setSelectedFilters({...selectedFilters,status:e.target.value.toLowerCase()}); handleFilterValue(e.target.value,'status');}} >{item}</DropdownItem>
                                                     })}
                                                 </DropdownMenu>
                                             </Dropdown>

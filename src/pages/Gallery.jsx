@@ -11,15 +11,14 @@ import "../assets/scss/component/gallery.scss";
 import FilterSelectMenu from "../components/Shared/FilterSelectMenu";
 import { Container, UncontrolledAlert } from 'reactstrap';
 import {Link} from 'react-router-dom';
+import useObservationsData from "../hooks/useObservationsData";
 
 
 
 const Gallery = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false);
-  const [observationList,setObservationList] = useState([]);
   const [isLoaded,setIsLoaded] = useState(true);
   const [selectedObservationId,setSelectedObservationId] = useState();
-  const [galleryCardToShow, setGalleryCardToShow] = useState([]);
   const [searchCountry, setSearchCountry] = useState("");
   const [isFilterOpen,setIsFilterOpen] = useState({
     isCountryOpen:false,
@@ -32,17 +31,18 @@ const Gallery = () => {
     status:''
   })
 
+  const { observationGalleryData, setObservationGalleryData } = useObservationsData();
+
   const [currentObservationList,setCurrentObservationList] = useState({});
   const { auth } = useAuth();
   const [loadMore,setLoadMore] = useState(10);
   const [pageSize,setPageSize] = useState(10);
   const [nextPageUrl,setNextPageUrl] = useState('/observation/gallery/?country=&categpry=&status=');
-
   useEffect(() => {
     setLoadMore(pageSize);
     getObservationType('',selectedFilters.type,selectedFilters.status,true);
+    setIsLoaded(false);
   },[isLoaded]);
-  // console.log(nextPageUrl);
 
   const findCountry = (e) => {
     let value = e.target.value.toLowerCase();
@@ -56,22 +56,7 @@ useEffect(()=> {
 }, [isFilterOpen.isCountryOpen])
 
   const handleLoadMoreData = () => {
-    // console.log(nextPageUrl.split('api'));
         getObservationType(selectedFilters.country?.code,selectedFilters.type,selectedFilters.status,false);
-    // let value = loadMore + pageSize;
-    // if(currentObservationList.length > 0){
-
-    //   let length;
-    //   if(value > currentObservationList.length){
-    //     length = currentObservationList.length;
-    //   }
-    //   else{
-    //     length = value;
-    //   }
-    //   setLoadMore(length);
-    //   let currentData = currentObservationList.slice(loadMore,length);
-    //   setGalleryCardToShow([...galleryCardToShow,...currentData]);
-    // }
   }
   const getObservationType = (country,category,status,reset=false) => {
     var url;
@@ -93,41 +78,48 @@ useEffect(()=> {
       }else{
         setNextPageUrl(null);
       }
-      setObservationList(success?.data?.results);
-      let data = success?.data?.results?.slice(0,pageSize);
-      setCurrentObservationList(success?.data?.results);
-      setGalleryCardToShow(data);
+      let records = success?.data?.results;
+      let prevData;
+      
+      if(observationGalleryData.length > 0 && reset == false){
+        prevData = [...observationGalleryData];
+        prevData = [...prevData,...records];
+      }else{
+        prevData = success?.data?.results;
+      }
+      setObservationGalleryData(prevData);
         if(!auth.user){
-          const varifiedData = success?.data?.results?.filter((item) => (item.is_verified === true && item.is_reject === false));
-          setObservationList(varifiedData);
+          const varifiedData = success?.data?.results?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
+          setObservationGalleryData(varifiedData);
         }
       setIsLoaded(false);
     }
     else{
-      setObservationList([])
-      setGalleryCardToShow([])
+      setNextPageUrl(null);
+      setObservationGalleryData([])
     }
   }).catch((error) => {
       console.log(error.response);
   })
   }
-  // console.log(observationList);
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);
   };
 
   const handleFilterValue = (value,type) => {
+    setObservationGalleryData([])
     setLoadMore(pageSize);
-    if(type === 'status'){
+    if(type == 'status'){
+      value = value.toLowerCase();
       getObservationType(selectedFilters.country?.code,selectedFilters.type,value,true);
     }
 
-    if(type === 'category') {
+    else if(type === 'category') {
       getObservationType(selectedFilters.country?.code,value,selectedFilters.status,true);
     }
 
-    if(type === 'country'){
+    else if(type === 'country'){
       getObservationType(value.code,selectedFilters.type,selectedFilters.status,true);
     }
   }
@@ -146,18 +138,18 @@ useEffect(()=> {
         <div className='gallery-page'>
           <h4 className='text-black fw-bold'>Recent Observations</h4>
           <div>
-            {galleryCardToShow.length ===  0 &&
+            {observationGalleryData.length ===  0 &&
               <div className="data-not-found">
                 <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
                 <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
               </div>
             }
-            <ObservationDetailPage observationList={galleryCardToShow} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
+            <ObservationDetailPage observationList={observationGalleryData} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
           </div>
           {nextPageUrl &&
             <LoadMore handlLoadMore={handleLoadMoreData} /> 
            }
-          {isObservationDetailModal && <ObservationDetails data={observationList[selectedObservationId]}  activeType={''} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />}
+          {isObservationDetailModal && <ObservationDetails data={observationGalleryData[selectedObservationId]}  activeType={''} modalClass="observation-details_modal" open={isObservationDetailModal} handleClose={handleObservationDetailModal} />}
         </div>
         </>
   )
