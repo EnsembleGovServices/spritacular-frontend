@@ -14,20 +14,20 @@ import ObservationLikeViewCounter from "./ObservationLikeViewCounter";
 
 const ObservationMoreDetails = (props) => {
     const {data, obvCommentCount} = props;
+    const { observationListData, setObservationListData } = useObservationsData();
     const {auth} = useAuth();
-    const [like, setLike] = useState(data?.like_watch_count_data?.is_like);
+    const [like, setLike] = useState(observationListData.active?.like_watch_count_data?.is_like);
     const formData = new FormData();
     const [openRejectPopup, setOpenRejectPopup] =  useState(false);
-    const { observationListData, setObservationListData } = useObservationsData();
-
-
-    // await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', formData, {
-
-
 
 
     const handleLike = async (id) => {
         formData.set('is_like', like ? 0 : 1);
+        let obvData = observationListData?.active,
+            alreadyLiked = obvData?.like_watch_count_data?.is_like,
+            existingLike = obvData?.like_watch_count_data?.like_count;
+        const newObvData = observationListData?.list;
+
         // console.log(id)
         await axios.post(baseURL.api+'/observation/like/'+id+'/', formData, {
             headers: {
@@ -36,62 +36,73 @@ const ObservationMoreDetails = (props) => {
             }
         })
             .then((response)=> {
-                // console.log(response);
-                setLike(!like);
+                if (!alreadyLiked) {
+                    setLike(!like);
+                    newObvData?.filter(openedItem => {
+                        return openedItem?.id === data?.id;
+                    }).map((item, index) => {
+                        item.like_watch_count_data.is_like = true;
+                        item.like_watch_count_data.like_count = alreadyLiked ? existingLike : existingLike + 1;
+                        return item;
+                    })
+
+                    setObservationListData((prev) => {
+                        return {
+                            ...prev,
+                            list: newObvData,
+                            active: {
+                                ...obvData,
+                                like_watch_count_data: {
+                                    ...obvData?.like_watch_count_data,
+                                    is_like: like,
+                                    like_count: alreadyLiked ? existingLike : existingLike + 1
+                                }
+                            }
+                        }
+                    })
+                }
             })
             .catch((error)=> {
                 console.log(error);
             })
     }
 
-    // like_watch_count_data: {
-    //     is_like: like,
-    //         like_count: like ? existingData?.like_watch_count_data?.like_count + 1 : existingData?.like_watch_count_data?.like_count - 1
-    // }
-
-    useEffect(()=> {
-        let data = observationListData?.active,
-            alreadyLiked = data?.like_watch_count_data?.is_like,
-            existingLike = data?.like_watch_count_data?.like_count;
-
-        setObservationListData((prev)=> {
-            return {
-                ...prev,
-                active: {
-                    ...data,
-                    like_watch_count_data: {
-                        ...data?.like_watch_count_data,
-                        is_like: like,
-                        like_count: like ? (alreadyLiked ? existingLike : existingLike + 1) : existingLike === 0 ? 0 : existingLike - 1
-                    }
-                }
-            }
-        });
-
-
-        const newObvData = observationListData?.list;
-        if (data?.id) {
-            newObvData?.filter(openedItem => {
-                return openedItem?.id === data?.id;
-            }).map((item, index) => {
-                    item.like_watch_count_data.is_like = like;
-                    item.like_watch_count_data.like_count = like ? (alreadyLiked ? existingLike : existingLike + 1) : existingLike === 0 ? 0 : existingLike - 1;
-              return item;
-            })
-
-            setObservationListData((prev) => {
-                return {
-                    ...prev,
-                    list: newObvData
-                }
-            })
-        }
-
-    }, [like]);
-
     const handleCloseRejectPopup = () =>{
         setOpenRejectPopup(!openRejectPopup)
     }
+
+    const handleWatchCounter = async (id) => {
+        await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', null, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth?.token?.access}`
+            }
+        }).then((response) => {
+            console.log(response);
+            let data = observationListData?.active,
+                alreadyWatched = data?.like_watch_count_data?.is_watch,
+                existingWatchCount = data?.like_watch_count_data?.watch_count;
+            setObservationListData((prev)=> {
+                return {
+                    ...prev,
+                    active: {
+                        ...data,
+                        like_watch_count_data: {
+                            ...data?.like_watch_count_data,
+                            watch_count: alreadyWatched ? existingWatchCount : existingWatchCount + 1
+                        }
+                    }
+                }
+            });
+        })
+    };
+
+    useEffect(()=> {
+        let watched = !(observationListData?.active?.like_watch_count_data?.is_watch);
+        if (watched) {
+            handleWatchCounter(observationListData?.active?.id).then(r => r)
+        }
+    }, [observationListData?.active?.id, observationListData?.active?.like_watch_count_data?.is_watch])
 
     return (
         <div className="more-details">
@@ -135,7 +146,7 @@ const ObservationMoreDetails = (props) => {
                     <div className="border-line my-2 mb-4"></div>
                     <Row>
                         <Col sm={12}>
-                            <button className={`btn btn-${like ? '' : 'outline-'}primary like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3`} onClick={()=> handleLike(data?.id)}>
+                            <button className={`btn btn-${like ? '' : 'outline-'}primary like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3`} onClick={()=> handleLike(data?.id)} disabled={like}>
                                 <Icon icon={`heroicons-${like ? 'solid' : 'outline'}:thumb-up`} width="25" height="25" className="me-2" />
                                 <span>{like ? 'Liked' : 'Like'}</span>
                             </button>
