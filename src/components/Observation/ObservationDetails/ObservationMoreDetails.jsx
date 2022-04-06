@@ -20,13 +20,14 @@ const ObservationMoreDetails = (props) => {
     const formData = new FormData();
     const [openRejectPopup, setOpenRejectPopup] =  useState(false);
 
+    const newObvData = observationListData?.list;
+
 
     const handleLike = async (id) => {
         formData.set('is_like', like ? 0 : 1);
         let obvData = observationListData?.active,
             alreadyLiked = obvData?.like_watch_count_data?.is_like,
             existingLike = obvData?.like_watch_count_data?.like_count;
-        const newObvData = observationListData?.list;
 
         // console.log(id)
         await axios.post(baseURL.api+'/observation/like/'+id+'/', formData, {
@@ -82,6 +83,16 @@ const ObservationMoreDetails = (props) => {
             let data = observationListData?.active,
                 alreadyWatched = data?.like_watch_count_data?.is_watch,
                 existingWatchCount = data?.like_watch_count_data?.watch_count;
+
+
+            newObvData?.filter(openedItem => {
+                return openedItem?.id === data?.id;
+            }).map((item, index) => {
+                item.like_watch_count_data.is_watch = true;
+                item.like_watch_count_data.watch_count = alreadyWatched ? existingWatchCount : existingWatchCount + 1;
+                return item;
+            })
+
             setObservationListData((prev)=> {
                 return {
                     ...prev,
@@ -97,12 +108,13 @@ const ObservationMoreDetails = (props) => {
         })
     };
 
+
     useEffect(()=> {
         let watched = !(observationListData?.active?.like_watch_count_data?.is_watch);
-        if (watched) {
-            handleWatchCounter(observationListData?.active?.id).then(r => r)
+        if (watched && data?.id) {
+            handleWatchCounter(data?.id).then(r => r)
         }
-    }, [observationListData?.active?.id, observationListData?.active?.like_watch_count_data?.is_watch])
+    }, [observationListData?.active?.like_watch_count_data?.is_watch])
 
     return (
         <div className="more-details">
@@ -151,12 +163,14 @@ const ObservationMoreDetails = (props) => {
                                 <span>{like ? 'Liked' : 'Like'}</span>
                             </button>
                         </Col>
-                        <Col sm={12}>
-                            <div className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
-                                <Button color="success" className="me-2 text-uppercase fw-bold px-5"><Icon icon="ci:circle-check-outline" className='me-1' />Approve</Button>
-                                <Button color="primary" className='text-uppercase fw-bold px-4' onClick={()=> {handleCloseRejectPopup()}} outline><Icon icon="zondicons:close-outline" className='me-1' />Reject</Button>
-                            </div>
-                        </Col>
+                        {auth?.user?.is_superuser && data?.is_submit && !data?.is_reject &&
+                            <Col sm={12}>
+                                <div className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
+                                    <Button color="success" className="me-2 text-uppercase fw-bold px-5"><Icon icon="ci:circle-check-outline" className='me-1' />Approve</Button>
+                                    <Button color="primary" className='text-uppercase fw-bold px-4' onClick={()=> {handleCloseRejectPopup()}} outline><Icon icon="zondicons:close-outline" className='me-1' />Reject</Button>
+                                </div>
+                            </Col>
+                        }
                         <Col sm={12}>
                             {/*<div className="d-flex align-items-center justify-content-center user-review">*/}
                             {/*    <span className="me-3 d-flex" ><Icon icon="heroicons-solid:thumb-up" width="17" height="17" className="me-1" /> {data?.like_watch_count_data?.like_count} </span>*/}
@@ -166,14 +180,18 @@ const ObservationMoreDetails = (props) => {
                             <ObservationLikeViewCounter likeView={observationListData?.active?.like_watch_count_data} commentCount={obvCommentCount} />
                         </Col>
                     </Row>
-                    <div className="border-line my-4"></div>
-                    <div className="question-box mt-3 d-inline-block w-100">
-                        <h5 className="mb-3 fw-normal text-black">Is this a {data?.category_data[0]}?</h5>
-                        <div className="d-flex">
-                            <Button className="gray-outline-btn me-2 px-3">No</Button>
-                            <Button className="px-3">Yes</Button>
-                        </div>
-                    </div>
+                    <div className="border-line my-4"/>
+                    {data?.category_data?.map((item, index) => {
+                        return(
+                            <div key={index} className="question-box mt-3 d-inline-block w-100">
+                                <h5 className="mb-3 fw-normal text-black">Is this a {item}?</h5>
+                                <div className="d-flex">
+                                    <Button className="gray-outline-btn me-2 px-3">No</Button>
+                                    <Button className="px-3">Yes</Button>
+                                </div>
+                            </div>
+                        )
+                    })}
                 </Col>
             </Row>
 

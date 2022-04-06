@@ -19,17 +19,11 @@ const MyObservations = () => {
   const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
   const { observationListData, setObservationListData } = useObservationsData();
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
-  const [currentObservationList,setCurrentObservationList] = useState({});
   const [isLoaded,setIsLoaded] = useState(true);
   const [activeType,setActiveType] = useState('verified');
   const [selectedObservationId,setSelectedObservationId] = useState();
   const navigate = useNavigate();
-  const formData = new FormData();
   const [nextPageUrl,setNextPageUrl] = useState('/observation/observation_collection/?type=');
-
-
-
-
 
   useEffect(() => {
     setObservationListData((prev) => {
@@ -44,7 +38,7 @@ const MyObservations = () => {
 
   useEffect(() => {
     getObservationData('verified',true);
-setIsLoaded(false);
+      setIsLoaded(false);
   },[isLoaded]);
 
   const handleObservationEdit = (data) => {

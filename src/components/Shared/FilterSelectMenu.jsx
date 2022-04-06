@@ -30,8 +30,10 @@ const FilterSelectMenu = (props) =>{
     }
 
     useEffect(() => {
-        fetchCategory().then(r => r);
-      },[fetchCategory]);
+        // fetchCategory().then(r => r);
+      },[]);
+
+
     return (
         <>
             <div className="observation-filter_wrapper">

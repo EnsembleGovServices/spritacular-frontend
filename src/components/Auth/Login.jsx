@@ -33,6 +33,8 @@ const Login = (props) => {
         e.preventDefault();
         await axios.post(baseURL.token, user)
             .then((response) => {
+                let superuser = response?.data?.is_superuser,
+                    user = response?.data?.is_user;
                 setPersist(prev => !prev);
                 setError('');
                 setAuth({
@@ -43,7 +45,12 @@ const Login = (props) => {
                     user: response?.data
                 })
 
-                navigate(from, { replace: true });
+                if (superuser) {
+                    navigate(routeUrls.dashboard, { replace: true });
+                } else if (user)  {
+                    navigate(routeUrls.home, { replace: true });
+                }
+
                 // toast.success('Logged in successfully', toastConfig());
                 localStorage.setItem('refresh', response?.data?.refresh);
                 localStorage.removeItem('camera');
