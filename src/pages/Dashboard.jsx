@@ -49,17 +49,20 @@ const Dashboard = () =>{
     })
 
     const getObservationData = (value) => {
-        axios.get(baseURL.api+'/observation/gallery/',{
-            headers:{
-                'Content-type': 'application/json',
-                'Authorization': `Bearer ${auth?.token?.access}`
-            },
+        if (auth?.user?.is_superuser) {
+            axios.get(baseURL.api+'/observation/gallery/',{
+                headers:{
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${auth?.token?.access}`
+                },
 
-        }).then((success)=>{
-            setObservationList(success?.data?.results?.data)
-        }).catch((error)=>{
-            console.log(error.response);
-        })
+            }).then((success)=>{
+                setObservationList(success?.data?.results?.data)
+            }).catch((error)=>{
+                console.log(error.response);
+            })
+        }
+        return true;
     }
     useEffect(()=>{
         getObservationData()

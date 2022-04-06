@@ -23,7 +23,6 @@ import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 import InformativePage from './layouts/InformativePage';
 import Dashboard from "./pages/Dashboard";
 
-
 const App = () => {
   const [persistValue, setPersistValue] = useState(false);
   const authCallBack = (authChange) => {

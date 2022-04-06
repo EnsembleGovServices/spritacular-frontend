@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button, Col, Container, FormGroup, Input, Label, Row,Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { routeUrls } from "../../helpers/url";
 import Images from './../../static/images';
-import {observationStatus,countries} from "./../../helpers/timezone";
+import {observationStatus,countries} from "../../helpers/timezone";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
@@ -28,10 +28,10 @@ const FilterSelectMenu = (props) =>{
         })
         .catch((error)=> {console.log(error)})
     }
-    
+
     useEffect(() => {
-        fetchCategory();
-      },[]);
+        fetchCategory().then(r => r);
+      },[fetchCategory]);
     return (
         <>
             <div className="observation-filter_wrapper">
