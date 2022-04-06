@@ -142,8 +142,7 @@ useEffect(() => {
   }
   return(
     <>
-
-     {auth.user &&
+     {!auth.user.is_user &&
      <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
 }
         <Container>
