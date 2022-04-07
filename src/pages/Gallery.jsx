@@ -174,6 +174,7 @@ useEffect(() => {
                   modalClass="observation-details_modal"
                   open={isObservationDetailModal}
                   handleClose={handleObservationDetailModal}
+                  handleApproveRejectEvent={getObservationType}
               />
 
             </div>
