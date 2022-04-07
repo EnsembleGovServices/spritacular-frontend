@@ -1,4 +1,4 @@
-import {Badge, Button, Col, Row, UncontrolledAlert} from "reactstrap";
+import {Badge, Button, ButtonGroup, Col, Form, Row, UncontrolledAlert} from "reactstrap";
 import { Icon } from '@iconify/react';
 import ReactCountryFlags from "../../../components/ReactCountryFlag";
 import moment from 'moment';
@@ -17,13 +17,18 @@ const ObservationMoreDetails = (props) => {
     const {data, obvCommentCount, handlePopup, approveRejectEvent} = props;
     const { observationListData, setObservationListData } = useObservationsData();
     const [like, setLike] = useState(observationListData.active?.like_watch_count_data?.is_like);
-    const formData = new FormData();
     const [openRejectPopup, setOpenRejectPopup] =  useState(false);
     const [error, setError] = useState();
     const [success, setSuccess] = useState();
     const user = auth?.user;
+    const superuser = user.is_superuser;
+    const trained = user?.is_trained;
+    const shouldVerify = user?.is_to_be_verify;
     const token = auth?.token?.access;
     const newObvData = observationListData?.list;
+    const formData = new FormData();
+    const [selectedVote, setSelectedVote] = useState([]);
+    const [selectedRadio, setSelectedRadio] = useState();
 
 
     const handleLike = async (id) => {
@@ -109,7 +114,6 @@ const ObservationMoreDetails = (props) => {
         })
     };
 
-
     const submitApproval = async (id) => {
         setSuccess('');
         setError('');
@@ -135,10 +139,42 @@ const ObservationMoreDetails = (props) => {
                 })
             })
     }
-
     const handleApproveObservation = (id) => {
       submitApproval(id).then(r => r);
     }
+
+
+    const handleVoteClick = (sr, item, index) => {
+        console.log(sr)
+        const selectedRadioData = {
+            category_name: item,
+            vote: sr === `yes${index}` ? 1 : 0
+        }
+
+        setSelectedRadio(selectedRadioData);
+        console.log(selectedRadio);
+
+        selectedVote.push(selectedRadio);
+
+        // if (index < 0) {
+      //     selectedVote.push(selectedRadio);
+      // } else {
+      //     selectedVote.splice(index, 1);
+      // }
+      // setSelectedVote(...selectedVote);
+    };
+
+    // useEffect(()=> {
+    //     const existingVote = (selectedRadio) ? [...selectedRadio] : [];
+    //     setSelectedVote(existingVote)
+    // }, [selectedRadio])
+
+
+    const handleVote = (e) => {
+        e.preventDefault();
+        console.log(e);
+    }
+
 
 
 
@@ -210,7 +246,7 @@ const ObservationMoreDetails = (props) => {
                             </UncontrolledAlert>
                         }
 
-                        {user && user?.is_superuser &&
+                        {superuser && shouldVerify &&
                             <Col sm={12}>
                                 <div className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
                                     <Button color="success" onClick={()=> handleApproveObservation(data?.id)} className="me-2 text-uppercase fw-bold px-5"><Icon icon="ci:circle-check-outline" className='me-1' />Approve</Button>
@@ -223,17 +259,37 @@ const ObservationMoreDetails = (props) => {
                         </Col>
                     </Row>
                     <div className="border-line my-4"/>
-                    {user && data?.category_data?.map((item, index) => {
-                        return(
-                            <div key={index} className="question-box mt-3 d-inline-block w-100">
-                                <h5 className="mb-3 fw-normal text-black">Is this a {item}?</h5>
-                                <div className="d-flex">
-                                    <Button className="gray-outline-btn me-2 px-3">No</Button>
-                                    <Button className="px-3">Yes</Button>
+                    <Form onSubmit={handleVote}>
+                        <h4 className="mt-3">Vote for observation</h4>
+                        {data?.category_data?.map((item, index) => {
+                            // console.log(item);
+                            return(
+                                <div key={index} className="question-box mt-3 d-inline-block w-100">
+                                    <h5 className="mb-3 fw-normal text-black">Is this a {item}?</h5>
+                                    <ButtonGroup>
+                                        <Button
+                                            color="outline-primary"
+                                            onClick={()=> handleVoteClick('yes'+index, item, index)}
+                                        >
+                                            Yes
+                                        </Button>
+                                        <Button
+                                            color="outline-primary"
+                                            onClick={()=> handleVoteClick('no'+index, item, index)}
+                                        >
+                                            No
+                                        </Button>
+                                    </ButtonGroup>
                                 </div>
-                            </div>
-                        )
-                    })}
+                            )
+                        })}
+
+                        <Button disabled className="like-btn mt-4 w-100 d-flex align-items-center justify-content-center py-2 mb-3">
+                            <Icon icon="heroicons-solid:thumb-up" width="25" height="25" className="me-2" />
+                            <span>Vote this observation</span>
+                        </Button>
+
+                    </Form>
                 </Col>
             </Row>
 
