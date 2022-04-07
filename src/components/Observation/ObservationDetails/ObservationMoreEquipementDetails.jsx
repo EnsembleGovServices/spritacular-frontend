@@ -1,8 +1,14 @@
 import { Button, Col, Row } from "reactstrap";
 import { Icon } from '@iconify/react';
+import ObservationLikeViewCounter from "./ObservationLikeViewCounter";
+import useObservationsData from "../../../hooks/useObservationsData";
+import useAuth from "../../../hooks/useAuth";
 
 const ObservationMoreEquipementDetails = (props) => {
+    const {auth} = useAuth();
     const {data, obvCommentCount} = props;
+    const { observationListData } = useObservationsData();
+    const user = auth?.user;
     return (
         <>
             <Row>
@@ -80,18 +86,16 @@ const ObservationMoreEquipementDetails = (props) => {
                     </Row>
                     <div className="border-line my-2 mb-4"></div>
                     <Row className="align-items-center mt-3">
+                        {user &&
+                            <Col sm={12}>
+                                <Button disabled className="like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3">
+                                    <Icon icon="heroicons-solid:thumb-up" width="25" height="25" className="me-2" />
+                                    <span>Vote this observation</span>
+                                </Button>
+                            </Col>
+                        }
                         <Col sm={12}>
-                            <Button disabled className="like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3">
-                                <Icon icon="heroicons-solid:thumb-up" width="25" height="25" className="me-2" /> 
-                                <span>Vote this observation</span>
-                            </Button>
-                        </Col>
-                        <Col sm={12}>
-                            <div className="d-flex align-items-center justify-content-center user-review">
-                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:thumb-up" width="17" height="17" className="me-1" /> 2,250 </span>
-                                <span className="me-3 d-flex" ><Icon icon="heroicons-solid:eye" width="17" height="17" className="me-1" /> 100K </span>
-                                <span className="d-flex" ><Icon icon="mdi:message" width="17" height="17" className="me-1" /> {obvCommentCount} </span>
-                            </div>
+                            <ObservationLikeViewCounter likeView={observationListData?.active?.like_watch_count_data} commentCount={obvCommentCount} />
                         </Col>
                     </Row>
                 </Col>

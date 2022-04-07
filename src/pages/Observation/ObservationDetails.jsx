@@ -12,7 +12,7 @@ import Tippy from "@tippyjs/react";
 import CardImageCarousel from "../../components/Shared/CardImageCarousel";
 
 const ObservationDetails = (props) =>{
-    const {modalClass, open, handleClose, data, activeType, handleContinueEdit } = props;
+    const {modalClass, open, handleClose, data, activeType, handleContinueEdit, handleApproveRejectEvent } = props;
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
     const {observationComments} = useObservationsData();
     const obvDetailsModal = useRef(null);
@@ -34,7 +34,7 @@ const ObservationDetails = (props) =>{
                 isOpen={open}
                 backdrop={true}
                 keyboard={false}
-                scrollable
+                scrollable={false}
                 size="xl"
                 toggle={handleClose}
                 ref={obvDetailsModal}
@@ -123,7 +123,7 @@ const ObservationDetails = (props) =>{
                             </Nav>
                             <TabContent activeTab={activeTab}>
                                 <TabPane tabId={imageDetails.Details}>
-                                    <ObservationMoreDetails obvCommentCount={observationComments?.comment_count} data={data}/>
+                                    <ObservationMoreDetails approveRejectEvent={handleApproveRejectEvent}  obvCommentCount={observationComments?.comment_count} data={data}/>
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Equipment}>
                                     <ObservationMoreEquipementDetails obvCommentCount={observationComments?.comment_count} data={data?.camera_data} />

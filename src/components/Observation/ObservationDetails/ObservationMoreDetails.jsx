@@ -1,4 +1,4 @@
-import { Badge, Button, Col, Row } from "reactstrap";
+import {Badge, Button, Col, Row, UncontrolledAlert} from "reactstrap";
 import { Icon } from '@iconify/react';
 import ReactCountryFlags from "../../../components/ReactCountryFlag";
 import moment from 'moment';
@@ -13,13 +13,16 @@ import ObservationLikeViewCounter from "./ObservationLikeViewCounter";
 
 
 const ObservationMoreDetails = (props) => {
-    const {data, obvCommentCount} = props;
-    const { observationListData, setObservationListData } = useObservationsData();
     const {auth} = useAuth();
+    const {data, obvCommentCount, approveRejectEvent} = props;
+    const { observationListData, setObservationListData } = useObservationsData();
     const [like, setLike] = useState(observationListData.active?.like_watch_count_data?.is_like);
     const formData = new FormData();
     const [openRejectPopup, setOpenRejectPopup] =  useState(false);
-
+    const [error, setError] = useState();
+    const [success, setSuccess] = useState();
+    const user = auth?.user;
+    const token = auth?.token?.access;
     const newObvData = observationListData?.list;
 
 
@@ -67,11 +70,9 @@ const ObservationMoreDetails = (props) => {
                 console.log(error);
             })
     }
-
     const handleCloseRejectPopup = () =>{
         setOpenRejectPopup(!openRejectPopup)
     }
-
     const handleWatchCounter = async (id) => {
         await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', null, {
             headers: {
@@ -109,12 +110,43 @@ const ObservationMoreDetails = (props) => {
     };
 
 
+    const submitApproval = async (id) => {
+        setSuccess('');
+        setError('');
+        await axios.post(`${baseURL.api}/observation/verify_observation/${id}/`, {name: "APPROVE"}, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then((response) => {
+                console.log(response);
+                setSuccess({
+                    message: response?.data?.success
+                })
+                approveRejectEvent('verified', true);
+            })
+            .catch(error => {
+                console.log(error?.response);
+                setError({
+                    notAllowed: error?.response?.data?.detail
+                })
+            })
+    }
+
+    const handleApproveObservation = (id) => {
+      console.log(id);
+      submitApproval(id).then(r => r);
+    }
+
+
+
     useEffect(()=> {
         let watched = !(observationListData?.active?.like_watch_count_data?.is_watch);
-        if (watched && data?.id) {
+        if (watched && data?.id && user) {
             handleWatchCounter(data?.id).then(r => r)
         }
-    }, [observationListData?.active?.like_watch_count_data?.is_watch])
+    }, [data?.id, observationListData?.active?.like_watch_count_data?.is_watch])
 
     return (
         <div className="more-details">
@@ -152,36 +184,45 @@ const ObservationMoreDetails = (props) => {
                         <Col sm={9}>
                             <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold text-end">
                             <ReactCountryFlags country= {data?.images[0]?.country_code} />
-                                <span className="ms-1">{data?.images[0]?.location}</span></p>
+                            <span className="ms-1">{data?.images[0]?.location}</span></p>
                         </Col>
                     </Row>
                     <div className="border-line my-2 mb-4"></div>
                     <Row>
-                        <Col sm={12}>
-                            <button className={`btn btn-${like ? '' : 'outline-'}primary like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3`} onClick={()=> handleLike(data?.id)} disabled={like}>
-                                <Icon icon={`heroicons-${like ? 'solid' : 'outline'}:thumb-up`} width="25" height="25" className="me-2" />
-                                <span>{like ? 'Liked' : 'Like'}</span>
-                            </button>
-                        </Col>
-                        {auth?.user?.is_superuser &&
+                        {user &&
+                            <Col sm={12}>
+                                <button className={`btn btn-${like ? '' : 'outline-'}primary like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3`} onClick={()=> handleLike(data?.id)} disabled={like}>
+                                    <Icon icon={`heroicons-${like ? 'solid' : 'outline'}:thumb-up`} width="25" height="25" className="me-2" />
+                                    <span>{like ? 'Liked' : 'Like'}</span>
+                                </button>
+                            </Col>
+                        }
+                        {success && success?.message &&
+                            <UncontrolledAlert color="success" data-dismiss="alert" dismissible="true" className="text-left">
+                                {success?.message}
+                            </UncontrolledAlert>
+                        }
+
+                        {error?.notAllowed &&
+                            <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-left">
+                                {error?.notAllowed}
+                            </UncontrolledAlert>
+                        }
+
+                        {user && user?.is_superuser &&
                             <Col sm={12}>
                                 <div className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
-                                    <Button color="success" className="me-2 text-uppercase fw-bold px-5"><Icon icon="ci:circle-check-outline" className='me-1' />Approve</Button>
+                                    <Button color="success" onClick={()=> handleApproveObservation(data?.id)} className="me-2 text-uppercase fw-bold px-5"><Icon icon="ci:circle-check-outline" className='me-1' />Approve</Button>
                                     <Button color="primary" className='text-uppercase fw-bold px-4' onClick={()=> {handleCloseRejectPopup()}} outline><Icon icon="zondicons:close-outline" className='me-1' />Reject</Button>
                                 </div>
                             </Col>
                         }
                         <Col sm={12}>
-                            {/*<div className="d-flex align-items-center justify-content-center user-review">*/}
-                            {/*    <span className="me-3 d-flex" ><Icon icon="heroicons-solid:thumb-up" width="17" height="17" className="me-1" /> {data?.like_watch_count_data?.like_count} </span>*/}
-                            {/*    <span className="me-3 d-flex" ><Icon icon="heroicons-solid:eye" width="17" height="17" className="me-1" /> {data?.like_watch_count_data?.watch_count} </span>*/}
-                            {/*    <span className="d-flex" ><Icon icon="mdi:message" width="17" height="17" className="me-1" /> {obvCommentCount} </span>*/}
-                            {/*</div>*/}
                             <ObservationLikeViewCounter likeView={observationListData?.active?.like_watch_count_data} commentCount={obvCommentCount} />
                         </Col>
                     </Row>
                     <div className="border-line my-4"/>
-                    {data?.category_data?.map((item, index) => {
+                    {user && data?.category_data?.map((item, index) => {
                         return(
                             <div key={index} className="question-box mt-3 d-inline-block w-100">
                                 <h5 className="mb-3 fw-normal text-black">Is this a {item}?</h5>
@@ -196,8 +237,12 @@ const ObservationMoreDetails = (props) => {
             </Row>
 
             <RejectObvservationPopup
+                data={data}
+                user={user}
+                token={token}
                 openRejectModal={openRejectPopup}
                 handleCloseRejectObs={handleCloseRejectPopup}
+                approveReject={approveRejectEvent}
             />
 
         </div>

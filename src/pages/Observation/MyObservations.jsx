@@ -186,6 +186,7 @@ const MyObservations = () => {
               open={isObservationDetailModal}
               handleClose={handleObservationDetailModal}
               handleContinueEdit={handleObservationEdit}
+              handleApproveRejectEvent={getObservationData}
           />
 
         </>
