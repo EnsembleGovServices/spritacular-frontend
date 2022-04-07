@@ -163,7 +163,7 @@ const ObservationMoreDetails = (props) => {
                                 <span>{like ? 'Liked' : 'Like'}</span>
                             </button>
                         </Col>
-                        {auth?.user?.is_superuser && data?.is_submit && !data?.is_reject &&
+                        {auth?.user?.is_superuser &&
                             <Col sm={12}>
                                 <div className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
                                     <Button color="success" className="me-2 text-uppercase fw-bold px-5"><Icon icon="ci:circle-check-outline" className='me-1' />Approve</Button>
