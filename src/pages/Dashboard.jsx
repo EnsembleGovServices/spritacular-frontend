@@ -12,6 +12,8 @@ import useObservations from '../hooks/useObservations';
 import AdvancedFilter from '../components/Shared/AdvancedFilter';
 import "../assets/scss/component/dashboard.scss";
 import ObservationListView from './Observation/ObservationListView';
+import { LoadMore } from '../components/Shared/LoadMore';
+import useObservationsData from '../hooks/useObservationsData';
 
 const Dashboard = () =>{
     const { auth } = useAuth();
@@ -47,17 +49,56 @@ const Dashboard = () =>{
       shutter_speed:null,
       lens_type:null,
     })
+    const [isLoaded,setIsLoaded] = useState(true);
 
-    const getObservationData = (value) => {
+
+    const { observationListData, setObservationListData } = useObservationsData();
+    const [nextPageUrl,setNextPageUrl] = useState('/observation/gallery/');
+
+
+    const getObservationData = (reset=false) => {
         if (auth?.user?.is_superuser) {
-            axios.get(baseURL.api+'/observation/gallery/',{
+            let url;
+            if(reset === true || !nextPageUrl){
+            url = '/observation/gallery/?page=1';
+            }else{
+            url = nextPageUrl;
+            }
+            axios.get(baseURL.api+url,{
                 headers:{
                     'Content-type': 'application/json',
                     'Authorization': `Bearer ${auth?.token?.access}`
                 },
 
             }).then((success)=>{
-                setObservationList(success?.data?.results?.data)
+                if(success?.data?.results?.data !== undefined){
+                    if(success?.data?.next){
+                      setNextPageUrl(success?.data?.next.split('api')[1]);
+                    }else{
+                      setNextPageUrl(null);
+                    }
+                    let records = success?.data?.results?.data;
+                    let prevData;
+                    
+                    if(observationListData?.list?.length > 0 && reset === false){
+                      prevData = [...observationListData?.list];
+                      prevData = [...prevData,...records];
+                    }else{
+                      prevData = success?.data?.results?.data;
+                    }
+                    setObservationListData((prev) => {
+                        return {
+                          ...prev,
+                          list: prevData,
+                        }
+                      })
+                    setIsLoaded(false);
+                  }
+                  else{
+                    setNextPageUrl(null);
+                    setObservationListData({list:[],active:{}})
+                  }
+                // setObservationList(success?.data?.results?.data)
             }).catch((error)=>{
                 console.log(error.response);
             })
@@ -67,10 +108,26 @@ const Dashboard = () =>{
     useEffect(()=>{
         getObservationData()
     },[]);
+
+    const handleLoadMoreData = () => {
+        getObservationData(false);
+  }
+  
     const handleObservationDetailModal = (id) => {
         setObservationDetailModal(!isObservationDetailModal);
         setSelectedObservationId(id);
     };
+
+    useEffect(() => {
+        setObservationListData((prev) => {
+          return {
+            ...prev,
+            active: observationListData?.list?.[selectedObservationId]
+          }
+        })
+      
+      }, [isObservationDetailModal]);
+
     const cleaningUpObservationDataForDraftSaving = async (data) => {
         setObservationImages([]);
         setObservationData([]);
@@ -157,29 +214,32 @@ const Dashboard = () =>{
                         
                         <div className={`dashboard-card overflow-hidden ${filterShow ? 'sm-card' : ''}`}>
                             {listView && <ObservationListView 
-                                observationList={observationList} 
+                                observationList={observationListData?.list} 
                                 isObservationDetailModal={isObservationDetailModal} 
                                 setObservationDetailModal={setObservationDetailModal} 
                                 setSelectedObservationId={setSelectedObservationId}
                             />}
-                            {observationList && gridView &&
+                            {observationListData?.list?.length > 0 && gridView &&
                                 <ObservationDetailPage 
-                                    observationList={observationList}
+                                    observationList={observationListData?.list}
                                     isObservationDetailModal={isObservationDetailModal}
                                     setObservationDetailModal={setObservationDetailModal} 
                                     setSelectedObservationId={setSelectedObservationId}
                                 />
                             }
+                            {nextPageUrl &&
+                            <LoadMore handleLoadMore={handleLoadMoreData} />
+                        }
                         </div>
-                        {isObservationDetailModal && observationList[selectedObservationId].images.length > 0 &&
                         <ObservationDetails 
-                            data={observationList[selectedObservationId]}  
+                            data={observationListData?.active}  
                             modalClass="observation-details_modal" 
                             open={isObservationDetailModal} 
                             handleClose={handleObservationDetailModal} 
                             handleContinueEdit={handleObservationEdit} 
+                            activeType={''}
+                            handleApproveRejectEvent={getObservationData}
                         />
-                        }
                     </div>
                 </Container>
             </div>

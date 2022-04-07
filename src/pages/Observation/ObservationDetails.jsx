@@ -44,7 +44,7 @@ const ObservationDetails = (props) =>{
                         <Button className="close-icon bg-transparent rounded-0 border-0 shadow-none p-0 me-3" onClick={() => handleClose()}>
                             <img src={Images.Modalcloseicon} alt="close-icon" />
                         </Button>
-                        {(data?.category_data[0]) ? data?.category_data[0] : null} 
+                        {(data?.category_data?.[0]) ? data?.category_data?.[0] : null} 
                         <Badge className={`text-uppercase ${activeType === 'verified' ? 'badge-success' : ''}`}>{activeType === 'verified' && <Icon icon="mdi:check-decagram" color="#27ae60" className="me-1" width="13" height="13" />}{activeType}</Badge>
                     </div>
                     {activeType === "draft" &&
@@ -74,7 +74,7 @@ const ObservationDetails = (props) =>{
                                     </Col>
                                     <Col sm={6} className="justify-content-end d-flex align-items-center">
                                         <div className="observation_type d-flex align-items-center">
-                                        {data?.category_data.length > 0 && data?.category_data.map((item, index) => {
+                                        {data?.category_data?.length > 0 && data?.category_data?.map((item, index) => {
                                             return (
                                                 <i id={item.toLowerCase().replaceAll(" ", "")} className="rounded-circle bg-white ms-2 cursor-pointer" key={index}>
                                                     <Tippy animation="perspective" content={item}>

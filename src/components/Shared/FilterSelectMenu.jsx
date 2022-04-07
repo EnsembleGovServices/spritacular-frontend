@@ -8,31 +8,13 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
+import useObservationsData from "../../hooks/useObservationsData";
 
 const FilterSelectMenu = (props) =>{
     const {filterShow, handleFilterOpen, galleryFilter,isFilterOpen,setIsFilterOpen,selectedFilters,setSelectedFilters,searchCountry,findCountry,handleFilterValue,dashboardFilter, handleListView, handleGridView, listView, gridView} =  props;
-
+    const { categoryList, setCategoryList } = useObservationsData();
     const [category,setCategory] = useState([]);
     const { auth } = useAuth();
-
-
-    const fetchCategory = async () => {
-        await axios.get(baseURL.api+'/observation/get_category_list/', {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${auth?.token?.access}`
-            }
-        })
-        .then((response)=> {
-          setCategory(response?.data);
-        })
-        .catch((error)=> {console.log(error)})
-    }
-
-    useEffect(() => {
-        // fetchCategory().then(r => r);
-      },[]);
-
 
     return (
         <>
@@ -76,8 +58,8 @@ const FilterSelectMenu = (props) =>{
                                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                 </DropdownToggle>
                                                 <DropdownMenu className="py-0 shadow">
-
-                                                    {category?.map((item, index) => {
+                                                {console.log(auth.categoryList)}
+                                                    {auth.categoryList !== undefined  && auth?.categoryList?.map((item, index) => {
                                                         return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value ={item.name} onClick={(e) => {setSelectedFilters({...selectedFilters,type:e.target.value}); handleFilterValue(e.target.value,'category');}} >{item.name}</DropdownItem>
                                                     })}
                                                 </DropdownMenu>

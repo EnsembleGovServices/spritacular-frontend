@@ -1,4 +1,5 @@
 import axios from '../api/axios';
+import { baseURL } from '../helpers/url';
 import useAuth from './useAuth';
 
 const useRefreshToken = () => {
@@ -30,6 +31,20 @@ const useRefreshToken = () => {
                 token: response.data,
             }
         });
+        await axios.get(baseURL.api+'/observation/get_category_list/', {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then((response)=> {
+            setAuth(prev => {
+            return {
+                ...prev,
+                categoryList: response.data,
+            }
+        });
+        })
+        .catch((error)=> {console.log(error)})
 
         return response.data;
     };
