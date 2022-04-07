@@ -50,8 +50,8 @@ const ObservationCard = (props) => {
                     }
                     <CardBody className="position-relative observation-card_body">
                         <div className="position-absolute observation_type d-flex align-items-center">
-                            {cardItems?.category_data.length > 0 &&
-                                cardItems?.category_data.map((item, index) => {
+                            {cardItems?.category_data?.length > 0 &&
+                                cardItems?.category_data?.map((item, index) => {
                                     let image = `/assets/images/category/${item?.toLowerCase().replaceAll(" ", "")}.png`;
                                     return (
                                         <i className="rounded-circle bg-white me-1" key={index}>

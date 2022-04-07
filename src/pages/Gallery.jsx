@@ -40,7 +40,7 @@ const Gallery = () => {
   const user = auth?.user;
   useEffect(() => {
     setLoadMore(pageSize);
-    getObservationType('',selectedFilters.type,selectedFilters.status,true);
+    getObservationType(true,'',selectedFilters.type,selectedFilters.status);
     setIsLoaded(false);
   },[isLoaded]);
 
@@ -66,9 +66,9 @@ useEffect(() => {
 }, [isObservationDetailModal]);
 
   const handleLoadMoreData = () => {
-        getObservationType(selectedFilters.country?.code,selectedFilters.type,selectedFilters.status,false);
+        getObservationType(false,selectedFilters.country?.code,selectedFilters.type,selectedFilters.status);
   }
-  const getObservationType = (country,category,status,reset=false) => {
+  const getObservationType = (reset=false,country=`${selectedFilters.country?.code}`,category=`${selectedFilters.type}`,status=`${selectedFilters.status}`) => {
     let url;
     if(reset === true || !nextPageUrl){
       url = '/observation/gallery/?country='+country+'&category='+category+'&status='+status+'&page=1';
@@ -99,16 +99,26 @@ useEffect(() => {
       }else{
         prevData = success?.data?.results?.data;
       }
-      setObservationListData({list:prevData});
+      setObservationListData((prev) => {
+        return {
+          ...prev,
+          list: prevData,
+        }
+      })
         if(!auth.user){
           const varifiedData = success?.data?.results?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
-          setObservationListData({list:varifiedData});
+          setObservationListData((prev) => {
+            return {
+              ...prev,
+              list: varifiedData,
+            }
+          })
         }
       setIsLoaded(false);
     }
     else{
       setNextPageUrl(null);
-      setObservationListData({list:[]})
+      setObservationListData({list:[],active:{}})
     }
   }).catch((error) => {
       console.log(error.response);
@@ -124,15 +134,15 @@ useEffect(() => {
     setLoadMore(pageSize);
     if(type === 'status'){
       value = value.toLowerCase();
-      getObservationType(selectedFilters.country?.code,selectedFilters.type,value,true);
+      getObservationType(true,selectedFilters.country?.code,selectedFilters.type,value);
     }
 
     else if(type === 'category') {
-      getObservationType(selectedFilters.country?.code,value,selectedFilters.status,true);
+      getObservationType(true,selectedFilters.country?.code,value,selectedFilters.status);
     }
 
     else if(type === 'country'){
-      getObservationType(value.code,selectedFilters.type,selectedFilters.status,true);
+      getObservationType(true,value.code,selectedFilters.type,selectedFilters.status);
     }
   }
   return(
@@ -150,7 +160,7 @@ useEffect(() => {
             <div className='gallery-page'>
               <h4 className='text-black fw-bold'>Recent Observations</h4>
               <div>
-                {observationListData?.list ? (
+                {observationListData?.list.length > 0 ? (
                     <ObservationDetailPage
                         observationList={observationListData?.list}
                         isObservationDetailModal={isObservationDetailModal}
@@ -174,6 +184,7 @@ useEffect(() => {
                   modalClass="observation-details_modal"
                   open={isObservationDetailModal}
                   handleClose={handleObservationDetailModal}
+                  handleApproveRejectEvent={getObservationType}
               />
 
             </div>

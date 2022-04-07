@@ -123,7 +123,7 @@ const ObservationMoreDetails = (props) => {
                 setSuccess({
                     message: response?.data?.success
                 })
-                approveRejectEvent('verified', true);
+                approveRejectEvent(true);
                 setTimeout(function () {
                     handlePopup(false);
                 }, 1200)

@@ -46,7 +46,7 @@ const RejectObservationPopUp = (props) => {
             })
                 .then((response)=> {
                     console.log(response);
-                    approveReject('verified', true);
+                    approveReject(true);
                     setTimeout(function () {
                         handleCloseRejectObs(false);
                     }, 1200)

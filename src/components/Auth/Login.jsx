@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth";
 import {useLocation, useNavigate} from "react-router-dom";
 import { routeUrls } from './../../helpers/url';
+import useObservationsData from "../../hooks/useObservationsData";
 
 const Login = (props) => {
     const {cp} = props;
@@ -12,6 +13,7 @@ const Login = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || routeUrls.home;
+    const { categoryList, setCategoryList } = useObservationsData();
 
     const [user, setUser] = useState({
         email: "",
@@ -44,7 +46,7 @@ const Login = (props) => {
                     },
                     user: response?.data
                 })
-
+                fetchCategory(response?.data?.access).then(r => r);
                 if (superuser) {
                     navigate(routeUrls.dashboard, { replace: true });
                 } else if (user)  {
@@ -79,6 +81,23 @@ const Login = (props) => {
                     console.log(error?.response?.statusText)
                 }
             })
+    }
+
+    const fetchCategory = async (token) => {
+        await axios.get(baseURL.api+'/observation/get_category_list/', {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then((response)=> {
+            setAuth(prev => {
+                return {
+                    ...prev,
+                    categoryList: response?.data
+                }
+            });
+        })
+        .catch((error)=> {console.log(error)})
     }
 
     useEffect(() => {

@@ -24,18 +24,6 @@ const ObservationCategory = (props) => {
     const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
     const tippyRef = useRef();
 
-    const fetchCategory = async () => {
-            await axios.get(baseURL.api+'/observation/get_category_list/', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${auth?.token?.access}`
-                }
-            })
-            .then((response)=> {
-                setOldCategory(response?.data);
-            })
-            .catch((error)=> {console.log(error)})
-    }
     const onCategoryChange=(e)=>{
         const value = parseFloat(e.target.id);
         setIsChecked({...isChecked,[e.target.name]: e.target.checked});
@@ -160,7 +148,7 @@ const ObservationCategory = (props) => {
     }
 
     useEffect(()=> {
-        fetchCategory().then(r=>r)
+        setOldCategory(auth?.categoryList)
     }, [])
 
     useEffect(() => {
