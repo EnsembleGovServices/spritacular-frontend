@@ -123,7 +123,7 @@ const ObservationDetails = (props) =>{
                             </Nav>
                             <TabContent activeTab={activeTab}>
                                 <TabPane tabId={imageDetails.Details}>
-                                    <ObservationMoreDetails approveRejectEvent={handleApproveRejectEvent}  obvCommentCount={observationComments?.comment_count} data={data}/>
+                                    <ObservationMoreDetails handlePopup={handleClose} approveRejectEvent={handleApproveRejectEvent}  obvCommentCount={observationComments?.comment_count} data={data}/>
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Equipment}>
                                     <ObservationMoreEquipementDetails obvCommentCount={observationComments?.comment_count} data={data?.camera_data} />

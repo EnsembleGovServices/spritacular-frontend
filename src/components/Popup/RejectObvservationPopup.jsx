@@ -5,7 +5,7 @@ import {baseURL} from "../../helpers/url";
 import PropTypes from "prop-types";
 
 const RejectObservationPopUp = (props) => {
-    const { openRejectModal, handleCloseRejectObs, data, user, token, approveReject } = props;
+    const { openRejectModal, handleCloseRejectObs, data, user, token, approveReject, handleDetailPopup } = props;
     const superuser = user?.is_superuser;
     const [reject, setReject] = useState({
         inappropriate_image: false,
@@ -47,6 +47,12 @@ const RejectObservationPopUp = (props) => {
                 .then((response)=> {
                     console.log(response);
                     approveReject('verified', true);
+                    setTimeout(function () {
+                        handleCloseRejectObs(false);
+                    }, 1200)
+                    setTimeout(function () {
+                        handleDetailPopup(false)
+                    }, 1500)
                     setSuccess({
                         message: response?.data?.success
                     })
@@ -140,6 +146,8 @@ const RejectObservationPopUp = (props) => {
 
 RejectObservationPopUp.propTypes = {
     approveReject: PropTypes.func,
+    handleDetailPopup: PropTypes.func,
+    handleCloseRejectObs: PropTypes.func,
 };
 
 export default RejectObservationPopUp;

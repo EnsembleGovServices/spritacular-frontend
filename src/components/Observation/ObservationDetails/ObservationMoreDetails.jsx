@@ -14,7 +14,7 @@ import ObservationLikeViewCounter from "./ObservationLikeViewCounter";
 
 const ObservationMoreDetails = (props) => {
     const {auth} = useAuth();
-    const {data, obvCommentCount, approveRejectEvent} = props;
+    const {data, obvCommentCount, handlePopup, approveRejectEvent} = props;
     const { observationListData, setObservationListData } = useObservationsData();
     const [like, setLike] = useState(observationListData.active?.like_watch_count_data?.is_like);
     const formData = new FormData();
@@ -120,11 +120,13 @@ const ObservationMoreDetails = (props) => {
             }
         })
             .then((response) => {
-                console.log(response);
                 setSuccess({
                     message: response?.data?.success
                 })
                 approveRejectEvent('verified', true);
+                setTimeout(function () {
+                    handlePopup(false);
+                }, 1200)
             })
             .catch(error => {
                 console.log(error?.response);
@@ -135,7 +137,6 @@ const ObservationMoreDetails = (props) => {
     }
 
     const handleApproveObservation = (id) => {
-      console.log(id);
       submitApproval(id).then(r => r);
     }
 
@@ -242,6 +243,7 @@ const ObservationMoreDetails = (props) => {
                 token={token}
                 openRejectModal={openRejectPopup}
                 handleCloseRejectObs={handleCloseRejectPopup}
+                handleDetailPopup={handlePopup}
                 approveReject={approveRejectEvent}
             />
 
