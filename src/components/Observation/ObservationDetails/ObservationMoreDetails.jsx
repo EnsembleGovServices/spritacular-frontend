@@ -28,7 +28,7 @@ const ObservationMoreDetails = (props) => {
     const newObvData = observationListData?.list;
     const formData = new FormData();
     const [selectedVote, setSelectedVote] = useState([]);
-    const [selectedRadio, setSelectedRadio] = useState();
+    const [selected, setSelected] = useState();
 
 
     const handleLike = async (id) => {
@@ -144,30 +144,19 @@ const ObservationMoreDetails = (props) => {
     }
 
 
-    const handleVoteClick = (sr, item, index) => {
-        console.log(sr)
+    const handleVoteClick = (sr, id, index) => {
         const selectedRadioData = {
-            category_name: item,
+            category_id: id,
             vote: sr === `yes${index}` ? 1 : 0
         }
-
-        setSelectedRadio(selectedRadioData);
-        console.log(selectedRadio);
-
-        selectedVote.push(selectedRadio);
-
-        // if (index < 0) {
-      //     selectedVote.push(selectedRadio);
-      // } else {
-      //     selectedVote.splice(index, 1);
-      // }
-      // setSelectedVote(...selectedVote);
+        const data = {...selectedRadioData}
+        setSelected([data])
     };
 
-    // useEffect(()=> {
-    //     const existingVote = (selectedRadio) ? [...selectedRadio] : [];
-    //     setSelectedVote(existingVote)
-    // }, [selectedRadio])
+    useEffect(()=> {
+        let data = (selected) ? [...selected] : [];
+        setSelectedVote(data);
+    }, [selected])
 
 
     const handleVote = (e) => {
@@ -265,17 +254,17 @@ const ObservationMoreDetails = (props) => {
                             // console.log(item);
                             return(
                                 <div key={index} className="question-box mt-3 d-inline-block w-100">
-                                    <h5 className="mb-3 fw-normal text-black">Is this a {item}?</h5>
+                                    <h5 className="mb-3 fw-normal text-black">Is this a {item?.name}?</h5>
                                     <ButtonGroup>
                                         <Button
                                             color="outline-primary"
-                                            onClick={()=> handleVoteClick('yes'+index, item, index)}
+                                            onClick={()=> handleVoteClick('yes'+index, item?.id, index)}
                                         >
                                             Yes
                                         </Button>
                                         <Button
                                             color="outline-primary"
-                                            onClick={()=> handleVoteClick('no'+index, item, index)}
+                                            onClick={()=> handleVoteClick('no'+index, item?.id, index)}
                                         >
                                             No
                                         </Button>
