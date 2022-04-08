@@ -237,7 +237,7 @@ const Dashboard = () =>{
                             open={isObservationDetailModal} 
                             handleClose={handleObservationDetailModal} 
                             handleContinueEdit={handleObservationEdit} 
-                            activeType={''}
+                            activeType={(observationListData?.active?.is_verified) ? 'verified' : (observationListData?.active?.is_reject) ? 'denied' : (observationListData?.active?.is_submit) ? 'unverified' : 'draft'}
                             handleApproveRejectEvent={getObservationData}
                         />
                     </div>

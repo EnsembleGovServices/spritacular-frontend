@@ -14,7 +14,7 @@ import ObservationLikeViewCounter from "./ObservationLikeViewCounter";
 
 const ObservationMoreDetails = (props) => {
     const {auth} = useAuth();
-    const {data, obvCommentCount, handlePopup, approveRejectEvent} = props;
+    const {data, obvCommentCount, handlePopup, approveRejectEvent,activeType} = props;
     const { observationListData, setObservationListData } = useObservationsData();
     const [like, setLike] = useState(observationListData.active?.like_watch_count_data?.is_like);
     const [openRejectPopup, setOpenRejectPopup] =  useState(false);
@@ -28,16 +28,13 @@ const ObservationMoreDetails = (props) => {
     const newObvData = observationListData?.list;
     const formData = new FormData();
     const [selectedVote, setSelectedVote] = useState([]);
-    const [selected, setSelected] = useState();
-
-
+    const [selected, setSelected] = useState(); 
     const handleLike = async (id) => {
         formData.set('is_like', like ? 0 : 1);
         let obvData = observationListData?.active,
             alreadyLiked = obvData?.like_watch_count_data?.is_like,
             existingLike = obvData?.like_watch_count_data?.like_count;
 
-        // console.log(id)
         await axios.post(baseURL.api+'/observation/like/'+id+'/', formData, {
             headers: {
                 'Content-Type': 'application/json',
@@ -234,8 +231,8 @@ const ObservationMoreDetails = (props) => {
                                 {error?.notAllowed}
                             </UncontrolledAlert>
                         }
-
-                        {superuser && shouldVerify &&
+                        
+                        {superuser && activeType !== 'verified' && activeType !== 'denied' &&
                             <Col sm={12}>
                                 <div className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
                                     <Button color="success" onClick={()=> handleApproveObservation(data?.id)} className="me-2 text-uppercase fw-bold px-5"><Icon icon="ci:circle-check-outline" className='me-1' />Approve</Button>

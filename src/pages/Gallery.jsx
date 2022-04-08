@@ -177,10 +177,9 @@ useEffect(() => {
               {nextPageUrl &&
                   <LoadMore handleLoadMore={handleLoadMoreData} />
               }
-
               <ObservationDetails
                   data={observationListData?.active}
-                  activeType={''}
+                  activeType={(observationListData?.active?.is_verified) ? 'verified' : (observationListData?.active?.is_reject) ? 'denied' : (observationListData?.active?.is_submit) ? 'unverified' : 'draft'}
                   modalClass="observation-details_modal"
                   open={isObservationDetailModal}
                   handleClose={handleObservationDetailModal}

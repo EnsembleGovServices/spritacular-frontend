@@ -43,10 +43,10 @@ const ObservationListRow = (props) => {
             <td valign="middle" className="observationType-box">
                 <div className="observation_type d-flex align-items-start justify-content-start flex-wrap flex-column">
                     {cardItems?.category_data?.map((item, index) => {
-                        let image = `/assets/images/category/${item?.toLowerCase().replaceAll(" ", "")}.png`;
+                        let image = `/assets/images/category/${item?.name?.toLowerCase().replaceAll(" ", "")}.png`;
                         return (<div key={index} className="mb-2"><i className="fst-normal rounded-circle me-2 d-inline-block">
-                            <img src={image} alt={item} className="rounded-circle w-100 h-100" /> 
-                        </i><span>{item}</span></div>)
+                            <img src={image} alt={item?.name} className="rounded-circle w-100 h-100" /> 
+                        </i><span>{item?.name}</span></div>)
                     })}
                 </div>
             </td>
