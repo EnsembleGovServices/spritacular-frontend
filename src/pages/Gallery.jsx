@@ -105,15 +105,15 @@ useEffect(() => {
           list: prevData,
         }
       })
-        if(!auth.user){
-          const varifiedData = success?.data?.results?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
-          setObservationListData((prev) => {
-            return {
-              ...prev,
-              list: varifiedData,
-            }
-          })
-        }
+        // if(!auth.user){
+        //   const varifiedData = success?.data?.results?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
+        //   setObservationListData((prev) => {
+        //     return {
+        //       ...prev,
+        //       list: varifiedData,
+        //     }
+        //   })
+        // }
       setIsLoaded(false);
     }
     else{
