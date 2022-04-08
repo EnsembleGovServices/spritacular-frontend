@@ -10,6 +10,7 @@ import useAuth from "../../../hooks/useAuth";
 import useObservationsData from "../../../hooks/useObservationsData";
 import RejectObvservationPopup from "../../Popup/RejectObvservationPopup";
 import ObservationLikeViewCounter from "./ObservationLikeViewCounter";
+import { array } from "prop-types";
 
 
 const ObservationMoreDetails = (props) => {
@@ -27,8 +28,8 @@ const ObservationMoreDetails = (props) => {
     const token = auth?.token?.access;
     const newObvData = observationListData?.list;
     const formData = new FormData();
-    const [selectedVote, setSelectedVote] = useState([]);
-    const [selected, setSelected] = useState(); 
+    const [selectedVote, setSelectedVote] = useState({});
+    const [selected, setSelected] = useState({}); 
     const handleLike = async (id) => {
         formData.set('is_like', like ? 0 : 1);
         let obvData = observationListData?.active,
@@ -114,7 +115,7 @@ const ObservationMoreDetails = (props) => {
     const submitApproval = async (id) => {
         setSuccess('');
         setError('');
-        await axios.post(`${baseURL.api}/observation/verify_observation/${id}/`, {name: "APPROVE"}, {
+        await axios.post(`${baseURL.api}/observation/verify_observation/${id}/`, {name: "APPROVE",reason: ""}, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -142,26 +143,57 @@ const ObservationMoreDetails = (props) => {
 
 
     const handleVoteClick = (sr, id, index) => {
-        const selectedRadioData = {
-            category_id: id,
-            vote: sr === `yes${index}` ? 1 : 0
-        }
-        const data = {...selectedRadioData}
-        setSelected([data])
+        setSelected({
+            ...selected,
+            [id] : {
+                vote: sr === `yes${index}` ? 1 : 0,
+                category_id: id}
+        })
+        
     };
-
-    useEffect(()=> {
-        let data = (selected) ? [...selected] : [];
-        setSelectedVote(data);
-    }, [selected])
-
-
-    const handleVote = (e) => {
+    
+    const handleVote = async(e) => {
+        var votes = [];
         e.preventDefault();
-        console.log(e);
+        for (var key in selected) {
+           
+            votes.push(selected[key]);
+          }
+        await axios.post(baseURL.api+'/observation/vote/'+data?.id+'/', {'votes':votes}, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth?.token?.access}`
+            }
+        })
+        .then((response)=> {
+
+            let obvData = observationListData?.active;
+            newObvData?.filter(openedItem => {
+                return openedItem?.id === data?.id;
+            }).map((item, index) => {
+                item.user_data.is_voted = true;
+                return item;
+            })
+            obvData.user_data.is_voted = true;
+            setObservationListData((prev) => {
+                return {
+                    ...prev,
+                    list: newObvData,
+                    active: {
+                        ...obvData,
+                    }
+                }
+            })
+            setTimeout(function () {
+                handlePopup(true);
+            }, 1200)
+            setSuccess({message: response?.data?.success});
+            setError('');
+        })
+        .catch((error)=> {
+            console.log(error);
+        })
     }
-
-
 
 
     useEffect(()=> {
@@ -231,8 +263,8 @@ const ObservationMoreDetails = (props) => {
                                 {error?.notAllowed}
                             </UncontrolledAlert>
                         }
-                        
-                        {superuser && activeType !== 'verified' && activeType !== 'denied' &&
+
+                        {superuser && window.location.href.split('/')[window.location.href.split('/').length-1] === 'dashboard' && activeType !== 'verified' && activeType !== 'denied' &&
                             <Col sm={12}>
                                 <div className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
                                     <Button color="success" onClick={()=> handleApproveObservation(data?.id)} className="me-2 text-uppercase fw-bold px-5"><Icon icon="ci:circle-check-outline" className='me-1' />Approve</Button>
@@ -245,37 +277,31 @@ const ObservationMoreDetails = (props) => {
                         </Col>
                     </Row>
                     <div className="border-line my-4"/>
+                    {data?.user_data?.is_can_vote && !data?.user_data?.is_voted && data?.category_data.length > 0 && 
                     <Form onSubmit={handleVote}>
                         <h4 className="mt-3">Vote for observation</h4>
                         {data?.category_data?.map((item, index) => {
-                            // console.log(item);
                             return(
                                 <div key={index} className="question-box mt-3 d-inline-block w-100">
-                                    <h5 className="mb-3 fw-normal text-black">Is this a {item?.name}?</h5>
-                                    <ButtonGroup>
-                                        <Button
-                                            color="outline-primary"
-                                            onClick={()=> handleVoteClick('yes'+index, item?.id, index)}
-                                        >
-                                            Yes
-                                        </Button>
-                                        <Button
-                                            color="outline-primary"
-                                            onClick={()=> handleVoteClick('no'+index, item?.id, index)}
-                                        >
-                                            No
-                                        </Button>
-                                    </ButtonGroup>
+                                    
+                                {!selected?.[item?.id] ? <>
+                                <h5 className="mb-3 fw-normal text-black">Is this a {item.name}?</h5>
+                                <div className="d-flex">
+                                    <Button className="gray-outline-btn me-2 px-3" onClick={()=> handleVoteClick('no'+index, item?.id, index)}>No</Button>
+                                    <Button className="px-3" onClick={()=> handleVoteClick('yes'+index, item?.id, index)}>Yes</Button>
                                 </div>
+                                </> : 
+                                    <h5> You have voted for {item?.name} to {(selected?.[item?.id].vote) ? 'Yes' : 'No'}</h5>}
+                            </div>
                             )
                         })}
-
-                        <Button disabled className="like-btn mt-4 w-100 d-flex align-items-center justify-content-center py-2 mb-3">
+                        <Button disabled={ (selected != undefined && (Object.keys(selected)?.length === data?.category_data?.length)) ? false:true} className="like-btn mt-4 w-100 d-flex align-items-center justify-content-center py-2 mb-3">
                             <Icon icon="heroicons-solid:thumb-up" width="25" height="25" className="me-2" />
                             <span>Vote this observation</span>
                         </Button>
 
                     </Form>
+                    } 
                 </Col>
             </Row>
 
