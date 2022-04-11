@@ -37,7 +37,7 @@ const Gallery = () => {
   const [loadMore,setLoadMore] = useState(10);
   const [pageSize,setPageSize] = useState(10);
   const [nextPageUrl,setNextPageUrl] = useState('/observation/gallery/?country=&category=&status=');
-  const user = auth?.user;
+  const normalUser = auth?.user?.is_user;
   useEffect(() => {
     setLoadMore(pageSize);
     getObservationType(true,'',selectedFilters.type,selectedFilters.status);
@@ -147,15 +147,15 @@ useEffect(() => {
   }
   return(
     <>
-      { user &&
+      { !normalUser &&
         <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
       }
 
       <Container className="pt-5">
-        <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center mb-5">
+        {normalUser &&<UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center mb-5">
           Would you like to help us sift through observations and endorse their validity?
           <Link to={'/'+routeUrls.tutorials} className="btn btn-outline-primary">Get Trained</Link>
-        </UncontrolledAlert>
+        </UncontrolledAlert>}
         {observationListData?.list &&
             <div className='gallery-page'>
               <h4 className='text-black fw-bold'>Recent Observations</h4>
