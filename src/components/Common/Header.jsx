@@ -124,7 +124,7 @@ const Header = (props) => {
 
           <Nav navbar>
             <>
-              {persist ? (
+              {persist && !user?.is_superuser ? (
                 <NavItem>
                   <Link
                     to={routeUrls.myObservations}
@@ -132,6 +132,17 @@ const Header = (props) => {
                     className="nav-link text-capitalize"
                   >
                     My Observations
+                  </Link>
+                </NavItem>
+              ) : '' }
+              {persist && user?.is_superuser ? (
+                <NavItem>
+                  <Link
+                    to={routeUrls.dashboard}
+                    title="Dashboard"
+                    className="nav-link text-capitalize"
+                  >
+                    Dashboard
                   </Link>
                 </NavItem>
               ) : '' }

@@ -14,6 +14,8 @@ import "../assets/scss/component/dashboard.scss";
 import ObservationListView from './Observation/ObservationListView';
 import { LoadMore } from '../components/Shared/LoadMore';
 import useObservationsData from '../hooks/useObservationsData';
+import Images from './../static/images';
+
 
 const Dashboard = () =>{
     const { auth } = useAuth();
@@ -31,10 +33,13 @@ const Dashboard = () =>{
       isCountryOpen:false,
       isTypeOpen:false,
       isStatusOpen:false,
+      isRateOpen:false,
+      isFOVOpen:false,
+      isLensTypeOpen:false,
 
     })
     const [selectedFilters,setSelectedFilters] = useState({
-      country:{},
+      country:{name:'',code:''},
       type:'',
       status:'',
       userId: '',
@@ -53,14 +58,14 @@ const Dashboard = () =>{
 
 
     const { observationListData, setObservationListData } = useObservationsData();
-    const [nextPageUrl,setNextPageUrl] = useState('/observation/gallery/');
+    const [nextPageUrl,setNextPageUrl] = useState('/observation/dashboard/?country=&category=&status=');
 
 
-    const getObservationData = (reset=false) => {
+    const getObservationData = (reset=false,country=`${selectedFilters.country?.code}`,category=`${selectedFilters.type}`,status=`${selectedFilters.status}`) => {
         if (auth?.user?.is_superuser) {
             let url;
             if(reset === true || !nextPageUrl){
-            url = '/observation/gallery/?page=1';
+            url = '/observation/dashboard/?country='+country+'&category='+category+'&status='+status+'&page=1';
             }else{
             url = nextPageUrl;
             }
@@ -106,7 +111,7 @@ const Dashboard = () =>{
         return true;
     }
     useEffect(()=>{
-        getObservationData()
+        getObservationData(true);
     },[]);
 
     const handleLoadMoreData = () => {
@@ -171,17 +176,17 @@ const Dashboard = () =>{
         setSearchCountry(value);
     }
     const handleFilterValue = (value,type) => {
-        // setLoadMore(pageSize);
         if(type === 'status'){    
-        //   getObservationType(selectedFilters.country?.code,selectedFilters.type,value);
+            value = value.toLowerCase();
+          getObservationData(true,selectedFilters.country?.code,selectedFilters.type,value);
         }
     
         if(type === 'category') {
-        //   getObservationType(selectedFilters.country?.code,value,selectedFilters.status);
+          getObservationData(true,selectedFilters.country?.code,value,selectedFilters.status);
         }
     
         if(type === 'country'){
-        //   getObservationType(value.code,selectedFilters.type,selectedFilters.status);
+          getObservationData(true,value.code,selectedFilters.type,selectedFilters.status);
         }   
       }
     return (
@@ -195,10 +200,13 @@ const Dashboard = () =>{
                 handleGridView={handleGridView} 
                 listView={listView}
                 gridView={gridView}
-                isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen}
+                isFilterOpen={isFilterOpen} 
+                setIsFilterOpen={setIsFilterOpen}
                 selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry}
-                findCountry={findCountry} handleFilterValue={handleFilterValue}
+                setSelectedFilters={setSelectedFilters} 
+                searchCountry={searchCountry}
+                findCountry={findCountry} 
+                handleFilterValue={handleFilterValue}
             />
             <div className='observation-dashboard_content'>
                 <Container>
@@ -209,11 +217,14 @@ const Dashboard = () =>{
                                 setSelectedFilters={setSelectedFilters}
                                 handleFilterValue={handleFilterValue}
                                 handleFilterOpen={handleFilterOpen}
+                                isFilterOpen={isFilterOpen} 
+                                setIsFilterOpen={setIsFilterOpen}
                             />
                         }
                         
                         <div className={`dashboard-card overflow-hidden ${filterShow ? 'sm-card' : ''}`}>
-                            {listView && <ObservationListView 
+
+                            {listView && observationListData?.list?.length > 0 && <ObservationListView 
                                 observationList={observationListData?.list} 
                                 isObservationDetailModal={isObservationDetailModal} 
                                 setObservationDetailModal={setObservationDetailModal} 
@@ -228,8 +239,15 @@ const Dashboard = () =>{
                                 />
                             }
                             {nextPageUrl &&
-                            <LoadMore handleLoadMore={handleLoadMoreData} />
-                        }
+                                <LoadMore handleLoadMore={handleLoadMoreData} />
+                            }
+                            {observationListData?.list?.length === 0 &&  (
+                                  <div className="data-not-found">
+                                  <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
+                                  <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
+                                </div>
+                            )
+                            }
                         </div>
                         <ObservationDetails 
                             data={observationListData?.active}  

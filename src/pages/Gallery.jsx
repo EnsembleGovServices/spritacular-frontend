@@ -131,7 +131,7 @@ useEffect(() => {
 
   const handleFilterValue = (value,type) => {
     setObservationListData([])
-    setLoadMore(pageSize);
+    // setLoadMore(pageSize);
     if(type === 'status'){
       value = value.toLowerCase();
       getObservationType(true,selectedFilters.country?.code,selectedFilters.type,value);

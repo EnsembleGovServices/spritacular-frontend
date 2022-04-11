@@ -35,7 +35,7 @@ const FilterSelectMenu = (props) =>{
                                             <Label className="text-uppercase px-2 px-xl-3" htmlFor="Country">Country</Label>
                                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isCountryOpen:!isFilterOpen.isCountryOpen})} isOpen={isFilterOpen.isCountryOpen} >
                                                 <DropdownToggle className="px-2 px-xl-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                                    <span className="text-truncate">{(selectedFilters.country?.name !== undefined ? selectedFilters.country?.name: 'All countries' )}</span>
+                                                    <span className="text-truncate">{(selectedFilters.country?.name !== '' ? selectedFilters.country?.name: 'All countries' )}</span>
 
                                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                 </DropdownToggle>
