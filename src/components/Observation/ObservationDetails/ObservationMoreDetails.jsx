@@ -5,7 +5,7 @@ import moment from 'moment';
 import {getdirectionDegree} from "../../../helpers/observation";
 import {useState,useEffect} from "react";
 import axios from "../../../api/axios";
-import {baseURL} from "../../../helpers/url";
+import {baseURL, routeUrls} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
 import useObservationsData from "../../../hooks/useObservationsData";
 import RejectObvservationPopup from "../../Popup/RejectObvservationPopup";
@@ -264,7 +264,7 @@ const ObservationMoreDetails = (props) => {
                             </UncontrolledAlert>
                         }
 
-                        {superuser && window.location.href.split('/')[window.location.href.split('/').length-1] === 'dashboard' && activeType !== 'verified' && activeType !== 'denied' &&
+                        {superuser && window.location.href.split('/')[window.location.href.split('/').length-1] === routeUrls.dashboard && activeType !== 'verified' && activeType !== 'denied' &&
                             <Col sm={12}>
                                 <div className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
                                     <Button color="success" onClick={()=> handleApproveObservation(data?.id)} className="me-2 text-uppercase fw-bold px-5"><Icon icon="ci:circle-check-outline" className='me-1' />Approve</Button>
@@ -277,7 +277,7 @@ const ObservationMoreDetails = (props) => {
                         </Col>
                     </Row>
                     <div className="border-line my-4"/>
-                    {data?.user_data?.is_can_vote && !data?.user_data?.is_voted && data?.category_data.length > 0 && 
+                    {data?.user_data?.is_can_vote && !data?.user_data?.is_voted && data?.category_data.length > 0 && window.location.href.split('/')[window.location.href.split('/').length-1] === routeUrls.gallery && 
                     <Form onSubmit={handleVote}>
                         <h4 className="mt-3">Vote for observation</h4>
                         {data?.category_data?.map((item, index) => {
