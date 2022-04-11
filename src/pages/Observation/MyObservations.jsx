@@ -37,7 +37,9 @@ const MyObservations = () => {
 
 
   useEffect(() => {
-    getObservationData(true,'verified');
+    if(!auth?.user?.is_superuser){
+      getObservationData(true,'verified');
+    }
       setIsLoaded(false);
   },[isLoaded]);
 
