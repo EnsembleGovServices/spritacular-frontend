@@ -7,30 +7,52 @@ import { useState, useEffect } from "react";
 
 
 const ObservationListRow = (props) => {
-    const { cardItems, cardData, allChecked, childFunc, setCheckedIds,index, checkedIds, handleClick} = props;
-    const [currentChecked,setCurrentChecked] = useState(false);
-    const setChecked = () => {
+    const { cardItems, cardData, allChecked,currentChecked,setCurrentChecked, childFunc, setCheckedIds,index, checkedIds, handleClick} = props;
+    
+    const [allClear,setAllClear] = useState(false);
+    const setChecked = (id) => {
         if(allChecked){
             return allChecked;
         }
         else{
-            return currentChecked;
+            return (allClear) ? false : currentChecked?.[id];
         }
     }
-
+    const handleChecked = (e,id) => {
+        setCurrentChecked({
+            ...currentChecked,
+            [id]: e.target.checked}
+            )
+            if(e.target.checked){
+                if(checkedIds.length > 0){
+                    setCheckedIds([...checkedIds,id]);
+                }else{
+                    setCheckedIds([id]);
+                }
+            }else{
+                let ids = [...checkedIds];
+                ids = ids.filter((item,index)=> {
+                    return item !== id;
+                })
+                setCheckedIds(ids);
+            }
+    }
+                                                                                                                    
     useEffect(() => {
         childFunc.current = handleCurrentCheckbox;
       }, [])
 
     const handleCurrentCheckbox = () => {
-        setCurrentChecked(false);
+        setAllClear(true);
+        setCurrentChecked({});
+        setCheckedIds([]);
     }
     return (
         <>
             <th valign="middle" className="check-box">
                 <FormGroup check className="mb-0">
-                    <Input type="checkbox" data-id={cardItems.id} name={`is_other_${cardItems.id}`} className="me-0" checked={setChecked()} onChange={(e) => {setCurrentChecked(e.target.checked);setCheckedIds([...checkedIds,cardItems.id]);}} />
-                </FormGroup>
+                    <Input type="checkbox" data-id={cardItems.id} name= {`is_other_${cardItems.id}`} className="me-0" checked={setChecked(cardItems.id)} onChange={(e) => {handleChecked(e,cardItems.id);}} />
+                                                                                                                                                                                                                                                                                                                                                </FormGroup>
             </th>
             <td valign="middle" className="observationCard-box">
                 <div className="h-100 position-relative">

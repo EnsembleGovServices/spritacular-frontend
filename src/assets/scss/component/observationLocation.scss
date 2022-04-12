@@ -202,10 +202,11 @@
     }
     input[type="date"]{
         padding-left: 40px;
+        position: relative;
         &::-webkit-calendar-picker-indicator{
             position: absolute;
             top: 15px;
-            left: 10px;
+            left: -15px;
             width: 20px;
             height: 22px;
             button{
