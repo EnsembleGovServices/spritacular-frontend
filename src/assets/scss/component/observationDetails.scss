@@ -110,6 +110,7 @@
             height: calc(100vh - 138px);
             overflow-y: auto;
             overflow-x: hidden;
+            padding-right: 5px;
             @include customScrollBar;
             .selected_direction{
                 background: #F3F4F6;
