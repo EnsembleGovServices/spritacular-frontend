@@ -4,7 +4,7 @@ import "../assets/scss/component/about.scss";
 const About = () => {
   return (
     <>
-      <section className="comman-banner">
+      <section className="common-banner">
         <Container>
           <div className="banner-inner">
             <Row>

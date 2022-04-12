@@ -14,9 +14,8 @@ import {useState} from "react";
 import useAuth from "../hooks/useAuth";
 import "../assets/scss/component/camerasettings.scss";
 import ImageUpload from "../components/Upload/ImageUpload";
-import {baseURL, cameraSettingFields} from "../helpers/url";
+import {cameraSettingFields} from "../helpers/url";
 import ReactCountryFlags from "../components/ReactCountryFlag";
-import axios from "../api/axios";
 
 const UpdateProfile = lazy(()=> import('../components/Account/UpdateProfile'))
 const CameraSetting = lazy(()=> import('../components/Account/CameraSetting'))
@@ -58,7 +57,7 @@ const Profile = () => {
 
   return (
     <>
-      <section className="comman-banner">
+      <section className="common-banner">
         <Container>
           <div className="banner-inner" />
         </Container>

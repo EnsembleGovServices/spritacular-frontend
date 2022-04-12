@@ -1,9 +1,10 @@
-// comman banner css
-.comman-banner{
+// common banner css
+.common-banner{
     background-color: $banner-bg;
     width: 100%;
     height: 280px;
     position: relative;
+    opacity: 0.64;
     @media(max-width:767px){
         height: 280px;
     }

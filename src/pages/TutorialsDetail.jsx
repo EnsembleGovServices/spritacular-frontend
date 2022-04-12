@@ -14,7 +14,7 @@ import { routeUrls } from './../helpers/url';
 const TutorialsDetail = () => {
   return (
     <div className="tutorial-details_page position-relative">
-      <div className="comman-banner"></div>
+      <div className="common-banner"></div>
       <section className="tutorial-detail-main">
         <Container>
           <div className="breadcrumb-main">

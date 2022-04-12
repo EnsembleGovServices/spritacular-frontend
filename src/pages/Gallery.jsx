@@ -32,8 +32,6 @@ const Gallery = () => {
   })
 
   const { observationListData, setObservationListData } = useObservationsData();
-
-  const [currentObservationList,setCurrentObservationList] = useState({});
   const { auth } = useAuth();
   const [loadMore,setLoadMore] = useState(10);
   const [pageSize,setPageSize] = useState(10);
@@ -89,7 +87,7 @@ useEffect(() => {
       headers: headers,
       
   }).then((success) => {
-    if(success?.data?.results?.data != undefined){
+    if(success?.data?.results?.data !== undefined){
       if(success?.data?.next){
         setNextPageUrl(success?.data?.next.split('api')[1]);
       }else{
@@ -98,7 +96,7 @@ useEffect(() => {
       let records = success?.data?.results?.data;
       let prevData;
       
-      if(observationListData?.list?.length > 0 && reset == false){
+      if(observationListData?.list?.length > 0 && reset === false){
         prevData = [...observationListData?.list];
         prevData = [...prevData,...records];
       }else{
@@ -127,7 +125,7 @@ useEffect(() => {
   const handleFilterValue = (value,type) => {
     setObservationListData([])
     setLoadMore(pageSize);
-    if(type == 'status'){
+    if(type === 'status'){
       value = value.toLowerCase();
       getObservationType(selectedFilters.country?.code,selectedFilters.type,value,true);
     }
@@ -147,7 +145,7 @@ useEffect(() => {
      <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
 }
         <Container>
-            <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center">
+            <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center mt-3">
               Would you like to help us sift through observations and endorse their validity?
               <Link to={'/'+routeUrls.tutorials} className="btn btn-outline-primary">Get Trained</Link>
             </UncontrolledAlert>
