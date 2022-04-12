@@ -108,6 +108,9 @@
         .tab-pane{
             padding-top: 12px;
             height: calc(100vh - 138px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            @include customScrollBar;
             .selected_direction{
                 background: #F3F4F6;
                 width: 40px;

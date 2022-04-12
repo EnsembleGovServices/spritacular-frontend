@@ -291,7 +291,7 @@ const ObservationMoreDetails = (props) => {
                                     <Button className="px-3" onClick={()=> handleVoteClick('yes'+index, item?.id, index)}>Yes</Button>
                                 </div>
                                 </> : 
-                                    <h5> You have voted for {item?.name} to {(selected?.[item?.id].vote) ? 'Yes' : 'No'}</h5>}
+                                    <h5 className={'mb-0'}> You have voted for {item?.name} to {(selected?.[item?.id].vote) ? 'Yes' : 'No'}</h5>}
                             </div>
                             )
                         })}

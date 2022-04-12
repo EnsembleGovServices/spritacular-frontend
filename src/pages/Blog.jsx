@@ -7,7 +7,9 @@ import { routeUrls } from './../helpers/url';
 const Blog = () => {
   return (
     <>
-      <section className="blog-main">
+      <div className="blog_page position-relative">
+        <div className="common-banner"></div>
+        <section className="blog-main">
         <Container>
           <h2 className="text-center">Spritacular Blog</h2>
           <Row  className="g-4">
@@ -115,6 +117,7 @@ const Blog = () => {
           </div>
         </Container>
       </section>
+      </div>
     </>
   );
 };

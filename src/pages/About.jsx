@@ -4,23 +4,25 @@ import "../assets/scss/component/about.scss";
 const About = () => {
   return (
     <>
-      <section className="common-banner">
-        <Container>
-          <div className="banner-inner">
-            <Row>
-              <Col xs={12}>
-                <h2>About Us</h2>
-              </Col>
-            </Row>
-            <div className="about-card">
-              <h3>Spritacular Headquarter</h3>
-              <p>1800 Lorem Ipsum Pkwy Mountain View, CA 94043 United States</p>
-              <Button className="contact-btn">Contact Us</Button>
+      <div className="about_page position-relative">
+        <div className="common-banner"></div>
+        <section className={'banner-content'}>
+          <Container className={'position-relative'}>
+            <div className="banner-inner">
+              <Row>
+                <Col xs={12}>
+                  <h2>About Us</h2>
+                </Col>
+              </Row>
+              <div className="about-card">
+                <h3>Spritacular Headquarter</h3>
+                <p>1800 Lorem Ipsum Pkwy Mountain View, CA 94043 United States</p>
+                <Button className="contact-btn">Contact Us</Button>
+              </div>
             </div>
-          </div>
-        </Container>
-      </section>
-      <section className="about-content">
+          </Container>
+        </section>
+        <section className="about-content">
         <Container>
           <div className="about-content-inner">
             <Row>
@@ -88,6 +90,7 @@ const About = () => {
           </div>
         </Container>
       </section>
+      </div>
     </>
   );
 };
