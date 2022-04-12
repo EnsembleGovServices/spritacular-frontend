@@ -144,6 +144,14 @@ useEffect(() => {
       getObservationType(true,value.code,selectedFilters.type,selectedFilters.status);
     }
   }
+  useEffect(()=> {
+    if (isObservationDetailModal) {
+      document.body.classList.add('overflow-hidden');
+    }
+    else{
+      document.body.classList.remove('overflow-hidden');
+    }
+  }, [isObservationDetailModal]);
   return(
     <>
       { !normalUser &&

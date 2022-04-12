@@ -1,4 +1,4 @@
-import {Badge, Button, ButtonGroup, Col, Form, Row, UncontrolledAlert} from "reactstrap";
+import {Badge, Button, Col, Form, Row, UncontrolledAlert} from "reactstrap";
 import { Icon } from '@iconify/react';
 import ReactCountryFlags from "../../../components/ReactCountryFlag";
 import moment from 'moment';
@@ -10,7 +10,6 @@ import useAuth from "../../../hooks/useAuth";
 import useObservationsData from "../../../hooks/useObservationsData";
 import RejectObvservationPopup from "../../Popup/RejectObvservationPopup";
 import ObservationLikeViewCounter from "./ObservationLikeViewCounter";
-import { array } from "prop-types";
 
 
 const ObservationMoreDetails = (props) => {
@@ -23,13 +22,10 @@ const ObservationMoreDetails = (props) => {
     const [success, setSuccess] = useState();
     const user = auth?.user;
     const superuser = user.is_superuser;
-    const trained = user?.is_trained;
-    const shouldVerify = user?.is_to_be_verify;
     const token = auth?.token?.access;
     const newObvData = observationListData?.list;
     const formData = new FormData();
-    const [selectedVote, setSelectedVote] = useState({});
-    const [selected, setSelected] = useState({}); 
+    const [selected, setSelected] = useState({});
     const handleLike = async (id) => {
         formData.set('is_like', like ? 0 : 1);
         let obvData = observationListData?.active,
@@ -295,7 +291,7 @@ const ObservationMoreDetails = (props) => {
                             </div>
                             )
                         })}
-                        <Button disabled={ (selected != undefined && (Object.keys(selected)?.length === data?.category_data?.length)) ? false:true} className="like-btn mt-4 w-100 d-flex align-items-center justify-content-center py-2 mb-3">
+                        <Button disabled={ (selected !== undefined && (Object.keys(selected)?.length === data?.category_data?.length)) ? false:true} className="like-btn mt-4 w-100 d-flex align-items-center justify-content-center py-2 mb-3">
                             <Icon icon="heroicons-solid:thumb-up" width="25" height="25" className="me-2" />
                             <span>Vote this observation</span>
                         </Button>

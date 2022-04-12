@@ -10,7 +10,6 @@ import { Icon } from "@iconify/react";
 import useObservationsData from "../../hooks/useObservationsData";
 import Tippy from "@tippyjs/react";
 import CardImageCarousel from "../../components/Shared/CardImageCarousel";
-import { baseURL } from "../../helpers/url";
 
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose, data, activeType, handleContinueEdit, handleApproveRejectEvent } = props;

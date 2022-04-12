@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
     const location = useLocation();
     useEffect(() => {
         window.scrollTo(0, 0);
+        console.log("current path", location.pathname)
     }, [location]);
 
     return(

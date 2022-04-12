@@ -10,8 +10,8 @@ const ObservationListView = (props) => {
     const [checkedIds,setCheckedIds] = useState([]);
     const [currentChecked,setCurrentChecked] = useState({});
     // const downloadCSV = (ids) => {
-        checkedIds.filter((val,id,array) => array.indexOf(val) == id);
-        console.log(checkedIds.filter((val,id,array) => array.indexOf(val) == id));
+        checkedIds.filter((val,id,array) => array.indexOf(val) === id);
+        console.log(checkedIds.filter((val,id,array) => array.indexOf(val) === id));
     // }'
     const handleObservationDetailModal = (id) => {
         setObservationDetailModal(!isObservationDetailModal);

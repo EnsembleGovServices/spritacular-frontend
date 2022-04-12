@@ -19,7 +19,6 @@ import Images from './../static/images';
 
 const Dashboard = () =>{
     const { auth } = useAuth();
-    const [observationList, setObservationList] = useState({});
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [selectedObservationId,setSelectedObservationId] = useState();
     const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
@@ -132,6 +131,15 @@ const Dashboard = () =>{
         })
       
       }, [isObservationDetailModal]);
+
+    useEffect(()=> {
+        if (isObservationDetailModal) {
+            document.body.classList.add('overflow-hidden');
+        }
+        else{
+            document.body.classList.remove('overflow-hidden');
+        }
+    }, [isObservationDetailModal]);
 
     const cleaningUpObservationDataForDraftSaving = async (data) => {
         setObservationImages([]);

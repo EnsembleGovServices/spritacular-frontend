@@ -4,16 +4,10 @@ import { Button, Col, Container, FormGroup, Input, Label, Row,Dropdown, Dropdown
 import { routeUrls } from "../../helpers/url";
 import Images from './../../static/images';
 import {observationStatus,countries} from "../../helpers/timezone";
-import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
-import useObservationsData from "../../hooks/useObservationsData";
 
 const FilterSelectMenu = (props) =>{
     const {filterShow, handleFilterOpen, galleryFilter,isFilterOpen,setIsFilterOpen,selectedFilters,setSelectedFilters,searchCountry,findCountry,handleFilterValue,dashboardFilter, handleListView, handleGridView, listView, gridView} =  props;
-    const { categoryList, setCategoryList } = useObservationsData();
-    const [category,setCategory] = useState([]);
     const { auth } = useAuth();
 
     return (
