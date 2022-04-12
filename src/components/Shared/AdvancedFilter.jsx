@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react';
 import { Button, Card, CardBody, Col, Collapse, FormGroup, Input, Label, Row, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import "../../assets/scss/component/advancedFilter.scss";
 import Images from "../../static/images";
+import moment from "moment";
 
 const AdvancedFilter = (props) => {
     const {
@@ -46,6 +47,7 @@ const AdvancedFilter = (props) => {
                                                 <div className='d-flex justify-content-between date-time_row'>
                                                     <div className="position-relative date-box">
                                                         <Input type="date"
+                                                        max= {moment(new Date()).format('Y-MM-DD')}
                                                         onChange={(e) => {setSelectedFilters({...selectedFilters,obs_start_date:e.target.value}); // handleFilterValue(e.target.value,'country');
                                                         }}/>
                                                     </div>
@@ -63,6 +65,7 @@ const AdvancedFilter = (props) => {
                                                 <div className='d-flex justify-content-between date-time_row'>
                                                     <div className="position-relative date-box">
                                                         <Input type="date"
+                                                        max= {moment(new Date()).format('Y-MM-DD')}
                                                         onChange={(e) => {setSelectedFilters({...selectedFilters,obs_end_date:e.target.value}); // handleFilterValue(e.target.value,'country');
                                                         }}/>
                                                     </div>

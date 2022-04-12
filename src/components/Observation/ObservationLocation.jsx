@@ -21,6 +21,7 @@ import {timezone} from "../../helpers/timezone";
 import ObservationCategory from "./ObservationCategory";
 import {Icon} from '@iconify/react';
 import {getdirectionDegree,getdirectionAngle} from "../../helpers/observation";
+import moment from "moment";
 
 
 const ObservationLocation = (props) => {
@@ -452,6 +453,7 @@ const ObservationLocation = (props) => {
                                     <Input
                                         id="Date"
                                         type="date"
+                                        max= {moment(new Date()).format('Y-MM-DD')}
                                         name="obs_date"
                                         value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
                                         className="w-100"
