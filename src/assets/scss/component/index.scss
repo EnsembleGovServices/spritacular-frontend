@@ -179,12 +179,10 @@
     border-radius: 8px;
 }
 .tippy-content{
-    background: $white;
     border-radius: 8px;
 }
 .popover-body{
     padding: 6px 20px 20px;
-    background: $white;
     p{
         color: $gray3;
         @include md-text;
