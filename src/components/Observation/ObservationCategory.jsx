@@ -81,10 +81,10 @@ const ObservationCategory = (props) => {
     const PopoverContent = () => {
         return (
           <>
-            <PopoverHeader>What is sprite? 
+            <PopoverHeader className={'bg-white'}>What is sprite?
                  {/*<button className="bg-transparent p-0 border-0 text-black shadow-none"><Icon icon="codicon:chrome-close" width="15" height="15" /></button>*/}
             </PopoverHeader>
-            <PopoverBody>
+            <PopoverBody className={'bg-white'}>
                 <p style={{'--line-clamb': isPopoverContentOpen === true ? 'unset' : '2'}}>
                     Sprites or red sprites are large-scale electric discharges that occur high above thunderstorm clouds, they appear as luminous reddish-orange flashes. 
                 </p>
