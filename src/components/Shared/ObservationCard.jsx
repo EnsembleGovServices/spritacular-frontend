@@ -50,13 +50,13 @@ const ObservationCard = (props) => {
                     }
                     <CardBody className="position-relative observation-card_body">
                         <div className="position-absolute observation_type d-flex align-items-center">
-                            {cardItems?.category_data.length > 0 &&
-                                cardItems?.category_data.map((item, index) => {
-                                    let image = `/assets/images/category/${item?.toLowerCase().replaceAll(" ", "")}.png`;
+                            {cardItems?.category_data?.length > 0 &&
+                                cardItems?.category_data?.map((item, index) => {
+                                    let image = `/assets/images/category/${item?.name?.toLowerCase().replaceAll(" ", "")}.png`;
                                     return (
                                         <i className="rounded-circle bg-white me-1" key={index}>
-                                            <Tippy animation="perspective" content={item}>
-                                                <img src={image} alt={item} className="rounded-circle" />
+                                            <Tippy animation="perspective" content={item?.name}>
+                                                <img src={image} alt={item?.name} className="rounded-circle" />
                                             </Tippy>
                                         </i>
                                     );

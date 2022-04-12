@@ -35,10 +35,11 @@ const Gallery = () => {
   const { auth } = useAuth();
   const [loadMore,setLoadMore] = useState(10);
   const [pageSize,setPageSize] = useState(10);
-  const [nextPageUrl,setNextPageUrl] = useState('/observation/gallery/?country=&categpry=&status=');
+  const [nextPageUrl,setNextPageUrl] = useState('/observation/gallery/?country=&category=&status=');
+  const normalUser = auth?.user?.is_user;
   useEffect(() => {
     setLoadMore(pageSize);
-    getObservationType('',selectedFilters.type,selectedFilters.status,true);
+    getObservationType(true,'',selectedFilters.type,selectedFilters.status);
     setIsLoaded(false);
   },[isLoaded]);
 
@@ -54,11 +55,6 @@ useEffect(()=> {
 }, [isFilterOpen.isCountryOpen])
 
 useEffect(() => {
-  // let watched = !currentObservationList[selectedObservationId]?.like_watch_count_data?.is_watch;
-  // if (isObservationDetailModal && watched) {
-  //   handleWatchCounter(observationListData?.list[selectedObservationId].id).then(r => r)
-  // }
-
   setObservationListData((prev) => {
     return {
       ...prev,
@@ -69,16 +65,16 @@ useEffect(() => {
 }, [isObservationDetailModal]);
 
   const handleLoadMoreData = () => {
-        getObservationType(selectedFilters.country?.code,selectedFilters.type,selectedFilters.status,false);
+        getObservationType(false,selectedFilters.country?.code,selectedFilters.type,selectedFilters.status);
   }
-  const getObservationType = (country,category,status,reset=false) => {
-    var url;
+  const getObservationType = (reset=false,country=`${selectedFilters.country?.code}`,category=`${selectedFilters.type}`,status=`${selectedFilters.status}`) => {
+    let url;
     if(reset === true || !nextPageUrl){
       url = '/observation/gallery/?country='+country+'&category='+category+'&status='+status+'&page=1';
     }else{
       url = nextPageUrl;
     }
-    var headers = {};
+    const headers = {};
     headers['Content-Type'] = 'application/json';
     if(auth.user){
       headers['Authorization'] = `Bearer ${auth?.token?.access}`;
@@ -102,16 +98,26 @@ useEffect(() => {
       }else{
         prevData = success?.data?.results?.data;
       }
-      setObservationListData({list:prevData});
-        if(!auth.user){
-          const varifiedData = success?.data?.results?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
-          setObservationListData({list:varifiedData});
+      setObservationListData((prev) => {
+        return {
+          ...prev,
+          list: prevData,
         }
+      })
+        // if(!auth.user){
+        //   const varifiedData = success?.data?.results?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
+        //   setObservationListData((prev) => {
+        //     return {
+        //       ...prev,
+        //       list: varifiedData,
+        //     }
+        //   })
+        // }
       setIsLoaded(false);
     }
     else{
       setNextPageUrl(null);
-      setObservationListData({list:[]})
+      setObservationListData({list:[],active:{}})
     }
   }).catch((error) => {
       console.log(error.response);
@@ -124,55 +130,66 @@ useEffect(() => {
 
   const handleFilterValue = (value,type) => {
     setObservationListData([])
-    setLoadMore(pageSize);
+    // setLoadMore(pageSize);
     if(type === 'status'){
       value = value.toLowerCase();
-      getObservationType(selectedFilters.country?.code,selectedFilters.type,value,true);
+      getObservationType(true,selectedFilters.country?.code,selectedFilters.type,value);
     }
 
     else if(type === 'category') {
-      getObservationType(selectedFilters.country?.code,value,selectedFilters.status,true);
+      getObservationType(true,selectedFilters.country?.code,value,selectedFilters.status);
     }
 
     else if(type === 'country'){
-      getObservationType(value.code,selectedFilters.type,selectedFilters.status,true);
+      getObservationType(true,value.code,selectedFilters.type,selectedFilters.status);
     }
   }
   return(
     <>
+      { !normalUser &&
+        <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
+      }
 
-     {auth.user &&
-     <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
-}
-        <Container>
-            <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center mt-3">
-              Would you like to help us sift through observations and endorse their validity?
-              <Link to={'/'+routeUrls.tutorials} className="btn btn-outline-primary">Get Trained</Link>
-            </UncontrolledAlert>
+      <Container className="pt-5">
+        {normalUser &&<UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center mb-5">
+          Would you like to help us sift through observations and endorse their validity?
+          <Link to={'/'+routeUrls.tutorials} className="btn btn-outline-primary">Get Trained</Link>
+        </UncontrolledAlert>}
+        {observationListData?.list &&
             <div className='gallery-page'>
               <h4 className='text-black fw-bold'>Recent Observations</h4>
               <div>
-                {observationListData?.list?.length ===  0 &&
+                {observationListData?.list.length > 0 ? (
+                    <ObservationDetailPage
+                        observationList={observationListData?.list}
+                        isObservationDetailModal={isObservationDetailModal}
+                        setObservationDetailModal={setObservationDetailModal}
+                        setSelectedObservationId={setSelectedObservationId}
+                    />
+                ) : (
                     <div className="data-not-found">
                       <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
                       <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
                     </div>
-                }
-                <ObservationDetailPage observationList={observationListData?.list} isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
+                )}
               </div>
               {nextPageUrl &&
                   <LoadMore handleLoadMore={handleLoadMoreData} />
               }
-              {isObservationDetailModal && <ObservationDetails
+              <ObservationDetails
                   data={observationListData?.active}
-                  activeType={''}
+                  activeType={(observationListData?.active?.is_verified) ? 'verified' : (observationListData?.active?.is_reject) ? 'denied' : (observationListData?.active?.is_submit) ? 'unverified' : 'draft'}
                   modalClass="observation-details_modal"
                   open={isObservationDetailModal}
-                  handleClose={handleObservationDetailModal} />}
-            </div>
-        </Container>
+                  handleClose={handleObservationDetailModal}
+                  handleApproveRejectEvent={getObservationType}
+              />
 
-        </>
+            </div>
+        }
+      </Container>
+
+    </>
   )
 }
 export default Gallery;

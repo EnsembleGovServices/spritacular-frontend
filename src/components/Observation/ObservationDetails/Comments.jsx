@@ -17,26 +17,29 @@ const Comments = (props) => {
     const [signal, setSignal] = useState(false);
     const commentBox = useRef(null);
     const {observationComments, setObservationComments} = useObservationsData();
+    const user = auth?.user?.id;
 
     const getComments = async () => {
-        await axios.get(baseURL.api+'/observation/comment/'+obvId+'/', {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${auth?.token?.access}`
-            }
-        })
-            .then((response)=> {
-                setComments(response?.data);
-                setObservationComments((prev) => {
-                    return {
-                        ...prev,
-                        comments: response?.data?.data
-                    }
+        if (user) {
+            await axios.get(baseURL.api+'/observation/comment/'+obvId+'/', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${auth?.token?.access}`
+                }
+            })
+                .then((response)=> {
+                    setComments(response?.data);
+                    setObservationComments((prev) => {
+                        return {
+                            ...prev,
+                            comments: response?.data?.data
+                        }
+                    })
                 })
-            })
-            .catch((error)=> {
-                console.log(error);
-            })
+                .catch((error)=> {
+                    console.log(error);
+                })
+        }
     };
 
     const sendComment = async (e) => {
@@ -59,8 +62,10 @@ const Comments = (props) => {
     }
 
     useEffect(()=> {
-        commentBox.current.focus = true;
-        getComments().then(r => r);
+        if (user) {
+            commentBox.current.focus = true;
+            getComments().then(r => r);
+        }
     }, [signal])
 
     useEffect(() => {
@@ -105,19 +110,21 @@ const Comments = (props) => {
                 <ul className="comment-area p-0 m-0">
                     {observationComments?.comments?.length ? showMessages() : <p className="text-center">No comments yet!</p>}
                 </ul>
-                <form onSubmit={sendComment}>
-                    <FormGroup className="typing-area d-flex justify-content-between align-items-center start-0 bottom-0">
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="text"
-                            ref={commentBox}
-                            placeholder="Write here.."
-                            onChange={(e) => handleCommentText(e)}
-                        />
-                        <Button disabled={message?.length === 0} className="send-btn shadow-none border-0 position-absolute end-0 pe-3"><Icon icon="bi:send" color={message?.length === 0 ? '#ccc' : '#900'} /></Button>
-                    </FormGroup>
-                </form>
+                {user &&
+                    <form onSubmit={sendComment}>
+                        <FormGroup className="typing-area d-flex justify-content-between align-items-center start-0 bottom-0">
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="text"
+                                ref={commentBox}
+                                placeholder="Write here.."
+                                onChange={(e) => handleCommentText(e)}
+                            />
+                            <Button disabled={message?.length === 0} className="send-btn shadow-none border-0 position-absolute end-0 pe-3"><Icon icon="bi:send" color={message?.length === 0 ? '#ccc' : '#900'} /></Button>
+                        </FormGroup>
+                    </form>
+                }
             </div>
         </>
     )

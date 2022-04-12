@@ -19,17 +19,11 @@ const MyObservations = () => {
   const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
   const { observationListData, setObservationListData } = useObservationsData();
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
-  const [currentObservationList,setCurrentObservationList] = useState({});
   const [isLoaded,setIsLoaded] = useState(true);
   const [activeType,setActiveType] = useState('verified');
   const [selectedObservationId,setSelectedObservationId] = useState();
   const navigate = useNavigate();
-  const formData = new FormData();
   const [nextPageUrl,setNextPageUrl] = useState('/observation/observation_collection/?type=');
-
-
-
-
 
   useEffect(() => {
     setObservationListData((prev) => {
@@ -43,8 +37,10 @@ const MyObservations = () => {
 
 
   useEffect(() => {
-    getObservationData('verified',true);
-setIsLoaded(false);
+    if(!auth?.user?.is_superuser){
+      getObservationData(true,'verified');
+    }
+      setIsLoaded(false);
   },[isLoaded]);
 
   const handleObservationEdit = (data) => {
@@ -76,7 +72,7 @@ setIsLoaded(false);
     });
   }
   
-  const getObservationData = (value,reset=false) => {
+  const getObservationData = (reset=false,value='verified') => {
     setActiveType(value);
     let url;
     if(reset === true || !nextPageUrl){
@@ -136,7 +132,7 @@ setIsLoaded(false);
   };
 
   const handleLoadMore = () => {
-    getObservationData(activeType,false);
+    getObservationData(false,activeType);
   }
 
   useEffect(()=> {
@@ -158,10 +154,10 @@ setIsLoaded(false);
               <Row>
                 <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
                   <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
-                    <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData('verified',true)}}>Verified ({observationListData?.count?.verified})</span>
-                    <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData('unverified',true)}}>Unverified ({observationListData?.count?.unverified})</span>
-                    <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData('denied',true)}}>Denied ({observationListData?.count?.denied})</span>
-                    <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData('draft',true)}}>Drafts ({observationListData?.count?.draft})</span>
+                    <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'verified')}}>Verified ({observationListData?.count?.verified})</span>
+                    <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'unverified')}}>Unverified ({observationListData?.count?.unverified})</span>
+                    <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'denied')}}>Denied ({observationListData?.count?.denied})</span>
+                    <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'draft')}}>Drafts ({observationListData?.count?.draft})</span>
                   </div>
                 </Col>
                 <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
@@ -192,6 +188,7 @@ setIsLoaded(false);
               open={isObservationDetailModal}
               handleClose={handleObservationDetailModal}
               handleContinueEdit={handleObservationEdit}
+              handleApproveRejectEvent={getObservationData}
           />
 
         </>

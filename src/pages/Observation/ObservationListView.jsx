@@ -4,13 +4,17 @@ import "../../assets/scss/component/observationList.scss";
 import { useState,useRef } from "react";
 
 const ObservationListView = (props) => {
-    const { observationList } = props;
+    const { observationList, isObservationDetailModal, setObservationDetailModal, setSelectedObservationId } = props;
     const [allChecked,setAllChecked] = useState(false);
     const childFunc = useRef(null);
     const [checkedIds,setCheckedIds] = useState([]);
     // const downloadCSV = (ids) => {
         console.log(checkedIds);
-    // }
+    // }'
+    const handleObservationDetailModal = (id) => {
+        setObservationDetailModal(!isObservationDetailModal);
+        setSelectedObservationId(id);
+      };
     return(
         <>
             <div className="table-responsive">
@@ -37,7 +41,7 @@ const ObservationListView = (props) => {
                         {observationList.length > 0 && observationList?.map((cardItems, index)=>{
                             return(
                                 <tr key={index}>
-                                    <ObservationListRow cardItems={cardItems} cardData={cardItems?.images[0]} allChecked={allChecked} childFunc={childFunc} setCheckedIds={setCheckedIds}checkedIds={checkedIds} />
+                                    <ObservationListRow cardItems={cardItems} index={index} cardData={cardItems?.images[0]} allChecked={allChecked} childFunc={childFunc} setCheckedIds={setCheckedIds}checkedIds={checkedIds}handleClick={handleObservationDetailModal} />
                                 </tr>
                             )
                         })

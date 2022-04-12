@@ -22,13 +22,20 @@ import TutorialsDetail from "./pages/TutorialsDetail";
 import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 import InformativePage from './layouts/InformativePage';
 import Dashboard from "./pages/Dashboard";
-
-
+import useAuth from "./hooks/useAuth";
 const App = () => {
   const [persistValue, setPersistValue] = useState(false);
   const authCallBack = (authChange) => {
     setPersistValue(authChange);
   };
+  const {auth} = useAuth();
+
+  const Roles = {
+    'superuser' : auth?.user?.is_superuser,
+    'trained' : auth?.user?.is_trained,
+    'user' : auth?.user?.is_user,
+  }
+
 
   return (
     <Routes>
@@ -46,7 +53,7 @@ const App = () => {
         <Route exact path={"/password_reset"} element={<ResetPasswordPopup />} />
         
         {/*Protected routes*/}
-        <Route element={<RequireAuth setAuthValue={authCallBack} />}>
+        <Route element={<RequireAuth allowedRoles={Roles} setAuthValue={authCallBack} />}>
           <Route exact path={routeUrls.profile} element={<Profile />} />
           <Route element={<Observations />}>
             <Route exact path={routeUrls.myObservations} element={<MyObservations />} />

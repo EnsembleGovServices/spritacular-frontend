@@ -21,7 +21,7 @@ export const cameraSettingFields = {
 
 
 export const routeUrls = {
-    home: '',
+    home: '/',
     about: 'about',
     getStarted: 'get-started',
     blog: 'blog',

@@ -3,35 +3,19 @@ import { Link } from "react-router-dom";
 import { Button, Col, Container, FormGroup, Input, Label, Row,Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { routeUrls } from "../../helpers/url";
 import Images from './../../static/images';
-import {observationStatus,countries} from "./../../helpers/timezone";
+import {observationStatus,countries} from "../../helpers/timezone";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
+import useObservationsData from "../../hooks/useObservationsData";
 
 const FilterSelectMenu = (props) =>{
     const {filterShow, handleFilterOpen, galleryFilter,isFilterOpen,setIsFilterOpen,selectedFilters,setSelectedFilters,searchCountry,findCountry,handleFilterValue,dashboardFilter, handleListView, handleGridView, listView, gridView} =  props;
-
+    const { categoryList, setCategoryList } = useObservationsData();
     const [category,setCategory] = useState([]);
     const { auth } = useAuth();
 
-
-    const fetchCategory = async () => {
-        await axios.get(baseURL.api+'/observation/get_category_list/', {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${auth?.token?.access}`
-            }
-        })
-        .then((response)=> {
-          setCategory(response?.data);
-        })
-        .catch((error)=> {console.log(error)})
-    }
-    
-    useEffect(() => {
-        fetchCategory();
-      },[]);
     return (
         <>
             <div className="observation-filter_wrapper">
@@ -51,7 +35,7 @@ const FilterSelectMenu = (props) =>{
                                             <Label className="text-uppercase px-2 px-xl-3" htmlFor="Country">Country</Label>
                                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isCountryOpen:!isFilterOpen.isCountryOpen})} isOpen={isFilterOpen.isCountryOpen} >
                                                 <DropdownToggle className="px-2 px-xl-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                                    <span className="text-truncate">{(selectedFilters.country?.name !== undefined ? selectedFilters.country?.name: 'All countries' )}</span>
+                                                    <span className="text-truncate">{(selectedFilters.country?.name !== '' ? selectedFilters.country?.name: 'All countries' )}</span>
 
                                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                 </DropdownToggle>
@@ -74,8 +58,7 @@ const FilterSelectMenu = (props) =>{
                                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                 </DropdownToggle>
                                                 <DropdownMenu className="py-0 shadow">
-
-                                                    {category?.map((item, index) => {
+                                                    {auth.categoryList !== undefined  && auth?.categoryList?.map((item, index) => {
                                                         return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value ={item.name} onClick={(e) => {setSelectedFilters({...selectedFilters,type:e.target.value}); handleFilterValue(e.target.value,'category');}} >{item.name}</DropdownItem>
                                                     })}
                                                 </DropdownMenu>

@@ -13,6 +13,7 @@ import Loader from "../components/Shared/Loader";
 export const observationViewContext = createContext({});
 
 const PersistLogin = (props) => {
+    const [categoryList, setCategoryList] = useState([]);
     const refresh = useRefreshToken();
     const { auth, persist } = useAuth();
     const { persistValue } = props;
@@ -24,6 +25,7 @@ const PersistLogin = (props) => {
     const [observationComments, setObservationComments] = useState({
         comment_count: 0
     });
+    
     useEffect(() => {
         let isMounted = true;
         const verifyRefreshToken = async () => {
@@ -57,6 +59,8 @@ const PersistLogin = (props) => {
                     setObservationListData,
                     observationComments,
                     setObservationComments,
+                    categoryList,
+                    setCategoryList
                 }
             }>
             {!persist ? (
