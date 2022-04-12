@@ -18,13 +18,13 @@ const AdvancedFilter = (props) => {
                         <img src={Images.Modalcloseicon} alt="close-icon" />
                     </Button>
                 </Col>
-                <Col xs={12}>
+                {/* <Col xs={12}>
                     <FormGroup>
                         <Label className='fw-normal text-black'>User ID</Label>
                         <Input type="text"  onChange={(e) => {setSelectedFilters({...selectedFilters,userId:e.target.value}); // handleFilterValue(e.target.value,'country');
                         }}/>
                     </FormGroup>
-                </Col>
+                </Col> */}
                 <Col xs={12}>
                     <FormGroup>
                         <Button
