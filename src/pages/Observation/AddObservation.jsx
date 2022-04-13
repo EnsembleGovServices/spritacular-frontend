@@ -42,14 +42,15 @@ const AddObservation = () => {
         observationData,
         setObservationData,
         observationType,
-        setObservationType
+        setObservationType,
+        cameraDetails, 
+        setCameraDetails
     } = useObservations();
     const location = useLocation();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
-    const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
     const [updateMode, setUpdateMode] = useState(false);
     const [reset, setReset] = useState(false);
     const [success, setSuccess] = useState(null);
@@ -211,6 +212,9 @@ const AddObservation = () => {
         }
         finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id  : null);
         formData.append("data", JSON.stringify(finalData));
+
+        console.log(finalData);
+        // return false;
 
         if (!updateMode) {
             await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
@@ -381,6 +385,7 @@ const AddObservation = () => {
                     story: data.story,
                     map_data: data.images
                 });
+                setCameraDetails(data?.camera_data);
                 setUpdateMode(true);
             })
             .catch(error => {
@@ -449,6 +454,7 @@ const AddObservation = () => {
             selected_image_index: 0,
             observation_count: draftData?.map_data.length
         });
+
     }, [draftData, setObservationImages])
 
 

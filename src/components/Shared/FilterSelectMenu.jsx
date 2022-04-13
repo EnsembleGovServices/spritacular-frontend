@@ -21,6 +21,9 @@ const FilterSelectMenu = (props) =>{
                                     <img src={Images.Filter} alt="Filter" /> {filterShow && <span className="ms-0 ms-md-3" >Advanced Filter</span> }</Button>
                             </FormGroup>}
                         </div>
+                        {
+                            auth?.user &&
+                        
                         <div className='flex-fill' >
                             <Row>
                                 <Col sm={12} lg={8} className='order-2 order-lg-1' >
@@ -99,6 +102,7 @@ const FilterSelectMenu = (props) =>{
                                 </Col>
                             </Row>
                         </div>
+                        }
                     </div>
                 </Container>
             </div>

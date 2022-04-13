@@ -54,8 +54,8 @@ const App = () => {
         
         {/*Protected routes*/}
         <Route element={<RequireAuth allowedRoles={Roles} setAuthValue={authCallBack} />}>
-          <Route exact path={routeUrls.profile} element={<Profile />} />
           <Route element={<Observations />}>
+          <Route exact path={routeUrls.profile} element={<Profile />} />
             <Route exact path={routeUrls.myObservations} element={<MyObservations />} />
             <Route exact path={routeUrls.observationsAdd} element={<AddObservation />} />
             <Route exact path={routeUrls.observationsUpdate} element={<AddObservation />} />
