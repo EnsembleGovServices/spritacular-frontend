@@ -5,10 +5,11 @@ import {useEffect, useState} from "react";
 import {uploadImageDefaultState} from "../../helpers/observation";
 import PropTypes from "prop-types";
 import useAuth from "../../hooks/useAuth";
+import { cameraSettingFields } from "../../helpers/url";
 
 const ObservationUploadImg = (props) =>{
     const {multiple, maxLimit, imageFormat, detectImage, mode}=props;
-    const {setObservationImages, observationImages} = useObservations();
+    const {setObservationImages, observationImages,setCameraDetails} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
     const { auth } = useAuth();
@@ -102,6 +103,7 @@ const ObservationUploadImg = (props) =>{
                 selected_image_id: images?.[0]?.id,
                 selected_image_index:0
             });
+            setCameraDetails(cameraSettingFields)
         }
     }, [images, setObservationImages, userLocation])
 
