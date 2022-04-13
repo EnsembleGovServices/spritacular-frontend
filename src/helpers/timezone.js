@@ -598,7 +598,7 @@ export const observationStatus = [
     'Verified',
     'Unverified',
     // 'Draft',
-    // 'Denied'
+    'Denied'
 ]
 
 export const countries =[ 

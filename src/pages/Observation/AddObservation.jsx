@@ -213,9 +213,6 @@ const AddObservation = () => {
         finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id  : null);
         formData.append("data", JSON.stringify(finalData));
 
-        console.log(finalData);
-        // return false;
-
         if (!updateMode) {
             await axios.post(baseURL.api+'/observation/upload_observation/',formData, {
                 headers: {

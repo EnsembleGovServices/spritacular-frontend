@@ -10,7 +10,6 @@ const EquipmentDetailsForm = (props) =>{
     const {
         observationData
     } = useObservations();
-    console.log(cameraDetails);
     return (
         <>
         <Row>

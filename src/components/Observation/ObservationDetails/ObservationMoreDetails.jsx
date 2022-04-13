@@ -79,7 +79,6 @@ const ObservationMoreDetails = (props) => {
                 'Authorization': `Bearer ${auth?.token?.access}`
             }
         }).then((response) => {
-            console.log(response);
             let data = observationListData?.active,
                 alreadyWatched = data?.like_watch_count_data?.is_watch,
                 existingWatchCount = data?.like_watch_count_data?.watch_count;
