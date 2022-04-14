@@ -41,17 +41,16 @@ const Dashboard = () =>{
       country:{name:'',code:''},
       type:'',
       status:'',
-      userId: '',
       obs_start_date: null,
       obs_end_date: null,
       obs_start_time: null,
       obs_end_time: null,
-      camera_type:null,
-      fps: null,
-      iso:null,
-      fov:null,
-      shutter_speed:null,
-      lens_type:null,
+      camera_type:'',
+      fps: '',
+      iso:'',
+      fov:'',
+      shutter_speed:'',
+      lens_type:'',
     })
     const [isLoaded,setIsLoaded] = useState(true);
 
@@ -64,7 +63,7 @@ const Dashboard = () =>{
         if (auth?.user?.is_superuser) {
             let url;
             if(reset === true || !nextPageUrl){
-            url = '/observation/dashboard/?country='+country+'&category='+category+'&status='+status+'&page=1';
+            url = '/observation/dashboard/?camera_type='+selectedFilters.camera_type+'&country='+country+'&category='+category+'&status='+status+'&page=1';
             }else{
             url = nextPageUrl;
             }
@@ -195,8 +194,12 @@ const Dashboard = () =>{
     
         if(type === 'country'){
           getObservationData(true,value.code,selectedFilters.type,selectedFilters.status);
-        }   
+        }  
+        if(type === 'filter'){
+            getObservationData(true,selectedFilters.country.code,selectedFilters.type,selectedFilters.status);
+        } 
       }
+
     return (
         <>
             <FilterSelectMenu 
