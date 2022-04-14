@@ -70,7 +70,7 @@ const Header = (props) => {
   useEffect(()=> {
     if(window.location.href.split('/')[window.location.href.split('/').length-1] === routeUrls.dashboard)
     setActive('dashboard');
-  },[auth?.user])
+  },[window.location.href])
 
 
   const handleLoginModal = () => {
