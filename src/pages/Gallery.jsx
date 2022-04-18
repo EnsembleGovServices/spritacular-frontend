@@ -25,11 +25,11 @@ const Gallery = () => {
     isTypeOpen:false,
     isStatusOpen:false
   })
-  const [selectedFilters,setSelectedFilters] = useState({
+  const [selectedFilterHorizontal,setSelectedFilterHorizontal] = useState({
     country:{name:'',code:''},
     type:'',
-    status:''
-  })
+    status:'',
+})
 
   const { observationListData, setObservationListData } = useObservationsData();
   const { auth } = useAuth();
@@ -39,7 +39,7 @@ const Gallery = () => {
   const normalUser = auth?.user?.is_user;
   useEffect(() => {
     setLoadMore(pageSize);
-    getObservationType(true,'',selectedFilters.type,selectedFilters.status);
+    getObservationType(true,'',selectedFilterHorizontal.type,selectedFilterHorizontal.status);
     setIsLoaded(false);
   },[isLoaded]);
 
@@ -65,9 +65,9 @@ useEffect(() => {
 }, [isObservationDetailModal]);
 
   const handleLoadMoreData = () => {
-        getObservationType(false,selectedFilters.country?.code,selectedFilters.type,selectedFilters.status);
+        getObservationType(false,selectedFilterHorizontal.country?.code,selectedFilterHorizontal.type,selectedFilterHorizontal.status);
   }
-  const getObservationType = (reset=false,country=`${selectedFilters.country?.code}`,category=`${selectedFilters.type}`,status=`${selectedFilters.status}`) => {
+  const getObservationType = (reset=false,country=`${selectedFilterHorizontal.country?.code}`,category=`${selectedFilterHorizontal.type}`,status=`${selectedFilterHorizontal.status}`) => {
     let url;
     if(reset === true || !nextPageUrl){
       url = '/observation/gallery/?country='+country+'&category='+category+'&status='+status+'&page=1';
@@ -133,15 +133,15 @@ useEffect(() => {
     // setLoadMore(pageSize);
     if(type === 'status'){
       value = value.toLowerCase();
-      getObservationType(true,selectedFilters.country?.code,selectedFilters.type,value);
+      getObservationType(true,selectedFilterHorizontal.country?.code,selectedFilterHorizontal.type,value);
     }
 
     else if(type === 'category') {
-      getObservationType(true,selectedFilters.country?.code,value,selectedFilters.status);
+      getObservationType(true,selectedFilterHorizontal.country?.code,value,selectedFilterHorizontal.status);
     }
 
     else if(type === 'country'){
-      getObservationType(true,value.code,selectedFilters.type,selectedFilters.status);
+      getObservationType(true,value.code,selectedFilterHorizontal.type,selectedFilterHorizontal.status);
     }
   }
   useEffect(()=> {
@@ -155,7 +155,7 @@ useEffect(() => {
   return(
     <>
       { !normalUser &&
-        <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilters={selectedFilters}setSelectedFilters={setSelectedFilters}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
+        <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilterHorizontal={selectedFilterHorizontal}setSelectedFilterHorizontal={setSelectedFilterHorizontal}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
       }
 
       <Container className="pt-5">
