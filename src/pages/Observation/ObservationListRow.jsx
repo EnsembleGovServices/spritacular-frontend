@@ -58,7 +58,7 @@ const ObservationListRow = (props) => {
                     <CardImageCarousel carouselData={cardItems?.images} />
                     : <img
                             alt="Card cap"
-                            src={cardData?.image}
+                            src={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}
                             className="img-fluid card-img"
                             onClick={(e) => {
                                  handleClick(index);
