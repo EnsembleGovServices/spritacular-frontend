@@ -37,12 +37,15 @@ const Dashboard = () =>{
       isLensTypeOpen:false,
 
     })
+
+    const [selectedFilterHorizontal,setSelectedFilterHorizontal] = useState({
+        country:{name:'',code:''},
+        type:'',
+        status:'',
+    })
     const [selectedFilters,setSelectedFilters] = useState({
-      country:{name:'',code:''},
-      type:'',
-      status:'',
-      obs_start_date: null,
-      obs_end_date: null,
+      from_obs_data: null,
+      to_obs_data: null,
       obs_start_time: null,
       obs_end_time: null,
       camera_type:'',
@@ -59,15 +62,16 @@ const Dashboard = () =>{
     const [nextPageUrl,setNextPageUrl] = useState('/observation/dashboard/?country=&category=&status=');
 
 
-    const getObservationData = (reset=false,country=`${selectedFilters.country?.code}`,category=`${selectedFilters.type}`,status=`${selectedFilters.status}`) => {
+    const getObservationData = (reset=false,country=`${selectedFilterHorizontal.country?.code}`,category=`${selectedFilterHorizontal.type}`,status=`${selectedFilterHorizontal.status}`) => {
         if (auth?.user?.is_superuser) {
             let url;
             if(reset === true || !nextPageUrl){
-            url = '/observation/dashboard/?camera_type='+selectedFilters.camera_type+'&country='+country+'&category='+category+'&status='+status+'&page=1';
+            url = '/observation/dashboard/?country='+country+'&category='+category+'&status='+status+'&page=1';
             }else{
             url = nextPageUrl;
             }
-            axios.get(baseURL.api+url,{
+           
+            axios.post(baseURL.api+url,selectedFilters,{
                 headers:{
                     'Content-type': 'application/json',
                     'Authorization': `Bearer ${auth?.token?.access}`
@@ -185,18 +189,18 @@ const Dashboard = () =>{
     const handleFilterValue = (value,type) => {
         if(type === 'status'){    
             value = value.toLowerCase();
-          getObservationData(true,selectedFilters.country?.code,selectedFilters.type,value);
+          getObservationData(true,selectedFilterHorizontal.country?.code,selectedFilterHorizontal.type,value);
         }
     
         if(type === 'category') {
-          getObservationData(true,selectedFilters.country?.code,value,selectedFilters.status);
+          getObservationData(true,selectedFilterHorizontal.country?.code,value,selectedFilterHorizontal.status);
         }
     
         if(type === 'country'){
-          getObservationData(true,value.code,selectedFilters.type,selectedFilters.status);
+          getObservationData(true,value.code,selectedFilterHorizontal.type,selectedFilterHorizontal.status);
         }  
         if(type === 'filter'){
-            getObservationData(true,selectedFilters.country.code,selectedFilters.type,selectedFilters.status);
+            getObservationData(true,selectedFilterHorizontal.country.code,selectedFilterHorizontal.type,selectedFilterHorizontal.status);
         } 
       }
 
@@ -213,8 +217,8 @@ const Dashboard = () =>{
                 gridView={gridView}
                 isFilterOpen={isFilterOpen} 
                 setIsFilterOpen={setIsFilterOpen}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters} 
+                selectedFilterHorizontal={selectedFilterHorizontal}
+                setSelectedFilterHorizontal={setSelectedFilterHorizontal} 
                 searchCountry={searchCountry}
                 findCountry={findCountry} 
                 handleFilterValue={handleFilterValue}
