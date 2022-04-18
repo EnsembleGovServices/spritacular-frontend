@@ -41,7 +41,7 @@ const ObservationCard = (props) => {
                         ? <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick} handleIndex={index} />    
                         : <img
                             alt="Card cap"
-                            src={cardData?.image}
+                            src={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}
                             className="img-fluid card-img"
                             onClick={(e) => {
                                 userProfile && handleClick(index);
