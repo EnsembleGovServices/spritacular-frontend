@@ -21,7 +21,7 @@ const ObservationMoreDetails = (props) => {
     const [error, setError] = useState();
     const [success, setSuccess] = useState();
     const user = auth?.user;
-    const superuser = user.is_superuser;
+    const superuser = user?.is_superuser;
     const token = auth?.token?.access;
     const newObvData = observationListData?.list;
     const formData = new FormData();
