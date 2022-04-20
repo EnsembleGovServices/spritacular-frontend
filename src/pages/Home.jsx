@@ -1,12 +1,14 @@
 import { Suspense, lazy } from 'react';
 import "../assets/scss/component/home.scss";
-// import  GoogleMapWrapper  from '../components/GoogleMapWrapper';
 import Notification from "../Notification";
+// import  GoogleMapWrapper  from '../components/GoogleMapWrapper';
 
 const HomeBanner = lazy(()=> import('../components/Home/HomeBanner'))
 const HomeCounter = lazy(()=> import('../components/Home/HomeCounter'))
 const HomeMapSection = lazy(()=> import('../components/Home/HomeMapSection'))
 const GetStarted = lazy(()=> import('../components/Home/GetStarted'))
+
+
 
 const Home = (props) => {
     // this.props = props;
@@ -15,7 +17,7 @@ const Home = (props) => {
    
         <Suspense fallback={''}>
             <HomeBanner />
-            <Notification />
+            {/* <Notification /> */}
         </Suspense>
 
         <Suspense fallback={''}>

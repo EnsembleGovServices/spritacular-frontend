@@ -22,6 +22,8 @@ import { Icon } from "@iconify/react";
 import LazyLoad from "../Upload/LazyLoad";
 import { routeUrls } from '../../helpers/url';
 import Images from "../../static/images";
+import Notification from "../../Notification";
+
 
 
 const Header = (props) => {
@@ -36,7 +38,7 @@ const Header = (props) => {
   const [aboutDropdown, setAboutDropdown] = useState(false);
   const [resourcesDropdown, setResourcesDropdown] = useState(false);
   const [communityDropdown, setCommunityDropdown] = useState(false);
-  const [notificationDropdown, setNotificationDropdown] = useState(false);
+  
   const [active, setActive] = useState('');
   const location = useLocation();
   const homeUrl = location.pathname === '/';
@@ -293,91 +295,44 @@ const Header = (props) => {
               Login
             </Button>
           </div>
-        ) : (
+        ) : 
+          <>
           <div className="after-login-right-menu">
-            {/* Notification Dropdown  */}
-            <Dropdown className="notify_menu" isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
-              <DropdownToggle className="notification">
-                <Icon icon="ic:baseline-notifications" />
-                <span className="notify" />
-              </DropdownToggle>
-              <DropdownMenu container="body" className="notify-open_menu">
-                <DropdownItem header> Notifications (3) </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
-                    <div className="comment_wrapper">
-                      <div className="comment_details">
-                        <h4>New comments</h4>
-                        <p>Nice Shot!</p>
-                      </div>
-                      <span>5m</span>
-                    </div>
-                  </div>
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
-                    <div className="comment_wrapper">
-                      <div className="comment_details">
-                        <h4>New vote</h4>
-                        <p>John votes your Sprite Observation</p>
-                      </div>
-                      <span>1h</span>
-                    </div>
-                  </div>
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
-                    <div className="comment_wrapper">
-                      <div className="comment_details">
-                        <h4>Emily replied to your comment</h4>
-                        <p>Thank you!</p>
-                      </div>
-                      <span>1h</span>
-                    </div>
-                  </div>
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            {/* User Profile Dropdown  */}
-            <Dropdown
-              className="user-menu"
-              isOpen={showUserMenu}
-              toggle={handleUserMenuDropdown}
-            >
-              <DropdownToggle >
-                <div className="profile_img">
-                  {user?.profile_image ? (
-                      <LazyLoad
-                          src={user?.profile_image}
-                          alt={user?.first_name}
-                      />
-                  ) : (
-                    <Icon icon="entypo:user" />
-                  )}
-                </div>
-                <span className="profile_text">
-                  <span>{user?.first_name} {user?.last_name}{" "}</span>
-                  <Icon icon="fe:arrow-down" />
-                </span>
-              </DropdownToggle>
-              <DropdownMenu container="body">
-                <DropdownItem onClick={() => setActive('')}>
-                  <Link to={routeUrls.profile}>Edit Profile</Link>
-                </DropdownItem>
-                <DropdownItem onClick={() => {handleChangePasswordModal();}}>
-                  Change Password
-                </DropdownItem>
-                <DropdownItem onClick={() => {Logout();setActive('')}}>Logout</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        )}
+          <Notification />
+          <Dropdown
+          className="user-menu"
+          isOpen={showUserMenu}
+          toggle={handleUserMenuDropdown}
+        >
+          <DropdownToggle >
+            <div className="profile_img">
+              {user?.profile_image ? (
+                  <LazyLoad
+                      src={user?.profile_image}
+                      alt={user?.first_name}
+                  />
+              ) : (
+                <Icon icon="entypo:user" />
+              )}
+            </div>
+            <span className="profile_text">
+              <span>{user?.first_name} {user?.last_name}{" "}</span>
+              <Icon icon="fe:arrow-down" />
+            </span>
+          </DropdownToggle>
+          <DropdownMenu container="body">
+            <DropdownItem onClick={() => setActive('')}>
+              <Link to={routeUrls.profile}>Edit Profile</Link>
+            </DropdownItem>
+            <DropdownItem onClick={() => {handleChangePasswordModal();}}>
+              Change Password
+            </DropdownItem>
+            <DropdownItem onClick={() => {Logout();setActive('')}}>Logout</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+        </div>
+        </>
+        }
       </Navbar>
 
       {isLoginModal && (
