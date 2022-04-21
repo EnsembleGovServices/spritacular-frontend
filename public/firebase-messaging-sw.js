@@ -17,7 +17,6 @@ firebase.initializeApp(firebaseConfig);
 
 // Retrieve firebase messaging
 const messaging = firebase.messaging();
-console.log(messaging);
 
 messaging.onBackgroundMessage(function(payload) {
   console.log('Received background message ', payload);

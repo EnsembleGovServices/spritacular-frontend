@@ -27,18 +27,18 @@ const Notification = () => {
     const [notificationDropdown, setNotificationDropdown] = useState(false);
     const [notificationArray,setNotificationArray] = useState([]);
     useEffect(() =>{
-      // getTokens(auth?.user?.id,auth?.token?.access);
+      getTokens(auth?.user?.id,auth?.token?.access);
       if(isTokenFound === false){
       }
       setTokenFound(true);
     },[isTokenFound])
   
-    // onMessageListener().then(payload => {
-    //   setShow(true);
-    //   setNotification(true);
-    //   console.log(payload);
-    //   setNotificationArray([payload.notification,...notificationArray]);
-    // }).catch(err => console.log('failed: ', err));
+    onMessageListener().then(payload => {
+      setShow(true);
+      setNotification(true);
+      console.log(payload);
+      setNotificationArray([payload.notification,...notificationArray]);
+    }).catch(err => console.log('failed: ', err));
     
     return (
             <Dropdown className="notify_menu" onClick={ e => setNotification(false)} isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
