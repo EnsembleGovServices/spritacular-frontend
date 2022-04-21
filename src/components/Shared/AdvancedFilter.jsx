@@ -49,7 +49,7 @@ const AdvancedFilter = (props) => {
                                                     <div className="position-relative date-box">
                                                         <Input type="date"
                                                         max={moment(new Date()).format('Y-MM-DD')}
-                                                        onChange={(e) => {setSelectedFilters({...selectedFilters,from_obs_data:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                        onChange={(e) => {setSelectedFilters({...selectedFilters,obs_start_date:e.target.value}); // handleFilterValue(e.target.value,'country');
                                                         }}/>
                                                     </div>
                                                     <div className="position-relative time-box">
@@ -67,7 +67,7 @@ const AdvancedFilter = (props) => {
                                                     <div className="position-relative date-box">
                                                         <Input type="date"
                                                         max={moment(new Date()).format('Y-MM-DD')}
-                                                        onChange={(e) => {setSelectedFilters({...selectedFilters,to_obs_data:e.target.value}); // handleFilterValue(e.target.value,'country');
+                                                        onChange={(e) => {setSelectedFilters({...selectedFilters,obs_end_date:e.target.value}); // handleFilterValue(e.target.value,'country');
                                                         }}/>
                                                     </div>
                                                     <div className="position-relative time-box">

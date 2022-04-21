@@ -15,6 +15,7 @@ import ObservationListView from './Observation/ObservationListView';
 import { LoadMore } from '../components/Shared/LoadMore';
 import useObservationsData from '../hooks/useObservationsData';
 import Images from './../static/images';
+import moment from 'moment';
 
 
 const Dashboard = () =>{
@@ -46,6 +47,8 @@ const Dashboard = () =>{
     const [selectedFilters,setSelectedFilters] = useState({
       from_obs_data: null,
       to_obs_data: null,
+      obs_start_date: null,
+      obs_end_date: null,
       obs_start_time: null,
       obs_end_time: null,
       camera_type:'',
@@ -69,6 +72,20 @@ const Dashboard = () =>{
             url = '/observation/dashboard/?country='+country+'&category='+category+'&status='+status+'&page=1';
             }else{
             url = nextPageUrl;
+            }
+            if(selectedFilters.obs_start_date !== null){
+                if(selectedFilters.obs_start_time !== null){
+                    selectedFilters.from_obs_data = (selectedFilters.obs_start_date !== null) ? moment(selectedFilters.obs_start_date + ' '+ selectedFilters.obs_start_time).format('DD/MM/Y H:mm'): null;
+                }else{
+                    selectedFilters.from_obs_data = (selectedFilters.obs_start_date !== null) ? moment(selectedFilters.obs_start_date + ' '+ '00:00').format('DD/MM/Y HH:mm'): null;
+                }
+            }
+            if(selectedFilters.obs_end_date !== null){
+                if(selectedFilters.obs_end_time !== null){
+                    selectedFilters.to_obs_data = (selectedFilters.obs_end_date !== null) ? moment(selectedFilters.obs_end_date + ' '+selectedFilters.obs_end_time).format('DD/MM/Y HH:mm'): null;
+                }else{
+                    selectedFilters.to_obs_data = (selectedFilters.obs_end_date !== null) ? moment(selectedFilters.obs_end_date + ' '+ '23:59').format('DD/MM/Y HH:mm'): null;
+                }
             }
            
             axios.post(baseURL.api+url,selectedFilters,{
