@@ -16,6 +16,7 @@ import {
 import Images from "./static/images";
 import { Icon } from "@iconify/react";
 import useAuth from "./hooks/useAuth";
+import Tippy from "@tippyjs/react";
 
 
 const Notification = () => {
@@ -26,6 +27,7 @@ const Notification = () => {
     
     const [notificationDropdown, setNotificationDropdown] = useState(false);
     const [notificationArray,setNotificationArray] = useState([]);
+    const [data,setData] = useState([]);
     useEffect(() =>{
       getTokens(auth?.user?.id,auth?.token?.access);
       if(isTokenFound === false){
@@ -38,8 +40,8 @@ const Notification = () => {
       setNotification(true);
       console.log(payload);
       setNotificationArray([payload.notification,...notificationArray]);
+      setData([payload.data]);
     }).catch(err => console.log('failed: ', err));
-    
     return (
             <Dropdown className="notify_menu" onClick={ e => setNotification(false)} isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
               <DropdownToggle className="notification">
@@ -55,7 +57,10 @@ const Notification = () => {
                     <>
                     <DropdownItem key={index}>
                     <div className="notify_wrapper">
-                      <i><img src={Images.UserProfile} alt="user Profile" /></i>
+                    <Tippy animation="perspective" content={data[0]?.from_user}>
+                        <i><img src={item?.image} alt="user Profile" /></i>
+                    </Tippy>
+                      
                       <div className="comment_wrapper">
                         <div className="comment_details">
                           <h4>{item.title}</h4>

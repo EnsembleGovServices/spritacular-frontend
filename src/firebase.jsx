@@ -3,7 +3,6 @@ import { getMessaging, onMessage, getToken} from 'firebase/messaging';
 import { initializeApp } from 'firebase/app';
 import axios from "./api/axios";
 import {baseURL} from "./helpers/url";
-import { ReactVapIdKey } from './config';
 
 
 const firebaseConfig = {
@@ -28,21 +27,20 @@ const messaging = getMessaging(firebaseApp);
 });
 
   export const getTokens = (userId,token) => {
-    return getToken(messaging, {vapidKey:ReactVapIdKey}).then((currentToken) => {
-        console.log(currentToken);
+    return getToken(messaging, {vapidKey:'BHJd0Y2Y1ZUvZ40ZuoL7memg_6g_ACYqk3M6oM9ebRn5rzQ2O_WqDgURWls5A8WyWPyHCyIT5SGA6DyU6hLQwzI'}).then((currentToken) => {
       if (currentToken) {
         console.log('current token for client: ', currentToken);
 
-      //   axios.post('http://127.0.0.1:8000/devices/',{"user": userId, "registration_id":currentToken, "type": "web"}, {
-      //     headers: {
-      //         'Content-Type': 'application/json',
-      //         'Authorization': `Bearer ${token}`
-      //     }
-      // })
-      // .then((response)=> {
-      //   console.log(response);
-      // })
-      // .catch((error)=> {console.log(error)})
+        axios.post(baseURL.api+'/devices/',{"user": userId, "registration_id":currentToken, "type": "web"}, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+          }
+      })
+      .then((response)=> {
+        console.log(response);
+      })
+      .catch((error)=> {console.log(error)})
         // setTokenFound(true);
         // Track the token -> client mapping, by sending to backend server
         // show on the UI that permission is secured
