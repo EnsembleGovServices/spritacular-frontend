@@ -17,6 +17,7 @@ import Images from "./static/images";
 import { Icon } from "@iconify/react";
 import useAuth from "./hooks/useAuth";
 import Tippy from "@tippyjs/react";
+import moment from "moment";
 
 
 const Notification = () => {
@@ -41,12 +42,12 @@ const Notification = () => {
       console.log(payload);
       setNotificationArray([payload.notification,...notificationArray]);
       setData([payload.data]);
+      
     }).catch(err => console.log('failed: ', err));
     return (
             <Dropdown className="notify_menu" onClick={ e => setNotification(false)} isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
               <DropdownToggle className="notification">
                 <Icon icon="ic:baseline-notifications" />
-
                 {notification && <span className="notify" />}
               </DropdownToggle>
               <DropdownMenu container="body" className="notify-open_menu">
@@ -66,7 +67,7 @@ const Notification = () => {
                           <h4>{item.title}</h4>
                           <p>{item.body}</p>
                         </div>
-                        <span>5m</span>
+                        <span>{moment(data[0]?.sent_at).fromNow(true)}</span>
                       </div>
                     </div>
                   </DropdownItem>
