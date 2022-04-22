@@ -1,6 +1,6 @@
 import { Suspense, lazy } from 'react';
 import "../assets/scss/component/home.scss";
-import Notification from "../Notification";
+import Notification from "../components/Notification/Notification";
 // import  GoogleMapWrapper  from '../components/GoogleMapWrapper';
 
 const HomeBanner = lazy(()=> import('../components/Home/HomeBanner'))

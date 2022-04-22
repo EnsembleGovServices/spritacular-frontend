@@ -1,37 +1,24 @@
-
 import { getMessaging, onMessage, getToken} from 'firebase/messaging';
 import { initializeApp } from 'firebase/app';
-import axios from "./api/axios";
-import {baseURL} from "./helpers/url";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
+import {firebaseConfig} from "../../helpers/firebase";
 
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBJpdPnsci63VmZOCMZ0NvNSzMq5D0424I",
-  authDomain: "spritacular-a130e.firebaseapp.com",
-  projectId: "spritacular-a130e",
-  storageBucket: "spritacular-a130e.appspot.com",
-  messagingSenderId: "656679339522",
-  appId: "1:656679339522:web:eed28084c22f65f585c91b",
-  measurementId: "G-8KJQ3TYZYB"
-};
-  
   const firebaseApp = initializeApp(firebaseConfig);
-const messaging = getMessaging(firebaseApp);
-
+  const messaging = getMessaging(firebaseApp);
 
   export const onMessageListener = () =>
   new Promise((resolve) => {
     onMessage(messaging, (payload) => {
       resolve(payload);
     });
-});
+  });
 
   export const getTokens = (userId,token) => {
-    return getToken(messaging, {vapidKey:'BHJd0Y2Y1ZUvZ40ZuoL7memg_6g_ACYqk3M6oM9ebRn5rzQ2O_WqDgURWls5A8WyWPyHCyIT5SGA6DyU6hLQwzI'}).then((currentToken) => {
+    return getToken(messaging, {vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY}).then((currentToken) => {
       if (currentToken) {
         console.log('current token for client: ', currentToken);
-
-        axios.post(baseURL.api+'/devices/',{"user": userId, "registration_id":currentToken, "type": "web"}, {
+        axios.post(baseURL.api+'/devices/',{"user": userId, "registration_id": currentToken, "type": "web"}, {
           headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
