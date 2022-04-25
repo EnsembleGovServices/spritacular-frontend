@@ -22,8 +22,9 @@ import { Icon } from "@iconify/react";
 import LazyLoad from "../Upload/LazyLoad";
 import { routeUrls } from '../../helpers/url';
 import Images from "../../static/images";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
 import Notification from "../../Notification";
-
 
 
 const Header = (props) => {
@@ -38,7 +39,7 @@ const Header = (props) => {
   const [aboutDropdown, setAboutDropdown] = useState(false);
   const [resourcesDropdown, setResourcesDropdown] = useState(false);
   const [communityDropdown, setCommunityDropdown] = useState(false);
-  
+  const [notificationArray,setNotificationArray] = useState([]);
   const [active, setActive] = useState('');
   const location = useLocation();
   const homeUrl = location.pathname === '/';
@@ -73,6 +74,20 @@ const Header = (props) => {
     if(window.location.href.split('/')[window.location.href.split('/').length-1] === routeUrls.dashboard)
     setActive('dashboard');
   },[window.location.href])
+
+
+  useEffect(()=> {
+       axios.get(baseURL.api+'/notification/user_notification/', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${auth?.token?.access}`
+        }
+    })
+    .then((response)=> {
+      setNotificationArray(response.data.results.data);
+    })
+    .catch((error)=> {console.log(error)})
+  },[location])
 
 
   const handleLoginModal = () => {
@@ -295,44 +310,44 @@ const Header = (props) => {
               Login
             </Button>
           </div>
-        ) : 
-          <>
+        ) : (
           <div className="after-login-right-menu">
-          <Notification />
-          <Dropdown
-          className="user-menu"
-          isOpen={showUserMenu}
-          toggle={handleUserMenuDropdown}
-        >
-          <DropdownToggle >
-            <div className="profile_img">
-              {user?.profile_image ? (
-                  <LazyLoad
-                      src={user?.profile_image}
-                      alt={user?.first_name}
-                  />
-              ) : (
-                <Icon icon="entypo:user" />
-              )}
-            </div>
-            <span className="profile_text">
-              <span>{user?.first_name} {user?.last_name}{" "}</span>
-              <Icon icon="fe:arrow-down" />
-            </span>
-          </DropdownToggle>
-          <DropdownMenu container="body">
-            <DropdownItem onClick={() => setActive('')}>
-              <Link to={routeUrls.profile}>Edit Profile</Link>
-            </DropdownItem>
-            <DropdownItem onClick={() => {handleChangePasswordModal();}}>
-              Change Password
-            </DropdownItem>
-            <DropdownItem onClick={() => {Logout();setActive('')}}>Logout</DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-        </div>
-        </>
-        }
+            {/* Notification Dropdown  */}
+            <Notification notificationArray={notificationArray} setNotificationArray={setNotificationArray}/>
+            {/* User Profile Dropdown  */}
+            <Dropdown
+              className="user-menu"
+              isOpen={showUserMenu}
+              toggle={handleUserMenuDropdown}
+            >
+              <DropdownToggle >
+                <div className="profile_img">
+                  {user?.profile_image ? (
+                      <LazyLoad
+                          src={user?.profile_image}
+                          alt={user?.first_name}
+                      />
+                  ) : (
+                    <Icon icon="entypo:user" />
+                  )}
+                </div>
+                <span className="profile_text">
+                  <span>{user?.first_name} {user?.last_name}{" "}</span>
+                  <Icon icon="fe:arrow-down" />
+                </span>
+              </DropdownToggle>
+              <DropdownMenu container="body">
+                <DropdownItem onClick={() => setActive('')}>
+                  <Link to={routeUrls.profile}>Edit Profile</Link>
+                </DropdownItem>
+                <DropdownItem onClick={() => {handleChangePasswordModal();}}>
+                  Change Password
+                </DropdownItem>
+                <DropdownItem onClick={() => {Logout();setActive('')}}>Logout</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+        )}
       </Navbar>
 
       {isLoginModal && (

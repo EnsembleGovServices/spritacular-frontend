@@ -18,17 +18,19 @@ import { Icon } from "@iconify/react";
 import useAuth from "./hooks/useAuth";
 import Tippy from "@tippyjs/react";
 import moment from "moment";
+import axios from "./api/axios";
+import {baseURL} from "./helpers/url";
 
 
-const Notification = () => {
+const Notification = (props) => {
+  const  {notificationArray,setNotificationArray, setData,data} = props;
   const {auth} = useAuth();
     const [show, setShow] = useState(false);
     const [notification, setNotification] = useState(false);
     const [isTokenFound, setTokenFound] = useState(false);
-    
+    const [notificationId,setnotificationId] = useState([]);
     const [notificationDropdown, setNotificationDropdown] = useState(false);
-    const [notificationArray,setNotificationArray] = useState([]);
-    const [data,setData] = useState([]);
+    
     useEffect(() =>{
       getTokens(auth?.user?.id,auth?.token?.access);
       if(isTokenFound === false){
@@ -39,13 +41,32 @@ const Notification = () => {
     onMessageListener().then(payload => {
       setShow(true);
       setNotification(true);
-      console.log(payload);
-      setNotificationArray([payload.notification,...notificationArray]);
-      setData([payload.data]);
+      
+      setNotificationArray([payload,...notificationArray]);
       
     }).catch(err => console.log('failed: ', err));
+
+    const handleNotificationStatusUpdate = (e) => {
+      console.log(e);
+      var notificaitonIds = []
+      notificationArray.map((item,index) => {
+        notificaitonIds.push(item.data.notification_id);
+      })
+      axios.post(baseURL.api+'/notification/read_user_notification/',{'notification_ids': notificaitonIds
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${auth?.token?.access}`
+        }
+    })
+    .then((response)=> {
+      console.log(response);
+    })
+    .catch((error)=> {console.log(error)})
+    }
+
     return (
-            <Dropdown className="notify_menu" onClick={ e => setNotification(false)} isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
+            <Dropdown className="notify_menu" onClick={ e => {setNotification(false); if(notification) handleNotificationStatusUpdate(e)}} isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
               <DropdownToggle className="notification">
                 <Icon icon="ic:baseline-notifications" />
                 {notification && <span className="notify" />}
@@ -55,24 +76,29 @@ const Notification = () => {
                 <DropdownItem divider />
                 {notificationArray?.map((item,index) => {
                   return (
-                    <>
+                    <div key={index}>
                     <DropdownItem key={index}>
                     <div className="notify_wrapper">
-                    <Tippy animation="perspective" content={data[0]?.from_user}>
-                        <i><img src={item?.image} alt="user Profile" /></i>
+                    <Tippy animation="perspective" content={item.data?.from_user}>
+                      {item.notification?.image !== '' ? 
+                        <i><img src={item.notification?.image} alt="user Profile" /></i> 
+                      : 
+                      <Icon icon="entypo:user" />
+                      }
+                        
                     </Tippy>
                       
                       <div className="comment_wrapper">
                         <div className="comment_details">
-                          <h4>{item.title}</h4>
-                          <p>{item.body}</p>
+                          <h4>{item.notification.title}</h4>
+                          <p>{item.notification.body}</p>
                         </div>
-                        <span>{moment(data[0]?.sent_at).fromNow(true)}</span>
+                        <span>{moment(item.data?.sent_at).fromNow(true)}</span>
                       </div>
                     </div>
                   </DropdownItem>
                   <DropdownItem divider />
-                  </>
+                  </div>
                   )
                 })}
                 
