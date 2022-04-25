@@ -21,7 +21,7 @@ import {firebaseConfig} from "../../helpers/firebase";
 export const getTokens = (userId, token, auth) => {
     return getToken(messaging, {vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY}).then((currentToken) => {
       if (currentToken && auth) {
-        console.log('current token for client: ', currentToken);
+        // console.log('current token for client: ', currentToken);
         axios.post(baseURL.api+'/devices/',{"user": userId, "registration_id": currentToken, "type": "web"}, {
           headers: {
               'Content-Type': 'application/json',
@@ -29,16 +29,16 @@ export const getTokens = (userId, token, auth) => {
           }
       })
       .then((response)=> {
-        console.log('found response', response);
+        // console.log('found response', response);
       })
       .catch((error)=> {
-        console.log('Notification error, Request permission to generate one.');
+        // console.log('Notification error, Request permission to generate one.');
       })
 
       }
     }).catch((err) => {
         // shows on the UI that permission is required 
-      console.log('Notification permission denied. Request permission to generate one.');
+      // console.log('Notification permission denied. Request permission to generate one.');
       // console.log('An error occurred while retrieving token. ', err);
       // catch error while creating client token
     });

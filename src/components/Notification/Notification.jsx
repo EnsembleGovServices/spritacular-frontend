@@ -29,13 +29,15 @@ const Notification = () => {
       }
     }, [isTokenFound])
   
-    onMessageListener().then(payload => {
-      console.log('payload here', payload);
-      setShow(true);
-      setNotification(true);
-      setNotificationArray([payload.notification,...notificationArray]);
-      setData([payload.data]);
-    }).catch(err => console.log('failed: ', err));
+    useLayoutEffect(()=> {
+      onMessageListener().then(payload => {
+        console.log('payload here', payload);
+        setShow(true);
+        setNotification(true);
+        setNotificationArray([...notificationArray, payload.notification]);
+        setData([payload.data]);
+      }).catch(err => console.log('failed: ', err));
+    }, [notificationArray, show])
 
     return (
             <Dropdown className="notify_menu" onClick={ e => setNotification(false)} isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
