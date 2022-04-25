@@ -184,17 +184,17 @@ const Header = (props) => {
                   About <Icon icon="fe:arrow-down" />
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem className={active == 'about-1' ? 'active' : ''}>
+                  <DropdownItem className={active === 'about-1' ? 'active' : ''}>
                     <Link to={routeUrls.about}  title="What is Spritacular?" onClick={() => setActive('about-1')} >
                       What is Spritacular?
                     </Link>
                   </DropdownItem>
-                  <DropdownItem className={active == 'about-2' ? 'active' : ''}>
+                  <DropdownItem className={active === 'about-2' ? 'active' : ''}>
                     <Link to={routeUrls.home} title="Policy" onClick={() => setActive('about-2')}>
                       Policy
                     </Link>
                   </DropdownItem>
-                  <DropdownItem className={active == 'about-3' ? 'active' : ''}>
+                  <DropdownItem className={active === 'about-3' ? 'active' : ''}>
                     <Link to={routeUrls.home} title="Code of Conduct" onClick={() => setActive('about-3')}>
                       Code of Conduct
                     </Link>
