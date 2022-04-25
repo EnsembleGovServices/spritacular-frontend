@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import {getTokens,onMessageListener} from './firebase';
+import React, {useState, useLayoutEffect} from 'react'
+import {getTokens, onMessageListener} from './firebase';
 import {
   Dropdown,
   DropdownItem,
@@ -9,6 +9,7 @@ import {
 import { Icon } from "@iconify/react";
 import useAuth from "../../hooks/useAuth";
 import Tippy from "@tippyjs/react";
+
 
 
 const Notification = () => {
@@ -21,19 +22,20 @@ const Notification = () => {
     const [notificationArray,setNotificationArray] = useState([]);
     const [data,setData] = useState([]);
 
-    useEffect(() =>{
-      getTokens(auth?.user?.id, auth?.token?.access).then(r => r);
+    useLayoutEffect(()=> {
       setTokenFound(true);
-    },[isTokenFound])
+      if (isTokenFound) {
+        getTokens(auth?.user?.id, auth?.token?.access, auth?.user).then(r => r);
+      }
+    }, [isTokenFound])
   
     onMessageListener().then(payload => {
-      console.log(payload);
+      console.log('payload here', payload);
       setShow(true);
       setNotification(true);
       setNotificationArray([payload.notification,...notificationArray]);
       setData([payload.data]);
     }).catch(err => console.log('failed: ', err));
-
 
     return (
             <Dropdown className="notify_menu" onClick={ e => setNotification(false)} isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>

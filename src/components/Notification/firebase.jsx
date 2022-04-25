@@ -1,4 +1,5 @@
 import { getMessaging, onMessage, getToken} from 'firebase/messaging';
+
 import { initializeApp } from 'firebase/app';
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
@@ -14,9 +15,12 @@ import {firebaseConfig} from "../../helpers/firebase";
     });
   });
 
-  export const getTokens = (userId,token) => {
+
+
+
+export const getTokens = (userId, token, auth) => {
     return getToken(messaging, {vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY}).then((currentToken) => {
-      if (currentToken) {
+      if (currentToken && auth) {
         console.log('current token for client: ', currentToken);
         axios.post(baseURL.api+'/devices/',{"user": userId, "registration_id": currentToken, "type": "web"}, {
           headers: {
@@ -25,22 +29,17 @@ import {firebaseConfig} from "../../helpers/firebase";
           }
       })
       .then((response)=> {
-        console.log(response);
+        console.log('found response', response);
       })
-      .catch((error)=> {console.log(error)})
-        // setTokenFound(true);
-        // Track the token -> client mapping, by sending to backend server
-        // show on the UI that permission is secured
-      } else {
-        console.log('No registration token available. Request permission to generate one.');
-        // setTokenFound(false);
-        // setTokenFound(true);
-        // shows on the UI that permission is required 
+      .catch((error)=> {
+        console.log('Notification error, Request permission to generate one.');
+      })
+
       }
     }).catch((err) => {
         // shows on the UI that permission is required 
-
-      console.log('An error occurred while retrieving token. ', err);
+      console.log('Notification permission denied. Request permission to generate one.');
+      // console.log('An error occurred while retrieving token. ', err);
       // catch error while creating client token
     });
   
