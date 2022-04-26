@@ -454,6 +454,7 @@ const ObservationLocation = (props) => {
                                     <Input
                                         id="Date"
                                         type="date"
+                                        max= {moment(new Date()).format('Y-MM-DD')}
                                         name="obs_date"
                                         max={moment(new Date()).format('Y-MM-DD')}
                                         value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}

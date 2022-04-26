@@ -19,7 +19,6 @@ const RequireAuth = (props ) => {
            navigate('/unauthorized', {replace: true});
            return true;
         }
-        return true;
     }, [allowedRoles, navigate, route])
 
 

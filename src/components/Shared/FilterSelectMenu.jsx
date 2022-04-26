@@ -99,9 +99,8 @@ const FilterSelectMenu = (props) =>{
                                                 </div>
                                             </>
                                         }
-                                        {!dashboardFilter && <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary shadow-none mt-2 mt-md-0">
-                                            <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload
-                                            Observation
+                                        {!dashboardFilter && !auth?.user?.is_superuser && <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary shadow-none mt-2 mt-md-0">
+                                            <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload Observation
                                         </Link>}
                                     </div>
                                 </Col>
