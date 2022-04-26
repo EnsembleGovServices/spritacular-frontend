@@ -48,7 +48,7 @@ const Notification = (props) => {
         notificaitonIds.push(item.data.notification_id);
       })
       axios.post(baseURL.api+'/notification/read_user_notification/',{'notification_ids': notificaitonIds
-    }, {
+       }, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${auth?.token?.access}`
@@ -62,7 +62,7 @@ const Notification = (props) => {
     }
 
     return (
-            <Dropdown className="notify_menu" onClick={ e => {setNotification(false); if(notification) handleNotificationStatusUpdate(e)}} isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
+            <Dropdown className="notify_menu" onClick={ e => {setNotification(false); if(notification) {handleNotificationStatusUpdate(e)}}} isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
             <DropdownToggle className="notification">
               <Icon icon="ic:baseline-notifications" />
               {notification && <span className="notify" />}

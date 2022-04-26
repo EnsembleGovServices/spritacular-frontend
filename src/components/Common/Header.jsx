@@ -77,16 +77,18 @@ const Header = (props) => {
 
 
   useEffect(()=> {
-       axios.get(baseURL.api+'/notification/user_notification/', {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${auth?.token?.access}`
-        }
-    })
-    .then((response)=> {
-      setNotificationArray(response.data.results.data);
-    })
-    .catch((error)=> {console.log(error)})
+    if(auth?.token?.access){
+      axios.get(baseURL.api+'/notification/user_notification/', {
+       headers: {
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${auth?.token?.access}`
+       }
+   })
+   .then((response)=> {
+     setNotificationArray(response.data.results.data);
+   })
+   .catch((error)=> {console.log(error)})
+    }
   },[location])
 
 
