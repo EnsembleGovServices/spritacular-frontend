@@ -24,7 +24,7 @@ import { routeUrls } from '../../helpers/url';
 import Images from "../../static/images";
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
-import Notification from "../../Notification";
+import Notification from "../Notification/Notification";
 
 
 const Header = (props) => {
