@@ -60,6 +60,8 @@ const Notification = (props) => {
     .then((response)=> {
       console.log(response);
       setData([]);
+      // setNotificationArray([]);
+
     })
     .catch((error)=> {console.log(error)})
     }
@@ -79,8 +81,8 @@ const Notification = (props) => {
                   <DropdownItem key={index}>
                   <div className="notify_wrapper">
                   <Tippy animation="perspective" content={item.data?.from_user}>
-                    {item.notification?.image  ? 
-                      <i><img src={item.notification?.image} alt="user Profile" /></i> 
+                    {item.data?.from_user_profile_pic  ? 
+                      <i><img src={item.data?.from_user_profile_pic} alt="user Profile" /></i> 
                     : 
                     <Icon icon="entypo:user" />
                     }
