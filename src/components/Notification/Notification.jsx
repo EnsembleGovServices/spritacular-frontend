@@ -58,7 +58,7 @@ const Notification = (props) => {
                 setData([]);
                 setTimeout(function () {
                     setNotificationArray([])
-                }, 1500)
+                }, 1000)
             })
           .catch((error)=> {
                 console.log(error)
@@ -100,42 +100,44 @@ const Notification = (props) => {
                 )  : 'No new Notifications'}
 
               </DropdownItem>
-              <DropdownItem divider />
-              {notificationArray?.length > 0 ? (
-                  notificationArray?.map((item,index) => {
-                      return (
-                          <div key={index} className="drp-c">
-                              <DropdownItem key={index}>
-                                  <div className="notify_wrapper">
-                                      <Tippy animation="perspective" content={item.data?.from_user}>
-                                          {item.notification?.image  ?
-                                              <div className="user-img">
-                                                  <img className="img-fluid" src={item.notification?.image} alt="user Profile" />
-                                              </div>
-                                              :
-                                              <div className="user-img">
-                                                  <Icon className="img-fluid" icon="entypo:user" />
-                                              </div>
-                                          }
-                                      </Tippy>
-                                      <div className="comment_wrapper">
-                                          <div className="comment_details">
-                                              <h4>{item.notification.title}</h4>
-                                              <p>{item.notification.body}</p>
-                                          </div>
-                                          <span>{moment(item.data?.sent_at).fromNow(true)}</span>
-                                      </div>
-                                  </div>
-                              </DropdownItem>
-                              <DropdownItem divider />
-                          </div>
-                      )
-                  })
-              ) : (
-                  <div className="d-flex align-items-center justify-content-center" style={{ height: "190px"}}>
-                      <h5>All caught up!</h5>
-                  </div>
-              )}
+              {/*<DropdownItem divider />*/}
+                <div className={'dropdown-body'}>
+                    {notificationArray?.length > 0 ? (
+                        notificationArray?.map((item,index) => {
+                            return (
+                                <div key={index} className="drp-c">
+                                    <DropdownItem key={index}>
+                                        <div className="notify_wrapper">
+                                            <Tippy animation="perspective" content={item.data?.from_user}>
+                                                {item.notification?.image  ?
+                                                    <div className="user-img">
+                                                        <img className="img-fluid" src={item.notification?.image} alt="user Profile" />
+                                                    </div>
+                                                    :
+                                                    <div className="user-img">
+                                                        <Icon className="img-fluid" icon="entypo:user" />
+                                                    </div>
+                                                }
+                                            </Tippy>
+                                            <div className="comment_wrapper">
+                                                <div className="comment_details">
+                                                    <h4>{item.notification.title}</h4>
+                                                    <p>{item.notification.body}</p>
+                                                </div>
+                                                <span>{moment(item.data?.sent_at).fromNow(true)}</span>
+                                            </div>
+                                        </div>
+                                    </DropdownItem>
+                                    <DropdownItem divider />
+                                </div>
+                            )
+                        })
+                    ) : (
+                        <div className="d-flex align-items-center justify-content-center" style={{ height: "190px"}}>
+                            <h5>All caught up!</h5>
+                        </div>
+                    )}
+                </div>
               </DropdownMenu>
             </Dropdown>
             
