@@ -200,6 +200,8 @@ const ObservationMoreDetails = (props) => {
 
     return (
         <div className="more-details">
+            <h4>{`Trained User: ${auth?.user?.is_trained}`}</h4>
+
             <Row>
                 <Col md={12}>
                     <Row className="align-items-center">
@@ -272,7 +274,7 @@ const ObservationMoreDetails = (props) => {
                         </Col>
                     </Row>
                     <div className="border-line my-4"/>
-                    {data?.user_data?.is_can_vote && !data?.user_data?.is_voted && data?.category_data.length > 0 && window.location.href.split('/')[window.location.href.split('/').length-1] === routeUrls.gallery && !user?.is_user &&
+                    {data?.user_data?.is_can_vote && !(data?.is_verified || data?.is_reject) && !data?.user_data?.is_voted && data?.category_data.length > 0 && window.location.href.split('/')[window.location.href.split('/').length-1] === routeUrls.gallery && !user?.is_user &&
                     <Form onSubmit={handleVote}>
                         <h4 className="mt-3">Vote for observation</h4>
                         {data?.category_data?.map((item, index) => {
@@ -290,7 +292,7 @@ const ObservationMoreDetails = (props) => {
                             </div>
                             )
                         })}
-                        <Button disabled={ (selected !== undefined && (Object.keys(selected)?.length === data?.category_data?.length)) ? false:true} className="like-btn mt-4 w-100 d-flex align-items-center justify-content-center py-2 mb-3">
+                        <Button disabled={ (!(selected !== undefined && (Object.keys(selected)?.length === data?.category_data?.length)))} className="like-btn mt-4 w-100 d-flex align-items-center justify-content-center py-2 mb-3">
                             <Icon icon="heroicons-solid:thumb-up" width="25" height="25" className="me-2" />
                             <span>Vote this observation</span>
                         </Button>
