@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import "../assets/scss/component/home.scss";
+import Notification from "../components/Notification/Notification";
 // import  GoogleMapWrapper  from '../components/GoogleMapWrapper';
 
 const HomeBanner = lazy(()=> import('../components/Home/HomeBanner'))
@@ -7,12 +8,16 @@ const HomeCounter = lazy(()=> import('../components/Home/HomeCounter'))
 const HomeMapSection = lazy(()=> import('../components/Home/HomeMapSection'))
 const GetStarted = lazy(()=> import('../components/Home/GetStarted'))
 
+
+
 const Home = (props) => {
     // this.props = props;
     return (
     <>
+   
         <Suspense fallback={''}>
             <HomeBanner />
+            {/* <Notification /> */}
         </Suspense>
 
         <Suspense fallback={''}>

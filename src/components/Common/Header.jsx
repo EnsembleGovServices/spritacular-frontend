@@ -22,6 +22,9 @@ import { Icon } from "@iconify/react";
 import LazyLoad from "../Upload/LazyLoad";
 import { routeUrls } from '../../helpers/url';
 import Images from "../../static/images";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
+import Notification from "../Notification/Notification";
 
 
 const Header = (props) => {
@@ -36,7 +39,7 @@ const Header = (props) => {
   const [aboutDropdown, setAboutDropdown] = useState(false);
   const [resourcesDropdown, setResourcesDropdown] = useState(false);
   const [communityDropdown, setCommunityDropdown] = useState(false);
-  const [notificationDropdown, setNotificationDropdown] = useState(false);
+  const [notificationArray,setNotificationArray] = useState([]);
   const [active, setActive] = useState('');
   const location = useLocation();
   const homeUrl = location.pathname === '/';
@@ -71,6 +74,22 @@ const Header = (props) => {
     if(window.location.href.split('/')[window.location.href.split('/').length-1] === routeUrls.dashboard)
     setActive('dashboard');
   },[window.location.href])
+
+
+  useEffect(()=> {
+       if (auth?.user) {
+         axios.get(baseURL.api+'/notification/user_notification/', {
+           headers: {
+             'Content-Type': 'application/json',
+             'Authorization': `Bearer ${auth?.token?.access}`
+           }
+         })
+             .then((response)=> {
+               setNotificationArray(response.data.results.data);
+             })
+             .catch((error)=> {console.log(error)})
+       }
+  },[location])
 
 
   const handleLoginModal = () => {
@@ -167,17 +186,17 @@ const Header = (props) => {
                   About <Icon icon="fe:arrow-down" />
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem className={active == 'about-1' ? 'active' : ''}>
+                  <DropdownItem className={active === 'about-1' ? 'active' : ''}>
                     <Link to={routeUrls.about}  title="What is Spritacular?" onClick={() => setActive('about-1')} >
                       What is Spritacular?
                     </Link>
                   </DropdownItem>
-                  <DropdownItem className={active == 'about-2' ? 'active' : ''}>
+                  <DropdownItem className={active === 'about-2' ? 'active' : ''}>
                     <Link to={routeUrls.home} title="Policy" onClick={() => setActive('about-2')}>
                       Policy
                     </Link>
                   </DropdownItem>
-                  <DropdownItem className={active == 'about-3' ? 'active' : ''}>
+                  <DropdownItem className={active === 'about-3' ? 'active' : ''}>
                     <Link to={routeUrls.home} title="Code of Conduct" onClick={() => setActive('about-3')}>
                       Code of Conduct
                     </Link>
@@ -296,54 +315,7 @@ const Header = (props) => {
         ) : (
           <div className="after-login-right-menu">
             {/* Notification Dropdown  */}
-            <Dropdown className="notify_menu" isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
-              <DropdownToggle className="notification">
-                <Icon icon="ic:baseline-notifications" />
-                <span className="notify" />
-              </DropdownToggle>
-              <DropdownMenu container="body" className="notify-open_menu">
-                <DropdownItem header> Notifications (3) </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
-                    <div className="comment_wrapper">
-                      <div className="comment_details">
-                        <h4>New comments</h4>
-                        <p>Nice Shot!</p>
-                      </div>
-                      <span>5m</span>
-                    </div>
-                  </div>
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
-                    <div className="comment_wrapper">
-                      <div className="comment_details">
-                        <h4>New vote</h4>
-                        <p>John votes your Sprite Observation</p>
-                      </div>
-                      <span>1h</span>
-                    </div>
-                  </div>
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
-                    <div className="comment_wrapper">
-                      <div className="comment_details">
-                        <h4>Emily replied to your comment</h4>
-                        <p>Thank you!</p>
-                      </div>
-                      <span>1h</span>
-                    </div>
-                  </div>
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+            <Notification notificationArray={notificationArray} setNotificationArray={setNotificationArray}/>
             {/* User Profile Dropdown  */}
             <Dropdown
               className="user-menu"
