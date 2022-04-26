@@ -22,6 +22,9 @@ import { Icon } from "@iconify/react";
 import LazyLoad from "../Upload/LazyLoad";
 import { routeUrls } from '../../helpers/url';
 import Images from "../../static/images";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
+import Notification from "../Notification/Notification";
 
 
 const Header = (props) => {
@@ -36,7 +39,8 @@ const Header = (props) => {
   const [aboutDropdown, setAboutDropdown] = useState(false);
   const [resourcesDropdown, setResourcesDropdown] = useState(false);
   const [communityDropdown, setCommunityDropdown] = useState(false);
-  const [notificationDropdown, setNotificationDropdown] = useState(false);
+  const [notificationArray,setNotificationArray] = useState([]);
+  const [active, setActive] = useState('');
   const location = useLocation();
   const homeUrl = location.pathname === '/';
   const navigate = useNavigate();
@@ -63,7 +67,30 @@ const Header = (props) => {
       }
     });
     setUser(auth?.user);
+    
   }, [auth?.user]);
+
+  useEffect(()=> {
+    if(window.location.href.split('/')[window.location.href.split('/').length-1] === routeUrls.dashboard)
+    setActive('dashboard');
+  },[window.location.href])
+
+
+  useEffect(()=> {
+       if (auth?.user) {
+         axios.get(baseURL.api+'/notification/user_notification/', {
+           headers: {
+             'Content-Type': 'application/json',
+             'Authorization': `Bearer ${auth?.token?.access}`
+           }
+         })
+             .then((response)=> {
+               setNotificationArray(response.data.results.data);
+             })
+             .catch((error)=> {console.log(error)})
+       }
+  },[location])
+
 
   const handleLoginModal = () => {
     setIsLoginModal(!isLoginModal);
@@ -105,7 +132,7 @@ const Header = (props) => {
         className={homeUrl ? "custom-header" : "custom-header bg-not-home"}
         light
       >
-        <Link to={routeUrls.home} className="navbar-brand p-0" title="Spritacular">
+        <Link to={routeUrls.home} className="navbar-brand p-0" title="Spritacular" onClick={() => setActive('')}>
           <img src={Images.Logo} alt="Logo" className="logo" />
           <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo" />
         </Link>
@@ -114,7 +141,7 @@ const Header = (props) => {
         </NavbarToggler>
         <Collapse navbar isOpen={showMenu}>
           <div className="menu-logo  justify-content-between w-100 px-2 py-1 shadow-sm">
-            <Link to={routeUrls.home} className="navbar-brand">
+            <Link to={routeUrls.home} className="navbar-brand"  onClick={() => setActive('')}>
               <img src={Images.BlackLogo} alt="Logo" />
             </Link>
             <Button className="close-menu" onClick={() => menuClose()}>
@@ -129,7 +156,8 @@ const Header = (props) => {
                   <Link
                     to={routeUrls.myObservations}
                     title="My Observations"
-                    className="nav-link text-capitalize"
+                    className={active === 'observations' ? "nav-link text-capitalize active": 'nav-link text-capitalize'}
+                    onClick={() => setActive('observations')}
                   >
                     My Observations
                   </Link>
@@ -140,14 +168,15 @@ const Header = (props) => {
                   <Link
                     to={routeUrls.dashboard}
                     title="Dashboard"
-                    className="nav-link text-capitalize"
+                    className={active === 'dashboard' ? "nav-link text-capitalize active": 'nav-link text-capitalize'}
+                    onClick={() => setActive('dashboard')}
                   >
                     Dashboard
                   </Link>
                 </NavItem>
               ) : '' }
             </>
-            <NavItem>
+            <NavItem  >
               <Dropdown
                 className="user-menu custom-relative-dropdown"
                 isOpen={aboutDropdown}
@@ -157,18 +186,18 @@ const Header = (props) => {
                   About <Icon icon="fe:arrow-down" />
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem>
-                    <Link to={routeUrls.about} title="What is Spritacular?">
+                  <DropdownItem className={active === 'about-1' ? 'active' : ''}>
+                    <Link to={routeUrls.about}  title="What is Spritacular?" onClick={() => setActive('about-1')} >
                       What is Spritacular?
                     </Link>
                   </DropdownItem>
-                  <DropdownItem>
-                    <Link to={routeUrls.home} title="Policy">
+                  <DropdownItem className={active === 'about-2' ? 'active' : ''}>
+                    <Link to={routeUrls.home} title="Policy" onClick={() => setActive('about-2')}>
                       Policy
                     </Link>
                   </DropdownItem>
-                  <DropdownItem>
-                    <Link to={routeUrls.home} title="Code of Conduct">
+                  <DropdownItem className={active === 'about-3' ? 'active' : ''}>
+                    <Link to={routeUrls.home} title="Code of Conduct" onClick={() => setActive('about-3')}>
                       Code of Conduct
                     </Link>
                   </DropdownItem>
@@ -179,13 +208,14 @@ const Header = (props) => {
               <Link
                 to={routeUrls.getStarted}
                 title="Get Started"
-                className="nav-link text-capitalize"
+                className={active === 'started' ? "nav-link text-capitalize active": 'nav-link text-capitalize'}
+                onClick={() => setActive('started')}
               >
                 Get Started
               </Link>
             </NavItem>
             <NavItem>
-              <Link to={routeUrls.gallery} title="Gallery" className="nav-link text-capitalize">
+              <Link to={routeUrls.gallery} title="Gallery" className={active === 'gallery' ? "nav-link text-capitalize active": 'nav-link text-capitalize'} onClick={() => setActive('gallery')}>
                 Gallery
               </Link>
             </NavItem>
@@ -199,13 +229,13 @@ const Header = (props) => {
                   Resources <Icon icon="fe:arrow-down" />
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem>
-                    <Link to={routeUrls.blog} title="Blog">
+                  <DropdownItem className={active == 'resources-1' ? 'active' : ''}>
+                    <Link to={routeUrls.blog} title="Blog" onClick={() => setActive('resources-1')}>
                       Blog
                     </Link>
                   </DropdownItem>
-                  <DropdownItem>
-                    <Link to={routeUrls.tutorials} title="Tutorials">
+                  <DropdownItem className={active == 'resources-2' ? 'active' : ''}>
+                    <Link to={routeUrls.tutorials} title="Tutorials" onClick={() => setActive('resources-2')}>
                       Tutorials
                     </Link>
                   </DropdownItem>
@@ -222,23 +252,23 @@ const Header = (props) => {
                   Community <Icon icon="fe:arrow-down" />
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem>
-                    <Link to={routeUrls.home} title="Meet the Teem">
+                  <DropdownItem className={active == 'community-1' ? 'active' : ''}>
+                    <Link to={routeUrls.home} title="Meet the Teem" onClick={() => setActive('community-1')}>
                       Meet the Teem
                     </Link>
                   </DropdownItem>
-                  <DropdownItem>
-                    <Link to={routeUrls.home} title="Volunteer Profile">
+                  <DropdownItem className={active == 'community-2' ? 'active' : ''}>
+                    <Link to={routeUrls.home} title="Volunteer Profile" onClick={() => setActive('community-2')}>
                       Volunteer Profile
                     </Link>
                   </DropdownItem>
-                  <DropdownItem>
-                    <Link to={routeUrls.home} title="Become an ambassador">
+                  <DropdownItem className={active == 'community-3' ? 'active' : ''}>
+                    <Link to={routeUrls.home} title="Become an ambassador" onClick={() => setActive('community-3')}>
                       Become an ambassador
                     </Link>
                   </DropdownItem>
-                  <DropdownItem>
-                    <Link to={routeUrls.home} title="Join Spritacular Google Group">
+                  <DropdownItem className={active == 'community-4' ? 'active' : ''}>
+                    <Link to={routeUrls.home} title="Join Spritacular Google Group" onClick={() => setActive('community-4')}>
                       Join Spritacular Google Group
                     </Link>
                   </DropdownItem>
@@ -285,61 +315,14 @@ const Header = (props) => {
         ) : (
           <div className="after-login-right-menu">
             {/* Notification Dropdown  */}
-            <Dropdown className="notify_menu" isOpen={notificationDropdown} toggle={ () => setNotificationDropdown(!notificationDropdown)}>
-              <DropdownToggle className="notification">
-                <Icon icon="ic:baseline-notifications" />
-                <span className="notify" />
-              </DropdownToggle>
-              <DropdownMenu container="body" className="notify-open_menu">
-                <DropdownItem header> Notifications (3) </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
-                    <div className="comment_wrapper">
-                      <div className="comment_details">
-                        <h4>New comments</h4>
-                        <p>Nice Shot!</p>
-                      </div>
-                      <span>5m</span>
-                    </div>
-                  </div>
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
-                    <div className="comment_wrapper">
-                      <div className="comment_details">
-                        <h4>New vote</h4>
-                        <p>John votes your Sprite Observation</p>
-                      </div>
-                      <span>1h</span>
-                    </div>
-                  </div>
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  <div className="notify_wrapper">
-                    <i><img src={Images.UserProfile} alt="user Profile" /></i>
-                    <div className="comment_wrapper">
-                      <div className="comment_details">
-                        <h4>Emily replied to your comment</h4>
-                        <p>Thank you!</p>
-                      </div>
-                      <span>1h</span>
-                    </div>
-                  </div>
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+            <Notification notificationArray={notificationArray} setNotificationArray={setNotificationArray}/>
             {/* User Profile Dropdown  */}
             <Dropdown
               className="user-menu"
               isOpen={showUserMenu}
               toggle={handleUserMenuDropdown}
             >
-              <DropdownToggle>
+              <DropdownToggle >
                 <div className="profile_img">
                   {user?.profile_image ? (
                       <LazyLoad
@@ -356,13 +339,13 @@ const Header = (props) => {
                 </span>
               </DropdownToggle>
               <DropdownMenu container="body">
-                <DropdownItem>
+                <DropdownItem onClick={() => setActive('')}>
                   <Link to={routeUrls.profile}>Edit Profile</Link>
                 </DropdownItem>
-                <DropdownItem onClick={() => handleChangePasswordModal()}>
+                <DropdownItem onClick={() => {handleChangePasswordModal();}}>
                   Change Password
                 </DropdownItem>
-                <DropdownItem onClick={() => Logout()}>Logout</DropdownItem>
+                <DropdownItem onClick={() => {Logout();setActive('')}}>Logout</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>

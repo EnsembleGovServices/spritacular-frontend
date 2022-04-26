@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 
 
 const ObservationListRow = (props) => {
-    const { cardItems, cardData, allChecked,currentChecked,setCurrentChecked, childFunc, setCheckedIds,index, checkedIds, handleClick} = props;
+    const { cardItems, cardData, allChecked, childFunc, setCheckedIds,index, checkedIds, handleClick} = props;
     
     const [allClear,setAllClear] = useState(false);
     const setChecked = (id) => {
@@ -15,14 +15,10 @@ const ObservationListRow = (props) => {
             return allChecked;
         }
         else{
-            return (allClear) ? false : currentChecked?.[id];
+            return (checkedIds.includes(id)) ? true : false ;
         }
     }
     const handleChecked = (e,id) => {
-        setCurrentChecked({
-            ...currentChecked,
-            [id]: e.target.checked}
-            )
             if(e.target.checked){
                 if(checkedIds.length > 0){
                     setCheckedIds([...checkedIds,id]);
@@ -44,7 +40,6 @@ const ObservationListRow = (props) => {
 
     const handleCurrentCheckbox = () => {
         setAllClear(true);
-        setCurrentChecked({});
         setCheckedIds([]);
     }
     return (
@@ -63,7 +58,7 @@ const ObservationListRow = (props) => {
                     <CardImageCarousel carouselData={cardItems?.images} />
                     : <img
                             alt="Card cap"
-                            src={cardData?.image}
+                            src={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}
                             className="img-fluid card-img"
                             onClick={(e) => {
                                  handleClick(index);

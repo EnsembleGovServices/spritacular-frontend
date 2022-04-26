@@ -1,6 +1,6 @@
 import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { routeUrls } from "./helpers/url";
 
@@ -23,6 +23,7 @@ import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 import InformativePage from './layouts/InformativePage';
 import Dashboard from "./pages/Dashboard";
 import useAuth from "./hooks/useAuth";
+
 const App = () => {
   const [persistValue, setPersistValue] = useState(false);
   const authCallBack = (authChange) => {
@@ -38,10 +39,13 @@ const App = () => {
 
 
   return (
+    <>
+    
     <Routes>
       <Route element={<PersistLogin persistValue={persistValue} />}>
         <Route element={ <InformativePage setAuthValue={authCallBack} /> }>
-          <Route exact path={routeUrls.home} element={<Home />} />
+          <Route exact path={routeUrls.home} element={<Home /> } />
+          
           <Route exact path={routeUrls.about} element={<About />} />
           <Route exact path={routeUrls.getStarted} element={<GetStarted />} />
           <Route exact path={routeUrls.gallery} element={<Gallery />} />
@@ -54,8 +58,8 @@ const App = () => {
         
         {/*Protected routes*/}
         <Route element={<RequireAuth allowedRoles={Roles} setAuthValue={authCallBack} />}>
-          <Route exact path={routeUrls.profile} element={<Profile />} />
           <Route element={<Observations />}>
+          <Route exact path={routeUrls.profile} element={<Profile />} />
             <Route exact path={routeUrls.myObservations} element={<MyObservations />} />
             <Route exact path={routeUrls.observationsAdd} element={<AddObservation />} />
             <Route exact path={routeUrls.observationsUpdate} element={<AddObservation />} />
@@ -65,6 +69,7 @@ const App = () => {
       </Route>
       <Route path="*" element={<Error />} />
     </Routes>
+    </>
   );
 };
 

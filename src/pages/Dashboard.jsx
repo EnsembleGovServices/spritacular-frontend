@@ -15,11 +15,11 @@ import ObservationListView from './Observation/ObservationListView';
 import { LoadMore } from '../components/Shared/LoadMore';
 import useObservationsData from '../hooks/useObservationsData';
 import Images from './../static/images';
+import moment from 'moment';
 
 
 const Dashboard = () =>{
     const { auth } = useAuth();
-    const [observationList, setObservationList] = useState({});
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [selectedObservationId,setSelectedObservationId] = useState();
     const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
@@ -38,21 +38,25 @@ const Dashboard = () =>{
       isLensTypeOpen:false,
 
     })
+
+    const [selectedFilterHorizontal,setSelectedFilterHorizontal] = useState({
+        country:{name:'',code:''},
+        type:'',
+        status:'',
+    })
     const [selectedFilters,setSelectedFilters] = useState({
-      country:{name:'',code:''},
-      type:'',
-      status:'',
-      userId: '',
+      from_obs_data: null,
+      to_obs_data: null,
       obs_start_date: null,
       obs_end_date: null,
       obs_start_time: null,
       obs_end_time: null,
-      camera_type:null,
-      fps: null,
-      iso:null,
-      fov:null,
-      shutter_speed:null,
-      lens_type:null,
+      camera_type:'',
+      fps: '',
+      iso:'',
+      fov:'',
+      shutter_speed:'',
+      lens_type:'',
     })
     const [isLoaded,setIsLoaded] = useState(true);
 
@@ -61,7 +65,7 @@ const Dashboard = () =>{
     const [nextPageUrl,setNextPageUrl] = useState('/observation/dashboard/?country=&category=&status=');
 
 
-    const getObservationData = (reset=false,country=`${selectedFilters.country?.code}`,category=`${selectedFilters.type}`,status=`${selectedFilters.status}`) => {
+    const getObservationData = (reset=false,country=`${selectedFilterHorizontal.country?.code}`,category=`${selectedFilterHorizontal.type}`,status=`${selectedFilterHorizontal.status}`) => {
         if (auth?.user?.is_superuser) {
             let url;
             if(reset === true || !nextPageUrl){
@@ -69,7 +73,22 @@ const Dashboard = () =>{
             }else{
             url = nextPageUrl;
             }
-            axios.get(baseURL.api+url,{
+            if(selectedFilters.obs_start_date !== null){
+                if(selectedFilters.obs_start_time !== null){
+                    selectedFilters.from_obs_data = (selectedFilters.obs_start_date !== null) ? moment(selectedFilters.obs_start_date + ' '+ selectedFilters.obs_start_time).format('DD/MM/Y H:mm'): null;
+                }else{
+                    selectedFilters.from_obs_data = (selectedFilters.obs_start_date !== null) ? moment(selectedFilters.obs_start_date + ' '+ '00:00').format('DD/MM/Y HH:mm'): null;
+                }
+            }
+            if(selectedFilters.obs_end_date !== null){
+                if(selectedFilters.obs_end_time !== null){
+                    selectedFilters.to_obs_data = (selectedFilters.obs_end_date !== null) ? moment(selectedFilters.obs_end_date + ' '+selectedFilters.obs_end_time).format('DD/MM/Y HH:mm'): null;
+                }else{
+                    selectedFilters.to_obs_data = (selectedFilters.obs_end_date !== null) ? moment(selectedFilters.obs_end_date + ' '+ '23:59').format('DD/MM/Y HH:mm'): null;
+                }
+            }
+           
+            axios.post(baseURL.api+url,selectedFilters,{
                 headers:{
                     'Content-type': 'application/json',
                     'Authorization': `Bearer ${auth?.token?.access}`
@@ -133,6 +152,15 @@ const Dashboard = () =>{
       
       }, [isObservationDetailModal]);
 
+    useEffect(()=> {
+        if (isObservationDetailModal) {
+            document.body.classList.add('overflow-hidden');
+        }
+        else{
+            document.body.classList.remove('overflow-hidden');
+        }
+    }, [isObservationDetailModal]);
+
     const cleaningUpObservationDataForDraftSaving = async (data) => {
         setObservationImages([]);
         setObservationData([]);
@@ -178,17 +206,21 @@ const Dashboard = () =>{
     const handleFilterValue = (value,type) => {
         if(type === 'status'){    
             value = value.toLowerCase();
-          getObservationData(true,selectedFilters.country?.code,selectedFilters.type,value);
+          getObservationData(true,selectedFilterHorizontal.country?.code,selectedFilterHorizontal.type,value);
         }
     
         if(type === 'category') {
-          getObservationData(true,selectedFilters.country?.code,value,selectedFilters.status);
+          getObservationData(true,selectedFilterHorizontal.country?.code,value,selectedFilterHorizontal.status);
         }
     
         if(type === 'country'){
-          getObservationData(true,value.code,selectedFilters.type,selectedFilters.status);
-        }   
+          getObservationData(true,value.code,selectedFilterHorizontal.type,selectedFilterHorizontal.status);
+        }  
+        if(type === 'filter'){
+            getObservationData(true,selectedFilterHorizontal.country.code,selectedFilterHorizontal.type,selectedFilterHorizontal.status);
+        } 
       }
+
     return (
         <>
             <FilterSelectMenu 
@@ -202,8 +234,8 @@ const Dashboard = () =>{
                 gridView={gridView}
                 isFilterOpen={isFilterOpen} 
                 setIsFilterOpen={setIsFilterOpen}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters} 
+                selectedFilterHorizontal={selectedFilterHorizontal}
+                setSelectedFilterHorizontal={setSelectedFilterHorizontal} 
                 searchCountry={searchCountry}
                 findCountry={findCountry} 
                 handleFilterValue={handleFilterValue}

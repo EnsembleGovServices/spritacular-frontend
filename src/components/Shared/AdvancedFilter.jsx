@@ -18,7 +18,8 @@ const AdvancedFilter = (props) => {
                     <Button className="close-icon bg-transparent shadow-none border-0 rounded-0" onClick={()=>handleFilterOpen()}>
                         <img src={Images.Modalcloseicon} alt="close-icon" />
                     </Button>
-                </Col>
+                </Col>  
+               
                 {/* <Col xs={12}>
                     <FormGroup>
                         <Label className='fw-normal text-black'>User ID</Label>
@@ -47,7 +48,7 @@ const AdvancedFilter = (props) => {
                                                 <div className='d-flex justify-content-between date-time_row'>
                                                     <div className="position-relative date-box">
                                                         <Input type="date"
-                                                        max= {moment(new Date()).format('Y-MM-DD')}
+                                                        max={moment(new Date()).format('Y-MM-DD')}
                                                         onChange={(e) => {setSelectedFilters({...selectedFilters,obs_start_date:e.target.value}); // handleFilterValue(e.target.value,'country');
                                                         }}/>
                                                     </div>
@@ -65,7 +66,7 @@ const AdvancedFilter = (props) => {
                                                 <div className='d-flex justify-content-between date-time_row'>
                                                     <div className="position-relative date-box">
                                                         <Input type="date"
-                                                        max= {moment(new Date()).format('Y-MM-DD')}
+                                                        max={moment(new Date()).format('Y-MM-DD')}
                                                         onChange={(e) => {setSelectedFilters({...selectedFilters,obs_end_date:e.target.value}); // handleFilterValue(e.target.value,'country');
                                                         }}/>
                                                     </div>

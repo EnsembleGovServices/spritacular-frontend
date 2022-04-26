@@ -19,11 +19,6 @@ const RequireAuth = (props ) => {
            navigate('/unauthorized', {replace: true});
            return true;
         }
-        if (route === 'observations' && (allowedRoles.superuser)) {
-            navigate('/unauthorized', {replace: true});
-            return true;
-         }
-        return true;
     }, [allowedRoles, navigate, route])
 
 

@@ -4,16 +4,10 @@ import { Button, Col, Container, FormGroup, Input, Label, Row,Dropdown, Dropdown
 import { routeUrls } from "../../helpers/url";
 import Images from './../../static/images';
 import {observationStatus,countries} from "../../helpers/timezone";
-import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
-import useObservationsData from "../../hooks/useObservationsData";
 
 const FilterSelectMenu = (props) =>{
-    const {filterShow, handleFilterOpen, galleryFilter,isFilterOpen,setIsFilterOpen,selectedFilters,setSelectedFilters,searchCountry,findCountry,handleFilterValue,dashboardFilter, handleListView, handleGridView, listView, gridView} =  props;
-    const { categoryList, setCategoryList } = useObservationsData();
-    const [category,setCategory] = useState([]);
+    const {filterShow, handleFilterOpen, galleryFilter,isFilterOpen,setIsFilterOpen,selectedFilterHorizontal,setSelectedFilterHorizontal,searchCountry,findCountry,handleFilterValue,dashboardFilter, handleListView, handleGridView, listView, gridView} =  props;
     const { auth } = useAuth();
 
     return (
@@ -25,8 +19,16 @@ const FilterSelectMenu = (props) =>{
                             {dashboardFilter && <FormGroup className={`filter-btn m-0 d-flex align-items-center h-100 form-group p-0 ${filterShow ? 'filter-open' : ''}`}>
                                 <Button onClick={()=>handleFilterOpen()} className="border-0 rounded-0 bg-transparent text-black shadow-none text-start w-auto w-md-100 d-flex align-items-center">
                                     <img src={Images.Filter} alt="Filter" /> {filterShow && <span className="ms-0 ms-md-3" >Advanced Filter</span> }</Button>
+                                    {filterShow &&<Button onClick={() => handleFilterValue('filter','filter')} className="btn btn-secondary shadow-none mt-2 mt-md-0">
+                                            {/* <Icon icon="heroicons-outline:filter"  width="16" height="20" />  */}
+                                            Filter
+                                        </Button> }
                             </FormGroup>}
+                            
                         </div>
+                        {
+                            auth?.user &&
+                        
                         <div className='flex-fill' >
                             <Row>
                                 <Col sm={12} lg={8} className='order-2 order-lg-1' >
@@ -35,7 +37,7 @@ const FilterSelectMenu = (props) =>{
                                             <Label className="text-uppercase px-2 px-xl-3" htmlFor="Country">Country</Label>
                                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isCountryOpen:!isFilterOpen.isCountryOpen})} isOpen={isFilterOpen.isCountryOpen} >
                                                 <DropdownToggle className="px-2 px-xl-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                                    <span className="text-truncate">{(selectedFilters.country?.name !== '' ? selectedFilters.country?.name: 'All countries' )}</span>
+                                                    <span className="text-truncate">{(selectedFilterHorizontal.country?.name !== '' ? selectedFilterHorizontal.country?.name: 'All countries' )}</span>
 
                                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                 </DropdownToggle>
@@ -44,7 +46,7 @@ const FilterSelectMenu = (props) =>{
                                                     {countries?.filter(item => {
                                                         return item.name.toLowerCase().indexOf(searchCountry.toLowerCase()) !== -1;
                                                     }).map((item, index) => {
-                                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item.name} onClick={(e) => {setSelectedFilters({...selectedFilters,country:item}); handleFilterValue(item,'country');}}>{item.name}</DropdownItem>
+                                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item.name} onClick={(e) => {setSelectedFilterHorizontal({...selectedFilterHorizontal,country:item}); handleFilterValue(item,'country');}}>{item.name}</DropdownItem>
                                                     })}
                                                 </DropdownMenu>
                                             </Dropdown>
@@ -54,12 +56,12 @@ const FilterSelectMenu = (props) =>{
                                             <Label className="text-uppercase px-2 px-xl-3" htmlFor="TransientLuminousEvent">Transient Luminous Event</Label>
                                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isTypeOpen:!isFilterOpen.isTypeOpen})} isOpen={isFilterOpen.isTypeOpen} >
                                                 <DropdownToggle className="px-2 px-xl-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                                    <span className="text-truncate">{(selectedFilters.type) ? selectedFilters.type: 'All types' }</span>
+                                                    <span className="text-truncate">{(selectedFilterHorizontal.type) ? selectedFilterHorizontal.type: 'All types' }</span>
                                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                 </DropdownToggle>
                                                 <DropdownMenu className="py-0 shadow">
                                                     {auth.categoryList !== undefined  && auth?.categoryList?.map((item, index) => {
-                                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value ={item.name} onClick={(e) => {setSelectedFilters({...selectedFilters,type:e.target.value}); handleFilterValue(e.target.value,'category');}} >{item.name}</DropdownItem>
+                                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value ={item.name} onClick={(e) => {setSelectedFilterHorizontal({...selectedFilterHorizontal,type:e.target.value}); handleFilterValue(e.target.value,'category');}} >{item.name}</DropdownItem>
                                                     })}
                                                 </DropdownMenu>
                                             </Dropdown>
@@ -69,13 +71,13 @@ const FilterSelectMenu = (props) =>{
                                             <Label className="text-uppercase px-2 px-xl-3" htmlFor="ObservationStatus">Observation Status</Label>
                                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isStatusOpen:!isFilterOpen.isStatusOpen})} isOpen={isFilterOpen.isStatusOpen} >
                                                 <DropdownToggle className="px-2 px-xl-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
-                                                    <span className="text-truncate">{(selectedFilters.status) ? selectedFilters.status.charAt(0).toUpperCase() + selectedFilters.status.slice(1): 'All status'}</span>
+                                                    <span className="text-truncate">{(selectedFilterHorizontal.status) ? selectedFilterHorizontal.status.charAt(0).toUpperCase() + selectedFilterHorizontal.status.slice(1): 'All status'}</span>
                                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                 </DropdownToggle>
                                                 <DropdownMenu className="py-0 shadow">
 
                                                     {observationStatus?.map((item, index) => {
-                                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e) => {setSelectedFilters({...selectedFilters,status:e.target.value.toLowerCase()}); handleFilterValue(e.target.value,'status');}} >{item}</DropdownItem>
+                                                        return <DropdownItem  name="timezone" className="px-2 fw-normal" key={index} value={item} onClick={(e) => {setSelectedFilterHorizontal({...selectedFilterHorizontal,status:e.target.value.toLowerCase()}); handleFilterValue(e.target.value,'status');}} >{item}</DropdownItem>
                                                     })}
                                                 </DropdownMenu>
                                             </Dropdown>
@@ -104,6 +106,7 @@ const FilterSelectMenu = (props) =>{
                                 </Col>
                             </Row>
                         </div>
+                        }
                     </div>
                 </Container>
             </div>

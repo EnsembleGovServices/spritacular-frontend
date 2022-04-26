@@ -1,5 +1,8 @@
 import { Outlet } from "react-router-dom";
 import {createContext, useEffect, useState} from "react";
+import { cameraSettingFields } from "../../helpers/url";
+import useObservationsData from "../../hooks/useObservationsData";
+import useObservations from "../../hooks/useObservations";
 
 export const ObservationContext = createContext({});
 
@@ -15,6 +18,7 @@ const Observations = () => {
         }
     });
     const [observationImages, setObservationImages] = useState([]);
+    const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
     const [observationCategory, setObservationCategory] = useState([]);
     const [observationData, setObservationData] = useState({});
 
@@ -41,7 +45,9 @@ const Observations = () => {
                 observationCategory,
                 setObservationCategory,
                 observationData,
-                setObservationData
+                setObservationData,
+                cameraDetails, 
+                setCameraDetails
             }
         }>
             <Outlet />

@@ -442,6 +442,7 @@ const ObservationLocation = (props) => {
                         </FormGroup>
                     </Col>}
                 </Row>
+                
                 {
                     (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate === false  
                     || observationImages?.selected_image_index === 0)  ?
@@ -455,6 +456,7 @@ const ObservationLocation = (props) => {
                                         type="date"
                                         max= {moment(new Date()).format('Y-MM-DD')}
                                         name="obs_date"
+                                        max={moment(new Date()).format('Y-MM-DD')}
                                         value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
                                         className="w-100"
                                         placeholder="12/20/2021"

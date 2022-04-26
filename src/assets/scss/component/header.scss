@@ -131,7 +131,25 @@
       @include lg-text;
       font-weight: 500;
       position: relative;
-      &:hover,  &:focus {
+      &:-webkit-any-link:active{
+        color: $secondary !important;
+        &:after {
+          content: "";
+          background-color: $secondary;
+          position: absolute;
+          width: 25px;
+          height: 3px;
+          border-radius: 10px;
+          bottom: 0px;
+          display: block;
+          left: 0px;
+          right: 0px;
+          margin: 0 auto;
+        }
+      }
+      &:hover,
+      &.active,
+      &:focus {
         color: $white;
         &:after {
           content: "";
@@ -493,6 +511,7 @@
       color: $black;
       display: block;
     }
+    &.active,
     &:hover {
       color: $secondary;
       background-color: #ffebeb;

@@ -10,7 +10,6 @@ import { Icon } from "@iconify/react";
 import useObservationsData from "../../hooks/useObservationsData";
 import Tippy from "@tippyjs/react";
 import CardImageCarousel from "../../components/Shared/CardImageCarousel";
-import { baseURL } from "../../helpers/url";
 
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose, data, activeType, handleContinueEdit, handleApproveRejectEvent } = props;
@@ -62,7 +61,7 @@ const ObservationDetails = (props) =>{
                             <div className="mb-4 mb-md-0 h-100">
                                 <div className="preview-detail mb-3 mb-md-2">
                                 { !(data?.image_type === 3) && (data?.images?.length === 0 ? <img src={Images.NotAvailable} alt="No available" className="object-contain img-fluid"/> : <img src={data?.images?.[0]?.image} alt="card details" className="img-fluid" />) }
-                                 { data?.image_type === 3 && <CardImageCarousel  carouselData={data?.images} /> }
+                                 { data?.image_type === 3 && <CardImageCarousel  carouselData={data?.images} detail={true}/> }
                                 </div>
                                 <Row>
                                     <Col sm={6} className="justify-content-start d-flex align-items-center mb-2 mb-sm-0">

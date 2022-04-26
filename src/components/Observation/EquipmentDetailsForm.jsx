@@ -8,7 +8,7 @@ import useObservations from "../../hooks/useObservations";
 const EquipmentDetailsForm = (props) =>{
     const {toggleTab,handleInput,handleOtherCamera,cameraDetails, error, step, isSwitchOn } = props;
     const {
-        observationData,
+        observationData
     } = useObservations();
     return (
         <>

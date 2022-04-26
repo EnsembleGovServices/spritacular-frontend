@@ -16,6 +16,7 @@ import "../assets/scss/component/camerasettings.scss";
 import ImageUpload from "../components/Upload/ImageUpload";
 import {cameraSettingFields} from "../helpers/url";
 import ReactCountryFlags from "../components/ReactCountryFlag";
+import useObservations from "../hooks/useObservations";
 
 const UpdateProfile = lazy(()=> import('../components/Account/UpdateProfile'))
 const CameraSetting = lazy(()=> import('../components/Account/CameraSetting'))
@@ -26,7 +27,11 @@ const Profile = () => {
   const { auth } = useAuth();
   const [user, setUser] = useState(auth?.user);
   const [activeTab, setActiveTab] = useState("1");
-  const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
+  // const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
+  const {
+    cameraDetails, 
+    setCameraDetails
+} = useObservations();
   const [isDetailExist, setIsDetailExist] = useState(false);
 
   const toggleTab = (tab) => {
@@ -73,7 +78,7 @@ const Profile = () => {
                       <ImageUpload user={user} token={auth?.token?.access}/>
                     </div>
                     <div className="profile-data text-center">
-                      <h5>{user.first_name} {user?.last_name}</h5>
+                      <h5>{user?.first_name} {user?.last_name}</h5>
                       <p>{user?.email}</p>
                       <div className="d-flex align-items-center justify-content-center">
                         <ReactCountryFlags country={user?.country_code} />

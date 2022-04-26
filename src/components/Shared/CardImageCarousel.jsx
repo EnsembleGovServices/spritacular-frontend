@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 
 const CardImageCarousel = (props) =>{
-    const {carouselData, handleClick, handleIndex } = props;
+    const {carouselData, handleClick, handleIndex, detail } = props;
 
     return (
         <>
@@ -10,7 +10,7 @@ const CardImageCarousel = (props) =>{
             {carouselData.length > 0 && carouselData.map((item,id) => {
                 return(
                     <SwiperSlide key={id}>
-                        <img src={item?.image} alt="carousel" onClick={(e) => { handleClick ? handleClick(handleIndex) : e.preventDefault()}} />
+                        <img src={(detail) ? item?.image : (item.compressed_image) ? item.compressed_image: item?.image} alt="carousel" onClick={(e) => { handleClick ? handleClick(handleIndex) : e.preventDefault()}} />
                     </SwiperSlide>
                 )
             })
