@@ -16,7 +16,7 @@ import {baseURL} from "../..//helpers/url";
 
 
 const Notification = (props) => {
-  const  {notificationArray,setNotificationArray, setData,data} = props;
+  const  {notificationArray,setNotificationArray} = props;
   const {auth} = useAuth();
     const [show, setShow] = useState(false);
     const [notification, setNotification] = useState(false);
@@ -24,7 +24,7 @@ const Notification = (props) => {
     
     const [notificationDropdown, setNotificationDropdown] = useState(false);
     // const [notificationArray,setNotificationArray] = useState([]);
-    // const [data,setData] = useState([]);
+    const [data,setData] = useState([]);
 
     useLayoutEffect(()=> {
       setTokenFound(true);
@@ -39,13 +39,12 @@ const Notification = (props) => {
         setShow(true);
         setNotification(true);
         setNotificationArray([payload,...notificationArray]);
-        setData([payload.data]);
+        setData([payload,...data]);
       }).catch(err => console.log('failed: ', err));
     }, [notificationArray, show])
-
     const handleNotificationStatusUpdate = (e) => {
       var notificaitonIds = []
-      notificationArray.map((item,index) => {
+      data.map((item,index) => {
         notificaitonIds.push(item.data.notification_id);
       })
       axios.post(baseURL.api+'/notification/read_user_notification/',{'notification_ids': notificaitonIds
@@ -57,6 +56,7 @@ const Notification = (props) => {
     })
     .then((response)=> {
       console.log(response);
+      setData([]);
     })
     .catch((error)=> {console.log(error)})
     }
