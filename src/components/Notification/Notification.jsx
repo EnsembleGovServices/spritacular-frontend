@@ -42,10 +42,13 @@ const Notification = (props) => {
         setData([payload,...data]);
       }).catch(err => console.log('failed: ', err));
     }, [notificationArray, show])
+
     const handleNotificationStatusUpdate = (e) => {
       var notificaitonIds = []
-      data.map((item,index) => {
-        notificaitonIds.push(item.data.notification_id);
+      notificationArray.map((item,index) => {
+        if(item.messageId){
+          notificaitonIds.push(item.data.notification_id);
+        }
       })
       axios.post(baseURL.api+'/notification/read_user_notification/',{'notification_ids': notificaitonIds
        }, {
