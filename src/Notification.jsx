@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import toast, { Toaster } from 'react-hot-toast';
-import {getTokens,onMessageListener} from './firebase';
+// import {getTokens,onMessageListener} from './firebase';
 import {
   Button,
   Collapse,
@@ -20,6 +20,7 @@ import Tippy from "@tippyjs/react";
 import moment from "moment";
 import axios from "./api/axios";
 import {baseURL} from "./helpers/url";
+import { getTokens, onMessageListener } from './firebase';
 
 
 const Notification = (props) => {

@@ -272,7 +272,7 @@ const ObservationMoreDetails = (props) => {
                         </Col>
                     </Row>
                     <div className="border-line my-4"/>
-                    {data?.user_data?.is_can_vote && !data?.user_data?.is_voted && data?.category_data.length > 0 && window.location.href.split('/')[window.location.href.split('/').length-1] === routeUrls.gallery && 
+                    {data?.user_data?.is_can_vote && !data?.user_data?.is_voted && data?.category_data.length > 0 && window.location.href.split('/')[window.location.href.split('/').length-1] === routeUrls.gallery && !user?.is_user && 
                     <Form onSubmit={handleVote}>
                         <h4 className="mt-3">Vote for observation</h4>
                         {data?.category_data?.map((item, index) => {
