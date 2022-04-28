@@ -33,7 +33,7 @@ const Gallery = () => {
   const { auth } = useAuth();
   const [loadMore,setLoadMore] = useState(10);
   const [pageSize,setPageSize] = useState(10);
-  const [nextPageUrl,setNextPageUrl] = useState('/observation/gallery/?country=&category=&status=');
+  const [nextPageUrl,setNextPageUrl] = useState(`${baseURL.api}/observation/gallery/?country=&category=&status=`);
   const normalUser = auth?.user?.is_user;
   useEffect(() => {
     setLoadMore(pageSize);
@@ -72,6 +72,7 @@ useEffect(() => {
     }else{
       url = nextPageUrl;
     }
+    console.log(baseURL.api+url);
     const headers = {};
     headers['Content-Type'] = 'application/json';
     if(auth.user){
@@ -102,15 +103,6 @@ useEffect(() => {
           list: prevData,
         }
       })
-        // if(!auth.user){
-        //   const varifiedData = success?.data?.results?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
-        //   setObservationListData((prev) => {
-        //     return {
-        //       ...prev,
-        //       list: varifiedData,
-        //     }
-        //   })
-        // }
       setIsLoaded(false);
     }
     else{
