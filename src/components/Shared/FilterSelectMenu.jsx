@@ -14,7 +14,7 @@ const FilterSelectMenu = (props) =>{
         <>
             <div className="observation-filter_wrapper">
                 <Container>
-                    <div className='d-flex'>
+                    <div className={`d-flex ${auth?.user?.is_user ? 'py-3' : ''}`}>
                         <div>
                             {dashboardFilter && <FormGroup className={`filter-btn m-0 d-flex align-items-center h-100 form-group p-0 ${filterShow ? 'filter-open' : ''}`}>
                                 <Button onClick={()=>handleFilterOpen()} className="border-0 rounded-0 bg-transparent text-black shadow-none text-start w-auto w-md-100 d-flex align-items-center">
@@ -32,7 +32,7 @@ const FilterSelectMenu = (props) =>{
                         <div className='flex-fill' >
                             <Row>
                                 <Col sm={12} lg={8} className='order-2 order-lg-1' >
-                                    { galleryFilter &&
+                                    { galleryFilter && !auth?.user?.is_user &&
                                         <FormGroup className="m-0 d-inline-block form-group country-menu">
                                             <Label className="text-uppercase px-2 px-xl-3" htmlFor="Country">Country</Label>
                                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isCountryOpen:!isFilterOpen.isCountryOpen})} isOpen={isFilterOpen.isCountryOpen} >
@@ -51,7 +51,7 @@ const FilterSelectMenu = (props) =>{
                                                 </DropdownMenu>
                                             </Dropdown>
                                         </FormGroup> }
-                                    {galleryFilter &&
+                                    {galleryFilter && !auth?.user?.is_user &&
                                         <FormGroup className="m-0 d-inline-block form-group type-menu">
                                             <Label className="text-uppercase px-2 px-xl-3" htmlFor="TransientLuminousEvent">Transient Luminous Event</Label>
                                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isTypeOpen:!isFilterOpen.isTypeOpen})} isOpen={isFilterOpen.isTypeOpen} >
@@ -66,7 +66,7 @@ const FilterSelectMenu = (props) =>{
                                                 </DropdownMenu>
                                             </Dropdown>
                                         </FormGroup>  }
-                                    {galleryFilter &&
+                                    {galleryFilter && !auth?.user?.is_user &&
                                         <FormGroup className="m-0 d-inline-block form-group status-menu">
                                             <Label className="text-uppercase px-2 px-xl-3" htmlFor="ObservationStatus">Observation Status</Label>
                                             <Dropdown className="dropdown-with-search" toggle={() => setIsFilterOpen({...isFilterOpen,isStatusOpen:!isFilterOpen.isStatusOpen})} isOpen={isFilterOpen.isStatusOpen} >
