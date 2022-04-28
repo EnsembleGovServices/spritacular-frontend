@@ -13,8 +13,6 @@ import { Container, UncontrolledAlert } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import useObservationsData from "../hooks/useObservationsData";
 
-
-
 const Gallery = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false);
   const [isLoaded,setIsLoaded] = useState(true);
@@ -65,7 +63,7 @@ useEffect(() => {
 }, [isObservationDetailModal]);
 
   const handleLoadMoreData = () => {
-        getObservationType(false,selectedFilterHorizontal.country?.code,selectedFilterHorizontal.type,selectedFilterHorizontal.status);
+        getObservationType(false, selectedFilterHorizontal.country?.code, selectedFilterHorizontal.type, selectedFilterHorizontal.status);
   }
   const getObservationType = (reset=false,country=`${selectedFilterHorizontal.country?.code}`,category=`${selectedFilterHorizontal.type}`,status=`${selectedFilterHorizontal.status}`) => {
     let url;

@@ -200,8 +200,6 @@ const ObservationMoreDetails = (props) => {
 
     return (
         <div className="more-details">
-            <h4>{`Trained User: ${auth?.user?.is_trained}`}</h4>
-
             <Row>
                 <Col md={12}>
                     <Row className="align-items-center">

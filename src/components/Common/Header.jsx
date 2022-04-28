@@ -122,6 +122,11 @@ const Header = (props) => {
     setShowUserProfilePopup(!showUserProfilePopup);
   };
 
+  let admin = auth?.user?.is_superuser,
+      trainee = auth?.user?.is_trained,
+      normalUser = auth?.user?.is_user;
+
+
 
 
   return (
@@ -132,9 +137,22 @@ const Header = (props) => {
         className={homeUrl ? "custom-header" : "custom-header bg-not-home"}
         light
       >
-        <Link to={routeUrls.home} className="navbar-brand p-0" title="Spritacular" onClick={() => setActive('')}>
+        <Link to={routeUrls.home} className="navbar-brand p-0 position-relative" title="Spritacular" onClick={() => setActive('')}>
           <img src={Images.Logo} alt="Logo" className="logo" />
           <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo" />
+          {process.env.NODE_ENV === "development" &&
+              <div className="showUserTag">
+                {admin &&
+                    <span>{admin ? "Admin" : ""}</span>
+                }
+                {trainee &&
+                    <span>{trainee ? "Trainee" : ""}</span>
+                }
+                {normalUser &&
+                    <span>{normalUser ? "User" : ""}</span>
+                }
+              </div>
+          }
         </Link>
         <NavbarToggler onClick={() => menuToggle()}>
           <Icon icon="eva:menu-outline" />
