@@ -51,26 +51,26 @@ const Dashboard = () =>{
         if (auth?.user?.is_superuser) {
             let url;
             if(reset === true || !nextPageUrl){
-            url = '/observation/dashboard/?country='+country+'&category='+category+'&status='+status+'&page=1';
+                url = `${baseURL.api}/observation/dashboard/?country=${country}&category=${category}&status=${status}&page=1`;
             }else{
-            url = nextPageUrl;
+                url = nextPageUrl;
             }
-            if(selectedFilterVertical.obs_start_date !== null){
-                if(selectedFilterVertical.obs_start_time !== null){
-                    selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + selectedFilterVertical.obs_start_time).format('DD/MM/Y H:mm');
-                }else{
-                    selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + '00:00').format('DD/MM/Y HH:mm');
-                }
-            }
-            if(selectedFilterVertical.obs_end_date !== null){
-                if(selectedFilterVertical.obs_end_time !== null){
-                    selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + selectedFilterVertical.obs_end_time).format('DD/MM/Y HH:mm');
-                }else{
-                    selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + '23:59').format('DD/MM/Y HH:mm');
-                }
-            }
+            // if(selectedFilterVertical.obs_start_date !== null){
+            //     if(selectedFilterVertical.obs_start_time !== null){
+            //         selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + selectedFilterVertical.obs_start_time).format('DD/MM/Y H:mm');
+            //     }else{
+            //         selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + '00:00').format('DD/MM/Y HH:mm');
+            //     }
+            // }
+            // if(selectedFilterVertical.obs_end_date !== null){
+            //     if(selectedFilterVertical.obs_end_time !== null){
+            //         selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + selectedFilterVertical.obs_end_time).format('DD/MM/Y HH:mm');
+            //     }else{
+            //         selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + '23:59').format('DD/MM/Y HH:mm');
+            //     }
+            // }
 
-            axios.post(baseURL.api+url,selectedFilterVertical,{
+            axios.post(url,selectedFilterVertical,{
                 headers:{
                     'Content-type': 'application/json',
                     'Authorization': `Bearer ${auth?.token?.access}`
@@ -80,7 +80,7 @@ const Dashboard = () =>{
                 setFilterReset(false);
                 if(success?.data?.results?.data !== undefined){
                     if(success?.data?.next){
-                      setNextPageUrl(success?.data?.next.split('api')[1]);
+                      setNextPageUrl(success?.data?.next);
                     }else{
                       setNextPageUrl(null);
                     }
@@ -114,7 +114,7 @@ const Dashboard = () =>{
 
     const handleLoadMoreData = () => {
         getObservationData(false);
-  }
+    }
 
     const handleObservationDetailModal = (id) => {
         setObservationDetailModal(!isObservationDetailModal);
