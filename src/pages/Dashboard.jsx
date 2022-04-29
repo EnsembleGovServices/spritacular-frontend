@@ -53,7 +53,7 @@ const Dashboard = () =>{
             if(reset === true || !nextPageUrl){
                 url = `${baseURL.api}/observation/dashboard/?country=${country}&category=${category}&status=${status}&page=1`;
             }else{
-                url = nextPageUrl;
+                url = baseURL.api+nextPageUrl;
             }
 
             console.log('load more url', url)
@@ -73,7 +73,7 @@ const Dashboard = () =>{
                 }
             }
 
-            axios.post(url,selectedFilterVertical,{
+            axios.post(url, selectedFilterVertical,{
                 headers:{
                     'Content-type': 'application/json',
                     'Authorization': `Bearer ${auth?.token?.access}`

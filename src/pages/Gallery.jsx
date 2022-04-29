@@ -68,21 +68,18 @@ useEffect(() => {
   const getObservationType = (reset=false,country=`${selectedFilterHorizontal.country?.code}`,category=`${selectedFilterHorizontal.type}`,status=`${selectedFilterHorizontal.status}`) => {
     let url;
     if(reset === true || !nextPageUrl){
-      url = `${baseURL.api}/observation/dashboard/?country=${country}&category=${category}&status=${status}&page=1`;
+      url = `${baseURL.api}/observation/gallery/?country=${country}&category=${category}&status=${status}&page=1`;
     }else{
-      url = nextPageUrl;
+      url = baseURL.api+nextPageUrl;
     }
-
-    console.log('load more url', url)
 
     const headers = {};
     headers['Content-Type'] = 'application/json';
     if(auth.user){
       headers['Authorization'] = `Bearer ${auth?.token?.access}`;
     }
-    axios.get(baseURL.api+url,{
+    axios.get(url,{
       headers: headers,
-      
   }).then((success) => {
     if(success?.data?.results?.data !== undefined){
       if(success?.data?.next){
