@@ -72,7 +72,6 @@ useEffect(() => {
     }else{
       url = nextPageUrl;
     }
-    console.log(baseURL.api+url);
     const headers = {};
     headers['Content-Type'] = 'application/json';
     if(auth.user){

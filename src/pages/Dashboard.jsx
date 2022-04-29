@@ -56,6 +56,8 @@ const Dashboard = () =>{
                 url = nextPageUrl;
             }
 
+            console.log('load more url', url)
+
             if(selectedFilterVertical.obs_start_date !== null){
                 if(selectedFilterVertical.obs_start_time !== null){
                     selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + selectedFilterVertical.obs_start_time).format('DD/MM/Y H:mm');
