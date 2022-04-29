@@ -30,12 +30,14 @@ const Dashboard = () =>{
     const [ gridView, setGridView ] = useState(true);
 
     const [searchCountry, setSearchCountry] = useState("");
-    const [isFilterOpen,setIsFilterOpen] = useState(dashboardHelper.filterState)
+    const [isFilterOpen, setIsFilterOpen] = useState(dashboardHelper.filterState)
     const [selectedFilterHorizontal,setSelectedFilterHorizontal] = useState(dashboardHelper.horizontal)
     const [selectedFilterVertical,setSelectedFilterVertical] = useState(dashboardHelper.vertical)
     const [isLoaded,setIsLoaded] = useState(true);
     const { observationListData, setObservationListData } = useObservationsData();
     const [nextPageUrl,setNextPageUrl] = useState(dashboardHelper.nextPageUrl);
+
+
 
     const [filterReset, setFilterReset] = useState(false);
 
@@ -179,6 +181,18 @@ const Dashboard = () =>{
         } 
       }
 
+    //  Handle Filtered Input
+    const handleFilterInput = (e) => {
+        let name = e.target.name,
+            value= e.target.value;
+
+        console.log(name, value);
+        setSelectedFilterVertical({
+            ...selectedFilterVertical,
+            [name]: value
+        })
+    }
+
     //  Reset Filters
     const resetFilters = () => {
         setFilterReset(true);
@@ -243,6 +257,7 @@ const Dashboard = () =>{
                                 isFilterOpen={isFilterOpen} 
                                 setIsFilterOpen={setIsFilterOpen}
                                 resetFilters={resetFilters}
+                                handleFilterInput={handleFilterInput}
                             />
                         }
                         

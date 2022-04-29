@@ -8,7 +8,14 @@ import PropTypes from "prop-types";
 
 const AdvancedFilter = (props) => {
     const {
-        selectedFilterVertical, setSelectedFilterVertical, handleFilterOpen, isFilterOpen,setIsFilterOpen, handleFilterValue, resetFilters
+        selectedFilterVertical,
+        setSelectedFilterVertical,
+        handleFilterOpen,
+        isFilterOpen,
+        setIsFilterOpen,
+        handleFilterValue,
+        resetFilters,
+        handleFilterInput
     } = props;
     const [isDateTimeOpen, setIsDateTimeOpen] = useState(true);
     const [isEquipmentDetailsOpen, setIsEquipmentDetailsOpen] = useState(true);
@@ -45,16 +52,14 @@ const AdvancedFilter = (props) => {
                                                                name="obs_start_date"
                                                                value={selectedFilterVertical?.obs_start_date === null ? "" : selectedFilterVertical?.obs_start_date}
                                                                max={moment(new Date()).format('Y-MM-DD')}
-                                                               onChange={(e) => {setSelectedFilterVertical({...selectedFilterVertical,obs_start_date:e.target.value});
-                                                        }}/>
+                                                               onChange={(e) => handleFilterInput(e)}/>
                                                     </div>
                                                     <div className="position-relative time-box">
                                                         <input className="form-control"
                                                                type="time"
                                                                name="obs_start_time"
                                                                value={selectedFilterVertical?.obs_start_time === null ? "" : selectedFilterVertical?.obs_start_time}
-                                                               onChange={(e) => {setSelectedFilterVertical({...selectedFilterVertical,obs_start_time:e.target.value});
-                                                        }}/>
+                                                               onChange={(e) => handleFilterInput(e)}/>
                                                     </div>
                                                 </div>
                                             </FormGroup>
@@ -69,16 +74,14 @@ const AdvancedFilter = (props) => {
                                                                 name="obs_end_date"
                                                                 value={selectedFilterVertical?.obs_end_date === null ? "" : selectedFilterVertical?.obs_end_date}
                                                                 max={moment(new Date()).format('Y-MM-DD')}
-                                                                onChange={(e) => {setSelectedFilterVertical({...selectedFilterVertical,obs_end_date:e.target.value});
-                                                        }}/>
+                                                                onChange={(e) => handleFilterInput(e)} />
                                                     </div>
                                                     <div className="position-relative time-box">
                                                         <input className="form-control"
                                                                type="time"
                                                                name="obs_end_time"
                                                                value={selectedFilterVertical?.obs_end_time === null ? "" : selectedFilterVertical?.obs_end_time}
-                                                               onChange={(e) => {setSelectedFilterVertical({...selectedFilterVertical,obs_end_time:e.target.value});
-                                                        }}/>
+                                                               onChange={(e) => handleFilterInput(e)} />
                                                     </div>
                                                 </div>
                                             </FormGroup>
@@ -111,9 +114,7 @@ const AdvancedFilter = (props) => {
                                                     name="camera_type"
                                                     placeholder="Canon"
                                                     value={selectedFilterVertical?.camera_type}
-                                                    onChange={(e) => {setSelectedFilterVertical({...selectedFilterVertical,camera_type:e.target.value});
-                                                }}
-                                                    />
+                                                    onChange={(e) => handleFilterInput(e)} />
                                             </FormGroup> 
                                         </Col>
                                         <Col xs={12}>
@@ -125,10 +126,10 @@ const AdvancedFilter = (props) => {
                                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                 </DropdownToggle>
                                                 <DropdownMenu className="py-0 shadow">
-                                                    <DropdownItem value='24 FPS' onClick={(e) => {setSelectedFilterVertical({...selectedFilterVertical,fps:e.target.value}); handleFilterValue(e.target.value,'fps');}} name="fps" className="px-2 fw-normal" >24 FPS</DropdownItem>
-                                                    <DropdownItem value='30 FPS' onClick={(e) => {setSelectedFilterVertical({...selectedFilterVertical,fps:e.target.value}); handleFilterValue(e.target.value,'fps');}} name="fps" className="px-2 fw-normal" >30 FPS</DropdownItem>
-                                                    <DropdownItem value='50 FPS' onClick={(e) => {setSelectedFilterVertical({...selectedFilterVertical,fps:e.target.value}); handleFilterValue(e.target.value,'fps');}} name="fps" className="px-2 fw-normal" >50 FPS</DropdownItem>
-                                                    <DropdownItem value='60 FPS' onClick={(e) => {setSelectedFilterVertical({...selectedFilterVertical,fps:e.target.value}); handleFilterValue(e.target.value,'fps');}} name="fps" className="px-2 fw-normal" >60 FPS</DropdownItem>
+                                                    <DropdownItem value='24 FPS' onClick={(e) => handleFilterInput(e)} name="fps" className="px-2 fw-normal" >24 FPS</DropdownItem>
+                                                    <DropdownItem value='30 FPS' onClick={(e) => handleFilterInput(e)} name="fps" className="px-2 fw-normal" >30 FPS</DropdownItem>
+                                                    <DropdownItem value='50 FPS' onClick={(e) => handleFilterInput(e)} name="fps" className="px-2 fw-normal" >50 FPS</DropdownItem>
+                                                    <DropdownItem value='60 FPS' onClick={(e) => handleFilterInput(e)} name="fps" className="px-2 fw-normal" >60 FPS</DropdownItem>
                                                 </DropdownMenu>
                                             </Dropdown>
                                             </FormGroup>
@@ -138,9 +139,9 @@ const AdvancedFilter = (props) => {
                                                 <Label className='fw-normal text-black'>ISO</Label>
                                                 <input className="form-control"
                                                        type="number"
+                                                       name="iso"
                                                        value={selectedFilterVertical.iso}
-                                                       onChange={(e) => {setSelectedFilterVertical({...selectedFilterVertical,iso:e.target.value});
-                                                }} />
+                                                       onChange={(e) => handleFilterInput(e)} />
                                             </FormGroup>
                                         </Col>
                                         <Col xs={12}>
@@ -152,9 +153,9 @@ const AdvancedFilter = (props) => {
                                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                 </DropdownToggle>
                                                 <DropdownMenu className="py-0 shadow">
-                                                    <DropdownItem value='10 mm' onClick={(e) => {setSelectedFilterVertical({...selectedFilterVertical,fov:e.target.value}); handleFilterValue(e.target.value,'fov');}} name="timezone" className="px-2 fw-normal" >10 mm</DropdownItem>
-                                                    <DropdownItem value='11 mm' onClick={(e) => {setSelectedFilterVertical({...selectedFilterVertical,fov:e.target.value}); handleFilterValue(e.target.value,'fov');}} name="timezone" className="px-2 fw-normal" >11 mm</DropdownItem>
-                                                    <DropdownItem value='12 mm' onClick={(e) => {setSelectedFilterVertical({...selectedFilterVertical,fov:e.target.value}); handleFilterValue(e.target.value,'fov');}} name="timezone" className="px-2 fw-normal" >12 mm</DropdownItem>
+                                                    <DropdownItem value='10 mm' onClick={(e) => handleFilterInput(e)} name="fov" className="px-2 fw-normal" >10 mm</DropdownItem>
+                                                    <DropdownItem value='11 mm' onClick={(e) => handleFilterInput(e)} name="fov" className="px-2 fw-normal" >11 mm</DropdownItem>
+                                                    <DropdownItem value='12 mm' onClick={(e) => handleFilterInput(e)} name="fov" className="px-2 fw-normal" >12 mm</DropdownItem>
                                                 </DropdownMenu>
                                             </Dropdown>
                                             </FormGroup> 
@@ -164,9 +165,9 @@ const AdvancedFilter = (props) => {
                                                 <Label className='fw-normal text-black'>Shutter Speed</Label>
                                                 <input className="form-control"
                                                        type="text"
+                                                       name="shutter_speed"
                                                        value={selectedFilterVertical.shutter_speed}
-                                                       onChange={(e) => {setSelectedFilterVertical({...selectedFilterVertical,shutter_speed:e.target.value});}}
-                                                />
+                                                       onChange={(e) => handleFilterInput(e)} />
                                             </FormGroup>
                                         </Col>
                                         <Col xs={12}>
@@ -178,9 +179,9 @@ const AdvancedFilter = (props) => {
                                                     <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                 </DropdownToggle>
                                                 <DropdownMenu className="py-0 shadow">
-                                                    <DropdownItem value='Wide angle' onClick={(e) => {setSelectedFilterVertical({...selectedFilterVertical,lens_type:e.target.value}); handleFilterValue(e.target.value,'lens_type');}} name="timezone" className="px-2 fw-normal" >Wide angle</DropdownItem>
-                                                    <DropdownItem value='Standard' onClick={(e) => {setSelectedFilterVertical({...selectedFilterVertical,lens_type:e.target.value}); handleFilterValue(e.target.value,'lens_type');}} name="timezone" className="px-2 fw-normal" >Standard</DropdownItem>
-                                                    <DropdownItem value='Short telephoto' onClick={(e) => {setSelectedFilterVertical({...selectedFilterVertical,lens_type:e.target.value}); handleFilterValue(e.target.value,'lens_type');}} name="timezone" className="px-2 fw-normal" >Short telephoto</DropdownItem>
+                                                    <DropdownItem value='Wide angle' onClick={(e) => handleFilterInput(e)} name="lens_type" className="px-2 fw-normal" >Wide angle</DropdownItem>
+                                                    <DropdownItem value='Standard' onClick={(e) => handleFilterInput(e)} name="lens_type" className="px-2 fw-normal" >Standard</DropdownItem>
+                                                    <DropdownItem value='Short telephoto' onClick={(e) => handleFilterInput(e)} name="lens_type" className="px-2 fw-normal" >Short telephoto</DropdownItem>
                                                 </DropdownMenu>
                                             </Dropdown>
                                             </FormGroup> 
@@ -203,6 +204,7 @@ const AdvancedFilter = (props) => {
 AdvancedFilter.propTypes = {
     handleFilterValue: PropTypes.func,
     resetFilters: PropTypes.func,
+    handleFilterInput: PropTypes.func,
 };
 
 export default AdvancedFilter;
