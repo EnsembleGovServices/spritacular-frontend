@@ -53,7 +53,9 @@ const Dashboard = () =>{
             if(reset === true || !nextPageUrl){
                 url = `${baseURL.api}/observation/dashboard/?country=${country}&category=${category}&status=${status}&page=1`;
             }else{
-                url = baseURL.api+nextPageUrl;
+                console.log(nextPageUrl);
+                url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
+                console.log(process.env.NODE_ENV)
             }
 
             console.log('load more url', url)
@@ -183,8 +185,6 @@ const Dashboard = () =>{
             getObservationData(true,selectedFilterHorizontal.country.code,selectedFilterHorizontal.type,selectedFilterHorizontal.status);
         } 
       }
-
-    console.log('setIsLoaded', isLoaded)
 
     //  Handle Filtered Input
     const handleFilterInput = (e) => {

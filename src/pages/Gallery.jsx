@@ -70,7 +70,9 @@ useEffect(() => {
     if(reset === true || !nextPageUrl){
       url = `${baseURL.api}/observation/gallery/?country=${country}&category=${category}&status=${status}&page=1`;
     }else{
-      url = baseURL.api+nextPageUrl;
+      console.log('nextPageUrl', nextPageUrl)
+      url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
+      console.log(process.env.NODE_ENV)
     }
 
     const headers = {};
@@ -83,7 +85,7 @@ useEffect(() => {
   }).then((success) => {
     if(success?.data?.results?.data !== undefined){
       if(success?.data?.next){
-        setNextPageUrl(success?.data?.next.split('api')[1]);
+        setNextPageUrl(success?.data?.next);
       }else{
         setNextPageUrl(null);
       }
@@ -133,14 +135,7 @@ useEffect(() => {
       getObservationType(true,value.code,selectedFilterHorizontal.type,selectedFilterHorizontal.status);
     }
   }
-  useEffect(()=> {
-    if (isObservationDetailModal) {
-      document.body.classList.add('overflow-hidden');
-    }
-    else{
-      document.body.classList.remove('overflow-hidden');
-    }
-  }, [isObservationDetailModal]);
+
   return(
     <>
       <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilterHorizontal={selectedFilterHorizontal}setSelectedFilterHorizontal={setSelectedFilterHorizontal}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
