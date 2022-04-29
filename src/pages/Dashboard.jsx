@@ -58,16 +58,16 @@ const Dashboard = () =>{
 
             if(selectedFilterVertical.obs_start_date !== null){
                 if(selectedFilterVertical.obs_start_time !== null){
-                    selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + selectedFilterVertical.obs_start_time).format('Y/MM/DD H:mm');
+                    selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + selectedFilterVertical.obs_start_time).format('DD/MM/Y H:mm');
                 }else{
-                    selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + '00:00').format('Y/MM/DD HH:mm');
+                    selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + '00:00').format('DD/MM/Y HH:mm');
                 }
             }
             if(selectedFilterVertical.obs_end_date !== null){
                 if(selectedFilterVertical.obs_end_time !== null){
-                    selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + selectedFilterVertical.obs_end_time).format('Y/MM/DD HH:mm');
+                    selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + selectedFilterVertical.obs_end_time).format('DD/MM/Y HH:mm');
                 }else{
-                    selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + '23:59').format('Y/MM/DD HH:mm');
+                    selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + '23:59').format('DD/MM/Y HH:mm');
                 }
             }
 
