@@ -1,71 +1,51 @@
+import "../assets/scss/component/dashboard.scss";
+import axios from './../api/axios';
+import moment from 'moment';
+import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container } from "reactstrap";
-import FilterSelectMenu from "../components/Shared/FilterSelectMenu";
-import axios from './../api/axios';
-import { baseURL } from "../helpers/url";
 import useAuth from "../hooks/useAuth";
-import { useState } from 'react';
+import useObservationsData from '../hooks/useObservationsData';
+import FilterSelectMenu from "../components/Shared/FilterSelectMenu";
 import ObservationDetailPage from "./Observation/ObservationDetailPage";
 import ObservationDetails from "./Observation/ObservationDetails";
 import useObservations from '../hooks/useObservations';
 import AdvancedFilter from '../components/Shared/AdvancedFilter';
-import "../assets/scss/component/dashboard.scss";
 import ObservationListView from './Observation/ObservationListView';
 import { LoadMore } from '../components/Shared/LoadMore';
-import useObservationsData from '../hooks/useObservationsData';
 import Images from './../static/images';
-import moment from 'moment';
+import {dashboardHelper} from "../helpers/dashboard";
+import { baseURL } from "../helpers/url";
+
 
 
 const Dashboard = () =>{
+    const navigate = useNavigate();
     const { auth } = useAuth();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [selectedObservationId,setSelectedObservationId] = useState();
     const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
-    const navigate = useNavigate();
-    const [filterShow, setFilterShow] = useState(true);
+    const [ filterShow, setFilterShow ] = useState(true);
     const [ listView, setListView ] = useState(false);
     const [ gridView, setGridView ] = useState(true);
 
     const [searchCountry, setSearchCountry] = useState("");
-    const [isFilterOpen,setIsFilterOpen] = useState({
-      isCountryOpen:false,
-      isTypeOpen:false,
-      isStatusOpen:false,
-      isRateOpen:false,
-      isFOVOpen:false,
-      isLensTypeOpen:false,
-
-    })
-
-    const [selectedFilterHorizontal,setSelectedFilterHorizontal] = useState({
-        country:{name:'',code:''},
-        type:'',
-        status:'',
-    })
-    const [selectedFilters,setSelectedFilters] = useState({
-      from_obs_data: null,
-      to_obs_data: null,
-      obs_start_date: null,
-      obs_end_date: null,
-      obs_start_time: null,
-      obs_end_time: null,
-      camera_type:'',
-      fps: '',
-      iso:'',
-      fov:'',
-      shutter_speed:'',
-      lens_type:'',
-    })
+    const [isFilterOpen,setIsFilterOpen] = useState(dashboardHelper.filterState)
+    const [selectedFilterHorizontal,setSelectedFilterHorizontal] = useState(dashboardHelper.horizontal)
+    const [selectedFilterVertical,setSelectedFilterVertical] = useState(dashboardHelper.vertical)
     const [isLoaded,setIsLoaded] = useState(true);
-
-
     const { observationListData, setObservationListData } = useObservationsData();
-    const [nextPageUrl,setNextPageUrl] = useState('/observation/dashboard/?country=&category=&status=');
+    const [nextPageUrl,setNextPageUrl] = useState(dashboardHelper.nextPageUrl);
+
+    const [filterReset, setFilterReset] = useState(false);
 
 
-    const getObservationData = (reset=false,country=`${selectedFilterHorizontal.country?.code}`,category=`${selectedFilterHorizontal.type}`,status=`${selectedFilterHorizontal.status}`) => {
+    const getObservationData = (
+            reset=false,
+            country=`${selectedFilterHorizontal?.country?.code}`,
+            category=`${selectedFilterHorizontal?.type}`,
+            status=`${selectedFilterHorizontal?.status}`
+        ) => {
         if (auth?.user?.is_superuser) {
             let url;
             if(reset === true || !nextPageUrl){
@@ -73,28 +53,29 @@ const Dashboard = () =>{
             }else{
             url = nextPageUrl;
             }
-            if(selectedFilters.obs_start_date !== null){
-                if(selectedFilters.obs_start_time !== null){
-                    selectedFilters.from_obs_data = (selectedFilters.obs_start_date !== null) ? moment(selectedFilters.obs_start_date + ' '+ selectedFilters.obs_start_time).format('DD/MM/Y H:mm'): null;
+            if(selectedFilterVertical.obs_start_date !== null){
+                if(selectedFilterVertical.obs_start_time !== null){
+                    selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + selectedFilterVertical.obs_start_time).format('DD/MM/Y H:mm');
                 }else{
-                    selectedFilters.from_obs_data = (selectedFilters.obs_start_date !== null) ? moment(selectedFilters.obs_start_date + ' '+ '00:00').format('DD/MM/Y HH:mm'): null;
+                    selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + '00:00').format('DD/MM/Y HH:mm');
                 }
             }
-            if(selectedFilters.obs_end_date !== null){
-                if(selectedFilters.obs_end_time !== null){
-                    selectedFilters.to_obs_data = (selectedFilters.obs_end_date !== null) ? moment(selectedFilters.obs_end_date + ' '+selectedFilters.obs_end_time).format('DD/MM/Y HH:mm'): null;
+            if(selectedFilterVertical.obs_end_date !== null){
+                if(selectedFilterVertical.obs_end_time !== null){
+                    selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + selectedFilterVertical.obs_end_time).format('DD/MM/Y HH:mm');
                 }else{
-                    selectedFilters.to_obs_data = (selectedFilters.obs_end_date !== null) ? moment(selectedFilters.obs_end_date + ' '+ '23:59').format('DD/MM/Y HH:mm'): null;
+                    selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + '23:59').format('DD/MM/Y HH:mm');
                 }
             }
-           
-            axios.post(baseURL.api+url,selectedFilters,{
+
+            axios.post(baseURL.api+url,selectedFilterVertical,{
                 headers:{
                     'Content-type': 'application/json',
                     'Authorization': `Bearer ${auth?.token?.access}`
                 },
 
             }).then((success)=>{
+                setFilterReset(false);
                 if(success?.data?.results?.data !== undefined){
                     if(success?.data?.next){
                       setNextPageUrl(success?.data?.next.split('api')[1]);
@@ -103,7 +84,7 @@ const Dashboard = () =>{
                     }
                     let records = success?.data?.results?.data;
                     let prevData;
-                    
+
                     if(observationListData?.list?.length > 0 && reset === false){
                       prevData = [...observationListData?.list];
                       prevData = [...prevData,...records];
@@ -127,40 +108,16 @@ const Dashboard = () =>{
                 console.log(error.response);
             })
         }
-        return true;
     }
-    useEffect(()=>{
-        getObservationData(true);
-    },[]);
 
     const handleLoadMoreData = () => {
         getObservationData(false);
   }
-  
+
     const handleObservationDetailModal = (id) => {
         setObservationDetailModal(!isObservationDetailModal);
         setSelectedObservationId(id);
     };
-
-    useEffect(() => {
-        setObservationListData((prev) => {
-          return {
-            ...prev,
-            active: observationListData?.list?.[selectedObservationId]
-          }
-        })
-      
-      }, [isObservationDetailModal]);
-
-    useEffect(()=> {
-        if (isObservationDetailModal) {
-            document.body.classList.add('overflow-hidden');
-        }
-        else{
-            document.body.classList.remove('overflow-hidden');
-        }
-    }, [isObservationDetailModal]);
-
     const cleaningUpObservationDataForDraftSaving = async (data) => {
         setObservationImages([]);
         setObservationData([]);
@@ -203,8 +160,9 @@ const Dashboard = () =>{
         let value = e.target.value.toLowerCase();
         setSearchCountry(value);
     }
+
     const handleFilterValue = (value,type) => {
-        if(type === 'status'){    
+        if(type === 'status'){
             value = value.toLowerCase();
           getObservationData(true,selectedFilterHorizontal.country?.code,selectedFilterHorizontal.type,value);
         }
@@ -220,6 +178,39 @@ const Dashboard = () =>{
             getObservationData(true,selectedFilterHorizontal.country.code,selectedFilterHorizontal.type,selectedFilterHorizontal.status);
         } 
       }
+
+    //  Reset Filters
+    const resetFilters = () => {
+        setFilterReset(true);
+        setSelectedFilterHorizontal(dashboardHelper.horizontal);
+        setSelectedFilterVertical(dashboardHelper.vertical);
+        getObservationData(false);
+    }
+
+    useEffect(()=>{
+        getObservationData(true);
+    },[filterReset]);
+
+    useEffect(()=>{
+        getObservationData(true);
+    },[]);
+
+    useEffect(() => {
+        if (isObservationDetailModal) {
+            document.body.classList.add('overflow-hidden');
+        }
+        else{
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        setObservationListData((prev) => {
+            return {
+                ...prev,
+                active: observationListData?.list?.[selectedObservationId]
+            }
+        })
+
+    }, [isObservationDetailModal]);
 
     return (
         <>
@@ -241,57 +232,62 @@ const Dashboard = () =>{
                 handleFilterValue={handleFilterValue}
             />
             <div className='observation-dashboard_content'>
-                <Container>
+                <div className="container">
                     <div className='d-flex'>
                         {filterShow && 
                             <AdvancedFilter
-                                selectedFilters={selectedFilters}
-                                setSelectedFilters={setSelectedFilters}
+                                selectedFilterVertical={selectedFilterVertical}
+                                setSelectedFilterVertical={setSelectedFilterVertical}
                                 handleFilterValue={handleFilterValue}
                                 handleFilterOpen={handleFilterOpen}
                                 isFilterOpen={isFilterOpen} 
                                 setIsFilterOpen={setIsFilterOpen}
+                                resetFilters={resetFilters}
                             />
                         }
                         
                         <div className={`dashboard-card overflow-hidden ${filterShow ? 'sm-card' : ''}`}>
 
-                            {listView && observationListData?.list?.length > 0 && <ObservationListView 
-                                observationList={observationListData?.list} 
-                                isObservationDetailModal={isObservationDetailModal} 
-                                setObservationDetailModal={setObservationDetailModal} 
-                                setSelectedObservationId={setSelectedObservationId}
-                            />}
-                            {observationListData?.list?.length > 0 && gridView &&
-                                <ObservationDetailPage 
-                                    observationList={observationListData?.list}
-                                    isObservationDetailModal={isObservationDetailModal}
-                                    setObservationDetailModal={setObservationDetailModal} 
-                                    setSelectedObservationId={setSelectedObservationId}
-                                />
-                            }
+                            {observationListData?.list?.length > 0 ? (
+                                listView ? (
+                                    <ObservationListView
+                                        observationList={observationListData?.list}
+                                        isObservationDetailModal={isObservationDetailModal}
+                                        setObservationDetailModal={setObservationDetailModal}
+                                        setSelectedObservationId={setSelectedObservationId}
+                                    />
+                                ) : (
+                                    <ObservationDetailPage
+                                        observationList={observationListData?.list}
+                                        isObservationDetailModal={isObservationDetailModal}
+                                        setObservationDetailModal={setObservationDetailModal}
+                                        setSelectedObservationId={setSelectedObservationId}
+                                    />
+                                )
+                            ) : (
+                                <div className="data-not-found">
+                                    <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
+                                    <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
+                                </div>
+                            )}
+
+
                             {nextPageUrl &&
                                 <LoadMore handleLoadMore={handleLoadMoreData} />
                             }
-                            {observationListData?.list?.length === 0 &&  (
-                                  <div className="data-not-found">
-                                  <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
-                                  <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
-                                </div>
-                            )
-                            }
+
                         </div>
-                        <ObservationDetails 
-                            data={observationListData?.active}  
-                            modalClass="observation-details_modal" 
-                            open={isObservationDetailModal} 
-                            handleClose={handleObservationDetailModal} 
-                            handleContinueEdit={handleObservationEdit} 
+                        <ObservationDetails
+                            data={observationListData?.active}
+                            modalClass="observation-details_modal"
+                            open={isObservationDetailModal}
+                            handleClose={handleObservationDetailModal}
+                            handleContinueEdit={handleObservationEdit}
                             activeType={(observationListData?.active?.is_verified) ? 'verified' : (observationListData?.active?.is_reject) ? 'denied' : (observationListData?.active?.is_submit) ? 'unverified' : 'draft'}
                             handleApproveRejectEvent={getObservationData}
                         />
                     </div>
-                </Container>
+                </div>
             </div>
         </>
     )

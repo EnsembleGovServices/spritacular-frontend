@@ -106,6 +106,13 @@ body.modal-open {
   }
 }
 
+.container {
+  @include media-breakpoint-up(xxl) {
+    max-width: 95%;
+  }
+}
+
+
 .btn-secondary{
   @include buttonSecodary;
 }

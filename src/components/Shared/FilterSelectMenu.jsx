@@ -1,13 +1,14 @@
+import { Button, Col, Container, FormGroup, Input, Label, Row,Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
-import { Button, Col, Container, FormGroup, Input, Label, Row,Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
-import { routeUrls } from "../../helpers/url";
-import Images from './../../static/images';
-import {observationStatus,countries} from "../../helpers/timezone";
 import useAuth from "../../hooks/useAuth";
 
+import Images from './../../static/images';
+import { routeUrls } from "../../helpers/url";
+import { observationStatus, countries } from "../../helpers/timezone";
+
 const FilterSelectMenu = (props) =>{
-    const {filterShow, handleFilterOpen, galleryFilter,isFilterOpen,setIsFilterOpen,selectedFilterHorizontal,setSelectedFilterHorizontal,searchCountry,findCountry,handleFilterValue,dashboardFilter, handleListView, handleGridView, listView, gridView} =  props;
+    const { filterShow, handleFilterOpen, galleryFilter,isFilterOpen,setIsFilterOpen,selectedFilterHorizontal,setSelectedFilterHorizontal,searchCountry,findCountry,handleFilterValue,dashboardFilter, handleListView, handleGridView, listView, gridView } =  props;
     const { auth } = useAuth();
 
     return (
@@ -18,11 +19,8 @@ const FilterSelectMenu = (props) =>{
                         <div>
                             {dashboardFilter && <FormGroup className={`filter-btn m-0 d-flex align-items-center h-100 form-group p-0 ${filterShow ? 'filter-open' : ''}`}>
                                 <Button onClick={()=>handleFilterOpen()} className="border-0 rounded-0 bg-transparent text-black shadow-none text-start w-auto w-md-100 d-flex align-items-center">
-                                    <img src={Images.Filter} alt="Filter" /> {filterShow && <span className="ms-0 ms-md-3" >Advanced Filter</span> }</Button>
-                                    {filterShow &&<Button onClick={() => handleFilterValue('filter','filter')} className="btn btn-secondary shadow-none mt-2 mt-md-0">
-                                            {/* <Icon icon="heroicons-outline:filter"  width="16" height="20" />  */}
-                                            Filter
-                                        </Button> }
+                                    <img src={Images.Filter} alt="Filter" /> {filterShow && <span className="ms-0 ms-md-3" >Advanced Filter</span> }
+                                </Button>
                             </FormGroup>}
                             
                         </div>
