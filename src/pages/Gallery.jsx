@@ -68,10 +68,13 @@ useEffect(() => {
   const getObservationType = (reset=false,country=`${selectedFilterHorizontal.country?.code}`,category=`${selectedFilterHorizontal.type}`,status=`${selectedFilterHorizontal.status}`) => {
     let url;
     if(reset === true || !nextPageUrl){
-      url = '/observation/gallery/?country='+country+'&category='+category+'&status='+status+'&page=1';
+      url = `${baseURL.api}/observation/dashboard/?country=${country}&category=${category}&status=${status}&page=1`;
     }else{
       url = nextPageUrl;
     }
+
+    console.log('load more url', url)
+
     const headers = {};
     headers['Content-Type'] = 'application/json';
     if(auth.user){
