@@ -33,7 +33,7 @@ const Dashboard = () =>{
     const [isFilterOpen, setIsFilterOpen] = useState(dashboardHelper.filterState)
     const [selectedFilterHorizontal,setSelectedFilterHorizontal] = useState(dashboardHelper.horizontal)
     const [selectedFilterVertical,setSelectedFilterVertical] = useState(dashboardHelper.vertical)
-    const [isLoaded,setIsLoaded] = useState(true);
+    const [isLoaded,setIsLoaded] = useState(false);
     const { observationListData, setObservationListData } = useObservationsData();
     const [nextPageUrl,setNextPageUrl] = useState(dashboardHelper.nextPageUrl);
 
@@ -55,20 +55,21 @@ const Dashboard = () =>{
             }else{
                 url = nextPageUrl;
             }
-            // if(selectedFilterVertical.obs_start_date !== null){
-            //     if(selectedFilterVertical.obs_start_time !== null){
-            //         selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + selectedFilterVertical.obs_start_time).format('DD/MM/Y H:mm');
-            //     }else{
-            //         selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + '00:00').format('DD/MM/Y HH:mm');
-            //     }
-            // }
-            // if(selectedFilterVertical.obs_end_date !== null){
-            //     if(selectedFilterVertical.obs_end_time !== null){
-            //         selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + selectedFilterVertical.obs_end_time).format('DD/MM/Y HH:mm');
-            //     }else{
-            //         selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + '23:59').format('DD/MM/Y HH:mm');
-            //     }
-            // }
+
+            if(selectedFilterVertical.obs_start_date !== null){
+                if(selectedFilterVertical.obs_start_time !== null){
+                    selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + selectedFilterVertical.obs_start_time).format('DD/MM/Y H:mm');
+                }else{
+                    selectedFilterVertical.from_obs_data = moment(selectedFilterVertical.obs_start_date + ' ' + '00:00').format('DD/MM/Y HH:mm');
+                }
+            }
+            if(selectedFilterVertical.obs_end_date !== null){
+                if(selectedFilterVertical.obs_end_time !== null){
+                    selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + selectedFilterVertical.obs_end_time).format('DD/MM/Y HH:mm');
+                }else{
+                    selectedFilterVertical.to_obs_data = moment(selectedFilterVertical.obs_end_date + ' ' + '23:59').format('DD/MM/Y HH:mm');
+                }
+            }
 
             axios.post(url,selectedFilterVertical,{
                 headers:{
@@ -99,7 +100,7 @@ const Dashboard = () =>{
                           list: prevData,
                         }
                       })
-                    setIsLoaded(false);
+                    setIsLoaded(true);
                   }
                   else{
                     setNextPageUrl(null);
@@ -181,6 +182,8 @@ const Dashboard = () =>{
         } 
       }
 
+    console.log('setIsLoaded', isLoaded)
+
     //  Handle Filtered Input
     const handleFilterInput = (e) => {
         let name = e.target.name,
@@ -210,13 +213,6 @@ const Dashboard = () =>{
     },[]);
 
     useEffect(() => {
-        if (isObservationDetailModal) {
-            document.body.classList.add('overflow-hidden');
-        }
-        else{
-            document.body.classList.remove('overflow-hidden');
-        }
-
         setObservationListData((prev) => {
             return {
                 ...prev,
@@ -247,60 +243,64 @@ const Dashboard = () =>{
             />
             <div className='observation-dashboard_content'>
                 <div className="container">
-                    <div className='d-flex'>
-                        {filterShow && 
-                            <AdvancedFilter
-                                selectedFilterVertical={selectedFilterVertical}
-                                setSelectedFilterVertical={setSelectedFilterVertical}
-                                handleFilterValue={handleFilterValue}
-                                handleFilterOpen={handleFilterOpen}
-                                isFilterOpen={isFilterOpen} 
-                                setIsFilterOpen={setIsFilterOpen}
-                                resetFilters={resetFilters}
-                                handleFilterInput={handleFilterInput}
-                            />
-                        }
-                        
-                        <div className={`dashboard-card overflow-hidden ${filterShow ? 'sm-card' : ''}`}>
+                    <div className='row'>
+                        <div className="col-sm-12">
+                            <div className="set-dash-content">
+                                {filterShow &&
+                                    <AdvancedFilter
+                                        selectedFilterVertical={selectedFilterVertical}
+                                        setSelectedFilterVertical={setSelectedFilterVertical}
+                                        handleFilterValue={handleFilterValue}
+                                        handleFilterOpen={handleFilterOpen}
+                                        isFilterOpen={isFilterOpen}
+                                        setIsFilterOpen={setIsFilterOpen}
+                                        resetFilters={resetFilters}
+                                        handleFilterInput={handleFilterInput}
+                                    />
+                                }
 
-                            {observationListData?.list?.length > 0 ? (
-                                listView ? (
-                                    <ObservationListView
-                                        observationList={observationListData?.list}
-                                        isObservationDetailModal={isObservationDetailModal}
-                                        setObservationDetailModal={setObservationDetailModal}
-                                        setSelectedObservationId={setSelectedObservationId}
-                                    />
-                                ) : (
-                                    <ObservationDetailPage
-                                        observationList={observationListData?.list}
-                                        isObservationDetailModal={isObservationDetailModal}
-                                        setObservationDetailModal={setObservationDetailModal}
-                                        setSelectedObservationId={setSelectedObservationId}
-                                    />
-                                )
-                            ) : (
-                                <div className="data-not-found">
-                                    <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
-                                    <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
+                                <div className={`dashboard-card overflow-hidden ${filterShow ? 'sm-card' : 'maximize-dash-content'}`}>
+                                    {observationListData?.list?.length > 0 ? (
+                                        listView ? (
+                                            <ObservationListView
+                                                observationList={observationListData?.list}
+                                                isObservationDetailModal={isObservationDetailModal}
+                                                setObservationDetailModal={setObservationDetailModal}
+                                                setSelectedObservationId={setSelectedObservationId}
+                                            />
+                                        ) : (
+                                            <ObservationDetailPage
+                                                observationList={observationListData?.list}
+                                                isObservationDetailModal={isObservationDetailModal}
+                                                setObservationDetailModal={setObservationDetailModal}
+                                                setSelectedObservationId={setSelectedObservationId}
+                                            />
+                                        )
+                                    ) : (
+                                        <div className="data-not-found">
+                                            <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
+                                            <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
+                                        </div>
+                                    )}
+
+
+                                    {nextPageUrl &&
+                                        <LoadMore handleLoadMore={handleLoadMoreData} />
+                                    }
+
                                 </div>
-                            )}
 
-
-                            {nextPageUrl &&
-                                <LoadMore handleLoadMore={handleLoadMoreData} />
-                            }
-
+                                <ObservationDetails
+                                    data={observationListData?.active}
+                                    modalClass="observation-details_modal"
+                                    open={isObservationDetailModal}
+                                    handleClose={handleObservationDetailModal}
+                                    handleContinueEdit={handleObservationEdit}
+                                    activeType={(observationListData?.active?.is_verified) ? 'verified' : (observationListData?.active?.is_reject) ? 'denied' : (observationListData?.active?.is_submit) ? 'unverified' : 'draft'}
+                                    handleApproveRejectEvent={getObservationData}
+                                />
+                            </div>
                         </div>
-                        <ObservationDetails
-                            data={observationListData?.active}
-                            modalClass="observation-details_modal"
-                            open={isObservationDetailModal}
-                            handleClose={handleObservationDetailModal}
-                            handleContinueEdit={handleObservationEdit}
-                            activeType={(observationListData?.active?.is_verified) ? 'verified' : (observationListData?.active?.is_reject) ? 'denied' : (observationListData?.active?.is_submit) ? 'unverified' : 'draft'}
-                            handleApproveRejectEvent={getObservationData}
-                        />
                     </div>
                 </div>
             </div>

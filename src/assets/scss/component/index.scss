@@ -298,8 +298,7 @@
 .photo-list{
     list-style-type: none;
     .photo-item {
-        width: 20%;
-        margin: 0 0 10px;
+        width: 19.95%;
         padding: 0 12px;
         @include media-breakpoint-down(xxl){
             width: 25%;

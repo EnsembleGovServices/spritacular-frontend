@@ -4,14 +4,13 @@
     background: #FFFFFF;
     box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.03), inset -1px 0px 0px #E0E3E8;
     padding: 18px 16px;
-    max-width: 255px;
+    display: block;
+    max-width: $filter-size;
     width: 100%;
-    margin-right: 60px;
     position: sticky;
     left: 0;
     top: 142px;
     right: 0;
-    width: 100%;
     height: calc(100vh - 142px);
     overflow: hidden;
     overflow-y: auto;

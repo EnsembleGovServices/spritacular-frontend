@@ -18,7 +18,7 @@ const ObservationListView = (props) => {
       };
     return(
         <>
-            <div className="table-responsive">
+            <div className="table-responsive mb-4">
                 <Table className="list-view" borderless>
                     <thead>
                         <tr>

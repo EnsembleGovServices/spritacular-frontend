@@ -1,8 +1,11 @@
 @import "../global/config.scss";
 
+.set-dash-content {
+    display: flex;
+}
 .dashboard-card{
-    flex: 1 1 auto;
-    padding: 50px 0;
+    width: calc(100% - #{$filter-size});
+    padding: 40px 0 40px 40px;
     &.sm-card{
         .photo-list{
             .photo-item{
@@ -22,9 +25,14 @@
             }
         }   
     }
+    &.maximize-dash-content {
+        width: 100%;
+        padding: 40px 0;
+    }
 }
 .filter-open{
-    min-width: 255px;
+    width: 100%;
+    min-width: $filter-size;
     @include media-breakpoint-down(xl){
         min-width: 210px;
     }
@@ -41,3 +49,4 @@
 .observation-dashboard_content {
     margin-top: -25px;
 }
+
