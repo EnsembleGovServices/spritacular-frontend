@@ -1,50 +1,64 @@
+import axiosPrivate from "../../api/axios";
+import moment from "moment/moment";
+import useAuth from "../../hooks/useAuth";
+import { observationStatus, countries } from "../../helpers/timezone";
+import useObservationsData from "../../hooks/useObservationsData";
 import { Button, Col, Container, FormGroup, Input, Label, Row,Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-
 import Images from './../../static/images';
 import {baseURL, routeUrls} from "../../helpers/url";
-import { observationStatus, countries } from "../../helpers/timezone";
-import useObservationsData from "../../hooks/useObservationsData";
-import axiosPrivate from "../../api/axios";
-import axios from "../../api/axios";
-import moment from "moment/moment";
 
 const FilterSelectMenu = (props) =>{
     const { filterShow, handleFilterOpen, galleryFilter,isFilterOpen,setIsFilterOpen,selectedFilterHorizontal,setSelectedFilterHorizontal,searchCountry,findCountry,handleFilterValue,dashboardFilter, handleListView, handleGridView, listView, gridView } =  props;
     const { auth } = useAuth();
-    const { observationCSVId } = useObservationsData();
+    const { observationCSVId , setObservationCSVId } = useObservationsData();
     const CSVID = observationCSVId?.data?.observation;
 
     const handleCSVDownload = (id) => {
-        console.log(id);
-        console.log(moment().format('LTS'))
-        // downloadSelectedDataAsCSV(id);
+        downloadSelectedDataAsCSV(id);
     }
-
     const downloadSelectedDataAsCSV = (data) => {
+        let name = moment.now();
         let downloadUrl = baseURL.api+'/observation/get_observation_csv/';
-        axios.post(downloadUrl, {
+        axiosPrivate.post(downloadUrl, {
             observation_ids: data
         } , {
+            responseType: 'blob',
             headers:{
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${auth?.token?.access}`,
             },
-            responseType: 'blob'
-
         }).then(response => {
-            console.log(response)
+            setObservationCSVId((prev) => {
+                return {
+                    ...prev,
+                    error: {
+                        status: '',
+                        message: '',
+                        data: ''
+                    }
+                }
+            })
             const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = downloadUrl;
-            link.setAttribute('download', 'file.csv');
+            link.setAttribute('download', `${name}.csv`);
             document.body.appendChild(link);
             link.click();
             link.remove();
         }).catch(error => {
-            console.log(error)})
+            setObservationCSVId((prev) => {
+                return {
+                    ...prev,
+                    error: {
+                        status: error.response.status,
+                        message: error.response.statusText,
+                        data: error.response.data
+                    }
+                }
+            })
+        })
     }
 
     return (
@@ -127,8 +141,8 @@ const FilterSelectMenu = (props) =>{
                                                 </div>
                                                 <div className="border-start ps-2 ms-2 ps-xl-3 ms-xl-3">
                                                     <button
-                                                        className={`btn btn-secondary shadow-none ${CSVID?.length <= 0 ? 'disabled' : ''}`}
-                                                        disabled={CSVID?.length <= 0}
+                                                        className={`btn btn-secondary shadow-none ${CSVID?.length <= 0 || CSVID === undefined ? 'disabled' : ''}`}
+                                                        disabled={CSVID?.length <= 0 || CSVID === undefined}
                                                         onClick={()=> handleCSVDownload(CSVID)}
                                                     >
                                                         <Icon icon="heroicons-outline:download"  width="25" height="22" />

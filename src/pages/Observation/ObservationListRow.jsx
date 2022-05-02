@@ -4,34 +4,45 @@ import ReactCountryFlags from "../../components/ReactCountryFlag";
 import moment from 'moment';
 import CardImageCarousel from "../../components/Shared/CardImageCarousel";
 import { useState, useEffect } from "react";
+import useObservationsData from "../../hooks/useObservationsData";
 
 
 const ObservationListRow = (props) => {
     const { cardItems, cardData, allChecked, childFunc, setCheckedIds,index, checkedIds, handleClick} = props;
-    
+    const {setObservationCSVId} = useObservationsData();
     const [allClear, setAllClear] = useState(false);
+
     const setChecked = (id) => {
+        let selectedIDs = [];
         if(allChecked){
+            console.log('all checked')
             return allChecked;
         }
         else{
+            console.log('all un-checked')
             return !!(checkedIds.includes(id)) ;
         }
     }
-    const handleChecked = (e,id) => {
-            if(e.target.checked){
-                if(checkedIds.length > 0){
-                    setCheckedIds([...checkedIds,id]);
-                }else{
-                    setCheckedIds([id]);
-                }
-            }else{
-                let ids = [...checkedIds];
-                ids = ids.filter((item,index)=> {
-                    return item !== id;
-                })
-                setCheckedIds(ids);
+
+    const handleChecked = (e, id) => {
+        console.log('clicked on ', id);
+        let checked = e.target.checked;
+        if(checked){
+            console.log('checked', checked);
+            if(checkedIds.length > 0){
+                setCheckedIds([...checkedIds,id]);
             }
+            else{
+                setCheckedIds([id]);
+            }
+        } else {
+            console.log('checked', checked);
+            let ids = [...checkedIds];
+            ids = ids.filter((item,index)=> {
+                return item !== id;
+            })
+            setCheckedIds(ids);
+        }
     }
                                                                                                                     
     useEffect(() => {

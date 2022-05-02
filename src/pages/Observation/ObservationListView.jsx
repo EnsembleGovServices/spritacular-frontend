@@ -6,18 +6,26 @@ import useObservationsData from "../../hooks/useObservationsData";
 
 const ObservationListView = (props) => {
     const { observationList, isObservationDetailModal, setObservationDetailModal, setSelectedObservationId } = props;
-    const [allChecked,setAllChecked] = useState(false);
+    const [ allChecked, setAllChecked] = useState(false);
     const childFunc = useRef(null);
     const [checkedIds,setCheckedIds] = useState([]);
     const {observationCSVId, setObservationCSVId} = useObservationsData();
 
-    const downloadCSV = (ids) => {
-        checkedIds.filter((val,id,array) => array.indexOf(val) === id);
-    }
     const handleObservationDetailModal = (id) => {
         setObservationDetailModal(!isObservationDetailModal);
         setSelectedObservationId(id);
     };
+
+
+    const handleAllChecked = (e) => {
+        setAllChecked(e.target.checked);
+        if(e.target.checked === false){
+            childFunc.current();
+        }
+    }
+
+    //setAllChecked(e.target.checked); if(e.target.checked === false){childFunc.current()
+
 
     useEffect(()=> {
         setObservationCSVId((prev) => {
@@ -25,8 +33,7 @@ const ObservationListView = (props) => {
                 ...prev,
                 data: {
                     observation: checkedIds
-                },
-                all: false
+                }
             }
         })
     }, [checkedIds, setObservationCSVId])
@@ -43,7 +50,7 @@ const ObservationListView = (props) => {
                                         type="checkbox"
                                         name="all_csv"
                                         className="me-0 form-check-input"
-                                        onChange={(e) => {setAllChecked(e.target.checked); if(e.target.checked === false){childFunc.current()} }} />
+                                        onChange={(e) => handleAllChecked(e) } />
                                 </FormGroup>
                             </th>
                             <th valign="middle">Observation</th>
@@ -64,6 +71,7 @@ const ObservationListView = (props) => {
                                         cardItems={cardItems}
                                         cardData={cardItems?.images[0]}
                                         allChecked={allChecked}
+                                        setAllChecked={setAllChecked}
                                         childFunc={childFunc}
                                         setCheckedIds={setCheckedIds}
                                         checkedIds={checkedIds}
