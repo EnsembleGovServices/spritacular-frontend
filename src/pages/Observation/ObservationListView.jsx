@@ -8,9 +8,9 @@ const ObservationListView = (props) => {
     const [allChecked,setAllChecked] = useState(false);
     const childFunc = useRef(null);
     const [checkedIds,setCheckedIds] = useState([]);
-    // const downloadCSV = (ids) => {
+    const downloadCSV = (ids) => {
         checkedIds.filter((val,id,array) => array.indexOf(val) === id);
-    // }'
+    }
     console.log(checkedIds);
     const handleObservationDetailModal = (id) => {
         setObservationDetailModal(!isObservationDetailModal);
@@ -42,7 +42,16 @@ const ObservationListView = (props) => {
                         {observationList.length > 0 && observationList?.map((cardItems, index)=>{
                             return(
                                 <tr key={index}>
-                                    <ObservationListRow cardItems={cardItems} index={index} cardData={cardItems?.images[0]} allChecked={allChecked} childFunc={childFunc} setCheckedIds={setCheckedIds}checkedIds={checkedIds}handleClick={handleObservationDetailModal}/>
+                                    <ObservationListRow
+                                        index={index}
+                                        cardItems={cardItems}
+                                        cardData={cardItems?.images[0]}
+                                        allChecked={allChecked}
+                                        childFunc={childFunc}
+                                        setCheckedIds={setCheckedIds}
+                                        checkedIds={checkedIds}
+                                        handleClick={handleObservationDetailModal}
+                                    />
                                 </tr>
                             )
                         })

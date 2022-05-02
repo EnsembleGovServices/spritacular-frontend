@@ -9,13 +9,13 @@ import { useState, useEffect } from "react";
 const ObservationListRow = (props) => {
     const { cardItems, cardData, allChecked, childFunc, setCheckedIds,index, checkedIds, handleClick} = props;
     
-    const [allClear,setAllClear] = useState(false);
+    const [allClear, setAllClear] = useState(false);
     const setChecked = (id) => {
         if(allChecked){
             return allChecked;
         }
         else{
-            return (checkedIds.includes(id)) ? true : false ;
+            return !!(checkedIds.includes(id)) ;
         }
     }
     const handleChecked = (e,id) => {
@@ -46,8 +46,14 @@ const ObservationListRow = (props) => {
         <>
             <th valign="middle" className="check-box">
                 <FormGroup check className="mb-0">
-                    <Input type="checkbox" data-id={cardItems.id} name= {`is_other_${cardItems.id}`} className="me-0" checked={setChecked(cardItems.id)} onChange={(e) => {handleChecked(e,cardItems.id);}} />
-                                                                                                                                                                                                                                                                                                                                                </FormGroup>
+                    <Input type="checkbox"
+                           data-id={cardItems.id}
+                           name= {`is_other_${cardItems.id}`}
+                           className="me-0"
+                           checked={setChecked(cardItems.id)}
+                           onChange={(e) => {handleChecked(e,cardItems.id)}}
+                    />
+                </FormGroup>
             </th>
             <td valign="middle" className="observationCard-box">
                 <div className="h-100 position-relative">

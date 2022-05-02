@@ -139,7 +139,7 @@ const Gallery = () => {
       <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilterHorizontal={selectedFilterHorizontal}setSelectedFilterHorizontal={setSelectedFilterHorizontal}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
 
       <Container className="pt-5">
-        {normalUser &&<UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center mb-5">
+        {normalUser && <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center mb-5">
           Would you like to help us sift through observations and endorse their validity?
           <Link to={'/'+routeUrls.tutorials} className="btn btn-outline-primary">Get Trained</Link>
         </UncontrolledAlert>}

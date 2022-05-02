@@ -33,14 +33,10 @@ const Dashboard = () =>{
     const [isFilterOpen, setIsFilterOpen] = useState(dashboardHelper.filterState)
     const [selectedFilterHorizontal,setSelectedFilterHorizontal] = useState(dashboardHelper.horizontal)
     const [selectedFilterVertical,setSelectedFilterVertical] = useState(dashboardHelper.vertical)
-    const [isLoaded,setIsLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
     const { observationListData, setObservationListData } = useObservationsData();
     const [nextPageUrl,setNextPageUrl] = useState(dashboardHelper.nextPageUrl);
-
-
-
     const [filterReset, setFilterReset] = useState(false);
-
 
     const getObservationData = (
             reset=false,
