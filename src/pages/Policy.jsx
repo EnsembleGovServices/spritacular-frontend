@@ -154,14 +154,14 @@ const Policy = () => {
                     </h5>
                     <p className="mb-0">
                       The Code of Conduct has been developed by the Spritacular team and largely drawn from other Codes of Conduct, including those by the
-                      <a href="https://citizenscience.org/home/events/conferences/citsci2019/code-of-conduct/" target="_blank" referrerPolicy="no-referrer">Citizen Science Association</a>,
-                      <a href="https://openhardware.science/gosh-2017/gosh-code-of-conduct/" target="_blank" referrerPolicy="no-referrer">
+                      <a href="https://citizenscience.org/home/events/conferences/citsci2019/code-of-conduct/" rel="noreferrer" target="_blank" referrerPolicy="no-referrer">Citizen Science Association</a>,
+                      <a href="https://openhardware.science/gosh-2017/gosh-code-of-conduct/" rel="noreferrer" target="_blank" referrerPolicy="no-referrer">
                         Gathering for Open Science Hardware
                       </a>,
-                      <a href="https://conbio.org/mini-sites/imcc-2016/registration-participation/code-of-conduct/" target="_blank" referrerPolicy="no-referrer"> International Congress of Marine Conservation 2016</a>,
-                      <a href="https://publiclab.org/conduct" target="_blank" referrerPolicy="no-referrer">Public Lab</a>, and <a
-                        href="https://www.transhack.org/" target="_blank" referrerPolicy="no-referrer">TransH4CK</a>. The user agreement on project contributions is developed following the best practices from
-                      <a href="https://www.aurorasaurus.org/" target="_blank" referrerPolicy="no-referrer"> Aurorasaurus</a> project.
+                      <a href="https://conbio.org/mini-sites/imcc-2016/registration-participation/code-of-conduct/" rel="noreferrer" target="_blank" referrerPolicy="no-referrer"> International Congress of Marine Conservation 2016</a>,
+                      <a href="https://publiclab.org/conduct" rel="noreferrer" target="_blank" referrerPolicy="no-referrer">Public Lab</a>, and <a
+                        href="https://www.transhack.org/" rel="noreferrer" target="_blank" referrerPolicy="no-referrer">TransH4CK</a>. The user agreement on project contributions is developed following the best practices from
+                      <a href="https://www.aurorasaurus.org/" rel="noreferrer" target="_blank" referrerPolicy="no-referrer"> Aurorasaurus</a> project.
                     </p>
 
                   </CardBody>

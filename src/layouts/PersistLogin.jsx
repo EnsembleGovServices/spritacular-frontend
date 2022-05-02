@@ -25,6 +25,7 @@ const PersistLogin = (props) => {
     const [observationComments, setObservationComments] = useState({
         comment_count: 0
     });
+    const [observationCSVId, setObservationCSVId] = useState({});
     
     useEffect(() => {
         let isMounted = true;
@@ -60,7 +61,9 @@ const PersistLogin = (props) => {
                     observationComments,
                     setObservationComments,
                     categoryList,
-                    setCategoryList
+                    setCategoryList,
+                    observationCSVId,
+                    setObservationCSVId
                 }
             }>
             {!persist ? (
