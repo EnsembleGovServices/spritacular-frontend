@@ -7,10 +7,12 @@ import { routeUrls } from './../helpers/url';
 const Blog = () => {
   return (
     <>
-      <section className="blog-main">
+      <div className="blog_page position-relative">
+        <div className="common-banner"></div>
+        <section className="blog-main">
         <Container>
           <h2 className="text-center">Spritacular Blog</h2>
-          <Row>
+          <Row  className="g-4">
             <Col md={6}>
               <div className="main-blog">
                 <img src={Images.BlogOne} alt="" />
@@ -26,8 +28,8 @@ const Blog = () => {
               </div>
             </Col>
             <Col md={6}>
-              <Row className="">
-                <Col md={6} className="mb-4">
+              <Row className="g-4">
+                <Col md={6}>
                   <div className="blog-small">
                     <img src={Images.BlogTwo} alt="" />
                     <div className="blog-text">
@@ -36,7 +38,7 @@ const Blog = () => {
                     </div>
                   </div>
                 </Col>
-                <Col md={6} className="mb-4">
+                <Col md={6}>
                   <div className="blog-small">
                     <img src={Images.BlogTwo} alt="" />
                     <div className="blog-text">
@@ -71,7 +73,7 @@ const Blog = () => {
               Recommended for you
               <Link to={routeUrls.home} className="view-all">View All</Link>
             </h3>
-            <Row>
+            <Row className="g-4">
               <Col md={4}>
                 <div className="blog-small">
                   <img src={Images.BlogTwo} alt="" />
@@ -115,6 +117,7 @@ const Blog = () => {
           </div>
         </Container>
       </section>
+      </div>
     </>
   );
 };

@@ -3,14 +3,56 @@ import { Icon } from "@iconify/react";
 import ReactCountryFlags from "../../components/ReactCountryFlag";
 import moment from 'moment';
 import CardImageCarousel from "../../components/Shared/CardImageCarousel";
+import { useState, useEffect } from "react";
+
 
 const ObservationListRow = (props) => {
-    const { cardItems, cardData } = props;
+    const { cardItems, cardData, allChecked, childFunc, setCheckedIds,index, checkedIds, handleClick} = props;
+    
+    const [allClear, setAllClear] = useState(false);
+    const setChecked = (id) => {
+        if(allChecked){
+            return allChecked;
+        }
+        else{
+            return !!(checkedIds.includes(id)) ;
+        }
+    }
+    const handleChecked = (e,id) => {
+            if(e.target.checked){
+                if(checkedIds.length > 0){
+                    setCheckedIds([...checkedIds,id]);
+                }else{
+                    setCheckedIds([id]);
+                }
+            }else{
+                let ids = [...checkedIds];
+                ids = ids.filter((item,index)=> {
+                    return item !== id;
+                })
+                setCheckedIds(ids);
+            }
+    }
+                                                                                                                    
+    useEffect(() => {
+        childFunc.current = handleCurrentCheckbox;
+      }, [])
+
+    const handleCurrentCheckbox = () => {
+        setAllClear(true);
+        setCheckedIds([]);
+    }
     return (
         <>
             <th valign="middle" className="check-box">
                 <FormGroup check className="mb-0">
-                    <Input type="checkbox" name="is_other" className="me-0" />
+                    <Input type="checkbox"
+                           data-id={cardItems.id}
+                           name= {`is_other_${cardItems.id}`}
+                           className="me-0"
+                           checked={setChecked(cardItems.id)}
+                           onChange={(e) => {handleChecked(e,cardItems.id)}}
+                    />
                 </FormGroup>
             </th>
             <td valign="middle" className="observationCard-box">
@@ -18,16 +60,26 @@ const ObservationListRow = (props) => {
                     { cardItems?.image_type === 3 && <div className="multiple-image_icon"><Icon icon="codicon:list-filter" color="black" /></div>}
                     {cardItems?.is_verified && <div className="verify-card"><Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" /></div>}
                     {/* <img alt="Card cap" src={cardData?.image} className="img-fluid card-img" /> */}
+                    { cardItems?.image_type === 3 ? 
                     <CardImageCarousel carouselData={cardItems?.images} />
+                    : <img
+                            alt="Card cap"
+                            src={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}
+                            className="img-fluid card-img"
+                            onClick={(e) => {
+                                 handleClick(index);
+                            }}
+                        />
+                        }
                 </div>
             </td>
             <td valign="middle" className="observationType-box">
                 <div className="observation_type d-flex align-items-start justify-content-start flex-wrap flex-column">
-                    {cardItems?.category_data.length > 0 && cardItems?.category_data.map((item, index) => {
-                        let image = `/assets/images/category/${item?.toLowerCase().replaceAll(" ", "")}.png`;
-                        return (<div className="mb-2"><i key={index} className="fst-normal rounded-circle me-2 d-inline-block">
-                            <img src={image} alt={item} className="rounded-circle w-100 h-100" /> 
-                        </i><span>{item}</span></div>)
+                    {cardItems?.category_data?.map((item, index) => {
+                        let image = `/assets/images/category/${item?.name?.toLowerCase().replaceAll(" ", "")}.png`;
+                        return (<div key={index} className="mb-2"><i className="fst-normal rounded-circle me-2 d-inline-block">
+                            <img src={image} alt={item?.name} className="rounded-circle w-100 h-100" /> 
+                        </i><span>{item?.name}</span></div>)
                     })}
                 </div>
             </td>

@@ -21,12 +21,13 @@ export const cameraSettingFields = {
 
 
 export const routeUrls = {
-    home: '',
+    home: '/',
     about: 'about',
     getStarted: 'get-started',
     blog: 'blog',
     tutorials: 'tutorials',
     tutorialsDetail: 'tutorials-detail',
+    policy: 'policy',
     login: 'login',
     profile: 'profile',
     myObservations: 'observations',

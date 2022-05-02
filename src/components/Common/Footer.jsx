@@ -42,7 +42,7 @@ const Footer = () => {
                       <h6>About</h6>
                       <li>
                         <Link
-                          to={routeUrls.home}
+                            to={routeUrls.about}
                           className="d-inline-block mb-4"
                           title="What is Spritacular?"
                         >
@@ -51,7 +51,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={routeUrls.home}
+                          to={routeUrls.policy}
                           className="d-inline-block mb-4"
                           title="Policy"
                         >
@@ -60,7 +60,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={routeUrls.home}
+                          to={routeUrls.policy+'?code=true'}
                           className="d-inline-block mb-4"
                           title="Code of Conduct"
                         >
@@ -82,7 +82,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={routeUrls.home}
+                            to={routeUrls.gallery}
                           className="d-inline-block mb-4"
                           title="Gallery"
                         >

@@ -597,7 +597,7 @@ export const timezone = [
 export const observationStatus = [
     'Verified',
     'Unverified',
-    'Draft',
+    // 'Draft',
     'Denied'
 ]
 

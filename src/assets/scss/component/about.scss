@@ -31,10 +31,27 @@
     }
   }
 }
-.comman-banner{
-    .container{
-        position: relative;
-        .about-card {
+.about_page{
+  .common-banner{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: -1;
+  }
+  .banner-inner{
+    padding: 100px 0px 90px;
+    @media(max-width:767px){
+      padding: 100px 0px 50px;
+
+    }
+  }
+  h2{
+    font-weight: bold;
+    @include xl-title;
+    color: #181818;
+  }
+  .about-card {
             background: linear-gradient(128.5deg, #c01e37 0%, #f052c1 154.21%);
             border-radius: $border-radius;
             padding: 24px;
@@ -42,7 +59,7 @@
             z-index: 9;
             position: absolute;
             right: 0px;
-            bottom: -46%;
+            bottom: -50px;
             @media(max-width:767px){
                 position: relative;
             }
@@ -66,6 +83,5 @@
               box-shadow: 0px 6px 10px rgba(153, 0, 0, 0.16);
             }
           }
-    }
 }
 

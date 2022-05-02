@@ -34,7 +34,7 @@ class LocationSearchInput extends React.Component {
 
        let Addresses = [city,state,country['long_name']].filter(x => x !== undefined && x !== null );
        let addressArray = [];
-       addressArray['address'] = Addresses.toString();//place.formatted_address;
+       addressArray['address'] = Addresses.join(', ');//place.formatted_address;
        addressArray['lat'] = place.geometry.location.lat();
        addressArray['lng'] = place.geometry.location.lng();
        addressArray['placeId'] = placeId;

@@ -1,11 +1,41 @@
 @import "../global/config.scss";
 
+.set-dash-content {
+    display: flex;
+}
 .dashboard-card{
-    flex: 1 1 auto;
-    padding-top: 50px;
+    width: calc(100% - #{$filter-size});
+    padding: 40px 0 40px 40px;
+    &.sm-card{
+        .photo-list{
+            .photo-item{
+                width: 25%;
+                @include media-breakpoint-down(xxl){
+                    width: 33%;
+                }
+                @include media-breakpoint-down(lg){
+                    width: 50%;
+                }
+                @include media-breakpoint-down(md){
+                    width: 50%;
+                }
+                @include media-breakpoint-down(sm){
+                    width: 100%;
+                }
+            }
+        }   
+    }
+    &.maximize-dash-content {
+        width: 100%;
+        padding: 40px 0;
+    }
 }
 .filter-open{
-    min-width: 255px;
+    width: 100%;
+    min-width: $filter-size;
+    @include media-breakpoint-down(xl){
+        min-width: 210px;
+    }
     span{
         color: $grey;
     }
@@ -19,3 +49,4 @@
 .observation-dashboard_content {
     margin-top: -25px;
 }
+

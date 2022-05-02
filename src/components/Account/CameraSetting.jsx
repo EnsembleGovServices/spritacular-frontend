@@ -5,7 +5,6 @@ import {baseURL, cameraSettingFields} from "../../helpers/url";
 import EquipmentForm from '../Shared/EquipmentForm'
 import useAuth from "../../hooks/useAuth";
 
-
 const CameraSetting = (props) => {
     const {setAuth, auth} = useAuth();
     const {cameraDetails, user, isDetailExist} = props;

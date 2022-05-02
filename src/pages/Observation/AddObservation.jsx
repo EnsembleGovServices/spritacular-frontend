@@ -42,14 +42,15 @@ const AddObservation = () => {
         observationData,
         setObservationData,
         observationType,
-        setObservationType
+        setObservationType,
+        cameraDetails, 
+        setCameraDetails
     } = useObservations();
     const location = useLocation();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
-    const [cameraDetails, setCameraDetails] = useState(cameraSettingFields);
     const [updateMode, setUpdateMode] = useState(false);
     const [reset, setReset] = useState(false);
     const [success, setSuccess] = useState(null);
@@ -381,6 +382,7 @@ const AddObservation = () => {
                     story: data.story,
                     map_data: data.images
                 });
+                setCameraDetails(data?.camera_data);
                 setUpdateMode(true);
             })
             .catch(error => {
@@ -449,6 +451,7 @@ const AddObservation = () => {
             selected_image_index: 0,
             observation_count: draftData?.map_data.length
         });
+
     }, [draftData, setObservationImages])
 
 
@@ -556,7 +559,7 @@ const AddObservation = () => {
                                         </TabPane>
                                         <TabPane tabId={Tabs.DateTimeLocation} className="observation_location">
                                             {showUploadedPreview() &&
-                                                <div className="observation-form-right-tab d-flex justify-content-end d-sm-none position-relative position-sm-sticky">
+                                                <div className="observation-form-right-tab d-flex justify-content-start justify-content-sm-end d-sm-none position-relative position-sm-sticky">
                                                     <ObservationUploadedImg obvType={observationType} step={observationSteps} error={error} remove={removeItem} />
                                                 </div>
                                             }

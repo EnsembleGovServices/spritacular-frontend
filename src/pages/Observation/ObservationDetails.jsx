@@ -1,5 +1,5 @@
-import {useState, useEffect, createRef, useRef} from "react";
-import { Badge, Button, Col, Modal, ModalBody, ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane, Tooltip } from "reactstrap";
+import {useState, useEffect, useRef} from "react";
+import { Badge, Button, Col, Modal, ModalBody, ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
 import Images from './../../static/images';
 import { imageDetails } from "../../helpers/observation";
 import "../../assets/scss/component/observationDetails.scss";
@@ -8,11 +8,12 @@ import ObservationMoreEquipementDetails from "../../components/Observation/Obser
 import Comments from "../../components/Observation/ObservationDetails/Comments";
 import { Icon } from "@iconify/react";
 import useObservationsData from "../../hooks/useObservationsData";
+import Tippy from "@tippyjs/react";
+import CardImageCarousel from "../../components/Shared/CardImageCarousel";
 
 const ObservationDetails = (props) =>{
-    const {modalClass, open, handleClose, data, activeType, handleContinueEdit } = props;
+    const {modalClass, open, handleClose, data, activeType, handleContinueEdit, handleApproveRejectEvent } = props;
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
-    const [tooltipOpen, setTooltipOpen] = useState([]);
     const {observationComments} = useObservationsData();
     const obvDetailsModal = useRef(null);
     // Toggle Tabs
@@ -21,21 +22,6 @@ const ObservationDetails = (props) =>{
             setActiveImageTab(tab);
         }
     };
-
-    const handleToggleChange = (e) => {
-        if (!tooltipOpen[e]) {
-            setTooltipOpen({
-            ...tooltipOpen,
-            [e]: {
-                isOpen: true
-            }
-            });
-        } else {
-            setTooltipOpen([]);
-        }
-        
-    }
-
 
     useEffect(()=>{
         setActiveImageTab(imageDetails.Details)
@@ -48,7 +34,7 @@ const ObservationDetails = (props) =>{
                 isOpen={open}
                 backdrop={true}
                 keyboard={false}
-                scrollable
+                scrollable={false}
                 size="xl"
                 toggle={handleClose}
                 ref={obvDetailsModal}
@@ -58,7 +44,7 @@ const ObservationDetails = (props) =>{
                         <Button className="close-icon bg-transparent rounded-0 border-0 shadow-none p-0 me-3" onClick={() => handleClose()}>
                             <img src={Images.Modalcloseicon} alt="close-icon" />
                         </Button>
-                        {(data?.category_data[0]) ? data?.category_data[0] : null} 
+                        {(data?.category_data?.[0]) ? data?.category_data?.[0]?.name : null}
                         <Badge className={`text-uppercase ${activeType === 'verified' ? 'badge-success' : ''}`}>{activeType === 'verified' && <Icon icon="mdi:check-decagram" color="#27ae60" className="me-1" width="13" height="13" />}{activeType}</Badge>
                     </div>
                     {activeType === "draft" &&
@@ -74,7 +60,8 @@ const ObservationDetails = (props) =>{
                         <Col md={6}>
                             <div className="mb-4 mb-md-0 h-100">
                                 <div className="preview-detail mb-3 mb-md-2">
-                                    {data?.images?.length === 0 ? <img src={Images.NotAvailable} alt="No image available" className="object-contain img-fluid"/> : <img src={data?.images?.[0]?.image} alt="card details" className="img-fluid" />}
+                                { !(data?.image_type === 3) && (data?.images?.length === 0 ? <img src={Images.NotAvailable} alt="No available" className="object-contain img-fluid"/> : <img src={data?.images?.[0]?.image} alt="card details" className="img-fluid" />) }
+                                 { data?.image_type === 3 && <CardImageCarousel  carouselData={data?.images} detail={true}/> }
                                 </div>
                                 <Row>
                                     <Col sm={6} className="justify-content-start d-flex align-items-center mb-2 mb-sm-0">
@@ -87,12 +74,15 @@ const ObservationDetails = (props) =>{
                                     </Col>
                                     <Col sm={6} className="justify-content-end d-flex align-items-center">
                                         <div className="observation_type d-flex align-items-center">
-                                            {data?.category_data?.map((item, index) => {
-                                                return (<i id={item?.toLowerCase().replaceAll(" ", "")} className="rounded-circle bg-white ms-2" key={index}>
-                                                    <img src={`/assets/images/category/${item?.toLowerCase().replaceAll(" ", "")}.png`} alt={item} />
-                                                    <Tooltip flip target={item?.toLowerCase().replaceAll(" ", "")} isOpen={tooltipOpen[item]?.isOpen} toggle={()=> (handleToggleChange(item))} >{item}</Tooltip>
-                                                </i>)
-                                            })}
+                                        {data?.category_data?.length > 0 && data?.category_data?.map((item, index) => {
+                                            return (
+                                                <i id={item?.name?.toLowerCase().replaceAll(" ", "")} className="rounded-circle bg-white ms-2 cursor-pointer" key={index}>
+                                                    <Tippy animation="perspective" content={item?.name}>
+                                                        <img src={`/assets/images/category/${item?.name?.toLowerCase().replaceAll(" ", "")}.png`} alt={item?.name} />
+                                                    </Tippy>
+                                                </i>
+                                            )
+                                        })}
                                         </div>
                                     </Col>
                                 </Row>
@@ -133,7 +123,7 @@ const ObservationDetails = (props) =>{
                             </Nav>
                             <TabContent activeTab={activeTab}>
                                 <TabPane tabId={imageDetails.Details}>
-                                    <ObservationMoreDetails obvCommentCount={observationComments?.comment_count} data={data}/>
+                                    <ObservationMoreDetails handlePopup={handleClose} approveRejectEvent={handleApproveRejectEvent}  obvCommentCount={observationComments?.comment_count} data={data} activeType={activeType}/>
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Equipment}>
                                     <ObservationMoreEquipementDetails obvCommentCount={observationComments?.comment_count} data={data?.camera_data} />

@@ -5,6 +5,15 @@
 // Importing variables & Bootstrap functions & utilities
 @import "../global/config";
 
+// Tooltip
+@import 'tippy.js/dist/tippy.css';
+
+// Slider
+@import "node_modules/swiper/swiper.scss";
+@import "node_modules/swiper/modules/navigation/navigation.scss";
+@import '~tippy.js/animations/perspective.css';
+@import "~tippy.js/themes/light-border.css";
+
 body {
   margin: 0;
   padding: 0;
@@ -92,10 +101,18 @@ body.modal-open {
 }
 .main-content {
   margin-top: 70px;
+  min-height: calc(100vh - 70px);
   @include media-breakpoint-down(md)  {
     margin-top: 64px;
   }
 }
+
+.container {
+  @include media-breakpoint-up(xxl) {
+    max-width: 1500px;
+  }
+}
+
 
 .btn-secondary{
   @include buttonSecodary;
@@ -124,8 +141,35 @@ body.modal-open {
 .ex-text{
   @include sm-text;
 }
-@import "../component/index.scss";
 
-// Slider
-@import "node_modules/swiper/swiper.scss";
-@import "node_modules/swiper/modules/navigation/navigation.scss";
+.showUserTag {
+  position: absolute;
+  right: 13px;
+  bottom: 0;
+  font-size: 12px;
+  font-weight: bolder;
+  @include media-breakpoint-down(sm) {
+    bottom: -8px;
+  }
+}
+
+
+ul.list-numbered {
+  list-style-type: decimal;
+  margin: 0;
+  padding: 0;
+  li {
+    margin-bottom: 30px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    ul {
+      list-style-type: disc;
+      li {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+@import "../component/index.scss";

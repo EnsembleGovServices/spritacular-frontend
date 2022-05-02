@@ -1,12 +1,12 @@
 @import "../global/config.scss";
 
 .gallery-page{
-    padding: 80px 50px 140px;
+    padding: 0 0 140px;
     @include media-breakpoint-down(lg){
-        padding: 50px 30px 110px;
+        padding: 50px 0 110px;
     }
     @include media-breakpoint-down(md){
-        padding: 40px 15px 110px;
+        padding: 40px 0 110px;
     }
     h4{
         @include lg-title;

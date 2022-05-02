@@ -1,6 +1,6 @@
 
-import {Col, FormGroup,PopoverBody, PopoverHeader,UncontrolledPopover, Collapse, Button, Row} from "reactstrap";
-import {useEffect, useState} from "react";
+import {Col, FormGroup,PopoverBody, PopoverHeader, Collapse, Button, Row} from "reactstrap";
+import { useEffect, useRef, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import { Icon } from "@iconify/react";
 import axios from "../../api/axios";
@@ -9,7 +9,7 @@ import useAuth from "../../hooks/useAuth";
 import Images from "../../static/images";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-
+import Tippy from "@tippyjs/react";
 
 const ObservationCategory = (props) => {
     const {error, obvType}=props;
@@ -21,19 +21,8 @@ const ObservationCategory = (props) => {
     const [selectedCategory, setSelectedCategory] = useState('' || []);
     const ObservationData = {...observationImages};
     const errorData = error ? Object.values(error?.data) : {};
-    
-    const fetchCategory = async () => {
-            await axios.get(baseURL.api+'/observation/get_category_list/', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${auth?.token?.access}`
-                }
-            })
-            .then((response)=> {
-                setOldCategory(response?.data);
-            })
-            .catch((error)=> {console.log(error)})
-    }
+    const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
+    const tippyRef = useRef();
 
     const onCategoryChange=(e)=>{
         const value = parseFloat(e.target.id);
@@ -47,7 +36,6 @@ const ObservationCategory = (props) => {
         }
         setObservationImages(ObservationData);
     }
-
     const updatedCategory = () => {
         let newCategory = [];
         oldCategory?.map((item, index) => {
@@ -90,23 +78,18 @@ const ObservationCategory = (props) => {
             </>
         )
     }
-    const PopoverContent = ({ contentUpdate, popoverId }) => {
-
-        const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
-        
+    const PopoverContent = () => {
         return (
           <>
-            <PopoverHeader>What is sprite? 
-                {/* <Button className="bg-transparent p-0 border-0 text-black shadow-none"><Icon icon="codicon:chrome-close" width="15" height="15" /></Button> */}
+            <PopoverHeader className={'bg-white'}>What is sprite?
+                 {/*<button className="bg-transparent p-0 border-0 text-black shadow-none"><Icon icon="codicon:chrome-close" width="15" height="15" /></button>*/}
             </PopoverHeader>
-            <PopoverBody>
+            <PopoverBody className={'bg-white'}>
                 <p style={{'--line-clamb': isPopoverContentOpen === true ? 'unset' : '2'}}>
                     Sprites or red sprites are large-scale electric discharges that occur high above thunderstorm clouds, they appear as luminous reddish-orange flashes. 
                 </p>
                 <Collapse
                 isOpen={isPopoverContentOpen}
-                onEntered={contentUpdate}
-                onExited={contentUpdate}
                 >
                 <ImageCarousel className="popover-carousel" />
               </Collapse>
@@ -117,26 +100,6 @@ const ObservationCategory = (props) => {
           </>
         );
     };
-    
-    const ImagePopover = (props) => {
-        const {index} = props;
-        return(
-            <div className="ms-2">
-                <Button id={`popover${index}`} type="button" className="bg-transparent p-0 border-0 shadow-none d-flex">
-                    <Icon icon="charm:info" color="#adb4c2" width="15" height="15" />
-                </Button>
-                <UncontrolledPopover
-                    trigger="click"
-                    target={`popover${index}`}
-                    placement="top"
-                >
-                    {({ contentUpdate, popoverId }) => (
-                        <PopoverContent contentUpdate={contentUpdate} popoverId={`popover${index}`} />
-                    )}
-                </UncontrolledPopover>
-            </div>
-        )
-    }
 
     const showCategory = () => {
         return observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
@@ -159,7 +122,20 @@ const ObservationCategory = (props) => {
                                         <label htmlFor={imagItem.id}>
                                             <img src={`${imagItem.image}`} alt={imagItem.name} />
                                             {imagItem.name}
-                                            <ImagePopover index={imagItem.id} />
+                                            <div className="ms-2 text-dark ">
+
+                                                <Tippy
+                                                    content={<PopoverContent />}
+                                                    interactive={true}
+                                                    appendTo={document.body}
+                                                    animation="perspective"
+                                                    theme="light-border"
+                                                    reference={tippyRef}
+                                                >
+                                                    <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2" width="15" height="15" /></span>
+                                                </Tippy>
+                                            </div>
+
                                         </label>
                                     </div>
                                 </div>
@@ -172,7 +148,7 @@ const ObservationCategory = (props) => {
     }
 
     useEffect(()=> {
-        fetchCategory().then(r=>r)
+        setOldCategory(auth?.categoryList)
     }, [])
 
     useEffect(() => {

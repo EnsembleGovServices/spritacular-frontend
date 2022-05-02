@@ -1,7 +1,7 @@
 @import "../global/config.scss";
 
 .tutorial-details_page{
-  .comman-banner{
+  .common-banner{
     position: absolute;
     left: 0;
     top: 0;
@@ -19,6 +19,7 @@
   }
   img {
     width: 100%;
+    border-radius: $border-radius;
   }
   h3 {
     margin-top: 40px;

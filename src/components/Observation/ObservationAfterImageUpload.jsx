@@ -171,7 +171,7 @@ const ObservationAfterImageUpload = (props) => {
                                 }
                                 { showUploadedPreview &&
                                     <Col sm={12}>
-                                        <div className="d-flex justify-content-end d-sm-none"><ObservationUploadedImg  obvType={obvType} step={step} error={error} remove={remove} /></div>
+                                        <div className="d-flex justify-content-start justify-content-sm-end d-sm-none"><ObservationUploadedImg  obvType={obvType} step={step} error={error} remove={remove} /></div>
                                     </Col>
                                 }
                                 <Col sm={12}>

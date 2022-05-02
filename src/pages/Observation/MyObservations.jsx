@@ -12,30 +12,33 @@ import ObservationDetailPage from "./ObservationDetailPage";
 import useObservations from "../../hooks/useObservations";
 import { LoadMore } from "../../components/Shared/LoadMore";
 import { Icon } from "@iconify/react";
+import useObservationsData from "../../hooks/useObservationsData";
 
 const MyObservations = () => {
   const { auth } = useAuth();
+  const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
+  const { observationListData, setObservationListData } = useObservationsData();
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
-  const [observationList,setObservationList] = useState({});
-  const [currentObservationList,setCurrentObservationList] = useState({});
-  const [observationCount,setObservationCount] = useState({
-    verified: 0,
-    unverified: 0,
-    denied: 0,
-    draft: 0,
-    total:0,
-  });
   const [isLoaded,setIsLoaded] = useState(true);
   const [activeType,setActiveType] = useState('verified');
   const [selectedObservationId,setSelectedObservationId] = useState();
-  const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
   const navigate = useNavigate();
-  const [loadMore,setLoadMore] = useState(0);
-  const [pageSize,setPageSize] = useState(10);
-  const [currobservationList,setcurrobservationList] = useState([]);
+  const [nextPageUrl,setNextPageUrl] = useState('/observation/observation_collection/?type=');
+
   useEffect(() => {
-    getObservationData(null);
-    getObservationType('verified');
+    setObservationListData((prev) => {
+      return {
+        ...prev,
+        active: observationListData?.list?.[selectedObservationId]
+      }
+    })
+
+  }, [isObservationDetailModal]);
+
+
+  useEffect(() => {
+      getObservationData(true,'verified');
+      setIsLoaded(false);
   },[isLoaded]);
 
   const handleObservationEdit = (data) => {
@@ -66,68 +69,55 @@ const MyObservations = () => {
       }
     });
   }
-
-  const getObservationType = (type) => {
-    let unverifiedList;
-    setActiveType(type);
-    setLoadMore(pageSize);
-    if(type === 'unverified'){
-      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
-        return (item.is_submit === true && item.is_verified === false && item.is_reject === false);
-      });
-    }
-    if(type === 'verified'){
-      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
-        return (item.is_verified === true && item.is_reject === false);
-      });
-    }
-    if(type === 'denied'){
-      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
-        return (item.is_reject === true && item.is_verified === false);
-      });
-    }
-    if(type === 'draft'){
-      unverifiedList = observationList.length > 0 && observationList?.filter((item) => {
-        return (item.is_submit === false && item.is_verified === false && item.is_reject === false);
-      });
-    }
-    setCurrentObservationList(unverifiedList);
-    if(unverifiedList){
-      let data = unverifiedList.slice(0,pageSize);
-      setcurrobservationList(data);
-    }
-  }
   
-  const getObservationData = (value) => {
-    if(value !== null){
-      value = value.target.value;
+  const getObservationData = (reset=false,value='verified') => {
+    setActiveType(value);
+    let url;
+    if(reset === true || !nextPageUrl){
+      url = '/observation/observation_collection/?type='+value+'&page=1';
+    }else{
+      url = nextPageUrl;
     }
-    else{
-      value = 1;
-    }
-    setActiveType('verified');
-    
-    axios.get(baseURL.api+'/observation/observation_collection/?sortBy='+value,{
+
+    axios.get(baseURL.api+url,{
       headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth?.token?.access}`,
       },
       
   }).then((success) => {
-    const varifiedCount = success?.data?.data?.filter((item) => (item.is_verified === true && item.is_reject === false));
-    const deniedCount = success?.data?.data?.filter((item) => (item.is_reject === true && item.is_verified === false));
-    const unVarifiedCount = success?.data?.data?.filter((item) => (item.is_reject === false && item.is_submit === true && item.is_verified === false));
-    const draftCount = success?.data?.data?.filter((item) => item.is_submit === false && item.is_reject === false && item.is_verified === false);
+    let data = success?.data?.results;
+    if(success?.data?.next){
+      setNextPageUrl(success?.data?.next.split('api')[1]);
+    }else{
+      setNextPageUrl(null);
+    }
 
-    setObservationList(success?.data?.data);
-    setObservationCount({
-      verified: varifiedCount.length,
-      unverified: unVarifiedCount.length,
-      denied: deniedCount.length,
-      draft: draftCount.length,
-      total: success?.data?.data.length
-    })
-    getObservationType('verified');
+    setIsLoaded(false);
+    let records = data?.data;
+      let prevData;
+
+    if(observationListData?.list?.length > 0 && reset === false){
+      prevData = [...observationListData.list];
+      prevData = [...prevData,...records];
+    }else{
+      prevData = data?.data;
+    }
+      // Global State
+      setObservationListData((prev) => {
+        return {
+          ...prev,
+          list: prevData,
+          count: {
+            verified: data?.verified_count,
+            unverified: data?.unverified_count,
+            denied: data?.denied_count,
+            draft: data?.draft_count,
+            total: data?.verified_count + data?.unverified_count+ data?.denied_count + data?.draft_count
+          }
+        }
+      })
+
     setIsLoaded(false);
   }).catch((error) => {
       console.log(error.response);
@@ -139,21 +129,8 @@ const MyObservations = () => {
     setSelectedObservationId(id);
   };
 
-  const handlLoadMore = () => {
-    let value = loadMore + pageSize;
-    if(currentObservationList.length > 0){
-
-      let length;
-      if(value > currentObservationList.length){
-        length = currentObservationList.length;
-      }
-      else{
-        length = value;
-      }
-      setLoadMore(length);
-      let currentData = currentObservationList.slice(loadMore,length);
-      setcurrobservationList([...currobservationList,...currentData]);
-    }
+  const handleLoadMore = () => {
+    getObservationData(false,activeType);
   }
 
   useEffect(()=> {
@@ -167,22 +144,22 @@ const MyObservations = () => {
 
   return(
       <>
-        {observationCount.total === 0 &&  <InitialUploadObservations /> }
-        {observationCount.total > 0 && 
+        {observationListData?.count?.total === 0 &&  <InitialUploadObservations /> }
+        {observationListData?.count?.total > 0 &&
         <>
           <Container>
             <div className="filtered-data_wrapper">
               <Row>
                 <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
                   <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
-                    <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('verified')}}>Verified ({observationCount.verified})</span>     
-                    <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('unverified')}}>Unverified ({observationCount.unverified})</span>     
-                    <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('denied')}}>Denied ({observationCount.denied})</span>     
-                    <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationType('draft')}}>Drafts ({observationCount.draft})</span>     
+                    <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'verified')}}>Verified ({observationListData?.count?.verified})</span>
+                    <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'unverified')}}>Unverified ({observationListData?.count?.unverified})</span>
+                    <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'denied')}}>Denied ({observationListData?.count?.denied})</span>
+                    <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'draft')}}>Drafts ({observationListData?.count?.draft})</span>
                   </div>
                 </Col>
                 <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
-                  <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mt-2 mt-md-0">
+                  <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mb-2 mb-md-0">
                     <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary ms-2 ms-xl-4 shadow-none">
                     <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload
                     Observations
@@ -193,24 +170,24 @@ const MyObservations = () => {
             </div>
           </Container>
           <Container>
-            {observationCount[`${activeType}`] ===  0 &&
+            {observationListData?.list?.length ===  0 &&
             <div className="data-not-found">
                 <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
                 <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
               </div>}
-            <ObservationDetailPage  observationList={currobservationList}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId}/>
-          {loadMore < currentObservationList.length && <LoadMore handlLoadMore={handlLoadMore} />}
+            <ObservationDetailPage  observationList={observationListData?.list}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
+          {nextPageUrl && <LoadMore handleLoadMore={handleLoadMore} />}
           </Container>
 
-          <ObservationDetails
-              data={currentObservationList[selectedObservationId]}
+         <ObservationDetails
+              data={observationListData?.active}
               activeType={activeType}
               modalClass="observation-details_modal"
               open={isObservationDetailModal}
               handleClose={handleObservationDetailModal}
               handleContinueEdit={handleObservationEdit}
+              handleApproveRejectEvent={getObservationData}
           />
-
 
         </>
         }

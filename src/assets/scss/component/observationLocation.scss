@@ -200,4 +200,33 @@
             height: 100%;
         }
     }
+    //input[type="date"]{
+    //    padding-left: 40px;
+    //    position: relative;
+    //    &::-webkit-calendar-picker-indicator{
+    //        position: absolute;
+    //        top: 15px;
+    //        left: -15px;
+    //        width: 20px;
+    //        height: 22px;
+    //        button{
+    //            border: none;
+    //            background: transparent;
+    //        }
+    //    }
+    //}
+    //input[type="time"]{
+    //    padding-left: 40px;
+    //    &::-webkit-calendar-picker-indicator{
+    //        position: absolute;
+    //        top: 15px;
+    //        left: 0px;
+    //        width: 20px;
+    //        height: 22px;
+    //        button{
+    //            border: none;
+    //            background: transparent;
+    //        }
+    //    }
+    //}
 }
