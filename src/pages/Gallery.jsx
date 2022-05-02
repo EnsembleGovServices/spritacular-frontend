@@ -46,21 +46,21 @@ const Gallery = () => {
     setSearchCountry(value);
 }
 
-useEffect(()=> {
-  if (isFilterOpen.isCountryOpen === false) {
-      setSearchCountry("");
-  }
-}, [isFilterOpen.isCountryOpen])
-
-useEffect(() => {
-  setObservationListData((prev) => {
-    return {
-      ...prev,
-      active: observationListData?.list?.[selectedObservationId]
+  useEffect(()=> {
+    if (isFilterOpen.isCountryOpen === false) {
+        setSearchCountry("");
     }
-  })
+  }, [isFilterOpen.isCountryOpen])
 
-}, [isObservationDetailModal]);
+  useEffect(() => {
+    setObservationListData((prev) => {
+      return {
+        ...prev,
+        active: observationListData?.list?.[selectedObservationId]
+      }
+    })
+
+  }, [isObservationDetailModal]);
 
   const handleLoadMoreData = () => {
         getObservationType(false, selectedFilterHorizontal.country?.code, selectedFilterHorizontal.type, selectedFilterHorizontal.status);
@@ -70,9 +70,7 @@ useEffect(() => {
     if(reset === true || !nextPageUrl){
       url = `${baseURL.api}/observation/gallery/?country=${country}&category=${category}&status=${status}&page=1`;
     }else{
-      console.log('nextPageUrl', nextPageUrl)
-      url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
-      console.log(process.env.NODE_ENV)
+      url = nextPageUrl;
     }
 
     const headers = {};

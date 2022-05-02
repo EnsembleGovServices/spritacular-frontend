@@ -27,6 +27,7 @@ export const routeUrls = {
     blog: 'blog',
     tutorials: 'tutorials',
     tutorialsDetail: 'tutorials-detail',
+    policy: 'policy',
     login: 'login',
     profile: 'profile',
     myObservations: 'observations',

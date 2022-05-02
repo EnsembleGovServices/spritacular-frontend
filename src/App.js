@@ -23,6 +23,7 @@ import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 import InformativePage from './layouts/InformativePage';
 import Dashboard from "./pages/Dashboard";
 import useAuth from "./hooks/useAuth";
+import Policy from "./pages/Policy";
 
 const App = () => {
   const [persistValue, setPersistValue] = useState(false);
@@ -45,12 +46,12 @@ const App = () => {
       <Route element={<PersistLogin persistValue={persistValue} />}>
         <Route element={ <InformativePage setAuthValue={authCallBack} /> }>
           <Route exact path={routeUrls.home} element={<Home /> } />
-          
           <Route exact path={routeUrls.about} element={<About />} />
           <Route exact path={routeUrls.getStarted} element={<GetStarted />} />
           <Route exact path={routeUrls.gallery} element={<Gallery />} />
           <Route exact path={routeUrls.blog} element={<Blog />} />
           <Route exact path={routeUrls.tutorials} element={<Tutorials />} />
+          <Route exact path={routeUrls.policy} element={<Policy />} />
           <Route exact path={routeUrls.tutorialsDetail} element={<TutorialsDetail />} />
           <Route exact path={routeUrls.login} element={<LoginPage />} />
         </Route>

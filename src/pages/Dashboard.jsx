@@ -53,12 +53,8 @@ const Dashboard = () =>{
             if(reset === true || !nextPageUrl){
                 url = `${baseURL.api}/observation/dashboard/?country=${country}&category=${category}&status=${status}&page=1`;
             }else{
-                console.log(nextPageUrl);
-                url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
-                console.log(process.env.NODE_ENV)
+                url = nextPageUrl;
             }
-
-            console.log('load more url', url)
 
             if(selectedFilterVertical.obs_start_date !== null){
                 if(selectedFilterVertical.obs_start_time !== null){

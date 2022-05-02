@@ -51,7 +51,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={routeUrls.home}
+                          to={routeUrls.policy}
                           className="d-inline-block mb-4"
                           title="Policy"
                         >
@@ -60,7 +60,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={routeUrls.home}
+                          to={routeUrls.policy+'?code=true'}
                           className="d-inline-block mb-4"
                           title="Code of Conduct"
                         >

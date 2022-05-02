@@ -210,12 +210,12 @@ const Header = (props) => {
                     </Link>
                   </DropdownItem>
                   <DropdownItem className={active === 'about-2' ? 'active' : ''}>
-                    <Link to={routeUrls.home} title="Policy" onClick={() => setActive('about-2')}>
+                    <Link to={routeUrls.policy} title="Policy" onClick={() => setActive('about-2')}>
                       Policy
                     </Link>
                   </DropdownItem>
                   <DropdownItem className={active === 'about-3' ? 'active' : ''}>
-                    <Link to={routeUrls.home} title="Code of Conduct" onClick={() => setActive('about-3')}>
+                    <Link to={routeUrls.policy+'?code=true'} title="Code of Conduct" onClick={() => setActive('about-3')}>
                       Code of Conduct
                     </Link>
                   </DropdownItem>
