@@ -1,7 +1,7 @@
+import "../assets/scss/component/blog.scss";
 import {Card, CardBody, Col, Row} from "reactstrap";
 import {useEffect, useRef} from "react";
 import {useSearchParams} from "react-router-dom";
-
 const Policy = () => {
   let searchParams, codeOfConduct, scrollToRef, executeScroll;
   [searchParams] = useSearchParams();
@@ -19,7 +19,7 @@ const Policy = () => {
     }
   }, [searchParams])
   return(
-      <div className="blog_page position-relative">
+      <div className="blog_page">
         <div className="common-banner"></div>
         <section className="blog-main">
           <div className="container">

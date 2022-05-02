@@ -1,6 +1,6 @@
+import "../assets/scss/component/blog.scss";
 import { Container, Row, Col } from "reactstrap";
 import Images from "../../src/static/images";
-import "../assets/scss/component/blog.scss";
 import {Link} from "react-router-dom";
 import { routeUrls } from '../helpers/url';
 
