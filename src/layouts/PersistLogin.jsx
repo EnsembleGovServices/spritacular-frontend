@@ -26,6 +26,7 @@ const PersistLogin = (props) => {
         comment_count: 0
     });
     const [observationCSVId, setObservationCSVId] = useState({});
+    const [recentObservation, setRecentObservation] = useState({});
     
     useEffect(() => {
         let isMounted = true;
@@ -56,6 +57,8 @@ const PersistLogin = (props) => {
         <>
             <observationViewContext.Provider value={
                 {
+                    recentObservation,
+                    setRecentObservation,
                     observationListData,
                     setObservationListData,
                     observationComments,

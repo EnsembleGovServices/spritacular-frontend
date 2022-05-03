@@ -9,10 +9,10 @@ import CardImageCarousel from "./CardImageCarousel";
 import Tippy from "@tippyjs/react";
 
 const ObservationCard = (props) => {
-    const { cardItems, handleClick, userProfile, cardData, index, activeType } = props;
+    const { cardItems, handleClick, userProfile, cardData, index, activeType, homepage } = props;
     return (
         <>
-            <Card className="observation_card overflow-hidden">
+            <Card className={`${homepage ? 'observation_card overflow-hidden homepage_observation_card' : 'observation_card overflow-hidden'}`}>
                 <div className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start" >
                     {!userProfile && (
                         <div className="observation_country">
@@ -42,10 +42,8 @@ const ObservationCard = (props) => {
                         : <img
                             alt="Card cap"
                             src={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}
-                            className="img-fluid card-img"
-                            onClick={(e) => {
-                                userProfile && handleClick(index);
-                            }}
+                            className={`${homepage ? 'img-fluid card-img no-cursor' : 'img-fluid card-img'}`}
+                            onClick={(e) => homepage ? null : userProfile && handleClick(index)}
                         />
                     }
                     <CardBody className="position-relative observation-card_body">
@@ -88,7 +86,7 @@ const ObservationCard = (props) => {
                         </Row>
                     </CardBody>
 
-                    {userProfile && (
+                    {userProfile && !homepage &&
                         <CardFooter>
                             <div className="location-details">
                                 <h6 className="mb-0">{cardData?.location}</h6>
@@ -99,14 +97,14 @@ const ObservationCard = (props) => {
                                         {cardData?.azimuth}
                                         {Number(cardData?.azimuth) ? "°" : ""}
                                     </h6>
-                                    {cardData?.azimuth && 
-                                    <span className="card-direction rounded-circle position-relative d-flex justify-content-center align-items-start">
+                                    {cardData?.azimuth &&
+                                        <span className="card-direction rounded-circle position-relative d-flex justify-content-center align-items-start">
                                         <span className="direction-dot"/>
                                     </span>}
                                 </div>
                             </div>
                         </CardFooter>
-                    )}
+                    }
                 </div>
             </Card>
         </>

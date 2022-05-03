@@ -9,7 +9,7 @@ const HomeCounter = () => {
       <div className="counter-main">
         <Container>
           <Row>
-            <Col md={4} xs={12}>
+            <Col md={4} sm={6}>
               <div className="counter-inner">
                 <div className="left-image">
                   <img src={Images.User} alt="Users" />
@@ -20,7 +20,7 @@ const HomeCounter = () => {
                 </div>
               </div>
             </Col>
-            <Col md={4} xs={12}>
+            <Col md={4} sm={6}>
               <div className="counter-inner">
                 <div className="left-image">
                   <img src={Images.Submit} alt="user" />
@@ -31,7 +31,7 @@ const HomeCounter = () => {
                 </div>
               </div>
             </Col>
-            <Col md={4} xs={12}>
+            <Col md={4} sm={12}>
               <div className="counter-inner">
                 <div className="left-image">
                   <img src={Images.Country} alt="country" />
