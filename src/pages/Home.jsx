@@ -1,4 +1,4 @@
-import {Suspense, lazy, useEffect, useState} from 'react';
+import {Suspense, lazy, useEffect} from 'react';
 import "../assets/scss/component/home.scss";
 import Loader from "../components/Shared/Loader";
 import axios from "../api/axios";
