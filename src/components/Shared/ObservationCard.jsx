@@ -7,9 +7,13 @@ import ReactCountryFlags from "../ReactCountryFlag";
 import { getdirectionDegree } from "../../helpers/observation";
 import CardImageCarousel from "./CardImageCarousel";
 import Tippy from "@tippyjs/react";
+import BlurImage from "../Common/BlurImage";
 
 const ObservationCard = (props) => {
     const { cardItems, handleClick, userProfile, cardData, index, activeType, homepage } = props;
+    const handleImageClick = () => {
+      return homepage ? null : userProfile && handleClick(index);
+    }
     return (
         <>
             <Card className={`${homepage ? 'observation_card overflow-hidden homepage_observation_card' : 'observation_card overflow-hidden'}`}>
@@ -39,12 +43,19 @@ const ObservationCard = (props) => {
                     )}
                     { cardItems?.image_type === 3 
                         ? <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick} handleIndex={index} />    
-                        : <img
-                            alt="Card cap"
-                            src={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}
-                            className={`${homepage ? 'img-fluid card-img no-cursor' : 'img-fluid card-img'}`}
-                            onClick={(e) => homepage ? null : userProfile && handleClick(index)}
-                        />
+                        : <BlurImage
+                            preview={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}
+                            image={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}
+                            handleClick={handleImageClick}
+                            homepage={homepage}
+                        >
+                            {/*<img*/}
+                            {/*    alt="Card cap"*/}
+                            {/*    src={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}*/}
+                            {/*    className={`${homepage ? 'img-fluid card-img no-cursor' : 'img-fluid card-img'}`}*/}
+                            {/*    onClick={(e) => homepage ? null : userProfile && handleClick(index)}*/}
+                            {/*/>*/}
+                        </BlurImage>
                     }
                     <CardBody className="position-relative observation-card_body">
                         <div className="position-absolute observation_type d-flex align-items-center">
