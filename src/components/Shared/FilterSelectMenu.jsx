@@ -1,3 +1,4 @@
+import "../../assets/scss/component/myObservation.scss";
 import axiosPrivate from "../../api/axios";
 import moment from "moment/moment";
 import useAuth from "../../hooks/useAuth";

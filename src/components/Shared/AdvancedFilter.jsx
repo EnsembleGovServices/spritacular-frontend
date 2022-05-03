@@ -1,5 +1,5 @@
 import "../../assets/scss/component/advancedFilter.scss";
-import { Button, Card, CardBody, Col, Collapse, FormGroup, Input, Label, Row, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
+import { Button, Card, CardBody, Col, Collapse, FormGroup, Label, Row, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import Images from "../../static/images";

@@ -1,15 +1,15 @@
 import "../../assets/scss/component/observationList.scss";
-import {useState, useRef, useEffect} from "react";
+import {useState, useEffect} from "react";
 import { FormGroup, Table } from "reactstrap";
 import ObservationListRow from "./ObservationListRow";
 import useObservationsData from "../../hooks/useObservationsData";
 
 const ObservationListView = (props) => {
     const { observationList, isObservationDetailModal, setObservationDetailModal, setSelectedObservationId } = props;
-    const [ allChecked, setAllChecked] = useState(false);
-    const childFunc = useRef(null);
-    const [checkedIds,setCheckedIds] = useState([]);
-    const {observationCSVId, setObservationCSVId} = useObservationsData();
+    const [ allChecked, setAllChecked ] = useState(false);
+    const [ checkedIds, setCheckedIds ] = useState([]);
+
+    const {setObservationCSVId} = useObservationsData();
 
     const handleObservationDetailModal = (id) => {
         setObservationDetailModal(!isObservationDetailModal);
@@ -19,12 +19,25 @@ const ObservationListView = (props) => {
 
     const handleAllChecked = (e) => {
         setAllChecked(e.target.checked);
-        if(e.target.checked === false){
-            childFunc.current();
-        }
     }
 
-    //setAllChecked(e.target.checked); if(e.target.checked === false){childFunc.current()
+    const allCheckedItem = []
+
+    const getAllChecked = (selector) => {
+        let id = parseFloat(selector?.id);
+        return allCheckedItem.push(id);
+    }
+
+    useEffect(()=> {
+        if (allChecked) {
+            setCheckedIds(allCheckedItem)
+        }
+        else {
+            setCheckedIds([]);
+        }
+    }, [allChecked, observationList?.length]);
+
+
 
 
     useEffect(()=> {
@@ -72,9 +85,10 @@ const ObservationListView = (props) => {
                                         cardData={cardItems?.images[0]}
                                         allChecked={allChecked}
                                         setAllChecked={setAllChecked}
-                                        childFunc={childFunc}
+                                        getAllChecked={getAllChecked}
                                         setCheckedIds={setCheckedIds}
                                         checkedIds={checkedIds}
+                                        loadMore={observationList?.length}
                                         handleClick={handleObservationDetailModal}
                                     />
                                 </tr>
