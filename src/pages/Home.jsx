@@ -3,6 +3,7 @@ import "../assets/scss/component/home.scss";
 import Loader from "../components/Shared/Loader";
 import axios from "../api/axios";
 import {baseURL} from "../helpers/url";
+
 import useObservationsData from "../hooks/useObservationsData";
 const HomeBanner = lazy(()=> import('../components/Home/HomeBanner'))
 const HomeCounter = lazy(()=> import('../components/Home/HomeCounter'))
