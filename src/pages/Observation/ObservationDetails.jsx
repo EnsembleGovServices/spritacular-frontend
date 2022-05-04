@@ -1,6 +1,20 @@
 import "../../assets/scss/component/observationDetails.scss";
 import {Suspense, lazy, useRef, useEffect, useState} from 'react';
-import { Badge, Button, Col, Modal, ModalBody, ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
+import {
+    Badge,
+    Button,
+    Col,
+    Modal,
+    ModalBody,
+    ModalHeader,
+    Nav,
+    NavItem,
+    NavLink,
+    Row,
+    Spinner,
+    TabContent,
+    TabPane
+} from "reactstrap";
 import { Icon } from "@iconify/react";
 import Tippy from "@tippyjs/react";
 import useObservationsData from "../../hooks/useObservationsData";
@@ -8,6 +22,7 @@ import useObservationsData from "../../hooks/useObservationsData";
 import Images from './../../static/images';
 import { imageDetails } from "../../helpers/observation";
 import Loader from "../../components/Shared/Loader";
+
 
 const ObservationMoreDetails = lazy(()=> import('../../components/Observation/ObservationDetails/ObservationMoreDetails'))
 const ObservationMoreEquipementDetails = lazy(()=> import('../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails'))
@@ -20,17 +35,19 @@ const ObservationDetails = (props) =>{
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
     const {observationComments} = useObservationsData();
     const obvDetailsModal = useRef(null);
+
+    const checkNullImage = (data?.images?.[0]?.image === null || data?.images?.[1]?.image === null || data?.images?.[2]?.image === null);
+
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
         if (activeTab !== tab) {
             setActiveImageTab(tab);
         }
     };
-
     useEffect(()=>{
         setActiveImageTab(imageDetails.Details)
-
     },[open])
+
     return (
         <>
             <Modal 
@@ -64,10 +81,24 @@ const ObservationDetails = (props) =>{
                         <Col md={6}>
                             <div className="mb-4 mb-md-0 h-100">
                                 <div className="preview-detail mb-3 mb-md-2">
-                                { !(data?.image_type === 3) && (data?.images?.length === 0 ? <img src={Images.NotAvailable} alt="No available" className="object-contain img-fluid"/> : <img src={data?.images?.[0]?.image} alt="card details" className="img-fluid" />) }
-                                 { data?.image_type === 3 && <Suspense fallback={<Loader fixContent={true} />}>
-                                     <CardImageCarousel  carouselData={data?.images} detail={true}/>
-                                 </Suspense> }
+                                { !(data?.image_type === 3) && (data?.images?.length === 0 ?
+                                    <img src={Images.NotAvailable} alt="No available" className="object-contain img-fluid"/> : (
+                                        !checkNullImage ? <img src={data?.images?.[0]?.image} alt="card details" className="img-fluid" /> : (
+                                            <div className="d-flex flex-column h-100 align-items-center justify-content-center bg-gradient bg-light">
+                                                <Spinner
+                                                    color="primary"
+                                                    size="20px"
+                                                />
+                                                <h5 className="mt-3">Processing image...</h5>
+                                            </div>
+                                        )
+                                    ))
+                                }
+                                 { data?.image_type === 3 &&
+                                     <Suspense fallback={<Loader fixContent={true} />}>
+                                        <CardImageCarousel  carouselData={data?.images} detail={true}/>
+                                    </Suspense>
+                                 }
                                 </div>
                                 <Row>
                                     <Col sm={6} className="justify-content-start d-flex align-items-center mb-2 mb-sm-0">

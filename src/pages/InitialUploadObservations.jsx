@@ -1,11 +1,12 @@
+import "../assets/scss/component/initialUploadobservations.scss";
 import {Container, Form, FormGroup, Label} from "reactstrap";
 import { Icon } from "@iconify/react";
-import "../assets/scss/component/initialUploadobservations.scss";
 import { useNavigate } from "react-router-dom";
-import { routeUrls } from './../helpers/url';
+import { routeUrls } from '../helpers/url';
 import useObservations from "../hooks/useObservations";
 import {useEffect, useState} from "react";
-const InitialUploadObservations = () => {
+
+const InitialUploadObservations = (props) => {
   const navigate = useNavigate();
   const {setObservationImages, setObservationSteps, setObservationData} = useObservations();
   const [isCleanUp, setIsCleanUp] = useState(false);

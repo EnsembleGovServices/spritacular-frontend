@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom";
 import {createContext, useEffect, useState} from "react";
 import { cameraSettingFields } from "../../helpers/url";
-import useObservationsData from "../../hooks/useObservationsData";
-import useObservations from "../../hooks/useObservations";
 
 export const ObservationContext = createContext({});
 
@@ -10,6 +8,7 @@ const Observations = () => {
     const [observationType, setObservationType] = useState({
         image_type: 1
     });
+
     const [observationSteps, setObservationSteps] = useState({
         total: 3,
         active: 1,

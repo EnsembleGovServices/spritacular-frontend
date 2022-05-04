@@ -1,18 +1,20 @@
 import "../../assets/scss/component/myObservation.scss";
 import InitialUploadObservations from "../InitialUploadObservations";
 import { Col, Container, Row } from 'reactstrap';
-import {Link, useNavigate} from 'react-router-dom';
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import { Icon } from "@iconify/react";
+
 import useAuth from "../../hooks/useAuth";
+import useObservationsData from "../../hooks/useObservationsData";
+
 import axios from "../../api/axios";
 import {baseURL, routeUrls} from "../../helpers/url";
-import ObservationDetails from './ObservationDetails';
 import Images from './../../static/images';
+import ObservationDetails from './ObservationDetails';
 import ObservationDetailPage from "./ObservationDetailPage";
 import useObservations from "../../hooks/useObservations";
 import { LoadMore } from "../../components/Shared/LoadMore";
-import { Icon } from "@iconify/react";
-import useObservationsData from "../../hooks/useObservationsData";
 
 const MyObservations = () => {
   const { auth } = useAuth();
@@ -34,7 +36,6 @@ const MyObservations = () => {
     })
 
   }, [isObservationDetailModal]);
-
 
   useEffect(() => {
       getObservationData(true,'verified');
@@ -69,8 +70,8 @@ const MyObservations = () => {
       }
     });
   }
-  
-  const getObservationData = (reset=false,value='verified') => {
+
+  const getObservationData = (reset=false, value='verified') => {
     setActiveType(value);
     let url;
     if(reset === true || !nextPageUrl){
@@ -78,17 +79,16 @@ const MyObservations = () => {
     }else{
       url = nextPageUrl;
     }
-
     axios.get(baseURL.api+url,{
       headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth?.token?.access}`,
       },
-      
+
   }).then((success) => {
     let data = success?.data?.results;
     if(success?.data?.next){
-      setNextPageUrl(success?.data?.next.split('api')[1]);
+      setNextPageUrl(success?.data?.next);
     }else{
       setNextPageUrl(null);
     }
@@ -114,7 +114,7 @@ const MyObservations = () => {
             denied: data?.denied_count,
             draft: data?.draft_count,
             total: data?.verified_count + data?.unverified_count+ data?.denied_count + data?.draft_count
-          }
+          },
         }
       })
 
@@ -133,65 +133,66 @@ const MyObservations = () => {
     getObservationData(false,activeType);
   }
 
-  useEffect(()=> {
-    if (isObservationDetailModal) {
-      document.body.classList.add('overflow-hidden');
-    }
-    else{
-      document.body.classList.remove('overflow-hidden');
-    }
-  }, [isObservationDetailModal])
+  const listCount = observationListData?.count;
 
   return(
-      <>
-        {observationListData?.count?.total === 0 &&  <InitialUploadObservations /> }
-        {observationListData?.count?.total > 0 &&
-        <>
-          <Container>
-            <div className="filtered-data_wrapper">
-              <Row>
-                <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
-                  <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
-                    <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'verified')}}>Verified ({observationListData?.count?.verified})</span>
-                    <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'unverified')}}>Unverified ({observationListData?.count?.unverified})</span>
-                    <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'denied')}}>Denied ({observationListData?.count?.denied})</span>
-                    <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'draft')}}>Drafts ({observationListData?.count?.draft})</span>
-                  </div>
-                </Col>
-                <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
-                  <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mb-2 mb-md-0">
-                    <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary ms-2 ms-xl-4 shadow-none">
-                    <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload
-                    Observations
-                    </Link>
-                  </div>
-                </Col>
-              </Row>
-            </div>
-          </Container>
-          <Container>
-            {observationListData?.list?.length ===  0 &&
-            <div className="data-not-found">
-                <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
-                <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
-              </div>}
-            <ObservationDetailPage  observationList={observationListData?.list}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
-          {nextPageUrl && <LoadMore handleLoadMore={handleLoadMore} />}
-          </Container>
+      listCount?.total > 0 ? (
+          <section className="my-observation-data">
+            {/*Filter*/}
+            <Container>
+              <div className="filtered-data_wrapper">
+                <Row>
+                  <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
+                    <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
+                      <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'verified')}}>Verified ({observationListData?.count?.verified})</span>
+                      <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'unverified')}}>Unverified ({observationListData?.count?.unverified})</span>
+                      <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'denied')}}>Denied ({observationListData?.count?.denied})</span>
+                      <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'draft')}}>Drafts ({observationListData?.count?.draft})</span>
+                    </div>
+                  </Col>
+                  <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
+                    <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mb-2 mb-md-0">
+                      <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary ms-2 ms-xl-4 shadow-none">
+                        <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload
+                        Observations
+                      </Link>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </Container>
 
-         <ObservationDetails
-              data={observationListData?.active}
-              activeType={activeType}
-              modalClass="observation-details_modal"
-              open={isObservationDetailModal}
-              handleClose={handleObservationDetailModal}
-              handleContinueEdit={handleObservationEdit}
-              handleApproveRejectEvent={getObservationData}
-          />
+            {/*Data block*/}
 
-        </>
-        }
-      </>
+            <Container>
+              {observationListData?.list?.length > 0 ? (
+                  <ObservationDetailPage  observationList={observationListData?.list}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
+              ) : (
+                  <div className="data-not-found">
+                    <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
+                    <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
+                  </div>
+              )}
+
+              {nextPageUrl && <LoadMore handleLoadMore={handleLoadMore} />}
+            </Container>
+
+            <ObservationDetails
+                data={observationListData?.active}
+                activeType={activeType}
+                modalClass="observation-details_modal"
+                open={isObservationDetailModal}
+                handleClose={handleObservationDetailModal}
+                handleContinueEdit={handleObservationEdit}
+                handleApproveRejectEvent={getObservationData}
+            />
+
+          </section>
+      ) : (
+          setTimeout(function () {
+            return <InitialUploadObservations />
+          }, 500)
+      )
   )
 }
 export default MyObservations;

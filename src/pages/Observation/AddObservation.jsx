@@ -78,6 +78,7 @@ const AddObservation = () => {
             break;
         }
     }
+
     const disabledLocationTab = (observationData?.image_type !== 3) ?  disabledLocation && next : next;
     const disabledEquipmentTab = disabledLocation && next && disabledEquipment;
 
@@ -156,7 +157,7 @@ const AddObservation = () => {
                         }
                     }
                     if(e.target.checked === false){
-                        observationArray.data[observationImages?.selected_image_index]['azimuth'] = observationArray?.data?.[observationImages?.selected_image_index]['azimuth'];
+                        observationArray.data[observationImages?.selected_image_index]['azimuth'] = observationArray && observationArray.data ? observationArray.data[observationImages?.selected_image_index]['azimuth'] : undefined;
                         if(observationData?.image_type === 3){
                             if(observationArray.data[1]){
                                observationArray.data[1]['azimuth'] = observationArray?.data?.[0]['azimuth'];
@@ -190,7 +191,6 @@ const AddObservation = () => {
     }
 
     const handleSubmit =  (e) => {
-       
         e.preventDefault();
         setIsLoading(true);
         setDraft(0);
@@ -230,7 +230,7 @@ const AddObservation = () => {
                 window.scrollTo(0, 0);
                 setTimeout(function () {
                     handleReset();
-                }, 3000)
+                }, 500)
             }).catch((error) => {
                 console.log(error.response);
                 setIsLoading(false);
@@ -258,7 +258,7 @@ const AddObservation = () => {
                 window.scrollTo(0, 0);
                 setTimeout(function () {
                     handleReset();
-                }, 3000)
+                }, 500)
             }).catch((error) => {
                 console.log(error.response);
                 setIsLoading(false);
@@ -400,7 +400,7 @@ const AddObservation = () => {
 
     useEffect(()=> {
         draftData?.map_data?.map((item, index) => {
-            let imageUrl = item.compressed_image,
+            let imageUrl = item.image,
                 fileName = getFileName(imageUrl);
             return fetch(imageUrl)
                 .then(async response => {
@@ -428,22 +428,20 @@ const AddObservation = () => {
 
         if (updateUrl && obvType === "draft") {
             getObservationDataForUpdate(id).then(r => r)
-            setTimeout(function () {
-                setObservationSteps((prev)=> {
-                    return {
-                        ...prev,
-                        converted: true
-                    }
-                })
-            }, 1000)
+            setObservationSteps((prev)=> {
+                return {
+                    ...prev,
+                    converted: true
+                }
+            });
         }
 
         if (updateUrl && obvType !== "draft") {
             return navigate('/observations');
         }
 
-    }, [location?.pathname, updateMode]);
 
+    }, [location?.pathname, updateMode, observationSteps?.converted]);
 
     useEffect(()=> {
         let existingObvImageData = {...observationImages},
@@ -462,7 +460,6 @@ const AddObservation = () => {
         });
 
     }, [draftData, setObservationImages])
-
 
     // Set Progress Bar
     useEffect(() => {
