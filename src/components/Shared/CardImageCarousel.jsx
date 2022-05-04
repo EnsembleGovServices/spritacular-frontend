@@ -1,5 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 const CardImageCarousel = (props) =>{
     const {carouselData, handleClick, handleIndex, detail } = props;

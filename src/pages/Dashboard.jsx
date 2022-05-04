@@ -1,21 +1,23 @@
 import "../assets/scss/component/dashboard.scss";
-import axios from './../api/axios';
-import moment from 'moment';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import {Suspense, lazy, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
 import useObservationsData from '../hooks/useObservationsData';
-import FilterSelectMenu from "../components/Shared/FilterSelectMenu";
-import ObservationDetailPage from "./Observation/ObservationDetailPage";
-import ObservationDetails from "./Observation/ObservationDetails";
+
 import useObservations from '../hooks/useObservations';
-import AdvancedFilter from '../components/Shared/AdvancedFilter';
-import ObservationListView from './Observation/ObservationListView';
 import { LoadMore } from '../components/Shared/LoadMore';
+
+import axios from './../api/axios';
+import moment from 'moment';
 import Images from './../static/images';
 import {dashboardHelper} from "../helpers/dashboard";
 import { baseURL } from "../helpers/url";
+
+const FilterSelectMenu = lazy(()=> import('../components/Shared/FilterSelectMenu'))
+const AdvancedFilter = lazy(()=> import('../components/Shared/AdvancedFilter'))
+const ObservationDetailPage = lazy(()=> import('./Observation/ObservationDetailPage'))
+const ObservationListView = lazy(()=> import('./Observation/ObservationListView'))
+const ObservationDetails = lazy(()=> import('./Observation/ObservationDetails'))
 
 
 
@@ -218,57 +220,67 @@ const Dashboard = () =>{
 
     return (
         <>
-            <FilterSelectMenu 
-                dashboardFilter={true} 
-                galleryFilter={true} 
-                filterShow={filterShow} 
-                handleFilterOpen={handleFilterOpen} 
-                handleListView={handleListView} 
-                handleGridView={handleGridView} 
-                listView={listView}
-                gridView={gridView}
-                isFilterOpen={isFilterOpen} 
-                setIsFilterOpen={setIsFilterOpen}
-                selectedFilterHorizontal={selectedFilterHorizontal}
-                setSelectedFilterHorizontal={setSelectedFilterHorizontal} 
-                searchCountry={searchCountry}
-                findCountry={findCountry} 
-                handleFilterValue={handleFilterValue}
-            />
+            <Suspense fallback={<div>please wait...</div>}>
+                <FilterSelectMenu
+                    dashboardFilter={true}
+                    galleryFilter={true}
+                    filterShow={filterShow}
+                    handleFilterOpen={handleFilterOpen}
+                    handleListView={handleListView}
+                    handleGridView={handleGridView}
+                    listView={listView}
+                    gridView={gridView}
+                    isFilterOpen={isFilterOpen}
+                    setIsFilterOpen={setIsFilterOpen}
+                    selectedFilterHorizontal={selectedFilterHorizontal}
+                    setSelectedFilterHorizontal={setSelectedFilterHorizontal}
+                    searchCountry={searchCountry}
+                    findCountry={findCountry}
+                    handleFilterValue={handleFilterValue}
+                />
+            </Suspense>
+
             <div className='observation-dashboard_content'>
                 <div className="container">
                     <div className='row'>
                         <div className="col-sm-12">
                             <div className="set-dash-content">
                                 {filterShow &&
-                                    <AdvancedFilter
-                                        selectedFilterVertical={selectedFilterVertical}
-                                        setSelectedFilterVertical={setSelectedFilterVertical}
-                                        handleFilterValue={handleFilterValue}
-                                        handleFilterOpen={handleFilterOpen}
-                                        isFilterOpen={isFilterOpen}
-                                        setIsFilterOpen={setIsFilterOpen}
-                                        resetFilters={resetFilters}
-                                        handleFilterInput={handleFilterInput}
-                                    />
+                                    <Suspense fallback={<div>please wait...</div>}>
+                                        <AdvancedFilter
+                                            selectedFilterVertical={selectedFilterVertical}
+                                            setSelectedFilterVertical={setSelectedFilterVertical}
+                                            handleFilterValue={handleFilterValue}
+                                            handleFilterOpen={handleFilterOpen}
+                                            isFilterOpen={isFilterOpen}
+                                            setIsFilterOpen={setIsFilterOpen}
+                                            resetFilters={resetFilters}
+                                            handleFilterInput={handleFilterInput}
+                                        />
+                                    </Suspense>
                                 }
 
                                 <div className={`dashboard-card overflow-hidden ${filterShow ? 'sm-card' : 'maximize-dash-content'}`}>
                                     {observationListData?.list?.length > 0 ? (
                                         listView ? (
-                                            <ObservationListView
-                                                observationList={observationListData?.list}
-                                                isObservationDetailModal={isObservationDetailModal}
-                                                setObservationDetailModal={setObservationDetailModal}
-                                                setSelectedObservationId={setSelectedObservationId}
-                                            />
+                                            <Suspense fallback={<div>please wait...</div>}>
+                                                <ObservationListView
+                                                    observationList={observationListData?.list}
+                                                    isObservationDetailModal={isObservationDetailModal}
+                                                    setObservationDetailModal={setObservationDetailModal}
+                                                    setSelectedObservationId={setSelectedObservationId}
+                                                />
+                                            </Suspense>
                                         ) : (
-                                            <ObservationDetailPage
-                                                observationList={observationListData?.list}
-                                                isObservationDetailModal={isObservationDetailModal}
-                                                setObservationDetailModal={setObservationDetailModal}
-                                                setSelectedObservationId={setSelectedObservationId}
-                                            />
+                                            <Suspense fallback={<div>please wait...</div>}>
+                                                <ObservationDetailPage
+                                                    observationList={observationListData?.list}
+                                                    isObservationDetailModal={isObservationDetailModal}
+                                                    setObservationDetailModal={setObservationDetailModal}
+                                                    setSelectedObservationId={setSelectedObservationId}
+                                                />
+                                            </Suspense>
+
                                         )
                                     ) : (
                                         <div className="data-not-found">
@@ -278,21 +290,23 @@ const Dashboard = () =>{
                                     )}
 
 
-                                    {nextPageUrl &&
+                                    {nextPageUrl && observationListData?.list?.length > 0 &&
                                         <LoadMore handleLoadMore={handleLoadMoreData} />
                                     }
 
                                 </div>
 
-                                <ObservationDetails
-                                    data={observationListData?.active}
-                                    modalClass="observation-details_modal"
-                                    open={isObservationDetailModal}
-                                    handleClose={handleObservationDetailModal}
-                                    handleContinueEdit={handleObservationEdit}
-                                    activeType={(observationListData?.active?.is_verified) ? 'verified' : (observationListData?.active?.is_reject) ? 'denied' : (observationListData?.active?.is_submit) ? 'unverified' : 'draft'}
-                                    handleApproveRejectEvent={getObservationData}
-                                />
+                                <Suspense fallback={<div>please wait...</div>}>
+                                    <ObservationDetails
+                                        data={observationListData?.active}
+                                        modalClass="observation-details_modal"
+                                        open={isObservationDetailModal}
+                                        handleClose={handleObservationDetailModal}
+                                        handleContinueEdit={handleObservationEdit}
+                                        activeType={(observationListData?.active?.is_verified) ? 'verified' : (observationListData?.active?.is_reject) ? 'denied' : (observationListData?.active?.is_submit) ? 'unverified' : 'draft'}
+                                        handleApproveRejectEvent={getObservationData}
+                                    />
+                                </Suspense>
                             </div>
                         </div>
                     </div>

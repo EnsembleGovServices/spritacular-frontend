@@ -1,23 +1,36 @@
-import { Suspense, lazy } from 'react';
+import {Suspense, lazy, useEffect} from 'react';
 import "../assets/scss/component/home.scss";
-import Notification from "../components/Notification/Notification";
-// import  GoogleMapWrapper  from '../components/GoogleMapWrapper';
+import Loader from "../components/Shared/Loader";
+import axios from "../api/axios";
+import {baseURL} from "../helpers/url";
 
+import useObservationsData from "../hooks/useObservationsData";
 const HomeBanner = lazy(()=> import('../components/Home/HomeBanner'))
 const HomeCounter = lazy(()=> import('../components/Home/HomeCounter'))
 const HomeMapSection = lazy(()=> import('../components/Home/HomeMapSection'))
 const GetStarted = lazy(()=> import('../components/Home/GetStarted'))
 
-
-
 const Home = (props) => {
-    // this.props = props;
+
+    const { setRecentObservation } = useObservationsData();
+    const getHomeData = () => {
+      return axios.get(baseURL.api+'/observation/home/')
+          .then(response => {
+              setRecentObservation(response?.data?.data)
+          })
+          .catch(error => {
+              console.log(error)
+          })
+    }
+
+    useEffect(()=> {
+        getHomeData().then(r=>r)
+    }, [])
+
     return (
     <>
-   
-        <Suspense fallback={''}>
+        <Suspense fallback={<Loader fixContent={true} />}>
             <HomeBanner />
-            {/* <Notification /> */}
         </Suspense>
 
         <Suspense fallback={''}>
@@ -25,9 +38,7 @@ const Home = (props) => {
         </Suspense>
 
         <Suspense fallback={''}>
-        {/*    /!*<div style={{ margin: '100px' }}>*!/*/}
             <HomeMapSection />
-		{/*	/!*</div>*!/*/}
         </Suspense>
 
         <Suspense fallback={''}>

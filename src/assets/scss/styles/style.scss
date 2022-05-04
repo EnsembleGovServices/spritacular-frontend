@@ -6,13 +6,10 @@
 @import "../global/config";
 
 // Tooltip
-@import 'tippy.js/dist/tippy.css';
-
-// Slider
-@import "node_modules/swiper/swiper.scss";
-@import "node_modules/swiper/modules/navigation/navigation.scss";
-@import '~tippy.js/animations/perspective.css';
-@import "~tippy.js/themes/light-border.css";
+@import 'tippy.js/dist/tippy';
+@import 'tippy.js/animations/perspective';
+@import "tippy.js/themes/light-border";
+@import "../component/swiper";
 
 body {
   margin: 0;

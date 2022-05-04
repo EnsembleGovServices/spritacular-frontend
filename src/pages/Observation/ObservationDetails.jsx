@@ -1,15 +1,19 @@
-import {useState, useEffect, useRef} from "react";
+import "../../assets/scss/component/observationDetails.scss";
+import {Suspense, lazy, useRef, useEffect, useState} from 'react';
 import { Badge, Button, Col, Modal, ModalBody, ModalHeader, Nav, NavItem, NavLink, Row, TabContent, TabPane } from "reactstrap";
+import { Icon } from "@iconify/react";
+import Tippy from "@tippyjs/react";
+import useObservationsData from "../../hooks/useObservationsData";
+
 import Images from './../../static/images';
 import { imageDetails } from "../../helpers/observation";
-import "../../assets/scss/component/observationDetails.scss";
-import ObservationMoreDetails from "../../components/Observation/ObservationDetails/ObservationMoreDetails";
-import ObservationMoreEquipementDetails from "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails";
-import Comments from "../../components/Observation/ObservationDetails/Comments";
-import { Icon } from "@iconify/react";
-import useObservationsData from "../../hooks/useObservationsData";
-import Tippy from "@tippyjs/react";
-import CardImageCarousel from "../../components/Shared/CardImageCarousel";
+import Loader from "../../components/Shared/Loader";
+
+const ObservationMoreDetails = lazy(()=> import('../../components/Observation/ObservationDetails/ObservationMoreDetails'))
+const ObservationMoreEquipementDetails = lazy(()=> import('../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails'))
+const Comments = lazy(()=> import('../../components/Observation/ObservationDetails/Comments'))
+const CardImageCarousel = lazy(()=> import('../../components/Shared/CardImageCarousel'))
+
 
 const ObservationDetails = (props) =>{
     const {modalClass, open, handleClose, data, activeType, handleContinueEdit, handleApproveRejectEvent } = props;
@@ -61,7 +65,9 @@ const ObservationDetails = (props) =>{
                             <div className="mb-4 mb-md-0 h-100">
                                 <div className="preview-detail mb-3 mb-md-2">
                                 { !(data?.image_type === 3) && (data?.images?.length === 0 ? <img src={Images.NotAvailable} alt="No available" className="object-contain img-fluid"/> : <img src={data?.images?.[0]?.image} alt="card details" className="img-fluid" />) }
-                                 { data?.image_type === 3 && <CardImageCarousel  carouselData={data?.images} detail={true}/> }
+                                 { data?.image_type === 3 && <Suspense fallback={<Loader fixContent={true} />}>
+                                     <CardImageCarousel  carouselData={data?.images} detail={true}/>
+                                 </Suspense> }
                                 </div>
                                 <Row>
                                     <Col sm={6} className="justify-content-start d-flex align-items-center mb-2 mb-sm-0">
@@ -123,13 +129,19 @@ const ObservationDetails = (props) =>{
                             </Nav>
                             <TabContent activeTab={activeTab}>
                                 <TabPane tabId={imageDetails.Details}>
-                                    <ObservationMoreDetails handlePopup={handleClose} approveRejectEvent={handleApproveRejectEvent}  obvCommentCount={observationComments?.comment_count} data={data} activeType={activeType}/>
+                                    <Suspense fallback={<div>please wait...</div>}>
+                                        <ObservationMoreDetails handlePopup={handleClose} approveRejectEvent={handleApproveRejectEvent}  obvCommentCount={observationComments?.comment_count} data={data} activeType={activeType}/>
+                                    </Suspense>
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Equipment}>
-                                    <ObservationMoreEquipementDetails obvCommentCount={observationComments?.comment_count} data={data?.camera_data} />
+                                    <Suspense fallback={<div>please wait...</div>}>
+                                        <ObservationMoreEquipementDetails obvCommentCount={observationComments?.comment_count} data={data?.camera_data} />
+                                    </Suspense>
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Comments}>
-                                    <Comments obvId={data?.id} />
+                                    <Suspense fallback={<div>please wait...</div>}>
+                                        <Comments obvId={data?.id} />
+                                    </Suspense>
                                 </TabPane>
                             </TabContent>
                         </Col>

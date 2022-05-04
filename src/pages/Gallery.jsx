@@ -1,17 +1,20 @@
 import "../assets/scss/component/myObservation.scss";
-import { useEffect, useState } from "react";
+import "../assets/scss/component/gallery.scss";
+import { useEffect, useState, Suspense, lazy } from "react";
+import { Container, UncontrolledAlert } from 'reactstrap';
+import {Link} from 'react-router-dom';
+
 import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import {baseURL,routeUrls} from "../helpers/url";
-import ObservationDetails from './Observation/ObservationDetails';
 import Images from './../static/images';
-import ObservationDetailPage from "./Observation/ObservationDetailPage";
 import { LoadMore } from '../components/Shared/LoadMore';
-import "../assets/scss/component/gallery.scss";
-import FilterSelectMenu from "../components/Shared/FilterSelectMenu";
-import { Container, UncontrolledAlert } from 'reactstrap';
-import {Link} from 'react-router-dom';
 import useObservationsData from "../hooks/useObservationsData";
+
+
+const ObservationDetails = lazy(()=> import('./Observation/ObservationDetails'))
+const FilterSelectMenu = lazy(()=> import('../components/Shared/FilterSelectMenu'))
+const ObservationDetailPage = lazy(()=> import('./Observation/ObservationDetailPage'))
 
 const Gallery = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false);
@@ -136,7 +139,10 @@ const Gallery = () => {
 
   return(
     <>
-      <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilterHorizontal={selectedFilterHorizontal}setSelectedFilterHorizontal={setSelectedFilterHorizontal}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
+      <Suspense fallback={<div>please wait...</div>}>
+        <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilterHorizontal={selectedFilterHorizontal}setSelectedFilterHorizontal={setSelectedFilterHorizontal}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
+      </Suspense>
+
 
       <Container className="pt-5">
         {normalUser && <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center mb-5">
@@ -148,12 +154,14 @@ const Gallery = () => {
               <h4 className='text-black fw-bold'>Recent Observations</h4>
               <div>
                 {observationListData?.list.length > 0 ? (
-                    <ObservationDetailPage
-                        observationList={observationListData?.list}
-                        isObservationDetailModal={isObservationDetailModal}
-                        setObservationDetailModal={setObservationDetailModal}
-                        setSelectedObservationId={setSelectedObservationId}
-                    />
+                        <Suspense fallback={<div>please wait...</div>}>
+                          <ObservationDetailPage
+                              observationList={observationListData?.list}
+                              isObservationDetailModal={isObservationDetailModal}
+                              setObservationDetailModal={setObservationDetailModal}
+                              setSelectedObservationId={setSelectedObservationId}
+                          />
+                        </Suspense>
                 ) : (
                     <div className="data-not-found">
                       <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
@@ -164,15 +172,17 @@ const Gallery = () => {
               {nextPageUrl &&
                   <LoadMore handleLoadMore={handleLoadMoreData} />
               }
-              <ObservationDetails
-                  data={observationListData?.active}
-                  activeType={(observationListData?.active?.is_verified) ? 'verified' : (observationListData?.active?.is_reject) ? 'denied' : (observationListData?.active?.is_submit) ? 'unverified' : 'draft'}
-                  modalClass="observation-details_modal"
-                  open={isObservationDetailModal}
-                  handleClose={handleObservationDetailModal}
-                  handleApproveRejectEvent={getObservationType}
-              />
 
+              <Suspense fallback={<div>please wait...</div>}>
+                <ObservationDetails
+                    data={observationListData?.active}
+                    activeType={(observationListData?.active?.is_verified) ? 'verified' : (observationListData?.active?.is_reject) ? 'denied' : (observationListData?.active?.is_submit) ? 'unverified' : 'draft'}
+                    modalClass="observation-details_modal"
+                    open={isObservationDetailModal}
+                    handleClose={handleObservationDetailModal}
+                    handleApproveRejectEvent={getObservationType}
+                />
+              </Suspense>
             </div>
         }
       </Container>

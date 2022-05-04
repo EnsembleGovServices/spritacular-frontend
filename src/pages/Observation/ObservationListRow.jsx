@@ -1,57 +1,57 @@
-import { Badge, CardSubtitle, CardTitle, FormGroup, Input } from "reactstrap";
+import { Badge, CardSubtitle, CardTitle, FormGroup } from "reactstrap";
 import { Icon } from "@iconify/react";
-import ReactCountryFlags from "../../components/ReactCountryFlag";
 import moment from 'moment';
+import {createRef, useEffect} from "react";
 import CardImageCarousel from "../../components/Shared/CardImageCarousel";
-import { useState, useEffect } from "react";
-
+    import ReactCountryFlags from "../../components/ReactCountryFlag";
 
 const ObservationListRow = (props) => {
-    const { cardItems, cardData, allChecked, childFunc, setCheckedIds,index, checkedIds, handleClick} = props;
-    
-    const [allClear, setAllClear] = useState(false);
+    const { cardItems, cardData, allChecked, setCheckedIds, index, getAllChecked, checkedIds, handleClick, loadMore} = props;
+    const childInput = createRef();
+
     const setChecked = (id) => {
-        if(allChecked){
-            return allChecked;
+        if(allChecked && loadMore){
+            return id;
         }
-        else{
+        else {
             return !!(checkedIds.includes(id)) ;
         }
     }
-    const handleChecked = (e,id) => {
-            if(e.target.checked){
-                if(checkedIds.length > 0){
-                    setCheckedIds([...checkedIds,id]);
-                }else{
-                    setCheckedIds([id]);
-                }
-            }else{
-                let ids = [...checkedIds];
-                ids = ids.filter((item,index)=> {
-                    return item !== id;
-                })
-                setCheckedIds(ids);
-            }
-    }
-                                                                                                                    
-    useEffect(() => {
-        childFunc.current = handleCurrentCheckbox;
-      }, [])
 
-    const handleCurrentCheckbox = () => {
-        setAllClear(true);
-        setCheckedIds([]);
+    const handleChecked = (e, id) => {
+        let checked = e.target.checked;
+        if(checked){
+            if(checkedIds.length > 0){
+                setCheckedIds([...checkedIds,id]);
+            }
+            else{
+                setCheckedIds([id]);
+            }
+        } else {
+            let ids = [...checkedIds];
+            ids = ids.filter((item,index)=> {
+                return item !== id;
+            })
+            setCheckedIds(ids);
+        }
     }
+
+    useEffect(()=> {
+         getAllChecked(childInput.current);
+    }, [allChecked, loadMore]);
+
     return (
         <>
             <th valign="middle" className="check-box">
                 <FormGroup check className="mb-0">
-                    <Input type="checkbox"
+                    <input type="checkbox"
                            data-id={cardItems.id}
+                           id={cardItems.id}
+                           ref={childInput}
                            name= {`is_other_${cardItems.id}`}
-                           className="me-0"
+                           className="me-0 form-check-input"
                            checked={setChecked(cardItems.id)}
-                           onChange={(e) => {handleChecked(e,cardItems.id)}}
+                           onChange={(e) => handleChecked(e, cardItems.id)}
                     />
                 </FormGroup>
             </th>
@@ -76,9 +76,14 @@ const ObservationListRow = (props) => {
                 <div className="observation_type d-flex align-items-start justify-content-start flex-wrap flex-column">
                     {cardItems?.category_data?.map((item, index) => {
                         let image = `/assets/images/category/${item?.name?.toLowerCase().replaceAll(" ", "")}.png`;
-                        return (<div key={index} className="mb-2"><i className="fst-normal rounded-circle me-2 d-inline-block">
-                            <img src={image} alt={item?.name} className="rounded-circle w-100 h-100" /> 
-                        </i><span>{item?.name}</span></div>)
+                        return (
+                            <div key={index} className="mb-2">
+                                <i className="fst-normal rounded-circle me-2 d-inline-block">
+                                    <img src={image} alt={item?.name} className="rounded-circle w-100 h-100" />
+                                </i>
+                                <span>{item?.name}</span>
+                            </div>
+                        )
                     })}
                 </div>
             </td>
@@ -90,7 +95,7 @@ const ObservationListRow = (props) => {
             </td>
             <td valign="middle" className="date-time-box">
                 <div className="card_desc">
-                    <CardTitle className="font-bold">{(cardData?.obs_date_time_as_per_utc) ? moment.utc(moment(cardData?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY") : (cardData?.obs_date) ? cardData?.obs_date : null }</CardTitle> 
+                    <CardTitle className="font-bold">{(cardData?.obs_date_time_as_per_utc) ? moment.utc(moment(cardData?.obs_date_time_as_per_utc).utc()).format("MMM DD, YYYY") : (cardData?.obs_date) ? cardData?.obs_date : null }</CardTitle>
                     <CardSubtitle className="d-flex align-items-center">{(cardData?.obs_date_time_as_per_utc) ? moment.utc(moment(cardData?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A"): (cardData?.obs_time) ? cardData?.obs_time : null} <Badge className="bg-black text-white ms-1">{(cardData?.obs_date_time_as_per_utc)  ? 'UTC': (cardData?.obs_time) ?  "UTC" : ''}</Badge></CardSubtitle>
                 </div>
             </td>

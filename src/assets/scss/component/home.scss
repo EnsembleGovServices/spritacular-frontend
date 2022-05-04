@@ -70,10 +70,14 @@
 .counter-main {
   padding-bottom: 270px;
   @include media-breakpoint-down(xl) {
+    padding-bottom: 222px;
+  }
+  @include media-breakpoint-down(sm) {
     padding-bottom: 170px;
   }
   .counter-inner {
     display: flex;
+    align-items: center;
     padding-top: 25px;
     .left-image {
       img {
@@ -83,7 +87,7 @@
     .right-counter {
       margin-left: 20px;
       h3 {
-        margin: 0px;
+        margin: 0;
         font-weight: 900;
         @include lg-title;
       }

@@ -55,6 +55,9 @@
     .card-img{
         border-radius: 8px 8px 0 0;
         cursor: pointer;
+        &.no-cursor {
+            cursor: auto;
+        }
     }
     .card-link{
         &:hover .observation_country{
@@ -163,14 +166,17 @@
             width: 100%;
         }
     }
-    .swiper{
-        .swiper-wrapper{
-            .swiper-slide{
-                height: auto;
-                img{
-                    cursor: pointer;
-                }
+
+
+    &.homepage_observation_card {
+        .card-img {
+             @include media-breakpoint-down(sm) {
+                 height: 250px;
+             }
+            @include media-breakpoint-down(lg) {
+                height: 200px;
             }
         }
     }
 }
+
