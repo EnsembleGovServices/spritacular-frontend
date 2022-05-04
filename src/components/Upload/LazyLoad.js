@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {placeholder} from "./placeholder";
 
 const LazyLoad = (props) => {
-    const { src, alt, imageClass } = props;
+    const { src, alt, imageClass, converted } = props;
     const [imageSrc, setImageSrc] = useState(placeholder)
     const [imageRef, setImageRef] = useState('')
 
@@ -47,7 +47,7 @@ const LazyLoad = (props) => {
                 observer.unobserve(imageRef)
             }
         }
-    }, [src, imageSrc, imageRef])
+    }, [src, imageSrc, imageRef, converted])
 
     return (
         <>

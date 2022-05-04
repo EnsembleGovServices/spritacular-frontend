@@ -400,14 +400,15 @@ const AddObservation = () => {
 
     useEffect(()=> {
         draftData?.map_data?.map((item, index) => {
-            let imageUrl = item.image,
+            let imageUrl = item.compressed_image,
                 fileName = getFileName(imageUrl);
             return fetch(imageUrl)
                 .then(async response => {
                     const contentType = response.headers.get('content-type')
-                    const blob = await response.blob()
+                    const blob = await response.blob().catch(error => console.log('blob error', error));
                     const file = new File([blob], fileName, { contentType });
-                    const image = await toBase64(file).catch(error => console.log(error));
+                    const image = await toBase64(file).catch(error => console.log('base64 Error', error));
+                    item.compressed_image = null;
                     setTimeout(function () {
                         item.item = file;
                         item.image = image;
@@ -427,13 +428,21 @@ const AddObservation = () => {
 
         if (updateUrl && obvType === "draft") {
             getObservationDataForUpdate(id).then(r => r)
+            setTimeout(function () {
+                setObservationSteps((prev)=> {
+                    return {
+                        ...prev,
+                        converted: true
+                    }
+                })
+            }, 1000)
         }
 
         if (updateUrl && obvType !== "draft") {
             return navigate('/observations');
         }
 
-    }, [location.pathname, updateMode]);
+    }, [location?.pathname, updateMode]);
 
 
     useEffect(()=> {

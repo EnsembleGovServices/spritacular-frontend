@@ -7,7 +7,7 @@ import ObservationUpdateUploadedImages from "./ObservationUpdateUploadedImages";
 
 const ObservationUploadedImg = (props) => {
     const { remove, className }=props;
-    const {observationImages, setObservationImages} = useObservations();
+    const {observationImages, setObservationImages, observationSteps} = useObservations();
     const [preview, setPreview] = useState([]);
     const [activeTab, setActiveTab] = useState(observationImages?.selected_image_id ?? null);
     // Toggle Tabs
@@ -35,17 +35,15 @@ const ObservationUploadedImg = (props) => {
                 return(
                     <div className={`selected-image_wrapper d-flex justify-content-end mb-2 ms-2 ms-sm-0 position-relative ${className ? className : ''}`} key={index}>
                         <div className={`selected-image  ${activeTab === item?.id ? 'active-tab' : ''}`}>
-                            <button type="button" className='preview-btn position-relative d-flex p-0 shadow-none' onClick={()=> toggleTab(item?.id,index)}>
-                                <LazyLoad src={item?.image} alt={item?.name} />
-                            </button>
-                            {/* {observationImages?.observation_count > 1 && */}
+                                <button type="button" className='preview-btn position-relative d-flex p-0 shadow-none' onClick={()=> toggleTab(item?.id,index)}>
+                                    <LazyLoad converted={observationSteps?.converted} src={item?.image} alt={item?.name} />
+                                </button>
                                 <ObservationUpdateUploadedImages item={item} index={index} />
                                 <button type="button" className="remove-btn text-black border-0 position-absolute btn" onClick={()=> remove(item?.id)}>
                                 <span>
                                     <Icon icon="ci:close-big" />
                                 </span>
                                 </button>
-                            {/* } */}
                         </div>
                     </div>
                 )

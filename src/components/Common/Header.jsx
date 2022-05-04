@@ -357,6 +357,9 @@ const Header = (props) => {
                 </span>
               </DropdownToggle>
               <DropdownMenu container="body">
+                <DropdownItem>
+                  <Link to={routeUrls.myObservations}>My Observation</Link>
+                </DropdownItem>
                 <DropdownItem onClick={() => setActive('')}>
                   <Link to={routeUrls.profile}>Edit Profile</Link>
                 </DropdownItem>
