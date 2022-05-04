@@ -182,19 +182,19 @@ const ObservationAfterImageUpload = (props) => {
                                     <ObservationCategory obvType={obvType} error={error} />
                                 </Col>
 
-                                <Col sm={12}>
-                                    <FormGroup check className="mb-3">
-                                        <Label check>
-                                            <Input type="checkbox" name="is_other" checked ={observationImages?.data[observationImages?.selected_image_index]?.category_map?.is_other} onChange={(e) => handleImageInput(e)} />
-                                            Other
-                                        </Label>
-                                    </FormGroup>
-                                    {isOther?.status &&
-                                        <FormGroup>
-                                            <Input type="text"  name="text" placeholder="Please enter other details" className="other-textfield" />
-                                        </FormGroup>
-                                    }
-                                </Col>
+                                {/*<Col sm={12}>*/}
+                                {/*    <FormGroup check className="mb-3">*/}
+                                {/*        <Label check>*/}
+                                {/*            <Input type="checkbox" name="is_other" checked ={observationImages?.data[observationImages?.selected_image_index]?.category_map?.is_other} onChange={(e) => handleImageInput(e)} />*/}
+                                {/*            Other*/}
+                                {/*        </Label>*/}
+                                {/*    </FormGroup>*/}
+                                {/*    {isOther?.status &&*/}
+                                {/*        <FormGroup>*/}
+                                {/*            <Input type="text"  name="text" placeholder="Please enter other details" className="other-textfield" />*/}
+                                {/*        </FormGroup>*/}
+                                {/*    }*/}
+                                {/*</Col>*/}
                                 <Col sm={12}>
                                     <Button type="button" className="mt-3" disabled={!disableNext} onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
                                 </Col>
