@@ -10,7 +10,7 @@ const HomeCounter = lazy(()=> import('../components/Home/HomeCounter'))
 const HomeMapSection = lazy(()=> import('../components/Home/HomeMapSection'))
 const GetStarted = lazy(()=> import('../components/Home/GetStarted'))
 
-const Home = (props) => {
+const Home = () => {
 
     const { setRecentObservation } = useObservationsData();
     const getHomeData = () => {

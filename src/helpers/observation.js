@@ -1,5 +1,3 @@
-import Images from "../static/images";
-
 export const Tabs = {
     ObservationImages : "ObservationImages",
     DateTimeLocation : "DateTimeLocation",
@@ -14,6 +12,14 @@ export const imageDetails = {
     Details : "Details",
     Equipment : "Equipment",
     Comments : "Comments",
+}
+
+export const obvType = {
+    default: "verified",
+    verified : "verified",
+    unverified: "unverified",
+    denied: "denied",
+    draft: "draft"
 }
 
 export const uploadImageDefaultState = (random, baseImage, item, userLocation) => {
@@ -42,40 +48,6 @@ export const uploadImageDefaultState = (random, baseImage, item, userLocation) =
         }
     }
 }
-
-export const CategoryList = [
-    {
-        id: 1,
-        name: 'Sprite',
-        image: Images.SpriteOb
-    },
-    {
-        id: 2,
-        name: 'Blue jet',
-        image: Images.Bluejet
-    },
-    {
-        id: 3,
-        name: 'Elve',
-        image: Images.Elev
-    },
-    {
-        id: 4,
-        name: 'Halo',
-        image: Images.Halo
-    },
-    {
-        id: 5,
-        name: 'Gigantic Jet',
-        image: Images.GiganticJet
-    },
-    {
-        id: 6,
-        name: 'Secondary Jet',
-        image: Images.SecondaryJet
-    },
-
-]
 
 export const directionValue = [
     {name: 'N', angle: 360, default : true},

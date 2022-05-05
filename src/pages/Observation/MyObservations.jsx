@@ -1,20 +1,28 @@
 import "../../assets/scss/component/myObservation.scss";
-import InitialUploadObservations from "../InitialUploadObservations";
 import { Col, Container, Row } from 'reactstrap';
-import { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from "@iconify/react";
+import axios from "../../api/axios";
+
+import { useEffect, useState, lazy, Suspense } from "react";
 
 import useAuth from "../../hooks/useAuth";
 import useObservationsData from "../../hooks/useObservationsData";
 
-import axios from "../../api/axios";
-import {baseURL, routeUrls} from "../../helpers/url";
-import Images from './../../static/images';
-import ObservationDetails from './ObservationDetails';
+
+// import ObservationDetails from './ObservationDetails';
 import ObservationDetailPage from "./ObservationDetailPage";
 import useObservations from "../../hooks/useObservations";
+import InitialUploadObservations from "../InitialUploadObservations";
+
 import { LoadMore } from "../../components/Shared/LoadMore";
+import {obvType} from "../../helpers/observation";
+import {baseURL, routeUrls} from "../../helpers/url";
+import Images from './../../static/images';
+import Loader from "../../components/Shared/Loader";
+
+const ObservationDetails = lazy(()=> import('./ObservationDetails'))
+
 
 const MyObservations = () => {
   const { auth } = useAuth();
@@ -22,25 +30,11 @@ const MyObservations = () => {
   const { observationListData, setObservationListData } = useObservationsData();
   const [isObservationDetailModal, setObservationDetailModal] = useState(false)
   const [isLoaded,setIsLoaded] = useState(true);
-  const [activeType,setActiveType] = useState('verified');
+  const [activeType, setActiveType] = useState('verified');
   const [selectedObservationId,setSelectedObservationId] = useState();
   const navigate = useNavigate();
   const [nextPageUrl,setNextPageUrl] = useState('/observation/observation_collection/?type=');
-
-  useEffect(() => {
-    setObservationListData((prev) => {
-      return {
-        ...prev,
-        active: observationListData?.list?.[selectedObservationId]
-      }
-    })
-
-  }, [isObservationDetailModal]);
-
-  useEffect(() => {
-      getObservationData(true,'verified');
-      setIsLoaded(false);
-  },[isLoaded]);
+  const [ isActiveTypeChangeFinished, setActiveTypeChangeFinished] = useState(false);
 
   const handleObservationEdit = (data) => {
     cleaningUpObservationDataForDraftSaving(data).then(r => r);
@@ -84,25 +78,25 @@ const MyObservations = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth?.token?.access}`,
       },
-
   }).then((success) => {
     let data = success?.data?.results;
-    if(success?.data?.next){
+    if (success?.data?.next){
       setNextPageUrl(success?.data?.next);
-    }else{
+    } else {
       setNextPageUrl(null);
     }
 
-    setIsLoaded(false);
-    let records = data?.data;
-      let prevData;
 
-    if(observationListData?.list?.length > 0 && reset === false){
+    let records = data?.data;
+    let prevData;
+
+    if(observationListData?.list && !reset){
       prevData = [...observationListData.list];
       prevData = [...prevData,...records];
-    }else{
+    } else {
       prevData = data?.data;
     }
+
       // Global State
       setObservationListData((prev) => {
         return {
@@ -116,7 +110,7 @@ const MyObservations = () => {
             total: data?.verified_count + data?.unverified_count+ data?.denied_count + data?.draft_count
           },
         }
-      })
+      });
 
     setIsLoaded(false);
   }).catch((error) => {
@@ -129,11 +123,44 @@ const MyObservations = () => {
     setSelectedObservationId(id);
   };
 
+  const handleTypeOfObservation = (type) => {
+    setActiveTypeChangeFinished(true);
+    setActiveType(type);
+
+    setObservationListData((prev) => {
+      return {
+        ...prev,
+        list: [],
+      }
+    });
+    getObservationData(true, type);
+
+    setTimeout(function () {
+      setActiveTypeChangeFinished(false);
+    }, 300)
+  }
+
   const handleLoadMore = () => {
-    getObservationData(false,activeType);
+    getObservationData(false, activeType);
   }
 
   const listCount = observationListData?.count;
+
+  useEffect(() => {
+    setObservationListData((prev) => {
+      return {
+        ...prev,
+        active: observationListData?.list?.[selectedObservationId]
+      }
+    })
+
+  }, [isObservationDetailModal]);
+
+  useEffect(() => {
+    getObservationData(true,'verified');
+    setIsLoaded(false);
+  },[isLoaded]);
+
 
   return(
       listCount?.total > 0 ? (
@@ -145,17 +172,17 @@ const MyObservations = () => {
                 <Row>
                   <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
                     <div className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
-                      <span className= {activeType === 'verified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'verified')}}>Verified ({observationListData?.count?.verified})</span>
-                      <span className={activeType === 'unverified' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'unverified')}}>Unverified ({observationListData?.count?.unverified})</span>
-                      <span className={activeType === 'denied' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'denied')}}>Denied ({observationListData?.count?.denied})</span>
-                      <span className={activeType === 'draft' ? "filter-link active" : "filter-link "}  onClick={() => {getObservationData(true,'draft')}}>Drafts ({observationListData?.count?.draft})</span>
+                      <span className={activeType === obvType.verified ? "filter-link active" : "filter-link "}  onClick={() => handleTypeOfObservation(obvType.verified)}>Verified ({observationListData?.count?.verified})</span>
+                      <span className={activeType === obvType.unverified ? "filter-link active" : "filter-link "}  onClick={() => handleTypeOfObservation(obvType.unverified)}>Unverified ({observationListData?.count?.unverified})</span>
+                      <span className={activeType === obvType.denied ? "filter-link active" : "filter-link "}  onClick={() => handleTypeOfObservation(obvType.denied)}>Denied ({observationListData?.count?.denied})</span>
+                      <span className={activeType === obvType.draft ? "filter-link active" : "filter-link "}  onClick={() => handleTypeOfObservation(obvType.draft)}>Drafts ({observationListData?.count?.draft})</span>
                     </div>
                   </Col>
                   <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
                     <div className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mb-2 mb-md-0">
                       <Link to={'/'+routeUrls.observationsAdd} className="btn btn-secondary ms-2 ms-xl-4 shadow-none">
-                        <Icon icon="heroicons-outline:upload"  width="16" height="20" /> Upload
-                        Observations
+                        <Icon icon="heroicons-outline:upload"  width="16" height="20" />
+                        Upload Observations
                       </Link>
                     </div>
                   </Col>
@@ -166,31 +193,45 @@ const MyObservations = () => {
             {/*Data block*/}
 
             <Container>
-              {observationListData?.list?.length > 0 ? (
-                  <ObservationDetailPage  observationList={observationListData?.list}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
+              {}
+
+              {isActiveTypeChangeFinished ? (
+                  <Loader />
               ) : (
-                  <div className="data-not-found">
-                    <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
-                    <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
-                  </div>
+                  observationListData?.list?.length > 0 ? (
+                      <Suspense fallback={<div>Please wait...</div>}>
+                        <ObservationDetailPage  activeType={activeType} observationList={observationListData?.list}  isObservationDetailModal={isObservationDetailModal} setObservationDetailModal={setObservationDetailModal} setSelectedObservationId={setSelectedObservationId} />
+                      </Suspense>
+                  ) : (
+                      <div className="data-not-found">
+                        <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
+                        <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
+                      </div>
+                  )
               )}
 
               {nextPageUrl && <LoadMore handleLoadMore={handleLoadMore} />}
             </Container>
 
-            <ObservationDetails
-                data={observationListData?.active}
-                activeType={activeType}
-                modalClass="observation-details_modal"
-                open={isObservationDetailModal}
-                handleClose={handleObservationDetailModal}
-                handleContinueEdit={handleObservationEdit}
-                handleApproveRejectEvent={getObservationData}
-            />
+
+
+            <Suspense fallback={<div>Please wait...</div>}>
+              <ObservationDetails
+                  data={observationListData?.active}
+                  activeType={activeType}
+                  modalClass="observation-details_modal"
+                  open={isObservationDetailModal}
+                  handleClose={handleObservationDetailModal}
+                  handleContinueEdit={handleObservationEdit}
+                  handleApproveRejectEvent={getObservationData}
+              />
+            </Suspense>
 
           </section>
       ) : (
-          <InitialUploadObservations count={listCount} />
+          <Suspense fallback={<div>Please wait...</div>}>
+            <InitialUploadObservations count={listCount} />
+          </Suspense>
       )
   )
 }
