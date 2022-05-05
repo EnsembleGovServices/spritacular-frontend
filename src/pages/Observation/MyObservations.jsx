@@ -138,6 +138,7 @@ const MyObservations = () => {
   return(
       listCount?.total > 0 ? (
           <section className="my-observation-data">
+
             {/*Filter*/}
             <Container>
               <div className="filtered-data_wrapper">
@@ -189,9 +190,7 @@ const MyObservations = () => {
 
           </section>
       ) : (
-          setTimeout(function () {
-            return <InitialUploadObservations />
-          }, 500)
+          <InitialUploadObservations count={listCount} />
       )
   )
 }

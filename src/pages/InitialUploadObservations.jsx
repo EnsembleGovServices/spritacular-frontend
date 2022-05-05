@@ -7,6 +7,7 @@ import useObservations from "../hooks/useObservations";
 import {useEffect, useState} from "react";
 
 const InitialUploadObservations = (props) => {
+  const { count } = props;
   const navigate = useNavigate();
   const {setObservationImages, setObservationSteps, setObservationData} = useObservations();
   const [isCleanUp, setIsCleanUp] = useState(false);
@@ -34,28 +35,28 @@ const InitialUploadObservations = (props) => {
 
 
   return (
-    <>
-      <section className="initial-upload_box upload-observation-main d-flex justify-content-center align-items-center h-100">
+    count?.total === 0 ? (
+        <section className="initial-upload_box upload-observation-main d-flex justify-content-center align-items-center h-100">
           <Container>
-          <div className="upload-ob-inner">
-            <Form>
-              <FormGroup>
-                <Label htmlFor="UploadFile">
-                  <div className="upload-info">
-                    <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
-                    <p>No observations yet.</p>
-                    <button onClick={(e)=> handleObvAdd(e)} className="btn btn-secondary">
-                      <Icon icon="heroicons-outline:upload"  width="25" height="22" /> Upload
-                      Observation
-                    </button>
-                  </div>
-                </Label>
-              </FormGroup>
-            </Form>
-          </div>
+            <div className="upload-ob-inner">
+              <Form>
+                <FormGroup>
+                  <Label htmlFor="UploadFile">
+                    <div className="upload-info">
+                      <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
+                      <p>No observations yet.</p>
+                      <button onClick={(e)=> handleObvAdd(e)} className="btn btn-secondary">
+                        <Icon icon="heroicons-outline:upload"  width="25" height="22" /> Upload
+                        Observation
+                      </button>
+                    </div>
+                  </Label>
+                </FormGroup>
+              </Form>
+            </div>
           </Container>
-      </section>
-    </>
+        </section>
+    ) : ('')
   );
 };
 
