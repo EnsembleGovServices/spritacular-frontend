@@ -1,193 +1,260 @@
 import "../assets/scss/component/myObservation.scss";
 import "../assets/scss/component/gallery.scss";
-import { useEffect, useState, Suspense, lazy } from "react";
-import { Container, UncontrolledAlert } from 'reactstrap';
-import {Link} from 'react-router-dom';
+import { lazy, Suspense, useEffect, useState } from "react";
+import { Container, UncontrolledAlert } from "reactstrap";
+import { Link } from "react-router-dom";
 
 import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
-import {baseURL,routeUrls} from "../helpers/url";
-import Images from './../static/images';
-import { LoadMore } from '../components/Shared/LoadMore';
+import { baseURL, routeUrls } from "../helpers/url";
+import Images from "./../static/images";
+import { LoadMore } from "../components/Shared/LoadMore";
 import useObservationsData from "../hooks/useObservationsData";
 
-
-const ObservationDetails = lazy(()=> import('./Observation/ObservationDetails'))
-const FilterSelectMenu = lazy(()=> import('../components/Shared/FilterSelectMenu'))
-const ObservationDetailPage = lazy(()=> import('./Observation/ObservationDetailPage'))
+const ObservationDetails = lazy(() =>
+  import("./Observation/ObservationDetails")
+);
+const FilterSelectMenu = lazy(() =>
+  import("../components/Shared/FilterSelectMenu")
+);
+const ObservationDetailPage = lazy(() =>
+  import("./Observation/ObservationDetailPage")
+);
 
 const Gallery = () => {
   const [isObservationDetailModal, setObservationDetailModal] = useState(false);
-  const [isLoaded,setIsLoaded] = useState(true);
-  const [selectedObservationId,setSelectedObservationId] = useState();
+  const [isLoaded, setIsLoaded] = useState(true);
+  const [selectedObservationId, setSelectedObservationId] = useState();
   const [searchCountry, setSearchCountry] = useState("");
-  const [isFilterOpen,setIsFilterOpen] = useState({
-    isCountryOpen:false,
-    isTypeOpen:false,
-    isStatusOpen:false
-  })
-  const [selectedFilterHorizontal,setSelectedFilterHorizontal] = useState({
-    country:{name:'',code:''},
-    type:'',
-    status:'',
-})
+  const [isFilterOpen, setIsFilterOpen] = useState({
+    isCountryOpen: false,
+    isTypeOpen: false,
+    isStatusOpen: false,
+  });
+  const [selectedFilterHorizontal, setSelectedFilterHorizontal] = useState({
+    country: { name: "", code: "" },
+    type: "",
+    status: "",
+  });
 
   const { observationListData, setObservationListData } = useObservationsData();
   const { auth } = useAuth();
-  const [loadMore,setLoadMore] = useState(10);
-  const [pageSize,setPageSize] = useState(10);
-  const [nextPageUrl,setNextPageUrl] = useState(`${baseURL.api}/observation/gallery/?country=&category=&status=`);
+  const [loadMore, setLoadMore] = useState(10);
+  const [pageSize, setPageSize] = useState(10);
+  const [nextPageUrl, setNextPageUrl] = useState(
+    `${baseURL.api}/observation/gallery/?country=&category=&status=`
+  );
   const normalUser = auth?.user?.is_user;
   useEffect(() => {
     setLoadMore(pageSize);
-    getObservationType(true,'',selectedFilterHorizontal.type,selectedFilterHorizontal.status);
+    getObservationType(
+      true,
+      "",
+      selectedFilterHorizontal.type,
+      selectedFilterHorizontal.status
+    );
     setIsLoaded(false);
-  },[isLoaded]);
+  }, [isLoaded]);
 
   const findCountry = (e) => {
     let value = e.target.value.toLowerCase();
     setSearchCountry(value);
-}
+  };
 
-  useEffect(()=> {
+  useEffect(() => {
     if (isFilterOpen.isCountryOpen === false) {
-        setSearchCountry("");
+      setSearchCountry("");
     }
-  }, [isFilterOpen.isCountryOpen])
+  }, [isFilterOpen.isCountryOpen]);
 
   useEffect(() => {
     setObservationListData((prev) => {
       return {
         ...prev,
-        active: observationListData?.list?.[selectedObservationId]
-      }
-    })
-
+        active: observationListData?.list?.[selectedObservationId],
+      };
+    });
   }, [isObservationDetailModal]);
 
   const handleLoadMoreData = () => {
-        getObservationType(false, selectedFilterHorizontal.country?.code, selectedFilterHorizontal.type, selectedFilterHorizontal.status);
-  }
-  const getObservationType = (reset=false,country=`${selectedFilterHorizontal.country?.code}`,category=`${selectedFilterHorizontal.type}`,status=`${selectedFilterHorizontal.status}`) => {
+    getObservationType(
+      false,
+      selectedFilterHorizontal.country?.code,
+      selectedFilterHorizontal.type,
+      selectedFilterHorizontal.status
+    );
+  };
+  const getObservationType = (
+    reset = false,
+    country = `${selectedFilterHorizontal.country?.code}`,
+    category = `${selectedFilterHorizontal.type}`,
+    status = `${selectedFilterHorizontal.status}`
+  ) => {
     let url;
-    if(reset === true || !nextPageUrl){
+    if (reset === true || !nextPageUrl) {
       url = `${baseURL.api}/observation/gallery/?country=${country}&category=${category}&status=${status}&page=1`;
-    }else{
+    } else {
       url = nextPageUrl;
     }
 
     const headers = {};
-    headers['Content-Type'] = 'application/json';
-    if(auth.user){
-      headers['Authorization'] = `Bearer ${auth?.token?.access}`;
+    headers["Content-Type"] = "application/json";
+    if (auth.user) {
+      headers["Authorization"] = `Bearer ${auth?.token?.access}`;
     }
-    axios.get(url,{
-      headers: headers,
-  }).then((success) => {
-    if(success?.data?.results?.data !== undefined){
-      if(success?.data?.next){
-        setNextPageUrl(success?.data?.next);
-      }else{
-        setNextPageUrl(null);
-      }
-      let records = success?.data?.results?.data;
-      let prevData;
-      
-      if(observationListData?.list?.length > 0 && reset === false){
-        prevData = [...observationListData?.list];
-        prevData = [...prevData,...records];
-      }else{
-        prevData = success?.data?.results?.data;
-      }
-      setObservationListData((prev) => {
-        return {
-          ...prev,
-          list: prevData,
+    axios
+      .get(url, {
+        headers: headers,
+      })
+      .then((success) => {
+        if (success?.data?.results?.data !== undefined) {
+          if (success?.data?.next) {
+            setNextPageUrl(success?.data?.next);
+          } else {
+            setNextPageUrl(null);
+          }
+          let records = success?.data?.results?.data;
+          let prevData;
+
+          if (observationListData?.list?.length > 0 && reset === false) {
+            prevData = [...observationListData?.list];
+            prevData = [...prevData, ...records];
+          } else {
+            prevData = success?.data?.results?.data;
+          }
+          setObservationListData((prev) => {
+            return {
+              ...prev,
+              list: prevData,
+            };
+          });
+          setIsLoaded(false);
+        } else {
+          setNextPageUrl(null);
+          setObservationListData({ list: [], active: {} });
         }
       })
-      setIsLoaded(false);
-    }
-    else{
-      setNextPageUrl(null);
-      setObservationListData({list:[],active:{}})
-    }
-  }).catch((error) => {
-      console.log(error.response);
-  })
-  }
+      .catch((error) => {
+        console.log(error.response);
+      });
+  };
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);
     setSelectedObservationId(id);
   };
 
-  const handleFilterValue = (value,type) => {
-    setObservationListData([])
+  const handleFilterValue = (value, type) => {
+    setObservationListData([]);
     // setLoadMore(pageSize);
-    if(type === 'status'){
+    if (type === "status") {
       value = value.toLowerCase();
-      getObservationType(true,selectedFilterHorizontal.country?.code,selectedFilterHorizontal.type,value);
+      getObservationType(
+        true,
+        selectedFilterHorizontal.country?.code,
+        selectedFilterHorizontal.type,
+        value
+      );
+    } else if (type === "category") {
+      getObservationType(
+        true,
+        selectedFilterHorizontal.country?.code,
+        value,
+        selectedFilterHorizontal.status
+      );
+    } else if (type === "country") {
+      getObservationType(
+        true,
+        value.code,
+        selectedFilterHorizontal.type,
+        selectedFilterHorizontal.status
+      );
     }
+  };
 
-    else if(type === 'category') {
-      getObservationType(true,selectedFilterHorizontal.country?.code,value,selectedFilterHorizontal.status);
-    }
-
-    else if(type === 'country'){
-      getObservationType(true,value.code,selectedFilterHorizontal.type,selectedFilterHorizontal.status);
-    }
-  }
-
-  return(
+  return (
     <>
       <Suspense fallback={<div>please wait...</div>}>
-        <FilterSelectMenu galleryFilter={true} isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} selectedFilterHorizontal={selectedFilterHorizontal}setSelectedFilterHorizontal={setSelectedFilterHorizontal}  searchCountry={searchCountry} findCountry={findCountry} handleFilterValue={handleFilterValue}/>
+        <FilterSelectMenu
+          galleryFilter={true}
+          isFilterOpen={isFilterOpen}
+          setIsFilterOpen={setIsFilterOpen}
+          selectedFilterHorizontal={selectedFilterHorizontal}
+          setSelectedFilterHorizontal={setSelectedFilterHorizontal}
+          searchCountry={searchCountry}
+          findCountry={findCountry}
+          handleFilterValue={handleFilterValue}
+        />
       </Suspense>
 
-
       <Container className="pt-5">
-        {normalUser && <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true" className="text-center mb-5">
-          Would you like to help us sift through observations and endorse their validity?
-          <Link to={'/'+routeUrls.tutorials} className="btn btn-outline-primary">Get Trained</Link>
-        </UncontrolledAlert>}
-        {observationListData?.list &&
-            <div className='gallery-page'>
-              <h4 className='text-black fw-bold'>Recent Observations</h4>
-              <div>
-                {observationListData?.list.length > 0 ? (
-                        <Suspense fallback={<div>please wait...</div>}>
-                          <ObservationDetailPage
-                              observationList={observationListData?.list}
-                              isObservationDetailModal={isObservationDetailModal}
-                              setObservationDetailModal={setObservationDetailModal}
-                              setSelectedObservationId={setSelectedObservationId}
-                          />
-                        </Suspense>
-                ) : (
-                    <div className="data-not-found">
-                      <img src={Images.NoDataFound} alt="No data found" className="mb-3"/>
-                      <p><b className="text-secondary fw-bold">Opps!</b> No Data Found</p>
-                    </div>
-                )}
-              </div>
-              {nextPageUrl &&
-                  <LoadMore handleLoadMore={handleLoadMoreData} />
-              }
-
-              <Suspense fallback={<div>please wait...</div>}>
-                <ObservationDetails
-                    data={observationListData?.active}
-                    activeType={(observationListData?.active?.is_verified) ? 'verified' : (observationListData?.active?.is_reject) ? 'denied' : (observationListData?.active?.is_submit) ? 'unverified' : 'draft'}
-                    modalClass="observation-details_modal"
-                    open={isObservationDetailModal}
-                    handleClose={handleObservationDetailModal}
-                    handleApproveRejectEvent={getObservationType}
-                />
-              </Suspense>
+        {normalUser && (
+          <UncontrolledAlert
+            color="danger"
+            data-dismiss="alert"
+            dismissible="true"
+            className="text-center mb-5"
+          >
+            Would you like to help us sift through observations and endorse
+            their validity?
+            <Link
+              to={"/" + routeUrls.tutorials}
+              className="btn btn-outline-primary"
+            >
+              Get Trained
+            </Link>
+          </UncontrolledAlert>
+        )}
+        {observationListData?.list && (
+          <div className="gallery-page">
+            <h4 className="text-black fw-bold">Recent Observations</h4>
+            <div>
+              {observationListData?.list.length > 0 ? (
+                <Suspense fallback={<div>please wait...</div>}>
+                  <ObservationDetailPage
+                    observationList={observationListData?.list}
+                    isObservationDetailModal={isObservationDetailModal}
+                    setObservationDetailModal={setObservationDetailModal}
+                    setSelectedObservationId={setSelectedObservationId}
+                  />
+                </Suspense>
+              ) : (
+                <div className="data-not-found">
+                  <img
+                    src={Images.NoDataFound}
+                    alt="No data found"
+                    className="mb-3"
+                  />
+                  <p>
+                    <b className="text-secondary fw-bold">Opps!</b> No Data
+                    Found
+                  </p>
+                </div>
+              )}
             </div>
-        }
-      </Container>
+            {nextPageUrl && <LoadMore handleLoadMore={handleLoadMoreData} />}
 
+            <Suspense fallback={<div>please wait...</div>}>
+              <ObservationDetails
+                data={observationListData?.active}
+                activeType={
+                  observationListData?.active?.is_verified
+                    ? "verified"
+                    : observationListData?.active?.is_reject
+                    ? "denied"
+                    : observationListData?.active?.is_submit
+                    ? "unverified"
+                    : "draft"
+                }
+                modalClass="observation-details_modal"
+                open={isObservationDetailModal}
+                handleClose={handleObservationDetailModal}
+                handleApproveRejectEvent={getObservationType}
+              />
+            </Suspense>
+          </div>
+        )}
+      </Container>
     </>
-  )
-}
+  );
+};
 export default Gallery;

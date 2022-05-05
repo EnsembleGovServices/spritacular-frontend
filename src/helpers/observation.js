@@ -3,6 +3,7 @@ export const Tabs = {
     DateTimeLocation : "DateTimeLocation",
     EquipmentDetails : "EquipmentDetails",
 }
+
 export const MultiImageTabs = {
     MultipleImages: "MultipleImages",
     ImageSequence: "ImageSequence"
@@ -20,6 +21,16 @@ export const obvType = {
     unverified: "unverified",
     denied: "denied",
     draft: "draft"
+}
+
+export const masonryConfig = (selector, width, gutter, fit=false, transition) => {
+    return {
+        columnWidth: width,
+        gutter: gutter,
+        itemSelector: selector,
+        fitWidth: false,
+        transitionDuration: transition,
+    }
 }
 
 export const uploadImageDefaultState = (random, baseImage, item, userLocation) => {

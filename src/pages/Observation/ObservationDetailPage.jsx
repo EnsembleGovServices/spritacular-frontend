@@ -1,17 +1,12 @@
 import ObservationCard from "../../components/Shared/ObservationCard";
 import Masonry from 'react-masonry-component';
+import {masonryConfig} from "../../helpers/observation";
 
 const ObservationDetailPage = (props) => {
   const {observationList, isObservationDetailModal, setSelectedObservationId, setObservationDetailModal, activeType} = props;
 
   // Masonry Options
-  const masonryOptions = {
-    columnWidth: 1,
-    gutter: 0,
-    itemSelector: ".photo-item",
-    fitWidth: false,
-    transitionDuration: 10,
-  };
+  const masonryOptions = masonryConfig('.photo-list', 1, 0, false, 10);
 
   const handleObservationDetailModal = (id) => {
     setObservationDetailModal(!isObservationDetailModal);

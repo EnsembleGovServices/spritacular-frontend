@@ -44,8 +44,8 @@ const ObservationCard = (props) => {
                     { cardItems?.image_type === 3 
                         ? <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick} handleIndex={index} />    
                         : <BlurImage
-                            preview={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}
-                            image={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}
+                            preview={(cardData?.compressed_image) ? cardData?.compressed_image : cardData?.image}
+                            image={(cardData?.compressed_image) ? cardData?.compressed_image : cardData?.image}
                             handleClick={handleImageClick}
                             homepage={homepage}
                         >
