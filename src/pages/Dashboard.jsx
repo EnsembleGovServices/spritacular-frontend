@@ -242,7 +242,7 @@ const Dashboard = () => {
         setFilterReset(true);
         setSelectedFilterHorizontal(dashboardHelper.horizontal);
         setSelectedFilterVertical(dashboardHelper.vertical);
-        getObservationData(false);
+        getObservationData(true, "", "", "");
     };
 
     useEffect(() => {
