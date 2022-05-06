@@ -75,7 +75,7 @@ const Dashboard = () => {
                     ).format("DD/MM/Y H:mm");
                 } else {
                     selectedFilterVertical.from_obs_data = moment(
-                        selectedFilterVertical.obs_start_date + " " + "00:00"
+                        selectedFilterVertical.obs_start_date + " 00:00"
                     ).format("DD/MM/Y HH:mm");
                 }
             }
@@ -88,7 +88,7 @@ const Dashboard = () => {
                     ).format("DD/MM/Y HH:mm");
                 } else {
                     selectedFilterVertical.to_obs_data = moment(
-                        selectedFilterVertical.obs_end_date + " " + "23:59"
+                        selectedFilterVertical.obs_end_date + " 23:59"
                     ).format("DD/MM/Y HH:mm");
                 }
             }
