@@ -24,28 +24,19 @@ import Images from "./../../static/images";
 import {imageDetails} from "../../helpers/observation";
 import Loader from "../../components/Shared/Loader";
 import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
+import {baseURL, routeUrls} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
+import {PropTypes} from "prop-types";
+import {useLocation} from "react-router-dom";
 
-const ObservationMoreDetails = lazy(() =>
-    import(
-        "../../components/Observation/ObservationDetails/ObservationMoreDetails"
-        )
-);
-const ObservationMoreEquipementDetails = lazy(() =>
-    import(
-        "../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails"
-        )
-);
-const Comments = lazy(() =>
-    import("../../components/Observation/ObservationDetails/Comments")
-);
-const CardImageCarousel = lazy(() =>
-    import("../../components/Shared/CardImageCarousel")
-);
+const ObservationMoreDetails = lazy(() => import("../../components/Observation/ObservationDetails/ObservationMoreDetails"));
+const ObservationMoreEquipementDetails = lazy(() => import("../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails"));
+const Comments = lazy(() => import("../../components/Observation/ObservationDetails/Comments"));
+const CardImageCarousel = lazy(() => import("../../components/Shared/CardImageCarousel"));
 
 const ObservationDetails = (props) => {
     const {auth} = useAuth();
+    const location = useLocation();
     const {
         modalClass,
         open,
@@ -54,12 +45,11 @@ const ObservationDetails = (props) => {
         activeType,
         handleContinueEdit,
         handleApproveRejectEvent,
-        hasNulledImage,
         refreshData
     } = props;
 
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
-    const {observationComments} = useObservationsData();
+    const {observationComments, setObservationListData, observationListData} = useObservationsData();
     const obvDetailsModal = useRef(null);
     const [isImageNull, setIsImageNull] = useState(true);
 
@@ -111,10 +101,27 @@ const ObservationDetails = (props) => {
     }, [data?.id, isImageNull, open]);
 
     useEffect(() => {
-        hasNulledImage(isImageNull);
-        refreshData(true, activeType);
+        if (!isImageNull && location.pathname === `/${routeUrls.myObservations}`) {
+            refreshData(true, activeType);
+        }
 
-    }, [isImageNull]);
+    }, [isImageNull, location]);
+
+
+    useEffect(() => {
+        if (!isImageNull) {
+            observationListData?.list?.filter(item => {
+                return item.id === observationListData?.active?.id
+            }).map(item => {
+                return setObservationListData((prev) => {
+                    return {
+                        ...prev,
+                        active: item
+                    }
+                })
+            })
+        }
+    }, [observationListData.list])
 
     return (
         <>
@@ -335,4 +342,10 @@ const ObservationDetails = (props) => {
         </>
     );
 };
+
+ObservationDetails.propTypes = {
+    hasNulledImage: PropTypes.func,
+    refreshData: PropTypes.func
+};
+
 export default ObservationDetails;

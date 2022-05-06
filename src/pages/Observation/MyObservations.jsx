@@ -39,8 +39,6 @@ const MyObservations = () => {
     const [isActiveTypeChangeFinished, setActiveTypeChangeFinished] =
         useState(false);
 
-    const [isNulledImage, setIsNulledImage] = useState();
-
     const handleObservationEdit = (data) => {
         cleaningUpObservationDataForDraftSaving(data).then((r) => r);
         setObservationDetailModal(false);
@@ -163,35 +161,16 @@ const MyObservations = () => {
             return {
                 ...prev,
                 active: observationListData?.list?.[selectedObservationId],
+                activeType: activeType
             };
         });
-    }, [isObservationDetailModal]);
+    }, [isObservationDetailModal, activeType]);
 
     useEffect(() => {
         getObservationData(true, "verified");
         setIsLoaded(false);
     }, [isLoaded]);
 
-    const handleImageNulled = (eventData) => {
-        setIsNulledImage(eventData);
-    };
-
-    useEffect(() => {
-        let activeID = observationListData?.active?.id;
-        if (!isNulledImage) {
-            observationListData?.list?.map((item) => {
-                if (item.id === activeID) {
-                    return item;
-                }
-                return setObservationListData((prev) => {
-                    return {
-                        ...prev,
-                        active: item
-                    }
-                })
-            })
-        }
-    }, [isNulledImage])
 
     return listCount?.total > 0 ? (
         <section className="my-observation-data">
@@ -304,7 +283,6 @@ const MyObservations = () => {
                     handleClose={handleObservationDetailModal}
                     handleContinueEdit={handleObservationEdit}
                     handleApproveRejectEvent={getObservationData}
-                    hasNulledImage={handleImageNulled}
                     refreshData={getObservationData}
                 />
             </Suspense>
