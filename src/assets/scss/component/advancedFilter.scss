@@ -1,127 +1,153 @@
 @import "../global/config.scss";
 
-.advanced-filter{
-    background: #FFFFFF;
-    box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.03), inset -1px 0px 0px #E0E3E8;
-    padding: 18px 16px;
-    display: block;
-    max-width: $filter-size;
-    width: 100%;
-    position: sticky;
+.advanced-filter {
+  background: #FFFFFF;
+  box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.03), inset -1px 0px 0px #E0E3E8;
+  padding: 18px 16px;
+  display: block;
+  max-width: $filter-size;
+  width: 100%;
+  position: sticky;
+  left: 0;
+  top: 142px;
+  right: 0;
+  height: calc(100vh - 142px);
+  overflow: hidden;
+  @include customScrollBar;
+  @include media-breakpoint-down(xl) {
+    margin-right: 30px;
+    max-width: 210px;
+  }
+  @include media-breakpoint-down(lg) {
+    top: 198px;
+  }
+  @include media-breakpoint-down(md) {
     left: 0;
-    top: 142px;
     right: 0;
-    height: calc(100vh - 142px);
-    overflow: hidden;
-    overflow-y: auto;
-    @include customScrollBar;
-    @include media-breakpoint-down(xl){
-        margin-right: 30px;
-        max-width: 210px;
+    top: 70px;
+    position: fixed;
+    height: calc(100vh - 70px);
+    z-index: 999;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 300px;
+    transform: translateX(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-right: 0;
+  }
+  @include media-breakpoint-down(sm) {
+    top: 64px;
+    height: calc(100vh - 64px);
+  }
+
+  .close-icon {
+    position: relative;
+    right: -10px;
+    top: -5px;
+  }
+
+  .form-label {
+    @include md-text;
+    margin-bottom: 5px !important;
+  }
+
+  .form-control,
+  .form-select {
+    @include md-text;
+    padding: 6px 10px;
+  }
+
+  .collapse-btn {
+    @include sm-text;
+    color: $grey;
+    @include media-breakpoint-down(lg) {
+      font-size: 11px;
     }
-    @include media-breakpoint-down(lg){
-        top: 198px;
+
+    &.open {
+      svg {
+        transform: rotate(-180deg);
+        transition: $transition;
+      }
     }
-    @include media-breakpoint-down(md){
-        background-color: $white;
-        display: flex !important;
-        flex-basis: auto;
-        left: 0;
+
+    svg {
+      transition: $transition;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .date-time_row {
+    background: $input-bg;
+    border-radius: $border-radius;
+
+    .date-box {
+      //width: 60%;
+      width: 120px;
+    }
+
+    .time-box {
+      //width: 40%;
+      width: 90px;
+    }
+
+    input[type="date"] {
+      //padding-left: 33px;
+      position: relative;
+      padding-right: 0;
+      @include media-breakpoint-down(xl) {
+        font-size: 13px;
+      }
+      @include media-breakpoint-down(md) {
+        font-size: 14px;
+      }
+
+      &::-webkit-calendar-picker-indicator {
+        position: absolute;
+        top: 4px;
+        //left: -18px;
+        right: 0px;
+        width: 20px;
+        height: 22px;
+
+        button {
+          border: none;
+          background: transparent;
+        }
+      }
+    }
+
+    input[type="time"] {
+      //padding-left: 33px;
+      padding: 6px 5px;
+      @include media-breakpoint-down(xl) {
+        font-size: 13px;
+      }
+      @include media-breakpoint-down(md) {
+        font-size: 14px;
+      }
+
+      &::-webkit-calendar-picker-indicator {
+        position: absolute;
+        top: 4px;
+        //left: -5px;
         right: 0;
-        top: 0;
-        position: fixed;
-        height: 100vh !important;
-        z-index: 999;
-        overflow-y: auto;
-        align-items: flex-start;
-        flex-direction: column;
-        width: 100%;
-        max-width: 300px;
-        transform: translateX(0);
-        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+        width: 20px;
+        height: 22px;
+
+        button {
+          border: none;
+          background: transparent;
+        }
+      }
     }
-    .form-label{
-        @include md-text;
-        margin-bottom: 5px !important;
+  }
+
+  .inner-wrapper {
+    @include media-breakpoint-down(md) {
+      height: calc(100vh - 180px);
+      overflow-y: auto;
     }
-    .form-control,
-    .form-select{
-        @include md-text;
-        padding: 6px 10px;
-    }
-    .collapse-btn{
-        @include sm-text;
-        color: $grey;
-        @include media-breakpoint-down(lg){
-            font-size: 11px;
-        }
-        &.open{
-            svg{
-                transform: rotate(-180deg);
-                transition: $transition;
-            }
-        }
-        svg{
-            transition: $transition;
-            width: 20px;
-            height: 20px;
-        }
-    }
-    .date-time_row{
-        background: $input-bg;
-        border-radius: $border-radius;
-        .date-box{
-            //width: 60%;
-            width: 120px;
-        }
-        .time-box{
-            //width: 40%;
-            width: 90px;
-        }
-        input[type="date"]{
-            //padding-left: 33px;
-            position: relative;
-            padding-right: 0;
-            @include media-breakpoint-down(xl){
-                font-size: 13px;
-            }
-            @include media-breakpoint-down(md){
-                font-size: 14px;
-            }
-            &::-webkit-calendar-picker-indicator{
-                position: absolute;
-                top: 4px;
-                //left: -18px;
-                right: 0px;
-                width: 20px;
-                height: 22px;
-                button{
-                    border: none;
-                    background: transparent;
-                }
-            }
-        }
-        input[type="time"]{
-            //padding-left: 33px;
-            padding: 6px 5px;
-            @include media-breakpoint-down(xl){
-                font-size: 13px;
-            }
-            @include media-breakpoint-down(md){
-                font-size: 14px;
-            }
-            &::-webkit-calendar-picker-indicator{
-                position: absolute;
-                top: 4px;
-                //left: -5px;
-                right: 0;
-                width: 20px;
-                height: 22px;
-                button{
-                    border: none;
-                    background: transparent;
-                }
-            }
-        }
-    }
+  }
 }

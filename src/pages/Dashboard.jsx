@@ -259,6 +259,10 @@ const Dashboard = () => {
         })
         getObservationData(true, "", "", "");
 
+        if (window.innerWidth < 768) {
+            setFilterShow(false);
+        }
+
     }, []);
 
     useEffect(() => {

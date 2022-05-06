@@ -19,24 +19,26 @@ body {
   font-family: $FontFamily;
   background-color: $white;
 }
-input.form-control::-webkit-input-placeholder, input::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeholder { 
+
+input.form-control::-webkit-input-placeholder, input::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeholder {
   color: #000;
   opacity: 0.32;
 }
 
 // input.form-control:-ms-input-placeholder { 
-input.form-control:-ms-input-placeholder, input:-ms-input-placeholder, textarea.form-control:-ms-input-placeholder { 
+input.form-control:-ms-input-placeholder, input:-ms-input-placeholder, textarea.form-control:-ms-input-placeholder {
   color: #000;
   opacity: 0.32;
 }
 
 // input.form-control::placeholder {
-input.form-control::placeholder, input::placeholder, textarea.form-control::placeholder { 
-  color: #000; 
+input.form-control::placeholder, input::placeholder, textarea.form-control::placeholder {
+  color: #000;
   opacity: 0.32;
 }
+
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
@@ -48,41 +50,49 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px $input-bg inset;
   transition: background-color 5000s ease-in-out 0s;
 }
-input[type=file], 
-input[type=file]::-webkit-file-upload-button { 
-    cursor: pointer; 
+
+input[type=file],
+input[type=file]::-webkit-file-upload-button {
+  cursor: pointer;
 }
-::selection{
+
+::selection {
   color: #fff;
   background-color: #9900004a;
 }
+
 body.modal-open {
   padding-right: 0 !important;
 }
+
 .pointer {
-  cursor: pointer!important;
+  cursor: pointer !important;
 }
 
-.btn{
+.btn {
   border-radius: 99px;
-  &.disabled{
+
+  &.disabled {
     @include disabled;
   }
 }
 
-.form-control, .form-select{
+.form-control, .form-select {
   @include formField;
   @include lg-text;
-  &:focus{
+
+  &:focus {
     border-color: transparent;
     box-shadow: none;
   }
 }
+
 .counter {
   font-size: 35px;
   font-weight: $font-weight-bolder;
 }
-.required{
+
+.required {
   background: linear-gradient(128.5deg, #C01E37 0%, #F052C1 154.21%);
   border-radius: 2px;
   padding: 1.5px 2px 0.5px 3px;
@@ -96,10 +106,11 @@ body.modal-open {
   margin-left: 6px;
   margin-bottom: 0;
 }
+
 .main-content {
   margin-top: 70px;
   min-height: calc(100vh - 70px);
-  @include media-breakpoint-down(md)  {
+  @include media-breakpoint-down(md) {
     margin-top: 64px;
   }
 }
@@ -108,22 +119,29 @@ body.modal-open {
   @include media-breakpoint-up(xxl) {
     max-width: 1500px;
   }
+  @include media-breakpoint-down(lg) {
+    max-width: 100%;
+  }
 }
 
 
-.btn-secondary{
+.btn-secondary {
   @include buttonSecodary;
 }
-.btn-outline-secondary{
+
+.btn-outline-secondary {
   @include buttonOutlineSecodary;
 }
-.gray-outline-btn{
+
+.gray-outline-btn {
   @include grayButton;
 }
+
 .map-search-container {
   padding: 20px;
   position: relative;
 }
+
 // Import any component file here
 
 .setplaceholdersize {
@@ -131,11 +149,12 @@ body.modal-open {
     font-size: 16px;
   }
 }
+
 .object-contain {
   object-fit: contain !important;
 }
 
-.ex-text{
+.ex-text {
   @include sm-text;
 }
 
@@ -155,13 +174,17 @@ ul.list-numbered {
   list-style-type: decimal;
   margin: 0;
   padding: 0;
+
   li {
     margin-bottom: 30px;
+
     &:last-child {
       margin-bottom: 0;
     }
+
     ul {
       list-style-type: disc;
+
       li {
         margin-bottom: 5px;
       }

@@ -176,7 +176,7 @@ const ObservationDetails = (props) => {
                     )}
                 </ModalHeader>
                 <ModalBody>
-                    <Row className="h-100">
+                    <Row>
                         <Col md={6}>
                             <div className="mb-4 mb-md-0 h-100">
                                 <div className="preview-detail mb-3 mb-md-2">
