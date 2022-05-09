@@ -5,19 +5,19 @@ import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import {baseURL} from "../../helpers/url";
 import PlacesAutocomplete from "../LocationSearchInput";
-import { Link } from "react-router-dom";
-import { routeUrls } from './../../helpers/url';
+import {Link} from "react-router-dom";
+import {routeUrls} from '../../helpers/url';
 
 
 const Register = (props) => {
-    const { handleLogin } = props;
-    const { setAuth, persist, setPersist } = useAuth();
+    const {handleLogin} = props;
+    const {setAuth, persist, setPersist} = useAuth();
     const [userRegistration, setUserRegistration] = useState({
         first_name: "",
         last_name: "",
         email: "",
         location: "",
-        place_uid:"",
+        place_uid: "",
         location_metadata: {
             address: "",
             lat: "",
@@ -46,7 +46,7 @@ const Register = (props) => {
             location_metadata: {
                 lat: location['lat'],
                 lng: location['lng'],
-                
+
             }
         });
     }
@@ -118,11 +118,16 @@ const Register = (props) => {
             });
     };
 
+    const handleDisabled = () => {
+        return !(userRegistration?.agreeTerms && userRegistration?.password === userRegistration?.password_confirmation);
+    }
+
+
     useEffect(() => {
         localStorage.setItem("persist", persist);
     }, [persist])
 
-    return(
+    return (
         <>
             {success && (
                 <p className="text-success small mb-4 fw-bolder">
@@ -186,7 +191,16 @@ const Register = (props) => {
                             <FormFeedback>{error?.data?.password}</FormFeedback>
                         </FormGroup>
                         <FormGroup>
-                            <PlacesAutocomplete handleLocations={handleLocations} error = {error}/>
+                            <Input
+                                required
+                                type="password"
+                                name="password_confirmation"
+                                placeholder="Confirm Password"
+                                onChange={(e) => handleInput(e)}
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <PlacesAutocomplete handleLocations={handleLocations} error={error}/>
                         </FormGroup>
                         <FormGroup check>
                             <Label check>
@@ -198,7 +212,8 @@ const Register = (props) => {
                                     onChange={(e) => handleCheck(e)}
                                 />
                                 Creating an account means you agree with our with our{" "}
-                                <Link to={routeUrls.home}>Privacy Policy</Link> and <Link to={routeUrls.home}>Terms.</Link>
+                                <Link to={routeUrls.home}>Privacy Policy</Link> and <Link
+                                to={routeUrls.home}>Terms.</Link>
                             </Label>
                         </FormGroup>
                     </Col>
@@ -206,9 +221,7 @@ const Register = (props) => {
                 <Button
                     type="submit"
                     className="modal-btn"
-                    disabled={
-                        userRegistration ? userRegistration?.agreeTerms !== true : false
-                    }
+                    disabled={handleDisabled()}
                 >
                     Create Account
                 </Button>
