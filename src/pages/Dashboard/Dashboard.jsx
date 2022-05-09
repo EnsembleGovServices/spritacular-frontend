@@ -1,32 +1,32 @@
-import "../assets/scss/component/dashboard.scss";
+import "../../assets/scss/component/dashboard.scss";
 import {lazy, Suspense, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import useObservationsData from "../hooks/useObservationsData";
+import useAuth from "../../hooks/useAuth";
+import useObservationsData from "../../hooks/useObservationsData";
 
-import useObservations from "../hooks/useObservations";
-import {LoadMore} from "../components/Shared/LoadMore";
+import useObservations from "../../hooks/useObservations";
+import {LoadMore} from "../../components/Shared/LoadMore";
 
-import axios from "./../api/axios";
+import axios from "../../api/axios";
 import moment from "moment";
-import Images from "./../static/images";
-import {dashboardHelper} from "../helpers/dashboard";
-import {baseURL} from "../helpers/url";
+import Images from "../../static/images";
+import {dashboardHelper} from "../../helpers/dashboard";
+import {baseURL} from "../../helpers/url";
 
 const FilterSelectMenu = lazy(() =>
-    import("../components/Shared/FilterSelectMenu")
+    import("../../components/Shared/FilterSelectMenu")
 );
 const AdvancedFilter = lazy(() =>
-    import("../components/Shared/AdvancedFilter")
+    import("../../components/Shared/AdvancedFilter")
 );
 const ObservationDetailPage = lazy(() =>
-    import("./Observation/ObservationDetailPage")
+    import("../Observation/ObservationDetailPage")
 );
 const ObservationListView = lazy(() =>
-    import("./Observation/ObservationListView")
+    import("../Observation/ObservationListView")
 );
 const ObservationDetails = lazy(() =>
-    import("./Observation/ObservationDetails")
+    import("../Observation/ObservationDetails")
 );
 
 const Dashboard = () => {

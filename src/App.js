@@ -2,9 +2,9 @@ import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
 
 
-import {lazy, Suspense ,useState} from "react";
-import { Routes, Route } from "react-router-dom";
-import { routeUrls } from "./helpers/url";
+import {lazy, Suspense, useState} from "react";
+import {Routes, Route} from "react-router-dom";
+import {routeUrls} from "./helpers/url";
 
 import useAuth from "./hooks/useAuth";
 
@@ -27,127 +27,152 @@ const LoginPage = lazy(() => import('./pages/Auth/LoginPage'));
 
 
 const Profile = lazy(() => import('./pages/Profile'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
 const MyObservations = lazy(() => import('./pages/Observation/MyObservations'));
 const AddObservation = lazy(() => import('./pages/Observation/AddObservation'));
 const Observations = lazy(() => import('./pages/Observation/Observations'));
 
 
+const BlogPage = lazy(() => import('./pages/Dashboard/Blog/BlogPage'));
+const BlogCreate = lazy(() => import('./pages/Dashboard/Blog/BlogCreate'));
+const BlogView = lazy(() => import('./pages/Dashboard/Blog/BlogView'));
+
+
 const App = () => {
-  const [persistValue, setPersistValue] = useState(false);
-  const authCallBack = (authChange) => {
-    setPersistValue(authChange);
-  };
-  const {auth} = useAuth();
+    const [persistValue, setPersistValue] = useState(false);
+    const authCallBack = (authChange) => {
+        setPersistValue(authChange);
+    };
+    const {auth} = useAuth();
 
-  const Roles = {
-    'superuser' : auth?.user?.is_superuser,
-    'trained' : auth?.user?.is_trained,
-    'user' : auth?.user?.is_user,
-  }
+    const Roles = {
+        'superuser': auth?.user?.is_superuser,
+        'trained': auth?.user?.is_trained,
+        'user': auth?.user?.is_user,
+    }
 
 
-  return (
-    <>
-    
-    <Routes>
-      <Route element={
-        <Suspense fallback={<Loader />}>
-          <PersistLogin persistValue={persistValue} />
-        </Suspense>
-      }>
-        <Route element={ <InformativePage setAuthValue={authCallBack} /> }>
-          <Route exact path={routeUrls.home} element={
-            <Suspense fallback={<Loader />}>
-              <Home />
-            </Suspense>
-          } />
-          <Route exact path={routeUrls.about} element={
-            <Suspense fallback={<Loader />}>
-              <About />
-            </Suspense>
-          } />
-          <Route exact path={routeUrls.getStarted} element={
-            <Suspense fallback={<Loader />}>
-              <GetStarted />
-            </Suspense>
-          } />
-          <Route exact path={routeUrls.gallery} element={
-            <Suspense fallback={<Loader />}>
-              <Gallery />
-            </Suspense>
-          } />
-          <Route exact path={routeUrls.blog} element={
-            <Suspense fallback={<Loader />}>
-              <Blog />
-            </Suspense>
-          } />
-          <Route exact path={routeUrls.tutorials} element={
-            <Suspense fallback={<Loader />}>
-              <Tutorials />
-            </Suspense>
-          } />
-          <Route exact path={routeUrls.policy} element={<Policy />} />
-          <Route exact path={routeUrls.tutorialsDetail} element={
-            <Suspense fallback={<Loader />}>
-              <TutorialsDetail />
-            </Suspense>
-          } />
-          <Route exact path={routeUrls.login} element={
-            <Suspense fallback={<Loader />}>
-              <LoginPage />
-            </Suspense>
-          } />
-        </Route>
-        <Route exact path={"/password_reset"} element={
-          <Suspense fallback={<Loader />}>
-            <ResetPasswordPopup />
-          </Suspense>
-        } />
-        
-        {/*Protected routes*/}
-        <Route element={<RequireAuth allowedRoles={Roles} setAuthValue={authCallBack} />}>
-          <Route element={
-            <Suspense fallback={<Loader />}>
-              <Observations />
-            </Suspense>
-          }>
-          <Route exact path={routeUrls.profile} element={
-            <Suspense fallback={<Loader />}>
-              <Profile />
-            </Suspense>
-          } />
-            <Route exact path={routeUrls.myObservations} element={
-              <Suspense fallback={<Loader />}>
-                <MyObservations />
-              </Suspense>
-            } />
-            <Route exact path={routeUrls.observationsAdd} element={
-              <Suspense fallback={<Loader />}>
-                <AddObservation />
-              </Suspense>
-            } />
-            <Route exact path={routeUrls.observationsUpdate} element={
-              <Suspense fallback={<Loader />}>
-                <AddObservation />
-              </Suspense>
-            } />
-          </Route>
-          <Route exact path={routeUrls.dashboard} element={
-            <Suspense fallback={<Loader />}>
-              <Dashboard />
-            </Suspense>
-          } />
-        </Route>
-      </Route>
-      <Route path="*" element={
-        <Suspense fallback={<Loader />}>
-          <Error />
-        </Suspense>
-      } />
-    </Routes>
-    </>
-  );
+    return (
+        <>
+
+            <Routes>
+                <Route element={
+                    <Suspense fallback={<Loader/>}>
+                        <PersistLogin persistValue={persistValue}/>
+                    </Suspense>
+                }>
+                    <Route element={<InformativePage setAuthValue={authCallBack}/>}>
+                        <Route exact path={routeUrls.home} element={
+                            <Suspense fallback={<Loader/>}>
+                                <Home/>
+                            </Suspense>
+                        }/>
+                        <Route exact path={routeUrls.about} element={
+                            <Suspense fallback={<Loader/>}>
+                                <About/>
+                            </Suspense>
+                        }/>
+                        <Route exact path={routeUrls.getStarted} element={
+                            <Suspense fallback={<Loader/>}>
+                                <GetStarted/>
+                            </Suspense>
+                        }/>
+                        <Route exact path={routeUrls.gallery} element={
+                            <Suspense fallback={<Loader/>}>
+                                <Gallery/>
+                            </Suspense>
+                        }/>
+                        <Route exact path={routeUrls.blog} element={
+                            <Suspense fallback={<Loader/>}>
+                                <Blog/>
+                            </Suspense>
+                        }/>
+                        <Route exact path={routeUrls.tutorials} element={
+                            <Suspense fallback={<Loader/>}>
+                                <Tutorials/>
+                            </Suspense>
+                        }/>
+                        <Route exact path={routeUrls.policy} element={<Policy/>}/>
+                        <Route exact path={routeUrls.tutorialsDetail} element={
+                            <Suspense fallback={<Loader/>}>
+                                <TutorialsDetail/>
+                            </Suspense>
+                        }/>
+                        <Route exact path={routeUrls.login} element={
+                            <Suspense fallback={<Loader/>}>
+                                <LoginPage/>
+                            </Suspense>
+                        }/>
+                    </Route>
+                    <Route exact path={"/password_reset"} element={
+                        <Suspense fallback={<Loader/>}>
+                            <ResetPasswordPopup/>
+                        </Suspense>
+                    }/>
+
+                    {/*Protected routes*/}
+                    <Route element={<RequireAuth allowedRoles={Roles} setAuthValue={authCallBack}/>}>
+                        <Route element={
+                            <Suspense fallback={<Loader/>}>
+                                <Observations/>
+                            </Suspense>
+                        }>
+                            <Route exact path={routeUrls.profile} element={
+                                <Suspense fallback={<Loader/>}>
+                                    <Profile/>
+                                </Suspense>
+                            }/>
+                            <Route exact path={routeUrls.myObservations} element={
+                                <Suspense fallback={<Loader/>}>
+                                    <MyObservations/>
+                                </Suspense>
+                            }/>
+                            <Route exact path={routeUrls.observationsAdd} element={
+                                <Suspense fallback={<Loader/>}>
+                                    <AddObservation/>
+                                </Suspense>
+                            }/>
+                            <Route exact path={routeUrls.observationsUpdate} element={
+                                <Suspense fallback={<Loader/>}>
+                                    <AddObservation/>
+                                </Suspense>
+                            }/>
+
+                            <Route exact path={routeUrls.dashboard}>
+                                <Route index element={<Suspense fallback={<Loader/>}><Dashboard/></Suspense>}/>
+                                <Route path={routeUrls.dashBlog.list}>
+                                    <Route index element={<BlogPage/>}/>
+                                    <Route path={routeUrls.dashBlog.create}
+                                           element={<Suspense fallback={<Loader/>}><BlogCreate/></Suspense>}/>
+                                    <Route path={routeUrls.dashBlog.view}
+                                           element={<Suspense fallback={<Loader/>}><BlogView/></Suspense>}/>
+                                </Route>
+                            </Route>
+
+                            {/*<Route exact path={routeUrls.dashBlog} element={*/}
+                            {/*    <Suspense fallback={<Loader/>}>*/}
+                            {/*        <BlogPage/>*/}
+                            {/*    </Suspense>*/}
+                            {/*}/>*/}
+
+                            {/*<Route exact path={routeUrls.blogCreate} element={*/}
+                            {/*    <Suspense fallback={<Loader/>}>*/}
+                            {/*        <BlogCreate/>*/}
+                            {/*    </Suspense>*/}
+                            {/*}/>*/}
+
+
+                        </Route>
+                    </Route>
+                </Route>
+                <Route path="*" element={
+                    <Suspense fallback={<Loader/>}>
+                        <Error/>
+                    </Suspense>
+                }/>
+            </Routes>
+        </>
+    );
 };
 
 export default App;
