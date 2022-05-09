@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import {useState, useEffect, createContext} from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
@@ -15,8 +15,8 @@ export const observationViewContext = createContext({});
 const PersistLogin = (props) => {
     const [categoryList, setCategoryList] = useState([]);
     const refresh = useRefreshToken();
-    const { auth, persist } = useAuth();
-    const { persistValue } = props;
+    const {auth, persist} = useAuth();
+    const {persistValue} = props;
     const [isLoading, setIsLoading] = useState(true);
     const [observationListData, setObservationListData] = useState({
         active: {},
@@ -27,7 +27,12 @@ const PersistLogin = (props) => {
     });
     const [observationCSVId, setObservationCSVId] = useState({});
     const [recentObservation, setRecentObservation] = useState({});
-    
+    const [blog, setBlog] = useState({
+        create: {},
+        list: {},
+        view: {}
+    });
+
     useEffect(() => {
         let isMounted = true;
         const verifyRefreshToken = async () => {
@@ -35,11 +40,9 @@ const PersistLogin = (props) => {
                 if (persist && localStorage.getItem('refresh')) {
                     await refresh();
                 }
-            }
-            catch (err) {
+            } catch (err) {
                 console.error(err);
-            }
-            finally {
+            } finally {
                 isMounted && setIsLoading(false);
             }
         }
@@ -66,28 +69,30 @@ const PersistLogin = (props) => {
                     categoryList,
                     setCategoryList,
                     observationCSVId,
-                    setObservationCSVId
+                    setObservationCSVId,
+                    blog,
+                    setBlog
                 }
             }>
-            {!persist ? (
-                <>
-                    <Header />
-                    <div className="main-content">
-                        <Outlet />
-                    </div>
-                    <Footer />
-                </>
-            ) : isLoading ? <Loader fixContent={true} /> : (
-                <>
-                        <Header />
+                {!persist ? (
+                    <>
+                        <Header/>
                         <div className="main-content">
-                            <Outlet />
+                            <Outlet/>
                         </div>
-                    {persistValue && <Footer />}
+                        <Footer/>
+                    </>
+                ) : isLoading ? <Loader fixContent={true}/> : (
+                    <>
+                        <Header/>
+                        <div className="main-content">
+                            <Outlet/>
+                        </div>
+                        {persistValue && <Footer/>}
 
-                </>
-            )}
-                </observationViewContext.Provider>
+                    </>
+                )}
+            </observationViewContext.Provider>
         </>
     )
 }
