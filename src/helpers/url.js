@@ -6,7 +6,9 @@ export const baseURL = {
     refresh: process.env.REACT_APP_API_REFRESH_URL,
     user: process.env.REACT_APP_API_USER_URL,
     register: process.env.REACT_APP_API_REGISTER_URL,
-    create_blog: process.env.REACT_APP_API_CREATE_BLOG_URL
+    create_blog: process.env.REACT_APP_API_CREATE_BLOG_URL,
+    get_blog: process.env.REACT_APP_API_ALL_BLOG_URL,
+    get_single_blog: process.env.REACT_APP_API_SINGLE_BLOG_URL
 }
 
 export const cameraSettingFields = {
@@ -39,6 +41,6 @@ export const routeUrls = {
     dashBlog: {
         list: 'blog',
         create: 'create',
-        view: ':blogID'
+        view: ':id'
     }
 }

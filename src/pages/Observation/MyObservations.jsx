@@ -16,6 +16,7 @@ import {obvType} from "../../helpers/observation";
 import {baseURL, routeUrls} from "../../helpers/url";
 import Images from "./../../static/images";
 import Loader from "../../components/Shared/Loader";
+import NotFound from "../../components/Common/NotFound";
 
 const ObservationDetails = lazy(() => import("./ObservationDetails"));
 const ObservationDetailPage = lazy(() => import("./ObservationDetailPage"));
@@ -259,16 +260,7 @@ const MyObservations = () => {
                         />
                     </Suspense>
                 ) : (
-                    <div className="data-not-found">
-                        <img
-                            src={Images.NoDataFound}
-                            alt="No data found"
-                            className="mb-3"
-                        />
-                        <p>
-                            <b className="text-secondary fw-bold">Opps!</b> No Data Found
-                        </p>
-                    </div>
+                    <NotFound/>
                 )}
 
                 {nextPageUrl && <LoadMore handleLoadMore={handleLoadMore}/>}
