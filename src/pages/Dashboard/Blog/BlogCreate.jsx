@@ -45,7 +45,7 @@ const BlogCreate = () => {
                 message: response.data.success
             });
             window.scrollTo(0, 0);
-            navigate('/dashboard/blog', {replace: true});
+            // navigate('/dashboard/blog', {replace: true});
         }).catch(error => {
             console.log('error', error)
             setError({

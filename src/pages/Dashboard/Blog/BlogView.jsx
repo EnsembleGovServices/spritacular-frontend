@@ -1,5 +1,4 @@
 import "../../../assets/scss/component/blog.scss";
-import "../../../assets/scss/styles/editor.css";
 import {Col, Container} from "reactstrap";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {baseURL, routeUrls} from "../../../helpers/url";

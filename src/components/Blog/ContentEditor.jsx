@@ -1,59 +1,59 @@
-import {CKEditor} from "@ckeditor/ckeditor5-react";
-import FullEditor from 'ckeditor5-build-full'
-import {editorCustomConfig} from "../../helpers/editorHelper";
+import "../../assets/scss/styles/editors.css";
 import PropTypes from "prop-types";
-import {useLayoutEffect, useState} from "react";
-import Loader from "../Shared/Loader";
+import {CKEditor} from "@ckeditor/ckeditor5-react";
+import FullEditor from 'ckeditor5-build-full';
 
 const ContentEditor = (props) => {
     const {data, setData, readMode} = props;
-    const [loading, setLoading] = useState(true);
     const editorConfig = {
-        toolbar: editorCustomConfig,
+        toolbar: {
+            items: [
+                "undo", "redo",
+                "fontsize", "fontColor", "fontBackgroundColor", "|",
+                "heading", "|", "alignment", "|",
+                "bold", "italic", "|", "link", "|",
+                "bulletedList", "numberedList",
+                "insertTable", "mergeTableCells", "|",
+                "code", "codeBlock", "|",
+                "imageUpload", "insertImage", "HorizontalLine",
+                "SpecialCharacters", "ImageResize",
+                "pageBreak",
+            ],
+            shouldNotGroupWhenFull: false
+        },
     }
 
-    useLayoutEffect(() => {
-        setTimeout(function () {
-            setLoading(!loading)
-        }, 500)
-    }, [readMode])
     return (
-        loading ? <Loader/> : (
-            <CKEditor
-                editor={FullEditor}
-                config={editorConfig}
-                data={data ? data : ""}
-                onReady={editor => {
-                    const toolbarContainer = editor.ui.view.stickyPanel;
+        <CKEditor
+            editor={FullEditor}
+            config={editorConfig}
+            data={data ? data : ""}
+            onReady={editor => {
+                const toolbarContainer = editor.ui.view.stickyPanel;
+                console.log(editor.config._config.plugins.map(item => item.pluginName))
+                editor.isReadOnly = !!readMode;
+                console.log(Array.from(editor.ui.componentFactory.names()));
+                console.log('isReadOnly', editor.isReadOnly)
 
-                    if (readMode) {
-                        editor.isReadOnly = true;
-                    } else {
-                        editor.isReadOnly = false;
-                    }
+                if (editor.isReadOnly) {
+                    editor.ui.view.top.remove(toolbarContainer);
+                    editor.ui.view.editable.element.classList.add('p-0');
+                    editor.ui.view.editable.element.classList.add('border-0');
+                }
+            }}
+            onChange={(event, editor) => {
+                const data = editor.getData();
+                if (setData) {
+                    setData((prev) => {
+                        return {
+                            ...prev,
+                            content: data
+                        }
+                    })
+                }
 
-                    console.log('isReadOnly', editor.isReadOnly)
-
-                    if (editor.isReadOnly) {
-                        editor.ui.view.top.remove(toolbarContainer);
-                        editor.ui.view.editable.element.classList.add('p-0');
-                        editor.ui.view.editable.element.classList.add('border-0');
-                    }
-                }}
-                onChange={(event, editor) => {
-                    const data = editor.getData();
-                    if (setData) {
-                        setData((prev) => {
-                            return {
-                                ...prev,
-                                content: data
-                            }
-                        })
-                    }
-
-                }}
-            />
-        )
+            }}
+        />
     )
 }
 ContentEditor.propTypes = {
