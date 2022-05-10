@@ -3,17 +3,16 @@ import {Col, Container, Form, FormGroup, Input, Label, UncontrolledAlert} from "
 import axios from "../../../api/axios";
 import {baseURL, routeUrls} from "../../../helpers/url";
 import {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 
 import useAuth from "../../../hooks/useAuth";
 import useObservationsData from "../../../hooks/useObservationsData";
 
 import ContentEditor from "../../../components/Blog/ContentEditor";
-import {Link, useNavigate} from "react-router-dom";
 
 
 const BlogCreate = () => {
     const {auth} = useAuth();
-    const {setBlog} = useObservationsData();
     const [data, setData] = useState();
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
@@ -45,7 +44,9 @@ const BlogCreate = () => {
                 message: response.data.success
             });
             window.scrollTo(0, 0);
-            // navigate('/dashboard/blog', {replace: true});
+            setTimeout(function () {
+                navigate('/dashboard/blog', {replace: true});
+            }, 1000)
         }).catch(error => {
             console.log('error', error)
             setError({
