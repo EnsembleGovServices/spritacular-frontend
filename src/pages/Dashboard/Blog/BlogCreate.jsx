@@ -6,7 +6,7 @@ import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
 import useAuth from "../../../hooks/useAuth";
-import useObservationsData from "../../../hooks/useObservationsData";
+// import useObservationsData from "../../../hooks/useObservationsData";
 
 import ContentEditor from "../../../components/Blog/ContentEditor";
 

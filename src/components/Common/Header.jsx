@@ -182,7 +182,7 @@ const Header = (props) => {
                                     </Link>
                                 </NavItem>
                             ) : ''}
-                            {persist && user?.is_superuser ? (
+                            {persist && admin ? (
                                 <NavItem>
                                     <Link
                                         to={routeUrls.dashboard}
@@ -252,12 +252,12 @@ const Header = (props) => {
                                     Resources <Icon icon="fe:arrow-down"/>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem className={active == 'resources-1' ? 'active' : ''}>
+                                    <DropdownItem className={active === 'resources-1' ? 'active' : ''}>
                                         <Link to={routeUrls.blog} title="Blog" onClick={() => setActive('resources-1')}>
                                             Blog
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active == 'resources-2' ? 'active' : ''}>
+                                    <DropdownItem className={active === 'resources-2' ? 'active' : ''}>
                                         <Link to={routeUrls.tutorials} title="Tutorials"
                                               onClick={() => setActive('resources-2')}>
                                             Tutorials
@@ -276,25 +276,25 @@ const Header = (props) => {
                                     Community <Icon icon="fe:arrow-down"/>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem className={active == 'community-1' ? 'active' : ''}>
+                                    <DropdownItem className={active === 'community-1' ? 'active' : ''}>
                                         <Link to={routeUrls.home} title="Meet the Teem"
                                               onClick={() => setActive('community-1')}>
                                             Meet the Teem
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active == 'community-2' ? 'active' : ''}>
+                                    <DropdownItem className={active === 'community-2' ? 'active' : ''}>
                                         <Link to={routeUrls.home} title="Volunteer Profile"
                                               onClick={() => setActive('community-2')}>
                                             Volunteer Profile
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active == 'community-3' ? 'active' : ''}>
+                                    <DropdownItem className={active === 'community-3' ? 'active' : ''}>
                                         <Link to={routeUrls.home} title="Become an ambassador"
                                               onClick={() => setActive('community-3')}>
                                             Become an ambassador
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active == 'community-4' ? 'active' : ''}>
+                                    <DropdownItem className={active === 'community-4' ? 'active' : ''}>
                                         <Link to={routeUrls.home} title="Join Spritacular Google Group"
                                               onClick={() => setActive('community-4')}>
                                             Join Spritacular Google Group
@@ -363,20 +363,22 @@ const Header = (props) => {
                                     )}
                                 </div>
                                 <span className="profile_text">
-                  <span>{user?.first_name} {user?.last_name}{" "}</span>
-                  <Icon icon="fe:arrow-down"/>
-                </span>
+                                  <span>{user?.first_name} {user?.last_name}{" "}</span>
+                                  <Icon icon="fe:arrow-down"/>
+                                </span>
                             </DropdownToggle>
                             <DropdownMenu container="body">
                                 <DropdownItem>
-                                    <Link
-                                        to={`${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${routeUrls.dashBlog.create}`}>
-                                        Create Article
-                                    </Link>
-                                </DropdownItem>
-                                <DropdownItem>
                                     <Link to={routeUrls.myObservations}>My Observation</Link>
                                 </DropdownItem>
+                                {admin &&
+                                    <DropdownItem>
+                                        <Link
+                                            to={`${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${routeUrls.dashBlog.create}`}>
+                                            Create Article
+                                        </Link>
+                                    </DropdownItem>
+                                }
                                 <DropdownItem onClick={() => setActive('')}>
                                     <Link to={routeUrls.profile}>Edit Profile</Link>
                                 </DropdownItem>

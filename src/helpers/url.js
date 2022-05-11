@@ -8,7 +8,8 @@ export const baseURL = {
     register: process.env.REACT_APP_API_REGISTER_URL,
     create_blog: process.env.REACT_APP_API_CREATE_BLOG_URL,
     get_blog: process.env.REACT_APP_API_ALL_BLOG_URL,
-    get_single_blog: process.env.REACT_APP_API_SINGLE_BLOG_URL
+    get_single_blog: process.env.REACT_APP_API_SINGLE_BLOG_URL,
+    blog_image_upload: process.env.REACT_APP_API_BLOG_IMAGE_UPLOAD
 }
 
 export const cameraSettingFields = {
