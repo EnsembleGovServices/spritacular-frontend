@@ -1,20 +1,25 @@
-
-import {Col, FormGroup,PopoverBody, PopoverHeader, Collapse, Button, Row} from "reactstrap";
-import { useEffect, useRef, useState} from "react";
+import {Col, FormGroup, PopoverBody, PopoverHeader, Collapse, Button, Row} from "reactstrap";
+import {useEffect, useRef, useState} from "react";
 import useObservations from "../../hooks/useObservations";
-import { Icon } from "@iconify/react";
-import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
+import {Icon} from "@iconify/react";
+// import axios from "../../api/axios";
+// import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import Images from "../../static/images";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Navigation} from "swiper";
 import Tippy from "@tippyjs/react";
 
 const ObservationCategory = (props) => {
-    const {error, obvType}=props;
-    const { auth } = useAuth();
-    const { observationImages, setObservationImages, observationSteps, observationCategory , setObservationCategory } = useObservations();
+    const {error, obvType} = props;
+    const {auth} = useAuth();
+    const {
+        observationImages,
+        setObservationImages,
+        observationSteps,
+        observationCategory,
+        setObservationCategory
+    } = useObservations();
     const [Category, setCategory] = useState([]);
     const [oldCategory, setOldCategory] = useState([]);
     const [isChecked, setIsChecked] = useState({});
@@ -24,14 +29,13 @@ const ObservationCategory = (props) => {
     const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
     const tippyRef = useRef();
 
-    const onCategoryChange=(e)=>{
+    const onCategoryChange = (e) => {
         const value = parseFloat(e.target.id);
-        setIsChecked({...isChecked,[e.target.name]: e.target.checked});
-        if(selectedCategory.includes(value))
-        {
+        setIsChecked({...isChecked, [e.target.name]: e.target.checked});
+        if (selectedCategory.includes(value)) {
             const filterValue = selectedCategory.filter((item) => item !== value)
             setSelectedCategory(filterValue);
-        }else{
+        } else {
             setSelectedCategory([...selectedCategory, value]);
         }
         setObservationImages(ObservationData);
@@ -54,22 +58,22 @@ const ObservationCategory = (props) => {
             }
         });
     }
-    const ImageCarousel = (props) =>{
+    const ImageCarousel = (props) => {
         const {className} = props;
-        const items= [
-            { src: Images.card1 },
-            { src: Images.card2 },
-            { src: Images.card3 }
+        const items = [
+            {src: Images.card1},
+            {src: Images.card2},
+            {src: Images.card3}
         ]
-    
+
         const carouselContent = items.map((item, index) => {
             return (
                 <SwiperSlide key={index}>
-                    <img src={item.src} alt="carousel" />
+                    <img src={item.src} alt="carousel"/>
                 </SwiperSlide>
             );
         });
-    
+
         return (
             <>
                 <Swiper navigation={true} modules={[Navigation]} className={`className ${className ? className : ''}`}>
@@ -80,31 +84,33 @@ const ObservationCategory = (props) => {
     }
     const PopoverContent = () => {
         return (
-          <>
-            <PopoverHeader className={'bg-white'}>What is sprite?
-                 {/*<button className="bg-transparent p-0 border-0 text-black shadow-none"><Icon icon="codicon:chrome-close" width="15" height="15" /></button>*/}
-            </PopoverHeader>
-            <PopoverBody className={'bg-white'}>
-                <p style={{'--line-clamb': isPopoverContentOpen === true ? 'unset' : '2'}}>
-                    Sprites or red sprites are large-scale electric discharges that occur high above thunderstorm clouds, they appear as luminous reddish-orange flashes. 
-                </p>
-                <Collapse
-                isOpen={isPopoverContentOpen}
-                >
-                <ImageCarousel className="popover-carousel" />
-              </Collapse>
-                <Button className="bg-transparent p-0 border-0 text-secondary shadow-none d-block" onClick={()=>setIsPopoverContentOpen(!isPopoverContentOpen)}>
-                    {isPopoverContentOpen === true ? 'Show less' : 'Show more'}
-                </Button>
-            </PopoverBody>
-          </>
+            <>
+                <PopoverHeader className={'bg-white'}>What is sprite?
+                    {/*<button className="bg-transparent p-0 border-0 text-black shadow-none"><Icon icon="codicon:chrome-close" width="15" height="15" /></button>*/}
+                </PopoverHeader>
+                <PopoverBody className={'bg-white'}>
+                    <p style={{'--line-clamb': isPopoverContentOpen === true ? 'unset' : '2'}}>
+                        Sprites or red sprites are large-scale electric discharges that occur high above thunderstorm
+                        clouds, they appear as luminous reddish-orange flashes.
+                    </p>
+                    <Collapse
+                        isOpen={isPopoverContentOpen}
+                    >
+                        <ImageCarousel className="popover-carousel"/>
+                    </Collapse>
+                    <Button className="bg-transparent p-0 border-0 text-secondary shadow-none d-block"
+                            onClick={() => setIsPopoverContentOpen(!isPopoverContentOpen)}>
+                        {isPopoverContentOpen === true ? 'Show less' : 'Show more'}
+                    </Button>
+                </PopoverBody>
+            </>
         );
     };
 
     const showCategory = () => {
         return observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
-            return(
-                observationCategory?.data?.map((imagItem, index)=>{
+            return (
+                observationCategory?.data?.map((imagItem, index) => {
                     return (
                         <Col sm={6} key={index}>
                             <FormGroup>
@@ -120,19 +126,20 @@ const ObservationCategory = (props) => {
                                             onChange={(e) => onCategoryChange(e)}
                                         />
                                         <label htmlFor={imagItem.id}>
-                                            <img src={`${imagItem.image}`} alt={imagItem.name} />
+                                            <img src={`${imagItem.image}`} alt={imagItem.name}/>
                                             {imagItem.name}
                                             <div className="ms-2 text-dark ">
 
                                                 <Tippy
-                                                    content={<PopoverContent />}
+                                                    content={<PopoverContent/>}
                                                     interactive={true}
                                                     appendTo={document.body}
                                                     animation="perspective"
                                                     theme="light-border"
                                                     reference={tippyRef}
                                                 >
-                                                    <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2" width="15" height="15" /></span>
+                                                    <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2"
+                                                                               width="15" height="15"/></span>
                                                 </Tippy>
                                             </div>
 
@@ -147,7 +154,7 @@ const ObservationCategory = (props) => {
         })
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         setOldCategory(auth?.categoryList)
     }, [])
 
@@ -166,21 +173,21 @@ const ObservationCategory = (props) => {
         }
     }, [observationImages?.selected_image_index])
 
-    useEffect(()=> {
-        if(obvType?.image_type === 3) {
+    useEffect(() => {
+        if (obvType?.image_type === 3) {
             observationImages?.data?.map((item, index) => {
                 return item.category_map.category = selectedCategory
             })
         } else {
             ObservationData.data[observationImages?.selected_image_index].category_map.category = selectedCategory;
         }
-    },[selectedCategory])
+    }, [selectedCategory])
 
-    return(
+    return (
         <>
             {error && errorData?.map((item, index) => {
                 if (observationSteps?.selected_image_index === index) {
-                    return(
+                    return (
                         <span key={index} className="text-danger small">{item?.category}</span>
                     )
                 }
@@ -197,7 +204,6 @@ const ObservationCategory = (props) => {
             </Row>
         </>
     )
-
 
 
 }

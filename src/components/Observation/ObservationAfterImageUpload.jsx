@@ -1,11 +1,11 @@
-import { MultiImageTabs, Tabs } from "../../helpers/observation";
-import { Icon } from "@iconify/react/dist/iconify";
+import {MultiImageTabs, Tabs} from "../../helpers/observation";
+import {Icon} from "@iconify/react/dist/iconify";
 import {
     Button,
     Col,
     FormGroup,
     Input,
-    Label, 
+    Label,
     Nav,
     NavItem,
     NavLink,
@@ -24,7 +24,18 @@ import DeleteItemConfirmationPopup from "../Popup/DeleteItemConfirmationPopup";
 
 
 const ObservationAfterImageUpload = (props) => {
-    const { toggleTab,handleImageInput, error, disableNext, obvType, remove, detectImage, step, showUploadedPreview, mode  } = props;
+    const {
+        toggleTab,
+        handleImageInput,
+        error,
+        disableNext,
+        obvType,
+        remove,
+        detectImage,
+        step,
+        showUploadedPreview,
+        mode
+    } = props;
     const {observationImages, observationType, setObservationCategory, setObservationType} = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
@@ -41,7 +52,7 @@ const ObservationAfterImageUpload = (props) => {
     };
 
     const handleMultipleCheck = (e) => {
-      console.log(isMultiple)
+        console.log(isMultiple)
         if (isMultiple) {
             handleConfirmationPopUp();
         }
@@ -52,14 +63,14 @@ const ObservationAfterImageUpload = (props) => {
         setIsConfirmPopUp(!isConfirmPopUp);
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         if (isMultiple) {
             handleConfirmationPopUp();
         }
     }, [isMultiple])
 
 
-    useEffect(()=> {
+    useEffect(() => {
         setIsMultiple(observationImages?.data?.length > 1)
     }, [observationImages?.data?.length])
 
@@ -80,7 +91,7 @@ const ObservationAfterImageUpload = (props) => {
                         image_type: 2
                     }
                 })
-            } else if (!isMultiple)  {
+            } else if (!isMultiple) {
                 setObservationType((prev) => {
                     return {
                         ...prev,
@@ -119,9 +130,9 @@ const ObservationAfterImageUpload = (props) => {
                                     className="hidden"
                                     checked={isMultiple}
                                     onClick={(e) => handleMultipleCheck(e)}
-                                    onChange={(e)=> setIsMultiple(true)}
+                                    onChange={(e) => setIsMultiple(true)}
                                 />
-                                <label className="switchbox" htmlFor="toggleMultiple" />
+                                <label className="switchbox" htmlFor="toggleMultiple"/>
                                 <span>Multiple Observations (limit to 3)</span>
                             </div>
                         </FormGroup>
@@ -137,7 +148,8 @@ const ObservationAfterImageUpload = (props) => {
                                         toggleImageTab(MultiImageTabs.MultipleImages);
                                     }}
                                 >
-                                    <Icon icon="fluent:square-multiple-20-regular" color="black" width={24} className="me-3" />
+                                    <Icon icon="fluent:square-multiple-20-regular" color="black" width={24}
+                                          className="me-3"/>
                                     Multiple images
                                 </NavLink>
                             </NavItem>
@@ -148,7 +160,7 @@ const ObservationAfterImageUpload = (props) => {
                                         toggleImageTab(MultiImageTabs.ImageSequence);
                                     }}
                                 >
-                                    <Icon icon="codicon:list-filter" color="black" width={24} className="me-3" />
+                                    <Icon icon="codicon:list-filter" color="black" width={24} className="me-3"/>
                                     <div>
                                         Image Sequence
                                         <p className="mb-0">Images sequence extracted from a video</p>
@@ -164,25 +176,27 @@ const ObservationAfterImageUpload = (props) => {
                             <Row>
                                 {isMultiple &&
                                     <Col sm={12}>
-                                        <div className="small-upload_box mb-3">
-                                            <ObservationUploadImg detectImage={detectImage} imageFormat={false} maxLimit={false} multiple={false} />
-                                        </div>
+                                        <ObservationUploadImg small={true} detectImage={detectImage} imageFormat={false}
+                                                              maxLimit={false} multiple={false}/>
                                     </Col>
                                 }
-                                { showUploadedPreview &&
+                                {showUploadedPreview &&
                                     <Col sm={12}>
-                                        <div className="d-flex justify-content-start justify-content-sm-end d-sm-none"><ObservationUploadedImg  obvType={obvType} step={step} error={error} remove={remove} /></div>
+                                        <div className="d-flex justify-content-start justify-content-sm-end d-sm-none">
+                                            <ObservationUploadedImg obvType={obvType} step={step} error={error}
+                                                                    remove={remove}/></div>
                                     </Col>
                                 }
                                 <Col sm={12}>
-                                    <ImagePreview remove={remove} />
+                                    <ImagePreview remove={remove}/>
                                 </Col>
 
                                 <Col sm={12}>
-                                    <ObservationCategory obvType={obvType} error={error} />
+                                    <ObservationCategory obvType={obvType} error={error}/>
                                 </Col>
                                 <Col sm={12}>
-                                    <Button type="button" className="mt-3" disabled={!disableNext} onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
+                                    <Button type="button" className="mt-3" disabled={!disableNext}
+                                            onClick={() => toggleTab(Tabs.DateTimeLocation)}>Continue</Button>
                                 </Col>
                             </Row>
                         </TabPane>
@@ -191,20 +205,23 @@ const ObservationAfterImageUpload = (props) => {
                                 {isMultiple &&
                                     <Col sm={12}>
                                         <div className="small-upload_box mb-3">
-                                            <ObservationUploadImg detectImage={detectImage} imageFormat={false} maxLimit={false} multiple={false} />
+                                            <ObservationUploadImg detectImage={detectImage} imageFormat={false}
+                                                                  maxLimit={false} multiple={false}/>
                                         </div>
                                     </Col>
                                 }
-                                { showUploadedPreview &&
+                                {showUploadedPreview &&
                                     <Col sm={12}>
-                                        <div className="d-flex justify-content-end d-sm-none"><ObservationUploadedImg  obvType={obvType} step={step} error={error} remove={remove} /></div>
+                                        <div className="d-flex justify-content-end d-sm-none"><ObservationUploadedImg
+                                            obvType={obvType} step={step} error={error} remove={remove}/></div>
                                     </Col>
                                 }
                                 <Col sm={12}>
                                     <ImagePreview remove={remove}/>
                                 </Col>
                                 <Col sm={12}>
-                                    <Button type="button" onClick={() => toggleTab(Tabs.DateTimeLocation)} >Continue</Button>
+                                    <Button type="button"
+                                            onClick={() => toggleTab(Tabs.DateTimeLocation)}>Continue</Button>
                                 </Col>
                             </Row>
                         </TabPane>
@@ -213,7 +230,8 @@ const ObservationAfterImageUpload = (props) => {
             </Row>
 
             {isConfirmPopUp && shouldShowConfirmation &&
-                <DeleteItemConfirmationPopup open={isConfirmPopUp && shouldShowConfirmation} handleClose={handleConfirmationPopUp} />
+                <DeleteItemConfirmationPopup open={isConfirmPopUp && shouldShowConfirmation}
+                                             handleClose={handleConfirmationPopUp}/>
             }
         </>
     );

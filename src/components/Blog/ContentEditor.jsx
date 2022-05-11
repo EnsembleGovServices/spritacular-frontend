@@ -7,18 +7,21 @@ import useAuth from "../../hooks/useAuth";
 import {useEffect, useState} from "react";
 
 const ContentEditor = (props) => {
-    const {data, setData, readMode} = props;
+    const {data, setData, readMode, editorData} = props;
     const {auth} = useAuth();
 
     const [imageId, setImageID] = useState([]);
+    const [changeData, setChangeData] = useState(false);
+    const [editorImage, setEditorImage] = useState([]);
 
     function uploadAdapter(loader) {
+        setChangeData(false);
         return {
             upload: () => {
                 return new Promise((resolve, reject) => {
                     const body = new FormData();
                     loader.file.then((file) => {
-                        body.append("image", file);
+                        body.append("upload", file);
                         let headers = new Headers();
                         headers.append("Authorization", `Bearer ${auth?.token?.access}`);
                         fetch(`${baseURL.blog_image_upload}`, {
@@ -33,7 +36,7 @@ const ContentEditor = (props) => {
                                 });
                                 setImageID((prev) => [
                                     ...prev,
-                                    res.image_id
+                                    {id: res.image_id, url: res.url}
                                 ])
                             })
                             .catch((err) => {
@@ -80,19 +83,35 @@ const ContentEditor = (props) => {
                 }
             })
         }
-    }, [imageId])
+    }, [imageId, editorImage])
+
+    // For clearing image from the array
+    useEffect(() => {
+        if (changeData && imageId) {
+            const updatedItem = editorData?.image_ids?.filter(item => {
+                return editorImage.includes(item.url);
+            }).map((item) => {
+                return item;
+            });
+            setImageID(updatedItem);
+        }
+    }, [editorImage, changeData])
+
     return (
         <>
             <CKEditor
                 editor={FullEditor}
                 config={editorConfig}
                 data={data ? data : ""}
+                then={response => {
+                    console.log(response);
+                }}
                 onReady={editor => {
-                    console.log('ready editor')
-                    console.log(editor.config._config.plugins.map(item => item.pluginName))
-                    console.log(Array.from(editor.ui.componentFactory.names()));
-                    console.log('isReadOnly', editor.isReadOnly)
-
+                    // console.log('ready editor')
+                    // console.log(editor.config._config.plugins.map(item => item.pluginName))
+                    // console.log(Array.from(editor.ui.componentFactory.names()));
+                    // console.log('isReadOnly', editor.isReadOnly)
+                    // editor.ui.view.editable.element.style.minHeight = "180px"
                     const toolbarContainer = editor.ui.view.stickyPanel;
                     editor.isReadOnly = !!readMode;
 
@@ -103,8 +122,19 @@ const ContentEditor = (props) => {
                     }
                 }}
                 onChange={(event, editor) => {
-                    console.log('change')
+                    setChangeData(false);
+                    // console.log('event', event)
                     const data = editor.getData();
+
+                    editor.model.document.on('change:data', () => {
+                        setChangeData(true);
+                    });
+                    const avlImg = Array.from(new DOMParser().parseFromString(editor.getData(), 'text/html')
+                        .querySelectorAll('img'))
+                        .map(img => img.getAttribute('src'))
+
+                    setEditorImage(avlImg);
+
                     if (setData) {
                         setData((prev) => {
                             return {
@@ -116,11 +146,12 @@ const ContentEditor = (props) => {
 
                 }}
                 onFocus={(event, editor) => {
-                    console.log('focus')
-                    editor.ui.view.editable.element.style.minHeight = "180px"
+                    // console.log('focus')
+                    // editor.ui.view.editable.element.style.minHeight = "180px"
                 }}
                 onBlur={(event, editor) => {
-                    console.log('blurred')
+                    // editor.ui.view.editable.element.style.minHeight = "180px"
+                    // console.log('blurred')
                 }}
             />
         </>

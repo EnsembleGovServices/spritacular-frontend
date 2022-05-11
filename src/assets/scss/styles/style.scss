@@ -192,4 +192,23 @@ ul.list-numbered {
   }
 }
 
+.center_box {
+  min-height: calc(100vh - 84px);
+  @include vcenter;
+}
+
+.mark-center {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  @include vcenter;
+  display: inline-flex;
+
+  .btn {
+    position: relative;
+    top: 80px;
+  }
+}
+
 @import "../component/index.scss";

@@ -2,14 +2,15 @@ import "../../../assets/scss/component/blog.scss"
 import {Col, Container, Form, FormGroup, Input, Label, UncontrolledAlert} from "reactstrap";
 import axios from "../../../api/axios";
 import {baseURL, routeUrls} from "../../../helpers/url";
-import {useState} from "react";
+import {useState, Suspense, lazy,} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
 import useAuth from "../../../hooks/useAuth";
 // import useObservationsData from "../../../hooks/useObservationsData";
 
-import ContentEditor from "../../../components/Blog/ContentEditor";
 
+const ContentEditor = lazy(() => import('../../../components/Blog/ContentEditor'))
+const UploadFeaturedImage = lazy(() => import('../../../components/Blog/UploadFeaturedImage'))
 
 const BlogCreate = () => {
     const {auth} = useAuth();
@@ -22,10 +23,13 @@ const BlogCreate = () => {
         e.preventDefault();
         let name = e.target.name,
             value = e.target.value;
+
         setData({
             ...data,
-            [name]: value
+            [name]: value,
         })
+
+
     }
 
     const crateArticle = async (e) => {
@@ -69,16 +73,19 @@ const BlogCreate = () => {
                                   className="btn btn-primary px-4 listing-btn">Blog lists</Link>
                         </div>
 
-                        <Form className="py-3 card p-4 py-md-5 px-md-5 shadow border-0 mt-5" onSubmit={crateArticle}>
-                            <div className="row">
-                                {success &&
+                        <Form className="py-3 card py-4 px-4 py-md-5 px-md-5 shadow border-0 mt-5"
+                              onSubmit={crateArticle}>
+                            {success &&
+                                <div className="row">
                                     <Col sm={12}>
                                         <UncontrolledAlert color="success">
                                             {success?.message}
                                         </UncontrolledAlert>
                                     </Col>
-                                }
-                                <Col sm={12}>
+                                </div>
+                            }
+                            <div className="row">
+                                <Col sm={12} md={8} className="mb-4 mb-md-0">
                                     <FormGroup>
                                         <Label for="title">
                                             Title
@@ -93,7 +100,6 @@ const BlogCreate = () => {
                                             onChange={(e) => handleInput(e)}
                                         />
                                     </FormGroup>
-
                                     <FormGroup>
                                         <Label for="description">
                                             Description
@@ -109,15 +115,45 @@ const BlogCreate = () => {
                                             onChange={(e) => handleInput(e)}
                                         />
                                     </FormGroup>
-
                                     <FormGroup>
                                         <Label for="content">
                                             Content
                                         </Label>
-                                        <ContentEditor setData={setData} readMode={false}/>
+                                        <Suspense fallback={<div>Please wait...</div>}>
+                                            <ContentEditor editorData={data} setData={setData} readMode={false}/>
+                                        </Suspense>
                                     </FormGroup>
-
-                                    <div className="mt-4 mt-sm-5">
+                                </Col>
+                                <Col sm={12} md={4}>
+                                    <FormGroup>
+                                        <Label for="title">
+                                            Choose Category
+                                        </Label>
+                                        <Input
+                                            id="category"
+                                            name="category"
+                                            type="select"
+                                            onChange={(e) => handleInput(e)}
+                                        >
+                                            <option value="sprite">Sprite</option>
+                                            <option value="blue jet">Blue Jet</option>
+                                            <option value="elve">Elve</option>
+                                            <option value="gigantic jet">Gigantic Jet</option>
+                                            <option value="halo">Halo</option>
+                                            <option value="secondary jet">Secondary Jet</option>
+                                        </Input>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="title">
+                                            Upload Thumbnail
+                                        </Label>
+                                        <Suspense fallback={<div>Please wait...</div>}>
+                                            <UploadFeaturedImage handleInput={handleInput} setData={setData}/>
+                                        </Suspense>
+                                    </FormGroup>
+                                </Col>
+                                <Col sm={12}>
+                                    <div className="mt-4">
                                         <button type="submit"
                                                 className="btn btn-primary px-4 py-2 px-sm-5 py-sm-2">Create
                                         </button>
