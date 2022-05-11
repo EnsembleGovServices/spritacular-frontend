@@ -45,17 +45,6 @@ const ContentEditor = (props) => {
         };
     }
 
-    useEffect(() => {
-        if (setData) {
-            setData((prev) => {
-                return {
-                    ...prev,
-                    image_ids: imageId
-                }
-            })
-        }
-    }, [imageId])
-
     function uploadPlugin(editor) {
         editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
             return uploadAdapter(loader);
@@ -71,8 +60,8 @@ const ContentEditor = (props) => {
                 "bold", "italic", "|", "link", "|",
                 "bulletedList", "numberedList",
                 "insertTable", "mergeTableCells", "|",
-                "code", "codeBlock", "|",
-                "insertImage", "HorizontalLine",
+                "insertImage", "codeBlock", "|",
+                "code", "HorizontalLine",
                 "SpecialCharacters", "ImageResize",
                 "pageBreak",
             ],
@@ -82,6 +71,16 @@ const ContentEditor = (props) => {
         extraPlugins: [uploadPlugin],
     }
 
+    useEffect(() => {
+        if (setData) {
+            setData((prev) => {
+                return {
+                    ...prev,
+                    image_ids: imageId
+                }
+            })
+        }
+    }, [imageId])
     return (
         <>
             <CKEditor
