@@ -18,7 +18,6 @@ import SystemOnline from "./components/Common/SystemOnline";
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
-const Blog = lazy(() => import('./pages/Blog'));
 const GetStarted = lazy(() => import('./pages/GetStarted'));
 const Tutorials = lazy(() => import('./pages/Tutorials'));
 const Gallery = lazy(() => import('./pages/Gallery'));
@@ -26,13 +25,17 @@ const Policy = lazy(() => import('./pages/Policy'));
 const TutorialsDetail = lazy(() => import('./pages/TutorialsDetail'));
 const LoginPage = lazy(() => import('./pages/Auth/LoginPage'));
 
+//Blog Pages
+const BlogList = lazy(() => import('./pages/Blog/BlogList'));
+const BlogArticleDetails = lazy(() => import('./pages/Blog/Details/BlogArticleDetails'));
 
+
+//Protected Pages
 const Profile = lazy(() => import('./pages/Profile'));
 const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
 const MyObservations = lazy(() => import('./pages/Observation/MyObservations'));
 const AddObservation = lazy(() => import('./pages/Observation/AddObservation'));
 const Observations = lazy(() => import('./pages/Observation/Observations'));
-
 
 const BlogPage = lazy(() => import('./pages/Dashboard/Blog/BlogPage'));
 const BlogCreate = lazy(() => import('./pages/Dashboard/Blog/BlogCreate'));
@@ -93,9 +96,18 @@ const App = () => {
                         }/>
                         <Route exact path={routeUrls.blog} element={
                             <Suspense fallback={<Loader/>}>
-                                <Blog/>
+                                <BlogList/>
                             </Suspense>
                         }/>
+
+
+                        <Route path={routeUrls.blog}>
+                            <Route index element={<Suspense fallback={<Loader/>}><BlogList/></Suspense>}/>
+                            <Route path={routeUrls.blogDetails}
+                                   element={<Suspense fallback={<Loader/>}><BlogArticleDetails/></Suspense>}/>
+                        </Route>
+
+
                         <Route exact path={routeUrls.tutorials} element={
                             <Suspense fallback={<Loader/>}>
                                 <Tutorials/>
