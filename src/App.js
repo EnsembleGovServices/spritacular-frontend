@@ -2,7 +2,7 @@ import "./assets/scss/framework/framework.scss";
 import "./assets/scss/styles/style.scss";
 
 
-import {lazy, Suspense, useState} from "react";
+import {lazy, Suspense, useEffect, useState} from "react";
 import {Routes, Route} from "react-router-dom";
 import {routeUrls} from "./helpers/url";
 
@@ -14,6 +14,7 @@ import Error from "./components/Error";
 import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 import InformativePage from './layouts/InformativePage';
 import Loader from "./components/Shared/Loader";
+import SystemOnline from "./components/Common/SystemOnline";
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -40,6 +41,7 @@ const BlogView = lazy(() => import('./pages/Dashboard/Blog/BlogView'));
 
 const App = () => {
     const [persistValue, setPersistValue] = useState(false);
+    const [isOnline, setOnline] = useState(true);
     const authCallBack = (authChange) => {
         setPersistValue(authChange);
     };
@@ -51,10 +53,19 @@ const App = () => {
         'user': auth?.user?.is_user,
     }
 
+    useEffect(() => {
+        window.addEventListener('online', () => {
+            console.log('system is online');
+            setOnline(true);
+        })
+        window.addEventListener('offline', () => {
+            console.log('system is down');
+            setOnline(false);
+        })
+    }, [isOnline]);
 
     return (
         <>
-
             <Routes>
                 <Route element={
                     <Suspense fallback={<Loader/>}>
@@ -149,19 +160,6 @@ const App = () => {
                                 </Route>
                             </Route>
 
-                            {/*<Route exact path={routeUrls.dashBlog} element={*/}
-                            {/*    <Suspense fallback={<Loader/>}>*/}
-                            {/*        <BlogPage/>*/}
-                            {/*    </Suspense>*/}
-                            {/*}/>*/}
-
-                            {/*<Route exact path={routeUrls.blogCreate} element={*/}
-                            {/*    <Suspense fallback={<Loader/>}>*/}
-                            {/*        <BlogCreate/>*/}
-                            {/*    </Suspense>*/}
-                            {/*}/>*/}
-
-
                         </Route>
                     </Route>
                 </Route>
@@ -171,6 +169,7 @@ const App = () => {
                     </Suspense>
                 }/>
             </Routes>
+            <SystemOnline status={isOnline}/>
         </>
     );
 };

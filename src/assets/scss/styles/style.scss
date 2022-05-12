@@ -211,4 +211,12 @@ ul.list-numbered {
   }
 }
 
+.offline {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: $white;
+  @include vcenter;
+}
+
 @import "../component/index.scss";

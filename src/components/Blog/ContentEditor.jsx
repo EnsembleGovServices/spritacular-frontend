@@ -21,7 +21,7 @@ const ContentEditor = (props) => {
                 return new Promise((resolve, reject) => {
                     const body = new FormData();
                     loader.file.then((file) => {
-                        body.append("upload", file);
+                        body.append("image", file);
                         let headers = new Headers();
                         headers.append("Authorization", `Bearer ${auth?.token?.access}`);
                         fetch(`${baseURL.blog_image_upload}`, {
