@@ -37,10 +37,10 @@ const BlogPage = () => {
                         {item?.id}
                     </th>
                     <td>
-                        {item?.title.substring(0, 30) + '...'}
+                        {item?.title.substring(0, 40) + '...'}
                     </td>
                     <td>
-                        {item?.description.substring(0, 90) + '...'}
+                        {item?.description.substring(0, 80) + '...'}
                     </td>
 
                     <td>
@@ -62,10 +62,12 @@ const BlogPage = () => {
             <section className="blog-main">
                 <Container>
                     <div className="position-relative">
-                        <h2 className="text-center">Blog Articles</h2>
-                        <Link
-                            to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list + '/' + routeUrls.dashBlog.create}
-                            className="btn btn-primary px-4 listing-btn">Create Article</Link>
+                        <div className="d-flex align-items-center justify-content-between">
+                            <h2 className="mb-0">Blog Articles</h2>
+                            <Link
+                                to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list + '/' + routeUrls.dashBlog.create}
+                                className="btn btn-primary px-4">Create Article</Link>
+                        </div>
                     </div>
 
                     <div className="mt-5">
@@ -74,9 +76,9 @@ const BlogPage = () => {
                                 <div className="card">
                                     <div className="card-body  p-4 py-md-5 px-md-5">
                                         {articles?.length > 0 ? (
-                                            <Table className="mb-0 table table-borderless"
+                                            <Table className="mb-0 table table-borderless table-hover table-striped"
                                             >
-                                                <thead>
+                                                <thead className="border-b">
                                                 <tr>
                                                     <th>
                                                         ID

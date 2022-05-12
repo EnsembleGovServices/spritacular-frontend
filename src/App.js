@@ -55,11 +55,9 @@ const App = () => {
 
     useEffect(() => {
         window.addEventListener('online', () => {
-            console.log('system is online');
             setOnline(true);
         })
         window.addEventListener('offline', () => {
-            console.log('system is down');
             setOnline(false);
         })
     }, [isOnline]);

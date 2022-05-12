@@ -1,6 +1,7 @@
 import "../../../assets/scss/component/blog.scss";
 import {Col, Container} from "reactstrap";
 import {Link, useNavigate, useParams} from "react-router-dom";
+import {Icon} from '@iconify/react';
 import {baseURL, routeUrls} from "../../../helpers/url";
 import axios from "../../../api/axios";
 import {useEffect, useState} from "react";
@@ -12,6 +13,7 @@ const BlogView = () => {
     const {auth} = useAuth();
     const navigate = useNavigate();
     const [article, setArticle] = useState();
+    const [readMode, setReadMode] = useState(false);
 
     const getArticleDetails = async () => {
 
@@ -23,7 +25,7 @@ const BlogView = () => {
         }).then(response => {
             // console.log(response);
             setArticle(response?.data?.data);
-            console.log(response?.data?.data);
+            // console.log(response?.data?.data);
         }).catch(error => {
             // console.log(error);
             if (error?.response?.statusCode !== 200) {
@@ -42,9 +44,16 @@ const BlogView = () => {
             <section className="blog-main">
                 <Container>
                     <div className="position-relative">
-                        <h2 className="text-start">{article?.title}</h2>
-                        <Link to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list}
-                              className="btn btn-primary px-4 listing-btn">Blog lists</Link>
+                        <div className="">
+                            <Link to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list}
+                                  className="d-flex align-items-center justify-content-start mb-3">
+                                <Icon icon="ep:back"/>
+                                <span className="ms-2">
+                                    Back to blogs
+                                </span>
+                            </Link>
+                            <h2 className="mb-0">{article?.title}</h2>
+                        </div>
                     </div>
 
                     <div className="mt-5">
@@ -57,7 +66,10 @@ const BlogView = () => {
                                             {article?.description}
                                         </p>
                                         <div>
-                                            <ContentEditor data={article?.content} readMode={true}/>
+                                            <ContentEditor data={article?.content}
+                                                           setReadMode={setReadMode}
+                                                           readMode={readMode}
+                                            />
                                         </div>
                                     </div>
                                 </div>

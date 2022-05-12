@@ -338,30 +338,16 @@
     .ck.ck-editor__top {
       .ck-sticky-panel {
         .ck-toolbar {
-          border-radius: 6px;
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
+          border-radius: 6px 6px 0 0;
         }
       }
     }
+  }
 
-    .ck-editor__main {
-      .ck-editor__editable {
-        background: #F4F5F6;
-        border-radius: 0 0 6px 6px;
-
-        &.ck-rounded-corners {
-          border-radius: 0 0 6px 6px;
-        }
-      }
-
-      .ck-focused {
-        outline: 0 !important;
-        border: 0 !important;
-        box-shadow: none !important;
-      }
-
-    }
+  .ck-focused {
+    outline: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
   }
 
   .ck.ck-editor__top {
@@ -374,9 +360,24 @@
   }
 
   .ck-editor__main {
+    border-radius: 6px;
+
     .ck-content {
       border: 0;
+    }
+  }
+}
 
+.ck {
+  &.ck-editor__main > .ck-editor__editable {
+    &.ck-editor__editable_inline {
+      border-radius: 6px !important;
+      background: #f4f5f6;
+    }
+
+    &.ck-read-only {
+      border-radius: 0 !important;
+      background: $white;
     }
   }
 }

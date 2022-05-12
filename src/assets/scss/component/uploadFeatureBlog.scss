@@ -1,0 +1,53 @@
+@import "../global/config.scss";
+
+.img_wrapper {
+  border-radius: 6px;
+  overflow: hidden;
+  height: 170px;
+
+  .remove-btn {
+    border: 0;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 2;
+    width: 26px;
+    height: 26px;
+    box-shadow: 2px 2px 4px #000;
+    padding: 0;
+    @include vcenter;
+  }
+
+  .img-preview_wrapper {
+    height: 100%;
+
+    > div {
+      height: 100%;
+    }
+  }
+}
+
+.progressbar {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: RGB(0 0 0 / 60%);
+  color: #fff;
+  border-radius: 6px;
+  @include vcenter;
+
+  &.fade-out {
+    animation: fadeOutAnime 1s linear;
+  }
+}
+
+@keyframes fadeOutAnime {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

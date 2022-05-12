@@ -2,10 +2,12 @@ import "../../../assets/scss/component/blog.scss"
 import {Col, Container, Form, FormGroup, Input, Label, UncontrolledAlert} from "reactstrap";
 import axios from "../../../api/axios";
 import {baseURL, routeUrls} from "../../../helpers/url";
-import {useState, Suspense, lazy,} from "react";
+import {useState, Suspense, lazy, useEffect,} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
 import useAuth from "../../../hooks/useAuth";
+import BlogCategory from "../../../components/Blog/BlogCategory";
+import Loader from "../../../components/Shared/Loader";
 
 
 const ContentEditor = lazy(() => import('../../../components/Blog/ContentEditor'))
@@ -13,9 +15,17 @@ const UploadFeaturedImage = lazy(() => import('../../../components/Blog/UploadFe
 
 const BlogCreate = () => {
     const {auth} = useAuth();
-    const [data, setData] = useState();
+    const [data, setData] = useState({
+        category: "1"
+    });
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
+    const [progress, setProgress] = useState("0");
+    const [category, setCategory] = useState();
+    const [loading, setLoading] = useState(false);
+
+    const formData = new FormData();
+
     const navigate = useNavigate();
 
     const handleInput = (e) => {
@@ -33,15 +43,30 @@ const BlogCreate = () => {
 
     const crateArticle = async (e) => {
         e.preventDefault();
+        setLoading(true);
         setSuccess('');
         setError('');
 
-        await axios.post(baseURL.create_blog, data, {
+        let imageID = JSON.stringify(data?.image_ids);
+
+        formData.append("thumbnail_image", data?.thumbnail_image);
+        formData.append("title", data?.title);
+        formData.append("description", data?.description);
+        formData.append("content", data?.content);
+        formData.append("image_ids", imageID)
+        formData.append("category", data?.category);
+
+        await axios.post(baseURL.create_blog, formData, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth?.token?.access}`,
             },
+            onUploadProgress: (ProgressEvent) => {
+                let progressBar = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) + "%";
+                setProgress(progressBar);
+            },
         }).then(response => {
+            setLoading(false);
             setSuccess({
                 status: response.status,
                 message: response.data.success
@@ -51,13 +76,40 @@ const BlogCreate = () => {
                 navigate('/dashboard/blog', {replace: true});
             }, 1000)
         }).catch(error => {
-            console.log('error', error)
+            setLoading(false);
+            console.log('error', error);
+            // setData('')
             setError({
-                status: error.status,
-                message: error.data
+                status: error.response.status,
+                message: error.response.data
             })
         })
     }
+
+    const getBlogCategory = async (e) => {
+        return await axios.get(baseURL.blog_category, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token?.access}`,
+            },
+        }).then(response => {
+            setCategory(response.data);
+        }).catch(error => {
+            console.log('error', error)
+        })
+    };
+
+    const handleEditMode = () => {
+        console.log('handleEditMode')
+    }
+
+    const handleDisable = () => {
+        return !(data?.thumbnail_image !== undefined && data?.title && data?.description && data?.category);
+    }
+
+    useEffect(() => {
+        getBlogCategory().then(r => r)
+    }, [])
 
 
     return (
@@ -67,9 +119,12 @@ const BlogCreate = () => {
                 <section className="blog-main">
                     <Container>
                         <div className="position-relative">
-                            <h2 className="text-center">Create Article</h2>
-                            <Link to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list}
-                                  className="btn btn-primary px-4 listing-btn">Blog lists</Link>
+                            <div className="d-flex align-items-center justify-content-between">
+                                <h2 className="mb-0">Create
+                                    Article</h2>
+                                <Link to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list}
+                                      className="btn btn-primary px-4">Blog lists</Link>
+                            </div>
                         </div>
 
                         <Form className="py-3 card py-4 px-4 py-md-5 px-md-5 shadow border-0 mt-5"
@@ -83,7 +138,16 @@ const BlogCreate = () => {
                                     </Col>
                                 </div>
                             }
-                            <div className="row">
+                            {error &&
+                                <div className="row">
+                                    <Col sm={12}>
+                                        <UncontrolledAlert color="danger">
+                                            {error?.message.detail}
+                                        </UncontrolledAlert>
+                                    </Col>
+                                </div>
+                            }
+                            <div className="row position-relative">
                                 <Col sm={12} md={8} className="mb-4 mb-md-0">
                                     <FormGroup>
                                         <Label for="title">
@@ -119,48 +183,36 @@ const BlogCreate = () => {
                                             Content
                                         </Label>
                                         <Suspense fallback={<div>Please wait...</div>}>
-                                            <ContentEditor editorData={data} setData={setData} readMode={false}/>
+                                            <ContentEditor setLoading={setLoading}
+                                                           editorData={data}
+                                                           setData={setData}
+                                            />
                                         </Suspense>
                                     </FormGroup>
                                 </Col>
                                 <Col sm={12} md={4}>
-                                    <FormGroup>
-                                        <Label for="title">
-                                            Choose Category
-                                        </Label>
-                                        <Input
-                                            id="category"
-                                            name="category"
-                                            type="select"
-                                            onChange={(e) => handleInput(e)}
-                                        >
-                                            <option value="sprite">Sprite</option>
-                                            <option value="blue jet">Blue Jet</option>
-                                            <option value="elve">Elve</option>
-                                            <option value="gigantic jet">Gigantic Jet</option>
-                                            <option value="halo">Halo</option>
-                                            <option value="secondary jet">Secondary Jet</option>
-                                        </Input>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="title">
-                                            Upload Thumbnail
-                                        </Label>
-                                        <Suspense fallback={<div>Please wait...</div>}>
-                                            <UploadFeaturedImage handleInput={handleInput} setData={setData}/>
-                                        </Suspense>
-                                    </FormGroup>
+                                    <BlogCategory handleInput={handleInput} category={category}/>
+                                    <Suspense fallback={<div>Please wait...</div>}>
+                                        <UploadFeaturedImage uploadProgress={progress}
+                                                             handleInput={handleInput}
+                                                             error={error}
+                                                             setData={setData}/>
+                                    </Suspense>
                                 </Col>
                                 <Col sm={12}>
                                     <div className="mt-4">
                                         <button type="submit"
-                                                className="btn btn-primary px-4 py-2 px-sm-5 py-sm-2">Create
+                                                disabled={handleDisable()}
+                                                className={`btn px-4 py-2 px-sm-5 py-sm-2 ${handleDisable() ? 'btn-light text-light-dark' : 'btn-primary'}`}>Create
                                         </button>
                                         <button type="reset"
                                                 className="btn btn-dark px-4 py-2 px-sm-5 py-sm-2 ms-2">Reset
                                         </button>
                                     </div>
                                 </Col>
+                                {loading &&
+                                    <Loader fixContent={true}/>
+                                }
                             </div>
                         </Form>
                     </Container>
