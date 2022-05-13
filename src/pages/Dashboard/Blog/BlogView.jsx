@@ -9,7 +9,7 @@ import useAuth from "../../../hooks/useAuth";
 import ContentEditor from "../../../components/Blog/ContentEditor";
 
 const BlogView = () => {
-    const {id} = useParams();
+    const {slug} = useParams();
     const {auth} = useAuth();
     const navigate = useNavigate();
     const [article, setArticle] = useState();
@@ -17,7 +17,7 @@ const BlogView = () => {
 
     const getArticleDetails = async () => {
 
-        await axios.get(`${baseURL.get_single_blog}${id}/`, {
+        await axios.get(`${baseURL.get_single_blog}${slug}/`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth?.token?.access}`,
@@ -36,6 +36,7 @@ const BlogView = () => {
 
     useEffect(() => {
         getArticleDetails().then(r => r)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -52,7 +53,14 @@ const BlogView = () => {
                                     Back to blogs
                                 </span>
                             </Link>
-                            <h2 className="mb-0">{article?.title}</h2>
+                            <div className="d-flex align-items-center justify-content-between">
+                                <h2 className="mb-0">{article?.title}</h2>
+                                <Link
+                                    to={article ? `/${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${slug}/edit` : ''}
+                                    className="btn btn-primary px-4 btn-sm">
+                                    Edit
+                                </Link>
+                            </div>
                         </div>
                     </div>
 

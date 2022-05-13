@@ -1,23 +1,24 @@
 import "../../../assets/scss/component/tutorialdetail.scss";
 import {Col, Container, Row} from "reactstrap";
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import axios from "../../../api/axios";
-import {baseURL} from "../../../helpers/url";
+import {baseURL, routeUrls} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
 import SimpleBreadcrumb from "../../../components/Blog/SimpleBreadcrumb";
 import ContentEditor from "../../../components/Blog/ContentEditor";
 
 const BlogArticleDetails = () => {
-    const {auth} = useAuth();
     const [article, setArticle] = useState();
-    const {id} = useParams();
+    const {slug} = useParams();
+    const {auth} = useAuth();
+    const admin = auth?.user?.is_superuser;
+
 
     const getArticle = async () => {
-        await axios.get(`${baseURL.get_single_blog}${id}/`, {
+        await axios.get(`${baseURL.get_single_blog}${slug}/`, {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${auth?.token?.access}`,
             },
         }).then(response => {
             setArticle(response?.data?.data);
@@ -28,6 +29,7 @@ const BlogArticleDetails = () => {
 
     useEffect(() => {
         getArticle().then(r => r)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -39,7 +41,16 @@ const BlogArticleDetails = () => {
                         <div className="breadcrumb-main">
                             <SimpleBreadcrumb page="Blog" title={article?.title}/>
                         </div>
-                        <h2>{article?.title}</h2>
+                        <div className="mb-4 mt-3 d-flex align-items-center justify-content-between">
+                            <h2 className="mb-0">{article?.title}</h2>
+                            {admin &&
+                                <Link
+                                    to={article ? `/${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${slug}/edit` : ''}
+                                    className="btn btn-primary px-4 btn-sm">
+                                    Edit
+                                </Link>
+                            }
+                        </div>
                         <Row>
                             <Col md={12}>
                                 <div className="card border-0 shadow-sm">

@@ -27,11 +27,7 @@ const PersistLogin = (props) => {
     });
     const [observationCSVId, setObservationCSVId] = useState({});
     const [recentObservation, setRecentObservation] = useState({});
-    const [blog, setBlog] = useState({
-        create: {},
-        list: {},
-        view: {}
-    });
+    const [blogTutorial, setBlogTutorial] = useState();
 
     useEffect(() => {
         let isMounted = true;
@@ -70,8 +66,8 @@ const PersistLogin = (props) => {
                     setCategoryList,
                     observationCSVId,
                     setObservationCSVId,
-                    blog,
-                    setBlog
+                    blogTutorial,
+                    setBlogTutorial
                 }
             }>
                 {!persist ? (

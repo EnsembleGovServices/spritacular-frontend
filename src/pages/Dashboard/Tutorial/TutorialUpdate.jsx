@@ -3,7 +3,7 @@ import {Suspense, lazy} from "react";
 
 const CreateUpdateBlogTutorial = lazy(() => import('../CreateUpdateBlogTutorial'))
 
-const BlogCreate = () => {
+const TutorialUpdate = () => {
     return (
         <>
             <div className="blog_page position-relative">
@@ -12,7 +12,7 @@ const BlogCreate = () => {
                     <div className="container">
                         <Suspense fallback={<div>Please wait...</div>}>
                             <CreateUpdateBlogTutorial
-                                type="blog"
+                                type="tutorial"
                             />
                         </Suspense>
                     </div>
@@ -21,5 +21,4 @@ const BlogCreate = () => {
         </>
     )
 }
-
-export default BlogCreate;
+export default TutorialUpdate;

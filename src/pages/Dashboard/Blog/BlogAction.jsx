@@ -5,9 +5,9 @@ const BlogAction = ({item}) => {
     return (
         <div>
             <Link className="me-2"
-                  to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list + '/' + item.id}>view</Link>
+                  to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list + '/' + item?.slug}>view</Link>
             <Link
-                to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list + '/' + item.id + '/?mode=edit'}>edit</Link>
+                to={`/${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${item?.slug}/edit`}>edit</Link>
         </div>
     )
 }

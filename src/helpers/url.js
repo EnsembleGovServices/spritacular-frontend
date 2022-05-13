@@ -35,7 +35,7 @@ export const routeUrls = {
     login: 'login',
     profile: 'profile',
     blog: 'blog',
-    blogDetails: ':id',
+    blogDetails: ':slug',
     myObservations: 'observations',
     gallery: 'gallery',
     observationsAdd: 'observations/add',
@@ -44,6 +44,13 @@ export const routeUrls = {
     dashBlog: {
         list: 'blog',
         create: 'create',
-        view: ':id'
+        view: ':slug',
+        edit: ':slug/edit'
+    },
+    dashTutorial: {
+        list: 'tutorial',
+        create: 'create',
+        view: ':slug',
+        edit: ':slug/edit'
     }
 }

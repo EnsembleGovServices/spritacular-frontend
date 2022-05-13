@@ -37,10 +37,16 @@ const MyObservations = lazy(() => import('./pages/Observation/MyObservations'));
 const AddObservation = lazy(() => import('./pages/Observation/AddObservation'));
 const Observations = lazy(() => import('./pages/Observation/Observations'));
 
+//Blog Pages dashboard
 const BlogPage = lazy(() => import('./pages/Dashboard/Blog/BlogPage'));
 const BlogCreate = lazy(() => import('./pages/Dashboard/Blog/BlogCreate'));
 const BlogView = lazy(() => import('./pages/Dashboard/Blog/BlogView'));
+const BlogUpdate = lazy(() => import('./pages/Dashboard/Blog/BlogUpdate'));
 
+//Tutorial Page dashboard
+const TutorialPage = lazy(() => import('./pages/Dashboard/Tutorial/TutorialPage'));
+const TutorialCreate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialCreate'));
+const TutorialUpdate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialUpdate'));
 
 const App = () => {
     const [persistValue, setPersistValue] = useState(false);
@@ -161,12 +167,27 @@ const App = () => {
 
                             <Route exact path={routeUrls.dashboard}>
                                 <Route index element={<Suspense fallback={<Loader/>}><Dashboard/></Suspense>}/>
+
+                                {/*Dashboard Blog*/}
                                 <Route path={routeUrls.dashBlog.list}>
                                     <Route index element={<BlogPage/>}/>
                                     <Route path={routeUrls.dashBlog.create}
                                            element={<Suspense fallback={<Loader/>}><BlogCreate/></Suspense>}/>
                                     <Route path={routeUrls.dashBlog.view}
                                            element={<Suspense fallback={<Loader/>}><BlogView/></Suspense>}/>
+                                    <Route path={routeUrls.dashBlog.edit}
+                                           element={<Suspense fallback={<Loader/>}><BlogUpdate/></Suspense>}/>
+                                </Route>
+
+                                {/*Dashboard Tutorial*/}
+                                <Route path={routeUrls.dashTutorial.list}>
+                                    <Route index element={<TutorialPage/>}/>
+                                    <Route path={routeUrls.dashTutorial.create}
+                                           element={<Suspense fallback={<Loader/>}><TutorialCreate/></Suspense>}/>
+                                    <Route path={routeUrls.dashTutorial.view}
+                                           element={<Suspense fallback={<Loader/>}><BlogView/></Suspense>}/>
+                                    <Route path={routeUrls.dashTutorial.edit}
+                                           element={<Suspense fallback={<Loader/>}><TutorialUpdate/></Suspense>}/>
                                 </Route>
                             </Route>
 

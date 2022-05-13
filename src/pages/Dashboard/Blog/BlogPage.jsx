@@ -15,7 +15,7 @@ const BlogPage = () => {
     const [articles, setArticles] = useState();
 
     const getArticle = async () => {
-        await axios.get(baseURL.get_blog, {
+        await axios.get(`${baseURL.get_blog}1`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth?.token?.access}`,
@@ -54,6 +54,7 @@ const BlogPage = () => {
 
     useEffect(() => {
         getArticle().then(r => r)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -63,7 +64,7 @@ const BlogPage = () => {
                 <Container>
                     <div className="position-relative">
                         <div className="d-flex align-items-center justify-content-between">
-                            <h2 className="mb-0">Blog Articles</h2>
+                            <h2 className="mb-0">Manage Articles</h2>
                             <Link
                                 to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list + '/' + routeUrls.dashBlog.create}
                                 className="btn btn-primary px-4">Create Article</Link>

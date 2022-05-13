@@ -73,6 +73,7 @@ const Header = (props) => {
     useEffect(() => {
         if (window.location.href.split('/')[window.location.href.split('/').length - 1] === routeUrls.dashboard)
             setActive('dashboard');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [window.location.href])
 
 
@@ -91,6 +92,7 @@ const Header = (props) => {
                     console.log(error)
                 })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
 
 
@@ -372,12 +374,20 @@ const Header = (props) => {
                                     <Link to={routeUrls.myObservations}>My Observation</Link>
                                 </DropdownItem>
                                 {admin &&
-                                    <DropdownItem>
-                                        <Link
-                                            to={`${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${routeUrls.dashBlog.create}`}>
-                                            Create Article
-                                        </Link>
-                                    </DropdownItem>
+                                    <>
+                                        <DropdownItem>
+                                            <Link
+                                                to={`${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${routeUrls.dashBlog.create}`}>
+                                                Create Article
+                                            </Link>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            <Link
+                                                to={`${routeUrls.dashboard}/${routeUrls.dashTutorial.list}/${routeUrls.dashTutorial.create}`}>
+                                                Create Tutorial
+                                            </Link>
+                                        </DropdownItem>
+                                    </>
                                 }
                                 <DropdownItem onClick={() => setActive('')}>
                                     <Link to={routeUrls.profile}>Edit Profile</Link>
