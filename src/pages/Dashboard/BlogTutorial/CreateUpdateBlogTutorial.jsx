@@ -75,7 +75,10 @@ const CreateUpdateBlogTutorial = (props) => {
         formData.append("description", data?.description);
         formData.append("content", data?.content);
         formData.append("image_ids", imageID)
-        formData.append("category", data?.category);
+        
+        if (data?.article_type === "1") {
+            formData.append("category", data?.category);
+        }
 
         await axios.post(baseURL.create_blog, formData, {
             headers: {
@@ -148,7 +151,7 @@ const CreateUpdateBlogTutorial = (props) => {
             }
         }
 // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [inputChange, data?.article_type])
+    }, [data?.article_type])
 
     return (
         <>

@@ -377,14 +377,14 @@ const Header = (props) => {
                                     <>
                                         <DropdownItem>
                                             <Link
-                                                to={`${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${routeUrls.dashBlog.create}`}>
-                                                Create Article
+                                                to={`${routeUrls.dashboard}/${routeUrls.dashBlog.list}`}>
+                                                Manage Articles
                                             </Link>
                                         </DropdownItem>
                                         <DropdownItem>
                                             <Link
-                                                to={`${routeUrls.dashboard}/${routeUrls.dashTutorial.list}/${routeUrls.dashTutorial.create}`}>
-                                                Create Tutorial
+                                                to={`${routeUrls.dashboard}/${routeUrls.dashTutorial.list}`}>
+                                                Manage Tutorials
                                             </Link>
                                         </DropdownItem>
                                     </>

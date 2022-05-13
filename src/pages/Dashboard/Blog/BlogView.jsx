@@ -1,5 +1,5 @@
 import "../../../assets/scss/component/blog.scss";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {baseURL} from "../../../helpers/url";
 import axios from "../../../api/axios";
 import {useEffect, useState} from "react";
@@ -15,7 +15,6 @@ const BlogView = () => {
     const [readMode, setReadMode] = useState(false);
 
     const getArticleDetails = async () => {
-
         await axios.get(`${baseURL.get_single_blog}${slug}/`, {
             headers: {
                 "Content-Type": "application/json",

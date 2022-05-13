@@ -26,7 +26,7 @@ const ListBlogTutorial = (props) => {
                     </td>
 
                     <td>
-                        <BlogAction item={item}/>
+                        <BlogAction type={type} item={item}/>
                     </td>
                 </tr>
             )

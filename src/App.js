@@ -16,6 +16,7 @@ import InformativePage from './layouts/InformativePage';
 import Loader from "./components/Shared/Loader";
 import SystemOnline from "./components/Common/SystemOnline";
 
+
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const GetStarted = lazy(() => import('./pages/GetStarted'));
@@ -45,6 +46,7 @@ const BlogUpdate = lazy(() => import('./pages/Dashboard/Blog/BlogUpdate'));
 
 //Tutorial Page dashboard
 const TutorialPage = lazy(() => import('./pages/Dashboard/Tutorial/TutorialPage'));
+const TutorialView = lazy(() => import('./pages/Dashboard/Tutorial/TutorialView'));
 const TutorialCreate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialCreate'));
 const TutorialUpdate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialUpdate'));
 
@@ -185,7 +187,7 @@ const App = () => {
                                     <Route path={routeUrls.dashTutorial.create}
                                            element={<Suspense fallback={<Loader/>}><TutorialCreate/></Suspense>}/>
                                     <Route path={routeUrls.dashTutorial.view}
-                                           element={<Suspense fallback={<Loader/>}><BlogView/></Suspense>}/>
+                                           element={<Suspense fallback={<Loader/>}><TutorialView/></Suspense>}/>
                                     <Route path={routeUrls.dashTutorial.edit}
                                            element={<Suspense fallback={<Loader/>}><TutorialUpdate/></Suspense>}/>
                                 </Route>
