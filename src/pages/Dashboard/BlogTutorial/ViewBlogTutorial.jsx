@@ -5,7 +5,7 @@ import {Icon} from "@iconify/react/dist/iconify";
 import ContentEditor from "../../../components/Blog/ContentEditor";
 
 const ViewBlogTutorial = (props) => {
-    const {slug, content, setReadMode, readMode} = props;
+    const {slug, content, setReadMode, readMode, type} = props;
     return (
         <>
             <div className="blog_page position-relative">
@@ -14,11 +14,11 @@ const ViewBlogTutorial = (props) => {
                     <Container>
                         <div className="position-relative">
                             <div className="">
-                                <Link to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list}
+                                <Link to={'/' + routeUrls.dashboard + '/' + type}
                                       className="d-flex align-items-center justify-content-start mb-3">
                                     <Icon icon="ep:back"/>
                                     <span className="ms-2">
-                                    Back to blogs
+                                    Back to {type}
                                 </span>
                                 </Link>
                                 <div className="d-flex align-items-center justify-content-between">

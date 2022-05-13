@@ -42,6 +42,7 @@ const BlogView = () => {
                           readMode={readMode}
                           content={article}
                           slug={slug}
+                          type="blog"
         />
     )
 }

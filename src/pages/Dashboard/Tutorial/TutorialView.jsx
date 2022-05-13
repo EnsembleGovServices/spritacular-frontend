@@ -41,6 +41,7 @@ const TutorialView = () => {
                               readMode={readMode}
                               content={tutorial}
                               slug={slug}
+                              type="tutorial"
             />
         </>
     )
