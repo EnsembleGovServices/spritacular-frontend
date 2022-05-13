@@ -89,7 +89,7 @@ const ObservationDetails = (props) => {
     };
 
     useEffect(() => {
-        if (open && data?.id && isImageNull) {
+        if (open && data?.id && isImageNull && auth?.user?.id) {
             intervalRef.current = setInterval(() => {
                 checkNulledImage().then((r) => r);
             }, 1000);
@@ -97,8 +97,12 @@ const ObservationDetails = (props) => {
             return () => {
                 clearInterval(intervalRef.current);
             };
+        } else if (open && data?.id && isImageNull && !auth?.user?.id) {
+            setTimeout(function () {
+                setIsImageNull(false);
+            }, 1000)
         }
-    }, [data?.id, isImageNull, open]);
+    }, [data?.id, isImageNull, open, auth?.user]);
 
     useEffect(() => {
         if (!isImageNull && location.pathname === `/${routeUrls.myObservations}`) {
