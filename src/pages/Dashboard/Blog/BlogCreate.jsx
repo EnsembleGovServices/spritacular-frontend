@@ -1,7 +1,7 @@
 import "../../../assets/scss/component/blog.scss"
 import {Suspense, lazy} from "react";
 
-const CreateUpdateBlogTutorial = lazy(() => import('../CreateUpdateBlogTutorial'))
+const CreateUpdateBlogTutorial = lazy(() => import('../BlogTutorial/CreateUpdateBlogTutorial'))
 
 const BlogCreate = () => {
     return (

@@ -1,24 +1,25 @@
 import "../../../assets/scss/component/blog.scss"
-import {Col, Container, Table} from "reactstrap";
-import {Link} from "react-router-dom";
 
 import {useEffect, useState} from "react";
-import useAuth from "../../../hooks/useAuth";
 
-import {baseURL, routeUrls} from "../../../helpers/url";
+import {baseURL} from "../../../helpers/url";
 import axios from "../../../api/axios";
-import BlogAction from "./BlogAction";
-import NotFound from "../../../components/Common/NotFound";
+
+import ListBlogTutorial from "../BlogTutorial/ListBlogTutorial";
 
 const BlogPage = () => {
-    const {auth} = useAuth();
     const [articles, setArticles] = useState();
 
+    const thead = [
+        {name: 'ID'},
+        {name: 'Title'},
+        {name: 'Description'},
+        {name: 'Action'}
+    ]
     const getArticle = async () => {
         await axios.get(`${baseURL.get_blog}1`, {
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${auth?.token?.access}`,
             },
         }).then(response => {
             // console.log('response', response);
@@ -28,90 +29,16 @@ const BlogPage = () => {
         })
     }
 
-
-    const listArticles = () => {
-        return articles?.map((item, index) => {
-            return (
-                <tr key={index}>
-                    <th scope="row">
-                        {item?.id}
-                    </th>
-                    <td>
-                        {item?.title.substring(0, 40) + '...'}
-                    </td>
-                    <td>
-                        {item?.description.substring(0, 80) + '...'}
-                    </td>
-
-                    <td>
-                        <BlogAction item={item}/>
-                    </td>
-                </tr>
-            )
-        })
-    }
-
-
     useEffect(() => {
         getArticle().then(r => r)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
-        <div className="blog_page position-relative">
-            <div className="common-banner"></div>
-            <section className="blog-main">
-                <Container>
-                    <div className="position-relative">
-                        <div className="d-flex align-items-center justify-content-between">
-                            <h2 className="mb-0">Manage Articles</h2>
-                            <Link
-                                to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list + '/' + routeUrls.dashBlog.create}
-                                className="btn btn-primary px-4">Create Article</Link>
-                        </div>
-                    </div>
-
-                    <div className="mt-5">
-                        <div className="row">
-                            <Col sm={12}>
-                                <div className="card">
-                                    <div className="card-body  p-4 py-md-5 px-md-5">
-                                        {articles?.length > 0 ? (
-                                            <Table className="mb-0 table table-borderless table-hover table-striped"
-                                            >
-                                                <thead className="border-b">
-                                                <tr>
-                                                    <th>
-                                                        ID
-                                                    </th>
-                                                    <th>
-                                                        Title
-                                                    </th>
-                                                    <th>
-                                                        Description
-                                                    </th>
-                                                    <th>
-                                                        Action
-                                                    </th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {listArticles()}
-                                                </tbody>
-                                            </Table>
-                                        ) : (
-                                            <NotFound/>
-                                        )
-                                        }
-                                    </div>
-                                </div>
-                            </Col>
-                        </div>
-                    </div>
-
-                </Container>
-            </section>
-        </div>
+        <ListBlogTutorial content={articles}
+                          thead={thead}
+                          type="blog"
+        />
     )
 }
 

@@ -1,15 +1,15 @@
 import {Col, Form, FormGroup, Input, Label, UncontrolledAlert} from "reactstrap";
-import Loader from "../../components/Shared/Loader";
-import axios from "../../api/axios";
-import {baseURL, routeUrls} from "../../helpers/url";
+import Loader from "../../../components/Shared/Loader";
+import axios from "../../../api/axios";
+import {baseURL, routeUrls} from "../../../helpers/url";
 import {useState, Suspense, lazy, useEffect,} from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 
-const ContentEditor = lazy(() => import('../../components/Blog/ContentEditor'))
-const UploadFeaturedImage = lazy(() => import('../../components/Blog/UploadFeaturedImage'))
-const BlogType = lazy(() => import('../Dashboard/Blog/BlogType'))
-const BlogCategory = lazy(() => import('../../components/Blog/BlogCategory'))
+const ContentEditor = lazy(() => import('../../../components/Blog/ContentEditor'))
+const UploadFeaturedImage = lazy(() => import('../../../components/Blog/UploadFeaturedImage'))
+const BlogType = lazy(() => import('../Blog/BlogType'))
+const BlogCategory = lazy(() => import('../../../components/Blog/BlogCategory'))
 
 const CreateUpdateBlogTutorial = (props) => {
     const {type} = props;

@@ -1,6 +1,44 @@
+import "../../../assets/scss/component/blog.scss"
+
+import {useEffect, useState} from "react";
+
+import {baseURL} from "../../../helpers/url";
+import axios from "../../../api/axios";
+
+import ListBlogTutorial from "../BlogTutorial/ListBlogTutorial";
+
 const TutorialPage = () => {
+    const [tutorials, setTutorials] = useState();
+
+    const thead = [
+        {name: 'ID'},
+        {name: 'Title'},
+        {name: 'Description'},
+        {name: 'Action'}
+    ]
+    const getTutorials = async () => {
+        await axios.get(`${baseURL.get_blog}2`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(response => {
+            // console.log('response', response);
+            setTutorials(response?.data?.data);
+        }).catch(error => {
+            console.log('error', error)
+        })
+    }
+
+    useEffect(() => {
+        getTutorials().then(r => r)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
-        <h1>Tutorial List</h1>
+        <ListBlogTutorial content={tutorials}
+                          thead={thead}
+                          type="tutorial"
+        />
     )
 }
 export default TutorialPage;
