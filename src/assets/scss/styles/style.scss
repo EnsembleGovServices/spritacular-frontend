@@ -223,4 +223,24 @@ ul.list-numbered {
   @include vcenter;
 }
 
+.dash-inner-card-list {
+  margin-bottom: 20px;
+  min-height: 170px;
+  max-height: 170px;
+  overflow: hidden;
+  border-radius: 5px;
+
+  > div {
+    min-height: 170px;
+    max-height: 170px;
+  }
+
+  .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
 @import "../component/index.scss";
