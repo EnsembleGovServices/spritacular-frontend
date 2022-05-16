@@ -108,7 +108,7 @@ const UploadFeaturedImage = (props) => {
                 })
                 .catch((error) =>
                     console.log(
-                        `Error converting the CDN image to file object at index [${error}]`
+                        `Error converting the CDN image to file object at index [${error}], This warning can be ignored.`
                     )
                 );
         }
