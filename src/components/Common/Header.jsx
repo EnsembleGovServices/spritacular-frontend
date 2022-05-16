@@ -218,12 +218,12 @@ const Header = (props) => {
                                             Policy
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active === 'about-3' ? 'active' : ''}>
-                                        <Link to={routeUrls.policy + '?code=true'} title="Code of Conduct"
-                                              onClick={() => setActive('about-3')}>
-                                            Code of Conduct
-                                        </Link>
-                                    </DropdownItem>
+                                    {/*<DropdownItem className={active === 'about-3' ? 'active' : ''}>*/}
+                                    {/*    <Link to={routeUrls.policy + '?code=true'} title="Code of Conduct"*/}
+                                    {/*          onClick={() => setActive('about-3')}>*/}
+                                    {/*        Code of Conduct*/}
+                                    {/*    </Link>*/}
+                                    {/*</DropdownItem>*/}
                                 </DropdownMenu>
                             </Dropdown>
                         </NavItem>
