@@ -87,7 +87,7 @@ const CreateUpdateBlogTutorial = (props) => {
         formData.append("content", data?.content);
         formData.append("image_ids", imageID)
 
-        if (data?.article_type === "1") {
+        if (data?.article_type === "1" || type === "blog") {
             formData.append("category", data?.category);
         }
 
@@ -109,7 +109,7 @@ const CreateUpdateBlogTutorial = (props) => {
                 });
                 window.scrollTo(0, 0);
                 setTimeout(function () {
-                    if (data?.article_type === "1") {
+                    if (data?.article_type === "1" || type === "blog") {
                         navigate('/dashboard/blog', {replace: true});
                     } else {
                         navigate('/dashboard/tutorial', {replace: true});
@@ -142,7 +142,7 @@ const CreateUpdateBlogTutorial = (props) => {
                 });
                 window.scrollTo(0, 0);
                 setTimeout(function () {
-                    if (data?.article_type === "1") {
+                    if (data?.article_type === "1" || type === "blog") {
                         navigate('/dashboard/blog', {replace: true});
                     } else {
                         navigate('/dashboard/tutorial', {replace: true});
@@ -189,10 +189,10 @@ const CreateUpdateBlogTutorial = (props) => {
 
     useEffect(() => {
         if (inputChange) {
-            if (data && data?.article_type === "1") {
+            if (data && data?.article_type === "1" || type === "blog") {
                 console.log('condition', data?.article_type)
                 navigate(`/dashboard/blog/${routeUrls.dashBlog.create}`, {replace: true})
-            } else if (data && data?.article_type === "2") {
+            } else if (data && data?.article_type === "2" || type === "tutorial") {
                 console.log('condition', data?.article_type)
                 navigate(`/dashboard/tutorial/${routeUrls.dashTutorial.create}`, {replace: true})
             }
