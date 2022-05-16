@@ -197,6 +197,10 @@ ul.list-numbered {
   @include vcenter;
 }
 
+.disabled {
+  cursor: not-allowed;
+}
+
 .mark-center {
   position: absolute;
   inset: 0;

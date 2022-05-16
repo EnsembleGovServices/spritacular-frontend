@@ -13,6 +13,7 @@ const TutorialUpdate = () => {
                         <Suspense fallback={<div>Please wait...</div>}>
                             <CreateUpdateBlogTutorial
                                 type="tutorial"
+                                update={true}
                             />
                         </Suspense>
                     </div>

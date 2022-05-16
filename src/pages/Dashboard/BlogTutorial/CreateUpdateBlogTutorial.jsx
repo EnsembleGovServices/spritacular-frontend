@@ -12,7 +12,7 @@ const BlogType = lazy(() => import('../Blog/BlogType'))
 const BlogCategory = lazy(() => import('../../../components/Blog/BlogCategory'))
 
 const CreateUpdateBlogTutorial = (props) => {
-    const {type} = props;
+    const {type, update} = props;
     const {auth} = useAuth();
 
     const [data, setData] = useState();
@@ -119,7 +119,6 @@ const CreateUpdateBlogTutorial = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
     useEffect(() => {
         if (location.pathname === "/dashboard/blog/create") {
             setData((prev) => {
@@ -189,6 +188,7 @@ const CreateUpdateBlogTutorial = (props) => {
                             <Col sm={12} md={data?.article_type === "1" || type === "blog" ? 6 : 12}>
                                 <BlogType blogType={data?.article_type}
                                           handleInput={handleInput}
+                                          update={update}
                                           type={type}/>
                             </Col>
                             {type === "blog" &&
