@@ -38,6 +38,7 @@ const BlogList = () => {
 
     useEffect(() => {
         getArticles().then(r => r)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

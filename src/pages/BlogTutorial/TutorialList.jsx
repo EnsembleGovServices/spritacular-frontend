@@ -23,7 +23,7 @@ const TutorialList = () => {
                 "Content-Type": "application/json",
             },
         }).then(response => {
-            console.log(response?.data)
+            // console.log(response?.data)
             setTutorials({
                 list: response?.data?.data
             })
@@ -34,6 +34,7 @@ const TutorialList = () => {
 
     useEffect(() => {
         getTutorials().then(r => r)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
