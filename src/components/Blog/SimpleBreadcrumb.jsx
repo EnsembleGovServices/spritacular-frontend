@@ -7,7 +7,7 @@ const SimpleBreadcrumb = (props) => {
     return (
         <Breadcrumb>
             <BreadcrumbItem>
-                <Link to={'/' + routeUrls.home}>Home</Link>
+                <Link to={routeUrls.home}>Home</Link>
             </BreadcrumbItem>
             <BreadcrumbItem>
                 <Link to={`/${page?.toLowerCase()}`} className="text-capitalize"> {page ? page : ''} </Link>

@@ -1,13 +1,13 @@
 import {Col, Row} from "reactstrap";
 import BlogListCardContent from "../BlogListCardContent";
 
-const BlogRestLists = (props) => {
+const BlogGrid4 = (props) => {
     const {articleItems} = props;
     return (
         <Row className="g-4">
             {articleItems?.map((item, index) => {
                 return (
-                    <Col key={index} md={2} xl={4}>
+                    <Col key={index} sm={6}>
                         <BlogListCardContent item={item}/>
                     </Col>
                 )
@@ -15,4 +15,4 @@ const BlogRestLists = (props) => {
         </Row>
     )
 }
-export default BlogRestLists;
+export default BlogGrid4;

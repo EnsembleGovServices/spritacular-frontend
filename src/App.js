@@ -15,20 +15,20 @@ import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 import InformativePage from './layouts/InformativePage';
 import Loader from "./components/Shared/Loader";
 import SystemOnline from "./components/Common/SystemOnline";
+import TutorialList from "./pages/BlogTutorial/TutorialList";
 
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const GetStarted = lazy(() => import('./pages/GetStarted'));
-const Tutorials = lazy(() => import('./pages/Tutorials'));
 const Gallery = lazy(() => import('./pages/Gallery'));
 const Policy = lazy(() => import('./pages/Policy'));
-const TutorialsDetail = lazy(() => import('./pages/TutorialsDetail'));
 const LoginPage = lazy(() => import('./pages/Auth/LoginPage'));
 
 //Blog Pages
-const BlogList = lazy(() => import('./pages/Blog/BlogList'));
-const BlogArticleDetails = lazy(() => import('./pages/Blog/Details/BlogArticleDetails'));
+const BlogList = lazy(() => import('./pages/BlogTutorial/BlogList'));
+const BlogArticleDetails = lazy(() => import('./pages/BlogTutorial/Details/BlogArticleDetails'));
+const TutorialDetails = lazy(() => import('./pages/BlogTutorial/Details/TutorialDetails'));
 
 
 //Protected Pages
@@ -115,18 +115,14 @@ const App = () => {
                                    element={<Suspense fallback={<Loader/>}><BlogArticleDetails/></Suspense>}/>
                         </Route>
 
+                        <Route path={routeUrls.tutorials}>
+                            <Route index element={<Suspense fallback={<Loader/>}><TutorialList/></Suspense>}/>
+                            <Route path={routeUrls.tutorialsDetail}
+                                   element={<Suspense fallback={<Loader/>}><TutorialDetails/></Suspense>}/>
+                        </Route>
 
-                        <Route exact path={routeUrls.tutorials} element={
-                            <Suspense fallback={<Loader/>}>
-                                <Tutorials/>
-                            </Suspense>
-                        }/>
+
                         <Route exact path={routeUrls.policy} element={<Policy/>}/>
-                        <Route exact path={routeUrls.tutorialsDetail} element={
-                            <Suspense fallback={<Loader/>}>
-                                <TutorialsDetail/>
-                            </Suspense>
-                        }/>
                         <Route exact path={routeUrls.login} element={
                             <Suspense fallback={<Loader/>}>
                                 <LoginPage/>
