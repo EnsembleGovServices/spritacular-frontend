@@ -2,8 +2,8 @@ import {Col, Form, FormGroup, Input, Label, UncontrolledAlert} from "reactstrap"
 import Loader from "../../../components/Shared/Loader";
 import axios from "../../../api/axios";
 import {baseURL, routeUrls} from "../../../helpers/url";
-import {useState, Suspense, lazy, useEffect,} from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useState, Suspense, lazy, useEffect, useLayoutEffect,} from "react";
+import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
 const ContentEditor = lazy(() => import('../../../components/Blog/ContentEditor'))
@@ -14,8 +14,17 @@ const BlogCategory = lazy(() => import('../../../components/Blog/BlogCategory'))
 const CreateUpdateBlogTutorial = (props) => {
     const {type, update} = props;
     const {auth} = useAuth();
+    const {slug} = useParams();
 
-    const [data, setData] = useState();
+    const [data, setData] = useState({
+        title: "",
+        description: "",
+        content: "",
+        image_ids: [],
+        category: "",
+        article_type: "",
+        thumbnail_image: undefined
+    });
     const [category, setCategory] = useState();
     const [loading, setLoading] = useState(false);
 
@@ -114,8 +123,10 @@ const CreateUpdateBlogTutorial = (props) => {
         })
     }
 
+
     useEffect(() => {
         getBlogCategory().then(r => r)
+        // console.clear();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -137,6 +148,7 @@ const CreateUpdateBlogTutorial = (props) => {
                 }
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
 
     useEffect(() => {
@@ -152,11 +164,43 @@ const CreateUpdateBlogTutorial = (props) => {
 // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data?.article_type])
 
+    const updateBlogTutorial = async () => {
+
+        await axios.get(`${baseURL.get_single_blog}${slug}/`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token?.access}`,
+            },
+        }).then(response => {
+            // console.log(response);
+            let data = response?.data?.data;
+            // console.log(response?.data?.data);
+            setData((prev) => {
+                return {
+                    ...prev,
+                    ...data
+                }
+            })
+        }).catch(error => {
+            // console.log(error);
+            if (error?.response?.statusCode !== 200) {
+                navigate('/404', {replace: true});
+            }
+        })
+    }
+
+    useLayoutEffect(() => {
+        if (update) {
+            updateBlogTutorial().then(r => r);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [update])
+
     return (
         <>
             <div className="position-relative">
                 <div className="d-flex align-items-center justify-content-between">
-                    <h2 className="mb-0 text-capitalize">Create {type}</h2>
+                    <h2 className="mb-0 text-capitalize">{update ? "Update" : "Create"} {type}</h2>
                     <Link to={`/${routeUrls.dashboard}/${type}`}
                           className="btn btn-primary px-4 text-capitalize">{type} lists</Link>
                 </div>
@@ -207,6 +251,7 @@ const CreateUpdateBlogTutorial = (props) => {
                                 name="title"
                                 placeholder="Enter blog title"
                                 autoComplete="off"
+                                value={data ? data?.title : ""}
                                 required
                                 onChange={(e) => handleInput(e)}
                             />
@@ -222,6 +267,7 @@ const CreateUpdateBlogTutorial = (props) => {
                                 name="description"
                                 placeholder="Write description"
                                 autoComplete="off"
+                                value={data ? data?.description : ""}
                                 required
                                 onChange={(e) => handleInput(e)}
                             />
@@ -234,6 +280,7 @@ const CreateUpdateBlogTutorial = (props) => {
                                 <ContentEditor setLoading={setLoading}
                                                editorData={data}
                                                setData={setData}
+                                               data={data?.content}
                                 />
                             </Suspense>
                         </FormGroup>
@@ -243,14 +290,18 @@ const CreateUpdateBlogTutorial = (props) => {
                             <UploadFeaturedImage uploadProgress={progress}
                                                  handleInput={handleInput}
                                                  error={error}
-                                                 setData={setData}/>
+                                                 setData={setData}
+                                                 updata={update}
+                                                 thumb={data?.thumbnail_image}
+                            />
                         </Suspense>
                     </Col>
                     <Col sm={12}>
                         <div className="mt-4">
                             <button type="submit"
                                     disabled={handleDisable()}
-                                    className={`btn px-4 py-2 px-sm-5 py-sm-2 ${handleDisable() ? 'btn-light text-light-dark' : 'btn-primary'}`}>Create
+                                    className={`btn px-4 py-2 px-sm-5 py-sm-2 ${handleDisable() ? 'btn-light text-light-dark' : 'btn-primary'}`}>
+                                {update ? "Update" : "Create"}
                             </button>
                             <button type="reset"
                                     className="btn btn-dark px-4 py-2 px-sm-5 py-sm-2 ms-2">Reset

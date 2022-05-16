@@ -1,13 +1,13 @@
 import "../../assets/scss/component/initialUploadobservations.scss";
 import "../../assets/scss/component/uploadFeatureBlog.scss";
 import UploadImageUI from "../Shared/UploadImageUI";
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 import {Icon} from '@iconify/react';
 import BlurImage from "../Common/BlurImage";
 import {FormGroup, Label} from "reactstrap";
 
 const UploadFeaturedImage = (props) => {
-    const {setData, uploadProgress, error} = props;
+    const {setData, uploadProgress, error, update, thumb} = props;
     const [file, setFile] = useState();
     const [preview, setPreview] = useState();
     const [reset, setReset] = useState(false);
@@ -69,6 +69,50 @@ const UploadFeaturedImage = (props) => {
     //         }, 1200);
     //     }
     // }, [uploadProgress])
+
+    const getFileName = (url) => {
+        return url.split(/[#?]/)[0].split("/").pop().trim();
+    };
+    const toBase64 = (file) =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+
+    useEffect(() => {
+        if (thumb) {
+            return fetch(thumb)
+                .then(async (response) => {
+                    const contentType = response.headers.get("content-type");
+                    const blob = await response
+                        .blob()
+                        .catch((error) => console.log("blob error", error));
+                    let fileName = getFileName(thumb);
+                    const file = new File([blob], fileName, {contentType});
+                    const image = await toBase64(file).catch((error) =>
+                        console.log("base64 Error", error)
+                    );
+                    setTimeout(() => {
+                        setData((prev) => {
+                            return {
+                                ...prev,
+                                thumbnail_image: file
+                            }
+                        })
+                        setFile(file)
+                        setPreview(image);
+                    }, 500)
+                    return file;
+                })
+                .catch((error) =>
+                    console.log(
+                        `Error converting the CDN image to file object at index [${error}]`
+                    )
+                );
+        }
+    }, [thumb])
 
     return (
         <FormGroup>

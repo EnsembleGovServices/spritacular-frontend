@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
 const BlurImage = (props) => {
     const {preview, image, alt, bgColor = 'transparent', handleClick, homepage} = props;
@@ -19,7 +19,7 @@ const BlurImage = (props) => {
     }, []);
 
     return (
-        <div className="shadow-sm drop-shadow-lg" style={{ overflow: 'hidden' }}>
+        <div className="shadow-sm drop-shadow-lg" style={{overflow: 'hidden'}}>
             <img
                 style={{
                     filter: `${loading ? 'blur(10px)' : ''}`,
