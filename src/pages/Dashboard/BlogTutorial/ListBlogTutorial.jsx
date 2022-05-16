@@ -19,7 +19,7 @@ const ListBlogTutorial = (props) => {
                                            alt={item?.title}/>
                             </div>
                             <div>
-                                {item?.title.substring(0, 40) + '...'}
+                                <h5 className="card-title">{item?.title.substring(0, 40) + '...'}</h5>
                             </div>
                             <div>
                                 {item?.description.substring(0, 80) + '...'}
