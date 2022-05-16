@@ -91,38 +91,73 @@ const CreateUpdateBlogTutorial = (props) => {
             formData.append("category", data?.category);
         }
 
-        await axios.post(apiContentUrl, formData, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${auth?.token?.access}`,
-            },
-            onUploadProgress: (ProgressEvent) => {
-                let progressBar = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) + "%";
-                setProgress(progressBar);
-            },
-        }).then(response => {
-            setLoading(false);
-            setSuccess({
-                status: response.status,
-                message: response.data.success
-            });
-            window.scrollTo(0, 0);
-            setTimeout(function () {
-                if (data?.article_type === "1") {
-                    navigate('/dashboard/blog', {replace: true});
-                } else {
-                    navigate('/dashboard/tutorial', {replace: true});
-                }
-            }, 1000)
-        }).catch(error => {
-            setLoading(false);
-            // console.log('error', error);
-            // setData('')
-            setError({
-                status: error.response.status,
-                message: error.response.data
+        if (!update) {
+            return await axios.post(apiContentUrl, formData, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${auth?.token?.access}`,
+                },
+                onUploadProgress: (ProgressEvent) => {
+                    let progressBar = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) + "%";
+                    setProgress(progressBar);
+                },
+            }).then(response => {
+                setLoading(false);
+                setSuccess({
+                    status: response.status,
+                    message: response.data.success
+                });
+                window.scrollTo(0, 0);
+                setTimeout(function () {
+                    if (data?.article_type === "1") {
+                        navigate('/dashboard/blog', {replace: true});
+                    } else {
+                        navigate('/dashboard/tutorial', {replace: true});
+                    }
+                }, 1000)
+            }).catch(error => {
+                setLoading(false);
+                // console.log('error', error);
+                // setData('')
+                setError({
+                    status: error.response.status,
+                    message: error.response.data
+                })
             })
-        })
+        } else {
+            return await axios.put(apiContentUrl, formData, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${auth?.token?.access}`,
+                },
+                onUploadProgress: (ProgressEvent) => {
+                    let progressBar = Math.round((ProgressEvent.loaded / ProgressEvent.total) * 100) + "%";
+                    setProgress(progressBar);
+                },
+            }).then(response => {
+                setLoading(false);
+                setSuccess({
+                    status: response.status,
+                    message: response.data.success
+                });
+                window.scrollTo(0, 0);
+                setTimeout(function () {
+                    if (data?.article_type === "1") {
+                        navigate('/dashboard/blog', {replace: true});
+                    } else {
+                        navigate('/dashboard/tutorial', {replace: true});
+                    }
+                }, 1000)
+            }).catch(error => {
+                setLoading(false);
+                // console.log('error', error);
+                // setData('')
+                setError({
+                    status: error.response.status,
+                    message: error.response.data
+                })
+            })
+        }
     }
 
     useEffect(() => {
@@ -234,6 +269,7 @@ const CreateUpdateBlogTutorial = (props) => {
                                 <BlogType blogType={data?.article_type}
                                           handleInput={handleInput}
                                           update={update}
+                                          setData={setData}
                                           type={type}/>
                             </Col>
                             {type === "blog" &&

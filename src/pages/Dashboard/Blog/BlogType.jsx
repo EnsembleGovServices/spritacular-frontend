@@ -1,7 +1,8 @@
 import {FormGroup, Input, Label} from "reactstrap";
+import {useLayoutEffect} from "react";
 
 const BlogType = (props) => {
-    const {blogType, handleInput, type, update} = props;
+    const {blogType, handleInput, type, update, setData} = props;
     const types = [
         {
             name: 'Blog',
@@ -11,7 +12,17 @@ const BlogType = (props) => {
             name: 'Tutorial',
             value: 2
         }
-    ]
+    ];
+    useLayoutEffect(() => {
+        if (update) {
+            setData((prev) => {
+                return {
+                    ...prev,
+                    article_type: blogType === "1" || type === "blog" ? 1 : 2
+                }
+            })
+        }
+    }, [update])
     return (
         <FormGroup>
             <Label for="ChooseType">
