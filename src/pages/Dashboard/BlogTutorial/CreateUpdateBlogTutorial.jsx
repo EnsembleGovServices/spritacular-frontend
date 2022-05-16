@@ -189,10 +189,10 @@ const CreateUpdateBlogTutorial = (props) => {
 
     useEffect(() => {
         if (inputChange) {
-            if (data && data?.article_type === "1" || type === "blog") {
+            if (data && data?.article_type === "1") {
                 console.log('condition', data?.article_type)
                 navigate(`/dashboard/blog/${routeUrls.dashBlog.create}`, {replace: true})
-            } else if (data && data?.article_type === "2" || type === "tutorial") {
+            } else if (data && data?.article_type === "2") {
                 console.log('condition', data?.article_type)
                 navigate(`/dashboard/tutorial/${routeUrls.dashTutorial.create}`, {replace: true})
             }
