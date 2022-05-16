@@ -51,11 +51,9 @@ const TutorialList = () => {
                                     className="btn btn-primary px-4">Create Tutorial</Link>
                             }
                         </div>
-                        <Row className='gx-5 gy-3'>
-                            <Suspense fallback={<Loader fixContent={true}/>}>
-                                <TutorialRestLists articleItems={tutorials?.list}/>
-                            </Suspense>
-                        </Row>
+                        <Suspense fallback={<Loader fixContent={true}/>}>
+                            <TutorialRestLists articleItems={tutorials?.list}/>
+                        </Suspense>
                     </Container>
                 </section>
             </div>

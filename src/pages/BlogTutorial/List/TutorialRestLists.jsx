@@ -10,7 +10,7 @@ const TutorialRestLists = (props) => {
         <Row className="g-4">
             {articleItems?.map((item, index) => {
                 return (
-                    <Col key={index} sm={6} md={4} xl={4}>
+                    <Col key={index} sm={6} md={4}>
                         <Suspense fallback={<Loader fixContent={true}/>}>
                             <TutorialListCardContent item={item}/>
                         </Suspense>
