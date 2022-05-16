@@ -75,7 +75,7 @@ const CreateUpdateBlogTutorial = (props) => {
         formData.append("description", data?.description);
         formData.append("content", data?.content);
         formData.append("image_ids", imageID)
-        
+
         if (data?.article_type === "1") {
             formData.append("category", data?.category);
         }
@@ -186,11 +186,12 @@ const CreateUpdateBlogTutorial = (props) => {
                 <div className="row position-relative">
                     <Col sm={12} md={8} className="mb-4 mb-md-0">
                         <div className="row g-4">
-                            <Col sm={12} md={data?.article_type === "1" ? 6 : 12}>
-                                <BlogType blogType={data?.article_type} handleInput={handleInput}
-                                          category={category}/>
+                            <Col sm={12} md={data?.article_type === "1" || type === "blog" ? 6 : 12}>
+                                <BlogType blogType={data?.article_type}
+                                          handleInput={handleInput}
+                                          type={type}/>
                             </Col>
-                            {data?.article_type === "1" &&
+                            {type === "blog" &&
                                 <Col sm={12} md={6}>
                                     <BlogCategory handleInput={handleInput} category={category}/>
                                 </Col>

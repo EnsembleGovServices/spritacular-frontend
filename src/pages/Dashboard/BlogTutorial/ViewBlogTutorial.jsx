@@ -24,7 +24,7 @@ const ViewBlogTutorial = (props) => {
                                 <div className="d-flex align-items-center justify-content-between">
                                     <h2 className="mb-0">{content?.title}</h2>
                                     <Link
-                                        to={content ? `/${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${slug}/edit` : ''}
+                                        to={content ? `/${routeUrls.dashboard}/${type}/${slug}/edit` : ''}
                                         className="btn btn-primary px-4 btn-sm">
                                         Edit
                                     </Link>

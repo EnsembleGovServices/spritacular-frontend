@@ -1,7 +1,7 @@
 import {FormGroup, Input, Label} from "reactstrap";
 
 const BlogType = (props) => {
-    const {blogType, handleInput} = props;
+    const {blogType, handleInput, type} = props;
     const types = [
         {
             name: 'Blog',
@@ -21,7 +21,7 @@ const BlogType = (props) => {
                 id="article_type"
                 name="article_type"
                 type="select"
-                value={blogType === "1" ? 1 : 2}
+                value={blogType === "1" || type === "blog" ? 1 : 2}
                 onChange={(e) => handleInput(e)}
             >
                 {types?.map((item, index) => {
