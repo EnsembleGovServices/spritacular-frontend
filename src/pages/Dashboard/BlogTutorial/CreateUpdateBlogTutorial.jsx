@@ -70,6 +70,8 @@ const CreateUpdateBlogTutorial = (props) => {
         });
     }
 
+    const apiContentUrl = update ? `${baseURL.blog_tut_update}${slug}/` : baseURL.create_blog;
+
     const crateArticle = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -89,7 +91,7 @@ const CreateUpdateBlogTutorial = (props) => {
             formData.append("category", data?.category);
         }
 
-        await axios.post(baseURL.create_blog, formData, {
+        await axios.post(apiContentUrl, formData, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth?.token?.access}`,
@@ -122,7 +124,6 @@ const CreateUpdateBlogTutorial = (props) => {
             })
         })
     }
-
 
     useEffect(() => {
         getBlogCategory().then(r => r)

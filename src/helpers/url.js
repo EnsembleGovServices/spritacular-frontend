@@ -10,7 +10,8 @@ export const baseURL = {
     get_blog: process.env.REACT_APP_API_ALL_BLOG_URL,
     get_single_blog: process.env.REACT_APP_API_SINGLE_BLOG_URL,
     blog_image_upload: process.env.REACT_APP_API_BLOG_IMAGE_UPLOAD,
-    blog_category: process.env.REACT_APP_API_BLOG_CATEGORY
+    blog_category: process.env.REACT_APP_API_BLOG_CATEGORY,
+    blog_tut_update: process.env.REACT_APP_API_BLOG_TUT_UPDATE
 }
 
 export const cameraSettingFields = {
