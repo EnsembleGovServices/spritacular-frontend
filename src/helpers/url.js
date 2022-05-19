@@ -37,6 +37,9 @@ export const routeUrls = {
     tutorialsDetail: ':slug',
     blog: 'blog',
     blogDetails: ':slug',
+    quiz: {
+        home: 'quiz'
+    },
     myObservations: 'observations',
     gallery: 'gallery',
     observationsAdd: 'observations/add',

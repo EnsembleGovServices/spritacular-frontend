@@ -30,6 +30,9 @@ const BlogList = lazy(() => import('./pages/BlogTutorial/BlogList'));
 const BlogArticleDetails = lazy(() => import('./pages/BlogTutorial/Details/BlogArticleDetails'));
 const TutorialDetails = lazy(() => import('./pages/BlogTutorial/Details/TutorialDetails'));
 
+// Quiz Page
+const QuizHome = lazy(() => import('./pages/Quiz/QuizHome'));
+
 
 //Protected Pages
 const Profile = lazy(() => import('./pages/Profile'));
@@ -105,6 +108,12 @@ const App = () => {
                         <Route exact path={routeUrls.blog} element={
                             <Suspense fallback={<Loader/>}>
                                 <BlogList/>
+                            </Suspense>
+                        }/>
+
+                        <Route exact path={routeUrls.quiz.home} element={
+                            <Suspense fallback={<Loader/>}>
+                                <QuizHome/>
                             </Suspense>
                         }/>
 
