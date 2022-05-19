@@ -83,7 +83,7 @@ const Images = {
   Filter,
   RemoveData,
   DefaultProfile,
-  NotAvailable
+  NotAvailable,
 };
 
 export default Images;
