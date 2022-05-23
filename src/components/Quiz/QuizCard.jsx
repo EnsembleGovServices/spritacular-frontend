@@ -1,10 +1,23 @@
 import {Col, Row} from "reactstrap";
+import Loader from "../Shared/Loader";
 
 const QuizCard = (props) => {
-    const {options, quizControl, singleAnswer, handleNextPrev, activeQuestion, handleTleCheck} = props;
+    const {
+        options,
+        quizControl,
+        singleAnswer,
+        handleNextPrev,
+        activeQuestion,
+        handleTleCheck,
+        handleQuizSubmit,
+        loading
+    } = props;
     return (
         <>
             <div className="card">
+                {loading &&
+                    <Loader loaderClass="quiz-loading"/>
+                }
                 <div className="card-top-image">
                     <img src={activeQuestion?.image_url} alt={activeQuestion?.id}/>
                 </div>
@@ -34,6 +47,12 @@ const QuizCard = (props) => {
                                             onClick={(e) => handleNextPrev(e.target.value)}
                                             className="btn px-5 btn-outline-dark">Prev
                                     </button>
+
+                                    <button type="submit"
+                                            onClick={handleQuizSubmit}
+                                            className="btn px-5 btn-info">Submit
+                                    </button>
+
                                     <button type="button"
                                             value="next"
                                             onClick={(e) => handleNextPrev(e.target.value)}
