@@ -11,7 +11,8 @@ const QuizCard = (props) => {
         handleTleCheck,
         handleQuizSubmit,
         disable,
-        loading
+        loading,
+        answers
     } = props;
 
 
@@ -38,6 +39,7 @@ const QuizCard = (props) => {
                                             name="tle_type"
                                             type="checkbox"
                                             value={item.id}
+                                            checked={(answers?.find(list => list === item?.id) === item?.id)}
                                             onChange={() => handleTleCheck(item.id)}
                                         />
                                         <label htmlFor={item.id}>{item?.title}</label>
