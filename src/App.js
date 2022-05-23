@@ -199,7 +199,8 @@ const App = () => {
                             </Route>
 
                             <Route exact path={routeUrls.quiz.home}>
-                                <Route index element={<Suspense fallback={<Loader/>}><QuizHome/></Suspense>}/>
+                                <Route index
+                                       element={<Suspense fallback={<Loader/>}><QuizHome roles={Roles}/></Suspense>}/>
                             </Route>
 
                         </Route>
