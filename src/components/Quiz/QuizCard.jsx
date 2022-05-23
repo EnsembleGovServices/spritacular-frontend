@@ -10,8 +10,11 @@ const QuizCard = (props) => {
         activeQuestion,
         handleTleCheck,
         handleQuizSubmit,
+        disable,
         loading
     } = props;
+
+
     return (
         <>
             <div className="card">
@@ -44,20 +47,26 @@ const QuizCard = (props) => {
                             <Col sm={12} className="mt-5">
                                 <div className="d-flex align-items-center justify-content-between">
                                     <button type="button" value="prev"
+                                            disabled={disable?.prevBtn}
                                             onClick={(e) => handleNextPrev(e.target.value)}
                                             className="btn px-5 btn-outline-dark">Prev
                                     </button>
 
-                                    <button type="submit"
-                                            onClick={handleQuizSubmit}
-                                            className="btn px-5 btn-info">Submit
-                                    </button>
+                                    {quizControl?.activeIndex === 14 ? (
+                                        <button type="submit"
+                                                onClick={handleQuizSubmit}
+                                                className="btn px-5 btn-primary">Submit
+                                        </button>
+                                    ) : (
+                                        <button type="button"
+                                                value="next"
+                                                disabled={disable?.nextBtn}
+                                                onClick={(e) => handleNextPrev(e.target.value)}
+                                                className="btn px-5 btn-primary">Next
+                                        </button>
+                                    )}
 
-                                    <button type="button"
-                                            value="next"
-                                            onClick={(e) => handleNextPrev(e.target.value)}
-                                            className="btn px-5 btn-primary">Next
-                                    </button>
+
                                 </div>
                             </Col>
                         </Row>

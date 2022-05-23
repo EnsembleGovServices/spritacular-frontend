@@ -14,13 +14,23 @@ const QuizHome = () => {
     const [options, setOptions] = useState([]);
     const [activeQuestion, setActiveQuestion] = useState({});
     const [quizControl, setQuizControl] = useState({active: 1, activeIndex: 0});
+    const [buttonType, setButtonType] = useState();
     const [singleAnswer, setSingleAnswer] = useState({que: null, ans: []});
     const [answers, setAnswers] = useState([]);
     const [result, setResult] = useState({
+        // success: {
+        //     message: 'Quiz submitted successfully',
+        //     score: 'Your score 25%'
+        // },
         success: {},
         error: {}
     });
     const [loading, setLoading] = useState(false);
+    const [disable, setDisable] = useState({
+        prevBtn: true,
+        nextBtn: true
+    });
+    const [startAgain, setStartAgain] = useState(false);
 
 // Local Variables
 
@@ -39,6 +49,7 @@ const QuizHome = () => {
     }
 
     const handleNextPrev = (value) => {
+        setButtonType(value);
         setQuizControl((prev) => {
             return {
                 ...prev,
@@ -74,13 +85,13 @@ const QuizHome = () => {
     const submitFinalAnswers = (e) => {
         e.preventDefault();
         setLoading(true);
-        console.log('calling here ', baseURL.quiz_submit)
         axios.post(baseURL.quiz_submit, answers, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth?.token?.access}`,
             },
         }).then(response => {
+            console.log(response?.data)
             setResult({
                 error: {},
                 success: {
@@ -88,7 +99,8 @@ const QuizHome = () => {
                     score: response?.data?.details
                 }
             });
-            // setLoading(false);
+            setLoading(false);
+            setAnswers([]);
         }).catch(error => {
             setResult({
                 success: {},
@@ -99,6 +111,11 @@ const QuizHome = () => {
             });
             setLoading(false);
         })
+    }
+
+    // Re-start quiz
+    const startQuizAgain = () => {
+        setStartAgain(true);
     }
 
 
@@ -152,6 +169,26 @@ const QuizHome = () => {
 
     }, [singleAnswer.ans])
 
+    useEffect(() => {
+        let current = answers?.[quizControl?.activeIndex]?.ans?.length > 0;
+        console.log('current', current)
+
+        if (current && singleAnswer?.ans?.length > 0) {
+            setDisable({
+                ...disable,
+                nextBtn: false,
+                prevBtn: (quizControl?.activeIndex === 0 || singleAnswer?.ans?.length < 1)
+            });
+        } else {
+            setDisable({
+                ...disable,
+                nextBtn: true,
+                prevBtn: quizControl?.activeIndex === 0
+            });
+        }
+
+
+    }, [answers?.[quizControl?.activeIndex]?.ans, singleAnswer?.ans])
 
     return (
         <>
@@ -177,7 +214,9 @@ const QuizHome = () => {
                                               activeQuestion={activeQuestion}
                                               options={options}
                                               loading={loading}
+                                              answers={answers?.[quizControl?.activeIndex]?.ans}
                                               quizControl={quizControl}
+                                              disable={disable}
                                               handleNextPrev={handleNextPrev}
                                               handleTleCheck={handleTleCheck}
                                               handleSubmit={submitFinalAnswers}
@@ -187,9 +226,14 @@ const QuizHome = () => {
                                         <div className="card quiz-submitted">
                                             <div className="card-body">
                                                 <h3>{result?.success?.message}</h3>
-                                                <h3 className="text-submitted text-success">
+                                                <h3 className="text-submitted text-success my-4">
                                                     {result?.success?.score}
                                                 </h3>
+
+                                                <button onClick={startQuizAgain}
+                                                        className="px-4 py-2 fw-bolder btn btn-warning">Re-attempt
+                                                    Quiz
+                                                </button>
                                             </div>
                                         </div>
                                     </>
