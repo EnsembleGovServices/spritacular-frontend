@@ -46,6 +46,7 @@ const QuizHome = () => {
     }
 
     const handleNextPrev = (value) => {
+        window.scrollTo(0, 0);
         setButtonType(value);
         setQuizControl((prev) => {
             return {
@@ -88,7 +89,6 @@ const QuizHome = () => {
                 Authorization: `Bearer ${auth?.token?.access}`,
             },
         }).then(response => {
-            console.log(response?.data)
             setResult({
                 error: {},
                 success: {
@@ -98,6 +98,7 @@ const QuizHome = () => {
             });
             setLoading(false);
             setAnswers([]);
+            window.scrollTo(0, 0);
         }).catch(error => {
             setResult({
                 success: {},
@@ -107,6 +108,7 @@ const QuizHome = () => {
                 }
             });
             setLoading(false);
+            window.scrollTo(0, 0);
         })
     }
 
