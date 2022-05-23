@@ -1,11 +1,11 @@
 import {Col, Row} from "reactstrap";
 import Loader from "../Shared/Loader";
+import QuizProgressBar from "./QuizProgressBar";
 
 const QuizCard = (props) => {
     const {
         options,
         quizControl,
-        singleAnswer,
         handleNextPrev,
         activeQuestion,
         handleTleCheck,
@@ -24,6 +24,7 @@ const QuizCard = (props) => {
                 }
                 <div className="card-top-image">
                     <img src={activeQuestion?.image_url} alt={activeQuestion?.id}/>
+                    <QuizProgressBar quizControl={quizControl} activeQuestion={activeQuestion?.id}/>
                 </div>
                 <div className="card-body">
                     <h5 className="card-title mb-4">
@@ -57,6 +58,7 @@ const QuizCard = (props) => {
                                     {quizControl?.activeIndex === 14 ? (
                                         <button type="submit"
                                                 onClick={handleQuizSubmit}
+                                                disabled={disable?.nextBtn}
                                                 className="btn px-5 btn-primary">Submit
                                         </button>
                                     ) : (
@@ -67,7 +69,6 @@ const QuizCard = (props) => {
                                                 className="btn px-5 btn-primary">Next
                                         </button>
                                     )}
-
 
                                 </div>
                             </Col>

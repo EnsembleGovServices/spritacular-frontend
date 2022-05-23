@@ -6,6 +6,7 @@ import axios from "../../api/axios";
 import {useEffect, useState} from "react";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
+import Images from "../../static/images";
 
 
 const QuizHome = () => {
@@ -18,19 +19,15 @@ const QuizHome = () => {
     const [singleAnswer, setSingleAnswer] = useState({que: null, ans: []});
     const [answers, setAnswers] = useState([]);
     const [result, setResult] = useState({
-        // success: {
-        //     message: 'Quiz submitted successfully',
-        //     score: 'Your score 25%'
-        // },
-        success: {},
-        error: {}
+        success: null,
+        error: null
     });
     const [loading, setLoading] = useState(false);
     const [disable, setDisable] = useState({
         prevBtn: true,
         nextBtn: true
     });
-    const [startAgain, setStartAgain] = useState(false);
+    const score = result?.success?.score;
 
 // Local Variables
 
@@ -96,7 +93,7 @@ const QuizHome = () => {
                 error: {},
                 success: {
                     message: response?.data?.success,
-                    score: response?.data?.details
+                    score: response?.data?.score
                 }
             });
             setLoading(false);
@@ -111,11 +108,6 @@ const QuizHome = () => {
             });
             setLoading(false);
         })
-    }
-
-    // Re-start quiz
-    const startQuizAgain = () => {
-        setStartAgain(true);
     }
 
 
@@ -171,8 +163,6 @@ const QuizHome = () => {
 
     useEffect(() => {
         let current = answers?.[quizControl?.activeIndex]?.ans?.length > 0;
-        console.log('current', current)
-
         if (current && singleAnswer?.ans?.length > 0) {
             setDisable({
                 ...disable,
@@ -196,9 +186,6 @@ const QuizHome = () => {
                 <Container>
                     <form onSubmit={submitFinalAnswers}>
                         <Row className="align-items-center">
-                            {/*<Col sm={12}>*/}
-                            {/*    <QuizProgressBar/>*/}
-                            {/*</Col>*/}
                             <Col sm={12}>
                                 {result?.error?.message &&
                                     <div className="error-card">
@@ -209,7 +196,7 @@ const QuizHome = () => {
                                 }
                             </Col>
                             <Col sm={12}>
-                                {!result?.success?.score ? (
+                                {!result?.success ? (
                                     <QuizCard singleAnswer={singleAnswer}
                                               activeQuestion={activeQuestion}
                                               options={options}
@@ -225,15 +212,36 @@ const QuizHome = () => {
                                     <>
                                         <div className="card quiz-submitted">
                                             <div className="card-body">
-                                                <h3>{result?.success?.message}</h3>
-                                                <h3 className="text-submitted text-success my-4">
-                                                    {result?.success?.score}
-                                                </h3>
+                                                <div className="result-image">
+                                                    {score < 75 ? (
+                                                        <img className="img-fluid success-img" src={Images.failedImage}
+                                                             alt="success"/>
+                                                    ) : (
+                                                        <img className="img-fluid success-img" src={Images.successImage}
+                                                             alt="success"/>
+                                                    )}
+                                                </div>
+                                                <h6 className="title">{result?.success?.message}</h6>
+                                                <div
+                                                    className={score > 75 ? 'score pass fw-bolder' : 'score fw-bolder'}>
+                                                    {score?.toFixed(0)}%
+                                                </div>
 
-                                                <button onClick={startQuizAgain}
-                                                        className="px-4 py-2 fw-bolder btn btn-warning">Re-attempt
-                                                    Quiz
-                                                </button>
+                                                {score < 75 ? (
+                                                    <button type="button" onClick={() => window.location.reload(false)}
+                                                            className="px-4 py-2 mb-4 fw-bolder btn btn-primary">Re-attempt
+                                                        Quiz
+                                                    </button>
+                                                ) : (
+                                                    <div className="px-4 py-2 mb-4 fw-bolder">
+                                                        <h5 className="mb-0">
+                                                            <span
+                                                                className="text-success">Congratulations! </span>
+                                                            <span>Your account has been upgraded.</span>
+                                                        </h5>
+                                                    </div>
+                                                )}
+
                                             </div>
                                         </div>
                                     </>
