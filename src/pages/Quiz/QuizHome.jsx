@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import Images from "../../static/images";
+import {useNavigate} from "react-router-dom";
 
 
 const QuizHome = () => {
@@ -28,6 +29,13 @@ const QuizHome = () => {
         nextBtn: true
     });
     const score = result?.success?.score;
+    const navigation = useNavigate();
+
+    const roles = {
+        superuser: auth?.user?.is_superuser,
+        trained: auth?.user?.is_trained,
+        user: auth?.user?.is_user,
+    }
 
 // Local Variables
 
