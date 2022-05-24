@@ -191,86 +191,74 @@ const QuizHome = (props) => {
         <>
             <section className="quiz-main">
                 <Container>
-                    {roles?.user || roles?.superuser ? (
-                        <form onSubmit={submitFinalAnswers}>
-                            <Row className="align-items-center">
-                                <Col sm={12}>
-                                    {result?.error?.message &&
-                                        <div className="error-card">
-                                            <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true">
-                                                {result?.error?.message}
-                                            </UncontrolledAlert>
-                                        </div>
-                                    }
-                                </Col>
-                                <Col sm={12}>
-                                    {!result?.success ? (
-                                        <QuizCard singleAnswer={singleAnswer}
-                                                  activeQuestion={activeQuestion}
-                                                  options={options}
-                                                  loading={loading}
-                                                  answers={answers?.[quizControl?.activeIndex]?.ans}
-                                                  quizControl={quizControl}
-                                                  disable={disable}
-                                                  handleNextPrev={handleNextPrev}
-                                                  handleTleCheck={handleTleCheck}
-                                                  handleSubmit={submitFinalAnswers}
-                                        />
-                                    ) : (
-                                        <>
-                                            <div className="card quiz-submitted">
-                                                <div className="card-body">
-                                                    <div className="result-image">
-                                                        {score < 75 ? (
-                                                            <img className="img-fluid success-img"
-                                                                 src={Images.failedImage}
-                                                                 alt="success"/>
-                                                        ) : (
-                                                            <img className="img-fluid success-img"
-                                                                 src={Images.successImage}
-                                                                 alt="success"/>
-                                                        )}
-                                                    </div>
-                                                    <h6 className="title">{result?.success?.message}</h6>
-                                                    <div
-                                                        className={score > 75 ? 'score pass fw-bolder' : 'score fw-bolder'}>
-                                                        {score?.toFixed(0)}%
-                                                    </div>
-
+                    <form onSubmit={submitFinalAnswers}>
+                        <Row className="align-items-center">
+                            <Col sm={12}>
+                                {result?.error?.message &&
+                                    <div className="error-card">
+                                        <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true">
+                                            {result?.error?.message}
+                                        </UncontrolledAlert>
+                                    </div>
+                                }
+                            </Col>
+                            <Col sm={12}>
+                                {!result?.success ? (
+                                    <QuizCard singleAnswer={singleAnswer}
+                                              activeQuestion={activeQuestion}
+                                              options={options}
+                                              loading={loading}
+                                              answers={answers?.[quizControl?.activeIndex]?.ans}
+                                              quizControl={quizControl}
+                                              disable={disable}
+                                              handleNextPrev={handleNextPrev}
+                                              handleTleCheck={handleTleCheck}
+                                              handleSubmit={submitFinalAnswers}
+                                    />
+                                ) : (
+                                    <>
+                                        <div className="card quiz-submitted">
+                                            <div className="card-body">
+                                                <div className="result-image">
                                                     {score < 75 ? (
-                                                        <button type="button"
-                                                                onClick={() => window.location.reload(false)}
-                                                                className="px-4 py-2 mb-4 fw-bolder btn btn-primary">Re-attempt
-                                                            Quiz
-                                                        </button>
+                                                        <img className="img-fluid success-img"
+                                                             src={Images.failedImage}
+                                                             alt="success"/>
                                                     ) : (
-                                                        <div className="px-4 py-2 mb-4 fw-bolder">
-                                                            <h5 className="mb-0">
+                                                        <img className="img-fluid success-img"
+                                                             src={Images.successImage}
+                                                             alt="success"/>
+                                                    )}
+                                                </div>
+                                                <h6 className="title">{result?.success?.message}</h6>
+                                                <div
+                                                    className={score > 75 ? 'score pass fw-bolder' : 'score fw-bolder'}>
+                                                    {score?.toFixed(0)}%
+                                                </div>
+
+                                                {score < 75 ? (
+                                                    <button type="button"
+                                                            onClick={() => window.location.reload(false)}
+                                                            className="px-4 py-2 mb-4 fw-bolder btn btn-primary">Re-attempt
+                                                        Quiz
+                                                    </button>
+                                                ) : (
+                                                    <div className="px-4 py-2 mb-4 fw-bolder">
+                                                        <h5 className="mb-0">
                                                             <span
                                                                 className="text-success">Congratulations! </span>
-                                                                <span>Your account has been upgraded.</span>
-                                                            </h5>
-                                                        </div>
-                                                    )}
+                                                            <span>Your account has been upgraded.</span>
+                                                        </h5>
+                                                    </div>
+                                                )}
 
-                                                </div>
                                             </div>
-                                        </>
-                                    )}
-                                </Col>
-                            </Row>
-                        </form>
-                    ) : (
-                        <div className="row">
-                            <Col sm={12} md={{size: 6, offset: 3}}>
-                                <div className="card">
-                                    <div className="card-body text-center">
-                                        <h3 className="text-dark mb-0">You've already completed your quiz.</h3>
-                                    </div>
-                                </div>
+                                        </div>
+                                    </>
+                                )}
                             </Col>
-                        </div>
-                    )}
+                        </Row>
+                    </form>
                 </Container>
             </section>
         </>
