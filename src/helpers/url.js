@@ -11,7 +11,9 @@ export const baseURL = {
     get_single_blog: process.env.REACT_APP_API_SINGLE_BLOG_URL,
     blog_image_upload: process.env.REACT_APP_API_BLOG_IMAGE_UPLOAD,
     blog_category: process.env.REACT_APP_API_BLOG_CATEGORY,
-    blog_tut_update: process.env.REACT_APP_API_BLOG_TUT_UPDATE
+    blog_tut_update: process.env.REACT_APP_API_BLOG_TUT_UPDATE,
+    quiz_question: process.env.REACT_APP_API_QUIZ_QUESTION,
+    quiz_submit: process.env.REACT_APP_API_SUBMIT_QUE_ANS
 }
 
 export const cameraSettingFields = {
@@ -37,6 +39,9 @@ export const routeUrls = {
     tutorialsDetail: ':slug',
     blog: 'blog',
     blogDetails: ':slug',
+    quiz: {
+        home: 'quiz'
+    },
     myObservations: 'observations',
     gallery: 'gallery',
     observationsAdd: 'observations/add',
