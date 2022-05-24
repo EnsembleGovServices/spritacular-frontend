@@ -143,7 +143,6 @@ const App = () => {
                             <ResetPasswordPopup/>
                         </Suspense>
                     }/>
-
                     {/*Protected routes*/}
                     <Route element={<RequireAuth allowedRoles={Roles} setAuthValue={authCallBack}/>}>
                         <Route element={
