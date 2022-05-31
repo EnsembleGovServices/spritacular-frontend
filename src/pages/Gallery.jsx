@@ -210,7 +210,7 @@ const Gallery = () => {
                         Would you like to help us sift through observations and endorse
                         their validity?
                         <Link
-                            to={"/" + routeUrls.tutorials}
+                            to={"/" + routeUrls.quiz.home}
                             className="btn btn-outline-primary"
                         >
                             Get Trained

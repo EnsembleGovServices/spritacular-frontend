@@ -231,9 +231,17 @@ const QuizHome = (props) => {
                                                     )}
                                                 </div>
                                                 <h6 className="title">{result?.success?.message}</h6>
-                                                <div
-                                                    className={score > 75 ? 'score pass fw-bolder' : 'score fw-bolder'}>
-                                                    {score?.toFixed(0)}%
+                                                <div className="d-flex align-items-center justify-content-center">
+                                                    <div
+                                                        className={score > 75 ? 'score pass fw-bolder' : 'score fail fw-bolder'}>
+                                                        <span>1</span>
+                                                        <span className="score-text">Correct Answer</span>
+                                                    </div>
+                                                    <div
+                                                        className={score > 75 ? 'score pass fw-bolder' : 'score fail fw-bolder'}>
+                                                        <span className="d-block">{score?.toFixed(0)}%</span>
+                                                        <span className="score-text">Total Score</span>
+                                                    </div>
                                                 </div>
 
                                                 {score < 75 ? (
