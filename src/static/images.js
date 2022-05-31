@@ -42,6 +42,8 @@ import DefaultProfile from "../assets/images/profile.svg";
 import NotAvailable from "../assets/images/noimage.jpg";
 import successImage from "../assets/images/success.svg";
 import failedImage from "../assets/images/failed.svg";
+import commentImage from "../assets/images/comment.svg";
+import notLoggedIn from "../assets/images/non-logged.svg";
 
 const Images = {
     Logo,
@@ -87,7 +89,9 @@ const Images = {
     DefaultProfile,
     NotAvailable,
     successImage,
-    failedImage
+    failedImage,
+    commentImage,
+    notLoggedIn
 };
 
 export default Images;

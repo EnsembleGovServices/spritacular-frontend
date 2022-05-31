@@ -95,7 +95,6 @@ const Gallery = () => {
             url = `${baseURL.api}/observation/gallery/?country=${country}&category=${category}&status=${status}&page=1`;
         } else {
             url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
-            ;
         }
 
         const headers = {};
