@@ -1,60 +1,57 @@
 import "../../assets/scss/component/observationCard.scss";
 import Images from "../../static/images";
-import { Card, CardBody, CardTitle, CardSubtitle, Row, Col, Badge, CardFooter, Button } from "reactstrap";
+import {Card, CardBody, CardTitle, CardSubtitle, Row, Col, Badge, CardFooter, Button} from "reactstrap";
 import moment from "moment";
-import { Icon } from "@iconify/react";
+import {Icon} from "@iconify/react";
 import ReactCountryFlags from "../ReactCountryFlag";
-import { getdirectionDegree } from "../../helpers/observation";
+import {getdirectionDegree} from "../../helpers/observation";
 import CardImageCarousel from "./CardImageCarousel";
 import Tippy from "@tippyjs/react";
 import BlurImage from "../Common/BlurImage";
 
 const ObservationCard = (props) => {
-    const { cardItems, handleClick, userProfile, cardData, index, activeType, homepage } = props;
+    const {cardItems, handleClick, userProfile, cardData, index, activeType, homepage} = props;
     const handleImageClick = () => {
-      return homepage ? null : userProfile && handleClick(index);
+        return homepage ? null : userProfile && handleClick(index);
     }
     return (
         <>
-            <Card className={`${homepage ? 'observation_card overflow-hidden homepage_observation_card' : 'observation_card overflow-hidden'}`}>
-                <div className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start" >
+            <Card
+                className={`${homepage ? 'observation_card overflow-hidden homepage_observation_card' : 'observation_card overflow-hidden'}`}>
+                <div
+                    className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start">
                     {!userProfile && (
                         <div className="observation_country">
                             <Badge className="bg-black text-white">
-                                <ReactCountryFlags country={cardData?.country_code} />
+                                <ReactCountryFlags country={cardData?.country_code}/>
                                 {cardData?.location}
                             </Badge>
                         </div>
                     )}
                     {userProfile && cardItems?.image_type === 3 && (
                         <div className="multiple-image_icon">
-                            <Icon icon="codicon:list-filter" color="black" />
+                            <Icon icon="codicon:list-filter" color="black"/>
                         </div>
                     )}
                     {userProfile && activeType === "draft" && (
                         <Button className="multiple-image_icon border-0 edit-icon">
-                            <Icon icon="eva:edit-2-outline" />
+                            <Icon icon="eva:edit-2-outline"/>
                         </Button>
                     )}
                     {cardItems?.is_verified && (
                         <div className="verify-card">
-                            <Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" />
+                            <Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13"/>
                         </div>
                     )}
-                    { cardItems?.image_type === 3 
-                        ? <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick} handleIndex={index} />    
+                    {cardItems?.image_type === 3
+                        ? <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick}
+                                             handleIndex={index}/>
                         : <BlurImage
                             preview={(cardData?.compressed_image) ? cardData?.compressed_image : cardData?.image}
                             image={(cardData?.compressed_image) ? cardData?.compressed_image : cardData?.image}
                             handleClick={handleImageClick}
                             homepage={homepage}
                         >
-                            {/*<img*/}
-                            {/*    alt="Card cap"*/}
-                            {/*    src={(cardData.compressed_image) ? cardData?.compressed_image : cardData?.image}*/}
-                            {/*    className={`${homepage ? 'img-fluid card-img no-cursor' : 'img-fluid card-img'}`}*/}
-                            {/*    onClick={(e) => homepage ? null : userProfile && handleClick(index)}*/}
-                            {/*/>*/}
                         </BlurImage>
                     }
                     <CardBody className="position-relative observation-card_body">
@@ -65,7 +62,7 @@ const ObservationCard = (props) => {
                                     return (
                                         <i className="rounded-circle bg-white me-1" key={index}>
                                             <Tippy animation="perspective" content={item?.name}>
-                                                <img src={image} alt={item?.name} className="rounded-circle" />
+                                                <img src={image} alt={item?.name} className="rounded-circle"/>
                                             </Tippy>
                                         </i>
                                     );
@@ -80,17 +77,21 @@ const ObservationCard = (props) => {
                                     </CardTitle>
                                     <CardSubtitle>
                                         {cardData?.obs_date_time_as_per_utc ? moment.utc(moment(cardData?.obs_date_time_as_per_utc).utc()).format("hh:mm:ss A") : cardData?.obs_time ? cardData?.obs_time : null}{" "}
-                                        <Badge className="bg-black text-white p-1">{cardData?.obs_date_time_as_per_utc ? "UTC" : cardData?.obs_time ? "UTC" : ""}</Badge>
+                                        <Badge
+                                            className="bg-black text-white p-1">{cardData?.obs_date_time_as_per_utc ? "UTC" : cardData?.obs_time ? "UTC" : ""}</Badge>
                                     </CardSubtitle>
                                 </div>
                             </Col>
                             <Col xs={6} lg={6} className=" justify-content-end d-flex">
                                 <div className="d-flex card-user_details align-items-center overflow-hidden">
-                                    <Tippy animation="perspective" content={userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}>
+                                    <Tippy animation="perspective"
+                                           content={userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}>
                                         <h6 className="pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</h6>
                                     </Tippy>
                                     <i className="profile-icon rounded-circle">
-                                        <img src={userProfile?.profile_image ? userProfile?.profile_image : Images.DefaultProfile} width="100%" height="100%" alt="Profile" className="rounded-circle" />
+                                        <img
+                                            src={userProfile?.profile_image ? userProfile?.profile_image : Images.DefaultProfile}
+                                            width="100%" height="100%" alt="Profile" className="rounded-circle"/>
                                     </i>
                                 </div>
                             </Col>
@@ -103,13 +104,15 @@ const ObservationCard = (props) => {
                                 <h6 className="mb-0">{cardData?.location}</h6>
                             </div>
                             <div className="direction-details">
-                                <div className="card-user_location" style={{ "--card-location-angle": `${getdirectionDegree(cardData?.azimuth)}deg` }}>
+                                <div className="card-user_location"
+                                     style={{"--card-location-angle": `${getdirectionDegree(cardData?.azimuth)}deg`}}>
                                     <h6 className="me-1 mb-0">
                                         {cardData?.azimuth}
                                         {Number(cardData?.azimuth) ? "°" : ""}
                                     </h6>
                                     {cardData?.azimuth &&
-                                        <span className="card-direction rounded-circle position-relative d-flex justify-content-center align-items-start">
+                                        <span
+                                            className="card-direction rounded-circle position-relative d-flex justify-content-center align-items-start">
                                         <span className="direction-dot"/>
                                     </span>}
                                 </div>

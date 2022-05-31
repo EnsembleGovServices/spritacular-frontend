@@ -1,6 +1,5 @@
 import ObservationCard from "../../components/Shared/ObservationCard";
 import Masonry from 'react-masonry-component';
-import {masonryConfig} from "../../helpers/observation";
 
 const ObservationDetailPage = (props) => {
     const {

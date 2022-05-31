@@ -186,7 +186,7 @@ const Gallery = () => {
 
     return (
         <>
-            <Suspense fallback={<div>please wait...</div>}>
+            <Suspense fallback={<div></div>}>
                 <FilterSelectMenu
                     galleryFilter={true}
                     isFilterOpen={isFilterOpen}
@@ -222,7 +222,7 @@ const Gallery = () => {
                         <h4 className="text-black fw-bold">Recent Observations</h4>
                         <div>
                             {observationListData?.list.length > 0 ? (
-                                <Suspense fallback={<div>please wait...</div>}>
+                                <Suspense fallback={<div></div>}>
                                     <ObservationDetailPage
                                         observationList={observationListData?.list}
                                         isObservationDetailModal={isObservationDetailModal}
@@ -246,7 +246,7 @@ const Gallery = () => {
                         </div>
                         {nextPageUrl && <LoadMore handleLoadMore={handleLoadMoreData}/>}
 
-                        <Suspense fallback={<div>please wait...</div>}>
+                        <Suspense fallback={<div></div>}>
                             <ObservationDetails
                                 data={observationListData?.active}
                                 activeType={
