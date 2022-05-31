@@ -16,10 +16,10 @@ const ObservationDetailPage = (props) => {
     // Masonry Options
     const masonryOptions = {
         columnWidth: 1,
-        gutter: 0,
+        gutter: 10,
         itemSelector: ".photo-item",
-        fitWidth: false,
-        transitionDuration: 10,
+        fitWidth: true,
+        transitionDuration: 1000,
     };
 
     const handleObservationDetailModal = (id) => {

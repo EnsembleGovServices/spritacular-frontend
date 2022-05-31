@@ -277,7 +277,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <Suspense fallback={<div>please wait...</div>}>
+            <Suspense fallback={<div></div>}>
                 <FilterSelectMenu
                     dashboardFilter={true}
                     galleryFilter={true}
@@ -303,7 +303,7 @@ const Dashboard = () => {
                         <div className="col-sm-12">
                             <div className="set-dash-content">
                                 {filterShow && (
-                                    <Suspense fallback={<div>please wait...</div>}>
+                                    <Suspense fallback={<div></div>}>
                                         <AdvancedFilter
                                             selectedFilterVertical={selectedFilterVertical}
                                             setSelectedFilterVertical={setSelectedFilterVertical}
@@ -324,7 +324,7 @@ const Dashboard = () => {
                                 >
                                     {observationListData?.list?.length > 0 ? (
                                         listView ? (
-                                            <Suspense fallback={<div>please wait...</div>}>
+                                            <Suspense fallback={<div></div>}>
                                                 <ObservationListView
                                                     observationList={observationListData?.list}
                                                     isObservationDetailModal={isObservationDetailModal}
@@ -333,7 +333,7 @@ const Dashboard = () => {
                                                 />
                                             </Suspense>
                                         ) : (
-                                            <Suspense fallback={<div>please wait...</div>}>
+                                            <Suspense fallback={<div></div>}>
                                                 <ObservationDetailPage
                                                     observationList={observationListData?.list}
                                                     isObservationDetailModal={isObservationDetailModal}
@@ -361,7 +361,7 @@ const Dashboard = () => {
                                     )}
                                 </div>
 
-                                <Suspense fallback={<div>please wait...</div>}>
+                                <Suspense fallback={<div></div>}>
                                     <ObservationDetails
                                         data={observationListData?.active}
                                         modalClass="observation-details_modal"

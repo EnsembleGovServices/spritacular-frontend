@@ -250,7 +250,7 @@ const MyObservations = () => {
                 {isActiveTypeChangeFinished ? (
                     <Loader/>
                 ) : observationListData?.list?.length > 0 ? (
-                    <Suspense fallback={<div>Please wait...</div>}>
+                    <Suspense fallback={<div></div>}>
                         <ObservationDetailPage
                             activeType={activeType}
                             observationList={observationListData?.list}
@@ -266,7 +266,7 @@ const MyObservations = () => {
                 {nextPageUrl && <LoadMore handleLoadMore={handleLoadMore}/>}
             </Container>
 
-            <Suspense fallback={<div>Please wait...</div>}>
+            <Suspense fallback={<div></div>}>
                 <ObservationDetails
                     data={observationListData?.active}
                     activeType={activeType}
@@ -280,7 +280,7 @@ const MyObservations = () => {
             </Suspense>
         </section>
     ) : (
-        <Suspense fallback={<div>Please wait...</div>}>
+        <Suspense fallback={<div></div>}>
             <InitialUploadObservations count={listCount}/>
         </Suspense>
     );
