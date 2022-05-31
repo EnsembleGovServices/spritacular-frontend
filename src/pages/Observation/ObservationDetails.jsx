@@ -165,6 +165,7 @@ const ObservationDetails = (props) => {
                             {activeType}
                         </Badge>
                     </div>
+                    {/*<h4>Data ID: {data?.id}</h4>*/}
 
                     {activeType === "draft" && (
                         <div>

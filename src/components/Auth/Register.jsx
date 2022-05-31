@@ -212,8 +212,8 @@ const Register = (props) => {
                                     onChange={(e) => handleCheck(e)}
                                 />
                                 Creating an account means you agree with our with our{" "}
-                                <Link to={routeUrls.home}>Privacy Policy</Link> and <Link
-                                to={routeUrls.home}>Terms.</Link>
+                                <Link to={`/${routeUrls.policy}`}>Privacy Policy</Link> and <Link
+                                to={`/${routeUrls.policy}`}>Terms.</Link>
                             </Label>
                         </FormGroup>
                     </Col>

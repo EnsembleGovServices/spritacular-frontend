@@ -18,6 +18,8 @@ const ObservationCard = (props) => {
         <>
             <Card
                 className={`${homepage ? 'observation_card overflow-hidden homepage_observation_card' : 'observation_card overflow-hidden'}`}>
+                {/*<h4 className="pl-4"> cardData - {cardData?.id}</h4>*/}
+                {/*<h4 className="pl-4"> cardItems - {cardItems?.id}</h4>*/}
                 <div
                     className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start">
                     {!userProfile && (

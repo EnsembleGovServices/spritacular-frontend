@@ -23,26 +23,19 @@ const Comments = (props) => {
     const isComment = observationComments?.comments?.length;
 
     const getComments = async () => {
-        if (user) {
-            await axios.get(baseURL.api + '/observation/comment/' + obvId + '/', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${auth?.token?.access}`
-                }
+        await axios.get(baseURL.api + '/observation/comment/' + obvId + '/')
+            .then((response) => {
+                setComments(response?.data);
+                setObservationComments((prev) => {
+                    return {
+                        ...prev,
+                        comments: response?.data?.data
+                    }
+                })
             })
-                .then((response) => {
-                    setComments(response?.data);
-                    setObservationComments((prev) => {
-                        return {
-                            ...prev,
-                            comments: response?.data?.data
-                        }
-                    })
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        }
+            .catch((error) => {
+                console.log(error);
+            })
     };
 
     const sendComment = async (e) => {
@@ -111,15 +104,15 @@ const Comments = (props) => {
 
     return (
         <>
-            <div className="comment-wrapper position-relative">
+            <div className={`comment-wrapper position-relative ${!user ? 'non-logged' : ''}`}>
                 {!user &&
-                    <div className="comment-area p-0 m-0">
+                    <div className={`p-0 m-0 ${isComment ? 'hasComments' : 'hasNoComments'}`}>
                         <NotLoggedForComment/>
                     </div>
                 }
 
                 {isComment ? (
-                    <ul className="comment-area p-0 m-0">
+                    <ul className="comment-area not-logged-list p-0 m-0">
                         {showMessages()}
                     </ul>
                 ) : (
