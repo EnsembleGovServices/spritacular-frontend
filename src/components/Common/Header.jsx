@@ -279,9 +279,9 @@ const Header = (props) => {
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem className={active === 'community-1' ? 'active' : ''}>
-                                        <Link to={routeUrls.home} title="Meet the Teem"
+                                        <Link to={routeUrls.home} title="Meet the Team"
                                               onClick={() => setActive('community-1')}>
-                                            Meet the Teem
+                                            Meet the Team
                                         </Link>
                                     </DropdownItem>
                                     <DropdownItem className={active === 'community-2' ? 'active' : ''}>
