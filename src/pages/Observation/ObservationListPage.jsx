@@ -1,7 +1,7 @@
 import ObservationCard from "../../components/Shared/ObservationCard";
 import Masonry from 'react-masonry-component';
 
-const ObservationDetailPage = (props) => {
+const ObservationListPage = (props) => {
     const {
         observationList,
         isObservationDetailModal,
@@ -45,4 +45,4 @@ const ObservationDetailPage = (props) => {
         </Masonry>
     )
 }
-export default ObservationDetailPage;
+export default ObservationListPage;

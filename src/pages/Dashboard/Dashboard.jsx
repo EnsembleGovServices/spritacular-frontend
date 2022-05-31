@@ -20,7 +20,7 @@ const AdvancedFilter = lazy(() =>
     import("../../components/Shared/AdvancedFilter")
 );
 const ObservationDetailPage = lazy(() =>
-    import("../Observation/ObservationDetailPage")
+    import("../Observation/ObservationListPage")
 );
 const ObservationListView = lazy(() =>
     import("../Observation/ObservationListView")

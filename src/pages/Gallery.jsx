@@ -18,7 +18,7 @@ const FilterSelectMenu = lazy(() =>
     import("../components/Shared/FilterSelectMenu")
 );
 const ObservationDetailPage = lazy(() =>
-    import("./Observation/ObservationDetailPage")
+    import("./Observation/ObservationListPage")
 );
 
 const Gallery = () => {

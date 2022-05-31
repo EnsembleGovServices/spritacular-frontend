@@ -19,7 +19,7 @@ import Loader from "../../components/Shared/Loader";
 import NotFound from "../../components/Common/NotFound";
 
 const ObservationDetails = lazy(() => import("./ObservationDetails"));
-const ObservationDetailPage = lazy(() => import("./ObservationDetailPage"));
+const ObservationDetailPage = lazy(() => import("./ObservationListPage"));
 const InitialUploadObservations = lazy(() =>
     import("../InitialUploadObservations")
 );
