@@ -306,3 +306,39 @@
     padding: 7px 16px;
   }
 }
+
+
+.obv-user-cat-loader {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: -5px 0 0 10px;
+  margin: 0 auto;
+}
+
+.obv-cat {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  margin-right: 5px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  .obv-cat-load {
+    position: absolute;
+    inset: -6px 0 0 0;
+  }
+
+  .obv-cat-item {
+    width: 35px;
+    height: 35px;
+
+    span {
+      display: block;
+      width: 35px;
+      height: 35px;
+    }
+  }
+}

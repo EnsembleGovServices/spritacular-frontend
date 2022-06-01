@@ -27,6 +27,7 @@ import useAuth from "../../hooks/useAuth";
 import {PropTypes} from "prop-types";
 import {useLocation} from "react-router-dom";
 import useObservationsData from "../../hooks/useObservationsData";
+import Skeleton from "react-loading-skeleton";
 
 const BlurImageComp = lazy(() => import("../../components/Common/BlurImage"));
 const ObservationMoreDetails = lazy(() => import("../../components/Observation/ObservationDetails/ObservationMoreDetails"));
@@ -218,11 +219,17 @@ const ObservationDetails = (props) => {
                                         />
                                     )}
                                 </div>
-                                <Row className="obv-user-cat-loader">
+
+                                <Row>
                                     <Col
                                         sm={6}
-                                        className="justify-content-start d-flex align-items-center mb-2 mb-sm-0"
+                                        className="justify-content-start d-flex align-items-center mb-2 mb-sm-0 position-relative"
                                     >
+                                        {loaderLoading &&
+                                            <div className="obv-user-cat-loader">
+                                                <Skeleton height={35}/>
+                                            </div>
+                                        }
                                         <div
                                             className="d-flex card-user_details align-items-center overflow-hidden">
                                             <i className="profile-icon rounded-circle">
@@ -247,29 +254,37 @@ const ObservationDetails = (props) => {
                                     </Col>
                                     <Col
                                         sm={6}
-                                        className="justify-content-end d-flex align-items-center"
+                                        className="justify-content-end d-flex align-items-center position-relative"
                                     >
                                         <div className="observation_type d-flex align-items-center">
                                             {data?.category_data?.length > 0 &&
                                                 data?.category_data?.map((item, index) => {
                                                     return (
-                                                        <i
-                                                            id={item?.name?.toLowerCase().replaceAll(" ", "")}
-                                                            className="rounded-circle bg-white ms-2 cursor-pointer"
-                                                            key={index}
-                                                        >
-                                                            <Tippy
-                                                                animation="perspective"
-                                                                content={item?.name}
-                                                            >
-                                                                <img
-                                                                    src={`/assets/images/category/${item?.name
-                                                                        ?.toLowerCase()
-                                                                        .replaceAll(" ", "")}.png`}
-                                                                    alt={item?.name}
-                                                                />
-                                                            </Tippy>
-                                                        </i>
+                                                        <div key={index} className="obv-cat">
+                                                            {loaderLoading &&
+                                                                <div className="obv-cat-load">
+                                                                    <Skeleton circle height={35} width={35}/>
+                                                                </div>
+                                                            }
+                                                            <div className="obv-cat-item">
+                                                                <span
+                                                                    id={item?.name?.toLowerCase().replaceAll(" ", "")}
+                                                                    className="rounded-circle bg-white ms-2 cursor-pointer"
+                                                                >
+                                                                    <Tippy
+                                                                        animation="perspective"
+                                                                        content={item?.name}
+                                                                    >
+                                                                        <img
+                                                                            src={`/assets/images/category/${item?.name
+                                                                                ?.toLowerCase()
+                                                                                .replaceAll(" ", "")}.png`}
+                                                                            alt={item?.name}
+                                                                        />
+                                                                    </Tippy>
+                                                                </span>
+                                                            </div>
+                                                        </div>
                                                     );
                                                 })}
                                         </div>
