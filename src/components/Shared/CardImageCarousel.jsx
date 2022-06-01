@@ -5,7 +5,7 @@ import 'swiper/css/navigation';
 import BlurImage from "../Common/BlurImage";
 
 const CardImageCarousel = (props) => {
-    const {carouselData, handleClick, handleIndex, detail} = props;
+    const {carouselData, handleClick, handleIndex, detail, loaderLoading} = props;
 
     return (
         <>
@@ -19,6 +19,7 @@ const CardImageCarousel = (props) => {
                                 handleClick={(e) => {
                                     handleClick ? handleClick(handleIndex) : e.preventDefault()
                                 }}
+                                loaderLoading={loaderLoading}
                                 alt={item?.name}
                             >
                             </BlurImage>

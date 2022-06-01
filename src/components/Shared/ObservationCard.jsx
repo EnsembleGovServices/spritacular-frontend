@@ -8,12 +8,21 @@ import {getdirectionDegree} from "../../helpers/observation";
 import CardImageCarousel from "./CardImageCarousel";
 import Tippy from "@tippyjs/react";
 import BlurImage from "../Common/BlurImage";
+import Skeleton from "react-loading-skeleton";
+import {useState} from "react";
 
 const ObservationCard = (props) => {
     const {cardItems, handleClick, userProfile, cardData, index, activeType, homepage} = props;
+    const [loaderLoading, setLoaderLoading] = useState(true);
+
     const handleImageClick = () => {
         return homepage ? null : userProfile && handleClick(index);
     }
+
+    const handleLoaderLoading = (state) => {
+        setLoaderLoading(state);
+    }
+
     return (
         <>
             <Card
@@ -47,30 +56,51 @@ const ObservationCard = (props) => {
                     )}
                     {cardItems?.image_type === 3
                         ? <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick}
-                                             handleIndex={index}/>
+                                             handleIndex={index}
+                                             loaderLoading={handleLoaderLoading}
+                        />
                         : <BlurImage
                             preview={(cardData?.compressed_image) ? cardData?.compressed_image : cardData?.image}
                             image={(cardData?.compressed_image) ? cardData?.compressed_image : cardData?.image}
                             handleClick={handleImageClick}
                             homepage={homepage}
+                            loaderLoading={handleLoaderLoading}
                         >
                         </BlurImage>
                     }
                     <CardBody className="position-relative observation-card_body">
-                        <div className="position-absolute observation_type d-flex align-items-center">
+                        <div className="observation_type">
                             {cardItems?.category_data?.length > 0 &&
                                 cardItems?.category_data?.map((item, index) => {
                                     let image = `/assets/images/category/${item?.name?.toLowerCase().replaceAll(" ", "")}.png`;
                                     return (
-                                        <i className="rounded-circle bg-white me-1" key={index}>
-                                            <Tippy animation="perspective" content={item?.name}>
-                                                <img src={image} alt={item?.name} className="rounded-circle"/>
-                                            </Tippy>
-                                        </i>
+                                        <div className="cat-loader" key={index}>
+                                            {loaderLoading &&
+                                                <div className="skeleton">
+                                                    <Skeleton
+                                                        circle
+                                                        width={32}
+                                                        height={32}
+                                                    />
+                                                </div>
+                                            }
+                                            <i className="rounded-circle bg-white me-1">
+                                                <Tippy animation="perspective" content={item?.name}>
+                                                    <img src={image} alt={item?.name} className="rounded-circle"/>
+                                                </Tippy>
+                                            </i>
+                                        </div>
                                     );
                                 })
                             }
                         </div>
+                        {loaderLoading &&
+                            <div className="body-loader">
+                                <div className="skeleton">
+                                    <Skeleton count={3} height={15}/>
+                                </div>
+                            </div>
+                        }
                         <Row className="card-details">
                             <Col xs={6} lg={6} className="">
                                 <div className="card_desc">
@@ -101,7 +131,14 @@ const ObservationCard = (props) => {
                     </CardBody>
 
                     {userProfile && !homepage &&
-                        <CardFooter>
+                        <CardFooter className="position-relative">
+                            {loaderLoading &&
+                                <div className="footer-loader">
+                                    <div className="skeleton">
+                                        <Skeleton count={1} height={22}/>
+                                    </div>
+                                </div>
+                            }
                             <div className="location-details">
                                 <h6 className="mb-0">{cardData?.location}</h6>
                             </div>

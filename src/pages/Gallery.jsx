@@ -228,6 +228,7 @@ const Gallery = () => {
                                         setObservationDetailModal={setObservationDetailModal}
                                         setSelectedObservationId={setSelectedObservationId}
                                     />
+                                    {nextPageUrl && <LoadMore handleLoadMore={handleLoadMoreData}/>}
                                 </Suspense>
                             ) : (
                                 <div className="data-not-found">
@@ -243,27 +244,25 @@ const Gallery = () => {
                                 </div>
                             )}
                         </div>
-                        {nextPageUrl && <LoadMore handleLoadMore={handleLoadMoreData}/>}
 
-                        <Suspense fallback={<div></div>}>
-                            <ObservationDetails
-                                data={observationListData?.active}
-                                activeType={
-                                    observationListData?.active?.is_verified
-                                        ? "verified"
-                                        : observationListData?.active?.is_reject
-                                            ? "denied"
-                                            : observationListData?.active?.is_submit
-                                                ? "unverified"
-                                                : "draft"
-                                }
-                                modalClass="observation-details_modal"
-                                open={isObservationDetailModal}
-                                handleClose={handleObservationDetailModal}
-                                handleApproveRejectEvent={getObservationType}
-                                refreshData={getObservationType}
-                            />
-                        </Suspense>
+
+                        <ObservationDetails
+                            data={observationListData?.active}
+                            activeType={
+                                observationListData?.active?.is_verified
+                                    ? "verified"
+                                    : observationListData?.active?.is_reject
+                                        ? "denied"
+                                        : observationListData?.active?.is_submit
+                                            ? "unverified"
+                                            : "draft"
+                            }
+                            modalClass="observation-details_modal"
+                            open={isObservationDetailModal}
+                            handleClose={handleObservationDetailModal}
+                            handleApproveRejectEvent={getObservationType}
+                            refreshData={getObservationType}
+                        />
                     </div>
                 )}
             </Container>
