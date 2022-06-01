@@ -14,14 +14,12 @@ const BlurImage = (props) => {
     }
     useEffect(() => {
         setLoading(true);
-        waitForImageToLoad(loadingImageRef.current).then(() => {
-            setLoading(false);
-            if (loaderLoading) {
+        if (image) {
+            waitForImageToLoad(loadingImageRef.current).then(() => {
+                setLoading(false);
                 loaderLoading(false);
-            }
-            console.log(loaderLoading)
-            // console.log('image loaded')
-        });
+            });
+        }
     }, [image]);
 
 

@@ -263,7 +263,7 @@ const Dashboard = () => {
         if (window.innerWidth < 768) {
             setFilterShow(false);
         }
-
+        console.clear();
     }, []);
 
     useEffect(() => {
@@ -340,6 +340,9 @@ const Dashboard = () => {
                                                     setObservationDetailModal={setObservationDetailModal}
                                                     setSelectedObservationId={setSelectedObservationId}
                                                 />
+                                                {nextPageUrl && (
+                                                    <LoadMore handleLoadMore={handleLoadMoreData}/>
+                                                )}
                                             </Suspense>
                                         )
                                     ) : (
@@ -356,9 +359,7 @@ const Dashboard = () => {
                                         </div>
                                     )}
 
-                                    {nextPageUrl && observationListData?.list?.length > 0 && (
-                                        <LoadMore handleLoadMore={handleLoadMoreData}/>
-                                    )}
+
                                 </div>
 
                                 <Suspense fallback={<div></div>}>

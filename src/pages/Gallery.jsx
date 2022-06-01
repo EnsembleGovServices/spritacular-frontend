@@ -138,6 +138,7 @@ const Gallery = () => {
                 console.log(error.response);
             });
     };
+
     const handleObservationDetailModal = (id) => {
         setObservationDetailModal(!isObservationDetailModal);
         setSelectedObservationId(id);
@@ -181,6 +182,7 @@ const Gallery = () => {
             }
         })
         getObservationType(true, "", "", "");
+        console.clear();
     }, [])
 
     return (

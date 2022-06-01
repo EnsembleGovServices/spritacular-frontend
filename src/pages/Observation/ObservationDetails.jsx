@@ -53,7 +53,7 @@ const ObservationDetails = (props) => {
     const {observationComments, setObservationListData, observationListData} = useObservationsData();
     const obvDetailsModal = useRef(null);
     const [isImageNull, setIsImageNull] = useState(true);
-
+    const [loaderLoading, setLoaderLoading] = useState(true);
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
         if (activeTab !== tab) {
@@ -82,8 +82,13 @@ const ObservationDetails = (props) => {
             });
     };
 
+    const handleLoaderLoading = (state) => {
+        setLoaderLoading(state);
+    }
+
 
     useEffect(() => {
+        setLoaderLoading(true);
         setActiveImageTab(imageDetails.Details);
     }, [open, data?.id]);
 
@@ -138,14 +143,14 @@ const ObservationDetails = (props) => {
                 ref={obvDetailsModal}
             >
                 <ModalHeader className="d-flex justify-content-between align-items-center w-100">
-                    <div>
+                    <div className="d-flex align-items-center justify-content-start">
                         <Button
                             className="close-icon bg-transparent rounded-0 border-0 shadow-none p-0 me-3"
                             onClick={() => handleClose()}
                         >
                             <img src={Images.Modalcloseicon} alt="close-icon"/>
                         </Button>
-                        {data?.category_data?.[0] ? data?.category_data?.[0]?.name : null}
+                        <h4 className="d-inline-block m-0">{data?.category_data?.[0] ? data?.category_data?.[0]?.name : null}</h4>
                         <Badge
                             className={`text-uppercase ${
                                 activeType === "verified" ? "badge-success" : ""
@@ -194,7 +199,9 @@ const ObservationDetails = (props) => {
                                             <Suspense fallback={<div></div>}>
                                                 <BlurImageComp image={data?.images?.[0]?.image}
                                                                preview={data?.images?.[0]?.image}
-                                                               alt={data?.images?.[0]?.location}/>
+                                                               alt={data?.images?.[0]?.location}
+                                                               loaderLoading={handleLoaderLoading}
+                                                />
                                             </Suspense>
                                         ) : (
                                             <div
@@ -207,10 +214,11 @@ const ObservationDetails = (props) => {
                                         <CardImageCarousel
                                             carouselData={data?.images}
                                             detail={true}
+                                            loaderLoading={handleLoaderLoading}
                                         />
                                     )}
                                 </div>
-                                <Row>
+                                <Row className="obv-user-cat-loader">
                                     <Col
                                         sm={6}
                                         className="justify-content-start d-flex align-items-center mb-2 mb-sm-0"

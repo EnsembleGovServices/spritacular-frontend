@@ -32,7 +32,7 @@ const ObservationListPage = (props) => {
             options={masonryOptions}
             enableResizableChildren={true}
         >
-            {observationList?.length > 0 && observationList?.map((cardItems, index) => {
+            {observationList && observationList?.map((cardItems, index) => {
                 return (
                     <div key={index} className="photo-item mb-4">
                         <ObservationCard cardItems={cardItems} cardData={cardItems?.images?.[0]} index={index}

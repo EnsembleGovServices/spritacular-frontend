@@ -13,10 +13,10 @@ import Loader from "../components/Shared/Loader";
 export const observationViewContext = createContext({});
 
 const PersistLogin = (props) => {
+    const {persistValue} = props;
     const [categoryList, setCategoryList] = useState([]);
     const refresh = useRefreshToken();
     const {auth, persist} = useAuth();
-    const {persistValue} = props;
     const [isLoading, setIsLoading] = useState(true);
     const [observationListData, setObservationListData] = useState({
         active: {},
@@ -46,11 +46,20 @@ const PersistLogin = (props) => {
         return () => isMounted = false;
     }, [auth, auth?.token?.access, persist, refresh])
 
-    useEffect(() => {
-        // console.log(`isLoading: ${isLoading}`)
-        // console.log(`aT: ${JSON.stringify(auth?.token?.access)}`)
-        // console.log(`rT: ${JSON.stringify(auth?.token?.refresh)}`)
-    }, [auth?.token?.access, auth?.token?.refresh, isLoading])
+    // useEffect(() => {
+    //     // console.log(`isLoading: ${isLoading}`)
+    //     // console.log(`aT: ${JSON.stringify(auth?.token?.access)}`)
+    //     // console.log(`rT: ${JSON.stringify(auth?.token?.refresh)}`)
+    // }, [auth?.token?.access, auth?.token?.refresh, isLoading])
+
+    // useEffect(() => {
+    //     setObservationListData((prev) => {
+    //         return {
+    //             ...prev,
+    //             list: [],
+    //         };
+    //     });
+    // }, [location])
 
     return (
         <>

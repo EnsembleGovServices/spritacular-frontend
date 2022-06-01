@@ -14,7 +14,6 @@ import useObservations from "../../hooks/useObservations";
 import {LoadMore} from "../../components/Shared/LoadMore";
 import {obvType} from "../../helpers/observation";
 import {baseURL, routeUrls} from "../../helpers/url";
-import Images from "./../../static/images";
 import Loader from "../../components/Shared/Loader";
 import NotFound from "../../components/Common/NotFound";
 
@@ -26,8 +25,7 @@ const InitialUploadObservations = lazy(() =>
 
 const MyObservations = () => {
     const {auth} = useAuth();
-    const {setObservationData, setObservationSteps, setObservationImages} =
-        useObservations();
+    const {setObservationData, setObservationSteps, setObservationImages} = useObservations();
     const {observationListData, setObservationListData} = useObservationsData();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [isLoaded, setIsLoaded] = useState(true);
@@ -73,12 +71,12 @@ const MyObservations = () => {
         setActiveType(value);
         let url;
         if (reset === true || !nextPageUrl) {
-            url = "/observation/observation_collection/?type=" + value + "&page=1";
+            url = `${baseURL.api}/observation/observation_collection/?type=${value}&page=1`;
         } else {
             url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
         }
         axios
-            .get(baseURL.api + url, {
+            .get(`${url}`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${auth?.token?.access}`,
@@ -175,23 +173,22 @@ const MyObservations = () => {
 
     return listCount?.total > 0 ? (
         <section className="my-observation-data">
-            {/*Filter*/}
             <Container>
                 <div className="filtered-data_wrapper">
                     <Row>
                         <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
                             <div
                                 className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
-                <span
-                    className={
-                        activeType === obvType.verified
-                            ? "filter-link active"
-                            : "filter-link "
-                    }
-                    onClick={() => handleTypeOfObservation(obvType.verified)}
-                >
-                  Verified ({observationListData?.count?.verified})
-                </span>
+                                <span
+                                    className={
+                                        activeType === obvType.verified
+                                            ? "filter-link active"
+                                            : "filter-link "
+                                    }
+                                    onClick={() => handleTypeOfObservation(obvType.verified)}
+                                >
+                                  Verified ({observationListData?.count?.verified})
+                                </span>
                                 <span
                                     className={
                                         activeType === obvType.unverified
@@ -200,8 +197,8 @@ const MyObservations = () => {
                                     }
                                     onClick={() => handleTypeOfObservation(obvType.unverified)}
                                 >
-                  Unverified ({observationListData?.count?.unverified})
-                </span>
+                                    Unverified ({observationListData?.count?.unverified})
+                                </span>
                                 <span
                                     className={
                                         activeType === obvType.denied
@@ -210,8 +207,8 @@ const MyObservations = () => {
                                     }
                                     onClick={() => handleTypeOfObservation(obvType.denied)}
                                 >
-                  Denied ({observationListData?.count?.denied})
-                </span>
+                                  Denied ({observationListData?.count?.denied})
+                                </span>
                                 <span
                                     className={
                                         activeType === obvType.draft
@@ -220,8 +217,8 @@ const MyObservations = () => {
                                     }
                                     onClick={() => handleTypeOfObservation(obvType.draft)}
                                 >
-                  Drafts ({observationListData?.count?.draft})
-                </span>
+                                  Drafts ({observationListData?.count?.draft})
+                                </span>
                             </div>
                         </Col>
                         <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
@@ -258,12 +255,11 @@ const MyObservations = () => {
                             setObservationDetailModal={setObservationDetailModal}
                             setSelectedObservationId={setSelectedObservationId}
                         />
+                        {nextPageUrl && <LoadMore handleLoadMore={handleLoadMore}/>}
                     </Suspense>
                 ) : (
                     <NotFound/>
                 )}
-
-                {nextPageUrl && <LoadMore handleLoadMore={handleLoadMore}/>}
             </Container>
 
             <Suspense fallback={<div></div>}>

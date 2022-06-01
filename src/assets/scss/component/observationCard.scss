@@ -6,7 +6,8 @@
   border-radius: 8px;
   z-index: 11;
   position: relative;
-  border: 1px solid #EAEAEA;
+  //border: 1px solid #EAEAEA;
+  border: 0;
 
   .observation_country {
     opacity: 0;
@@ -67,6 +68,7 @@
 
     &.no-cursor {
       cursor: auto;
+      max-height: 217px;
     }
   }
 
