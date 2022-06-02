@@ -1,11 +1,17 @@
 @import "../global/config.scss";
 
+.rc-card-loader {
+  min-height: 300px;
+}
+
 .observation_card {
-  background: $white;
+  //background: $white;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.03);
   border-radius: 8px;
   z-index: 11;
   position: relative;
+  min-height: 300px;
+  //background-color: red;
   //border: 1px solid #EAEAEA;
   border: 0;
 
@@ -207,12 +213,12 @@
 
   &.homepage_observation_card {
     .card-img {
-      @include media-breakpoint-down(sm) {
-        height: 250px;
-      }
-      @include media-breakpoint-down(lg) {
-        height: 200px;
-      }
+      //@include media-breakpoint-down(sm) {
+      //  height: 250px;
+      //}
+      //@include media-breakpoint-down(lg) {
+      //  height: 200px;
+      //}
     }
   }
 }

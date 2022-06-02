@@ -86,7 +86,7 @@ const App = () => {
                 }>
                     <Route element={<InformativePage setAuthValue={authCallBack}/>}>
                         <Route exact path={routeUrls.home} element={
-                            <Suspense fallback={<Loader/>}>
+                            <Suspense fallback={<div></div>}>
                                 <Home/>
                             </Suspense>
                         }/>

@@ -1,52 +1,55 @@
-import {Suspense, lazy, useEffect} from 'react';
+import {Suspense, lazy, useEffect, useState} from 'react';
 import "../assets/scss/component/home.scss";
-import Loader from "../components/Shared/Loader";
 import axios from "../api/axios";
 import {baseURL} from "../helpers/url";
 
 import useObservationsData from "../hooks/useObservationsData";
-const HomeBanner = lazy(()=> import('../components/Home/HomeBanner'))
-const HomeCounter = lazy(()=> import('../components/Home/HomeCounter'))
-const HomeMapSection = lazy(()=> import('../components/Home/HomeMapSection'))
-const GetStarted = lazy(()=> import('../components/Home/GetStarted'))
+
+const HomeBanner = lazy(() => import('../components/Home/HomeBanner'))
+const HomeCounter = lazy(() => import('../components/Home/HomeCounter'))
+const HomeMapSection = lazy(() => import('../components/Home/HomeMapSection'))
+const GetStarted = lazy(() => import('../components/Home/GetStarted'))
 
 const Home = () => {
-
-    const { setRecentObservation } = useObservationsData();
+    const [loading, setLoading] = useState(true);
+    const {setRecentObservation, recentObservation} = useObservationsData();
     const getHomeData = () => {
-      return axios.get(baseURL.api+'/observation/home/')
-          .then(response => {
-              setRecentObservation(response?.data?.data)
-          })
-          .catch(error => {
-              console.log(error)
-          })
+        return axios.get(baseURL.api + '/observation/home/')
+            .then(response => {
+                setRecentObservation(response?.data?.data)
+                setLoading(false);
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
-    useEffect(()=> {
-        getHomeData().then(r=>r)
+    useEffect(() => {
+        setLoading(true);
+        getHomeData().then(r => r)
     }, [])
 
     return (
-    <>
-        <Suspense fallback={<Loader fixContent={true} />}>
-            <HomeBanner />
-        </Suspense>
+        <>
+            <Suspense fallback={''}>
+                <HomeBanner/>
+            </Suspense>
 
-        <Suspense fallback={''}>
-            <HomeCounter />
-        </Suspense>
+            <Suspense fallback={''}>
+                <section className="counter-main">
+                    <HomeCounter loading={loading} counter={recentObservation}/>
+                </section>
+            </Suspense>
 
-        <Suspense fallback={''}>
-            <HomeMapSection />
-        </Suspense>
+            <Suspense fallback={''}>
+                <HomeMapSection loading={loading}/>
+            </Suspense>
 
-        <Suspense fallback={''}>
-            <GetStarted />
-        </Suspense>
-
-    </>
-  );
+            <Suspense fallback={''}>
+                <GetStarted/>
+            </Suspense>
+        </>
+    );
 };
 
 export default Home;

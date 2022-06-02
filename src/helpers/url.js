@@ -60,3 +60,8 @@ export const routeUrls = {
         edit: ':slug/edit'
     }
 }
+
+
+export const cdn = {
+    url: process.env.REACT_APP_CDN_URL
+}

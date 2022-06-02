@@ -1,14 +1,10 @@
 import {Outlet} from "react-router-dom";
-import {useState, useEffect, createContext} from "react";
+import {useState, useEffect, createContext, lazy, Suspense} from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
-import Header from "../components/Common/Header";
-import Footer from "../components/Common/Footer";
-import Loader from "../components/Shared/Loader";
 
-// const Header = lazy(()=> import('../components/Common/Header'))
-// const Footer = lazy(()=> import('../components/Common/Footer'))
-// const Loader = lazy(()=> import('../components/Shared/Loader'))
+const Header = lazy(() => import('../components/Common/Header'))
+const Footer = lazy(() => import('../components/Common/Footer'))
 
 export const observationViewContext = createContext({});
 
@@ -46,21 +42,6 @@ const PersistLogin = (props) => {
         return () => isMounted = false;
     }, [auth, auth?.token?.access, persist, refresh])
 
-    // useEffect(() => {
-    //     // console.log(`isLoading: ${isLoading}`)
-    //     // console.log(`aT: ${JSON.stringify(auth?.token?.access)}`)
-    //     // console.log(`rT: ${JSON.stringify(auth?.token?.refresh)}`)
-    // }, [auth?.token?.access, auth?.token?.refresh, isLoading])
-
-    // useEffect(() => {
-    //     setObservationListData((prev) => {
-    //         return {
-    //             ...prev,
-    //             list: [],
-    //         };
-    //     });
-    // }, [location])
-
     return (
         <>
             <observationViewContext.Provider value={
@@ -81,20 +62,27 @@ const PersistLogin = (props) => {
             }>
                 {!persist ? (
                     <>
-                        <Header/>
+                        <Suspense fallback={<div></div>}>
+                            <Header/>
+                        </Suspense>
                         <div className="main-content">
                             <Outlet/>
                         </div>
-                        <Footer/>
+                        <Suspense fallback={<div></div>}>
+                            <Footer/>
+                        </Suspense>
                     </>
-                ) : isLoading ? <Loader fixContent={true}/> : (
+                ) : (
                     <>
-                        <Header/>
+                        <Suspense fallback={<div></div>}>
+                            <Header/>
+                        </Suspense>
                         <div className="main-content">
                             <Outlet/>
                         </div>
-                        {persistValue && <Footer/>}
-
+                        <Suspense fallback={<div></div>}>
+                            {persistValue && <Footer/>}
+                        </Suspense>
                     </>
                 )}
             </observationViewContext.Provider>
