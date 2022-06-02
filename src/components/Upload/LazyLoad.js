@@ -2,8 +2,8 @@ import {useEffect, useState} from "react";
 import {placeholder} from "./placeholder";
 
 const LazyLoad = (props) => {
-    const { src, alt, imageClass, converted } = props;
-    const [imageSrc, setImageSrc] = useState(placeholder)
+    const {src, alt, imageClass, converted} = props;
+    const [imageSrc, setImageSrc] = useState(null)
     const [imageRef, setImageRef] = useState('')
 
     const onLoad = (event) => {
@@ -52,7 +52,7 @@ const LazyLoad = (props) => {
     return (
         <>
             <img
-                className={ imageClass ? imageClass + ' img-fluid' : 'img-fluid' }
+                className={imageClass ? imageClass + ' img-fluid' : 'img-fluid'}
                 ref={setImageRef}
                 src={imageSrc}
                 alt={alt}

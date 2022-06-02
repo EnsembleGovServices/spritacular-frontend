@@ -10,6 +10,7 @@ import Tippy from "@tippyjs/react";
 import BlurImage from "../Common/BlurImage";
 import Skeleton from "react-loading-skeleton";
 import {useState} from "react";
+import {cdn} from "../../helpers/url";
 
 const ObservationCard = (props) => {
     const {cardItems, handleClick, userProfile, cardData, index, activeType, homepage} = props;
@@ -69,7 +70,7 @@ const ObservationCard = (props) => {
                     <div className="observation_type">
                         {cardItems?.category_data?.length > 0 &&
                             cardItems?.category_data?.map((item, index) => {
-                                let image = `/assets/images/category/${item?.name?.toLowerCase().replaceAll(" ", "")}.png`;
+                                let image = `${cdn.url}/category/${item?.name?.toLowerCase().replaceAll(" ", "")}.png`;
                                 return (
                                     <div className="cat-loader" key={index}>
                                         {loaderLoading &&

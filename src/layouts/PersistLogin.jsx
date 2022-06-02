@@ -40,7 +40,8 @@ const PersistLogin = (props) => {
         }
         !auth?.token?.access ? verifyRefreshToken() : setIsLoading(false);
         return () => isMounted = false;
-    }, [auth, auth?.token?.access, persist, refresh])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [auth?.token?.access])
 
     return (
         <>
@@ -72,7 +73,7 @@ const PersistLogin = (props) => {
                             <Footer/>
                         </Suspense>
                     </>
-                ) : (
+                ) : isLoading ? <div/> : (
                     <>
                         <Suspense fallback={<div></div>}>
                             <Header/>

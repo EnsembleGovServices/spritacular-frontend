@@ -20,8 +20,7 @@ import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 import UserProfilePopup from "../Popup/UserProfilePopup";
 import {Icon} from "@iconify/react";
 import LazyLoad from "../Upload/LazyLoad";
-import {routeUrls} from '../../helpers/url';
-import Images from "../../static/images";
+import {cdn, routeUrls} from '../../helpers/url';
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
 import Notification from "../Notification/Notification";
@@ -141,8 +140,8 @@ const Header = (props) => {
             >
                 <Link to={routeUrls.home} className="navbar-brand p-0 position-relative" title="Spritacular"
                       onClick={() => setActive('')}>
-                    <img src={Images.Logo} alt="Logo" className="logo"/>
-                    <img src={Images.BlackLogo} alt="Logo" className="on-scroll-logo"/>
+                    <img src={`${cdn.url}/logo.png`} alt="Spritacular" className="logo"/>
+                    <img src={`${cdn.url}/black-logo.png`} alt="Spritacular" className="on-scroll-logo"/>
                     {process.env.NODE_ENV === "development" &&
                         <div className="showUserTag">
                             {admin &&
@@ -163,7 +162,7 @@ const Header = (props) => {
                 <Collapse navbar isOpen={showMenu}>
                     <div className="menu-logo  justify-content-between w-100 px-2 py-1 shadow-sm">
                         <Link to={routeUrls.home} className="navbar-brand" onClick={() => setActive('')}>
-                            <img src={Images.BlackLogo} alt="Logo"/>
+                            <img src={`${cdn.url}/black-logo.png`} alt="Spritacular"/>
                         </Link>
                         <Button className="close-menu" onClick={() => menuClose()}>
                             <Icon icon="ci:close-big" color="#000" width="25" height="25"/>

@@ -19,7 +19,7 @@ footer {
       position: absolute;
       right: -3%;
       top: 0;
-      background: url("../../images/footer-line.png") no-repeat center;
+      background: url("#{$footerTopImage}") no-repeat center;
       background-size: contain;
       z-index: -1;
       @include media-breakpoint-down(md) {
