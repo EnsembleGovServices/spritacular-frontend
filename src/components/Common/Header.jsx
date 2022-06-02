@@ -23,7 +23,7 @@ import LazyLoad from "../Upload/LazyLoad";
 import {cdn, routeUrls} from '../../helpers/url';
 import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
-import Notification from "../Notification/Notification";
+import NotificationComponent from "../Notification/NotificationComponent";
 
 
 const Header = (props) => {
@@ -92,7 +92,7 @@ const Header = (props) => {
                 })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location])
+    }, [auth?.user?.id])
 
 
     const handleLoginModal = () => {
@@ -343,9 +343,9 @@ const Header = (props) => {
                     </div>
                 ) : (
                     <div className="after-login-right-menu">
-                        {/* Notification Dropdown  */}
-                        <Notification notificationArray={notificationArray}
-                                      setNotificationArray={setNotificationArray}/>
+                        {/* NotificationComponent Dropdown  */}
+                        <NotificationComponent notificationArray={notificationArray}
+                                               setNotificationArray={setNotificationArray}/>
                         {/* User Profile Dropdown  */}
                         <Dropdown
                             className="user-menu"

@@ -182,7 +182,8 @@ const Gallery = () => {
             }
         })
         getObservationType(true, "", "", "");
-        console.clear();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // console.clear();
     }, [])
 
     return (
