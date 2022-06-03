@@ -9,9 +9,9 @@ import {LoadMore} from "../../components/Shared/LoadMore";
 
 import axios from "../../api/axios";
 import moment from "moment";
-import Images from "../../static/images";
 import {dashboardHelper} from "../../helpers/dashboard";
 import {baseURL} from "../../helpers/url";
+import NoDataFound from "../../components/NoDataFound";
 
 const FilterSelectMenu = lazy(() =>
     import("../../components/Shared/FilterSelectMenu")
@@ -246,9 +246,9 @@ const Dashboard = () => {
         getObservationData(true, "", "", "");
     };
 
-    useEffect(() => {
-        getObservationData(true);
-    }, [filterReset]);
+    // useEffect(() => {
+    //     getObservationData(true);
+    // }, [filterReset]);
 
     useEffect(() => {
         setObservationListData((prev) => {
@@ -346,17 +346,9 @@ const Dashboard = () => {
                                             </Suspense>
                                         )
                                     ) : (
-                                        <div className="data-not-found">
-                                            <img
-                                                src={Images.NoDataFound}
-                                                alt="No data found"
-                                                className="mb-3"
-                                            />
-                                            <p>
-                                                <b className="text-secondary fw-bold">Opps!</b> No Data
-                                                Found
-                                            </p>
-                                        </div>
+                                        <>
+                                            {/*<NoDataFound/>*/}
+                                        </>
                                     )}
 
 
