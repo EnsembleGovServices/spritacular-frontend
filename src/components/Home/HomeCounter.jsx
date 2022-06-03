@@ -1,7 +1,5 @@
 import {Container, Row, Col} from "reactstrap";
 import {Suspense, lazy, useState, useLayoutEffect} from 'react';
-import Images from "../../static/images";
-import useObservationsData from "../../hooks/useObservationsData";
 
 import Skeleton from "react-loading-skeleton";
 import {cdn} from "../../helpers/url";
@@ -39,7 +37,7 @@ const HomeCounter = (props) => {
                         }
 
                         <div className="left-image">
-                            <img src={`${cdn.url}/users.png`} alt="Users"/>
+                            <img width={50} height={50} src={`${cdn.url}/users.png`} alt="Users"/>
                         </div>
                         <div className="right-counter">
                             <Suspense fallback={<div></div>}>
@@ -57,7 +55,7 @@ const HomeCounter = (props) => {
                             </div>
                         }
                         <div className="left-image">
-                            <img src={`${cdn.url}/submit.png`} alt="observations"/>
+                            <img width={50} height={50} src={`${cdn.url}/submit.png`} alt="observations"/>
                         </div>
                         <div className="right-counter">
                             <Suspense fallback={<div></div>}>
@@ -75,7 +73,7 @@ const HomeCounter = (props) => {
                             </div>
                         }
                         <div className="left-image">
-                            <img src={`${cdn.url}/country.png`} alt="country"/>
+                            <img width={50} height={50} src={`${cdn.url}/country.png`} alt="country"/>
                         </div>
                         <div className="right-counter">
                             <Suspense fallback={<div></div>}>

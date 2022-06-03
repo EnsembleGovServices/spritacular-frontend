@@ -13,6 +13,7 @@ const GetStarted = lazy(() => import('../components/Home/GetStarted'))
 const Home = () => {
     const [loading, setLoading] = useState(true);
     const {setRecentObservation, recentObservation} = useObservationsData();
+
     const getHomeData = () => {
         return axios.get(baseURL.api + '/observation/home/')
             .then(response => {

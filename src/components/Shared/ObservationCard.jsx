@@ -84,7 +84,8 @@ const ObservationCard = (props) => {
                                         }
                                         <i className="rounded-circle bg-white me-1">
                                             <Tippy animation="perspective" content={item?.name}>
-                                                <img src={image} alt={item?.name} className="rounded-circle"/>
+                                                <img width={22} height={22} src={image} alt={item?.name}
+                                                     className="rounded-circle"/>
                                             </Tippy>
                                         </i>
                                     </div>
