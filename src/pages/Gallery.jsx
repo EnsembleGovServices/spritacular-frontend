@@ -7,9 +7,9 @@ import {Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import {baseURL, routeUrls} from "../helpers/url";
-import Images from "./../static/images";
 import {LoadMore} from "../components/Shared/LoadMore";
 import useObservationsData from "../hooks/useObservationsData";
+import NoDataFound from "../components/NoDataFound";
 
 const ObservationDetails = lazy(() =>
     import("./Observation/ObservationDetails")
@@ -22,6 +22,7 @@ const ObservationDetailPage = lazy(() =>
 );
 
 const Gallery = () => {
+    const {auth} = useAuth();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [isLoaded, setIsLoaded] = useState(true);
     const [selectedObservationId, setSelectedObservationId] = useState();
@@ -38,9 +39,8 @@ const Gallery = () => {
     });
 
     const {observationListData, setObservationListData} = useObservationsData();
-    const {auth} = useAuth();
-    const [loadMore, setLoadMore] = useState(10);
-    const [pageSize, setPageSize] = useState(10);
+    // const [loadMore, setLoadMore] = useState(10);
+    // const [pageSize, setPageSize] = useState(10);
     const [nextPageUrl, setNextPageUrl] = useState(
         `${baseURL.api}/observation/gallery/?country=&category=&status=`
     );
@@ -99,41 +99,37 @@ const Gallery = () => {
 
         const headers = {};
         headers["Content-Type"] = "application/json";
-        if (auth.user) {
+        if (auth?.user) {
             headers["Authorization"] = `Bearer ${auth?.token?.access}`;
         }
-        axios
-            .get(url, {
-                headers: headers,
-            })
-            .then((success) => {
-                if (success?.data?.results?.data !== undefined) {
-                    if (success?.data?.next) {
-                        setNextPageUrl(success?.data?.next);
-                    } else {
-                        setNextPageUrl(null);
-                    }
-                    let records = success?.data?.results?.data;
-                    let prevData;
-
-                    if (observationListData?.list?.length > 0 && reset === false) {
-                        prevData = [...observationListData?.list];
-                        prevData = [...prevData, ...records];
-                    } else {
-                        prevData = success?.data?.results?.data;
-                    }
-                    setObservationListData((prev) => {
-                        return {
-                            ...prev,
-                            list: prevData,
-                        };
-                    });
-                    setIsLoaded(false);
+        axios.get(url, {headers: headers}).then((success) => {
+            if (success?.data?.results?.data !== undefined) {
+                if (success?.data?.next) {
+                    setNextPageUrl(success?.data?.next);
                 } else {
                     setNextPageUrl(null);
-                    setObservationListData({list: [], active: {}});
                 }
-            })
+                let records = success?.data?.results?.data;
+                let prevData;
+
+                if (observationListData?.list?.length > 0 && reset === false) {
+                    prevData = [...observationListData?.list];
+                    prevData = [...prevData, ...records];
+                } else {
+                    prevData = success?.data?.results?.data;
+                }
+                setObservationListData((prev) => {
+                    return {
+                        ...prev,
+                        list: prevData,
+                    };
+                });
+                setIsLoaded(false);
+            } else {
+                setNextPageUrl(null);
+                setObservationListData({list: [], active: {}});
+            }
+        })
             .catch((error) => {
                 console.log(error.response);
             });
@@ -223,29 +219,17 @@ const Gallery = () => {
                     <div className="gallery-page">
                         <h4 className="text-black fw-bold">Recent Observations</h4>
                         <div>
-                            {observationListData?.list.length > 0 ? (
-                                <Suspense fallback={<div></div>}>
-                                    <ObservationDetailPage
-                                        observationList={observationListData?.list}
-                                        isObservationDetailModal={isObservationDetailModal}
-                                        setObservationDetailModal={setObservationDetailModal}
-                                        setSelectedObservationId={setSelectedObservationId}
-                                    />
-                                    {nextPageUrl && <LoadMore handleLoadMore={handleLoadMoreData}/>}
-                                </Suspense>
-                            ) : (
-                                <div className="data-not-found">
-                                    <img
-                                        src={Images.NoDataFound}
-                                        alt="No data found"
-                                        className="mb-3"
-                                    />
-                                    <p>
-                                        <b className="text-secondary fw-bold">Opps!</b> No Data
-                                        Found
-                                    </p>
-                                </div>
-                            )}
+                            <Suspense fallback={<div></div>}>
+                                <ObservationDetailPage
+                                    observationList={observationListData?.list}
+                                    isObservationDetailModal={isObservationDetailModal}
+                                    setObservationDetailModal={setObservationDetailModal}
+                                    setSelectedObservationId={setSelectedObservationId}
+                                />
+                                {observationListData?.list?.length > 0 && nextPageUrl &&
+                                    <LoadMore handleLoadMore={handleLoadMoreData}/>
+                                }
+                            </Suspense>
                         </div>
                     </div>
                 )}

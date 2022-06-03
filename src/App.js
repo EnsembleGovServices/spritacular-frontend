@@ -91,28 +91,28 @@ const App = () => {
                             </Suspense>
                         }/>
                         <Route exact path={routeUrls.about} element={
-                            <Suspense fallback={<Loader/>}>
+                            <Suspense fallback={<div></div>}>
                                 <About/>
                             </Suspense>
                         }/>
                         <Route exact path={routeUrls.getStarted} element={
-                            <Suspense fallback={<Loader/>}>
+                            <Suspense fallback={<div></div>}>
                                 <GetStarted/>
                             </Suspense>
                         }/>
                         <Route exact path={routeUrls.gallery} element={
-                            <Suspense fallback={<Loader/>}>
+                            <Suspense fallback={<div></div>}>
                                 <Gallery/>
                             </Suspense>
                         }/>
                         <Route exact path={routeUrls.blog} element={
-                            <Suspense fallback={<Loader/>}>
+                            <Suspense fallback={<div></div>}>
                                 <BlogList/>
                             </Suspense>
                         }/>
 
                         <Route exact path={routeUrls.quiz.home} element={
-                            <Suspense fallback={<Loader/>}>
+                            <Suspense fallback={<div></div>}>
                                 <QuizHome/>
                             </Suspense>
                         }/>
