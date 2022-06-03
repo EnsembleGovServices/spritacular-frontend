@@ -32,8 +32,8 @@ const AdvancedFilter = (props) => {
     const [isDateTimeOpen, setIsDateTimeOpen] = useState(true);
     const [isEquipmentDetailsOpen, setIsEquipmentDetailsOpen] = useState(true);
     return (
-        <div className='advanced-filter'>
-            <Row>
+        <div className='advanced-filter d-flex flex-column'>
+            <Row className=" overflow-auto">
                 <Col xs={12} className='d-flex justify-content-end d-md-none'>
                     <Button className="close-icon bg-transparent shadow-none border-0 rounded-0"
                             onClick={() => handleFilterOpen()}>
@@ -262,7 +262,7 @@ const AdvancedFilter = (props) => {
                     </Col>
                 </div>
             </Row>
-            <Row>
+            <Row className="mt-auto">
                 <Col>
                     <div className="d-flex align-items-center justify-content-between">
                         <button onClick={() => handleFilterValue('filter', 'filter')}

@@ -4,7 +4,7 @@
     display: flex;
 }
 .dashboard-card{
-    width: calc(100% - #{$filter-size});
+    // width: calc(100% - #{$filter-size});
     padding: 40px 0 40px 40px;
     &.sm-card{
         .photo-list{
