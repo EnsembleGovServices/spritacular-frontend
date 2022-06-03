@@ -45,16 +45,16 @@ const Gallery = () => {
         `${baseURL.api}/observation/gallery/?country=&category=&status=`
     );
     const normalUser = auth?.user?.is_user;
-    useEffect(() => {
-        setLoadMore(pageSize);
-        getObservationType(
-            true,
-            "",
-            selectedFilterHorizontal.type,
-            selectedFilterHorizontal.status
-        );
-        setIsLoaded(false);
-    }, [isLoaded]);
+    // useEffect(() => {
+    //     setLoadMore(pageSize);
+    //     getObservationType(
+    //         true,
+    //         "",
+    //         selectedFilterHorizontal.type,
+    //         selectedFilterHorizontal.status
+    //     );
+    //     setIsLoaded(false);
+    // }, [isLoaded]);
 
     const findCountry = (e) => {
         let value = e.target.value.toLowerCase();
@@ -247,27 +247,26 @@ const Gallery = () => {
                                 </div>
                             )}
                         </div>
-
-
-                        <ObservationDetails
-                            data={observationListData?.active}
-                            activeType={
-                                observationListData?.active?.is_verified
-                                    ? "verified"
-                                    : observationListData?.active?.is_reject
-                                        ? "denied"
-                                        : observationListData?.active?.is_submit
-                                            ? "unverified"
-                                            : "draft"
-                            }
-                            modalClass="observation-details_modal"
-                            open={isObservationDetailModal}
-                            handleClose={handleObservationDetailModal}
-                            handleApproveRejectEvent={getObservationType}
-                            refreshData={getObservationType}
-                        />
                     </div>
                 )}
+
+                <ObservationDetails
+                    data={observationListData?.active}
+                    activeType={
+                        observationListData?.active?.is_verified
+                            ? "verified"
+                            : observationListData?.active?.is_reject
+                                ? "denied"
+                                : observationListData?.active?.is_submit
+                                    ? "unverified"
+                                    : "draft"
+                    }
+                    modalClass="observation-details_modal"
+                    open={isObservationDetailModal}
+                    handleClose={handleObservationDetailModal}
+                    handleApproveRejectEvent={getObservationType}
+                    refreshData={getObservationType}
+                />
             </Container>
         </>
     );

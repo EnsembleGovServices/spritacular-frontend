@@ -140,8 +140,9 @@ const Header = (props) => {
             >
                 <Link to={routeUrls.home} className="navbar-brand p-0 position-relative" title="Spritacular"
                       onClick={() => setActive('')}>
-                    <img src={`${cdn.url}/logo.png`} alt="Spritacular" className="logo"/>
-                    <img src={`${cdn.url}/black-logo.png`} alt="Spritacular" className="on-scroll-logo"/>
+                    <img width={100} height={50} src={`${cdn.url}/logo.png`} alt="Spritacular" className="logo"/>
+                    <img width={100} height={50} src={`${cdn.url}/black-logo.png`} alt="Spritacular"
+                         className="on-scroll-logo"/>
                     {process.env.NODE_ENV === "development" &&
                         <div className="showUserTag">
                             {admin &&

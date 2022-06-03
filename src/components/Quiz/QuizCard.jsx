@@ -1,6 +1,7 @@
 import {Col, Row} from "reactstrap";
 import Loader from "../Shared/Loader";
 import QuizProgressBar from "./QuizProgressBar";
+import {Icon} from '@iconify/react';
 
 const QuizCard = (props) => {
     const {
@@ -12,9 +13,9 @@ const QuizCard = (props) => {
         handleQuizSubmit,
         disable,
         loading,
-        answers
+        answers,
+        goFullScreenImage,
     } = props;
-
 
     return (
         <>
@@ -23,7 +24,14 @@ const QuizCard = (props) => {
                     <Loader loaderClass="quiz-loading"/>
                 }
                 <div className="card-top-image">
-                    <img src={activeQuestion?.image_url} alt={activeQuestion?.id}/>
+                    <div className="h-100 position-relative">
+                        <img src={activeQuestion?.image_url} alt={activeQuestion?.id}/>
+                        <div className="full-screen" onClick={() => goFullScreenImage(activeQuestion?.image_url)}>
+                            <div className="fc-icon">
+                                <Icon icon="octicon:screen-full-16"/>
+                            </div>
+                        </div>
+                    </div>
                     <QuizProgressBar quizControl={quizControl} activeQuestion={activeQuestion?.id}/>
                 </div>
                 <div className="card-body">

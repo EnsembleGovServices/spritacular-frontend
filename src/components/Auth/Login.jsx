@@ -11,9 +11,9 @@ const Login = (props) => {
     const {cp} = props;
     const {setAuth, persist, setPersist} = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || routeUrls.home;
-    const {categoryList, setCategoryList} = useObservationsData();
+    // const location = useLocation();
+    // const from = location.state?.from?.pathname || routeUrls.home;
+    // const {categoryList, setCategoryList} = useObservationsData();
 
     const [user, setUser] = useState({
         email: "",
