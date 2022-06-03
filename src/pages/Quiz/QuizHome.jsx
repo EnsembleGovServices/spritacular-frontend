@@ -1,13 +1,13 @@
 import "../../assets/scss/component/quiz.scss";
-import {Col, Container, Row, UncontrolledAlert} from "reactstrap";
-import QuizCard from "../../components/Quiz/QuizCard";
-
+import {Col, Container, Modal, ModalBody, Row, UncontrolledAlert} from "reactstrap";
+import {Icon} from '@iconify/react';
 import axios from "../../api/axios";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import Images from "../../static/images";
-
+import BlurImage from "../../components/Common/BlurImage";
+import QuizCard from "../../components/Quiz/QuizCard";
 
 const QuizHome = (props) => {
     const {roles} = props;
@@ -28,9 +28,12 @@ const QuizHome = (props) => {
         prevBtn: true,
         nextBtn: true
     });
+    const [fullScreen, setFullScreen] = useState(false);
+    const [fullImage, setFullImage] = useState("");
     const score = result?.success?.score;
 
 // Local Variables
+
 
     const getQuizQuestions = () => {
         return axios.get(baseURL.quiz_question, {
@@ -114,6 +117,18 @@ const QuizHome = (props) => {
     }
 
 
+    // Handle Full Screen
+    const goFullScreenImage = (image) => {
+        console.log(image);
+        setFullImage(image);
+        setFullScreen(true);
+    }
+
+    const closeFullScreen = () => {
+        setFullScreen(false);
+        setFullImage("");
+    }
+
     useEffect(() => {
         setQuizControl((prev) => {
             return {
@@ -183,10 +198,6 @@ const QuizHome = (props) => {
 
     }, [answers?.[quizControl?.activeIndex]?.ans, singleAnswer?.ans]);
 
-    useEffect(() => {
-
-    }, [])
-
     return (
         <>
             <section className="quiz-main">
@@ -214,6 +225,7 @@ const QuizHome = (props) => {
                                               handleNextPrev={handleNextPrev}
                                               handleTleCheck={handleTleCheck}
                                               handleSubmit={submitFinalAnswers}
+                                              goFullScreenImage={goFullScreenImage}
                                     />
                                 ) : (
                                     <>
@@ -269,6 +281,24 @@ const QuizHome = (props) => {
                     </form>
                 </Container>
             </section>
+
+            {fullScreen &&
+                <Modal
+                    className="fullScreen-quiz-image-modal"
+                    isOpen={fullScreen}
+                    backdrop={false}
+                    centered
+                    fullscreen
+                    toggle={closeFullScreen}
+                >
+                    <ModalBody>
+                        <button className="close-icon" type="button" onClick={() => closeFullScreen()}>
+                            <Icon color="#fff" width={30} height={30} icon="clarity:close-line"/>
+                        </button>
+                        <BlurImage preview={fullImage} image={fullImage}/>
+                    </ModalBody>
+                </Modal>
+            }
         </>
     );
 };

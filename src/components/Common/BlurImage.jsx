@@ -17,7 +17,9 @@ const BlurImage = (props) => {
         if (image) {
             waitForImageToLoad(loadingImageRef.current).then(() => {
                 setLoading(false);
-                loaderLoading(false);
+                if (loaderLoading) {
+                    loaderLoading(false);
+                }
             });
         }
     }, [image]);

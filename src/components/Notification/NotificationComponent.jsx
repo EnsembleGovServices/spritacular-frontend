@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect, useRef} from 'react'
+import React, {useState, useLayoutEffect, useRef, useEffect} from 'react'
 import {getTokens, onMessageListener} from './firebase';
 import {
     Dropdown,
@@ -31,7 +31,6 @@ const NotificationComponent = (props) => {
             if (permission === "granted") {
                 // console.log('granted')
                 setTokenFound(true);
-                getTokens(auth?.user?.id, auth?.token?.access, auth?.user).then(r => r);
             } else {
                 setTokenFound(false);
                 // console.log('rejected')
@@ -39,7 +38,13 @@ const NotificationComponent = (props) => {
         }).catch(e => {
             console.log(e)
         });
-    }, [])
+        return () => {
+            if (isTokenFound) {
+                return getTokens(auth?.user?.id, auth?.token?.access, auth?.user).then(r => r);
+            }
+        }
+    }, [isTokenFound])
+
 
     useLayoutEffect(() => {
         return () => {
