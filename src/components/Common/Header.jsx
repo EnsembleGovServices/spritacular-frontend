@@ -1,3 +1,4 @@
+import "../../assets/scss/component/header.scss";
 import {
     Button,
     Collapse,
@@ -10,21 +11,21 @@ import {
     NavbarToggler,
     NavItem
 } from "reactstrap";
-import "../../assets/scss/component/header.scss";
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate, useLocation} from "react-router-dom";
+import {cdn, routeUrls} from '../../helpers/url';
+import {baseURL} from "../../helpers/url";
+import axios from "../../api/axios";
+
+import {Icon} from "@iconify/react";
+import LazyLoad from "../Upload/LazyLoad";
+
 import useAuth from "../../hooks/useAuth";
 import LoginPopup from "../Popup/LoginPopup";
 import RegisterPopup from "../Popup/RegisterPopup";
 import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 import UserProfilePopup from "../Popup/UserProfilePopup";
-import {Icon} from "@iconify/react";
-import LazyLoad from "../Upload/LazyLoad";
-import {cdn, routeUrls} from '../../helpers/url';
-import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
 import NotificationComponent from "../Notification/NotificationComponent";
-
 
 const Header = (props) => {
     const {auth, setAuth, persist, setPersist} = useAuth();
@@ -207,13 +208,14 @@ const Header = (props) => {
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem className={active === 'about-1' ? 'active p-0' : 'p-0'}>
-                                        <Link  className="px-3 py-1" to={routeUrls.about} title="What is Spritacular?"
+                                        <Link className="px-3 py-1" to={routeUrls.about} title="What is Spritacular?"
                                               onClick={() => setActive('about-1')}>
                                             What is Spritacular?
                                         </Link>
                                     </DropdownItem>
                                     <DropdownItem className={active === 'about-2' ? 'active p-0' : 'p-0'}>
-                                        <Link  className="px-3 py-1" to={routeUrls.policy} title="Policy" onClick={() => setActive('about-2')}>
+                                        <Link className="px-3 py-1" to={routeUrls.policy} title="Policy"
+                                              onClick={() => setActive('about-2')}>
                                             Policy
                                         </Link>
                                     </DropdownItem>
@@ -254,12 +256,13 @@ const Header = (props) => {
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem className={active === 'resources-1' ? 'active p-0' : 'p-0'}>
-                                        <Link  className="px-3 py-1" to={routeUrls.blog} title="Blog" onClick={() => setActive('resources-1')}>
+                                        <Link className="px-3 py-1" to={routeUrls.blog} title="Blog"
+                                              onClick={() => setActive('resources-1')}>
                                             Blog
                                         </Link>
                                     </DropdownItem>
                                     <DropdownItem className={active === 'resources-2' ? 'active p-0' : 'p-0'}>
-                                        <Link  className="px-3 py-1" to={routeUrls.tutorials} title="Tutorials"
+                                        <Link className="px-3 py-1" to={routeUrls.tutorials} title="Tutorials"
                                               onClick={() => setActive('resources-2')}>
                                             Tutorials
                                         </Link>
@@ -278,25 +281,26 @@ const Header = (props) => {
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem className={active === 'community-1' ? 'active p-0' : 'p-0'}>
-                                        <Link  className="px-3 py-1" to={routeUrls.home} title="Meet the Team"
+                                        <Link className="px-3 py-1" to={routeUrls.home} title="Meet the Team"
                                               onClick={() => setActive('community-1')}>
                                             Meet the Team
                                         </Link>
                                     </DropdownItem>
                                     <DropdownItem className={active === 'community-2' ? 'active p-0' : 'p-0'}>
-                                        <Link  className="px-3 py-1" to={routeUrls.home} title="Volunteer Profile"
+                                        <Link className="px-3 py-1" to={routeUrls.home} title="Volunteer Profile"
                                               onClick={() => setActive('community-2')}>
                                             Volunteer Profile
                                         </Link>
                                     </DropdownItem>
                                     <DropdownItem className={active === 'community-3' ? 'active p-0' : 'p-0'}>
-                                        <Link  className="px-3 py-1" to={routeUrls.home} title="Become an ambassador"
+                                        <Link className="px-3 py-1" to={routeUrls.home} title="Become an ambassador"
                                               onClick={() => setActive('community-3')}>
                                             Become an ambassador
                                         </Link>
                                     </DropdownItem>
                                     <DropdownItem className={active === 'community-4' ? 'active p-0' : 'p-0'}>
-                                        <Link  className="px-3 py-1" to={routeUrls.home} title="Join Spritacular Google Group"
+                                        <Link className="px-3 py-1" to={routeUrls.home}
+                                              title="Join Spritacular Google Group"
                                               onClick={() => setActive('community-4')}>
                                             Join Spritacular Google Group
                                         </Link>
@@ -326,6 +330,7 @@ const Header = (props) => {
                         ) : ('')}
                     </Nav>
                 </Collapse>
+
                 {!persist ? (
                     <div className="right-menu">
                         <Button
@@ -391,7 +396,7 @@ const Header = (props) => {
                                     </>
                                 }
                                 <DropdownItem className="p-0" onClick={() => setActive('')}>
-                                    <Link  className="px-3 py-1" to={routeUrls.profile}>Edit Profile</Link>
+                                    <Link className="px-3 py-1" to={routeUrls.profile}>Edit Profile</Link>
                                 </DropdownItem>
                                 <DropdownItem className="p-0" onClick={() => {
                                     handleChangePasswordModal();
