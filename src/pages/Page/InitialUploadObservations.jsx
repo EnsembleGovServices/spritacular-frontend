@@ -1,11 +1,11 @@
-import "../assets/scss/component/initialUploadobservations.scss";
+import "../../assets/scss/component/initialUploadobservations.scss";
 import {Container, Form, FormGroup, Label} from "reactstrap";
 import {Icon} from "@iconify/react";
 import {useNavigate} from "react-router-dom";
-import {routeUrls} from '../helpers/url';
-import useObservations from "../hooks/useObservations";
+import {routeUrls} from '../../helpers/url';
+import useObservations from "../../hooks/useObservations";
 import {useEffect, useState} from "react";
-import UploadImageUI from "../components/Shared/UploadImageUI";
+import UploadImageUI from "../../components/Shared/UploadImageUI";
 
 const InitialUploadObservations = (props) => {
     const {count} = props;

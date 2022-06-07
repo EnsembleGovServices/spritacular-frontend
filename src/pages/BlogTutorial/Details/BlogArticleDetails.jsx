@@ -39,7 +39,7 @@ const BlogArticleDetails = () => {
                 <section className="tutorial-detail-main">
                     <Container>
                         <div className="breadcrumb-main">
-                            <SimpleBreadcrumb page="Blog" title={article?.title}/>
+                            <SimpleBreadcrumb page="Blog" title={article?.title.split(" ").length > 6 ? `${article?.title.split(" ", 6).join(" ")}...` : article?.title}/>
                         </div>
                         <div className="mb-4 mt-3 d-flex align-items-center justify-content-between">
                             <h2 className="mb-0">{article?.title}</h2>

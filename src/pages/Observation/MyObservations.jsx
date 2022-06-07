@@ -20,7 +20,7 @@ import NotFound from "../../components/Common/NotFound";
 const ObservationDetails = lazy(() => import("./ObservationDetails"));
 const ObservationDetailPage = lazy(() => import("./ObservationListPage"));
 const InitialUploadObservations = lazy(() =>
-    import("../InitialUploadObservations")
+    import("../Page/InitialUploadObservations")
 );
 
 const MyObservations = () => {

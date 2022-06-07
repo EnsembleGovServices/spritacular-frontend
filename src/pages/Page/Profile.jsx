@@ -11,16 +11,16 @@ import {
 import {Suspense, lazy, useEffect} from 'react';
 import classnames from "classnames";
 import {useState} from "react";
-import useAuth from "../hooks/useAuth";
-import "../assets/scss/component/camerasettings.scss";
-import ImageUpload from "../components/Upload/ImageUpload";
-import {cameraSettingFields} from "../helpers/url";
-import ReactCountryFlags from "../components/ReactCountryFlag";
-import useObservations from "../hooks/useObservations";
+import useAuth from "../../hooks/useAuth";
+import "../../assets/scss/component/camerasettings.scss";
+import ImageUpload from "../../components/Upload/ImageUpload";
+import {cameraSettingFields} from "../../helpers/url";
+import ReactCountryFlags from "../../components/ReactCountryFlag";
+import useObservations from "../../hooks/useObservations";
 
-const UpdateProfile = lazy(()=> import('../components/Account/UpdateProfile'))
-const CameraSetting = lazy(()=> import('../components/Account/CameraSetting'))
-const ChangePassword = lazy(()=> import('../components/Account/ChangePassword'))
+const UpdateProfile = lazy(()=> import('../../components/Account/UpdateProfile'))
+const CameraSetting = lazy(()=> import('../../components/Account/CameraSetting'))
+const ChangePassword = lazy(()=> import('../../components/Account/ChangePassword'))
 
 
 const Profile = () => {

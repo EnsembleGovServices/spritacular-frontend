@@ -227,11 +227,11 @@ const ObservationDetails = (props) => {
                                     >
                                         {loaderLoading &&
                                             <div className="obv-user-cat-loader">
-                                                <Skeleton height={35}/>
+                                                <Skeleton height={32} width="80%"/>
                                             </div>
                                         }
                                         <div
-                                            className="d-flex card-user_details align-items-center overflow-hidden">
+                                            className="d-flex card-user_details align-items-center overflow-hidden mx-1">
                                             <i className="profile-icon rounded-circle">
                                                 <img
                                                     width="100%"
@@ -260,16 +260,16 @@ const ObservationDetails = (props) => {
                                             {data?.category_data?.length > 0 &&
                                                 data?.category_data?.map((item, index) => {
                                                     return (
-                                                        <div key={index} className="obv-cat">
+                                                        <div key={index} className="cat-loader m-0 gap">
                                                             {loaderLoading &&
-                                                                <div className="obv-cat-load">
-                                                                    <Skeleton circle height={35} width={35}/>
+                                                                <div className="skeleton">
+                                                                    <Skeleton circle height={28} width={28}/>
                                                                 </div>
                                                             }
-                                                            <div className="obv-cat-item">
+                                                            <div className="obv-cat-item mt-1">
                                                                 <span
                                                                     id={item?.name?.toLowerCase().replaceAll(" ", "")}
-                                                                    className="rounded-circle bg-white ms-2 cursor-pointer"
+                                                                    className="rounded-circle bg-white me-1 cursor-pointer"
                                                                 >
                                                                     <Tippy
                                                                         animation="perspective"
@@ -280,6 +280,7 @@ const ObservationDetails = (props) => {
                                                                                 ?.toLowerCase()
                                                                                 .replaceAll(" ", "")}.png`}
                                                                             alt={item?.name}
+                                                                            width={16} height={16}
                                                                         />
                                                                     </Tippy>
                                                                 </span>

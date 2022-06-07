@@ -18,11 +18,11 @@ import SystemOnline from "./components/Common/SystemOnline";
 import TutorialList from "./pages/BlogTutorial/TutorialList";
 
 
-const Home = lazy(() => import('./pages/Home'));
-const About = lazy(() => import('./pages/About'));
-const GetStarted = lazy(() => import('./pages/GetStarted'));
-const Gallery = lazy(() => import('./pages/Gallery'));
-const Policy = lazy(() => import('./pages/Policy'));
+const Home = lazy(() => import('./pages/Page/Home'));
+const About = lazy(() => import('./pages/Page/About'));
+const GetStarted = lazy(() => import('./pages/Page/GetStarted'));
+const Gallery = lazy(() => import('./pages/Page/Gallery'));
+const Policy = lazy(() => import('./pages/Page/Policy'));
 const LoginPage = lazy(() => import('./pages/Auth/LoginPage'));
 
 //Blog Pages
@@ -35,7 +35,7 @@ const QuizHome = lazy(() => import('./pages/Quiz/QuizHome'));
 
 
 //Protected Pages
-const Profile = lazy(() => import('./pages/Profile'));
+const Profile = lazy(() => import('./pages/Page/Profile'));
 const Dashboard = lazy(() => import('./pages/Dashboard/Dashboard'));
 const MyObservations = lazy(() => import('./pages/Observation/MyObservations'));
 const AddObservation = lazy(() => import('./pages/Observation/AddObservation'));

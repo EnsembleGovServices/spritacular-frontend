@@ -1,5 +1,5 @@
-import "../assets/scss/component/getstarted.scss";
-import HomeHowItWorks from "../components/Home/HomeHowItWorks";
+import "../../assets/scss/component/getstarted.scss";
+import HomeHowItWorks from "../../components/Home/HomeHowItWorks";
 
 const GetStarted = () => {
   return (

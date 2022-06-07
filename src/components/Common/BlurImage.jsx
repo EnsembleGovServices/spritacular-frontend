@@ -1,8 +1,8 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton'
 
 const BlurImage = (props) => {
-    const {preview, image, alt, bgColor = 'transparent', handleClick, homepage, loaderLoading} = props;
+    const { preview, image, alt, bgColor = 'transparent', handleClick, homepage, loaderLoading } = props;
     const [loading, setLoading] = useState(true);
     const loadingImageRef = useRef(null);
 
@@ -16,10 +16,12 @@ const BlurImage = (props) => {
         setLoading(true);
         if (image) {
             waitForImageToLoad(loadingImageRef.current).then(() => {
-                setLoading(false);
-                if (loaderLoading) {
-                    loaderLoading(false);
-                }
+                setTimeout(() => {
+                    setLoading(false);
+                    if (loaderLoading) {
+                        loaderLoading(false);
+                    }
+                }, 600)
             });
         }
     }, [image]);
@@ -31,10 +33,10 @@ const BlurImage = (props) => {
     }
     return (
         <>
-            <div className="shadow-sm drop-shadow-lg h-100 loader-wrap-img" style={style}>
+            <div className="w-100 shadow-sm drop-shadow-lg h-100 loader-wrap-img" style={style}>
                 {loading &&
                     <div className="loadingImage">
-                        <Skeleton count={1} height="100%"/>
+                        <Skeleton count={1} height="100%" />
                     </div>
                 }
                 <img

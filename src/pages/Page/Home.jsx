@@ -1,14 +1,14 @@
 import {Suspense, lazy, useEffect, useState} from 'react';
-import "../assets/scss/component/home.scss";
-import axios from "../api/axios";
-import {baseURL} from "../helpers/url";
+import "../../assets/scss/component/home.scss";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
 
-import useObservationsData from "../hooks/useObservationsData";
+import useObservationsData from "../../hooks/useObservationsData";
 
-const HomeBanner = lazy(() => import('../components/Home/HomeBanner'))
-const HomeCounter = lazy(() => import('../components/Home/HomeCounter'))
-const HomeMapSection = lazy(() => import('../components/Home/HomeMapSection'))
-const GetStarted = lazy(() => import('../components/Home/GetStarted'))
+const HomeBanner = lazy(() => import('../../components/Home/HomeBanner'))
+const HomeCounter = lazy(() => import('../../components/Home/HomeCounter'))
+const HomeMapSection = lazy(() => import('../../components/Home/HomeMapSection'))
+const GetStarted = lazy(() => import('../../components/Home/GetStarted'))
 
 const Home = () => {
     const [loading, setLoading] = useState(true);

@@ -1,5 +1,5 @@
 import {Button, Col, Container, Row} from "reactstrap";
-import "../assets/scss/component/about.scss";
+import "../../assets/scss/component/about.scss";
 
 const About = () => {
     return (

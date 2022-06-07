@@ -312,7 +312,7 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  inset: -5px 0 0 10px;
+  inset: -6px 0 0 12px;
   margin: 0 auto;
 }
 
@@ -341,4 +341,20 @@
       height: 35px;
     }
   }
+}
+
+div.gap{
+  margin: 0 1px !important;
+}
+
+.observation_type .obv-cat-item span{
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  width: 24px;
+  height: 24px;
+  padding: 0 2px 4px 4px;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  display: inline-block;
 }

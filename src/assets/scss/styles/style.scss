@@ -273,11 +273,11 @@ ul.list-numbered {
   @include vcenter;
 
   &:last-child {
-    margin-right: 0;
+    margin-right: 0 !important;
   }
 
   &:first-child {
-    margin-left: 0;
+    margin-left: 0 !important;
   }
 
   .skeleton {

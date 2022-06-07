@@ -1,24 +1,24 @@
-import "../assets/scss/component/myObservation.scss";
-import "../assets/scss/component/gallery.scss";
+import "../../assets/scss/component/myObservation.scss";
+import "../../assets/scss/component/gallery.scss";
 import {lazy, Suspense, useEffect, useState} from "react";
 import {Container, UncontrolledAlert} from "reactstrap";
 import {Link} from "react-router-dom";
 
-import useAuth from "../hooks/useAuth";
-import axios from "../api/axios";
-import {baseURL, routeUrls} from "../helpers/url";
-import {LoadMore} from "../components/Shared/LoadMore";
-import useObservationsData from "../hooks/useObservationsData";
-import NoDataFound from "../components/NoDataFound";
+import useAuth from "../../hooks/useAuth";
+import axios from "../../api/axios";
+import {baseURL, routeUrls} from "../../helpers/url";
+import {LoadMore} from "../../components/Shared/LoadMore";
+import useObservationsData from "../../hooks/useObservationsData";
+import NoDataFound from "../../components/NoDataFound";
 
 const ObservationDetails = lazy(() =>
-    import("./Observation/ObservationDetails")
+    import("../Observation/ObservationDetails")
 );
 const FilterSelectMenu = lazy(() =>
-    import("../components/Shared/FilterSelectMenu")
+    import("../../components/Shared/FilterSelectMenu")
 );
 const ObservationDetailPage = lazy(() =>
-    import("./Observation/ObservationListPage")
+    import("../Observation/ObservationListPage")
 );
 
 const Gallery = () => {

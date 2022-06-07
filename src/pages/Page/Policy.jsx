@@ -1,4 +1,4 @@
-import "../assets/scss/component/blog.scss";
+import "../../assets/scss/component/blog.scss";
 import {Card, CardBody, Col, Row} from "reactstrap";
 import {useEffect, useRef} from "react";
 import {useSearchParams} from "react-router-dom";
