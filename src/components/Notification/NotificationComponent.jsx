@@ -29,11 +29,11 @@ const NotificationComponent = (props) => {
     useEffect(() => {
         Notification.requestPermission().then(permission => {
             if (permission === "granted") {
-                console.log('granted')
+                // console.log('granted')
                 setTokenFound(true);
             } else {
                 setTokenFound(false);
-                console.log('rejected')
+                // console.log('rejected')
             }
         }).catch(e => {
             console.log(e)

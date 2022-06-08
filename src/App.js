@@ -129,7 +129,7 @@ const App = () => {
                         </Route>
 
 
-                        <Route exact path={routeUrls.policy} element={<Policy/>}/>
+                        <Route exact path={routeUrls.policy} element={<Suspense fallback=""><Policy/></Suspense>}/>
                         <Route exact path={routeUrls.login} element={
                             <Suspense fallback={<Loader/>}>
                                 <LoginPage/>

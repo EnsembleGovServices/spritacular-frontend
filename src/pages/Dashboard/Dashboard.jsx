@@ -11,7 +11,7 @@ import axios from "../../api/axios";
 import moment from "moment";
 import {dashboardHelper} from "../../helpers/dashboard";
 import {baseURL} from "../../helpers/url";
-import NoDataFound from "../../components/NoDataFound";
+// import NoDataFound from "../../components/NoDataFound";
 
 const FilterSelectMenu = lazy(() =>
     import("../../components/Shared/FilterSelectMenu")
@@ -243,12 +243,11 @@ const Dashboard = () => {
         setFilterReset(true);
         setSelectedFilterHorizontal(dashboardHelper.horizontal);
         setSelectedFilterVertical(dashboardHelper.vertical);
-        getObservationData(true, "", "", "");
     };
 
-    // useEffect(() => {
-    //     getObservationData(true);
-    // }, [filterReset]);
+    useEffect(() => {
+        getObservationData(true, "", "", "");
+    }, [filterReset]);
 
     useEffect(() => {
         setObservationListData((prev) => {

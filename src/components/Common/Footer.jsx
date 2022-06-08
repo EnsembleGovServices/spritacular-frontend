@@ -1,7 +1,6 @@
 import "../../assets/scss/component/footer.scss";
 import {Link} from "react-router-dom";
 import {Col, Container, Row, List} from "reactstrap";
-import Images from "../../static/images";
 import {cdn, routeUrls} from '../../helpers/url';
 import {Icon} from "@iconify/react";
 
@@ -72,7 +71,7 @@ const Footer = () => {
                                     <List type="unstyled" className="footer-links">
                                         <li>
                                             <Link
-                                                to={routeUrls.home}
+                                                to={routeUrls.getStarted}
                                                 className="d-inline-block mb-4"
                                                 title="Get Started"
                                             >
@@ -180,10 +179,11 @@ const Footer = () => {
                             </Row>
                         </Col>
                         <Col sm={12}>
-                            <Link to={''} className="d-inline-block w-100">
+                            <a href="https://www.ensembleconsultancy.com/" target="_blank" rel="noreferrer"
+                               className="d-inline-block w-100">
                                 Powered by <img alt="Ensemble" src={`${cdn.url}/ensemble.png`} width="120"
                                                 className="ms-2"/>
-                            </Link>
+                            </a>
                         </Col>
                     </Row>
                 </Container>

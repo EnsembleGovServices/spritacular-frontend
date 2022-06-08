@@ -1,14 +1,15 @@
-import { Button, Form, FormFeedback, FormGroup, Input, Label, UncontrolledAlert} from "reactstrap";
+import {Button, Form, FormFeedback, FormGroup, Input, Label, UncontrolledAlert} from "reactstrap";
 import axios from "../../api/axios";
 import {useEffect, useState} from "react";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import PlacesAutocomplete from "../LocationSearchInput";
+import {addScriptTagToHead} from "../../helpers/addScriptTagToHead";
 
 
 const UpdateProfile = (props) => {
     const {user} = props;
-    const { setAuth } = useAuth();
+    const {setAuth} = useAuth();
     const [updateUser, setUpdatedUser] = useState()
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
@@ -19,12 +20,9 @@ const UpdateProfile = (props) => {
             value = e.target.value;
         setUpdatedUser({
             ...updateUser,
-            [name]:value
+            [name]: value
         })
     }
-    useEffect(()=> {
-        setUpdatedUser(user?.user)
-    }, [user?.user])
 
     const handleLocations = (location) => {
         setUpdatedUser({
@@ -43,7 +41,7 @@ const UpdateProfile = (props) => {
         e.preventDefault();
         setSuccess('');
         setError('');
-        await axios.patch(baseURL.api+'/users/user_profile/'+user?.user?.id+'/', {
+        await axios.patch(baseURL.api + '/users/user_profile/' + user?.user?.id + '/', {
             first_name: updateUser?.first_name,
             last_name: updateUser?.last_name,
             email: updateUser?.email,
@@ -53,7 +51,7 @@ const UpdateProfile = (props) => {
             location_metadata: {
                 lat: updateUser?.location_metadata?.lat,
                 lng: updateUser?.location_metadata?.lng,
-                
+
             }
         }, {
             headers: {
@@ -75,7 +73,16 @@ const UpdateProfile = (props) => {
         })
     }
 
-    return(
+    useEffect(() => {
+        setUpdatedUser(user?.user)
+    }, [user?.user]);
+
+
+    // useEffect(() => {
+    //     addScriptTagToHead(true, 'https://maps.googleapis.com/maps/api/js?', 'key', `${baseURL.mapApiKey}&libraries=places`);
+    // }, [])
+
+    return (
         <>
             {success && success?.status === 200 &&
                 <UncontrolledAlert variant="success" data-dismiss="alert" dismissible="true">
@@ -89,7 +96,7 @@ const UpdateProfile = (props) => {
                         type="text"
                         name="first_name"
                         value={updateUser?.first_name ?? ""}
-                        onChange={(e)=>handleInput(e)}
+                        onChange={(e) => handleInput(e)}
                         invalid={!!error?.data?.first_name}
                         placeholder="First Name"
                     />
@@ -103,7 +110,7 @@ const UpdateProfile = (props) => {
                         placeholder="Last Name"
                         value={updateUser?.last_name ?? ""}
                         invalid={!!error?.data?.last_name}
-                        onChange={(e)=>handleInput(e)}
+                        onChange={(e) => handleInput(e)}
                     />
                     <FormFeedback>{error?.data?.last_name}</FormFeedback>
                 </FormGroup>
@@ -115,7 +122,7 @@ const UpdateProfile = (props) => {
                         placeholder="Enter Your Email"
                         value={updateUser?.email ?? ""}
                         invalid={!!error?.data?.email}
-                        onChange={(e)=>handleInput(e)}
+                        onChange={(e) => handleInput(e)}
                     />
                     <FormFeedback>{error?.data?.email}</FormFeedback>
                 </FormGroup>

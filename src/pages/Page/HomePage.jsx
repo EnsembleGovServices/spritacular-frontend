@@ -6,7 +6,7 @@ import {baseURL} from "../../helpers/url";
 import HomeBanner from "../../components/Home/HomeBanner";
 import HomeCounter from "../../components/Home/HomeCounter";
 import HomeMapSection from "../../components/Home/HomeMapSection";
-import GetStarted from "./GetStarted";
+import GetStarted from "../../components/Home/GetStarted";
 
 
 // const HomeBanner = lazy(() => import('../../components/Home/HomeBanner'))

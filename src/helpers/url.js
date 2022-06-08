@@ -4,6 +4,7 @@ export const baseURL = {
     api: process.env.REACT_APP_API_URL,
     token: process.env.REACT_APP_API_TOKEN_URL,
     refresh: process.env.REACT_APP_API_REFRESH_URL,
+    mapApiKey: process.env.REACT_APP_GOOGLE_MAP_KEY,
     user: process.env.REACT_APP_API_USER_URL,
     register: process.env.REACT_APP_API_REGISTER_URL,
     create_blog: process.env.REACT_APP_API_CREATE_BLOG_URL,
