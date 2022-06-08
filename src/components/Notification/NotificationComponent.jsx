@@ -26,22 +26,24 @@ const NotificationComponent = (props) => {
 
     const notificationDropDownRef = useRef(null);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         Notification.requestPermission().then(permission => {
             if (permission === "granted") {
-                // console.log('granted')
+                console.log('granted')
                 setTokenFound(true);
             } else {
                 setTokenFound(false);
-                // console.log('rejected')
+                console.log('rejected')
             }
         }).catch(e => {
             console.log(e)
         });
-        return () => {
-            if (isTokenFound) {
-                return getTokens(auth?.user?.id, auth?.token?.access, auth?.user).then(r => r);
-            }
+    }, []);
+
+
+    useEffect(() => {
+        if (isTokenFound && auth?.user?.id) {
+            getTokens(auth?.user?.id, auth?.token?.access, auth?.user).then(r => r);
         }
     }, [isTokenFound])
 

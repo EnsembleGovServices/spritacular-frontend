@@ -1,26 +1,22 @@
-import { Button, Form, FormGroup, FormText, Input } from "reactstrap";
+import {Button, Form, FormGroup, FormText, Input} from "reactstrap";
 import axios from "../../api/axios";
-import { baseURL } from "../../helpers/url";
-import { useEffect, useState } from "react";
+import {baseURL} from "../../helpers/url";
+import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth";
-import { useLocation, useNavigate } from "react-router-dom";
-import { routeUrls } from '../../helpers/url';
-import useObservationsData from "../../hooks/useObservationsData";
+import {useNavigate} from "react-router-dom";
+import {routeUrls} from '../../helpers/url';
 
 const Login = (props) => {
-    const { cp } = props;
-    const { setAuth, persist, setPersist } = useAuth();
+    const {cp} = props;
+    const {setAuth, auth, persist, setPersist} = useAuth();
     const navigate = useNavigate();
-    // const location = useLocation();
-    // const from = location.state?.from?.pathname || routeUrls.home;
-    // const {categoryList, setCategoryList} = useObservationsData();
-    const { setRecentObservation, recentObservation } = useObservationsData ();
 
     const [user, setUser] = useState({
         email: "",
         password: ""
     });
     const [error, setError] = useState('');
+    const [token, setToken] = useState();
 
     const handleInput = (e) => {
         e.preventDefault();
@@ -32,41 +28,36 @@ const Login = (props) => {
         })
     }
 
-    const getHomeData = async () => {
-        return axios.get(baseURL.api + '/observation/home/')
-            .then(response => {
-                setRecentObservation(response?.data?.data)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    };
-    
     const handleLogin = async (e) => {
         e.preventDefault();
         await axios.post(baseURL.token, user)
             .then((response) => {
-                let superuser = response?.data?.is_superuser,
-                    user = response?.data?.is_user;
-                setPersist(prev => !prev);
-                setError('');
-                setAuth({
-                    token: {
-                        access: response?.data?.access,
-                        refresh: response?.data?.refresh,
-                    },
-                    user: response?.data
-                })
-                fetchCategory(response?.data?.access).then(r => r);
-                if (superuser) {
-                    navigate(`/${routeUrls.dashboard}`, { replace: true });
-                } else if (user) {
-                    navigate(`/${routeUrls.home}`, { replace: true });
-                }
+                if (response.status === 200) {
+                    const superuser = response?.data?.is_superuser
+                    setPersist(prev => !prev);
 
-                // toast.success('Logged in successfully', toastConfig());
-                localStorage.setItem('refresh', response?.data?.refresh);
-                localStorage.removeItem('camera');
+                    setError('');
+                    setAuth({
+                        token: {
+                            access: response?.data?.access,
+                            refresh: response?.data?.refresh,
+                        },
+                        user: response?.data
+                    });
+
+                    setToken(response?.data)
+
+                    localStorage.setItem('refresh', response?.data?.refresh);
+                    localStorage.removeItem('camera');
+
+                    fetchCategory(response?.data?.access).then(r => r);
+
+                    if (superuser) {
+                        navigate(routeUrls.dashboard, {replace: true});
+                    } else {
+                        navigate(routeUrls.home, {replace: true});
+                    }
+                }
             })
             .catch((error) => {
                 if (!error?.response) {
@@ -89,8 +80,6 @@ const Login = (props) => {
                     console.log(error?.response?.statusText)
                 }
             });
-
-        getHomeData().then(r => r);
     }
 
     const fetchCategory = async (token) => {

@@ -25,13 +25,11 @@ export const getTokens = (userId, token, auth) => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
+            }).then((response) => {
+                // console.log('found response', response);
+            }).catch((error) => {
+                // console.log('NotificationComponent error, Request permission to generate one.');
             })
-                .then((response) => {
-                    // console.log('found response', response);
-                })
-                .catch((error) => {
-                    // console.log('NotificationComponent error, Request permission to generate one.');
-                })
 
         }
     }).catch((err) => {

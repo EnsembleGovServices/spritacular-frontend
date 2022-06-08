@@ -1,4 +1,4 @@
-import {Outlet} from "react-router-dom";
+import {Outlet, useLocation} from "react-router-dom";
 import {useState, useEffect, createContext, lazy, Suspense} from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
@@ -23,8 +23,8 @@ const PersistLogin = (props) => {
     });
     const [observationCSVId, setObservationCSVId] = useState({});
     const [recentObservation, setRecentObservation] = useState({});
-    const [blogTutorial, setBlogTutorial] = useState();
-
+    const location = useLocation();
+    
     useEffect(() => {
         let isMounted = true;
         const verifyRefreshToken = async () => {
@@ -41,7 +41,16 @@ const PersistLogin = (props) => {
         !auth?.token?.access ? verifyRefreshToken() : setIsLoading(false);
         return () => isMounted = false;
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth?.token?.access])
+    }, [auth?.token?.access]);
+
+    useEffect(() => {
+        setObservationListData((prev) => {
+            return {
+                ...prev,
+                list: [],
+            };
+        });
+    }, [location])
 
     return (
         <>
@@ -57,8 +66,6 @@ const PersistLogin = (props) => {
                     setCategoryList,
                     observationCSVId,
                     setObservationCSVId,
-                    blogTutorial,
-                    setBlogTutorial
                 }
             }>
                 {!persist ? (

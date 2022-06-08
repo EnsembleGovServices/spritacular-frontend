@@ -1,11 +1,11 @@
-import {lazy, Suspense} from "react";
 import {Container} from 'reactstrap';
 import {cdn} from "../../helpers/url";
+import HomeObservationCard from "./HomeObservationCard";
 
-const HomeObservationCard = lazy(() => import('./HomeObservationCard'))
+// const HomeObservationCard = lazy(() => import('./HomeObservationCard'))
 
 const HomeMapSection = (props) => {
-    const {loading} = props;
+    const {recent} = props;
     return (
         <section className="map_section bg-black">
             <div className="map_inner">
@@ -14,9 +14,7 @@ const HomeMapSection = (props) => {
             <Container>
                 <div className="position-relative">
                     <div className="obervation-card_wrapper">
-                        <Suspense fallback={<div></div>}>
-                            <HomeObservationCard loading={loading}/>
-                        </Suspense>
+                        <HomeObservationCard recent={recent}/>
                     </div>
                 </div>
             </Container>
