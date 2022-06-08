@@ -23,7 +23,7 @@ const RequireAuth = (props) => {
 
 
     return (
-        persist && auth?.user?.id ? <Outlet/> : <Navigate to={routeUrls.login} state={{from: location}} replace/>
+        persist && auth ? <Outlet/> : <Navigate to={routeUrls.login} state={{from: location}} replace/>
     );
 }
 

@@ -79,7 +79,7 @@ const Header = (props) => {
 
 
     useEffect(() => {
-        if (auth?.user) {
+        if (auth?.user && auth?.token?.access) {
             axios.get(baseURL.api + '/notification/user_notification/', {
                 headers: {
                     'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ const Header = (props) => {
                 })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth?.user?.id])
+    }, [auth])
 
 
     const handleLoginModal = () => {
