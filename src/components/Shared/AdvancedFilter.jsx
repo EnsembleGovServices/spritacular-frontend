@@ -263,7 +263,7 @@ const AdvancedFilter = (props) => {
                 </div>
             </Row>
             <Row className="mt-auto">
-                <Col>
+                <Col className="pt-3">
                     <div className="d-flex align-items-center justify-content-between">
                         <button onClick={() => handleFilterValue('filter', 'filter')}
                                 className="btn btn-primary w-100 me-1">Filter

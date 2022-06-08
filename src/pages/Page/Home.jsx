@@ -14,7 +14,7 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
     const {setRecentObservation, recentObservation} = useObservationsData();
 
-    const getHomeData = () => {
+    const getHomeData = async() => {
         return axios.get(baseURL.api + '/observation/home/')
             .then(response => {
                 setRecentObservation(response?.data?.data)

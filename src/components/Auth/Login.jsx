@@ -1,19 +1,20 @@
-import {Button, Form, FormGroup, FormText, Input} from "reactstrap";
+import { Button, Form, FormGroup, FormText, Input } from "reactstrap";
 import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
-import {useEffect, useState} from "react";
+import { baseURL } from "../../helpers/url";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import {useLocation, useNavigate} from "react-router-dom";
-import {routeUrls} from '../../helpers/url';
+import { useLocation, useNavigate } from "react-router-dom";
+import { routeUrls } from '../../helpers/url';
 import useObservationsData from "../../hooks/useObservationsData";
 
 const Login = (props) => {
-    const {cp} = props;
-    const {setAuth, persist, setPersist} = useAuth();
+    const { cp } = props;
+    const { setAuth, persist, setPersist } = useAuth();
     const navigate = useNavigate();
     // const location = useLocation();
     // const from = location.state?.from?.pathname || routeUrls.home;
     // const {categoryList, setCategoryList} = useObservationsData();
+    const { setRecentObservation, recentObservation } = useObservationsData ();
 
     const [user, setUser] = useState({
         email: "",
@@ -31,6 +32,16 @@ const Login = (props) => {
         })
     }
 
+    const getHomeData = async () => {
+        return axios.get(baseURL.api + '/observation/home/')
+            .then(response => {
+                setRecentObservation(response?.data?.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    };
+    
     const handleLogin = async (e) => {
         e.preventDefault();
         await axios.post(baseURL.token, user)
@@ -48,9 +59,9 @@ const Login = (props) => {
                 })
                 fetchCategory(response?.data?.access).then(r => r);
                 if (superuser) {
-                    navigate(`/${routeUrls.dashboard}`, {replace: true});
+                    navigate(`/${routeUrls.dashboard}`, { replace: true });
                 } else if (user) {
-                    navigate(`/${routeUrls.home}`, {replace: true});
+                    navigate(`/${routeUrls.home}`, { replace: true });
                 }
 
                 // toast.success('Logged in successfully', toastConfig());
@@ -77,7 +88,9 @@ const Login = (props) => {
                 } else {
                     console.log(error?.response?.statusText)
                 }
-            })
+            });
+
+        getHomeData().then(r => r);
     }
 
     const fetchCategory = async (token) => {
