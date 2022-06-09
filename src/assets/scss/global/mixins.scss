@@ -26,158 +26,170 @@
   justify-content: flex-end;
   align-items: center;
 }
-// Title Fonts 
+
+// Title Fonts
 @mixin xl-title {
   font-size: 48px;
   line-height: 56px;
-  @media (max-width: 1023px){
+  @media (max-width: 1023px) {
     font-size: 36px;
     line-height: 40px;
   }
-  @include media-breakpoint-down(md){
+  @include media-breakpoint-down(md) {
     font-size: 28px;
     line-height: 36px;
   }
 }
+
 @mixin lg-title {
   font-size: 42px;
   line-height: 49px;
-  @media (max-width: 1023px){
+  @media (max-width: 1023px) {
     font-size: 30px;
     line-height: 35px;
   }
-  @include media-breakpoint-down(md){
+  @include media-breakpoint-down(md) {
     font-size: 26px;
     line-height: 35px;
   }
 }
+
 @mixin slg-title {
-    font-size: 34px;
-    line-height: 40px;
-    @media (max-width: 1023px){
-      font-size: 26px;
-      line-height: 30px;
-    }
-    @include media-breakpoint-down(md){
-      font-size: 22px;
-      line-height: 26px;
-    }
-}
-@mixin md-title {
-  font-size: 30px;
-  line-height: 35px;
-  @media (max-width: 1023px){
-    font-size: 28px;
-    line-height: 32px;
-  }
-  @include media-breakpoint-down(md){
-    font-size: 25px;
+  font-size: 34px;
+  line-height: 40px;
+  @media (max-width: 1023px) {
+    font-size: 26px;
     line-height: 30px;
   }
-}
-@mixin mds-title {
-  font-size: 26px;
-  line-height: 30px;
-  @media (max-width: 1023px){
+  @include media-breakpoint-down(md) {
     font-size: 22px;
     line-height: 26px;
   }
 }
+
+@mixin md-title {
+  font-size: 30px;
+  line-height: 35px;
+  @media (max-width: 1023px) {
+    font-size: 28px;
+    line-height: 32px;
+  }
+  @include media-breakpoint-down(md) {
+    font-size: 25px;
+    line-height: 30px;
+  }
+}
+
+@mixin mds-title {
+  font-size: 22px;
+  line-height: 1.4;
+  @media (max-width: 1023px) {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+}
+
 @mixin sm-title {
   font-size: 24px;
   line-height: 26px;
-  @media (max-width: 1023px){
+  @media (max-width: 1023px) {
     font-size: 21px;
     line-height: 25px;
   }
-  @include media-breakpoint-down(md){
+  @include media-breakpoint-down(md) {
     font-size: 18px;
     line-height: 22px;
   }
 }
+
 @mixin xsm-title {
   font-size: 20px;
   line-height: 23px;
-  @media (max-width: 1023px){
+  @media (max-width: 1023px) {
     font-size: 18px;
     line-height: 24px;
   }
-  @include media-breakpoint-down(md){
+  @include media-breakpoint-down(md) {
     font-size: 15px;
     line-height: 20px;
   }
 }
-// Description fonts 
+
+// Description fonts
 @mixin xl-text {
   font-size: 18px;
   line-height: 24px;
-  @media (max-width: 1023px){
+  @media (max-width: 1023px) {
     font-size: 16px;
     line-height: 26px;
   }
-  @include media-breakpoint-down(md){
+  @include media-breakpoint-down(md) {
     font-size: 14px;
     line-height: 18px;
   }
 }
+
 @mixin lg-text {
   font-size: 16px;
   line-height: 26px;
-  @media (max-width: 1023px){
+  @media (max-width: 1023px) {
     font-size: 14px;
     line-height: 18px;
   }
-  @include media-breakpoint-down(md){
+  @include media-breakpoint-down(md) {
     font-size: 15px;
     line-height: 20px;
   }
 }
+
 @mixin md-text {
   font-size: 14px;
   line-height: 18px;
-  @media (max-width: 1023px){
+  @media (max-width: 1023px) {
     font-size: 13px;
     line-height: 17px;
   }
 }
+
 @mixin sm-text {
   font-size: 12px;
   line-height: 16px;
 }
+
 @mixin xs-text {
   font-size: 10px;
   line-height: 14px;
 }
 
-@mixin btn-bg{
+@mixin btn-bg {
   background-color: $white;
   padding: 10px 35px;
   border-radius: 30px;
   font-size: 14px;
   line-height: 18px;
   color: $black;
-  border:1px solid $admin-btn-bg;
+  border: 1px solid $admin-btn-bg;
 }
 
 // Common ScrollBar 
-@mixin customScrollBar{
-  &::-webkit-scrollbar-thumb{
-    background: rgba(163,160,160,.75);
+@mixin customScrollBar {
+  &::-webkit-scrollbar-thumb {
+    background: rgba(163, 160, 160, .75);
     border-radius: 50px;
     height: 20px;
     width: 20px;
   }
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     width: 5px;
     height: 5px;
   }
-  &::-webkit-scrollbar-track{
+  &::-webkit-scrollbar-track {
     background: #e4e5e6;
   }
 }
 
 // Common form field 
-@mixin formField{
+@mixin formField {
   background-color: $input-bg;
   border: 1px solid $input-bg;
   box-shadow: none;
@@ -186,40 +198,41 @@
   border-radius: $border-radius;
 }
 
-@mixin disabled{
+@mixin disabled {
   background-color: $modal-btn;
   border: 1px solid $modal-btn;
   color: $white;
   opacity: 1;
 }
 
-@mixin buttonOutlinePrimary{
+@mixin buttonOutlinePrimary {
   background: $secondary;
   border: 1px solid $white;
   color: $white;
-  &:hover{
+  &:hover {
     color: $white;
     background: $secondary;
     border-color: $secondary;
   }
 }
 
-@mixin buttonSecodary{
+@mixin buttonSecodary {
   background: $secondary;
   border: 1px solid $secondary;
   color: $white;
   box-shadow: $box-shadow-button;
-  &:hover{
+  &:hover {
     color: $secondary;
     background: $white;
     border-color: $secondary;
   }
 }
-@mixin buttonOutlineSecodary{
+
+@mixin buttonOutlineSecodary {
   color: $secondary;
   background: $white;
   border: 1px solid $secondary;
-  &:hover{
+  &:hover {
     background: $secondary;
     border-color: $secondary;
     color: $white;
@@ -227,12 +240,12 @@
   }
 }
 
-@mixin grayButton{
+@mixin grayButton {
   color: $gray1;
   background: $white;
   border: 1px solid $gray2;
   box-shadow: none;
-  &:hover{
+  &:hover {
     background: $gray1;
     border-color: $gray1;
     color: $white;

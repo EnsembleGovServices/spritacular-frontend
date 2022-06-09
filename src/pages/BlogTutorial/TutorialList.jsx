@@ -1,6 +1,5 @@
-// import "../../assets/scss/component/blog.scss";
 import "../../assets/scss/component/tutorials.scss";
-import {Container, Row} from "reactstrap"
+import {Container} from "reactstrap"
 import {useEffect, useState, lazy, Suspense} from "react";
 import {baseURL, routeUrls} from "../../helpers/url";
 import axios from "../../api/axios";
