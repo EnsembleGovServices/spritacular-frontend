@@ -59,6 +59,9 @@ export const routeUrls = {
         create: 'create',
         view: ':slug',
         edit: ':slug/edit'
+    },
+    pages: {
+        meetTheTeam: 'meet-the-team'
     }
 }
 

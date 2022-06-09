@@ -282,15 +282,10 @@ const Header = (props) => {
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem className={active === 'community-1' ? 'active p-0' : 'p-0'}>
-                                        <Link className="px-3 py-1" to={routeUrls.home} title="Meet the Team"
+                                        <Link className="px-3 py-1" to={routeUrls.pages.meetTheTeam}
+                                              title="Meet the Team"
                                               onClick={() => setActive('community-1')}>
                                             Meet the Team
-                                        </Link>
-                                    </DropdownItem>
-                                    <DropdownItem className={active === 'community-2' ? 'active p-0' : 'p-0'}>
-                                        <Link className="px-3 py-1" to={routeUrls.home} title="Volunteer Profile"
-                                              onClick={() => setActive('community-2')}>
-                                            Volunteer Profile
                                         </Link>
                                     </DropdownItem>
                                     <DropdownItem className={active === 'community-3' ? 'active p-0' : 'p-0'}>

@@ -25,6 +25,9 @@ const Gallery = lazy(() => import('./pages/Page/Gallery'));
 const Policy = lazy(() => import('./pages/Page/Policy'));
 const LoginPage = lazy(() => import('./pages/Auth/LoginPage'));
 
+const MeetTheTeam = lazy(() => import('./pages/Page/MeetTheTeam'));
+
+
 //Blog Pages
 const BlogList = lazy(() => import('./pages/BlogTutorial/BlogList'));
 const BlogArticleDetails = lazy(() => import('./pages/BlogTutorial/Details/BlogArticleDetails'));
@@ -135,6 +138,15 @@ const App = () => {
                                 <LoginPage/>
                             </Suspense>
                         }/>
+
+
+                        <Route exact path={routeUrls.pages.meetTheTeam} element={
+                            <Suspense fallback={<Loader/>}>
+                                <MeetTheTeam/>
+                            </Suspense>
+                        }/>
+
+
                     </Route>
                     <Route exact path={"/password_reset"} element={
                         <Suspense fallback={<Loader/>}>

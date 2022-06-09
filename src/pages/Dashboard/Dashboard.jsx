@@ -11,7 +11,6 @@ import axios from "../../api/axios";
 import moment from "moment";
 import {dashboardHelper} from "../../helpers/dashboard";
 import {baseURL} from "../../helpers/url";
-// import NoDataFound from "../../components/NoDataFound";
 
 const FilterSelectMenu = lazy(() =>
     import("../../components/Shared/FilterSelectMenu")
@@ -47,12 +46,11 @@ const Dashboard = () => {
     const [selectedFilterVertical, setSelectedFilterVertical] = useState(
         dashboardHelper.vertical
     );
-    const [isLoaded, setIsLoaded] = useState(false);
     const {observationListData, setObservationListData} = useObservationsData();
     const [nextPageUrl, setNextPageUrl] = useState(dashboardHelper.nextPageUrl);
     const [filterReset, setFilterReset] = useState(false);
 
-    const getObservationData = (
+    const getObservationData = async (
         reset = false,
         country = `${selectedFilterHorizontal?.country?.code}`,
         category = `${selectedFilterHorizontal?.type}`,
@@ -94,51 +92,48 @@ const Dashboard = () => {
                 }
             }
 
-            axios
-                .post(url, selectedFilterVertical, {
-                    headers: {
-                        "Content-type": "application/json",
-                        Authorization: `Bearer ${auth?.token?.access}`,
-                    },
-                })
-                .then((success) => {
-                    setFilterReset(false);
-                    if (success?.data?.results?.data !== undefined) {
-                        if (success?.data?.next) {
-                            setNextPageUrl(success?.data?.next);
-                        } else {
-                            setNextPageUrl(null);
-                        }
-                        let records = success?.data?.results?.data;
-                        let prevData;
-
-                        if (observationListData?.list?.length > 0 && reset === false) {
-                            prevData = [...observationListData?.list];
-                            prevData = [...prevData, ...records];
-                        } else {
-                            prevData = success?.data?.results?.data;
-                        }
-                        setObservationListData((prev) => {
-                            return {
-                                ...prev,
-                                list: prevData,
-                            };
-                        });
-                        setIsLoaded(true);
+            await axios.post(url, selectedFilterVertical, {
+                headers: {
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${auth?.token?.access}`,
+                },
+            }).then((success) => {
+                setFilterReset(false);
+                if (success?.data?.results?.data !== undefined) {
+                    if (success?.data?.next) {
+                        setNextPageUrl(success?.data?.next);
                     } else {
                         setNextPageUrl(null);
-                        setObservationListData({list: [], active: {}});
                     }
-                    // setObservationList(success?.data?.results?.data)
-                })
-                .catch((error) => {
-                    console.log(error.response);
-                });
+                    let records = success?.data?.results?.data;
+                    let prevData;
+
+                    if (observationListData?.list?.length > 0 && reset === false) {
+                        prevData = [...observationListData?.list];
+                        prevData = [...prevData, ...records];
+                    } else {
+                        prevData = success?.data?.results?.data;
+                    }
+                    setObservationListData((prev) => {
+                        return {
+                            ...prev,
+                            list: prevData,
+                        };
+                    });
+                    // Assign loading
+                } else {
+                    setNextPageUrl(null);
+                    setObservationListData({list: [], active: {}});
+                }
+                // setObservationList(success?.data?.results?.data)
+            }).catch((error) => {
+                console.log(error.response);
+            });
         }
     };
 
     const handleLoadMoreData = () => {
-        getObservationData(false);
+        getObservationData(false).then(r => r);
     };
 
     const handleObservationDetailModal = (id) => {
@@ -321,63 +316,61 @@ const Dashboard = () => {
                                         filterShow ? "sm-card" : "maximize-dash-content"
                                     }`}
                                 >
-                                    {observationListData?.list?.length > 0 ? (
-                                        listView ? (
-                                            <Suspense fallback={<div></div>}>
-                                                <ObservationListView
-                                                    observationList={observationListData?.list}
-                                                    isObservationDetailModal={isObservationDetailModal}
-                                                    setObservationDetailModal={setObservationDetailModal}
-                                                    setSelectedObservationId={setSelectedObservationId}
-                                                />
-                                            </Suspense>
-                                        ) : (
-                                            <Suspense fallback={<div></div>}>
-                                                <ObservationDetailPage
-                                                    observationList={observationListData?.list}
-                                                    isObservationDetailModal={isObservationDetailModal}
-                                                    setObservationDetailModal={setObservationDetailModal}
-                                                    setSelectedObservationId={setSelectedObservationId}
-                                                />
-                                                {nextPageUrl && (
-                                                    <LoadMore handleLoadMore={handleLoadMoreData}/>
-                                                )}
-                                            </Suspense>
-                                        )
+                                    {listView ? (
+                                        <Suspense fallback={<div></div>}>
+                                            <ObservationListView
+                                                observationList={observationListData?.list}
+                                                isObservationDetailModal={isObservationDetailModal}
+                                                setObservationDetailModal={setObservationDetailModal}
+                                                setSelectedObservationId={setSelectedObservationId}
+                                            />
+                                            {nextPageUrl && observationListData?.list > 0 && (
+                                                <LoadMore handleLoadMore={handleLoadMoreData}/>
+                                            )}
+                                        </Suspense>
                                     ) : (
-                                        <>
-                                            {/*<NoDataFound/>*/}
-                                        </>
+                                        <Suspense fallback={<div></div>}>
+                                            <ObservationDetailPage
+                                                observationList={observationListData?.list}
+                                                isObservationDetailModal={isObservationDetailModal}
+                                                setObservationDetailModal={setObservationDetailModal}
+                                                setSelectedObservationId={setSelectedObservationId}
+                                            />
+                                            {nextPageUrl && observationListData?.list > 0 && (
+                                                <LoadMore handleLoadMore={handleLoadMoreData}/>
+                                            )}
+                                        </Suspense>
                                     )}
 
 
                                 </div>
-
-                                <Suspense fallback={<div></div>}>
-                                    <ObservationDetails
-                                        data={observationListData?.active}
-                                        modalClass="observation-details_modal"
-                                        open={isObservationDetailModal}
-                                        handleClose={handleObservationDetailModal}
-                                        handleContinueEdit={handleObservationEdit}
-                                        activeType={
-                                            observationListData?.active?.is_verified
-                                                ? "verified"
-                                                : observationListData?.active?.is_reject
-                                                    ? "denied"
-                                                    : observationListData?.active?.is_submit
-                                                        ? "unverified"
-                                                        : "draft"
-                                        }
-                                        handleApproveRejectEvent={getObservationData}
-                                        refreshData={getObservationData}
-                                    />
-                                </Suspense>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+            <Suspense fallback={<div></div>}>
+                <ObservationDetails
+                    data={observationListData?.active}
+                    modalClass="observation-details_modal"
+                    open={isObservationDetailModal}
+                    handleClose={handleObservationDetailModal}
+                    handleContinueEdit={handleObservationEdit}
+                    activeType={
+                        observationListData?.active?.is_verified
+                            ? "verified"
+                            : observationListData?.active?.is_reject
+                                ? "denied"
+                                : observationListData?.active?.is_submit
+                                    ? "unverified"
+                                    : "draft"
+                    }
+                    handleApproveRejectEvent={getObservationData}
+                    refreshData={getObservationData}
+                />
+            </Suspense>
         </>
     );
 };
