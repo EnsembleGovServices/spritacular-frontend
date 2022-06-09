@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {cdn} from "../../helpers/url";
 
 const DeleteItemConfirmationPopup = (props) => {
-    const {open, handleClose} = props;
+    const {open, handleClose, handleConfirmation} = props;
     return (
         <>
             <Modal
@@ -23,7 +23,9 @@ const DeleteItemConfirmationPopup = (props) => {
                         <p className="mb-5 opacity-75">If you perform this action, we will only keep your first
                             observation. If you wish to add more observation, you will need to enable this again & then
                             you can add more.</p>
-                        <button type="button" className="me-2 btn btn-dark px-5">Yes</button>
+                        <button type="button" className="me-2 btn btn-dark px-5"
+                                onClick={() => handleConfirmation()}>Yes
+                        </button>
                         <button type="button" className="px-5 btn btn-primary"
                                 onClick={() => handleClose()}>No
                         </button>
