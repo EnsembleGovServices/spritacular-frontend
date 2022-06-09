@@ -52,7 +52,7 @@ const ObservationAfterImageUpload = (props) => {
     };
 
     const handleMultipleCheck = (e) => {
-        console.log(isMultiple)
+        // console.log(isMultiple)
         if (isMultiple) {
             handleConfirmationPopUp();
         }

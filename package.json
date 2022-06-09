@@ -1,6 +1,6 @@
 {
   "name": "spritacular-frontend",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "start": "react-scripts --max_old_space_size=4096 start",
