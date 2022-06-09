@@ -1,23 +1,32 @@
+import LazyLoad from 'react-lazy-load';
 import {Col, Row} from "reactstrap";
-import {lazy, Suspense} from "react";
-import Loader from "../../../components/Shared/Loader";
+import BlogListCardContent from "../BlogListCardContent";
 
-const BlogListCardContent = lazy(() => import('../BlogListCardContent'))
 
 const BlogRestLists = (props) => {
     const {articleItems} = props;
+
     return (
-        <Row className="g-4">
-            {articleItems?.map((item, index) => {
-                return (
-                    <Col key={index} sm={6} md={4} xl={4}>
-                        <Suspense fallback={<Loader fixContent={true}/>}>
-                            <BlogListCardContent item={item}/>
-                        </Suspense>
-                    </Col>
-                )
-            })}
-        </Row>
+        <>
+            <Row className="g-4">
+                {articleItems?.map((item, index) => {
+                    return (
+                        <Col key={index} sm={6} md={4} xl={4}>
+                            <div className="position-relative">
+                                <LazyLoad
+                                    height={263}
+                                    offsetTop={100}
+                                    debounce={true}
+                                    onContentVisible={() => console.log('look ma I have been lazy!')}>
+                                    <BlogListCardContent item={item}/>
+                                </LazyLoad>
+                            </div>
+                        </Col>
+                    )
+                })}
+            </Row>
+
+        </>
     )
 }
 export default BlogRestLists;

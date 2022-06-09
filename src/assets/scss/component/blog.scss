@@ -69,9 +69,6 @@
   .blog-small {
     position: relative;
     height: 263px;
-    @include media-breakpoint-down(lg) {
-      height: 188px;
-    }
 
     img {
       object-fit: cover;
