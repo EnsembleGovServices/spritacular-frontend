@@ -126,7 +126,6 @@ const MyObservations = () => {
     };
 
     const handleTypeOfObservation = (type) => {
-        // setActiveTypeChangeFinished(true);
         setActiveType(type);
 
         setObservationListData((prev) => {
@@ -137,10 +136,6 @@ const MyObservations = () => {
         });
 
         getObservationData(true, type);
-
-        // setTimeout(function () {
-        //     setActiveTypeChangeFinished(false);
-        // }, 300);
     };
 
     const handleLoadMore = () => {
@@ -155,6 +150,7 @@ const MyObservations = () => {
                 activeType: activeType
             };
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal, activeType]);
     useEffect(() => {
         getObservationData(true, "verified");
@@ -166,6 +162,7 @@ const MyObservations = () => {
                 }
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     useEffect(() => {
         setLoading((prev) => {
@@ -190,10 +187,10 @@ const MyObservations = () => {
 
 
     const showNotFound = activeType &&
-        (activeType === obvType.verified && !loadedState?.hasVerifiedData) ||
-        (activeType === obvType.unverified && !loadedState?.hasUnverifiedData) ||
-        (activeType === obvType.denied && !loadedState?.hasDeniedData) ||
-        (activeType === obvType.draft && !loadedState?.hasDraftData)
+        ((activeType === obvType.verified && !loadedState?.hasVerifiedData) ||
+            (activeType === obvType.unverified && !loadedState?.hasUnverifiedData) ||
+            (activeType === obvType.denied && !loadedState?.hasDeniedData) ||
+            (activeType === obvType.draft && !loadedState?.hasDraftData))
 
 
     return (

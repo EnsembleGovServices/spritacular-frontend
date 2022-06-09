@@ -1,4 +1,3 @@
-import {lazy, Suspense} from "react";
 import Masonry from 'react-masonry-component';
 import ObservationCard from "../../components/Shared/ObservationCard";
 

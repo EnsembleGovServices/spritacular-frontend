@@ -255,6 +255,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         getObservationData(true, "", "", "").then(r => r);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterReset]);
 
     useEffect(() => {
@@ -271,6 +272,7 @@ const Dashboard = () => {
             setFilterShow(false);
         }
         console.clear();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -280,6 +282,7 @@ const Dashboard = () => {
                 active: observationListData?.list?.[selectedObservationId],
             };
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal]);
 
     return (

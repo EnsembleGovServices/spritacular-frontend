@@ -26,7 +26,9 @@ const BlurImage = (props) => {
         }
         return () => {
             setLoading(false);
+            loaderLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [image]);
 
 

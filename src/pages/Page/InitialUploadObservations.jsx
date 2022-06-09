@@ -1,6 +1,5 @@
 import "../../assets/scss/component/initialUploadobservations.scss";
-import {Container, Form, FormGroup, Label} from "reactstrap";
-import {Icon} from "@iconify/react";
+import {Container} from "reactstrap";
 import {useNavigate} from "react-router-dom";
 import {routeUrls} from '../../helpers/url';
 import useObservations from "../../hooks/useObservations";
