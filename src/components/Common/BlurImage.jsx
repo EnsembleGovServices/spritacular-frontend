@@ -24,6 +24,9 @@ const BlurImage = (props) => {
                 }, 600)
             });
         }
+        return () => {
+            setLoading(false);
+        }
     }, [image]);
 
 

@@ -9,7 +9,6 @@ import axios from "../../api/axios";
 import {baseURL, routeUrls} from "../../helpers/url";
 import {LoadMore} from "../../components/Shared/LoadMore";
 import useObservationsData from "../../hooks/useObservationsData";
-import NoDataFound from "../../components/NoDataFound";
 
 const ObservationDetails = lazy(() =>
     import("../Observation/ObservationDetails")

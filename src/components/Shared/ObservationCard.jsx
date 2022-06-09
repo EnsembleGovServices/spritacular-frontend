@@ -1,5 +1,4 @@
 import "../../assets/scss/component/observationCard.scss";
-import Images from "../../static/images";
 import {Card, CardBody, CardTitle, CardSubtitle, Row, Col, Badge, CardFooter, Button} from "reactstrap";
 import moment from "moment";
 import {Icon} from "@iconify/react";
@@ -121,7 +120,7 @@ const ObservationCard = (props) => {
                                 </Tippy>
                                 <i className="profile-icon rounded-circle">
                                     <img
-                                        src={userProfile?.profile_image ? userProfile?.profile_image : Images.DefaultProfile}
+                                        src={userProfile?.profile_image ? userProfile?.profile_image : `${cdn.url}/profile.svg`}
                                         width="100%" height="100%" alt="Profile" className="rounded-circle"/>
                                 </i>
                             </div>

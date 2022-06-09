@@ -1,5 +1,6 @@
-import ObservationCard from "../../components/Shared/ObservationCard";
+import {lazy, Suspense} from "react";
 import Masonry from 'react-masonry-component';
+import ObservationCard from "../../components/Shared/ObservationCard";
 
 const ObservationListPage = (props) => {
     const {
@@ -7,8 +8,9 @@ const ObservationListPage = (props) => {
         isObservationDetailModal,
         setSelectedObservationId,
         setObservationDetailModal,
-        activeType
+        activeType,
     } = props;
+
 
     // Masonry Options
     // const masonryOptions = masonryConfig('.photo-list', 1, 0, false, 10);
@@ -27,22 +29,25 @@ const ObservationListPage = (props) => {
         setSelectedObservationId(id);
     };
     return (
-        <Masonry
-            className={"photo-list p-0"}
-            options={masonryOptions}
-            enableResizableChildren={true}
-        >
-            {observationList && observationList?.map((cardItems, index) => {
-                return (
-                    <div key={index} className="photo-item mb-4">
-                        <ObservationCard cardItems={cardItems} cardData={cardItems?.images?.[0]} index={index}
-                                         userProfile={cardItems.user_data} handleClick={handleObservationDetailModal}
-                                         activeType={activeType}/>
-                    </div>
-                )
-            })
-            }
-        </Masonry>
+        <>
+            <Masonry
+                className={"photo-list p-0"}
+                options={masonryOptions}
+                enableResizableChildren={true}
+            >
+                {observationList && observationList?.map((cardItems, index) => {
+                    return (
+                        <div key={index} className="photo-item mb-4">
+                            <ObservationCard cardItems={cardItems} cardData={cardItems?.images?.[0]} index={index}
+                                             userProfile={cardItems.user_data}
+                                             handleClick={handleObservationDetailModal}
+                                             activeType={activeType}/>
+                        </div>
+                    )
+                })
+                }
+            </Masonry>
+        </>
     )
 }
 export default ObservationListPage;
