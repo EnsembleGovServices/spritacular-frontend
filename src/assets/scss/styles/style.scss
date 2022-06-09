@@ -3,13 +3,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 // Importing variables & Bootstrap functions & utilities
-@import "../global/config";
+@import "../global/config.scss";
 
 // Tooltip
 @import 'tippy.js/dist/tippy';
 @import 'tippy.js/animations/perspective';
 @import "tippy.js/themes/light-border";
-@import "../component/swiper";
+@import "../component/swiper.scss";
 
 body {
   margin: 0;
@@ -20,19 +20,25 @@ body {
   background-color: $white;
 }
 
-input.form-control::-webkit-input-placeholder, input::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeholder {
+input.form-control::-webkit-input-placeholder,
+input::-webkit-input-placeholder,
+textarea.form-control::-webkit-input-placeholder {
   color: #000;
   opacity: 0.32;
 }
 
 // input.form-control:-ms-input-placeholder { 
-input.form-control:-ms-input-placeholder, input:-ms-input-placeholder, textarea.form-control:-ms-input-placeholder {
+input.form-control:-ms-input-placeholder,
+input:-ms-input-placeholder,
+textarea.form-control:-ms-input-placeholder {
   color: #000;
   opacity: 0.32;
 }
 
 // input.form-control::placeholder {
-input.form-control::placeholder, input::placeholder, textarea.form-control::placeholder {
+input.form-control::placeholder,
+input::placeholder,
+textarea.form-control::placeholder {
   color: #000;
   opacity: 0.32;
 }
@@ -77,7 +83,8 @@ body.modal-open {
   }
 }
 
-.form-control, .form-select {
+.form-control,
+.form-select {
   @include formField;
   @include lg-text;
 
@@ -110,6 +117,7 @@ body.modal-open {
 .main-content {
   margin-top: 70px;
   min-height: calc(100vh - 70px);
+
   @include media-breakpoint-down(md) {
     margin-top: 64px;
   }
@@ -119,14 +127,20 @@ body.modal-open {
   @include media-breakpoint-up(xxl) {
     max-width: 90%;
   }
+
   @media screen and (min-width: 2000px) {
     max-width: 1800px;
   }
+
   @include media-breakpoint-down(lg) {
     max-width: 100%;
   }
 }
 
+
+.btn-violet {
+  @include buttonViolet;
+}
 
 .btn-secondary {
   @include buttonSecodary;
@@ -167,6 +181,7 @@ body.modal-open {
   bottom: 0;
   font-size: 12px;
   font-weight: bolder;
+
   @include media-breakpoint-down(sm) {
     bottom: -8px;
   }
@@ -233,7 +248,7 @@ ul.list-numbered {
   overflow: hidden;
   border-radius: 5px;
 
-  > div {
+  >div {
     min-height: 170px;
     max-height: 170px;
   }
@@ -292,7 +307,8 @@ ul.list-numbered {
   }
 }
 
-.body-loader, .footer-loader {
+.body-loader,
+.footer-loader {
   position: absolute;
   inset: 0;
   width: 100%;

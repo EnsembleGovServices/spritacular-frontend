@@ -61,7 +61,9 @@ export const routeUrls = {
         edit: ':slug/edit'
     },
     pages: {
-        meetTheTeam: 'meet-the-team'
+        meetTheTeam: 'meet-the-team',
+        becomeAnAmbasador: 'become-an-ambassador',
+        spritacularGoogleGroup: 'spritacular-google-group'
     }
 }
 

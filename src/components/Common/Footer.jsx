@@ -115,7 +115,7 @@ const Footer = () => {
                                         <h6>Community</h6>
                                         <li>
                                             <Link
-                                                to={routeUrls.home}
+                                                to={routeUrls.pages.meetTheTeam}
                                                 className="d-inline-block mb-4"
                                                 title="Meet the Team"
                                             >
@@ -124,16 +124,7 @@ const Footer = () => {
                                         </li>
                                         <li>
                                             <Link
-                                                to={routeUrls.home}
-                                                className="d-inline-block mb-4"
-                                                title="Volunteer Profiles"
-                                            >
-                                                Volunteer Profiles
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                to={routeUrls.home}
+                                                to={routeUrls.pages.becomeAnAmbasador}
                                                 className="d-inline-block mb-4"
                                                 title="Become an Ambassador"
                                             >
@@ -142,11 +133,11 @@ const Footer = () => {
                                         </li>
                                         <li>
                                             <Link
-                                                to={routeUrls.home}
+                                                to={routeUrls.pages.spritacularGoogleGroup}
                                                 className="d-inline-block mb-4"
-                                                title="Join Spritacular Google Group"
+                                                title="Spritacular Google Group"
                                             >
-                                                Join Spritacular Google Group
+                                                Spritacular Google Group
                                             </Link>
                                         </li>
                                     </List>

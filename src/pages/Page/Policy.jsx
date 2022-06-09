@@ -27,7 +27,7 @@ const Policy = () => {
             <Row  className="g-4">
               <Col md={12}>
                 <Card className="border-0 shadow-sm">
-                  <CardBody className="p-5">
+                  <CardBody className="p-md-5 p-4">
                     <h4>User Agreement</h4>
                     <p>
                       This document describes in detail how the project will use and protect your contributions.
@@ -144,7 +144,7 @@ const Policy = () => {
                           We believe that together, we can better understand these magnificent atmospheric phenomena and in turn the world around us. We thank you for your participation!
                         </p>
                         <p>
-                          Please feel free to contact us with any questions/comments
+                          Please feel free to contact us with any questions/comments at <a href="mailto:info.spritacular@gmail.com" rel="noreferrer" target="_blank" referrerPolicy="no-referrer"> info.spritacular@gmail.com</a>
                         </p>
                       </li>
                     </ul>
