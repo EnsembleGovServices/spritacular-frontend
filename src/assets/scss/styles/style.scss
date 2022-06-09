@@ -138,10 +138,6 @@ body.modal-open {
 }
 
 
-.btn-violet {
-  @include buttonViolet;
-}
-
 .btn-secondary {
   @include buttonSecodary;
 }
@@ -248,7 +244,7 @@ ul.list-numbered {
   overflow: hidden;
   border-radius: 5px;
 
-  >div {
+  > div {
     min-height: 170px;
     max-height: 170px;
   }
