@@ -80,6 +80,13 @@ const ObservationAfterImageUpload = (props) => {
                     selected_image_index: 0
                 }
             });
+            setObservationType((prev) => {
+                return {
+                    ...prev,
+                    image_type: 1
+                }
+            })
+            setActiveImageTab(MultiImageTabs.MultipleImages)
             setIsConfirmPopUp(true);
             setIsMultiple(false);
             setShouldShowConfirmation(false);
