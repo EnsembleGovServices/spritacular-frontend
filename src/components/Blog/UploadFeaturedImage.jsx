@@ -11,7 +11,12 @@ const UploadFeaturedImage = (props) => {
     const [file, setFile] = useState();
     const [preview, setPreview] = useState();
     const [reset, setReset] = useState(false);
+    const [loaderLoading, setLoaderLoading] = useState(true);
+
     // const progressBar = useRef(null);
+    const handleLoaderLoading = (state) => {
+        setLoaderLoading(state);
+    };
 
     const handleFileInput = (e) => {
         setReset(false);
@@ -41,6 +46,7 @@ const UploadFeaturedImage = (props) => {
         })
     }
 
+
     useLayoutEffect(() => {
         if (file && !reset) {
             previewImage();
@@ -57,6 +63,7 @@ const UploadFeaturedImage = (props) => {
             })
         }
     }, [file])
+
 
     // useEffect(() => {
     //     if (uploadProgress === "100%") {
@@ -127,7 +134,7 @@ const UploadFeaturedImage = (props) => {
                             <Icon icon="clarity:window-close-line" width={20} height={20}/>
                         </button>
                         <div className={'img-preview_wrapper'}>
-                            <BlurImage image={preview} preview={preview}/>
+                            <BlurImage loaderLoading={handleLoaderLoading} image={preview} preview={preview}/>
                         </div>
                     </div>
                 }

@@ -12,7 +12,6 @@
 
 .blog-main {
   padding: 50px 0px 80px;
-
   @include media-breakpoint-down(md) {
     padding: 30px 0px 80px;
   }
@@ -25,11 +24,9 @@
   .main-blog {
     position: relative;
     height: 550px;
-
     @include media-breakpoint-down(lg) {
       height: 400px;
     }
-
     @include media-breakpoint-down(lg) {
       height: 320px;
     }
@@ -47,7 +44,6 @@
       left: 0;
       right: 0;
       padding: 0 15px 30px 30px;
-
       @include media-breakpoint-down(lg) {
         padding: 0 15px 20px 20px;
       }
@@ -74,10 +70,6 @@
     position: relative;
     height: 263px;
 
-    @include media-breakpoint-down(lg) {
-      height: 188px;
-    }
-
     img {
       object-fit: cover;
       width: 100%;
@@ -91,7 +83,6 @@
       left: 0;
       right: 0;
       padding: 0 15px 30px 30px;
-
       @include media-breakpoint-down(lg) {
         padding: 0 15px 20px 20px;
       }
@@ -114,7 +105,6 @@
 
   .recommended-blog {
     margin: 110px 0px 110px;
-
     @include media-breakpoint-down(lg) {
       margin: 50px 0px 70px;
     }
@@ -135,7 +125,6 @@
 
     .blog-small {
       height: 380px;
-
       @include media-breakpoint-down(lg) {
         height: 250px;
       }

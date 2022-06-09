@@ -1,8 +1,7 @@
+import LazyLoad from 'react-lazy-load';
 import {Col, Row} from "reactstrap";
-import {lazy, Suspense} from "react";
-import Loader from "../../../components/Shared/Loader";
+import TutorialListCardContent from "../TutorialListCardContent";
 
-const TutorialListCardContent = lazy(() => import('../TutorialListCardContent'))
 
 const TutorialRestLists = (props) => {
     const {articleItems} = props;
@@ -10,10 +9,15 @@ const TutorialRestLists = (props) => {
         <Row className="g-4">
             {articleItems?.map((item, index) => {
                 return (
-                    <Col key={index} sm={6} md={4}>
-                        <Suspense fallback={<Loader fixContent={true}/>}>
-                            <TutorialListCardContent item={item}/>
-                        </Suspense>
+                    <Col key={index} sm={6} md={4} xl={3}>
+                        <div className="position-relative card border-0 h-100">
+                            <LazyLoad
+                                height={330}
+                                offsetTop={100}
+                            >
+                                <TutorialListCardContent item={item}/>
+                            </LazyLoad>
+                        </div>
                     </Col>
                 )
             })}

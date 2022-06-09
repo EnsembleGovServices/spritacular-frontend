@@ -10,6 +10,9 @@ import {baseURL, routeUrls} from "../../helpers/url";
 import {LoadMore} from "../../components/Shared/LoadMore";
 import useObservationsData from "../../hooks/useObservationsData";
 
+const NotFound = lazy(() =>
+    import("../../components/Common/NotFound")
+);
 const ObservationDetails = lazy(() =>
     import("../Observation/ObservationDetails")
 );
@@ -23,7 +26,6 @@ const ObservationDetailPage = lazy(() =>
 const Gallery = () => {
     const {auth} = useAuth();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(true);
     const [selectedObservationId, setSelectedObservationId] = useState();
     const [searchCountry, setSearchCountry] = useState("");
     const [isFilterOpen, setIsFilterOpen] = useState({
@@ -36,44 +38,20 @@ const Gallery = () => {
         type: "",
         status: "",
     });
-
     const {observationListData, setObservationListData} = useObservationsData();
-    // const [loadMore, setLoadMore] = useState(10);
-    // const [pageSize, setPageSize] = useState(10);
+    const [loadedState, setLoadedState] = useState({loading: true, hasData: false});
+    const [showNoData, setShowNoData] = useState(false);
+    const activeTypeData = observationListData?.active?.is_verified ? "verified" : observationListData?.active?.is_reject ? "denied" : observationListData?.active?.is_submit ? "unverified" : "draft"
+
     const [nextPageUrl, setNextPageUrl] = useState(
         `${baseURL.api}/observation/gallery/?country=&category=&status=`
     );
     const normalUser = auth?.user?.is_user;
-    // useEffect(() => {
-    //     setLoadMore(pageSize);
-    //     getObservationType(
-    //         true,
-    //         "",
-    //         selectedFilterHorizontal.type,
-    //         selectedFilterHorizontal.status
-    //     );
-    //     setIsLoaded(false);
-    // }, [isLoaded]);
 
     const findCountry = (e) => {
         let value = e.target.value.toLowerCase();
         setSearchCountry(value);
     };
-
-    useEffect(() => {
-        if (isFilterOpen.isCountryOpen === false) {
-            setSearchCountry("");
-        }
-    }, [isFilterOpen.isCountryOpen]);
-
-    useEffect(() => {
-        setObservationListData((prev) => {
-            return {
-                ...prev,
-                active: observationListData?.list?.[selectedObservationId],
-            };
-        });
-    }, [isObservationDetailModal]);
 
     const handleLoadMoreData = () => {
         getObservationType(
@@ -83,7 +61,7 @@ const Gallery = () => {
             selectedFilterHorizontal.status
         );
     };
-    const getObservationType = (
+    const getObservationType = async (
         reset = false,
         country = `${selectedFilterHorizontal.country?.code}`,
         category = `${selectedFilterHorizontal.type}`,
@@ -101,7 +79,7 @@ const Gallery = () => {
         if (auth?.user) {
             headers["Authorization"] = `Bearer ${auth?.token?.access}`;
         }
-        axios.get(url, {headers: headers}).then((success) => {
+        await axios.get(url, {headers: headers}).then((success) => {
             if (success?.data?.results?.data !== undefined) {
                 if (success?.data?.next) {
                     setNextPageUrl(success?.data?.next);
@@ -123,13 +101,25 @@ const Gallery = () => {
                         list: prevData,
                     };
                 });
-                setIsLoaded(false);
+                setLoadedState((prev) => {
+                    return {
+                        ...prev,
+                        loading: false,
+                        hasData: success?.data?.results?.data?.length > 0
+                    }
+                });
             } else {
                 setNextPageUrl(null);
                 setObservationListData({list: [], active: {}});
             }
         })
             .catch((error) => {
+                setLoadedState((prev) => {
+                    return {
+                        ...prev,
+                        loading: false,
+                    }
+                });
                 console.log(error.response);
             });
     };
@@ -169,6 +159,21 @@ const Gallery = () => {
 
 
     useEffect(() => {
+        if (isFilterOpen.isCountryOpen === false) {
+            setSearchCountry("");
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isFilterOpen.isCountryOpen]);
+    useEffect(() => {
+        setObservationListData((prev) => {
+            return {
+                ...prev,
+                active: observationListData?.list?.[selectedObservationId],
+            };
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isObservationDetailModal]);
+    useEffect(() => {
         setObservationListData((prev) => {
             return {
                 ...prev,
@@ -176,10 +181,13 @@ const Gallery = () => {
                 list: []
             }
         })
-        getObservationType(true, "", "", "");
+        getObservationType(true, "", "", "").then(r => r);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        // console.clear();
     }, [])
+
+    useEffect(() => {
+        setShowNoData(loadedState?.hasData);
+    }, [loadedState?.hasData])
 
     return (
         <>
@@ -214,7 +222,8 @@ const Gallery = () => {
                         </Link>
                     </UncontrolledAlert>
                 )}
-                {observationListData?.list && (
+
+                {loadedState?.hasData ? (
                     <div className="gallery-page">
                         <h4 className="text-black fw-bold">Recent Observations</h4>
                         <div>
@@ -231,26 +240,26 @@ const Gallery = () => {
                             </Suspense>
                         </div>
                     </div>
+                ) : (
+                    showNoData ? (
+                        <Suspense fallback={''}>
+                            <NotFound/>
+                        </Suspense>
+                    ) : ('')
                 )}
 
-                <ObservationDetails
-                    data={observationListData?.active}
-                    activeType={
-                        observationListData?.active?.is_verified
-                            ? "verified"
-                            : observationListData?.active?.is_reject
-                                ? "denied"
-                                : observationListData?.active?.is_submit
-                                    ? "unverified"
-                                    : "draft"
-                    }
-                    modalClass="observation-details_modal"
-                    open={isObservationDetailModal}
-                    handleClose={handleObservationDetailModal}
-                    handleApproveRejectEvent={getObservationType}
-                    refreshData={getObservationType}
-                />
             </Container>
+
+
+            <ObservationDetails
+                data={observationListData?.active}
+                activeType={activeTypeData}
+                modalClass="observation-details_modal"
+                open={isObservationDetailModal}
+                handleClose={handleObservationDetailModal}
+                handleApproveRejectEvent={getObservationType}
+                refreshData={getObservationType}
+            />
         </>
     );
 };

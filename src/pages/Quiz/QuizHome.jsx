@@ -2,10 +2,9 @@ import "../../assets/scss/component/quiz.scss";
 import {Col, Container, Modal, ModalBody, Row, UncontrolledAlert} from "reactstrap";
 import {Icon} from '@iconify/react';
 import axios from "../../api/axios";
-import {useEffect, useRef, useState} from "react";
-import {baseURL} from "../../helpers/url";
+import {useEffect, useState} from "react";
+import {baseURL, cdn} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
-import Images from "../../static/images";
 import BlurImage from "../../components/Common/BlurImage";
 import QuizCard from "../../components/Quiz/QuizCard";
 
@@ -97,7 +96,8 @@ const QuizHome = (props) => {
                 error: {},
                 success: {
                     message: response?.data?.success,
-                    score: response?.data?.score
+                    score: response?.data?.score,
+                    correct: response?.data?.correct_answers
                 }
             });
             setLoading(false);
@@ -119,7 +119,7 @@ const QuizHome = (props) => {
 
     // Handle Full Screen
     const goFullScreenImage = (image) => {
-        console.log(image);
+        // console.log(image);
         setFullImage(image);
         setFullScreen(true);
     }
@@ -234,11 +234,11 @@ const QuizHome = (props) => {
                                                 <div className="result-image">
                                                     {score < 75 ? (
                                                         <img className="img-fluid success-img"
-                                                             src={Images.failedImage}
+                                                             src={`${cdn.url}/failed.svg`}
                                                              alt="success"/>
                                                     ) : (
                                                         <img className="img-fluid success-img"
-                                                             src={Images.successImage}
+                                                             src={`${cdn.url}/success.svg`}
                                                              alt="success"/>
                                                     )}
                                                 </div>
@@ -246,7 +246,7 @@ const QuizHome = (props) => {
                                                 <div className="d-flex align-items-center justify-content-center">
                                                     <div
                                                         className={score > 75 ? 'score pass fw-bolder' : 'score fail fw-bolder'}>
-                                                        <span>1</span>
+                                                        <span>{result?.success?.correct}</span>
                                                         <span className="score-text">Correct Answer</span>
                                                     </div>
                                                     <div

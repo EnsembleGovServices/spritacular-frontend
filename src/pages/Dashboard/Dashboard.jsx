@@ -12,6 +12,9 @@ import moment from "moment";
 import {dashboardHelper} from "../../helpers/dashboard";
 import {baseURL} from "../../helpers/url";
 
+const NotFound = lazy(() =>
+    import("../../components/Common/NotFound")
+);
 const FilterSelectMenu = lazy(() =>
     import("../../components/Shared/FilterSelectMenu")
 );
@@ -49,6 +52,7 @@ const Dashboard = () => {
     const {observationListData, setObservationListData} = useObservationsData();
     const [nextPageUrl, setNextPageUrl] = useState(dashboardHelper.nextPageUrl);
     const [filterReset, setFilterReset] = useState(false);
+    const [loadedState, setLoadedState] = useState({loading: true, hasData: true});
 
     const getObservationData = async (
         reset = false,
@@ -97,22 +101,23 @@ const Dashboard = () => {
                     "Content-type": "application/json",
                     Authorization: `Bearer ${auth?.token?.access}`,
                 },
-            }).then((success) => {
+            }).then((response) => {
+                const resData = response?.data;
                 setFilterReset(false);
-                if (success?.data?.results?.data !== undefined) {
-                    if (success?.data?.next) {
-                        setNextPageUrl(success?.data?.next);
+                if (resData?.results?.data !== undefined) {
+                    if (resData?.next) {
+                        setNextPageUrl(response?.data?.next);
                     } else {
                         setNextPageUrl(null);
                     }
-                    let records = success?.data?.results?.data;
+                    let records = resData?.results?.data;
                     let prevData;
 
                     if (observationListData?.list?.length > 0 && reset === false) {
                         prevData = [...observationListData?.list];
                         prevData = [...prevData, ...records];
                     } else {
-                        prevData = success?.data?.results?.data;
+                        prevData = resData?.results?.data;
                     }
                     setObservationListData((prev) => {
                         return {
@@ -121,6 +126,14 @@ const Dashboard = () => {
                         };
                     });
                     // Assign loading
+                    setLoadedState((prev) => {
+                        return {
+                            ...prev,
+                            loading: false,
+                            hasData: resData?.results?.data?.length > 0
+                        }
+                    })
+
                 } else {
                     setNextPageUrl(null);
                     setObservationListData({list: [], active: {}});
@@ -191,7 +204,7 @@ const Dashboard = () => {
                 selectedFilterHorizontal.country?.code,
                 selectedFilterHorizontal.type,
                 value
-            );
+            ).then(r => r);
         }
 
         if (type === "category") {
@@ -200,7 +213,7 @@ const Dashboard = () => {
                 selectedFilterHorizontal.country?.code,
                 value,
                 selectedFilterHorizontal.status
-            );
+            ).then(r => r);
         }
 
         if (type === "country") {
@@ -209,7 +222,7 @@ const Dashboard = () => {
                 value.code,
                 selectedFilterHorizontal.type,
                 selectedFilterHorizontal.status
-            );
+            ).then(r => r);
         }
         if (type === "filter") {
             getObservationData(
@@ -217,7 +230,7 @@ const Dashboard = () => {
                 selectedFilterHorizontal.country.code,
                 selectedFilterHorizontal.type,
                 selectedFilterHorizontal.status
-            );
+            ).then(r => r);
         }
     };
 
@@ -226,7 +239,7 @@ const Dashboard = () => {
         let name = e.target.name,
             value = e.target.value;
 
-        console.log(name, value);
+        // console.log(name, value);
         setSelectedFilterVertical({
             ...selectedFilterVertical,
             [name]: value,
@@ -241,7 +254,8 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        getObservationData(true, "", "", "");
+        getObservationData(true, "", "", "").then(r => r);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterReset]);
 
     useEffect(() => {
@@ -252,12 +266,13 @@ const Dashboard = () => {
                 list: []
             }
         })
-        getObservationData(true, "", "", "");
+        getObservationData(true, "", "", "").then(r => r);
 
         if (window.innerWidth < 768) {
             setFilterShow(false);
         }
         console.clear();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -267,6 +282,7 @@ const Dashboard = () => {
                 active: observationListData?.list?.[selectedObservationId],
             };
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal]);
 
     return (
@@ -324,7 +340,7 @@ const Dashboard = () => {
                                                 setObservationDetailModal={setObservationDetailModal}
                                                 setSelectedObservationId={setSelectedObservationId}
                                             />
-                                            {nextPageUrl && observationListData?.list > 0 && (
+                                            {nextPageUrl && observationListData?.list.length > 0 && (
                                                 <LoadMore handleLoadMore={handleLoadMoreData}/>
                                             )}
                                         </Suspense>
@@ -336,12 +352,17 @@ const Dashboard = () => {
                                                 setObservationDetailModal={setObservationDetailModal}
                                                 setSelectedObservationId={setSelectedObservationId}
                                             />
-                                            {nextPageUrl && observationListData?.list > 0 && (
+                                            {nextPageUrl && observationListData?.list.length > 0 && (
                                                 <LoadMore handleLoadMore={handleLoadMoreData}/>
                                             )}
                                         </Suspense>
                                     )}
 
+                                    {!loadedState?.hasData &&
+                                        <Suspense fallback={''}>
+                                            <NotFound/>
+                                        </Suspense>
+                                    }
 
                                 </div>
                             </div>

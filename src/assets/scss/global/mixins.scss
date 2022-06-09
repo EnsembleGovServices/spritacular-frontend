@@ -76,11 +76,11 @@
   }
 }
 @mixin mds-title {
-  font-size: 26px;
-  line-height: 30px;
-  @media (max-width: 1023px){
-    font-size: 22px;
-    line-height: 26px;
+  font-size: 22px;
+  line-height: 1.4;
+  @media (max-width: 1023px) {
+    font-size: 18px;
+    line-height: 1.4;
   }
 }
 @mixin sm-title {
@@ -224,17 +224,6 @@
     border-color: $secondary;
     color: $white;
     box-shadow: $box-shadow-button;
-  }
-}
-
-@mixin buttonViolet{
-  color: $white;
-  background: $violet;
-  border: 1px solid $violet;
-  &:hover{
-    background: $white;
-    border-color: $violet;
-    color: $violet;
   }
 }
 

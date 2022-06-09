@@ -4,8 +4,6 @@ import {
     Button,
     Col,
     FormGroup,
-    Input,
-    Label,
     Nav,
     NavItem,
     NavLink,
@@ -13,12 +11,12 @@ import {
     TabContent,
     TabPane
 } from "reactstrap";
+import PropTypes from "prop-types";
 import ObservationUploadImg from "./ObservationUploadImg";
 import {useEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import ObservationCategory from "./ObservationCategory";
 import ImagePreview from "./ImagePreview";
-import PropTypes from "prop-types";
 import ObservationUploadedImg from './ObservationUploadedImg';
 import DeleteItemConfirmationPopup from "../Popup/DeleteItemConfirmationPopup";
 
@@ -36,7 +34,13 @@ const ObservationAfterImageUpload = (props) => {
         showUploadedPreview,
         mode
     } = props;
-    const {observationImages, observationType, setObservationCategory, setObservationType} = useObservations();
+    const {
+        observationImages,
+        setObservationImages,
+        observationType,
+        setObservationCategory,
+        setObservationType,
+    } = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
     const [isOther] = useState(false);
@@ -52,9 +56,40 @@ const ObservationAfterImageUpload = (props) => {
     };
 
     const handleMultipleCheck = (e) => {
-        console.log(isMultiple)
         if (isMultiple) {
             handleConfirmationPopUp();
+        }
+    }
+
+    const handleConfirmation = () => {
+        if (observationImages?.data?.length === 1) {
+            setIsConfirmPopUp(true);
+            setIsMultiple(false);
+            setShouldShowConfirmation(false);
+        } else {
+            const selectedObvIndex = step?.selected_image_index;
+            const filteredData = observationImages?.data?.filter((item, index) => {
+                return index === selectedObvIndex;
+            });
+            setObservationImages((prev) => {
+                return {
+                    ...prev,
+                    data: filteredData,
+                    observation_count: 1,
+                    selected_image_id: step?.selected_image_id,
+                    selected_image_index: 0
+                }
+            });
+            setObservationType((prev) => {
+                return {
+                    ...prev,
+                    image_type: 1
+                }
+            })
+            setActiveImageTab(MultiImageTabs.MultipleImages)
+            setIsConfirmPopUp(true);
+            setIsMultiple(false);
+            setShouldShowConfirmation(false);
         }
     }
 
@@ -230,8 +265,11 @@ const ObservationAfterImageUpload = (props) => {
             </Row>
 
             {isConfirmPopUp && shouldShowConfirmation &&
-                <DeleteItemConfirmationPopup open={isConfirmPopUp && shouldShowConfirmation}
-                                             handleClose={handleConfirmationPopUp}/>
+                <DeleteItemConfirmationPopup
+                    open={isConfirmPopUp && shouldShowConfirmation}
+                    handleClose={handleConfirmationPopUp}
+                    handleConfirmation={handleConfirmation}
+                />
             }
         </>
     );
