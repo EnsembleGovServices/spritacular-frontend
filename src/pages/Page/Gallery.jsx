@@ -1,6 +1,6 @@
 import "../../assets/scss/component/myObservation.scss";
 import "../../assets/scss/component/gallery.scss";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState, useLayoutEffect } from "react";
 import { Container, UncontrolledAlert } from "reactstrap";
 import { Link } from "react-router-dom";
 
@@ -25,6 +25,9 @@ const ObservationDetailPage = lazy(() =>
 );
 
 const Gallery = () => {
+    // setTimeout(() => {
+    //     window.scrollTo({ x: 0, y: 0, animated: false });
+    // }, 1)
     const { auth } = useAuth();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [selectedObservationId, setSelectedObservationId] = useState();
@@ -158,7 +161,6 @@ const Gallery = () => {
         }
     };
 
-
     useEffect(() => {
         if (isFilterOpen.isCountryOpen === false) {
             setSearchCountry("");
@@ -175,6 +177,8 @@ const Gallery = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal]);
     useEffect(() => {
+        document.getElementById("gallery_heading")?.scroll({ top: 0, behavior: "smooth" });
+
         setObservationListData((prev) => {
             return {
                 ...prev,
@@ -225,7 +229,7 @@ const Gallery = () => {
 
                 {loadedState?.hasData ? (
                     <div className="gallery-page">
-                        <h4 className="text-black fw-bold">Recent Observations</h4>
+                        <h4 className="text-black fw-bold" id="gallery_heading">Recent Observations</h4>
                         <div>
                             <Suspense fallback={<div></div>}>
                                 {observationListData?.list?.length > 0 ? (<ObservationDetailPage

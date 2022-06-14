@@ -73,7 +73,7 @@ const PersistLogin = (props) => {
                         <Suspense fallback={<div></div>}>
                             <Header />
                         </Suspense>
-                        <div className="main-content">
+                        <div className="main-content" id="main-content">
                             <Outlet />
                         </div>
                         <Suspense fallback={<div></div>}>
@@ -85,7 +85,7 @@ const PersistLogin = (props) => {
                         <Suspense fallback={<div></div>}>
                             <Header />
                         </Suspense>
-                        <div className="main-content">
+                        <div className="main-content" id="main-content">
                             <Outlet />
                         </div>
                         <Suspense fallback={<div></div>}>

@@ -11,6 +11,7 @@ const Policy = () => {
     scrollToRef(codeOfConduct);
   };
   useEffect(() => {
+    window.scrollTo(0,0);
     let code = searchParams.get('code');
     if (code) {
       setTimeout(function () {

@@ -15,7 +15,6 @@ const TutorialList = () => {
     const [tutorials, setTutorials] = useState([]);
     const admin = auth?.user?.is_superuser;
 
-
     const getTutorials = async () => {
         await axios.get(`${baseURL.get_blog}2`, {
             headers: {
@@ -32,6 +31,7 @@ const TutorialList = () => {
     }
 
     useEffect(() => {
+        document.getElementById("user_tut")?.scroll({ top: 0, behavior: "smooth" });
         getTutorials().then(r => r)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -43,7 +43,7 @@ const TutorialList = () => {
                 <section className="tutorial-main">
                     <Container>
                         <div className="mb-5 d-flex align-items-center justify-content-between">
-                            <h2 className="mb-0">User Tutorials</h2>
+                            <h2 className="mb-0" id="user_tut">User Tutorials</h2>
                             {auth?.user && admin &&
                                 <Link
                                     to={'/' + routeUrls.dashboard + '/' + routeUrls.dashTutorial.list + '/' + routeUrls.dashBlog.create}

@@ -134,14 +134,12 @@ const App = () => {
                                 element={<Suspense fallback={<Loader />}><TutorialDetails /></Suspense>} />
                         </Route>
 
-
                         <Route exact path={routeUrls.policy} element={<Suspense fallback=""><Policy /></Suspense>} />
                         <Route exact path={routeUrls.login} element={
                             <Suspense fallback={<Loader />}>
                                 <LoginPage />
                             </Suspense>
                         } />
-
 
                         <Route exact path={routeUrls.pages.meetTheTeam} element={
                             <Suspense fallback={<Loader />}>
