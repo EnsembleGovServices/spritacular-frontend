@@ -1,16 +1,17 @@
 import "../../assets/scss/component/dashboard.scss";
-import {lazy, Suspense, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useObservationsData from "../../hooks/useObservationsData";
 
 import useObservations from "../../hooks/useObservations";
-import {LoadMore} from "../../components/Shared/LoadMore";
+import { LoadMore } from "../../components/Shared/LoadMore";
 
 import axios from "../../api/axios";
 import moment from "moment";
-import {dashboardHelper} from "../../helpers/dashboard";
-import {baseURL} from "../../helpers/url";
+import { dashboardHelper } from "../../helpers/dashboard";
+import { baseURL } from "../../helpers/url";
+import Loader from "../../components/Shared/Loader";
 
 const NotFound = lazy(() =>
     import("../../components/Common/NotFound")
@@ -33,10 +34,10 @@ const ObservationDetails = lazy(() =>
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [selectedObservationId, setSelectedObservationId] = useState();
-    const {setObservationData, setObservationSteps, setObservationImages} = useObservations();
+    const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
     const [filterShow, setFilterShow] = useState(true);
     const [listView, setListView] = useState(false);
     const [gridView, setGridView] = useState(true);
@@ -49,10 +50,10 @@ const Dashboard = () => {
     const [selectedFilterVertical, setSelectedFilterVertical] = useState(
         dashboardHelper.vertical
     );
-    const {observationListData, setObservationListData} = useObservationsData();
+    const { observationListData, setObservationListData } = useObservationsData();
     const [nextPageUrl, setNextPageUrl] = useState(dashboardHelper.nextPageUrl);
     const [filterReset, setFilterReset] = useState(false);
-    const [loadedState, setLoadedState] = useState({loading: true, hasData: true});
+    const [loadedState, setLoadedState] = useState({ loading: true, hasData: true });
 
     const getObservationData = async (
         reset = false,
@@ -60,6 +61,8 @@ const Dashboard = () => {
         category = `${selectedFilterHorizontal?.type}`,
         status = `${selectedFilterHorizontal?.status}`
     ) => {
+        setLoadedState({ loading: true })
+
         if (auth?.user?.is_superuser) {
             let url;
             if (reset === true || !nextPageUrl) {
@@ -136,7 +139,7 @@ const Dashboard = () => {
 
                 } else {
                     setNextPageUrl(null);
-                    setObservationListData({list: [], active: {}});
+                    setObservationListData({ list: [], active: {} });
                 }
                 // setObservationList(success?.data?.results?.data)
             }).catch((error) => {
@@ -248,9 +251,12 @@ const Dashboard = () => {
 
     //  Reset Filters
     const resetFilters = () => {
-        setFilterReset(true);
-        setSelectedFilterHorizontal(dashboardHelper.horizontal);
-        setSelectedFilterVertical(dashboardHelper.vertical);
+        const { country: { name, code }, type, status } = selectedFilterHorizontal;
+        if (name !== "" || code !== "" || type !== "" || status !== "") {
+            setFilterReset(true);
+            setSelectedFilterHorizontal(dashboardHelper.horizontal);
+            setSelectedFilterVertical(dashboardHelper.vertical);
+        }
     };
 
     useEffect(() => {
@@ -328,39 +334,44 @@ const Dashboard = () => {
                                 )}
 
                                 <div
-                                    className={`dashboard-card overflow-hidden ${
-                                        filterShow ? "sm-card" : "maximize-dash-content"
-                                    }`}
+                                    className={`dashboard-card overflow-hidden ${filterShow ? "sm-card" : "maximize-dash-content"
+                                        }`}
                                 >
-                                    {listView ? (
-                                        <Suspense fallback={<div></div>}>
-                                            <ObservationListView
-                                                observationList={observationListData?.list}
-                                                isObservationDetailModal={isObservationDetailModal}
-                                                setObservationDetailModal={setObservationDetailModal}
-                                                setSelectedObservationId={setSelectedObservationId}
-                                            />
-                                            {nextPageUrl && observationListData?.list.length > 0 && (
-                                                <LoadMore handleLoadMore={handleLoadMoreData}/>
-                                            )}
-                                        </Suspense>
-                                    ) : (
-                                        <Suspense fallback={<div></div>}>
-                                            <ObservationDetailPage
-                                                observationList={observationListData?.list}
-                                                isObservationDetailModal={isObservationDetailModal}
-                                                setObservationDetailModal={setObservationDetailModal}
-                                                setSelectedObservationId={setSelectedObservationId}
-                                            />
-                                            {nextPageUrl && observationListData?.list.length > 0 && (
-                                                <LoadMore handleLoadMore={handleLoadMoreData}/>
-                                            )}
-                                        </Suspense>
-                                    )}
+                                    {
+                                        (!loadedState.loading && observationListData?.list.length > 0 && !filterReset) ?
+                                            listView ? (
+                                                <Suspense fallback={<Loader fixContent={true} />}>
+                                                    <ObservationListView
+                                                        observationList={observationListData?.list}
+                                                        isObservationDetailModal={isObservationDetailModal}
+                                                        setObservationDetailModal={setObservationDetailModal}
+                                                        setSelectedObservationId={setSelectedObservationId}
+                                                    />
+                                                    {nextPageUrl && observationListData?.list.length > 0 && (
+                                                        <LoadMore handleLoadMore={handleLoadMoreData} />
+                                                    )}
+                                                </Suspense>
+                                            ) :
+                                                (
+                                                    <Suspense fallback={<div></div>}>
+                                                        {(<ObservationDetailPage
+                                                            observationList={observationListData?.list}
+                                                            isObservationDetailModal={isObservationDetailModal}
+                                                            setObservationDetailModal={setObservationDetailModal}
+                                                            setSelectedObservationId={setSelectedObservationId}
+                                                        />)}
 
-                                    {!loadedState?.hasData &&
+                                                        {!loadedState.loading && nextPageUrl && observationListData?.list.length > 0 && (
+                                                            <LoadMore handleLoadMore={handleLoadMoreData} />
+                                                        )}
+                                                    </Suspense>
+                                                )
+                                            : (loadedState.loading || filterReset) && <Loader loaderClass="h-50 position-relative" />
+                                    }
+
+                                    {(!loadedState?.hasData && observationListData?.list.length === 0 && !loadedState.loading) &&
                                         <Suspense fallback={''}>
-                                            <NotFound/>
+                                            <NotFound />
                                         </Suspense>
                                     }
 
@@ -370,7 +381,6 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-
 
             <Suspense fallback={<div></div>}>
                 <ObservationDetails

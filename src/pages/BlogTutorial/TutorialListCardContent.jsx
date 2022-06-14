@@ -1,9 +1,9 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import BlurImage from "../../components/Common/BlurImage";
-import {useState} from "react";
+import { useState } from "react";
 
 const TutorialListCardContent = (props) => {
-    const {item} = props;
+    const { item } = props;
     const [loaderLoading, setLoaderLoading] = useState(true);
     const handleLoaderLoading = (state) => {
         setLoaderLoading(state);

@@ -9,7 +9,6 @@ const Footer = lazy(() => import('../components/Common/Footer'))
 export const observationViewContext = createContext({});
 
 const PersistLogin = (props) => {
-    window.scrollTo(0, 0);
     const { persistValue } = props;
     const [categoryList, setCategoryList] = useState([]);
     const refresh = useRefreshToken();
@@ -51,7 +50,7 @@ const PersistLogin = (props) => {
                 list: [],
             };
         });
-    }, [location])
+    }, [location]);
 
     return (
         <>

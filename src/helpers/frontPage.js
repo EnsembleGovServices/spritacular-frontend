@@ -1,4 +1,4 @@
-import {cdn} from "./url";
+import { cdn } from "./url";
 
 export const meetTheTeamData = [
     {
@@ -6,13 +6,21 @@ export const meetTheTeamData = [
         person_name: "Dr. Burcu Kosar",
         designation: "Principal Investigator"
     },
-    {person_img: `${cdn.url}/co-Investigator.png`, person_name: "Dr. Jia Yue", designation: "Co-Investigator"},
+    {
+        person_img: `${cdn.url}/co-Investigator.png`,
+        person_name: "Dr. Jia Yue",
+        designation: "Co-Investigator"
+    },
     {
         person_img: `${cdn.url}/technical-consultant.png`,
         person_name: "Dr. Jozsef Bor",
         designation: "Technical Consultant"
     },
-    {person_img: `${cdn.url}/ux-design.png`, person_name: "Sean Simmons", designation: "UX Design"},
+    {
+        person_img: `${cdn.url}/ux-design.png`,
+        person_name: "Sean Simmons",
+        designation: "UX Design"
+    },
     {
         person_img: `${cdn.url}/science-communication.png`,
         person_name: "Rachel Lense",

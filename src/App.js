@@ -59,6 +59,7 @@ const TutorialCreate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialCre
 const TutorialUpdate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialUpdate'));
 
 const App = () => {
+    
     const [persistValue, setPersistValue] = useState(false);
     const [isOnline, setOnline] = useState(true);
     const authCallBack = (authChange) => {
@@ -157,9 +158,8 @@ const App = () => {
                                 <SpritacularGoogleGroup />
                             </Suspense>
                         } />
-
-
                     </Route>
+
                     <Route exact path={"/password_reset"} element={
                         <Suspense fallback={<Loader />}>
                             <ResetPasswordPopup />

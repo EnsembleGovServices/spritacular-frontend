@@ -15,7 +15,7 @@ const Policy = () => {
     if (code) {
       setTimeout(function () {
         executeScroll();
-      }, 100)
+      }, 10)
     }
   }, [searchParams])
   return(

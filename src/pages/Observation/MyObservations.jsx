@@ -1,18 +1,19 @@
 import "../../assets/scss/component/myObservation.scss";
-import {Col, Container, Row} from "reactstrap";
-import {Link, useNavigate} from "react-router-dom";
-import {Icon} from "@iconify/react";
+import { Col, Container, Row } from "reactstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 import axios from "../../api/axios";
 
-import {lazy, Suspense, useEffect, useState} from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 import useAuth from "../../hooks/useAuth";
 import useObservationsData from "../../hooks/useObservationsData";
 import useObservations from "../../hooks/useObservations";
 
-import {LoadMore} from "../../components/Shared/LoadMore";
-import {obvType} from "../../helpers/observation";
-import {baseURL, routeUrls} from "../../helpers/url";
+import { LoadMore } from "../../components/Shared/LoadMore";    
+import { obvType } from "../../helpers/observation";
+import { baseURL, routeUrls } from "../../helpers/url";
+import Loader from "../../components/Shared/Loader";
 
 
 const NotFound = lazy(() => import("../../components/Common/NotFound"));
@@ -22,10 +23,10 @@ const ObservationDetailPage = lazy(() => import("./ObservationListPage"));
 const InitialUploadObservations = lazy(() => import("../Page/InitialUploadObservations"));
 
 const MyObservations = () => {
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const navigate = useNavigate();
-    const {setObservationData, setObservationSteps, setObservationImages} = useObservations();
-    const {observationListData, setObservationListData} = useObservationsData();
+    const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
+    const { observationListData, setObservationListData } = useObservationsData();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [activeType, setActiveType] = useState("verified");
     const [selectedObservationId, setSelectedObservationId] = useState();
@@ -203,16 +204,16 @@ const MyObservations = () => {
                                 <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
                                     <div
                                         className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
-                                <span
-                                    className={
-                                        activeType === obvType.verified
-                                            ? "filter-link active"
-                                            : "filter-link "
-                                    }
-                                    onClick={() => handleTypeOfObservation(obvType.verified)}
-                                >
-                                  Verified ({observationListData?.count?.verified})
-                                </span>
+                                        <span
+                                            className={
+                                                activeType === obvType.verified
+                                                    ? "filter-link active"
+                                                    : "filter-link "
+                                            }
+                                            onClick={() => handleTypeOfObservation(obvType.verified)}
+                                        >
+                                            Verified ({observationListData?.count?.verified})
+                                        </span>
                                         <span
                                             className={
                                                 activeType === obvType.unverified
@@ -221,8 +222,8 @@ const MyObservations = () => {
                                             }
                                             onClick={() => handleTypeOfObservation(obvType.unverified)}
                                         >
-                                    Unverified ({observationListData?.count?.unverified})
-                                </span>
+                                            Unverified ({observationListData?.count?.unverified})
+                                        </span>
                                         <span
                                             className={
                                                 activeType === obvType.denied
@@ -231,8 +232,8 @@ const MyObservations = () => {
                                             }
                                             onClick={() => handleTypeOfObservation(obvType.denied)}
                                         >
-                                  Denied ({observationListData?.count?.denied})
-                                </span>
+                                            Denied ({observationListData?.count?.denied})
+                                        </span>
                                         <span
                                             className={
                                                 activeType === obvType.draft
@@ -241,8 +242,8 @@ const MyObservations = () => {
                                             }
                                             onClick={() => handleTypeOfObservation(obvType.draft)}
                                         >
-                                  Drafts ({observationListData?.count?.draft})
-                                </span>
+                                            Drafts ({observationListData?.count?.draft})
+                                        </span>
                                     </div>
                                 </Col>
                                 <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
@@ -271,11 +272,11 @@ const MyObservations = () => {
                 <Container>
                     {!loadedState?.hasObservations &&
                         <Suspense fallback={''}>
-                            <InitialUploadObservations count={loading?.count}/>
+                            <InitialUploadObservations count={loading?.count} />
                         </Suspense>
                     }
 
-                    <Suspense fallback={''}>
+                    {observationListData?.list.length > 0 ? (<Suspense fallback={''}>
                         <ObservationDetailPage
                             activeType={activeType}
                             observationList={observationListData?.list}
@@ -286,12 +287,12 @@ const MyObservations = () => {
 
                         />
                         {nextPageUrl && observationListData?.list.length > 0 &&
-                            <LoadMore handleLoadMore={handleLoadMore}/>}
-                    </Suspense>
+                            <LoadMore handleLoadMore={handleLoadMore} />}
+                    </Suspense>) : (loadedState.loading) && <Loader loaderClass="h-50 position-relative" />}
 
                     {showNotFound && loadedState?.hasObservations &&
                         <Suspense fallback={''}>
-                            <NotFound/>
+                            <NotFound />
                         </Suspense>
                     }
 

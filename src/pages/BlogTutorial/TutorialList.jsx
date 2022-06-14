@@ -1,17 +1,17 @@
 import "../../assets/scss/component/tutorials.scss";
-import {Container} from "reactstrap"
-import {useEffect, useState, lazy, Suspense} from "react";
-import {baseURL, routeUrls} from "../../helpers/url";
+import { Container } from "reactstrap"
+import { useEffect, useState, lazy, Suspense } from "react";
+import { baseURL, routeUrls } from "../../helpers/url";
 import axios from "../../api/axios";
 
 import useAuth from "../../hooks/useAuth";
 import Loader from "../../components/Shared/Loader";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const TutorialRestLists = lazy(() => import('./List/TutorialRestLists'))
 
 const TutorialList = () => {
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const [tutorials, setTutorials] = useState([]);
     const admin = auth?.user?.is_superuser;
 
@@ -34,7 +34,7 @@ const TutorialList = () => {
     useEffect(() => {
         getTutorials().then(r => r)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
     return (
         <>
@@ -50,8 +50,8 @@ const TutorialList = () => {
                                     className="btn btn-primary px-4">Create Tutorial</Link>
                             }
                         </div>
-                        <Suspense fallback={<Loader fixContent={true}/>}>
-                            <TutorialRestLists articleItems={tutorials?.list}/>
+                        <Suspense fallback={<Loader fixContent={true} />}>
+                            <TutorialRestLists articleItems={tutorials?.list} />
                         </Suspense>
                     </Container>
                 </section>

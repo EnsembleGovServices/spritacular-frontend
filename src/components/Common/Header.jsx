@@ -131,7 +131,6 @@ const Header = (props) => {
         trainee = auth?.user?.is_trained,
         normalUser = auth?.user?.is_user;
 
-
     return (
         <>
             <Navbar
@@ -288,16 +287,16 @@ const Header = (props) => {
                                             Meet the Team
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active === 'community-3' ? 'active p-0' : 'p-0'}>
+                                    <DropdownItem className={active === 'community-2' ? 'active p-0' : 'p-0'}>
                                         <Link className="px-3 py-1" to={routeUrls.pages.becomeAnAmbasador} title="Become an ambassador"
-                                            onClick={() => setActive('community-3')}>
+                                            onClick={() => setActive('community-2')}>
                                             Become an ambassador
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active === 'community-4' ? 'active p-0' : 'p-0'}>
+                                    <DropdownItem className={active === 'community-3' ? 'active p-0' : 'p-0'}>
                                         <Link className="px-3 py-1" to={routeUrls.pages.spritacularGoogleGroup}
                                             title="Spritacular Google Group"
-                                            onClick={() => setActive('community-4')}>
+                                            onClick={() => setActive('community-3')}>
                                             Spritacular Google Group
                                         </Link>
                                     </DropdownItem>

@@ -1,14 +1,11 @@
-import {Container, Row, Col} from "reactstrap";
-import {useState, useLayoutEffect} from 'react';
+import { Container, Row, Col } from "reactstrap";
+import { useState, useLayoutEffect } from 'react';
 import Skeleton from "react-loading-skeleton";
-import {cdn} from "../../helpers/url";
+import { cdn } from "../../helpers/url";
 import Counter from "../../helpers/counter";
 
-// const Counter = lazy(() => import('../../helpers/counter'))
-
-
 const HomeCounter = (props) => {
-    const {loading, counter} = props;
+    const { loading, counter } = props;
     const userCount = counter?.observation_user_count,
         observationCount = counter?.observation_count,
         countriesCount = counter?.observation_country_count;
@@ -27,20 +24,19 @@ const HomeCounter = (props) => {
 
     return (
         <Container>
-            <Row>
+            {(userCount && observationCount && countriesCount) && (<Row>
                 <Col md={4} sm={6}>
                     <div className="counter-inner">
                         {internalLoading &&
                             <div className="counter-loader">
-                                <Skeleton height={80}/>
+                                <Skeleton height={80} />
                             </div>
                         }
-
                         <div className="left-image">
-                            <img width={50} height={50} src={`${cdn.url}/users.png`} alt="Users"/>
+                            <img width={50} height={50} src={`${cdn.url}/users.png`} alt="Users" />
                         </div>
                         <div className="right-counter">
-                            <Counter end={userCount} speed={1}/>
+                            <Counter end={userCount} speed={1} />
                             <p>Volunteers</p>
                         </div>
                     </div>
@@ -49,14 +45,14 @@ const HomeCounter = (props) => {
                     <div className="counter-inner">
                         {internalLoading &&
                             <div className="counter-loader">
-                                <Skeleton height={80}/>
+                                <Skeleton height={80} />
                             </div>
                         }
                         <div className="left-image">
-                            <img width={50} height={50} src={`${cdn.url}/submit.png`} alt="observations"/>
+                            <img width={50} height={50} src={`${cdn.url}/submit.png`} alt="observations" />
                         </div>
                         <div className="right-counter">
-                            <Counter end={observationCount} speed={1}/>
+                            <Counter end={observationCount} speed={1} />
                             <p>Observations</p>
                         </div>
                     </div>
@@ -65,19 +61,19 @@ const HomeCounter = (props) => {
                     <div className="counter-inner">
                         {internalLoading &&
                             <div className="counter-loader">
-                                <Skeleton height={80}/>
+                                <Skeleton height={80} />
                             </div>
                         }
                         <div className="left-image">
-                            <img width={50} height={50} src={`${cdn.url}/country.png`} alt="country"/>
+                            <img width={50} height={50} src={`${cdn.url}/country.png`} alt="country" />
                         </div>
                         <div className="right-counter">
-                            <Counter end={countriesCount} speed={1}/>
+                            <Counter end={countriesCount} speed={1} />
                             <p>Countries</p>
                         </div>
                     </div>
                 </Col>
-            </Row>
+            </Row>)}
         </Container>
     );
 };

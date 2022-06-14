@@ -1,10 +1,11 @@
 import LazyLoad from 'react-lazy-load';
-import {Col, Row} from "reactstrap";
+import { Col, Row } from "reactstrap";
 import TutorialListCardContent from "../TutorialListCardContent";
 
 
 const TutorialRestLists = (props) => {
-    const {articleItems} = props;
+    const { articleItems } = props;
+
     return (
         <Row className="g-4">
             {articleItems?.map((item, index) => {
@@ -15,7 +16,7 @@ const TutorialRestLists = (props) => {
                                 height={330}
                                 offsetTop={100}
                             >
-                                <TutorialListCardContent item={item}/>
+                                <TutorialListCardContent item={item} />
                             </LazyLoad>
                         </div>
                     </Col>

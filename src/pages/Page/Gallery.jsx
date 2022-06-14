@@ -1,14 +1,15 @@
 import "../../assets/scss/component/myObservation.scss";
 import "../../assets/scss/component/gallery.scss";
-import {lazy, Suspense, useEffect, useState} from "react";
-import {Container, UncontrolledAlert} from "reactstrap";
-import {Link} from "react-router-dom";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { Container, UncontrolledAlert } from "reactstrap";
+import { Link } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
-import {baseURL, routeUrls} from "../../helpers/url";
-import {LoadMore} from "../../components/Shared/LoadMore";
+import { baseURL, routeUrls } from "../../helpers/url";
+import { LoadMore } from "../../components/Shared/LoadMore";
 import useObservationsData from "../../hooks/useObservationsData";
+import Loader from "../../components/Shared/Loader";
 
 const NotFound = lazy(() =>
     import("../../components/Common/NotFound")
@@ -24,7 +25,7 @@ const ObservationDetailPage = lazy(() =>
 );
 
 const Gallery = () => {
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [selectedObservationId, setSelectedObservationId] = useState();
     const [searchCountry, setSearchCountry] = useState("");
@@ -34,12 +35,12 @@ const Gallery = () => {
         isStatusOpen: false,
     });
     const [selectedFilterHorizontal, setSelectedFilterHorizontal] = useState({
-        country: {name: "", code: ""},
+        country: { name: "", code: "" },
         type: "",
         status: "",
     });
-    const {observationListData, setObservationListData} = useObservationsData();
-    const [loadedState, setLoadedState] = useState({loading: true, hasData: false});
+    const { observationListData, setObservationListData } = useObservationsData();
+    const [loadedState, setLoadedState] = useState({ loading: true, hasData: true });
     const [showNoData, setShowNoData] = useState(false);
     const activeTypeData = observationListData?.active?.is_verified ? "verified" : observationListData?.active?.is_reject ? "denied" : observationListData?.active?.is_submit ? "unverified" : "draft"
 
@@ -79,7 +80,7 @@ const Gallery = () => {
         if (auth?.user) {
             headers["Authorization"] = `Bearer ${auth?.token?.access}`;
         }
-        await axios.get(url, {headers: headers}).then((success) => {
+        await axios.get(url, { headers: headers }).then((success) => {
             if (success?.data?.results?.data !== undefined) {
                 if (success?.data?.next) {
                     setNextPageUrl(success?.data?.next);
@@ -110,7 +111,7 @@ const Gallery = () => {
                 });
             } else {
                 setNextPageUrl(null);
-                setObservationListData({list: [], active: {}});
+                setObservationListData({ list: [], active: {} });
             }
         })
             .catch((error) => {
@@ -183,11 +184,10 @@ const Gallery = () => {
         })
         getObservationType(true, "", "", "").then(r => r);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
+    }, []);
     useEffect(() => {
         setShowNoData(loadedState?.hasData);
-    }, [loadedState?.hasData])
+    }, [loadedState?.hasData]);
 
     return (
         <>
@@ -204,7 +204,7 @@ const Gallery = () => {
                 />
             </Suspense>
 
-            <Container className="pt-5">
+            <Container className="pt-3">
                 {normalUser && (
                     <UncontrolledAlert
                         color="danger"
@@ -228,28 +228,27 @@ const Gallery = () => {
                         <h4 className="text-black fw-bold">Recent Observations</h4>
                         <div>
                             <Suspense fallback={<div></div>}>
-                                <ObservationDetailPage
+                                {observationListData?.list?.length > 0 ? (<ObservationDetailPage
                                     observationList={observationListData?.list}
                                     isObservationDetailModal={isObservationDetailModal}
                                     setObservationDetailModal={setObservationDetailModal}
                                     setSelectedObservationId={setSelectedObservationId}
-                                />
+                                />) : (loadedState?.hasData) && <Loader loaderClass="h-50" />}
                                 {observationListData?.list?.length > 0 && nextPageUrl &&
-                                    <LoadMore handleLoadMore={handleLoadMoreData}/>
+                                    <LoadMore handleLoadMore={handleLoadMoreData} />
                                 }
                             </Suspense>
                         </div>
                     </div>
-                ) : (
-                    showNoData ? (
-                        <Suspense fallback={''}>
-                            <NotFound/>
-                        </Suspense>
-                    ) : ('')
-                )}
+                ) : <Loader />}
+
+                {!loadedState?.hasData &&
+                    <Suspense fallback={''}>
+                        <NotFound />
+                    </Suspense>
+                }
 
             </Container>
-
 
             <ObservationDetails
                 data={observationListData?.active}
