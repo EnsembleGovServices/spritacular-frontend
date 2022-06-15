@@ -10,7 +10,7 @@ import useAuth from "../../hooks/useAuth";
 import useObservationsData from "../../hooks/useObservationsData";
 import useObservations from "../../hooks/useObservations";
 
-import { LoadMore } from "../../components/Shared/LoadMore";    
+import { LoadMore } from "../../components/Shared/LoadMore";
 import { obvType } from "../../helpers/observation";
 import { baseURL, routeUrls } from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
@@ -268,7 +268,6 @@ const MyObservations = () => {
                 }
 
                 {/*Data block*/}
-
                 <Container>
                     {!loadedState?.hasObservations &&
                         <Suspense fallback={''}>
@@ -276,31 +275,36 @@ const MyObservations = () => {
                         </Suspense>
                     }
 
-                    {observationListData?.list.length > 0 ? (<Suspense fallback={''}>
-                        <ObservationDetailPage
-                            activeType={activeType}
-                            observationList={observationListData?.list}
-                            isObservationDetailModal={isObservationDetailModal}
-                            setObservationDetailModal={setObservationDetailModal}
-                            setSelectedObservationId={setSelectedObservationId}
-                            loadedState={loadedState}
+                    {
+                        (!loadedState.loading && observationListData?.list.length > 0) ?
+                            (
+                                <Suspense fallback={''}>
+                                    <ObservationDetailPage
+                                        activeType={activeType}
+                                        observationList={observationListData?.list}
+                                        isObservationDetailModal={isObservationDetailModal}
+                                        setObservationDetailModal={setObservationDetailModal}
+                                        setSelectedObservationId={setSelectedObservationId}
+                                        loadedState={loadedState}
 
-                        />
-                        {nextPageUrl && observationListData?.list.length > 0 &&
-                            <LoadMore handleLoadMore={handleLoadMore} />}
-                    </Suspense>) : (loadedState.loading) && <Loader loaderClass="h-50 position-relative" />}
+                                    />
+                                    {(!loadedState.loading && nextPageUrl && observationListData?.list.length > 0) &&
+                                        <LoadMore handleLoadMore={handleLoadMore} />
+                                    }
+                                </Suspense>
+                            ) : !showNotFound && <Loader />
+                    }
 
-                    {showNotFound && loadedState?.hasObservations &&
+                    {(showNotFound && loadedState?.hasObservations && observationListData?.list.length === 0 && !loadedState.loading) &&
                         <Suspense fallback={''}>
                             <NotFound />
                         </Suspense>
                     }
-
                 </Container>
             </section>
 
             {observationListData?.list?.length > 0 &&
-                <Suspense fallback={''}>
+                <Suspense fallback={<Loader />}>
                     <ObservationDetails
                         data={observationListData?.active}
                         activeType={activeType}

@@ -354,14 +354,14 @@ const Dashboard = () => {
                                             ) :
                                                 (
                                                     <Suspense fallback={<div></div>}>
-                                                        {(<ObservationDetailPage
+                                                        <ObservationDetailPage
                                                             observationList={observationListData?.list}
                                                             isObservationDetailModal={isObservationDetailModal}
                                                             setObservationDetailModal={setObservationDetailModal}
                                                             setSelectedObservationId={setSelectedObservationId}
-                                                        />)}
+                                                        />
 
-                                                        {!loadedState.loading && nextPageUrl && observationListData?.list.length > 0 && (
+                                                        {(!loadedState.loading && nextPageUrl && observationListData?.list.length > 0) && (
                                                             <LoadMore handleLoadMore={handleLoadMoreData} />
                                                         )}
                                                     </Suspense>

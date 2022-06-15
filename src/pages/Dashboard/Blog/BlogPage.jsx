@@ -9,6 +9,7 @@ import ListBlogTutorial from "../BlogTutorial/ListBlogTutorial";
 
 const BlogPage = () => {
     const [articles, setArticles] = useState();
+    const [loader, setLoader] = useState(true);
 
     const thead = [
         {name: 'ID'},
@@ -24,6 +25,7 @@ const BlogPage = () => {
         }).then(response => {
             // console.log('response', response);
             setArticles(response?.data?.data);
+            setLoader(false);
         }).catch(error => {
             console.log('error', error)
         })
@@ -38,6 +40,7 @@ const BlogPage = () => {
         <ListBlogTutorial content={articles}
                           thead={thead}
                           type="blog"
+                          isLoading={loader}
         />
     )
 }
