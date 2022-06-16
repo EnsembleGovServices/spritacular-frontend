@@ -25,9 +25,6 @@ const ObservationDetailPage = lazy(() =>
 );
 
 const Gallery = () => {
-    // setTimeout(() => {
-    //     window.scrollTo({ x: 0, y: 0, animated: false });
-    // }, 1)
     const {auth} = useAuth();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [selectedObservationId, setSelectedObservationId] = useState();
@@ -185,7 +182,6 @@ const Gallery = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal]);
     useEffect(() => {
-        document.getElementById("gallery_heading")?.scroll({top: 0, behavior: "smooth"});
 
         setObservationListData((prev) => {
             return {
