@@ -54,6 +54,7 @@ const Dashboard = () => {
     const [nextPageUrl, setNextPageUrl] = useState(dashboardHelper.nextPageUrl);
     const [filterReset, setFilterReset] = useState(false);
     const [loadedState, setLoadedState] = useState({loading: true, hasData: true});
+    const [shouldFilter, setShouldFilter] = useState(false);
 
     const getObservationData = async (
         reset = false,
@@ -199,41 +200,40 @@ const Dashboard = () => {
         setSearchCountry(value);
     };
 
+
     const handleFilterValue = (value, type) => {
-        if (selectedFilterVertical?.filtered || selectedFilterHorizontal?.filtered) {
-            if (type === "status") {
-                value = value.toLowerCase();
-                getObservationData(
-                    true,
-                    selectedFilterHorizontal.country?.code,
-                    selectedFilterHorizontal.type,
-                    value
-                ).then(r => r);
-            }
-            if (type === "category") {
-                getObservationData(
-                    true,
-                    selectedFilterHorizontal.country?.code,
-                    value,
-                    selectedFilterHorizontal.status
-                ).then(r => r);
-            }
-            if (type === "country") {
-                getObservationData(
-                    true,
-                    value.code,
-                    selectedFilterHorizontal.type,
-                    selectedFilterHorizontal.status
-                ).then(r => r);
-            }
-            if (type === "filter") {
-                getObservationData(
-                    true,
-                    selectedFilterHorizontal.country.code,
-                    selectedFilterHorizontal.type,
-                    selectedFilterHorizontal.status
-                ).then(r => r);
-            }
+        if (type === "status") {
+            value = value.toLowerCase();
+            getObservationData(
+                true,
+                selectedFilterHorizontal.country?.code,
+                selectedFilterHorizontal.type,
+                value
+            ).then(r => r);
+        }
+        if (type === "category") {
+            getObservationData(
+                true,
+                selectedFilterHorizontal.country?.code,
+                value,
+                selectedFilterHorizontal.status
+            ).then(r => r);
+        }
+        if (type === "country") {
+            getObservationData(
+                true,
+                value.code,
+                selectedFilterHorizontal.type,
+                selectedFilterHorizontal.status
+            ).then(r => r);
+        }
+        if (shouldFilter && type === "filter") {
+            getObservationData(
+                true,
+                selectedFilterHorizontal.country.code,
+                selectedFilterHorizontal.type,
+                selectedFilterHorizontal.status
+            ).then(r => r);
         }
     };
 
@@ -291,6 +291,11 @@ const Dashboard = () => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal]);
+
+
+    useEffect(() => {
+        setShouldFilter(selectedFilterHorizontal?.filtered || selectedFilterVertical?.filtered);
+    }, [selectedFilterHorizontal?.filtered, selectedFilterVertical?.filtered])
 
     return (
         <>
