@@ -200,40 +200,40 @@ const Dashboard = () => {
     };
 
     const handleFilterValue = (value, type) => {
-        if (type === "status") {
-            value = value.toLowerCase();
-            getObservationData(
-                true,
-                selectedFilterHorizontal.country?.code,
-                selectedFilterHorizontal.type,
-                value
-            ).then(r => r);
-        }
-
-        if (type === "category") {
-            getObservationData(
-                true,
-                selectedFilterHorizontal.country?.code,
-                value,
-                selectedFilterHorizontal.status
-            ).then(r => r);
-        }
-
-        if (type === "country") {
-            getObservationData(
-                true,
-                value.code,
-                selectedFilterHorizontal.type,
-                selectedFilterHorizontal.status
-            ).then(r => r);
-        }
-        if (type === "filter") {
-            getObservationData(
-                true,
-                selectedFilterHorizontal.country.code,
-                selectedFilterHorizontal.type,
-                selectedFilterHorizontal.status
-            ).then(r => r);
+        if (selectedFilterVertical?.filtered || selectedFilterHorizontal?.filtered) {
+            if (type === "status") {
+                value = value.toLowerCase();
+                getObservationData(
+                    true,
+                    selectedFilterHorizontal.country?.code,
+                    selectedFilterHorizontal.type,
+                    value
+                ).then(r => r);
+            }
+            if (type === "category") {
+                getObservationData(
+                    true,
+                    selectedFilterHorizontal.country?.code,
+                    value,
+                    selectedFilterHorizontal.status
+                ).then(r => r);
+            }
+            if (type === "country") {
+                getObservationData(
+                    true,
+                    value.code,
+                    selectedFilterHorizontal.type,
+                    selectedFilterHorizontal.status
+                ).then(r => r);
+            }
+            if (type === "filter") {
+                getObservationData(
+                    true,
+                    selectedFilterHorizontal.country.code,
+                    selectedFilterHorizontal.type,
+                    selectedFilterHorizontal.status
+                ).then(r => r);
+            }
         }
     };
 
@@ -246,18 +246,19 @@ const Dashboard = () => {
         setSelectedFilterVertical({
             ...selectedFilterVertical,
             [name]: value,
+            filtered: true,
         });
     };
 
     //  Reset Filters
     const resetFilters = () => {
-        const {country: {name, code}, type, status} = selectedFilterHorizontal;
-        if (name !== "" || code !== "" || type !== "" || status !== "") {
+        if (selectedFilterHorizontal.filtered || selectedFilterVertical.filtered) {
             setFilterReset(true);
             setSelectedFilterHorizontal(dashboardHelper.horizontal);
             setSelectedFilterVertical(dashboardHelper.vertical);
         }
     };
+
 
     useEffect(() => {
         getObservationData(true, "", "", "").then(r => r);
