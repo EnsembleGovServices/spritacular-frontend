@@ -13,6 +13,8 @@ import { dashboardHelper } from "../../helpers/dashboard";
 import { baseURL } from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
 
+import DatePicker, { DateObject } from "react-multi-date-picker"
+
 const NotFound = lazy(() =>
     import("../../components/Common/NotFound")
 );
@@ -54,6 +56,8 @@ const Dashboard = () => {
     const [nextPageUrl, setNextPageUrl] = useState(dashboardHelper.nextPageUrl);
     const [filterReset, setFilterReset] = useState(false);
     const [loadedState, setLoadedState] = useState({ loading: true, hasData: true });
+
+    const [dtValue, setDTValue] = useState("");
 
     const getObservationData = async (
         reset = false,
@@ -239,10 +243,12 @@ const Dashboard = () => {
 
     //  Handle Filtered Input
     const handleFilterInput = (e) => {
+
+        console.log(e);
         let name = e.target.name,
             value = e.target.value;
 
-        // console.log(name, value);
+        console.log(name, value);
         setSelectedFilterVertical({
             ...selectedFilterVertical,
             [name]: value,

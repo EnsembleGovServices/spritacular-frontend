@@ -14,13 +14,16 @@
   height: calc(100vh - 142px);
   overflow: hidden;
   @include customScrollBar;
+
   @include media-breakpoint-down(xl) {
     margin-right: 30px;
     max-width: 210px;
   }
+
   @include media-breakpoint-down(lg) {
     top: 198px;
   }
+
   @include media-breakpoint-down(md) {
     left: 0;
     right: 0;
@@ -35,6 +38,7 @@
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     margin-right: 0;
   }
+
   @include media-breakpoint-down(sm) {
     top: 64px;
     height: calc(100vh - 64px);
@@ -54,12 +58,14 @@
   .form-control,
   .form-select {
     @include md-text;
-    padding: 6px 10px;
+    padding: 6px 16px;
+    letter-spacing: 0.5px;
   }
 
   .collapse-btn {
     @include sm-text;
     color: $grey;
+
     @include media-breakpoint-down(lg) {
       font-size: 11px;
     }
@@ -92,13 +98,29 @@
       width: 90px;
     }
 
+    .rmdp-container {
+      width: 100% !important;
+    }
+
+    .red .rmdp-day.rmdp-selected span:not(.highlight) {
+      box-shadow: none !important;
+    }
+
+    .red .rmdp-toolbar {
+      div {
+        background-color: $primary;
+      }
+    }
+
     input[type="date"] {
       //padding-left: 33px;
       position: relative;
       padding-right: 0;
+
       @include media-breakpoint-down(xl) {
         font-size: 13px;
       }
+
       @include media-breakpoint-down(md) {
         font-size: 14px;
       }
@@ -121,9 +143,11 @@
     input[type="time"] {
       //padding-left: 33px;
       padding: 6px 5px;
+
       @include media-breakpoint-down(xl) {
         font-size: 13px;
       }
+
       @include media-breakpoint-down(md) {
         font-size: 14px;
       }
@@ -145,6 +169,8 @@
   }
 
   .inner-wrapper {
+    overflow-x: hidden !important;
+
     @include media-breakpoint-down(md) {
       height: calc(100vh - 180px);
       overflow-y: auto;
