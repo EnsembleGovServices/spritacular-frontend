@@ -141,7 +141,8 @@ const FilterSelectMenu = (props) => {
                                                                                  value={item.name} onClick={(e) => {
                                                                 setSelectedFilterHorizontal({
                                                                     ...selectedFilterHorizontal,
-                                                                    country: item
+                                                                    country: item,
+                                                                    filtered: true
                                                                 });
                                                                 handleFilterValue(item, 'country');
                                                             }}>{item.name}</DropdownItem>
@@ -165,13 +166,14 @@ const FilterSelectMenu = (props) => {
                                                         <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                                     </DropdownToggle>
                                                     <DropdownMenu className="py-0 shadow">
-                                                        {auth.categoryList !== undefined && auth?.categoryList?.map((item, index) => {
+                                                        {auth?.categoryList !== undefined && auth?.categoryList?.map((item, index) => {
                                                             return <DropdownItem name="timezone"
                                                                                  className="px-2 fw-normal" key={index}
                                                                                  value={item.name} onClick={(e) => {
                                                                 setSelectedFilterHorizontal({
                                                                     ...selectedFilterHorizontal,
-                                                                    type: e.target.value
+                                                                    type: e.target.value,
+                                                                    filtered: true
                                                                 });
                                                                 handleFilterValue(e.target.value, 'category');
                                                             }}>{item.name}</DropdownItem>
@@ -202,7 +204,8 @@ const FilterSelectMenu = (props) => {
                                                                                  value={item} onClick={(e) => {
                                                                 setSelectedFilterHorizontal({
                                                                     ...selectedFilterHorizontal,
-                                                                    status: e.target.value.toLowerCase()
+                                                                    status: e.target.value.toLowerCase(),
+                                                                    filtered: true
                                                                 });
                                                                 handleFilterValue(e.target.value, 'status');
                                                             }}>{item}</DropdownItem>

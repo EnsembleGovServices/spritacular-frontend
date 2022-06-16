@@ -138,7 +138,6 @@ const ObservationDetails = (props) => {
                 isOpen={open}
                 backdrop={true}
                 keyboard={false}
-                scrollable={false}
                 size="xl"
                 toggle={handleClose}
                 ref={obvDetailsModal}

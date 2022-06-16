@@ -79,7 +79,9 @@ const AddObservation = () => {
             observationData?.map_data?.[index]?.azimuth &&
             observationData?.map_data?.[index]?.obs_time &&
             observationData?.map_data?.[index]?.obs_date &&
-            observationData?.map_data?.[index]?.timezone
+            observationData?.map_data?.[index]?.timezone &&
+            observationData?.map_data?.[index]?.latitude &&
+            observationData?.map_data?.[index]?.longitude
         ) {
             disabledEquipment = true;
         } else {
@@ -88,8 +90,7 @@ const AddObservation = () => {
         }
     }
 
-    const disabledLocationTab =
-        observationData?.image_type !== 3 ? disabledLocation && next : next;
+    const disabledLocationTab = observationData?.image_type !== 3 ? disabledLocation && next : next;
     const disabledEquipmentTab = disabledLocation && next && disabledEquipment;
 
     // Toggle Tabs
@@ -144,62 +145,109 @@ const AddObservation = () => {
             let name = e.target.name,
                 value = e.target.value;
 
-            if (name === "is_other") {
-                observationArray.data[
-                    observationImages?.selected_image_index
-                    ].category_map[name] = e.target.checked;
+            // if (name === "is_other") {
+            //     observationArray.data[
+            //         observationImages?.selected_image_index
+            //         ].category_map[name] = e.target.checked;
+            //     if (observationData?.image_type === 3) {
+            //         if (observationArray.data[1]) {
+            //             observationArray.data[1].category_map[name] = e.target.checked;
+            //         }
+            //         if (observationArray.data[2]) {
+            //             observationArray.data[2].category_map[name] = e.target.checked;
+            //         }
+            //     }
+            // } else {
+            //     if (name === "is_precise_azimuth") {
+            //         observationArray.data[observationImages?.selected_image_index][name] =
+            //             e.target.checked === true ? 1 : 0;
+            //         if (observationData?.image_type === 3) {
+            //             if (observationArray.data[1]) {
+            //                 observationArray.data[1]["is_precise_azimuth"] =
+            //                     e.target.checked === true ? 1 : 0;
+            //             }
+            //             if (observationArray.data[2]) {
+            //                 observationArray.data[2]["is_precise_azimuth"] =
+            //                     e.target.checked === true ? 1 : 0;
+            //             }
+            //         }
+            //         if (e.target.checked === false) {
+            //             observationArray.data[observationImages?.selected_image_index][
+            //                 "azimuth"
+            //                 ] =
+            //                 observationArray && observationArray.data
+            //                     ? observationArray.data[
+            //                         observationImages?.selected_image_index
+            //                         ]["azimuth"]
+            //                     : undefined;
+            //             if (observationData?.image_type === 3) {
+            //                 if (observationArray.data[1]) {
+            //                     observationArray.data[1]["azimuth"] =
+            //                         observationArray?.data?.[0]["azimuth"];
+            //                 }
+            //                 if (observationArray.data[2]) {
+            //                     observationArray.data[2]["azimuth"] =
+            //                         observationArray?.data?.[0]["azimuth"];
+            //                 }
+            //             }
+            //         }
+            //     } else {
+            //         observationArray.data[observationImages?.selected_image_index][name] =
+            //             value;
+            //         if (observationData?.image_type === 3) {
+            //             if (observationArray.data[1]) {
+            //                 observationArray.data[1][name] = value;
+            //             }
+            //             if (observationArray.data[2]) {
+            //                 observationArray.data[2][name] = value;
+            //             }
+            //         }
+            //     }
+            // }
+
+
+            if (name === "is_precise_azimuth") {
+                observationArray.data[observationImages?.selected_image_index][name] =
+                    e.target.checked === true ? 1 : 0;
                 if (observationData?.image_type === 3) {
                     if (observationArray.data[1]) {
-                        observationArray.data[1].category_map[name] = e.target.checked;
+                        observationArray.data[1]["is_precise_azimuth"] =
+                            e.target.checked === true ? 1 : 0;
                     }
                     if (observationArray.data[2]) {
-                        observationArray.data[2].category_map[name] = e.target.checked;
+                        observationArray.data[2]["is_precise_azimuth"] =
+                            e.target.checked === true ? 1 : 0;
+                    }
+                }
+                if (e.target.checked === false) {
+                    observationArray.data[observationImages?.selected_image_index][
+                        "azimuth"
+                        ] =
+                        observationArray && observationArray.data
+                            ? observationArray.data[
+                                observationImages?.selected_image_index
+                                ]["azimuth"]
+                            : undefined;
+                    if (observationData?.image_type === 3) {
+                        if (observationArray.data[1]) {
+                            observationArray.data[1]["azimuth"] =
+                                observationArray?.data?.[0]["azimuth"];
+                        }
+                        if (observationArray.data[2]) {
+                            observationArray.data[2]["azimuth"] =
+                                observationArray?.data?.[0]["azimuth"];
+                        }
                     }
                 }
             } else {
-                if (name === "is_precise_azimuth") {
-                    observationArray.data[observationImages?.selected_image_index][name] =
-                        e.target.checked === true ? 1 : 0;
-                    if (observationData?.image_type === 3) {
-                        if (observationArray.data[1]) {
-                            observationArray.data[1]["is_precise_azimuth"] =
-                                e.target.checked === true ? 1 : 0;
-                        }
-                        if (observationArray.data[2]) {
-                            observationArray.data[2]["is_precise_azimuth"] =
-                                e.target.checked === true ? 1 : 0;
-                        }
+                observationArray.data[observationImages?.selected_image_index][name] =
+                    value;
+                if (observationData?.image_type === 3) {
+                    if (observationArray.data[1]) {
+                        observationArray.data[1][name] = value;
                     }
-                    if (e.target.checked === false) {
-                        observationArray.data[observationImages?.selected_image_index][
-                            "azimuth"
-                            ] =
-                            observationArray && observationArray.data
-                                ? observationArray.data[
-                                    observationImages?.selected_image_index
-                                    ]["azimuth"]
-                                : undefined;
-                        if (observationData?.image_type === 3) {
-                            if (observationArray.data[1]) {
-                                observationArray.data[1]["azimuth"] =
-                                    observationArray?.data?.[0]["azimuth"];
-                            }
-                            if (observationArray.data[2]) {
-                                observationArray.data[2]["azimuth"] =
-                                    observationArray?.data?.[0]["azimuth"];
-                            }
-                        }
-                    }
-                } else {
-                    observationArray.data[observationImages?.selected_image_index][name] =
-                        value;
-                    if (observationData?.image_type === 3) {
-                        if (observationArray.data[1]) {
-                            observationArray.data[1][name] = value;
-                        }
-                        if (observationArray.data[2]) {
-                            observationArray.data[2][name] = value;
-                        }
+                    if (observationArray.data[2]) {
+                        observationArray.data[2][name] = value;
                     }
                 }
             }

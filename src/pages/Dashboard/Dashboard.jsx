@@ -1,16 +1,16 @@
 import "../../assets/scss/component/dashboard.scss";
-import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {lazy, Suspense, useCallback, useEffect, useMemo, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useObservationsData from "../../hooks/useObservationsData";
 
 import useObservations from "../../hooks/useObservations";
-import { LoadMore } from "../../components/Shared/LoadMore";
+import {LoadMore} from "../../components/Shared/LoadMore";
 
 import axios from "../../api/axios";
 import moment from "moment";
-import { dashboardHelper } from "../../helpers/dashboard";
-import { baseURL } from "../../helpers/url";
+import {dashboardHelper} from "../../helpers/dashboard";
+import {baseURL} from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
 
 import DatePicker, { DateObject } from "react-multi-date-picker"
@@ -36,10 +36,10 @@ const ObservationDetails = lazy(() =>
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const { auth } = useAuth();
+    const {auth} = useAuth();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [selectedObservationId, setSelectedObservationId] = useState();
-    const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
+    const {setObservationData, setObservationSteps, setObservationImages} = useObservations();
     const [filterShow, setFilterShow] = useState(true);
     const [listView, setListView] = useState(false);
     const [gridView, setGridView] = useState(true);
@@ -52,10 +52,11 @@ const Dashboard = () => {
     const [selectedFilterVertical, setSelectedFilterVertical] = useState(
         dashboardHelper.vertical
     );
-    const { observationListData, setObservationListData } = useObservationsData();
+    const {observationListData, setObservationListData} = useObservationsData();
     const [nextPageUrl, setNextPageUrl] = useState(dashboardHelper.nextPageUrl);
     const [filterReset, setFilterReset] = useState(false);
-    const [loadedState, setLoadedState] = useState({ loading: true, hasData: true });
+    const [loadedState, setLoadedState] = useState({loading: true, hasData: true});
+    const [shouldFilter, setShouldFilter] = useState(false);
 
     const [dtValue, setDTValue] = useState("");
 
@@ -65,7 +66,7 @@ const Dashboard = () => {
         category = `${selectedFilterHorizontal?.type}`,
         status = `${selectedFilterHorizontal?.status}`
     ) => {
-        setLoadedState({ loading: true })
+        setLoadedState({loading: true})
 
         if (auth?.user?.is_superuser) {
             let url;
@@ -143,7 +144,7 @@ const Dashboard = () => {
 
                 } else {
                     setNextPageUrl(null);
-                    setObservationListData({ list: [], active: {} });
+                    setObservationListData({list: [], active: {}});
                 }
                 // setObservationList(success?.data?.results?.data)
             }).catch((error) => {
@@ -203,6 +204,7 @@ const Dashboard = () => {
         setSearchCountry(value);
     };
 
+
     const handleFilterValue = (value, type) => {
         if (type === "status") {
             value = value.toLowerCase();
@@ -213,7 +215,6 @@ const Dashboard = () => {
                 value
             ).then(r => r);
         }
-
         if (type === "category") {
             getObservationData(
                 true,
@@ -222,7 +223,6 @@ const Dashboard = () => {
                 selectedFilterHorizontal.status
             ).then(r => r);
         }
-
         if (type === "country") {
             getObservationData(
                 true,
@@ -231,7 +231,7 @@ const Dashboard = () => {
                 selectedFilterHorizontal.status
             ).then(r => r);
         }
-        if (type === "filter") {
+        if (shouldFilter && type === "filter") {
             getObservationData(
                 true,
                 selectedFilterHorizontal.country.code,
@@ -252,18 +252,19 @@ const Dashboard = () => {
         setSelectedFilterVertical({
             ...selectedFilterVertical,
             [name]: value,
+            filtered: true,
         });
     };
 
     //  Reset Filters
     const resetFilters = () => {
-        const { country: { name, code }, type, status } = selectedFilterHorizontal;
-        if (name !== "" || code !== "" || type !== "" || status !== "") {
+        if (selectedFilterHorizontal.filtered || selectedFilterVertical.filtered) {
             setFilterReset(true);
             setSelectedFilterHorizontal(dashboardHelper.horizontal);
             setSelectedFilterVertical(dashboardHelper.vertical);
         }
     };
+
 
     useEffect(() => {
         getObservationData(true, "", "", "").then(r => r);
@@ -296,6 +297,11 @@ const Dashboard = () => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal]);
+
+
+    useEffect(() => {
+        setShouldFilter(selectedFilterHorizontal?.filtered || selectedFilterVertical?.filtered);
+    }, [selectedFilterHorizontal?.filtered, selectedFilterVertical?.filtered])
 
     return (
         <>
@@ -341,43 +347,41 @@ const Dashboard = () => {
 
                                 <div
                                     className={`dashboard-card overflow-hidden ${filterShow ? "sm-card" : "maximize-dash-content"
-                                        }`}
+                                    }`}
                                 >
-                                    {
-                                        (!loadedState.loading && observationListData?.list.length > 0 && !filterReset) ?
-                                            listView ? (
-                                                <Suspense fallback={<Loader fixContent={true} />}>
-                                                    <ObservationListView
-                                                        observationList={observationListData?.list}
-                                                        isObservationDetailModal={isObservationDetailModal}
-                                                        setObservationDetailModal={setObservationDetailModal}
-                                                        setSelectedObservationId={setSelectedObservationId}
-                                                    />
-                                                    {nextPageUrl && observationListData?.list.length > 0 && (
-                                                        <LoadMore handleLoadMore={handleLoadMoreData} />
-                                                    )}
-                                                </Suspense>
-                                            ) :
-                                                (
-                                                    <Suspense fallback={<div></div>}>
-                                                        <ObservationDetailPage
-                                                            observationList={observationListData?.list}
-                                                            isObservationDetailModal={isObservationDetailModal}
-                                                            setObservationDetailModal={setObservationDetailModal}
-                                                            setSelectedObservationId={setSelectedObservationId}
-                                                        />
+                                    {listView ? (
+                                        <Suspense fallback={<div></div>}>
+                                            <ObservationListView
+                                                observationList={observationListData?.list}
+                                                isObservationDetailModal={isObservationDetailModal}
+                                                setObservationDetailModal={setObservationDetailModal}
+                                                setSelectedObservationId={setSelectedObservationId}
+                                            />
+                                            {nextPageUrl && observationListData?.list.length > 0 && (
+                                                <LoadMore handleLoadMore={handleLoadMoreData}/>
+                                            )}
+                                        </Suspense>
+                                    ) : (
+                                        <Suspense fallback={<div></div>}>
+                                            <ObservationDetailPage
+                                                observationList={observationListData?.list}
+                                                isObservationDetailModal={isObservationDetailModal}
+                                                setObservationDetailModal={setObservationDetailModal}
+                                                setSelectedObservationId={setSelectedObservationId}
+                                            />
+                                            {nextPageUrl && observationListData?.list.length > 0 && (
+                                                <LoadMore handleLoadMore={handleLoadMoreData}/>
+                                            )}
+                                        </Suspense>
+                                    )}
 
-                                                        {(!loadedState.loading && nextPageUrl && observationListData?.list.length > 0) && (
-                                                            <LoadMore handleLoadMore={handleLoadMoreData} />
-                                                        )}
-                                                    </Suspense>
-                                                )
-                                            : (loadedState.loading || filterReset) && <Loader loaderClass="h-50 position-relative" />
+                                    {loadedState?.loading &&
+                                        <Loader fixContent={true}/>
                                     }
 
                                     {(!loadedState?.hasData && observationListData?.list.length === 0 && !loadedState.loading) &&
                                         <Suspense fallback={''}>
-                                            <NotFound />
+                                            <NotFound/>
                                         </Suspense>
                                     }
 
