@@ -7,6 +7,7 @@ import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import Loader from "../../components/Shared/Loader";
 import {Link} from "react-router-dom";
+import NotFound from "../../components/Common/NotFound";
 
 const BlogFeatured = lazy(() => import('./Featured/BlogFeatured'))
 const BlogGrid4 = lazy(() => import('./Grid/BlogGrid4'))
@@ -39,7 +40,7 @@ const BlogList = () => {
     useEffect(() => {
         getArticles().then(r => r)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [articles?.length !== 0])
 
     return (
         <div className="blog_page position-relative">
