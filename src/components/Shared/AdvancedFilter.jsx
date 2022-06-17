@@ -1,12 +1,12 @@
 import "../../assets/scss/component/advancedFilter.scss";
 import { Button, Card, CardBody, Col, Collapse, FormGroup, Label, Row } from "reactstrap";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import Images from "../../static/images";
 import moment from "moment";
 import PropTypes from "prop-types";
 // Date-time-picker 
-import DatePicker, { DateObject } from "react-multi-date-picker";
+import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import InputIcon from "react-multi-date-picker/components/input_icon";
 import "react-multi-date-picker/styles/colors/red.css";
@@ -15,31 +15,52 @@ import Toolbar from "react-multi-date-picker/plugins/toolbar";
 import transition from "react-element-popper/animations/transition"
 import opacity from "react-element-popper/animations/opacity"
 import highlightWeekends from "react-multi-date-picker/plugins/highlight_weekends";
-import { array } from "prop-types";
 
 const AdvancedFilter = (props) => {
     const { selectedFilterVertical, handleFilterOpen, handleFilterValue, resetFilters, handleFilterInput } = props;
     const [isDateTimeOpen, setIsDateTimeOpen] = useState(true);
+    const [date, setDate] = useState(["dd/mm/yyy"]);
+    const [time, setTime] = useState([new Date().toLocaleTimeString().toUpperCase()]);
     const [dateValue, setDateValue] = useState({
-        value: "",
-        format: "DD/MM/YYYY HH:mm:ss A",
-        onChange: (date) => console.log(date.format()),
-    });
-    const [timeValue, setTimeValue] = useState({
-        onChange: (date) => console.log(date.format()),
+        obs_start_date: null,
+        obs_end_date: null,
+        obs_start_time: null,
+        obs_end_time: null,
     });
 
-    function handleChange(value) {
-        console.log(new DateObject({ value, format: "DD/MM/YYYY" }).format(),);
+    function handleChange(props) {
+        console.log(props);
+        // console.log(props[0]?.format("DD/MM/YYYY"));
+        // setDate([props[0]?.format("DD/MM/YYYY")])
 
-        console.log(value.format());
+        // console.log(props?.value[0]?.format());
+        // console.log(props.value?.format("DD/MM/YYYY"));
+        // console.log(props.value?.format());
+
+        // const combineObj = { target: { name: props.name, value: props.value?.format("DD/MM/YYYY") } }
+        // console.log(combineObj);
+
         //your modification on passed value ....
-        // setDateValue(value)
+        // setDate(props.value?.format())
+        // setTime([props?.value[0]?.format()])
+
     }
+
+    const resetAll = () => {
+        console.log(date, time);
+        setDate(["dd/mm/yyy"]);
+        setTime([new Date().toLocaleTimeString().toUpperCase()]);
+        resetFilters();
+    }
+
+    useEffect(() => {
+        console.log("UseEffect Data ", date, time);
+    }, [])
+
 
     return (
         <div className='advanced-filter d-flex flex-column'>
-            <Row className="h-100 overflow-auto">
+            <Row className="h-100 py-2">
                 <Col xs={12} className='d-flex justify-content-end d-md-none'>
                     <Button className="close-icon bg-transparent shadow-none border-0 rounded-0"
                         onClick={() => handleFilterOpen()}>
@@ -64,40 +85,56 @@ const AdvancedFilter = (props) => {
                                             <Col xs={12}>
                                                 <FormGroup>
                                                     <Label className='fw-normal text-black'>From</Label>
-                                                    <div className='d-flex justify-content-between date-time_row w-100'>
-                                                        <div className="position-relative w-100">
-                                                            {/* <input className="form-control"
-                                                                type="date"
-                                                                name="obs_start_date"
-                                                                value={selectedFilterVertical?.obs_start_date === null ? "" : selectedFilterVertical?.obs_start_date}
-                                                                max={moment(new Date()).format('Y-MM-DD')}
-                                                                onChange={(e) => handleFilterInput(e)} /> */}
+                                                    <div className='d-flex justify-content-between date-time_row'>
+                                                        <div className="position-relative date-box w-100">
                                                             <DatePicker
-                                                                render={<CustomDateTimeInput className="w-100" name={'obs_start_date'} value={dateValue} selectedFilterVertical={selectedFilterVertical} handleFilterInput={handleChange} onPC={setDateValue} />}
-                                                                // render={<InputIcon />}
-
-                                                                className="w-100 red form-control"
-                                                                format="DD/MM/YYYY              HH:mm:ss A"
+                                                                render={<CustomDateTimeInput name={'obs_start_date'} dateState={date} selectedFilterVertical={selectedFilterVertical} handleValueChange={handleChange} />}
+                                                                className="red"
+                                                                format="DD/MM/YYYY"
+                                                                name="obs_start_date"
+                                                                editable={false}
+                                                                scrollSensitive={false}
+                                                                onOpenPickNewDate={false}
+                                                                onPropsChange={(props) => handleChange(props)}
+                                                                // value={date}
                                                                 plugins={[
-                                                                    <TimePicker position="bottom" />,
-                                                                    <Toolbar position="bottom" sort={["deselect", "close", "today"]} />,
+                                                                    <Toolbar
+                                                                        position="bottom"
+                                                                        sort={["deselect", "close", "today"]}
+                                                                    />,
                                                                     highlightWeekends()
                                                                 ]}
-                                                                animations={[opacity({ from: 0.5, to: 1 }), transition({ from: 25, duration: 500 })]}
-                                                                onOpenPickNewDate={false}
-                                                                // {...dateValue}
-                                                                // value={dateValue.value === "" ? "dd/mm/yyy                            --:-- --" : dateValue.value}
-                                                                // onPropsChange={setTimeValue}
+                                                                animations={[
+                                                                    opacity({ from: 0.5, to: 1 }),
+                                                                    transition({ from: 25, duration: 500 })
+                                                                ]}
+
                                                             />
                                                         </div>
 
-                                                        {/* <div className="position-relative time-box">
-                                                            <input className="form-control"
-                                                                type="time"
+                                                        <div className="position-relative time-box w-100">
+                                                            <DatePicker
+                                                                render={<CustomTimeInput name={"obs_start_time"} timeState={time} selectedFilterVertical={selectedFilterVertical} handleValueChange={handleChange} />}
+                                                                disableDayPicker
                                                                 name="obs_start_time"
-                                                                value={selectedFilterVertical?.obs_start_time === null ? "" : selectedFilterVertical?.obs_start_time}
-                                                                onChange={(e) => handleFilterInput(e)} />
-                                                        </div> */}
+                                                                format="hh:mm:ss A"
+                                                                plugins={[
+                                                                    <TimePicker style={{ minWidth: "180px" }} />,
+                                                                    <Toolbar
+                                                                        position="bottom"
+                                                                        names={{
+                                                                            close: "Close",
+                                                                            today: "Current",
+                                                                        }}
+                                                                        sort={["close", "today"]}
+                                                                    />
+                                                                ]}
+                                                                // value={time}
+                                                                // onChange={e => handleChange(e)}
+                                                                scrollSensitive={false}
+                                                                onPropsChange={(props) => handleChange(props)}
+                                                            />
+                                                        </div>
                                                     </div>
                                                 </FormGroup>
                                             </Col>
@@ -120,13 +157,20 @@ const AdvancedFilter = (props) => {
                                                                 value={selectedFilterVertical?.obs_end_time === null ? "" : selectedFilterVertical?.obs_end_time}
                                                                 onChange={(e) => handleFilterInput(e)} />
                                                         </div> */}
-                                                        <div className="position-relative w-100">
+                                                        <div className="position-relative date-box w-100">
                                                             <DatePicker
-                                                                render={<CustomDateTimeInput className="w-100" name={'obs_end_date'} value={timeValue} selectedFilterVertical={selectedFilterVertical} handleValueChange={handleChange} />}
-                                                                className="w-100 red"
-                                                                format="DD/MM/YYYY              HH:mm:ss A"
+                                                                render={<CustomDateTimeInput name={'obs_end_date'} dateState={date} selectedFilterVertical={selectedFilterVertical} handleValueChange={handleChange} />}
+                                                                className="red"
+                                                                format="DD/MM/YYYY"
+                                                                name="obs_end_date"
+                                                                // value={date}
+                                                                // onChange={handleChange}
+                                                                editable={false}
+                                                                onOpenPickNewDate={false}
+                                                                scrollSensitive={false}
+                                                                onPropsChange={(props) => handleChange(props)}
                                                                 plugins={[
-                                                                    <TimePicker position="bottom" />,
+                                                                    // <TimePicker position="bottom" />,
                                                                     <Toolbar
                                                                         position="bottom"
                                                                         sort={["deselect", "close", "today"]}
@@ -136,7 +180,30 @@ const AdvancedFilter = (props) => {
                                                                     opacity({ from: 0.5, to: 1 }),
                                                                     transition({ from: 25, duration: 500 })
                                                                 ]}
-                                                                onOpenPickNewDate={false}
+
+                                                            />
+                                                        </div>
+                                                        <div className="position-relative time-box w-100">
+                                                            <DatePicker
+                                                                render={<CustomTimeInput name={"obs_end_time"} timeState={time} selectedFilterVertical={selectedFilterVertical} handleValueChange={handleChange} />}
+                                                                disableDayPicker
+                                                                name="obs_end_time"
+                                                                format="hh:mm:ss A"
+                                                                plugins={[
+                                                                    <TimePicker style={{ minWidth: "180px" }} />,
+                                                                    <Toolbar
+                                                                        position="bottom"
+                                                                        names={{
+                                                                            close: "Close",
+                                                                            today: "Current",
+                                                                        }}
+                                                                        sort={["close", "today"]}
+                                                                    />
+                                                                ]}
+                                                                // value={time}
+                                                                // onChange={(e) => handleChange(e)}
+                                                                scrollSensitive={false}
+                                                                onPropsChange={(props) => handleChange(props)}
                                                             />
                                                         </div>
                                                     </div>
@@ -150,13 +217,13 @@ const AdvancedFilter = (props) => {
                     </Col>
                 </div>
             </Row>
-            <Row className="">
+            <Row className="py-2">
                 <Col>
                     <div className="d-flex align-items-center justify-content-between">
                         <button onClick={() => handleFilterValue('filter', 'filter')}
                             className="btn btn-primary w-100 me-1">Filter
                         </button>
-                        <button onClick={() => resetFilters()} className="btn btn-dark w-100">Reset</button>
+                        <button onClick={() => resetAll()} className="btn btn-dark w-100">Reset</button>
                     </div>
                 </Col>
             </Row>
@@ -171,19 +238,32 @@ AdvancedFilter.propTypes = {
 };
 
 
-function CustomDateTimeInput({ openCalendar, name, value, handleValueChange, selectedFilterVertical }) {
-    // console.log(value);
+function CustomDateTimeInput({ openCalendar, name, value, dateState, handleValueChange, selectedFilterVertical }) {
+    // console.log(name, dateState);
     return (
-        <InputIcon
+        <input
             className="form-control"
             name={name}
             onFocus={openCalendar}
-            // value={selectedFilterVertical?.obs_start_date === null ? "dd/mm/yyy               --:-- --" : selectedFilterVertical?.obs_start_date}
-            value={value === "" ? "dd/mm/yyy                            --:-- --" : value[0]}
+            // value={selectedFilterVertical?.obs_start_date === null ? "dd/mm/yyy" : selectedFilterVertical?.obs_start_date}
+            value={value === "" ? dateState[0] : value[0]}
             onChange={handleValueChange}
             max={moment(new Date()).format('Y-MM-DD')}
         />
     )
 }
+function CustomTimeInput({ openCalendar, name, value, timeState, handleValueChange, selectedFilterVertical }) {
+    // console.log(name, value);
+    return (
+        <InputIcon
+            className="form-control"
+            name={name}
+            onFocus={openCalendar}
+            value={value === "" ? timeState[0] : value[0]}
+            onChange={handleValueChange}
+        />
+    )
+}
+
 
 export default AdvancedFilter;

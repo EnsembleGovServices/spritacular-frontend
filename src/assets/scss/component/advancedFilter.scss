@@ -12,7 +12,7 @@
   top: 142px;
   right: 0;
   height: calc(100vh - 142px);
-  overflow: hidden;
+  // overflow: hidden;
   @include customScrollBar;
 
   @include media-breakpoint-down(xl) {
@@ -58,8 +58,8 @@
   .form-control,
   .form-select {
     @include md-text;
-    padding: 6px 16px;
-    letter-spacing: 0.5px;
+    padding: 6px 12px;
+    word-spacing: 8px;
   }
 
   .collapse-btn {
@@ -98,9 +98,9 @@
       width: 90px;
     }
 
-    .rmdp-container {
-      width: 100% !important;
-    }
+    // .rmdp-container {
+    //   width: 100% !important;
+    // }
 
     .red .rmdp-day.rmdp-selected span:not(.highlight) {
       box-shadow: none !important;
@@ -169,7 +169,7 @@
   }
 
   .inner-wrapper {
-    overflow-x: hidden !important;
+    // overflow-x: hidden !important;
 
     @include media-breakpoint-down(md) {
       height: calc(100vh - 180px);
