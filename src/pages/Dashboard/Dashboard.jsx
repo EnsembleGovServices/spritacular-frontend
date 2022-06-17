@@ -1,5 +1,5 @@
 import "../../assets/scss/component/dashboard.scss";
-import {lazy, Suspense, useCallback, useEffect, useMemo, useState} from "react";
+import {lazy, Suspense, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useObservationsData from "../../hooks/useObservationsData";
@@ -13,7 +13,6 @@ import {dashboardHelper} from "../../helpers/dashboard";
 import {baseURL} from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
 
-import DatePicker, { DateObject } from "react-multi-date-picker"
 
 const NotFound = lazy(() =>
     import("../../components/Common/NotFound")
@@ -57,8 +56,6 @@ const Dashboard = () => {
     const [filterReset, setFilterReset] = useState(false);
     const [loadedState, setLoadedState] = useState({loading: true, hasData: true});
     const [shouldFilter, setShouldFilter] = useState(false);
-
-    const [dtValue, setDTValue] = useState("");
 
     const getObservationData = async (
         reset = false,
