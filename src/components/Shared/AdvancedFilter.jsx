@@ -179,33 +179,4 @@ AdvancedFilter.propTypes = {
 };
 
 
-// function CustomDateTimeInput({openCalendar, name, value, dateState, handleValueChange, selectedFilterVertical}) {
-//     // console.log(name, dateState);
-//     return (
-//         <input
-//             className="form-control"
-//             name={name}
-//             onFocus={openCalendar}
-//             // value={selectedFilterVertical?.obs_start_date === null ? "dd/mm/yyy" : selectedFilterVertical?.obs_start_date}
-//             value={value === "" ? dateState[0] : value[0]}
-//             onChange={handleValueChange}
-//             max={moment(new Date()).format('Y-MM-DD')}
-//         />
-//     )
-// }
-//
-// function CustomTimeInput({openCalendar, name, value, timeState, handleValueChange, selectedFilterVertical}) {
-//     // console.log(name, value);
-//     return (
-//         <InputIcon
-//             className="form-control"
-//             name={name}
-//             onFocus={openCalendar}
-//             value={value === "" ? timeState[0] : value[0]}
-//             onChange={handleValueChange}
-//         />
-//     )
-// }
-
-
 export default AdvancedFilter;
