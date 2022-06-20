@@ -2,7 +2,7 @@ import "../../assets/scss/component/advancedFilter.scss";
 import "../../assets/scss/styles/editors.css"
 import {cdn} from "../../helpers/url";
 import {Button, Card, CardBody, Col, Collapse, FormGroup, Label, Row} from "reactstrap";
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {Icon} from '@iconify/react';
 import PropTypes from "prop-types";
 
@@ -15,12 +15,6 @@ import "react-multi-date-picker/styles/colors/red.css";
 const AdvancedFilter = (props) => {
     const {selectedFilterVertical, handleFilterOpen, handleFilterValue, resetFilters, handleFilterInput} = props;
     const [isDateTimeOpen, setIsDateTimeOpen] = useState(true);
-
-
-    const handleDateTimeChange = (e) => {
-        console.log(e)
-        console.log(e.format())
-    }
 
     const resetAll = () => {
         resetFilters();

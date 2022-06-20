@@ -1,6 +1,5 @@
 import "../../assets/scss/component/observationCard.scss";
 import {Container, Row, Col} from "reactstrap";
-import Images from "../../static/images";
 import {Link} from "react-router-dom";
 import {cdn, routeUrls} from "../../helpers/url";
 import BlurImage from "../Common/BlurImage";

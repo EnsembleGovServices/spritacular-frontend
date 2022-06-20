@@ -8,7 +8,6 @@ import useObservations from "../../hooks/useObservations";
 import {LoadMore} from "../../components/Shared/LoadMore";
 
 import axios from "../../api/axios";
-import moment from "moment";
 import {dashboardHelper} from "../../helpers/dashboard";
 import {baseURL} from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
