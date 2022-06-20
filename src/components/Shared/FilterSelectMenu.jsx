@@ -18,9 +18,10 @@ import {
     DropdownToggle
 } from "reactstrap";
 import {Icon} from "@iconify/react";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import Images from './../../static/images';
 import {baseURL, routeUrls} from "../../helpers/url";
+import {useEffect, useState} from "react";
 
 const FilterSelectMenu = (props) => {
     const {
@@ -38,10 +39,13 @@ const FilterSelectMenu = (props) => {
         handleListView,
         handleGridView,
         listView,
-        gridView
+        gridView,
+        resetFilter
     } = props;
     const {auth} = useAuth();
+    const location = useLocation();
     const {observationCSVId, setObservationCSVId} = useObservationsData();
+    const [isGalleryPage, setGalleryPage] = useState(false);
     const CSVID = observationCSVId?.data?.observation;
 
     const handleCSVDownload = (id) => {
@@ -89,6 +93,14 @@ const FilterSelectMenu = (props) => {
             })
         })
     }
+
+    useEffect(() => {
+        if (location.pathname === '/gallery') {
+            setGalleryPage(true);
+        } else {
+            setGalleryPage(false);
+        }
+    }, [location.pathname])
 
     return (
         <>
@@ -240,6 +252,14 @@ const FilterSelectMenu = (props) => {
                                                         </button>
                                                     </div>
                                                 </>
+                                            }
+                                            {isGalleryPage &&
+                                                <div className="d-inline-flex align-items-center h-100">
+                                                    <button type="button" className="btn px-4 btn-outline-primary me-2"
+                                                            onClick={() => resetFilter()}>
+                                                        Clear Filter
+                                                    </button>
+                                                </div>
                                             }
                                             {!dashboardFilter && <Link to={'/' + routeUrls.observationsAdd}
                                                                        className="btn btn-secondary shadow-none mt-2 mt-md-0">

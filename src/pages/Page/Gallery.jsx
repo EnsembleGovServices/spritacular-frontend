@@ -10,6 +10,7 @@ import {baseURL, routeUrls} from "../../helpers/url";
 import {LoadMore} from "../../components/Shared/LoadMore";
 import useObservationsData from "../../hooks/useObservationsData";
 import Loader from "../../components/Shared/Loader";
+import {dashboardHelper} from "../../helpers/dashboard";
 
 const NotFound = lazy(() =>
     import("../../components/Common/NotFound")
@@ -166,6 +167,12 @@ const Gallery = () => {
         }
     };
 
+
+    const resetHorizontalFilter = () => {
+        setSelectedFilterHorizontal(dashboardHelper.horizontal);
+        getObservationType(true, "", "", "").then(r => r);
+    }
+
     useEffect(() => {
         if (isFilterOpen.isCountryOpen === false) {
             setSearchCountry("");
@@ -209,6 +216,7 @@ const Gallery = () => {
                     searchCountry={searchCountry}
                     findCountry={findCountry}
                     handleFilterValue={handleFilterValue}
+                    resetFilter={resetHorizontalFilter}
                 />
             </Suspense>
 

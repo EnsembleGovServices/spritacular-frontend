@@ -35,7 +35,7 @@ import compassArrow from "../assets/images/compass-arrow.svg";
 import PageNotFound from "../assets/images/404-error.svg";
 import ErrorBG from "../assets/images/error_bg.svg";
 import Ensemble from "../assets/images/ensemble.png";
-import NoDataFound from "../assets/images/no-data.svg";
+import NoDataFound from "../assets/images/notfound.svg";
 import RemoveData from "../assets/images/remove-data.svg";
 import Filter from "../assets/images/filter.png";
 import DefaultProfile from "../assets/images/profile.svg";
