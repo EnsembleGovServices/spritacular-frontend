@@ -17,6 +17,7 @@ const BlogRestLists = lazy(() => import('./List/BlogRestLists'))
 const BlogList = () => {
     const {auth} = useAuth();
     const [articles, setArticles] = useState([]);
+    const [hasData, setHasData] = useState(false);
     const admin = auth?.user?.is_superuser;
 
 
@@ -26,12 +27,19 @@ const BlogList = () => {
                 "Content-Type": "application/json",
             },
         }).then(response => {
+            if (response?.data?.data?.length > 0) {
+                setHasData(true);
+            } else {
+                setHasData(false);
+            }
+
             setArticles({
-                featured: response?.data?.data[0],
+                featured: response?.data?.data[0] ? response?.data?.data[0] : null,
                 grid4: response?.data?.data?.slice(1, 5),
                 list: response?.data?.data?.slice(5),
                 all: response?.data?.data
             });
+
         }).catch(error => {
             console.log('error', error)
         })
@@ -40,7 +48,7 @@ const BlogList = () => {
     useEffect(() => {
         getArticles().then(r => r)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [articles?.length !== 0])
+    }, [])
 
     return (
         <div className="blog_page position-relative">

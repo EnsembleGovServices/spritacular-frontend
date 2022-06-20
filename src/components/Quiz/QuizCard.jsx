@@ -63,7 +63,7 @@ const QuizCard = (props) => {
                                             className="btn px-5 btn-outline-dark">Prev
                                     </button>
 
-                                    {quizControl?.activeIndex === 14 ? (
+                                    {quizControl?.activeIndex === (quizControl.total - 1) ? (
                                         <button type="submit"
                                                 onClick={handleQuizSubmit}
                                                 disabled={disable?.nextBtn}
