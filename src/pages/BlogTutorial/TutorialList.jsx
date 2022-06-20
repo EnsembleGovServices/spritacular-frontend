@@ -1,18 +1,20 @@
 import "../../assets/scss/component/tutorials.scss";
-import { Container } from "reactstrap"
-import { useEffect, useState, lazy, Suspense } from "react";
-import { baseURL, routeUrls } from "../../helpers/url";
+import {Container} from "reactstrap"
+import {useEffect, useState, lazy, Suspense} from "react";
+import {baseURL, routeUrls} from "../../helpers/url";
 import axios from "../../api/axios";
 
 import useAuth from "../../hooks/useAuth";
 import Loader from "../../components/Shared/Loader";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import NotFound from "../../components/Common/NotFound";
 
 const TutorialRestLists = lazy(() => import('./List/TutorialRestLists'))
 
 const TutorialList = () => {
-    const { auth } = useAuth();
+    const {auth} = useAuth();
     const [tutorials, setTutorials] = useState([]);
+    const [hasData, setHasData] = useState(true);
     const admin = auth?.user?.is_superuser;
 
     const getTutorials = async () => {
@@ -22,6 +24,11 @@ const TutorialList = () => {
             },
         }).then(response => {
             // console.log(response?.data)
+            if (response?.data?.data?.length > 0) {
+                setHasData(true);
+            } else {
+                setHasData(false);
+            }
             setTutorials({
                 list: response?.data?.data
             })
@@ -31,7 +38,7 @@ const TutorialList = () => {
     }
 
     useEffect(() => {
-        document.getElementById("user_tut")?.scroll({ top: 0, behavior: "smooth" });
+        document.getElementById("user_tut")?.scroll({top: 0, behavior: "smooth"});
         getTutorials().then(r => r)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -50,9 +57,13 @@ const TutorialList = () => {
                                     className="btn btn-primary px-4">Create Tutorial</Link>
                             }
                         </div>
-                        <Suspense fallback={<Loader fixContent={true} />}>
-                            <TutorialRestLists articleItems={tutorials?.list} />
-                        </Suspense>
+                        {hasData ? (
+                            <Suspense fallback={<Loader fixContent={true}/>}>
+                                <TutorialRestLists articleItems={tutorials?.list}/>
+                            </Suspense>
+                        ) : (
+                            <NotFound/>
+                        )}
                     </Container>
                 </section>
             </div>

@@ -17,7 +17,7 @@ const BlogRestLists = lazy(() => import('./List/BlogRestLists'))
 const BlogList = () => {
     const {auth} = useAuth();
     const [articles, setArticles] = useState([]);
-    const [hasData, setHasData] = useState(false);
+    const [hasData, setHasData] = useState(true);
     const admin = auth?.user?.is_superuser;
 
 
@@ -50,6 +50,7 @@ const BlogList = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+
     return (
         <div className="blog_page position-relative">
             <div className="common-banner"></div>
@@ -64,23 +65,31 @@ const BlogList = () => {
                         }
                     </div>
 
-                    <Row className="g-4">
-                        <Col md={6}>
-                            <Suspense fallback={<Loader fixContent={true}/>}>
-                                <BlogFeatured articleItems={articles?.featured}/>
-                            </Suspense>
-                        </Col>
-                        <Col md={6}>
-                            <Suspense fallback={<Loader fixContent={true}/>}>
-                                <BlogGrid4 articleItems={articles?.grid4}/>
-                            </Suspense>
-                        </Col>
-                    </Row>
-                    <div className="mt-4">
-                        <Suspense fallback={<Loader fixContent={true}/>}>
-                            <BlogRestLists articleItems={articles?.list}/>
-                        </Suspense>
-                    </div>
+                    {hasData ? (
+                        <>
+                            <Row className="g-4">
+                                <Col md={6}>
+                                    <Suspense fallback={<Loader fixContent={true}/>}>
+                                        <BlogFeatured articleItems={articles?.featured}/>
+                                    </Suspense>
+                                </Col>
+                                <Col md={6}>
+                                    <Suspense fallback={<Loader fixContent={true}/>}>
+                                        <BlogGrid4 articleItems={articles?.grid4}/>
+                                    </Suspense>
+                                </Col>
+                            </Row>
+                            <div className="mt-4">
+                                <Suspense fallback={<Loader fixContent={true}/>}>
+                                    <BlogRestLists articleItems={articles?.list}/>
+                                </Suspense>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <NotFound/>
+                        </>
+                    )}
                 </Container>
             </section>
         </div>
