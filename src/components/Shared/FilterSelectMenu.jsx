@@ -253,7 +253,7 @@ const FilterSelectMenu = (props) => {
                                                     </div>
                                                 </>
                                             }
-                                            {isGalleryPage &&
+                                            {isGalleryPage && !auth?.user?.is_user &&
                                                 <div className="d-inline-flex align-items-center h-100">
                                                     <button type="button" className="btn px-4 btn-outline-primary me-2"
                                                             onClick={() => resetFilter()}>
