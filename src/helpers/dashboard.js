@@ -17,8 +17,8 @@ export const dashboardHelper = {
         filtered: false
     },
     vertical: {
-        // from_obs_data: null,
-        // to_obs_data: null,
+        from_obs_data: null,
+        to_obs_data: null,
         obs_start_date: null,
         obs_end_date: null,
         obs_start_time: null,

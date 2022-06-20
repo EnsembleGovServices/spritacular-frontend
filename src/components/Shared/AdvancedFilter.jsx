@@ -10,8 +10,7 @@ import PropTypes from "prop-types";
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import "react-multi-date-picker/styles/colors/red.css";
-import Toolbar from "react-multi-date-picker/plugins/toolbar";
-import highlightWeekends from "react-multi-date-picker/plugins/highlight_weekends";
+
 
 const AdvancedFilter = (props) => {
     const {selectedFilterVertical, handleFilterOpen, handleFilterValue, resetFilters, handleFilterInput} = props;
@@ -62,17 +61,10 @@ const AdvancedFilter = (props) => {
                                                                 format="DD/MM/YYYY"
                                                                 placeholder="DD/MM/YYYY"
                                                                 name="obs_start_date"
-                                                                editable={false}
                                                                 scrollSensitive={false}
                                                                 onOpenPickNewDate={false}
-                                                                onChange={(e) => handleDateTimeChange(e)}
-                                                                plugins={[
-                                                                    <Toolbar
-                                                                        position="bottom"
-                                                                        sort={["deselect", "close", "today"]}
-                                                                    />,
-                                                                    highlightWeekends()
-                                                                ]}
+                                                                value={selectedFilterVertical?.obs_start_date}
+                                                                onChange={(e) => handleFilterInput(e, 'obs_start_date')}
                                                             />
                                                         </div>
 
@@ -82,19 +74,12 @@ const AdvancedFilter = (props) => {
                                                                 className="red"
                                                                 inputClass="form-control"
                                                                 name="obs_start_time"
-                                                                format="hh:mm:ss A"
+                                                                format="HH:mm"
                                                                 placeholder="Select Time"
-                                                                onChange={(e) => handleDateTimeChange(e)}
+                                                                value={selectedFilterVertical?.obs_start_time}
+                                                                onChange={(e) => handleFilterInput(e, 'obs_start_time')}
                                                                 plugins={[
                                                                     <TimePicker/>,
-                                                                    <Toolbar
-                                                                        position="bottom"
-                                                                        names={{
-                                                                            close: "Close",
-                                                                            today: "Current",
-                                                                        }}
-                                                                        sort={["close", "today"]}
-                                                                    />
                                                                 ]}
                                                                 scrollSensitive={false}
                                                             />
@@ -114,15 +99,10 @@ const AdvancedFilter = (props) => {
                                                                 format="DD/MM/YYYY"
                                                                 placeholder="DD/MM/YYYY"
                                                                 name="obs_end_date"
-                                                                editable={false}
                                                                 onOpenPickNewDate={false}
                                                                 scrollSensitive={false}
-                                                                plugins={[
-                                                                    <Toolbar
-                                                                        position="bottom"
-                                                                        sort={["deselect", "close", "today"]}
-                                                                    />
-                                                                ]}
+                                                                value={selectedFilterVertical?.obs_end_date}
+                                                                onChange={(e) => handleFilterInput(e, 'obs_end_date')}
                                                             />
                                                         </div>
                                                         <div className="position-relative time-box w-100">
@@ -131,20 +111,14 @@ const AdvancedFilter = (props) => {
                                                                 className="red"
                                                                 inputClass="form-control"
                                                                 name="obs_end_time"
-                                                                format="hh:mm:ss A"
+                                                                format="HH:mm"
                                                                 placeholder="Select Time"
-                                                                plugins={[
-                                                                    <TimePicker style={{minWidth: "180px"}}/>,
-                                                                    <Toolbar
-                                                                        position="bottom"
-                                                                        names={{
-                                                                            close: "Close",
-                                                                            today: "Current",
-                                                                        }}
-                                                                        sort={["close", "today"]}
-                                                                    />
-                                                                ]}
                                                                 scrollSensitive={false}
+                                                                value={selectedFilterVertical?.obs_end_time}
+                                                                onChange={(e) => handleFilterInput(e, 'obs_end_time')}
+                                                                plugins={[
+                                                                    <TimePicker/>,
+                                                                ]}
                                                             />
                                                         </div>
                                                     </div>
