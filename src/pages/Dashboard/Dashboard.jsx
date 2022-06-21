@@ -232,7 +232,7 @@ const Dashboard = () => {
 
     //  Handle Filtered Input
     const handleFilterInput = (e, name) => {
-        console.log(e)
+        // console.log(e)
         setSelectedFilterVertical((prev) => {
             return {
                 ...prev,
