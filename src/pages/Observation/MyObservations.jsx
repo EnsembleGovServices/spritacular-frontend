@@ -1,18 +1,18 @@
 import "../../assets/scss/component/myObservation.scss";
-import { Col, Container, Row } from "reactstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { Icon } from "@iconify/react";
+import {Col, Container, Row} from "reactstrap";
+import {Link, useNavigate} from "react-router-dom";
+import {Icon} from "@iconify/react";
 import axios from "../../api/axios";
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import {lazy, Suspense, useEffect, useState} from "react";
 
 import useAuth from "../../hooks/useAuth";
 import useObservationsData from "../../hooks/useObservationsData";
 import useObservations from "../../hooks/useObservations";
 
-import { LoadMore } from "../../components/Shared/LoadMore";
-import { obvType } from "../../helpers/observation";
-import { baseURL, routeUrls } from "../../helpers/url";
+import {LoadMore} from "../../components/Shared/LoadMore";
+import {obvType} from "../../helpers/observation";
+import {baseURL, routeUrls} from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
 
 
@@ -23,10 +23,10 @@ const ObservationDetailPage = lazy(() => import("./ObservationListPage"));
 const InitialUploadObservations = lazy(() => import("../Page/InitialUploadObservations"));
 
 const MyObservations = () => {
-    const { auth } = useAuth();
+    const {auth} = useAuth();
     const navigate = useNavigate();
-    const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
-    const { observationListData, setObservationListData } = useObservationsData();
+    const {setObservationData, setObservationSteps, setObservationImages} = useObservations();
+    const {observationListData, setObservationListData} = useObservationsData();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [activeType, setActiveType] = useState("verified");
     const [selectedObservationId, setSelectedObservationId] = useState();
@@ -271,12 +271,12 @@ const MyObservations = () => {
                 <Container>
                     {!loadedState?.hasObservations &&
                         <Suspense fallback={''}>
-                            <InitialUploadObservations count={loading?.count} />
+                            <InitialUploadObservations count={loading?.count}/>
                         </Suspense>
                     }
 
                     {
-                        (!loadedState.loading && observationListData?.list.length > 0) ?
+                        (!loadedState?.loading && observationListData?.list?.length > 0) ?
                             (
                                 <Suspense fallback={''}>
                                     <ObservationDetailPage
@@ -288,23 +288,23 @@ const MyObservations = () => {
                                         loadedState={loadedState}
 
                                     />
-                                    {(!loadedState.loading && nextPageUrl && observationListData?.list.length > 0) &&
-                                        <LoadMore handleLoadMore={handleLoadMore} />
+                                    {(!loadedState?.loading && nextPageUrl && observationListData?.list?.length > 0) &&
+                                        <LoadMore handleLoadMore={handleLoadMore}/>
                                     }
                                 </Suspense>
-                            ) : !showNotFound && <Loader />
+                            ) : !showNotFound && <Loader/>
                     }
 
-                    {(showNotFound && loadedState?.hasObservations && observationListData?.list.length === 0 && !loadedState.loading) &&
+                    {(showNotFound && loadedState?.hasObservations && observationListData?.list?.length === 0 && !loadedState?.loading) &&
                         <Suspense fallback={''}>
-                            <NotFound />
+                            <NotFound/>
                         </Suspense>
                     }
                 </Container>
             </section>
 
             {observationListData?.list?.length > 0 &&
-                <Suspense fallback={<Loader />}>
+                <Suspense fallback={<Loader/>}>
                     <ObservationDetails
                         data={observationListData?.active}
                         activeType={activeType}
