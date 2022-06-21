@@ -1,22 +1,22 @@
-import React, {useState, useLayoutEffect, useRef, useEffect} from 'react'
-import {getTokens, onMessageListener} from './firebase';
+import React, { useState, useLayoutEffect, useRef, useEffect } from 'react'
+import { getTokens, onMessageListener } from './firebase';
 import {
     Dropdown,
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
 } from "reactstrap";
-import {Icon} from "@iconify/react";
+import { Icon } from "@iconify/react";
 import useAuth from "../../hooks/useAuth";
 import Tippy from "@tippyjs/react";
 import moment from "moment";
 import axios from "../../api/axios";
-import {baseURL, cdn} from "../../helpers/url";
+import { baseURL, cdn } from "../../helpers/url";
 
 
 const NotificationComponent = (props) => {
-    const {notificationArray, setNotificationArray} = props;
-    const {auth} = useAuth();
+    const { notificationArray, setNotificationArray } = props;
+    const { auth } = useAuth();
     const [show, setShow] = useState(false);
     const [notification, setNotification] = useState(false);
     const [isTokenFound, setTokenFound] = useState(false);
@@ -60,7 +60,7 @@ const NotificationComponent = (props) => {
     }, [data, notificationArray, setNotificationArray, show])
 
     const handleNotificationStatusUpdate = async (e, notificaitonIds) => {
-        await axios.post(baseURL.api + '/notification/read_user_notification/', {'notification_ids': notificaitonIds}, {
+        await axios.post(baseURL.api + '/notification/read_user_notification/', { 'notification_ids': notificaitonIds }, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${auth?.token?.access}`
@@ -88,35 +88,37 @@ const NotificationComponent = (props) => {
         dropContent.forEach(function (item) {
             return item.classList.add('markedAsRead');
         })
+        setNotificationDropdown(!notificationDropdown);
     }
 
     return (
         <Dropdown className="notify_menu"
-                  isOpen={notificationDropdown}
-                  toggle={() => setNotificationDropdown(!notificationDropdown)}
+            isOpen={notificationDropdown}
+            toggle={() => setNotificationDropdown(!notificationDropdown)}
         >
             <DropdownToggle className="notification">
-                <Icon icon="ic:baseline-notifications"/>
-                {notification && <span className="notify"/>}
+                <Icon icon="ic:baseline-notifications" />
+                {notification && <span className="notify" />}
             </DropdownToggle>
             <DropdownMenu ref={notificationDropDownRef} container="body" className="notify-open_menu">
                 <DropdownItem key={0} header>
-                    <div className="d-flex align-items-center justify-content-between w-100">
-                        <div className="title">
-                            Notifications
-                            {notificationArray?.length > 0 &&
+                    {notificationArray?.length > 0 ?
+                        <div className="d-flex align-items-center justify-content-between w-100">
+                            <div className="title">
+                                Notifications
                                 <span className="custom-badge">{notificationArray?.length}</span>
-                            }
-                        </div>
-                        <Tippy content="Mark as read" placement="left" interactive={true}
-                               interactiveBorder={20}
-                               delay={100}>
-                            <button data-tippy-content="Tooltip" className="btn btn-link p-0 m-0"
+                            </div>
+                            <Tippy content="Mark as read" placement="left" interactive={true}
+                                interactiveBorder={20}
+                                delay={100}>
+                                <button className="btn p-0 m-0"
                                     onClick={event => handleMarkAsRead(event)}>
-                                <Icon icon="bi:check-circle"/>
-                            </button>
-                        </Tippy>
-                    </div>
+                                    <Icon icon="fa6-solid:envelope-open" color="#188038" width="22" height="20" />
+                                </button>
+                            </Tippy>
+
+                        </div> : <div className="title">Notifications</div>
+                    }
                 </DropdownItem>
                 {/*<DropdownItem divider />*/}
                 <div className={'dropdown-body'}>
@@ -130,11 +132,11 @@ const NotificationComponent = (props) => {
                                                 {item.notification?.image ?
                                                     <div className="user-img">
                                                         <img className="img-fluid" src={item.notification?.image}
-                                                             alt="user Profile"/>
+                                                            alt="user Profile" />
                                                     </div>
                                                     :
                                                     <div className="user-img">
-                                                        <Icon className="img-fluid" icon="entypo:user"/>
+                                                        <Icon className="img-fluid" icon="entypo:user" />
                                                     </div>
                                                 }
                                             </Tippy>
@@ -147,16 +149,16 @@ const NotificationComponent = (props) => {
                                             </div>
                                         </div>
                                     </DropdownItem>
-                                    <DropdownItem divider/>
+                                    <DropdownItem divider />
                                 </div>
                             )
                         }).reverse()
                     ) : (
                         <div className="d-flex align-items-center flex-column justify-content-center"
-                             style={{height: "190px", width: "230px"}}>
+                            style={{ height: "190px" }}>
                             <img className="img-fluid mb-3"
-                                 src={`${cdn.url}/success.svg`}
-                                 alt="no notification"/>
+                                src={`${cdn.url}/success.svg`}
+                                alt="no notification" />
                             <h6>All caught up!</h6>
                         </div>
                     )}

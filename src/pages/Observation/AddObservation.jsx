@@ -129,7 +129,7 @@ const AddObservation = () => {
         });
     };
 
-    const handleImageInput = (e, address = null) => {
+    const handleImageInput = (e, address = null, name) => {
         let observationArray = {...observationImages};
         if (e === "address") {
             observationArray.data[observationImages?.selected_image_index][
@@ -142,8 +142,8 @@ const AddObservation = () => {
                 observationArray.data[2].category_map["location"] = address;
             }
         } else {
-            let name = e.target.name,
-                value = e.target.value;
+            // let name = e.target.name,
+                let value = e.format();
 
             // if (name === "is_other") {
             //     observationArray.data[

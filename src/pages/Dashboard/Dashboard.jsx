@@ -1,15 +1,15 @@
 import "../../assets/scss/component/dashboard.scss";
-import {lazy, Suspense, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useObservationsData from "../../hooks/useObservationsData";
 
 import useObservations from "../../hooks/useObservations";
-import {LoadMore} from "../../components/Shared/LoadMore";
+import { LoadMore } from "../../components/Shared/LoadMore";
 
 import axios from "../../api/axios";
-import {dashboardHelper} from "../../helpers/dashboard";
-import {baseURL} from "../../helpers/url";
+import { dashboardHelper } from "../../helpers/dashboard";
+import { baseURL } from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
 
 
@@ -34,10 +34,10 @@ const ObservationDetails = lazy(() =>
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [selectedObservationId, setSelectedObservationId] = useState();
-    const {setObservationData, setObservationSteps, setObservationImages} = useObservations();
+    const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
     const [filterShow, setFilterShow] = useState(true);
     const [listView, setListView] = useState(false);
     const [gridView, setGridView] = useState(true);
@@ -50,10 +50,10 @@ const Dashboard = () => {
     const [selectedFilterVertical, setSelectedFilterVertical] = useState(
         dashboardHelper.vertical
     );
-    const {observationListData, setObservationListData} = useObservationsData();
+    const { observationListData, setObservationListData } = useObservationsData();
     const [nextPageUrl, setNextPageUrl] = useState(dashboardHelper.nextPageUrl);
     const [filterReset, setFilterReset] = useState(false);
-    const [loadedState, setLoadedState] = useState({loading: true, hasData: true});
+    const [loadedState, setLoadedState] = useState({ loading: true, hasData: true });
     const [shouldFilter, setShouldFilter] = useState(false);
 
     const getObservationData = async (
@@ -62,7 +62,7 @@ const Dashboard = () => {
         category = `${selectedFilterHorizontal?.type}`,
         status = `${selectedFilterHorizontal?.status}`
     ) => {
-        setLoadedState({loading: true})
+        setLoadedState({ loading: true })
 
         if (auth?.user?.is_superuser) {
             let url;
@@ -133,7 +133,7 @@ const Dashboard = () => {
 
                 } else {
                     setNextPageUrl(null);
-                    setObservationListData({list: [], active: {}});
+                    setObservationListData({ list: [], active: {} });
                 }
                 // setObservationList(success?.data?.results?.data)
             }).catch((error) => {
@@ -334,7 +334,7 @@ const Dashboard = () => {
 
                                 <div
                                     className={`dashboard-card overflow-hidden ${filterShow ? "sm-card" : "maximize-dash-content"
-                                    }`}
+                                        }`}
                                 >
                                     {listView ? (
                                         <Suspense fallback={<div></div>}>
@@ -345,7 +345,7 @@ const Dashboard = () => {
                                                 setSelectedObservationId={setSelectedObservationId}
                                             />
                                             {nextPageUrl && observationListData?.list?.length > 0 && (
-                                                <LoadMore handleLoadMore={handleLoadMoreData}/>
+                                                <LoadMore handleLoadMore={handleLoadMoreData} />
                                             )}
                                         </Suspense>
                                     ) : (
@@ -357,18 +357,18 @@ const Dashboard = () => {
                                                 setSelectedObservationId={setSelectedObservationId}
                                             />
                                             {nextPageUrl && observationListData?.list?.length > 0 && (
-                                                <LoadMore handleLoadMore={handleLoadMoreData}/>
+                                                <LoadMore handleLoadMore={handleLoadMoreData} />
                                             )}
                                         </Suspense>
                                     )}
 
                                     {loadedState?.loading &&
-                                        <Loader fixContent={true}/>
+                                        <Loader fixContent={true} />
                                     }
 
                                     {(!loadedState?.hasData && observationListData?.list?.length === 0 && !loadedState?.loading) &&
                                         <Suspense fallback={''}>
-                                            <NotFound/>
+                                            <NotFound />
                                         </Suspense>
                                     }
 
