@@ -16,7 +16,7 @@ const ContentEditor = (props) => {
     const [changeData, setChangeData] = useState(false);
     const [editorImage, setEditorImage] = useState([]);
 
-    // const [fakeLoading, setFakeLoading] = useState(true);
+    const [fakeLoading, setFakeLoading] = useState(true);
 
 
     function uploadAdapter(loader) {
@@ -65,14 +65,14 @@ const ContentEditor = (props) => {
         toolbar: {
             items: [
                 "undo", "redo",
-                "fontsize", "fontColor", "fontBackgroundColor", "|",
+                "fontFamily", "fontsize", "fontColor", "fontBackgroundColor", "|",
                 "heading", "|", "alignment", "|",
                 "bold", "italic", "|", "link", "|",
                 "bulletedList", "numberedList",
                 "insertTable", "mergeTableCells", "|",
-                "insertImage", "codeBlock", "|",
+                "insertImage", "mediaEmbed", "codeBlock", "|",
                 "code", "HorizontalLine",
-                "SpecialCharacters", "ImageResize",
+                "ImageResize",
                 "pageBreak",
             ],
             shouldNotGroupWhenFull: false
@@ -115,71 +115,77 @@ const ContentEditor = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mode]);
 
-    // useEffect(() => {
-    //     setTimeout(function () {
-    //         setFakeLoading(false);
-    //     }, 1000)
-    // }, [fakeLoading])
+    useEffect(() => {
+        setTimeout(function () {
+            setFakeLoading(false);
+        }, 1000)
+    }, [fakeLoading])
 
     return (
         <>
-            {/*{fakeLoading ? <div>Please wait...</div> : ''}*/}
-            <CKEditor
-                editor={FullEditor}
-                config={editorConfig}
-                data={data ? data : ""}
-                then={response => {
-                    console.log(response);
-                }}
-                onReady={editor => {
+            {fakeLoading ? <div className="spinner">
+                <div className="loading-1"></div>
+                <div className="loading-2"></div>
+                <div className="loading-3"></div>
+            </div> : ''}
+            <div className={fakeLoading ? 'd-none' : 'd-block'}>
+                <CKEditor
+                    editor={FullEditor}
+                    config={editorConfig}
+                    data={data ? data : ""}
+                    then={response => {
+                        console.log(response);
+                    }}
+                    onReady={editor => {
 
-                    // console.log('ready editor')
-                    // console.log(editor.config._config.plugins.map(item => item.pluginName))
-                    // console.log(Array.from(editor.ui.componentFactory.names()));
-                    // console.log('isReadOnly', editor.isReadOnly)
-                    // editor.ui.view.editable.element.style.minHeight = "180px"
-                    const toolbarContainer = editor.ui.view.stickyPanel;
-                    editor.isReadOnly = readMode ? readMode : readOnly;
+                        // console.log('ready editor')
+                        // console.log(editor.config._config.plugins.map(item => item.pluginName))
+                        // console.log(Array.from(editor.ui.componentFactory.names()));
+                        // console.log('isReadOnly', editor.isReadOnly)
+                        // editor.ui.view.editable.element.style.minHeight = "180px"
+                        const toolbarContainer = editor.ui.view.stickyPanel;
+                        editor.isReadOnly = readMode ? readMode : readOnly;
 
-                    if (editor.isReadOnly) {
-                        editor.ui.view.top.remove(toolbarContainer);
-                        editor.ui.view.editable.element.classList.add('p-0');
-                        editor.ui.view.editable.element.classList.add('border-0');
-                    }
-                }}
-                onChange={(event, editor) => {
-                    setChangeData(false);
-                    // console.log('event', event)
-                    const data = editor.getData();
+                        if (editor.isReadOnly) {
+                            editor.ui.view.top.remove(toolbarContainer);
+                            editor.ui.view.editable.element.classList.add('p-0');
+                            editor.ui.view.editable.element.classList.add('border-0');
+                        }
+                    }}
+                    onChange={(event, editor) => {
+                        setChangeData(false);
+                        // console.log('event', event)
+                        const data = editor.getData();
 
-                    editor.model.document.on('change:data', () => {
-                        setChangeData(true);
-                    });
-                    const avlImg = Array.from(new DOMParser().parseFromString(editor.getData(), 'text/html')
-                        .querySelectorAll('img'))
-                        .map(img => img.getAttribute('src'))
+                        editor.model.document.on('change:data', () => {
+                            setChangeData(true);
+                        });
+                        const avlImg = Array.from(new DOMParser().parseFromString(editor.getData(), 'text/html')
+                            .querySelectorAll('img'))
+                            .map(img => img.getAttribute('src'))
 
-                    setEditorImage(avlImg);
+                        setEditorImage(avlImg);
 
-                    if (setData) {
-                        setData((prev) => {
-                            return {
-                                ...prev,
-                                content: data
-                            }
-                        })
-                    }
+                        if (setData) {
+                            setData((prev) => {
+                                return {
+                                    ...prev,
+                                    content: data
+                                }
+                            })
+                        }
 
-                }}
-                onFocus={(event, editor) => {
-                    // console.log('focus')
-                    // editor.ui.view.editable.element.style.minHeight = "180px"
-                }}
-                onBlur={(event, editor) => {
-                    // editor.ui.view.editable.element.style.minHeight = "180px"
-                    // console.log('blurred')
-                }}
-            />
+                    }}
+                    onFocus={(event, editor) => {
+                        // console.log('focus')
+                        // editor.ui.view.editable.element.style.minHeight = "180px"
+                    }}
+                    onBlur={(event, editor) => {
+                        // editor.ui.view.editable.element.style.minHeight = "180px"
+                        // console.log('blurred')
+                    }}
+                />
+            </div>
         </>
 
     )

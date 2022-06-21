@@ -312,7 +312,7 @@ const Header = (props) => {
                                 </DropdownMenu>
                             </Dropdown>
                         </NavItem>
-                        {!persist ? (
+                        {!persist && !auth?.user?.id ? (
                             <>
                                 <NavItem className="open-modal-btn">
                                     <Button
@@ -335,7 +335,7 @@ const Header = (props) => {
                     </Nav>
                 </Collapse>
 
-                {!persist ? (
+                {!persist && !auth?.user?.id ? (
                     <div className="right-menu">
                         <Button
                             className="register nav-link"

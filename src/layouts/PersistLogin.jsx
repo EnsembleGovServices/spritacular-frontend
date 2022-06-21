@@ -1,5 +1,5 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { useState, useEffect, createContext, lazy, Suspense } from "react";
+import {Outlet} from "react-router-dom";
+import {useState, useEffect, createContext, lazy, Suspense} from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
 
@@ -9,10 +9,10 @@ const Footer = lazy(() => import('../components/Common/Footer'))
 export const observationViewContext = createContext({});
 
 const PersistLogin = (props) => {
-    const { persistValue } = props;
+    const {persistValue} = props;
     const [categoryList, setCategoryList] = useState([]);
     const refresh = useRefreshToken();
-    const { auth, persist } = useAuth();
+    const {auth, persist} = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [observationListData, setObservationListData] = useState({
         active: {},
@@ -23,7 +23,6 @@ const PersistLogin = (props) => {
     });
     const [observationCSVId, setObservationCSVId] = useState({});
     const [recentObservation, setRecentObservation] = useState({});
-    const location = useLocation();
 
     useEffect(() => {
         let isMounted = true;
@@ -43,14 +42,14 @@ const PersistLogin = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [auth?.token?.access]);
 
-    useEffect(() => {
-        setObservationListData((prev) => {
-            return {
-                ...prev,
-                list: [],
-            };
-        });
-    }, [location]);
+    // useEffect(() => {
+    //     setObservationListData((prev) => {
+    //         return {
+    //             ...prev,
+    //             list: [],
+    //         };
+    //     });
+    // }, [location]);
 
     return (
         <>
@@ -71,25 +70,25 @@ const PersistLogin = (props) => {
                 {!persist ? (
                     <>
                         <Suspense fallback={<div></div>}>
-                            <Header />
+                            <Header/>
                         </Suspense>
                         <div className="main-content" id="main-content">
-                            <Outlet />
+                            <Outlet/>
                         </div>
                         <Suspense fallback={<div></div>}>
-                            <Footer />
+                            <Footer/>
                         </Suspense>
                     </>
-                ) : isLoading ? <div /> : (
+                ) : isLoading ? <div/> : (
                     <>
                         <Suspense fallback={<div></div>}>
-                            <Header />
+                            <Header/>
                         </Suspense>
                         <div className="main-content" id="main-content">
-                            <Outlet />
+                            <Outlet/>
                         </div>
                         <Suspense fallback={<div></div>}>
-                            {persistValue && <Footer />}
+                            {persistValue && <Footer/>}
                         </Suspense>
                     </>
                 )}

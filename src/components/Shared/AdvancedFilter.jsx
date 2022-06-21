@@ -8,8 +8,9 @@ import PropTypes from "prop-types";
 
 // Date-time-picker 
 import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import "react-multi-date-picker/styles/colors/red.css";
+import InputIcon from "react-multi-date-picker/components/input_icon";
 
 
 const AdvancedFilter = (props) => {
@@ -22,7 +23,7 @@ const AdvancedFilter = (props) => {
 
     return (
         <div className='advanced-filter d-flex flex-column'>
-            <Row className="h-100 py-2">
+            <Row className="py-2">
                 <Col xs={12} className='d-flex justify-content-end d-md-none'>
                     <Button className="close-icon bg-transparent shadow-none border-0 rounded-0"
                             onClick={() => handleFilterOpen()}>
@@ -57,6 +58,8 @@ const AdvancedFilter = (props) => {
                                                                 name="obs_start_date"
                                                                 scrollSensitive={false}
                                                                 onOpenPickNewDate={false}
+                                                                editable={false}
+                                                                maxDate={new Date().setDate(new Date().getDate())}
                                                                 value={selectedFilterVertical?.obs_start_date}
                                                                 onChange={(e) => handleFilterInput(e, 'obs_start_date')}
                                                             />
@@ -64,16 +67,17 @@ const AdvancedFilter = (props) => {
 
                                                         <div className="position-relative time-box w-100">
                                                             <DatePicker
+                                                                render={<InputIcon placeholder="Select Time"
+                                                                                   className="form-control"/>}
                                                                 disableDayPicker
                                                                 className="red"
                                                                 inputClass="form-control"
                                                                 name="obs_start_time"
                                                                 format="HH:mm"
-                                                                placeholder="Select Time"
-                                                                value={selectedFilterVertical?.obs_start_time}
                                                                 onChange={(e) => handleFilterInput(e, 'obs_start_time')}
+                                                                editable={false}
                                                                 plugins={[
-                                                                    <TimePicker/>,
+                                                                    <TimePicker hideSeconds/>,
                                                                 ]}
                                                                 scrollSensitive={false}
                                                             />
@@ -95,23 +99,26 @@ const AdvancedFilter = (props) => {
                                                                 name="obs_end_date"
                                                                 onOpenPickNewDate={false}
                                                                 scrollSensitive={false}
+                                                                editable={false}
+                                                                maxDate={new Date().setDate(new Date().getDate())}
                                                                 value={selectedFilterVertical?.obs_end_date}
                                                                 onChange={(e) => handleFilterInput(e, 'obs_end_date')}
                                                             />
                                                         </div>
                                                         <div className="position-relative time-box w-100">
                                                             <DatePicker
+                                                                render={<InputIcon className="form-control"
+                                                                                   placeholder="Select Time"/>}
                                                                 disableDayPicker
                                                                 className="red"
                                                                 inputClass="form-control"
                                                                 name="obs_end_time"
                                                                 format="HH:mm"
-                                                                placeholder="Select Time"
                                                                 scrollSensitive={false}
-                                                                value={selectedFilterVertical?.obs_end_time}
+                                                                editable={false}
                                                                 onChange={(e) => handleFilterInput(e, 'obs_end_time')}
                                                                 plugins={[
-                                                                    <TimePicker/>,
+                                                                    <TimePicker hideSeconds/>,
                                                                 ]}
                                                             />
                                                         </div>

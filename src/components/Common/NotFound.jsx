@@ -4,7 +4,7 @@ const NotFound = () => {
     return (
         <div className="data-not-found">
             <img
-                src={`${cdn.url}/notfound.svg`}
+                src={`${cdn.url}/no-data.svg`}
                 alt="No data found"
                 className="mb-3"
             />

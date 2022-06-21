@@ -189,7 +189,6 @@ const Gallery = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal]);
     useEffect(() => {
-
         setObservationListData((prev) => {
             return {
                 ...prev,
