@@ -104,8 +104,8 @@ const NotificationComponent = (props) => {
                 <DropdownItem key={0} header>
                     {notificationArray?.length > 0 ? (
                         <div className="d-flex align-items-center justify-content-between w-100">
-                            <h3 className="title">Notifications <span
-                                className="custom-badge">{notificationArray?.length}</span></h3>
+                            <div className="title">Notifications <span
+                                className="custom-badge">{notificationArray?.length}</span></div>
                             <Tippy content="Mark as read" placement="left" interactive={true}
                                    interactiveBorder={20}
                                    delay={100}>
@@ -116,7 +116,7 @@ const NotificationComponent = (props) => {
                             </Tippy>
 
                         </div>
-                    ) : <h3 className="title">Notifications</h3>}
+                    ) : <div className="title">Notifications</div>}
 
                 </DropdownItem>
                 {/*<DropdownItem divider />*/}
