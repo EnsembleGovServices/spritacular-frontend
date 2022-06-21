@@ -354,7 +354,7 @@ class Map extends Component {
         if (this.props.center.lat !== undefined) {
             map = <div>
                 <AsyncMap
-                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GoogleMapsAPI}&libraries=places`}
+                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${baseURL.mapApiKey}&libraries=places`}
                     loadingElement={
                         <div style={{height: `100%`}}/>
                     }
