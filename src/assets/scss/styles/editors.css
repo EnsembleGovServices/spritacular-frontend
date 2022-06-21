@@ -1,8 +1,3 @@
-/*
- * CKEditor 5 (v34.0.0) content styles.
- * Generated on Mon, 09 May 2022 10:49:49 GMT.
- * For more information, check out https://ckeditor.com/docs/ckeditor5/latest/installation/advanced/content-styles.html
- */
 
 :root {
     --ck-color-image-caption-background: hsl(0, 0%, 97%);
@@ -21,11 +16,11 @@
     --ck-inline-image-style-spacing: calc(var(--ck-image-style-spacing) / 2);
     --ck-todo-list-checkmark-size: 16px;
     --rmdp-primary-red: #C11E37 !important;
-    --rmdp-secondary-red: #C11E37;
+    --rmdp-secondary-red: #C11E37 !important;
     /* --rmdp-shadow-red: #cfb6b6; */
-    --rmdp-today-red: #188038;
-    --rmdp-hover-red: #0f0f0f;
-    --rmdp-deselect-red: #af1738;
+    --rmdp-today-red: #188038 !important;
+    --rmdp-hover-red: #0f0f0f !important;
+    --rmdp-deselect-red: #af1738 !important;
 }
 
 /* ckeditor5-block-quote/theme/blockquote.css */
@@ -105,7 +100,7 @@
 }
 
 /* ckeditor5-image/theme/imagecaption.css */
-.ck-content .image>figcaption {
+.ck-content .image > figcaption {
     display: table-caption;
     caption-side: bottom;
     word-break: break-word;
@@ -171,7 +166,7 @@
 }
 
 /* ckeditor5-image/theme/imageresize.css */
-.ck-content .image.image_resized>figcaption {
+.ck-content .image.image_resized > figcaption {
     display: block;
 }
 
@@ -225,9 +220,9 @@
 }
 
 /* ckeditor5-image/theme/imagestyle.css */
-.ck-content p+.image-style-align-left,
-.ck-content p+.image-style-align-right,
-.ck-content p+.image-style-side {
+.ck-content p + .image-style-align-left,
+.ck-content p + .image-style-align-right,
+.ck-content p + .image-style-side {
     margin-top: 0;
 }
 
@@ -269,7 +264,7 @@
 }
 
 /* ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list .todo-list__label>input {
+.ck-content .todo-list .todo-list__label > input {
     -webkit-appearance: none;
     display: inline-block;
     position: relative;
@@ -284,7 +279,7 @@
 }
 
 /* ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list .todo-list__label>input::before {
+.ck-content .todo-list .todo-list__label > input::before {
     display: block;
     position: absolute;
     box-sizing: border-box;
@@ -297,7 +292,7 @@
 }
 
 /* ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list .todo-list__label>input::after {
+.ck-content .todo-list .todo-list__label > input::after {
     display: block;
     position: absolute;
     box-sizing: content-box;
@@ -314,13 +309,13 @@
 }
 
 /* ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list .todo-list__label>input[checked]::before {
+.ck-content .todo-list .todo-list__label > input[checked]::before {
     background: hsl(126, 64%, 41%);
     border-color: hsl(126, 64%, 41%);
 }
 
 /* ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list .todo-list__label>input[checked]::after {
+.ck-content .todo-list .todo-list__label > input[checked]::after {
     border-color: hsl(0, 0%, 100%);
 }
 
@@ -377,7 +372,7 @@
 }
 
 /* ckeditor5-table/theme/tablecaption.css */
-.ck-content .table>figcaption {
+.ck-content .table > figcaption {
     display: table-caption;
     caption-side: top;
     word-break: break-word;
@@ -489,7 +484,7 @@
     margin: 0;
 }
 
-.ckeditor-viewer .ck-content .image>figcaption {
+.ckeditor-viewer .ck-content .image > figcaption {
     background-color: transparent !important;
 }
 

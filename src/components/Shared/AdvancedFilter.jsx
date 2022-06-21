@@ -59,6 +59,7 @@ const AdvancedFilter = (props) => {
                                                                 scrollSensitive={false}
                                                                 onOpenPickNewDate={false}
                                                                 editable={false}
+                                                                maxDate={new Date().setDate(new Date().getDate())}
                                                                 value={selectedFilterVertical?.obs_start_date}
                                                                 onChange={(e) => handleFilterInput(e, 'obs_start_date')}
                                                             />
@@ -99,6 +100,7 @@ const AdvancedFilter = (props) => {
                                                                 onOpenPickNewDate={false}
                                                                 scrollSensitive={false}
                                                                 editable={false}
+                                                                maxDate={new Date().setDate(new Date().getDate())}
                                                                 value={selectedFilterVertical?.obs_end_date}
                                                                 onChange={(e) => handleFilterInput(e, 'obs_end_date')}
                                                             />

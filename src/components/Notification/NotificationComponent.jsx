@@ -11,7 +11,7 @@ import useAuth from "../../hooks/useAuth";
 import Tippy from "@tippyjs/react";
 import moment from "moment";
 import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
+import {baseURL, cdn} from "../../helpers/url";
 
 
 const NotificationComponent = (props) => {
@@ -103,13 +103,20 @@ const NotificationComponent = (props) => {
             <DropdownMenu ref={notificationDropDownRef} container="body" className="notify-open_menu">
                 <DropdownItem key={0} header>
                     {notificationArray?.length > 0 ? (
-                        <div className="d-flex align-items-center justify-content-between">
-                            <span>Notifications {notificationArray?.length}</span>
-                            <button className="btn btn-link p-0 m-0" onClick={event => handleMarkAsRead(event)}>
-                                <Icon icon="bi:check-circle"/>
-                            </button>
+                        <div className="d-flex align-items-center justify-content-between w-100">
+                            <h3 className="title">Notifications <span
+                                className="custom-badge">{notificationArray?.length}</span></h3>
+                            <Tippy content="Mark as read" placement="left" interactive={true}
+                                   interactiveBorder={20}
+                                   delay={100}>
+                                <button data-tippy-content="Tooltip" className="btn btn-link p-0 m-0"
+                                        onClick={event => handleMarkAsRead(event)}>
+                                    <Icon icon="bi:check-circle"/>
+                                </button>
+                            </Tippy>
+
                         </div>
-                    ) : 'No new Notifications'}
+                    ) : <h3 className="title">Notifications</h3>}
 
                 </DropdownItem>
                 {/*<DropdownItem divider />*/}
@@ -144,10 +151,14 @@ const NotificationComponent = (props) => {
                                     <DropdownItem divider/>
                                 </div>
                             )
-                        })
+                        }).reverse()
                     ) : (
-                        <div className="d-flex align-items-center justify-content-center" style={{height: "190px"}}>
-                            <h5>All caught up!</h5>
+                        <div className="d-flex align-items-center flex-column justify-content-center"
+                             style={{height: "190px", width: "230px"}}>
+                            <img className="img-fluid mb-3"
+                                 src={`${cdn.url}/success.svg`}
+                                 alt="no notification"/>
+                            <h6>All caught up!</h6>
                         </div>
                     )}
                 </div>
