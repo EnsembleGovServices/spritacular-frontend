@@ -232,10 +232,13 @@ const Dashboard = () => {
 
     //  Handle Filtered Input
     const handleFilterInput = (e, name) => {
-        setSelectedFilterVertical({
-            ...selectedFilterVertical,
-            [name]: e.format(),
-            filtered: true,
+        console.log(e)
+        setSelectedFilterVertical((prev) => {
+            return {
+                ...prev,
+                [name]: e.format(),
+                filtered: true,
+            }
         });
     };
 

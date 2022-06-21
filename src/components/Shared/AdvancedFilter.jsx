@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 
 // Date-time-picker 
 import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import "react-multi-date-picker/styles/colors/red.css";
 
 
@@ -70,10 +70,9 @@ const AdvancedFilter = (props) => {
                                                                 name="obs_start_time"
                                                                 format="HH:mm"
                                                                 placeholder="Select Time"
-                                                                value={selectedFilterVertical?.obs_start_time}
                                                                 onChange={(e) => handleFilterInput(e, 'obs_start_time')}
                                                                 plugins={[
-                                                                    <TimePicker/>,
+                                                                    <TimePicker hideSeconds/>,
                                                                 ]}
                                                                 scrollSensitive={false}
                                                             />
@@ -108,10 +107,9 @@ const AdvancedFilter = (props) => {
                                                                 format="HH:mm"
                                                                 placeholder="Select Time"
                                                                 scrollSensitive={false}
-                                                                value={selectedFilterVertical?.obs_end_time}
                                                                 onChange={(e) => handleFilterInput(e, 'obs_end_time')}
                                                                 plugins={[
-                                                                    <TimePicker/>,
+                                                                    <TimePicker hideSeconds/>,
                                                                 ]}
                                                             />
                                                         </div>
