@@ -5,7 +5,6 @@ import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import {useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
-import {Spinner} from "reactstrap";
 
 const ContentEditor = (props) => {
     const {data, setData, editorData, setLoading, setReadMode, readMode, readOnly} = props;
@@ -66,14 +65,14 @@ const ContentEditor = (props) => {
         toolbar: {
             items: [
                 "undo", "redo",
-                "fontsize", "fontColor", "fontBackgroundColor", "|",
+                "fontFamily", "fontsize", "fontColor", "fontBackgroundColor", "|",
                 "heading", "|", "alignment", "|",
                 "bold", "italic", "|", "link", "|",
                 "bulletedList", "numberedList",
                 "insertTable", "mergeTableCells", "|",
-                "insertImage", "codeBlock", "|",
+                "insertImage", "mediaEmbed", "codeBlock", "|",
                 "code", "HorizontalLine",
-                "SpecialCharacters", "ImageResize",
+                "ImageResize",
                 "pageBreak",
             ],
             shouldNotGroupWhenFull: false
@@ -124,7 +123,11 @@ const ContentEditor = (props) => {
 
     return (
         <>
-            {fakeLoading ? <Spinner color="primary">Loading...</Spinner> : ''}
+            {fakeLoading ? <div className="spinner">
+                <div className="loading-1"></div>
+                <div className="loading-2"></div>
+                <div className="loading-3"></div>
+            </div> : ''}
             <div className={fakeLoading ? 'd-none' : 'd-block'}>
                 <CKEditor
                     editor={FullEditor}

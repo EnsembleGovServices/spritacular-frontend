@@ -23,7 +23,7 @@ const AdvancedFilter = (props) => {
 
     return (
         <div className='advanced-filter d-flex flex-column'>
-            <Row className="h-100 py-2">
+            <Row className="py-2">
                 <Col xs={12} className='d-flex justify-content-end d-md-none'>
                     <Button className="close-icon bg-transparent shadow-none border-0 rounded-0"
                             onClick={() => handleFilterOpen()}>
@@ -67,8 +67,8 @@ const AdvancedFilter = (props) => {
 
                                                         <div className="position-relative time-box w-100">
                                                             <DatePicker
-                                                                render={<InputIcon className="form-control"
-                                                                                   placeholder="Select Time"/>}
+                                                                render={<InputIcon placeholder="Select Time"
+                                                                                   className="form-control"/>}
                                                                 disableDayPicker
                                                                 className="red"
                                                                 inputClass="form-control"
