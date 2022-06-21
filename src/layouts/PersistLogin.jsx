@@ -1,4 +1,4 @@
-import {Outlet, useLocation} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import {useState, useEffect, createContext, lazy, Suspense} from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
@@ -23,7 +23,6 @@ const PersistLogin = (props) => {
     });
     const [observationCSVId, setObservationCSVId] = useState({});
     const [recentObservation, setRecentObservation] = useState({});
-    const location = useLocation();
 
     useEffect(() => {
         let isMounted = true;
