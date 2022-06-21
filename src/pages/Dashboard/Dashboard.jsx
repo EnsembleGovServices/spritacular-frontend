@@ -344,7 +344,7 @@ const Dashboard = () => {
                                                 setObservationDetailModal={setObservationDetailModal}
                                                 setSelectedObservationId={setSelectedObservationId}
                                             />
-                                            {nextPageUrl && observationListData?.list.length > 0 && (
+                                            {nextPageUrl && observationListData?.list?.length > 0 && (
                                                 <LoadMore handleLoadMore={handleLoadMoreData}/>
                                             )}
                                         </Suspense>
@@ -356,7 +356,7 @@ const Dashboard = () => {
                                                 setObservationDetailModal={setObservationDetailModal}
                                                 setSelectedObservationId={setSelectedObservationId}
                                             />
-                                            {nextPageUrl && observationListData?.list.length > 0 && (
+                                            {nextPageUrl && observationListData?.list?.length > 0 && (
                                                 <LoadMore handleLoadMore={handleLoadMoreData}/>
                                             )}
                                         </Suspense>
@@ -366,7 +366,7 @@ const Dashboard = () => {
                                         <Loader fixContent={true}/>
                                     }
 
-                                    {(!loadedState?.hasData && observationListData?.list.length === 0 && !loadedState.loading) &&
+                                    {(!loadedState?.hasData && observationListData?.list?.length === 0 && !loadedState?.loading) &&
                                         <Suspense fallback={''}>
                                             <NotFound/>
                                         </Suspense>
