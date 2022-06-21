@@ -20,7 +20,6 @@ const NotificationComponent = (props) => {
     const [show, setShow] = useState(false);
     const [notification, setNotification] = useState(false);
     const [isTokenFound, setTokenFound] = useState(false);
-
     const [notificationDropdown, setNotificationDropdown] = useState(false);
     const [data, setData] = useState([]);
 
@@ -102,22 +101,22 @@ const NotificationComponent = (props) => {
             </DropdownToggle>
             <DropdownMenu ref={notificationDropDownRef} container="body" className="notify-open_menu">
                 <DropdownItem key={0} header>
-                    {notificationArray?.length > 0 ? (
-                        <div className="d-flex align-items-center justify-content-between w-100">
-                            <div className="title">Notifications <span
-                                className="custom-badge">{notificationArray?.length}</span></div>
-                            <Tippy content="Mark as read" placement="left" interactive={true}
-                                   interactiveBorder={20}
-                                   delay={100}>
-                                <button data-tippy-content="Tooltip" className="btn btn-link p-0 m-0"
-                                        onClick={event => handleMarkAsRead(event)}>
-                                    <Icon icon="bi:check-circle"/>
-                                </button>
-                            </Tippy>
-
+                    <div className="d-flex align-items-center justify-content-between w-100">
+                        <div className="title">
+                            Notifications
+                            {notificationArray?.length > 0 &&
+                                <span className="custom-badge">{notificationArray?.length}</span>
+                            }
                         </div>
-                    ) : <div className="title">Notifications</div>}
-
+                        <Tippy content="Mark as read" placement="left" interactive={true}
+                               interactiveBorder={20}
+                               delay={100}>
+                            <button data-tippy-content="Tooltip" className="btn btn-link p-0 m-0"
+                                    onClick={event => handleMarkAsRead(event)}>
+                                <Icon icon="bi:check-circle"/>
+                            </button>
+                        </Tippy>
+                    </div>
                 </DropdownItem>
                 {/*<DropdownItem divider />*/}
                 <div className={'dropdown-body'}>
