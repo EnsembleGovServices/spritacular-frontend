@@ -137,7 +137,7 @@ const Dashboard = () => {
                 }
                 // setObservationList(success?.data?.results?.data)
             }).catch((error) => {
-                console.log(error.response);
+                console.log(error.message);
             });
         }
     };

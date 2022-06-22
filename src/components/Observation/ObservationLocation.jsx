@@ -22,13 +22,11 @@ import { timezone } from "../../helpers/timezone";
 import ObservationCategory from "./ObservationCategory";
 import { Icon } from '@iconify/react';
 import { getdirectionDegree, getdirectionAngle } from "../../helpers/observation";
-import moment from "moment";
 
 // Date-time-picker 
 import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import "react-multi-date-picker/styles/colors/red.css";
-import InputIcon from "react-multi-date-picker/components/input_icon";
 
 
 const ObservationLocation = (props) => {
@@ -298,8 +296,6 @@ const ObservationLocation = (props) => {
         }
     }, [observationImages?.data, obvType?.image_type, setObservationImages, step.active])
 
-    console.log(observationImages?.data[observationImages?.selected_image_index]?.obs_date);
-    console.log(observationImages?.data[0]);
     return (
         <>
             <Col md="12">
@@ -478,16 +474,6 @@ const ObservationLocation = (props) => {
                                 <FormGroup>
                                     <Label className="text-uppercase" htmlFor="Date">Date</Label>
                                     <div className="position-relative">
-                                        {/* <Input
-                                            id="Date"
-                                            type="date"
-                                            max={moment(new Date()).format('Y-MM-DD')}
-                                            name="obs_date"
-                                            value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
-                                            className="w-100"
-                                            placeholder="12/20/2021"
-                                            onChange={(e) => handleImageInput(e)}
-                                        /> */}
                                         <DatePicker
                                             className="red"
                                             containerClassName="w-100"
@@ -500,12 +486,9 @@ const ObservationLocation = (props) => {
                                             editable={false}
                                             maxDate={new Date().setDate(new Date().getDate())}
                                             value={(observationImages?.data) && (observationImages?.data[observationImages?.selected_image_index]?.obs_date)}
-                                            onChange={(e) => handleImageInput(e, null, 'obs_date')}
+                                            onChange={(e) => handleImageInput({ target: { name: "obs_date", value: e.format() } })}
                                         />
                                     </div>
-
-
-
                                     {error && errorData?.map((item, index) => {
                                         if (step?.selected_image_index === index) {
                                             return (
@@ -519,29 +502,16 @@ const ObservationLocation = (props) => {
                             <Col md={6} lg={4}>
                                 <FormGroup>
                                     <Label className="text-uppercase" htmlFor="Time">Time</Label>
-                                    <div className="position-relative">
-                                        {/* <Input
-                                            id="Time"
-                                            type="time"
-                                            name="obs_time"
-                                            value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
-                                            className="w-100"
-                                            placeholder="10:21:00 am"
-                                            onChange={(e) => handleImageInput(e)}
-                                        /> */}
-
+                                    <div className="position-relative ">
                                         <DatePicker
-                                            render={<InputIcon placeholder="Select Time"
-                                                value={observationImages?.data && (observationImages?.data[observationImages?.selected_image_index]?.obs_time)}
-                                                className="form-control" />}
                                             containerClassName="w-100"
                                             disableDayPicker
                                             className="red"
                                             inputClass="form-control"
                                             name="obs_time"
-                                            format="HH:mm a"
-
-                                            onChange={(e) => handleImageInput(e, null, 'obs_time')}
+                                            format="HH:mm A"
+                                            placeholder="Select Time"
+                                            onChange={(e) => handleImageInput({ target: { name: "obs_time", value: e.format() } })}
                                             editable={false}
                                             plugins={[
                                                 <TimePicker hideSeconds />,
@@ -568,7 +538,7 @@ const ObservationLocation = (props) => {
                                             className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                                             {/*<span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>*/}
                                             <span
-                                                className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone}` : ''}</span>
+                                                className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone}` : 'Select Time Zone'}</span>
                                             <Icon icon="fe:arrow-down" className="down-arrow ms-1" />
                                         </DropdownToggle>
                                         <DropdownMenu className="py-0 shadow">
