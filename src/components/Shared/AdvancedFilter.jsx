@@ -2,7 +2,7 @@ import "../../assets/scss/component/advancedFilter.scss";
 import "../../assets/scss/styles/editors.css"
 import { cdn } from "../../helpers/url";
 import { Button, Card, CardBody, Col, Collapse, FormGroup, Label, Row } from "reactstrap";
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
 import PropTypes from "prop-types";
 
@@ -11,6 +11,7 @@ import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import "react-multi-date-picker/styles/colors/red.css";
 import InputIcon from "react-multi-date-picker/components/input_icon";
+import { dashboardHelper } from "../../helpers/dashboard";
 
 
 const AdvancedFilter = (props) => {
@@ -20,17 +21,13 @@ const AdvancedFilter = (props) => {
     const startTimeRef = useRef();
     const endTimeRef = useRef();
 
-    // const storeTime = useCallback((whichTime) => selectedFilterVertical[whichTime] === null ? "" : selectedFilterVertical[whichTime], [resetFilters])
-
-    const resetAll = async() => {
-        startTimeRef.current.firstChild.value = "";
-        startTimeRef.current.firstChild.placeholder = "Select Time";
-        endTimeRef.current.firstChild.value = "";
-        endTimeRef.current.firstChild.placeholder = "Select Time";
-        await resetFilters();
+    const resetAll = () => {
+        // document.getElementsByName('obs_start_time')[0].value=""
+        // document.getElementsByName('obs_end_time')[0].value=""
+        startTimeRef.current.firstChild.value=""
+        startTimeRef.current.firstChild.placeholder="Select Time"
+        resetFilters();
     }
-    
-    // console.log(storeTime('obs_start_time'));
 
     return (
         <div className='advanced-filter d-flex flex-column'>
@@ -83,19 +80,21 @@ const AdvancedFilter = (props) => {
                                                                 disableDayPicker
                                                                 className="red"
                                                                 inputClass="form-control"
+                                                                format="HH:mm"
                                                                 placeholder="Select Time"
                                                                 name="obs_start_time"
-                                                                format="HH:mm"
                                                                 ref={startTimeRef}
-                                                                onChange={(e) => handleFilterInput(e, 'obs_start_time')}
-                                                                editable={false}
-                                                                plugins={[
-                                                                    <TimePicker hideSeconds />,
-                                                                ]}
                                                                 scrollSensitive={false}
+                                                                editable={false}
+                                                                // value={selectedFilterVertical?.obs_start_time}
+                                                                onChange={(e) => handleFilterInput(e, 'obs_start_time')}
+                                                                plugins={[
+                                                                    <TimePicker hideSeconds/>,
+                                                                ]}
                                                             />
                                                         </div>
                                                     </div>
+                                                    
                                                 </FormGroup>
                                             </Col>
                                             <Col xs={12}>

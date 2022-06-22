@@ -50,7 +50,7 @@ const BlurImage = (props) => {
                         width: '100%',
                         background: bgColor,
                         objectFit: 'cover',
-                        height: '100%',
+                        // height: '100%',
                         minHeight: '217px'
                     }}
                     src={preview}

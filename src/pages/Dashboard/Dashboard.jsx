@@ -150,10 +150,10 @@ const Dashboard = () => {
         setObservationDetailModal(!isObservationDetailModal);
         setSelectedObservationId(id);
     };
-    const cleaningUpObservationDataForDraftSaving = async (data) => {
+    const cleaningUpObservationDataForDraftSaving = (data) => {
         setObservationImages([]);
         setObservationData([]);
-        await updateStateForDraft(data);
+        updateStateForDraft(data);
         return true;
     };
     const updateStateForDraft = (data) => {
@@ -232,11 +232,11 @@ const Dashboard = () => {
 
     //  Handle Filtered Input
     const handleFilterInput = (e, name) => {
-        // console.log(e)
+        // console.log(e?.split(" ")[1]?.format())
         setSelectedFilterVertical((prev) => {
             return {
                 ...prev,
-                [name]: e.format(),
+                [name]: e.format().split(" ")[1],
                 filtered: true,
             }
         });
@@ -271,7 +271,6 @@ const Dashboard = () => {
         if (window.innerWidth < 768) {
             setFilterShow(false);
         }
-        console.clear();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

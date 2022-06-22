@@ -25,7 +25,7 @@ import { getdirectionDegree, getdirectionAngle } from "../../helpers/observation
 
 // Date-time-picker 
 import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import "react-multi-date-picker/styles/colors/red.css";
 
 
@@ -478,8 +478,8 @@ const ObservationLocation = (props) => {
                                             className="red"
                                             containerClassName="w-100"
                                             inputClass="form-control"
-                                            format="DD/MM/YYYY"
-                                            placeholder="DD/MM/YYYY"
+                                            format="YYYY-MM-DD"
+                                            placeholder="YYYY-MM-DD"
                                             name="obs_date"
                                             scrollSensitive={false}
                                             onOpenPickNewDate={false}
@@ -509,7 +509,7 @@ const ObservationLocation = (props) => {
                                             className="red"
                                             inputClass="form-control"
                                             name="obs_time"
-                                            format="HH:mm A"
+                                            format="HH:mm"
                                             placeholder="Select Time"
                                             onChange={(e) => handleImageInput({ target: { name: "obs_time", value: e.format() } })}
                                             editable={false}
