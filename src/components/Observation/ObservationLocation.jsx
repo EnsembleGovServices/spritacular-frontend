@@ -68,7 +68,7 @@ const ObservationLocation = (props) => {
         if (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap === false) {
             fref.current.handleChangeLatLng(observationImages?.data[observationImages?.selected_image_index]?.latitude, observationImages?.data[observationImages?.selected_image_index]?.longitude);
         }
-
+        // eslint-disable-next-line
     }, [observationImages?.data?.[observationImages?.selected_image_index], observationImages?.selected_image_index]);
 
     useEffect(() => {
@@ -78,7 +78,7 @@ const ObservationLocation = (props) => {
             handleCopyData(observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap, ['latitude', 'longitude', 'location', 'country_code']);
             handleCopyData(observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate, ['obs_date', 'obs_time', 'timezone']);
         }
-
+        // eslint-disable-next-line
     }, [observationImages?.selected_image_index]);
 
     const handleValue = (flag, value) => {
@@ -145,8 +145,8 @@ const ObservationLocation = (props) => {
 
     const handleChangeLat = (e) => {
         handleImageInput(e);
-        let name = e.target.name,
-            value = Number(e.target.value);
+        // let name = e.target.name,
+            let value = Number(e.target.value);
         let addressState = { ...address1 };
         addressState.mapPosition.lat = value;
         addressState.markerPosition.lat = value;
@@ -162,8 +162,8 @@ const ObservationLocation = (props) => {
 
     const handleChangeLng = (e) => {
         handleImageInput(e);
-        let name = e.target.name,
-            value = Number(e.target.value);
+        // let name = e.target.name,
+            let value = Number(e.target.value);
         let addressState = { ...address1 };
         addressState.mapPosition.lng = value;
         addressState.markerPosition.lng = value;

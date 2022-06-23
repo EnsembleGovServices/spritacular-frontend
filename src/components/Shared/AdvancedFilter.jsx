@@ -11,7 +11,6 @@ import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import "react-multi-date-picker/styles/colors/red.css";
 import InputIcon from "react-multi-date-picker/components/input_icon";
-import { dashboardHelper } from "../../helpers/dashboard";
 
 
 const AdvancedFilter = (props) => {
@@ -22,10 +21,10 @@ const AdvancedFilter = (props) => {
     const endTimeRef = useRef();
 
     const resetAll = () => {
-        // document.getElementsByName('obs_start_time')[0].value=""
-        // document.getElementsByName('obs_end_time')[0].value=""
         startTimeRef.current.firstChild.value=""
         startTimeRef.current.firstChild.placeholder="Select Time"
+        endTimeRef.current.firstChild.value=""
+        endTimeRef.current.firstChild.placeholder="Select Time"
         resetFilters();
     }
 
@@ -75,15 +74,13 @@ const AdvancedFilter = (props) => {
 
                                                         <div className="position-relative time-box w-100">
                                                             <DatePicker
-                                                                // render={<InputIcon placeholder={storeTime('obs_start_time')
-                                                                //     className="form-control" />}
                                                                 disableDayPicker
                                                                 className="red"
                                                                 inputClass="form-control"
                                                                 format="HH:mm"
                                                                 placeholder="Select Time"
                                                                 name="obs_start_time"
-                                                                ref={startTimeRef}
+                                                                // ref={startTimeRef}
                                                                 scrollSensitive={false}
                                                                 editable={false}
                                                                 // value={selectedFilterVertical?.obs_start_time}
@@ -126,7 +123,7 @@ const AdvancedFilter = (props) => {
                                                                 placeholder="Select Time"
                                                                 name="obs_end_time"
                                                                 format="HH:mm"
-                                                                ref={endTimeRef}
+                                                                // ref={endTimeRef}
                                                                 scrollSensitive={false}
                                                                 editable={false}
                                                                 onChange={(e) => handleFilterInput(e, 'obs_end_time')}

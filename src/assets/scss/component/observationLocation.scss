@@ -1,42 +1,51 @@
 @import "../global/config.scss";
-.observation_location{
-    h6{
+
+.observation_location {
+    h6 {
         margin-bottom: 20px;
         font-weight: 600;
         @include lg-text;
     }
-    .form-label{
+
+    .form-label {
         @include sm-text;
         margin-right: 0;
         display: flex;
         align-items: center;
+
         &.form-check-label {
             @include lg-text;
         }
     }
+
     .selected-address {
         font-weight: 500;
         @include md-text;
         height: 100%;
-        img{
+
+        img {
             width: 24px;
             margin-right: 8px;
         }
-        span{
+
+        span {
             max-width: calc(100% - 30px);
             display: block;
             word-break: break-word;
         }
     }
-    .btn-secondary{
-        &:not(.gray-outline-btn){
+
+    .btn-secondary {
+        &:not(.gray-outline-btn) {
             padding: 13px 50px;
-            @include media-breakpoint-down(lg){
+
+            @include media-breakpoint-down(lg) {
                 padding: 10px 30px;
             }
         }
     }
-    .form-check{
+
+    .form-check {
         .form-check-label {
             font-weight: normal;
             @include lg-text;
@@ -45,11 +54,13 @@
             justify-content: flex-end;
         }
     }
-    .degree-input{
+
+    .degree-input {
         width: 100%;
         max-width: 318px;
     }
-    .compass-wrapper{
+
+    .compass-wrapper {
         border: 1px solid #CBCFD8;
         border-radius: 50%;
         width: 220px;
@@ -57,7 +68,8 @@
         margin: 0 auto;
         position: relative;
         overflow: hidden;
-        .btn-secondary{
+
+        .btn-secondary {
             padding: 7px;
             text-transform: uppercase;
             font-style: normal;
@@ -72,95 +84,111 @@
             box-shadow: none;
             color: $black;
             flex-direction: column;
-            &.active_direction{
+
+            &.active_direction {
                 @include buttonSecodary;
                 box-shadow: 0px 4px 4px rgba(153, 0, 0, 0.16);
 
             }
-            &.N-direction{
+
+            &.N-direction {
                 position: absolute;
                 left: 50%;
                 transform: translateX(-50%);
                 top: 6px;
             }
-            &.NE-direction{
+
+            &.NE-direction {
                 position: absolute;
                 right: 30px;
                 top: 14%;
             }
-            &.E-direction{
+
+            &.E-direction {
                 position: absolute;
                 right: 6px;
                 transform: translateY(-50%);
                 top: 50%;
             }
-            &.SE-direction{
+
+            &.SE-direction {
                 position: absolute;
                 right: 30px;
                 top: 68%;
             }
-            &.S-direction{
+
+            &.S-direction {
                 position: absolute;
                 left: 50%;
                 transform: translateX(-50%);
                 bottom: 6px;
             }
-            &.SW-direction{
+
+            &.SW-direction {
                 position: absolute;
                 bottom: 10%;
                 transform: translateY(-50%);
                 left: 20px;
             }
-            &.W-direction{
+
+            &.W-direction {
                 position: absolute;
                 left: 6px;
                 transform: translateY(-50%);
                 top: 50%;
             }
-            &.NW-direction{
+
+            &.NW-direction {
                 position: absolute;
                 left: 30px;
                 top: 14%;
             }
-            .direction-angle{
+
+            .direction-angle {
                 font-size: 10px;
                 line-height: 10px;
                 opacity: 0.7;
             }
         }
-        .center-dot{
+
+        .center-dot {
             position: absolute;
             width: 5px;
             height: 5px;
             background: #CBCFD8;
             left: 50%;
             top: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
             z-index: 1;
         }
-        .rotate-arrow-wrap{
+
+        .rotate-arrow-wrap {
             position: absolute;
             left: 50%;
             top: 50%;
             height: 100%;
             transform: translate(-50%, -50%);
-            .rotate-arrow-inner{
+
+            .rotate-arrow-inner {
                 height: 100%;
                 transition: all 0.5s ease;
                 padding: 0 8px;
                 transform: rotate(var(--directionAngle));
             }
-            .rotate-arrow{
+
+            .rotate-arrow {
                 &.main {
                     position: relative;
                     top: -1px;
                 }
-                &.hidden{
+
+                &.hidden {
                     opacity: 0;
                 }
             }
         }
     }
+
     .search-input-container {
         position: absolute;
         left: 0;
@@ -168,38 +196,48 @@
         top: 0;
         padding: 14px;
     }
+
     .dropdown-with-search {
-        .btn{
-            span{
+        .btn {
+            span {
                 width: calc(100% - 18px);
             }
         }
-        .dropdown-item{
+
+        .dropdown-item {
             border-bottom: 1px solid #ededed;
-            &:last-child{
+
+            &:last-child {
                 border-bottom: 0;
             }
         }
     }
-    .same-data_row{
+
+    .same-data_row {
         border-radius: $border-radius;
         padding: 10px;
+
         .form-group {
             margin-bottom: 0 !important;
         }
-        .data-value{
+
+        .data-value {
             max-width: 90px;
         }
     }
-    .location_map{
+
+    .location_map {
         height: 400px;
+
         @include media-breakpoint-down(md) {
             height: 250px;
         }
-        >div{
+
+        >div {
             height: 100%;
         }
     }
+
     //input[type="date"]{
     //    padding-left: 40px;
     //    position: relative;
@@ -229,4 +267,16 @@
     //        }
     //    }
     //}
+}
+
+.pac-container {
+    box-shadow: none !important;
+    border: 0 !important;
+    // z-index: 10000 !important;
+    // left: 32% !important;
+    top: 230px !important;
+    // display: block !important;
+    .pac-item{
+        border-top: 0;
+    }
 }

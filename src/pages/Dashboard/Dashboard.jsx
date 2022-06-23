@@ -232,11 +232,11 @@ const Dashboard = () => {
 
     //  Handle Filtered Input
     const handleFilterInput = (e, name) => {
-        // console.log(e?.split(" ")[1]?.format())
+        // console.log(e?.format().split(" ")[1])
         setSelectedFilterVertical((prev) => {
             return {
                 ...prev,
-                [name]: e.format().split(" ")[1],
+                [name]: e.format(),
                 filtered: true,
             }
         });
@@ -283,7 +283,6 @@ const Dashboard = () => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal]);
-
 
     useEffect(() => {
         setShouldFilter(selectedFilterHorizontal?.filtered || selectedFilterVertical?.filtered);
