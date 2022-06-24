@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton'
 
 const BlurImage = (props) => {
-    const { preview, image, alt, bgColor = 'transparent', handleClick, homepage, loaderLoading } = props;
+    const { preview, image, alt, bgColor = 'transparent', handleClick, homepage, loaderLoading = () => { } } = props;
     const [loading, setLoading] = useState(true);
     const loadingImageRef = useRef(null);
 

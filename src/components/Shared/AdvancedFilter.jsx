@@ -2,7 +2,7 @@ import "../../assets/scss/component/advancedFilter.scss";
 import "../../assets/scss/styles/editors.css"
 import { cdn } from "../../helpers/url";
 import { Button, Card, CardBody, Col, Collapse, FormGroup, Label, Row } from "reactstrap";
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
 import PropTypes from "prop-types";
 
@@ -21,25 +21,12 @@ const AdvancedFilter = (props) => {
     const endTimeRef = useRef();
 
     const resetAll = () => {
-        // console.log(startTimeRef.current);
-        startTimeRef.current.firstChild.value = "Select Time";
-        endTimeRef.current.firstChild.value = "Select Time";
-        resetFilters(startTimeRef, endTimeRef);
+        startTimeRef.current.firstChild.value=""
+        startTimeRef.current.firstChild.placeholder="Select Time"
+        endTimeRef.current.firstChild.value=""
+        endTimeRef.current.firstChild.placeholder="Select Time"
+        resetFilters();
     }
-
-    const storeTime = useCallback((whichTime) => selectedFilterVertical[whichTime] === null ? "Select Time" : selectedFilterVertical[whichTime], [resetFilters])
-
-    // console.log(storeTime('obs_start_time'));
-
-    const setDefault = async () => {
-        startTimeRef.current.firstChild.value = "Select Time";
-        endTimeRef.current.firstChild.value = "Select Time";
-    }
-
-    useEffect(() => {
-        setDefault();
-    }, [startTimeRef, endTimeRef])
-
 
     return (
         <div className='advanced-filter d-flex flex-column'>
@@ -87,30 +74,30 @@ const AdvancedFilter = (props) => {
 
                                                         <div className="position-relative time-box w-100">
                                                             <DatePicker
-                                                                // render={<InputIcon placeholder={storeTime('obs_start_time')
-                                                                //     className="form-control" />}
-                                                                ref={startTimeRef}
                                                                 disableDayPicker
                                                                 className="red"
                                                                 inputClass="form-control"
-                                                                name="obs_start_time"
                                                                 format="HH:mm"
-                                                                onChange={(e) => handleFilterInput(e, 'obs_start_time')}
-                                                                editable={false}
-                                                                plugins={[
-                                                                    <TimePicker hideSeconds />,
-                                                                ]}
+                                                                placeholder="Select Time"
+                                                                name="obs_start_time"
+                                                                // ref={startTimeRef}
                                                                 scrollSensitive={false}
+                                                                editable={false}
+                                                                // value={selectedFilterVertical?.obs_start_time}
+                                                                onChange={(e) => handleFilterInput(e, 'obs_start_time')}
+                                                                plugins={[
+                                                                    <TimePicker hideSeconds/>,
+                                                                ]}
                                                             />
                                                         </div>
                                                     </div>
+                                                    
                                                 </FormGroup>
                                             </Col>
                                             <Col xs={12}>
                                                 <FormGroup>
                                                     <Label className='fw-normal text-black'>To</Label>
                                                     <div className='d-flex justify-content-between date-time_row'>
-
                                                         <div className="position-relative date-box w-100">
                                                             <DatePicker
                                                                 className="red"
@@ -130,12 +117,13 @@ const AdvancedFilter = (props) => {
                                                             <DatePicker
                                                                 // render={<InputIcon className="form-control"
                                                                 //     placeholder={storeTime('obs_end_time')} />}
-                                                                ref={endTimeRef}
                                                                 disableDayPicker
                                                                 className="red"
                                                                 inputClass="form-control"
+                                                                placeholder="Select Time"
                                                                 name="obs_end_time"
                                                                 format="HH:mm"
+                                                                // ref={endTimeRef}
                                                                 scrollSensitive={false}
                                                                 editable={false}
                                                                 onChange={(e) => handleFilterInput(e, 'obs_end_time')}

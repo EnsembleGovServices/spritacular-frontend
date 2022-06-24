@@ -137,7 +137,7 @@ const Dashboard = () => {
                 }
                 // setObservationList(success?.data?.results?.data)
             }).catch((error) => {
-                console.log(error.response);
+                console.log(error.message);
             });
         }
     };
@@ -150,10 +150,10 @@ const Dashboard = () => {
         setObservationDetailModal(!isObservationDetailModal);
         setSelectedObservationId(id);
     };
-    const cleaningUpObservationDataForDraftSaving = async (data) => {
+    const cleaningUpObservationDataForDraftSaving = (data) => {
         setObservationImages([]);
         setObservationData([]);
-        await updateStateForDraft(data);
+        updateStateForDraft(data);
         return true;
     };
     const updateStateForDraft = (data) => {
@@ -232,7 +232,7 @@ const Dashboard = () => {
 
     //  Handle Filtered Input
     const handleFilterInput = (e, name) => {
-        // console.log(e)
+        // console.log(e?.format().split(" ")[1])
         setSelectedFilterVertical((prev) => {
             return {
                 ...prev,
@@ -271,7 +271,6 @@ const Dashboard = () => {
         if (window.innerWidth < 768) {
             setFilterShow(false);
         }
-        console.clear();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -284,7 +283,6 @@ const Dashboard = () => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal]);
-
 
     useEffect(() => {
         setShouldFilter(selectedFilterHorizontal?.filtered || selectedFilterVertical?.filtered);

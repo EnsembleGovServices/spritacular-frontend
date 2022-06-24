@@ -60,6 +60,9 @@
     @include md-text;
     padding: 6px 12px;
     //word-spacing: 8px;
+    @include media-breakpoint-down(xl) {
+      padding: 6px 2px;
+    }
   }
 
   .collapse-btn {
