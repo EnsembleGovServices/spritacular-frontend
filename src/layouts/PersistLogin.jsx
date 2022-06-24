@@ -12,7 +12,7 @@ const PersistLogin = (props) => {
     const {persistValue} = props;
     const [categoryList, setCategoryList] = useState([]);
     const refresh = useRefreshToken();
-    const {auth, persist} = useAuth();
+    const {auth, persist, setPersist} = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [observationListData, setObservationListData] = useState({
         active: {},
@@ -34,6 +34,8 @@ const PersistLogin = (props) => {
             } catch (err) {
                 if (err.response.status === 401) {
                     localStorage.setItem('persist', false);
+                    localStorage.removeItem('refresh');
+                    setPersist(false);
                 }
                 console.error('err', err.response.status);
             } finally {
@@ -44,15 +46,6 @@ const PersistLogin = (props) => {
         return () => isMounted = false;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [auth?.token?.access]);
-
-    // useEffect(() => {
-    //     setObservationListData((prev) => {
-    //         return {
-    //             ...prev,
-    //             list: [],
-    //         };
-    //     });
-    // }, [location]);
 
     return (
         <>
