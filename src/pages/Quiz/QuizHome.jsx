@@ -1,22 +1,22 @@
 import "../../assets/scss/component/quiz.scss";
-import {Col, Container, Modal, ModalBody, Row, UncontrolledAlert} from "reactstrap";
-import {Icon} from '@iconify/react';
+import { Col, Container, Modal, ModalBody, Row, UncontrolledAlert } from "reactstrap";
+import { Icon } from '@iconify/react';
 import axios from "../../api/axios";
-import {useEffect, useState} from "react";
-import {baseURL, cdn} from "../../helpers/url";
+import { useEffect, useState } from "react";
+import { baseURL, cdn } from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import BlurImage from "../../components/Common/BlurImage";
 import QuizCard from "../../components/Quiz/QuizCard";
 
 const QuizHome = (props) => {
-    const {roles} = props;
-    const {auth} = useAuth();
+    const { roles } = props;
+    const { auth } = useAuth();
     const [questions, setQuestions] = useState([]);
     const [options, setOptions] = useState([]);
     const [activeQuestion, setActiveQuestion] = useState({});
-    const [quizControl, setQuizControl] = useState({active: 1, activeIndex: 0});
+    const [quizControl, setQuizControl] = useState({ active: 1, activeIndex: 0 });
     const [buttonType, setButtonType] = useState();
-    const [singleAnswer, setSingleAnswer] = useState({que: null, ans: []});
+    const [singleAnswer, setSingleAnswer] = useState({ que: null, ans: [] });
     const [answers, setAnswers] = useState([]);
     const [result, setResult] = useState({
         success: null,
@@ -31,10 +31,10 @@ const QuizHome = (props) => {
     const [fullImage, setFullImage] = useState("");
     const score = result?.success?.score;
 
-// Local Variables
+    // Local Variables
 
 
-    const getQuizQuestions = () => {
+    const getQuizQuestions = async () => {
         return axios.get(baseURL.quiz_question, {
             headers: {
                 "Content-Type": "application/json",
@@ -171,12 +171,12 @@ const QuizHome = (props) => {
     }, [activeQuestion?.id])
 
     useEffect(() => {
-        let single = {...singleAnswer};
+        let single = { ...singleAnswer };
 
         if (activeQuestion?.id) {
             answers[quizControl.activeIndex] = single;
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [singleAnswer.ans])
 
     useEffect(() => {
@@ -195,7 +195,7 @@ const QuizHome = (props) => {
             });
         }
 
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [answers?.[quizControl?.activeIndex]?.ans, singleAnswer?.ans]);
 
     return (
@@ -216,16 +216,16 @@ const QuizHome = (props) => {
                             <Col sm={12}>
                                 {!result?.success ? (
                                     <QuizCard singleAnswer={singleAnswer}
-                                              activeQuestion={activeQuestion}
-                                              options={options}
-                                              loading={loading}
-                                              answers={answers?.[quizControl?.activeIndex]?.ans}
-                                              quizControl={quizControl}
-                                              disable={disable}
-                                              handleNextPrev={handleNextPrev}
-                                              handleTleCheck={handleTleCheck}
-                                              handleSubmit={submitFinalAnswers}
-                                              goFullScreenImage={goFullScreenImage}
+                                        activeQuestion={activeQuestion}
+                                        options={options}
+                                        loading={loading}
+                                        answers={answers?.[quizControl?.activeIndex]?.ans}
+                                        quizControl={quizControl}
+                                        disable={disable}
+                                        handleNextPrev={handleNextPrev}
+                                        handleTleCheck={handleTleCheck}
+                                        handleSubmit={submitFinalAnswers}
+                                        goFullScreenImage={goFullScreenImage}
                                     />
                                 ) : (
                                     <>
@@ -234,12 +234,12 @@ const QuizHome = (props) => {
                                                 <div className="result-image">
                                                     {score < 75 ? (
                                                         <img className="img-fluid success-img"
-                                                             src={`${cdn.url}/failed.svg`}
-                                                             alt="success"/>
+                                                            src={`${cdn.url}/failed.svg`}
+                                                            alt="success" />
                                                     ) : (
                                                         <img className="img-fluid success-img"
-                                                             src={`${cdn.url}/success.svg`}
-                                                             alt="success"/>
+                                                            src={`${cdn.url}/success.svg`}
+                                                            alt="success" />
                                                     )}
                                                 </div>
                                                 <h6 className="title">{result?.success?.message}</h6>
@@ -258,8 +258,8 @@ const QuizHome = (props) => {
 
                                                 {score < 75 ? (
                                                     <button type="button"
-                                                            onClick={() => window.location.reload(false)}
-                                                            className="px-4 py-2 mb-4 fw-bolder btn btn-primary">Re-attempt
+                                                        onClick={() => window.location.reload(false)}
+                                                        className="px-4 py-2 mb-4 fw-bolder btn btn-primary">Re-attempt
                                                         Quiz
                                                     </button>
                                                 ) : (
@@ -293,9 +293,9 @@ const QuizHome = (props) => {
                 >
                     <ModalBody>
                         <button className="close-icon" type="button" onClick={() => closeFullScreen()}>
-                            <Icon color="#fff" width={30} height={30} icon="clarity:close-line"/>
+                            <Icon color="#fff" width={30} height={30} icon="clarity:close-line" />
                         </button>
-                        <BlurImage preview={fullImage} image={fullImage}/>
+                        <BlurImage preview={fullImage} image={fullImage} />
                     </ModalBody>
                 </Modal>
             }

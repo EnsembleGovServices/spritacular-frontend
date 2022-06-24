@@ -20,6 +20,7 @@
     img {
       width: 100%;
       height: 100%;
+
       @include media-breakpoint-down(md) {
         object-fit: cover;
       }
@@ -87,9 +88,11 @@
   padding: 0;
   min-height: 200px;
   position: relative;
+
   @include media-breakpoint-down(md) {
     min-height: 300px;
   }
+
   @include media-breakpoint-down(sm) {
     min-height: 345px;
   }
@@ -149,6 +152,7 @@
     height: 140px;
     left: 0;
     top: 8%;
+
     @media (max-width: 1023px) {
       width: 140px;
       height: 80px;
@@ -180,6 +184,7 @@
       position: absolute;
       right: 0px;
       top: 0px;
+
       @media (max-width: 1150px) {
         width: 40%;
       }
@@ -191,6 +196,7 @@
       position: absolute;
       left: 0px;
       bottom: 0px;
+
       @media (max-width: 1450px) {
         width: 40%;
         z-index: -9;
@@ -200,6 +206,7 @@
 
   .works-gap {
     margin-bottom: 90px;
+
     @media (max-width: 1023px) {
       margin-bottom: 35px;
     }
@@ -232,6 +239,7 @@
         color: #fff;
         text-align: center;
         margin-right: 18px;
+
         @media (max-width: 1023px) {
           height: 35px;
           width: 35px;
@@ -250,6 +258,7 @@
       right: 20%;
       bottom: 5%;
       position: absolute;
+
       @include media-breakpoint-down(lg) {
         display: none;
       }
@@ -261,6 +270,7 @@
       height: 130px;
       width: 130px;
       position: absolute;
+
       @include media-breakpoint-down(lg) {
         display: none;
       }
@@ -272,21 +282,27 @@
       height: 100px;
       position: absolute;
       top: -90px;
+
       @media (max-width: 1820px) {
         left: -40%;
       }
+
       @media (max-width: 1700px) {
         left: -30%;
       }
+
       @media (max-width: 1600px) {
         left: -18%;
       }
+
       @media (max-width: 1500px) {
         left: -17%;
       }
+
       @media (max-width: 1380px) {
         left: -26%;
       }
+
       @media (max-width: 1280px) {
         left: -15%;
       }
@@ -302,6 +318,7 @@
       width: 100px;
       bottom: -35px;
       position: absolute;
+
       @include media-breakpoint-down(lg) {
         display: none;
       }
@@ -350,6 +367,26 @@
     z-index: 10;
   }
 
+  .container {
+    .swiper {
+      .swiper-wrapper {
+        .swiper-slide {
+          img {
+            max-height: 260px !important;
+          }
+        }
+      }
+    }
+
+    .loader-wrap-img {
+      max-height: 217px !important;
+      //Extra css to fit image in homepage card section.
+      // img{
+      //   height: 180px !important;
+      // }
+    }
+  }
+
   &::after {
     content: "";
     width: 100%;
@@ -375,15 +412,19 @@
       height: 180px;
       object-fit: cover;
       object-position: center;
+
       @media (max-width: 1024px) {
         height: 130px;
       }
+
       @include media-breakpoint-down(lg) {
         height: 120px;
       }
+
       @include media-breakpoint-down(md) {
         height: 160px;
       }
+
       @media (max-width: 474px) {
         height: 100px;
       }
@@ -405,6 +446,7 @@
       bottom: -29px;
       width: 14%;
       transform: rotate(90deg);
+
       @media(max-width: 767px) {
         display: none;
       }
