@@ -133,6 +133,14 @@ const Header = (props) => {
         trainee = auth?.user?.is_trained,
         normalUser = auth?.user?.is_user;
 
+
+    useEffect(() => {
+        if (location) {
+            setShowMenu(false);
+            document.querySelector('body').classList.remove("menu-open");
+        }
+    }, [location])
+
     return (
         <>
             <Navbar
