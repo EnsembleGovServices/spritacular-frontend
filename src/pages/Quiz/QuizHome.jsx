@@ -31,9 +31,6 @@ const QuizHome = (props) => {
     const [fullImage, setFullImage] = useState("");
     const score = result?.success?.score;
 
-    // Local Variables
-
-
     const getQuizQuestions = async () => {
         return axios.get(baseURL.quiz_question, {
             headers: {
@@ -81,7 +78,6 @@ const QuizHome = (props) => {
         }
     }
 
-
     // submit final answers
     const submitFinalAnswers = (e) => {
         e.preventDefault();
@@ -115,7 +111,6 @@ const QuizHome = (props) => {
             window.scrollTo(0, 0);
         })
     }
-
 
     // Handle Full Screen
     const goFullScreenImage = (image) => {

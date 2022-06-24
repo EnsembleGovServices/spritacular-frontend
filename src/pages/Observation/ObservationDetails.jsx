@@ -1,5 +1,6 @@
 import "../../assets/scss/component/observationDetails.scss";
-import {lazy, Suspense, useEffect, useRef, useState} from "react";
+import "../../assets/scss/component/quiz.scss";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import {
     Badge,
     Button,
@@ -16,16 +17,16 @@ import {
     TabPane,
 } from "reactstrap";
 
-import {Icon} from "@iconify/react";
+import { Icon } from "@iconify/react";
 import Tippy from "@tippyjs/react";
 
 import Images from "./../../static/images";
-import {imageDetails} from "../../helpers/observation";
+import { imageDetails } from "../../helpers/observation";
 import axios from "../../api/axios";
-import {baseURL, routeUrls} from "../../helpers/url";
+import { baseURL, routeUrls } from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
-import {PropTypes} from "prop-types";
-import {useLocation} from "react-router-dom";
+import { PropTypes } from "prop-types";
+import { useLocation } from "react-router-dom";
 import useObservationsData from "../../hooks/useObservationsData";
 import Skeleton from "react-loading-skeleton";
 
@@ -36,7 +37,7 @@ const Comments = lazy(() => import("../../components/Observation/ObservationDeta
 const CardImageCarousel = lazy(() => import("../../components/Shared/CardImageCarousel"));
 
 const ObservationDetails = (props) => {
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const location = useLocation();
     const intervalRef = useRef();
     const {
@@ -51,10 +52,13 @@ const ObservationDetails = (props) => {
     } = props;
 
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
-    const {observationComments, setObservationListData, observationListData} = useObservationsData();
+    const { observationComments, setObservationListData, observationListData } = useObservationsData();
     const obvDetailsModal = useRef(null);
     const [isImageNull, setIsImageNull] = useState(true);
     const [loaderLoading, setLoaderLoading] = useState(true);
+    const [fullScreen, setFullScreen] = useState(false);
+    const [fullImage, setFullImage] = useState("");
+
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
         if (activeTab !== tab) {
@@ -83,10 +87,21 @@ const ObservationDetails = (props) => {
             });
     };
 
+    // Loader for sidebar loading
     const handleLoaderLoading = (state) => {
         setLoaderLoading(state);
     }
 
+    // Handle Full Screen
+    const goFullScreenImage = (image) => {
+        // console.log(image);
+        setFullImage(image);
+        setFullScreen(true);
+    }
+    const closeFullScreen = () => {
+        setFullScreen(false);
+        setFullImage("");
+    }
 
     useEffect(() => {
         setLoaderLoading(true);
@@ -148,13 +163,12 @@ const ObservationDetails = (props) => {
                             className="close-icon bg-transparent rounded-0 border-0 shadow-none p-0 me-3"
                             onClick={() => handleClose()}
                         >
-                            <img src={Images.Modalcloseicon} alt="close-icon"/>
+                            <img src={Images.Modalcloseicon} alt="close-icon" />
                         </Button>
                         <h4 className="d-inline-block m-0">{data?.category_data?.[0] ? data?.category_data?.[0]?.name : null}</h4>
                         <Badge
-                            className={`text-uppercase ${
-                                activeType === "verified" ? "badge-success" : ""
-                            }`}
+                            className={`text-uppercase ${activeType === "verified" ? "badge-success" : ""
+                                }`}
                         >
                             {activeType === "verified" && (
                                 <Icon
@@ -175,7 +189,7 @@ const ObservationDetails = (props) => {
                             <Button
                                 variant="primary"
                                 onClick={() =>
-                                    handleContinueEdit({id: data?.id, type: activeType})
+                                    handleContinueEdit({ id: data?.id, type: activeType })
                                 }
                             >
                                 Continue Editing
@@ -196,17 +210,20 @@ const ObservationDetails = (props) => {
                                                 className="object-contain img-fluid"
                                             />
                                         ) : !isImageNull ? (
-                                            <Suspense fallback={<div></div>}>
-                                                <BlurImageComp image={data?.images?.[0]?.image}
-                                                               preview={data?.images?.[0]?.image}
-                                                               alt={data?.images?.[0]?.location}
-                                                               loaderLoading={handleLoaderLoading}
-                                                />
-                                            </Suspense>
+                                            <div className="h-100" onClick={() => goFullScreenImage(data?.images?.[0]?.image)}>
+                                                <Suspense fallback={<div></div>}>
+                                                    <BlurImageComp
+                                                        image={data?.images?.[0]?.image}
+                                                        preview={data?.images?.[0]?.image}
+                                                        alt={data?.images?.[0]?.location}
+                                                        loaderLoading={handleLoaderLoading}
+                                                    />
+                                                </Suspense>
+                                            </div>
                                         ) : (
                                             <div
                                                 className="d-flex flex-column h-100 align-items-center justify-content-center bg-gradient bg-light">
-                                                <Spinner color="primary" size="20px"/>
+                                                <Spinner color="primary" size="20px" />
                                                 <h5 className="mt-3">Processing image...</h5>
                                             </div>
                                         ))}
@@ -215,10 +232,10 @@ const ObservationDetails = (props) => {
                                             carouselData={data?.images}
                                             detail={true}
                                             loaderLoading={handleLoaderLoading}
+                                            handleFullScreen={goFullScreenImage}
                                         />
                                     )}
                                 </div>
-
                                 <Row>
                                     <Col
                                         sm={6}
@@ -226,7 +243,7 @@ const ObservationDetails = (props) => {
                                     >
                                         {loaderLoading &&
                                             <div className="obv-user-cat-loader">
-                                                <Skeleton height={32} width="80%"/>
+                                                <Skeleton height={32} width="80%" />
                                             </div>
                                         }
                                         <div
@@ -262,7 +279,7 @@ const ObservationDetails = (props) => {
                                                         <div key={index} className="cat-loader m-0 gap">
                                                             {loaderLoading &&
                                                                 <div className="skeleton">
-                                                                    <Skeleton circle height={28} width={28}/>
+                                                                    <Skeleton circle height={28} width={28} />
                                                                 </div>
                                                             }
                                                             <div className="obv-cat-item mt-1">
@@ -356,7 +373,7 @@ const ObservationDetails = (props) => {
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Comments}>
                                     <Suspense fallback={<div>please wait...</div>}>
-                                        <Comments obvId={data?.id}/>
+                                        <Comments obvId={data?.id} />
                                     </Suspense>
                                 </TabPane>
                             </TabContent>
@@ -364,6 +381,29 @@ const ObservationDetails = (props) => {
                     </Row>
                 </ModalBody>
             </Modal>
+            {fullScreen &&
+                <Modal
+                    className="fullScreen-quiz-image-modal"
+                    isOpen={fullScreen}
+                    backdrop={false}
+                    centered
+                    fullscreen
+                    toggle={closeFullScreen}
+                >
+                    <ModalBody>
+                        <button className="close-icon" type="button" onClick={() => closeFullScreen()}>
+                            <Icon color="#fff" width={30} height={30} icon="clarity:close-line" />
+                        </button>
+                        {data?.image_type === 3 ?
+                            <CardImageCarousel
+                                carouselData={data?.images}
+                                detail={true}
+                                loaderLoading={handleLoaderLoading}
+                            /> : <BlurImageComp preview={fullImage} image={fullImage} />
+                        }
+                    </ModalBody>
+                </Modal>
+            }
         </>
     );
 };
