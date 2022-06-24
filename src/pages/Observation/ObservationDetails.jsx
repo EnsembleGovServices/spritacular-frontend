@@ -210,7 +210,7 @@ const ObservationDetails = (props) => {
                                                 className="object-contain img-fluid"
                                             />
                                         ) : !isImageNull ? (
-                                            <div className="h-100" onClick={() => goFullScreenImage(data?.images?.[0]?.image)}>
+                                            <div className="full-screen position-relative h-100" onClick={() => goFullScreenImage(data?.images?.[0]?.image)}>
                                                 <Suspense fallback={<div></div>}>
                                                     <BlurImageComp
                                                         image={data?.images?.[0]?.image}
@@ -219,6 +219,9 @@ const ObservationDetails = (props) => {
                                                         loaderLoading={handleLoaderLoading}
                                                     />
                                                 </Suspense>
+                                                <div className="fc-icon">
+                                                    <Icon icon="octicon:screen-full-16" />
+                                                </div>
                                             </div>
                                         ) : (
                                             <div
