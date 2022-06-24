@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
 
-import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap, InfoWindow, Marker } from "react-google-maps";
+import React, {Component} from 'react';
+import {withGoogleMap, GoogleMap, InfoWindow, Marker} from "react-google-maps";
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
-import { baseURL } from "../helpers/url";
+import {baseURL} from "../helpers/url";
 
 Geocode.setApiKey(baseURL.mapApiKey);
 
@@ -77,9 +77,6 @@ class Map extends Component {
                 console.error(error);
             }
         );
-        const getSearchInput = document?.querySelector('#searchInput');
-        const getDropdown = document?.getElementsByClassName('pac-container');
-        console.log("test", getSearchInput, getDropdown);
     };
 
     handleChangeLatLng(newLat, newLng) {
@@ -116,7 +113,6 @@ class Map extends Component {
                 console.error(error);
             }
         );
-
     };
 
     /**
@@ -215,7 +211,7 @@ class Map extends Component {
      * @param event
      */
     onChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
+        this.setState({[event.target.name]: event.target.value});
     };
     /**
      * This Event triggers when the marker window is closed
@@ -310,19 +306,19 @@ class Map extends Component {
                 props => (
                     <>
                         <GoogleMap google={this.props.google}
-                            defaultZoom={this.props.zoom}
-                            defaultCenter={{ lat: this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
-                            defaultOptions={{
-                                disableDefaultUI: true,
-                            }}
+                                   defaultZoom={this.props.zoom}
+                                   defaultCenter={{lat: this.state.mapPosition.lat, lng: this.state.mapPosition.lng}}
+                                   defaultOptions={{
+                                       disableDefaultUI: true,
+                                   }}
                         >
                             <Marker google={this.props.google}
-                                name={'Dolores park'}
-                                draggable={true}
-                                onDragEnd={this.onMarkerDragEnd}
-                                position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
+                                    name={'Dolores park'}
+                                    draggable={true}
+                                    onDragEnd={this.onMarkerDragEnd}
+                                    position={{lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng}}
                             />
-                            <Marker />
+                            <Marker/>
 
                             <div className="search-input-container">
                                 <Autocomplete
@@ -343,7 +339,7 @@ class Map extends Component {
                                     }}
                                 >
                                     <div>
-                                        <span style={{ padding: 0, margin: 0 }}>{this.state.short_address}</span>
+                                        <span style={{padding: 0, margin: 0}}>{this.state.short_address}</span>
                                     </div>
                                 </InfoWindow>
                             </div>
@@ -358,19 +354,19 @@ class Map extends Component {
                 <AsyncMap
                     googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${baseURL.mapApiKey}&libraries=places`}
                     loadingElement={
-                        <div style={{ height: `100%` }} />
+                        <div style={{height: `100%`}}/>
                     }
                     containerElement={
-                        <div style={{ height: this.props.height, position: this.props.containerPosition }} />
+                        <div style={{height: this.props.height, position: this.props.containerPosition}}/>
                     }
                     mapElement={
                         <div className={this.props.mapContainer}
-                            style={{ height: `100%`, borderRadius: this.props.mapRadius }} />
+                             style={{height: `100%`, borderRadius: this.props.mapRadius}}/>
                     }
                 />
             </div>
         } else {
-            map = <div style={{ height: this.props.height }} />
+            map = <div style={{height: this.props.height}}/>
         }
         return (map)
     }
