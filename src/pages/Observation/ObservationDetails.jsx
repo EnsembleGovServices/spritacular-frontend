@@ -182,15 +182,14 @@ const ObservationDetails = (props) => {
                             {activeType}
                         </Badge>
                     </div>
-                    {/*<h4>Data ID: {data?.id}</h4>*/}
 
                     {activeType === "draft" && (
                         <div>
                             <Button
                                 variant="primary"
-                                onClick={() =>
-                                    handleContinueEdit({id: data?.id, type: activeType})
-                                }
+                                    onClick={() =>
+                                        handleContinueEdit({id: data?.id, type: activeType})
+                                    }
                             >
                                 Continue Editing
                             </Button>

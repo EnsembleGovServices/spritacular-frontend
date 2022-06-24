@@ -12,7 +12,7 @@ import {useState} from "react";
 import {cdn} from "../../helpers/url";
 
 const ObservationCard = (props) => {
-    const {cardItems, handleClick, userProfile, cardData, index, activeType, homepage} = props;
+    const {cardItems, handleClick, userProfile, cardData, index, activeType, homepage, handleContinueEdit} = props;
     const [loaderLoading, setLoaderLoading] = useState(true);
 
     const handleImageClick = () => {
@@ -42,7 +42,9 @@ const ObservationCard = (props) => {
                     </div>
                 )}
                 {userProfile && activeType === "draft" && (
-                    <Button className="multiple-image_icon border-0 edit-icon">
+                    <Button className="multiple-image_icon border-0 edit-icon" onClick={() =>
+                        handleContinueEdit({id: cardItems?.id, type: activeType})
+                    }>
                         <Icon icon="eva:edit-2-outline"/>
                     </Button>
                 )}
