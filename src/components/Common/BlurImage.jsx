@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Skeleton from 'react-loading-skeleton'
 
 const BlurImage = (props) => {
-    const { preview, image, alt, bgColor = 'transparent', handleClick, homepage, loaderLoading } = props;
+    const {preview, image, alt, bgColor = 'transparent', handleClick, homepage, loaderLoading} = props;
     const [loading, setLoading] = useState(true);
     const loadingImageRef = useRef(null);
 
@@ -26,7 +26,9 @@ const BlurImage = (props) => {
         }
         return () => {
             setLoading(false);
-            loaderLoading(false);
+            if (loaderLoading) {
+                loaderLoading(false);
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [image]);
@@ -42,7 +44,7 @@ const BlurImage = (props) => {
             <div className="w-100 shadow-sm drop-shadow-lg h-100 loader-wrap-img" style={style}>
                 {loading &&
                     <div className="loadingImage">
-                        <Skeleton count={1} height="100%" />
+                        <Skeleton count={1} height="100%"/>
                     </div>
                 }
                 <img

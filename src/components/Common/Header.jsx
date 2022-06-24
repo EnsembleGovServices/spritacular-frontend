@@ -72,10 +72,12 @@ const Header = (props) => {
     }, [auth?.user]);
 
     useEffect(() => {
-        if (window.location.href.split('/')[window.location.href.split('/').length - 1] === routeUrls.dashboard)
-            setActive('dashboard');
+        setActive('');
+        if (location.pathname) {
+            setActive(location.pathname.replace('/', ''));
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [window.location.href])
+    }, [location.pathname])
 
 
     useEffect(() => {
@@ -131,6 +133,14 @@ const Header = (props) => {
         trainee = auth?.user?.is_trained,
         normalUser = auth?.user?.is_user;
 
+
+    useEffect(() => {
+        if (location) {
+            setShowMenu(false);
+            document.querySelector('body').classList.remove("menu-open");
+        }
+    }, [location])
+
     return (
         <>
             <Navbar
@@ -178,7 +188,6 @@ const Header = (props) => {
                                         to={routeUrls.myObservations}
                                         title="My Observations"
                                         className={active === 'observations' ? "nav-link text-capitalize active" : 'nav-link text-capitalize'}
-                                        onClick={() => setActive('observations')}
                                     >
                                         My Observations
                                     </Link>
@@ -190,7 +199,6 @@ const Header = (props) => {
                                         to={routeUrls.dashboard}
                                         title="Dashboard"
                                         className={active === 'dashboard' ? "nav-link text-capitalize active" : 'nav-link text-capitalize'}
-                                        onClick={() => setActive('dashboard')}
                                     >
                                         Dashboard
                                     </Link>
@@ -203,28 +211,20 @@ const Header = (props) => {
                                 isOpen={aboutDropdown}
                                 toggle={() => setAboutDropdown(!aboutDropdown)}
                             >
-                                <DropdownToggle>
+                                <DropdownToggle className="p-0">
                                     About <Icon icon="fe:arrow-down"/>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem className={active === 'about-1' ? 'active p-0' : 'p-0'}>
-                                        <Link className="px-3 py-1" to={routeUrls.about} title="What is Spritacular?"
-                                              onClick={() => setActive('about-1')}>
+                                    <DropdownItem className={active === 'about' ? 'active p-0' : 'p-0'}>
+                                        <Link className="px-3 py-1" to={routeUrls.about} title="What is Spritacular?">
                                             What is Spritacular?
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active === 'about-2' ? 'active p-0' : 'p-0'}>
-                                        <Link className="px-3 py-1" to={routeUrls.policy} title="Policy"
-                                              onClick={() => setActive('about-2')}>
+                                    <DropdownItem className={active === 'policy' ? 'active p-0' : 'p-0'}>
+                                        <Link className="px-3 py-1" to={routeUrls.policy} title="Policy">
                                             Policy
                                         </Link>
                                     </DropdownItem>
-                                    {/*<DropdownItem className={active === 'about-3' ? 'active p-0' : 'p-0'}>*/}
-                                    {/*    <Link to={routeUrls.policy + '?code=true'} title="Code of Conduct"*/}
-                                    {/*          onClick={() => setActive('about-3')}>*/}
-                                    {/*        Code of Conduct*/}
-                                    {/*    </Link>*/}
-                                    {/*</DropdownItem>*/}
                                 </DropdownMenu>
                             </Dropdown>
                         </NavItem>
@@ -232,16 +232,14 @@ const Header = (props) => {
                             <Link
                                 to={routeUrls.getStarted}
                                 title="Get Started"
-                                className={active === 'started' ? "nav-link text-capitalize active" : 'nav-link text-capitalize'}
-                                onClick={() => setActive('started')}
+                                className={active === 'get-started' ? "nav-link text-capitalize active" : 'nav-link text-capitalize'}
                             >
                                 Get Started
                             </Link>
                         </NavItem>
                         <NavItem>
                             <Link to={routeUrls.gallery} title="Gallery"
-                                  className={active === 'gallery' ? "nav-link text-capitalize active" : 'nav-link text-capitalize'}
-                                  onClick={() => setActive('gallery')}>
+                                  className={active === 'gallery' ? "nav-link text-capitalize active" : 'nav-link text-capitalize'}>
                                 Gallery
                             </Link>
                         </NavItem>
@@ -251,26 +249,23 @@ const Header = (props) => {
                                 isOpen={resourcesDropdown}
                                 toggle={() => setResourcesDropdown(!resourcesDropdown)}
                             >
-                                <DropdownToggle>
+                                <DropdownToggle className="p-0">
                                     Resources <Icon icon="fe:arrow-down"/>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem className={active === 'resources-1' ? 'active p-0' : 'p-0'}>
-                                        <Link className="px-3 py-1" to={routeUrls.blog} title="Blog"
-                                              onClick={() => setActive('resources-1')}>
+                                    <DropdownItem className={active === 'blog' ? 'active p-0' : 'p-0'}>
+                                        <Link className="px-3 py-1" to={routeUrls.blog} title="Blog">
                                             Blog
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active === 'resources-2' ? 'active p-0' : 'p-0'}>
-                                        <Link className="px-3 py-1" to={routeUrls.tutorials} title="Tutorials"
-                                              onClick={() => setActive('resources-2')}>
+                                    <DropdownItem className={active === 'tutorials' ? 'active p-0' : 'p-0'}>
+                                        <Link className="px-3 py-1" to={routeUrls.tutorials} title="Tutorials">
                                             Tutorials
                                         </Link>
                                     </DropdownItem>
                                     {auth && auth?.user?.id &&
-                                        <DropdownItem className={active === 'resources-3' ? 'active p-0' : 'p-0'}>
-                                            <Link className="px-3 py-1" to={routeUrls.quiz.home} title="Quiz"
-                                                  onClick={() => setActive('resources-3')}>
+                                        <DropdownItem className={active === 'quiz' ? 'active p-0' : 'p-0'}>
+                                            <Link className="px-3 py-1" to={routeUrls.quiz.home} title="Quiz">
                                                 Start Quiz
                                             </Link>
                                         </DropdownItem>
@@ -284,28 +279,26 @@ const Header = (props) => {
                                 isOpen={communityDropdown}
                                 toggle={() => setCommunityDropdown(!communityDropdown)}
                             >
-                                <DropdownToggle>
+                                <DropdownToggle className="p-0">
                                     Community <Icon icon="fe:arrow-down"/>
                                 </DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem className={active === 'community-1' ? 'active p-0' : 'p-0'}>
+                                    <DropdownItem className={active === 'meet-the-team' ? 'active p-0' : 'p-0'}>
                                         <Link className="px-3 py-1" to={routeUrls.pages.meetTheTeam}
-                                              title="Meet the Team"
-                                              onClick={() => setActive('community-1')}>
+                                              title="Meet the Team">
                                             Meet the Team
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active === 'community-2' ? 'active p-0' : 'p-0'}>
+                                    <DropdownItem className={active === 'become-an-ambassador' ? 'active p-0' : 'p-0'}>
                                         <Link className="px-3 py-1" to={routeUrls.pages.becomeAnAmbasador}
-                                              title="Become an ambassador"
-                                              onClick={() => setActive('community-2')}>
+                                              title="Become an ambassador">
                                             Become an ambassador
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active === 'community-3' ? 'active p-0' : 'p-0'}>
+                                    <DropdownItem
+                                        className={active === 'spritacular-google-group' ? 'active p-0' : 'p-0'}>
                                         <Link className="px-3 py-1" to={routeUrls.pages.spritacularGoogleGroup}
-                                              title="Spritacular Google Group"
-                                              onClick={() => setActive('community-3')}>
+                                              title="Spritacular Google Group">
                                             Spritacular Google Group
                                         </Link>
                                     </DropdownItem>

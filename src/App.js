@@ -13,7 +13,6 @@ import Error from "./components/Error";
 import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 import InformativePage from './layouts/InformativePage';
 import Loader from "./components/Shared/Loader";
-import SystemOnline from "./components/Common/SystemOnline";
 import TutorialList from "./pages/BlogTutorial/TutorialList";
 import HomePage from "./pages/Page/HomePage";
 
@@ -61,7 +60,6 @@ const TutorialUpdate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialUpd
 const App = () => {
 
     const [persistValue, setPersistValue] = useState(false);
-    const [isOnline, setOnline] = useState(true);
     const authCallBack = (authChange) => {
         setPersistValue(authChange);
     };
@@ -72,19 +70,6 @@ const App = () => {
         trained: auth?.user?.is_trained,
         user: auth?.user?.is_user,
     }
-
-    useEffect(() => {
-        window.addEventListener('online', () => {
-            setOnline(true);
-        })
-        window.addEventListener('offline', () => {
-            setOnline(false);
-        })
-        return () => {
-            window.removeEventListener("online", () => setOnline(true));
-            window.removeEventListener("offline", () => setOnline(false));
-        }
-    }, [isOnline]);
 
     return (
         <>
@@ -231,7 +216,6 @@ const App = () => {
                     </Suspense>
                 }/>
             </Routes>
-            <SystemOnline status={isOnline}/>
         </>
     );
 };

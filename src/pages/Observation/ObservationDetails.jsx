@@ -1,4 +1,5 @@
 import "../../assets/scss/component/observationDetails.scss";
+import "../../assets/scss/component/quiz.scss";
 import {lazy, Suspense, useEffect, useRef, useState} from "react";
 import {
     Badge,
@@ -55,6 +56,9 @@ const ObservationDetails = (props) => {
     const obvDetailsModal = useRef(null);
     const [isImageNull, setIsImageNull] = useState(true);
     const [loaderLoading, setLoaderLoading] = useState(true);
+    const [fullScreen, setFullScreen] = useState(false);
+    const [fullImage, setFullImage] = useState("");
+
     // Toggle Tabs
     const toggleImageDetailsTab = (tab) => {
         if (activeTab !== tab) {
@@ -83,10 +87,21 @@ const ObservationDetails = (props) => {
             });
     };
 
+    // Loader for sidebar loading
     const handleLoaderLoading = (state) => {
         setLoaderLoading(state);
     }
 
+    // Handle Full Screen
+    const goFullScreenImage = (image) => {
+        // console.log(image);
+        setFullImage(image);
+        setFullScreen(true);
+    }
+    const closeFullScreen = () => {
+        setFullScreen(false);
+        setFullImage("");
+    }
 
     useEffect(() => {
         setLoaderLoading(true);
@@ -152,8 +167,7 @@ const ObservationDetails = (props) => {
                         </Button>
                         <h4 className="d-inline-block m-0">{data?.category_data?.[0] ? data?.category_data?.[0]?.name : null}</h4>
                         <Badge
-                            className={`text-uppercase ${
-                                activeType === "verified" ? "badge-success" : ""
+                            className={`text-uppercase ${activeType === "verified" ? "badge-success" : ""
                             }`}
                         >
                             {activeType === "verified" && (
@@ -196,13 +210,20 @@ const ObservationDetails = (props) => {
                                                 className="object-contain img-fluid"
                                             />
                                         ) : !isImageNull ? (
-                                            <Suspense fallback={<div></div>}>
-                                                <BlurImageComp image={data?.images?.[0]?.image}
-                                                               preview={data?.images?.[0]?.image}
-                                                               alt={data?.images?.[0]?.location}
-                                                               loaderLoading={handleLoaderLoading}
-                                                />
-                                            </Suspense>
+                                            <div className="full-screen position-relative h-100"
+                                                 onClick={() => goFullScreenImage(data?.images?.[0]?.image)}>
+                                                <Suspense fallback={<div></div>}>
+                                                    <BlurImageComp
+                                                        image={data?.images?.[0]?.image}
+                                                        preview={data?.images?.[0]?.image}
+                                                        alt={data?.images?.[0]?.location}
+                                                        loaderLoading={handleLoaderLoading}
+                                                    />
+                                                </Suspense>
+                                                <div className="fc-icon">
+                                                    <Icon icon="octicon:screen-full-16"/>
+                                                </div>
+                                            </div>
                                         ) : (
                                             <div
                                                 className="d-flex flex-column h-100 align-items-center justify-content-center bg-gradient bg-light">
@@ -211,14 +232,20 @@ const ObservationDetails = (props) => {
                                             </div>
                                         ))}
                                     {data?.image_type === 3 && (
-                                        <CardImageCarousel
-                                            carouselData={data?.images}
-                                            detail={true}
-                                            loaderLoading={handleLoaderLoading}
-                                        />
+                                        <div className="full-screen position-relative h-100">
+                                            <CardImageCarousel
+                                                carouselData={data?.images}
+                                                detail={true}
+                                                loaderLoading={handleLoaderLoading}
+                                                handleFullScreen={goFullScreenImage}
+                                            />
+                                            <div className="fc-icon"
+                                                 onClick={() => goFullScreenImage(data?.images?.[0]?.image)}>
+                                                <Icon icon="octicon:screen-full-16"/>
+                                            </div>
+                                        </div>
                                     )}
                                 </div>
-
                                 <Row>
                                     <Col
                                         sm={6}
@@ -364,6 +391,33 @@ const ObservationDetails = (props) => {
                     </Row>
                 </ModalBody>
             </Modal>
+            {fullScreen &&
+                <Modal
+                    className="fullScreen-quiz-image-modal"
+                    isOpen={fullScreen}
+                    backdrop={false}
+                    centered
+                    fullscreen
+                    toggle={closeFullScreen}
+                >
+                    <ModalBody>
+                        <button className="close-icon" type="button" onClick={() => closeFullScreen()}>
+                            <Icon color="#fff" width={30} height={30} icon="clarity:close-line"/>
+                        </button>
+                        <div className="fc-image-wrapper">
+                            <div className="fc-image-adjust">
+                                {data?.image_type === 3 ?
+                                    <CardImageCarousel
+                                        carouselData={data?.images}
+                                        detail={true}
+                                        loaderLoading={handleLoaderLoading}
+                                    /> : <BlurImageComp preview={fullImage} image={fullImage}/>
+                                }
+                            </div>
+                        </div>
+                    </ModalBody>
+                </Modal>
+            }
         </>
     );
 };

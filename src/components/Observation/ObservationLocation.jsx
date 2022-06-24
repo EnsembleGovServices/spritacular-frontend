@@ -1,4 +1,5 @@
 import "../../assets/scss/component/observationLocation.scss";
+import "../../assets/scss/styles/editors.css"
 import {
     Button,
     Col,
@@ -21,7 +22,11 @@ import {timezone} from "../../helpers/timezone";
 import ObservationCategory from "./ObservationCategory";
 import {Icon} from '@iconify/react';
 import {getdirectionDegree, getdirectionAngle} from "../../helpers/observation";
-import moment from "moment";
+
+// Date-time-picker 
+import DatePicker from "react-multi-date-picker";
+import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
+import "react-multi-date-picker/styles/colors/red.css";
 
 
 const ObservationLocation = (props) => {
@@ -33,7 +38,7 @@ const ObservationLocation = (props) => {
         area: '',
         state: '',
         country: 'IN',
-        short_address: 'Pune Maharastra Indias',
+        short_address: 'Pune Maharastra India',
         mapPosition: {
             lat: null,
             lng: null
@@ -63,7 +68,7 @@ const ObservationLocation = (props) => {
         if (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap === false) {
             fref.current.handleChangeLatLng(observationImages?.data[observationImages?.selected_image_index]?.latitude, observationImages?.data[observationImages?.selected_image_index]?.longitude);
         }
-
+        // eslint-disable-next-line
     }, [observationImages?.data?.[observationImages?.selected_image_index], observationImages?.selected_image_index]);
 
     useEffect(() => {
@@ -73,7 +78,7 @@ const ObservationLocation = (props) => {
             handleCopyData(observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap, ['latitude', 'longitude', 'location', 'country_code']);
             handleCopyData(observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate, ['obs_date', 'obs_time', 'timezone']);
         }
-
+        // eslint-disable-next-line
     }, [observationImages?.selected_image_index]);
 
     const handleValue = (flag, value) => {
@@ -140,8 +145,8 @@ const ObservationLocation = (props) => {
 
     const handleChangeLat = (e) => {
         handleImageInput(e);
-        let name = e.target.name,
-            value = Number(e.target.value);
+        // let name = e.target.name,
+        let value = Number(e.target.value);
         let addressState = {...address1};
         addressState.mapPosition.lat = value;
         addressState.markerPosition.lat = value;
@@ -157,8 +162,8 @@ const ObservationLocation = (props) => {
 
     const handleChangeLng = (e) => {
         handleImageInput(e);
-        let name = e.target.name,
-            value = Number(e.target.value);
+        // let name = e.target.name,
+        let value = Number(e.target.value);
         let addressState = {...address1};
         addressState.mapPosition.lng = value;
         addressState.markerPosition.lng = value;
@@ -469,19 +474,26 @@ const ObservationLocation = (props) => {
                                 <FormGroup>
                                     <Label className="text-uppercase" htmlFor="Date">Date</Label>
                                     <div className="position-relative">
-                                        <Input
-                                            id="Date"
-                                            type="date"
-                                            max={moment(new Date()).format('Y-MM-DD')}
+                                        <DatePicker
+                                            className="red"
+                                            containerClassName="w-100"
+                                            inputClass="form-control"
+                                            format="YYYY-MM-DD"
+                                            placeholder="YYYY-MM-DD"
                                             name="obs_date"
-                                            max={moment(new Date()).format('Y-MM-DD')}
-                                            value={(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}
-                                            className="w-100"
-                                            placeholder="12/20/2021"
-                                            onChange={(e) => handleImageInput(e)}
+                                            scrollSensitive={false}
+                                            onOpenPickNewDate={false}
+                                            editable={false}
+                                            maxDate={new Date().setDate(new Date().getDate())}
+                                            value={(observationImages?.data) && (observationImages?.data[observationImages?.selected_image_index]?.obs_date)}
+                                            onChange={(e) => handleImageInput({
+                                                target: {
+                                                    name: "obs_date",
+                                                    value: e.format()
+                                                }
+                                            })}
                                         />
                                     </div>
-
                                     {error && errorData?.map((item, index) => {
                                         if (step?.selected_image_index === index) {
                                             return (
@@ -495,15 +507,26 @@ const ObservationLocation = (props) => {
                             <Col md={6} lg={4}>
                                 <FormGroup>
                                     <Label className="text-uppercase" htmlFor="Time">Time</Label>
-                                    <div className="position-relative">
-                                        <Input
-                                            id="Time"
-                                            type="time"
+                                    <div className="position-relative ">
+                                        <DatePicker
+                                            containerClassName="w-100"
+                                            disableDayPicker
+                                            className="red"
+                                            inputClass="form-control"
                                             name="obs_time"
-                                            value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
-                                            className="w-100"
-                                            placeholder="10:21:00 am"
-                                            onChange={(e) => handleImageInput(e)}
+                                            format="HH:mm"
+                                            placeholder="Select Time"
+                                            onChange={(e) => handleImageInput({
+                                                target: {
+                                                    name: "obs_time",
+                                                    value: e.format()
+                                                }
+                                            })}
+                                            editable={false}
+                                            plugins={[
+                                                <TimePicker hideSeconds/>,
+                                            ]}
+                                            scrollSensitive={false}
                                         />
                                     </div>
                                     {error && errorData?.map((item, index) => {
@@ -525,7 +548,7 @@ const ObservationLocation = (props) => {
                                             className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                                             {/*<span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>*/}
                                             <span
-                                                className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone}` : ''}</span>
+                                                className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone}` : 'Select Time Zone'}</span>
                                             <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                         </DropdownToggle>
                                         <DropdownMenu className="py-0 shadow">

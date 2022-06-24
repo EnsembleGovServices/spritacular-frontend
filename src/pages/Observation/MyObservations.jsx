@@ -1,6 +1,6 @@
 import "../../assets/scss/component/myObservation.scss";
 import {Col, Container, Row} from "reactstrap";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {Icon} from "@iconify/react";
 import axios from "../../api/axios";
 
@@ -35,6 +35,7 @@ const MyObservations = () => {
     );
     const [loading, setLoading] = useState({});
     const [loadedState, setLoadedState] = useState({});
+    const location = useLocation();
 
     const handleObservationEdit = (data) => {
         cleaningUpObservationDataForDraftSaving(data).then((r) => r);
@@ -153,6 +154,19 @@ const MyObservations = () => {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal, activeType]);
+
+
+
+    useEffect(()=> {
+        setObservationListData((prev) => {
+            return {
+                ...prev,
+                list: []
+            }
+        });
+    }, [location])
+
+
     useEffect(() => {
         getObservationData(true, "verified");
         return () => {
@@ -165,6 +179,11 @@ const MyObservations = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+
+
+
+
     useEffect(() => {
         setLoading((prev) => {
             return {

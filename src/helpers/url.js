@@ -47,7 +47,7 @@ export const routeUrls = {
     gallery: 'gallery',
     observationsAdd: 'observations/add',
     observationsUpdate: 'observations/update',
-    dashboard: 'dashboard',
+    dashboard: '/dashboard',
     dashBlog: {
         list: 'blog',
         create: 'create',

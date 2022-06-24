@@ -21,9 +21,11 @@ const ObservationUploadImg = (props) => {
     const handleUploadImage = (e) => {
         setError(null);
         const fileList = e.target.files;
+        const imgType = ["image/png", "image/jpeg", "image/jpg"]
         Array.from(fileList).forEach((item, id) => {
             const reader = new FileReader();
             reader.onloadend = () => {
+                const isValidImage = imgType.includes(item.type);
                 const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
                 const baseImage = `data:image/png;base64,${base64String}`;
                 const random = (Math.random() + 1).toString(36).substring(7) + (Math.random() + 1).toString(36).substring(20);
@@ -32,7 +34,7 @@ const ObservationUploadImg = (props) => {
                     return image?.lastModified === item?.lastModified && image?.name === item?.name;
                 });
                 const duplicate = repeatCheck.includes(true);
-                if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate) {
+                if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate && isValidImage) {
 
                     if (mode) {
                         return setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
@@ -74,6 +76,15 @@ const ObservationUploadImg = (props) => {
                         return {
                             ...prev,
                             duplicate: 'You have already added the image, please choose other image',
+                        }
+                    })
+                }
+
+                if (!isValidImage) {
+                    setError((prev) => {
+                        return {
+                            ...prev,
+                            invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.)',
                         }
                     })
                 }

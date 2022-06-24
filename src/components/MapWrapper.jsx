@@ -8,8 +8,6 @@ import {baseURL} from "../helpers/url";
 
 Geocode.setApiKey(baseURL.mapApiKey);
 
-// Geocode.enableDebug();
-
 class Map extends Component {
 
     constructor(props) {
@@ -115,7 +113,6 @@ class Map extends Component {
                 console.error(error);
             }
         );
-
     };
 
     /**
@@ -325,6 +322,7 @@ class Map extends Component {
 
                             <div className="search-input-container">
                                 <Autocomplete
+                                    id='searchInput'
                                     style={{
                                         width: '100%',
                                     }}

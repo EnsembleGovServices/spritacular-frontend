@@ -55,6 +55,9 @@ const UploadImageUI = (props) => {
                 {error?.duplicate &&
                     <span className="text-info d-block small my-1 d-inline-block">{error?.duplicate}</span>
                 }
+                {error?.invalidImage &&
+                    <span className="text-danger d-block small my-1 d-inline-block">{error?.invalidImage}</span>
+                }
             </div>
             {defaultUploadBox &&
                 <div className={`${defaultUploadBox ? 'mark-center' : ''}`}>
