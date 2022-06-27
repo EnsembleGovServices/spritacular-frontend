@@ -32,12 +32,11 @@ const PersistLogin = (props) => {
                     await refresh();
                 }
             } catch (err) {
-                if (err.response.status === 401) {
+                if (err?.response?.status === 401) {
                     localStorage.setItem('persist', false);
                     localStorage.removeItem('refresh');
                     setPersist(false);
                 }
-                console.error('err', err.response.status);
             } finally {
                 isMounted && setIsLoading(false);
             }

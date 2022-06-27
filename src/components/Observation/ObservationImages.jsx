@@ -22,7 +22,7 @@ const ObservationImages = (props) =>{
             </Row>
             <Row>
                 <Col sm={12}>
-                    <div className="mt-5">
+                    <div className="mt-4">
                         <Button disabled={!observationImages?.data?.length} onClick={proceedNext}>Continue</Button>
                     </div>
                 </Col>

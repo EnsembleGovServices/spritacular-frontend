@@ -18,7 +18,6 @@ const InitialUploadObservations = (props) => {
         return navigate('/' + routeUrls.observationsAdd);
     }
 
-
     useEffect(() => {
         setObservationSteps({
             total: 3,

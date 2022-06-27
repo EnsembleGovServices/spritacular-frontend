@@ -13,13 +13,14 @@ import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
 import ImageUpload from "../Upload/ImageUpload";
 import { useEffect, useState } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { routeUrls } from './../../helpers/url';
 import ReactCountryFlags from "../ReactCountryFlag";
 
 const UserProfilePopup = (props) => {
   const [user, setUser] = useState(props);
   const { open, handleClose, modalClass, data } = props;
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setUser(data?.user);
@@ -45,7 +46,7 @@ const UserProfilePopup = (props) => {
           <Col md={5}>
             <FormGroup className="custom-file-upload">
               <div className="file-upload-inners">
-                <ImageUpload user={data?.user} token={data?.token?.access} />
+                <ImageUpload user={data?.user} token={data?.token?.access} isProfilePopup={true} setPopupError={setError} popupError={error} />
               </div>
             </FormGroup>
           </Col>
@@ -63,9 +64,17 @@ const UserProfilePopup = (props) => {
             </div>
           </Col>
         </Row>
+        <Row className="mt-2">
+          {error?.size &&
+            <span className="px-1 text-danger text-center d-block small mt-1">{error?.size}</span>
+          }
+          {error?.invalidImage &&
+            <span className="px-1 text-danger text-center d-block small mt-1">{error?.invalidImage}</span>
+          }
+        </Row>
         <Row>
           <Col md={12}>
-            <FormGroup className="text-center mt-4">
+            <FormGroup className="text-center mt-2">
               <Link
                 to={routeUrls.profile}
                 onClick={() => handleClose()}

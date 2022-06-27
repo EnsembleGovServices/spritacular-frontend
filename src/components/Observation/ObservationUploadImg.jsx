@@ -84,7 +84,7 @@ const ObservationUploadImg = (props) => {
                     setError((prev) => {
                         return {
                             ...prev,
-                            invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.)',
+                            invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.',
                         }
                     })
                 }

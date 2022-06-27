@@ -169,7 +169,6 @@ const MyObservations = () => {
 
     useEffect(() => {
         getObservationData(true, "verified");
-        console.log('Hello', observationListData?.active)
         return () => {
             setObservationListData((prev) => {
                 return {
@@ -181,10 +180,6 @@ const MyObservations = () => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-
-
-
 
     useEffect(() => {
         setLoading((prev) => {
