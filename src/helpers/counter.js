@@ -20,7 +20,6 @@ const Counter = (props) => {
                 } else if (i.innerHTML !== "") {
                     data.format = i.innerHTML
                 }
-                // console.log(data.format)
                 if (data.start == null) {
                     throw new Error('start is required')
                 }

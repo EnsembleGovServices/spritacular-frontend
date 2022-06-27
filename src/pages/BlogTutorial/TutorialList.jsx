@@ -9,6 +9,7 @@ import Loader from "../../components/Shared/Loader";
 import {Link} from "react-router-dom";
 import NotFound from "../../components/Common/NotFound";
 
+// To render a dynamic import as a regular component for showing loader till it loads.
 const TutorialRestLists = lazy(() => import('./List/TutorialRestLists'))
 
 const TutorialList = () => {

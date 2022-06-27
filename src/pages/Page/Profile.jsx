@@ -17,6 +17,7 @@ import ImageUpload from "../../components/Upload/ImageUpload";
 import ReactCountryFlags from "../../components/ReactCountryFlag";
 import useObservations from "../../hooks/useObservations";
 
+// To render a dynamic import as a regular component for showing loader till it loads.
 const UpdateProfile = lazy(() => import('../../components/Account/UpdateProfile'))
 const CameraSetting = lazy(() => import('../../components/Account/CameraSetting'))
 const ChangePassword = lazy(() => import('../../components/Account/ChangePassword'))

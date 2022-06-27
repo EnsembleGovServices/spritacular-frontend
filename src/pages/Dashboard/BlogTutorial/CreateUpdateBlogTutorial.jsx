@@ -6,6 +6,7 @@ import {useState, Suspense, lazy, useEffect, useLayoutEffect,} from "react";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
+// To render a dynamic import as a regular component for showing loader till it loads.
 const ContentEditor = lazy(() => import('../../../components/Blog/ContentEditor'))
 const UploadFeaturedImage = lazy(() => import('../../../components/Blog/UploadFeaturedImage'))
 const BlogType = lazy(() => import('../Blog/BlogType'))

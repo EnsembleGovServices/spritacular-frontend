@@ -15,9 +15,8 @@ import { obvType } from "../../helpers/observation";
 import { baseURL, routeUrls } from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
 
-
+// To render a dynamic import as a regular component for showing loader till it loads.
 const NotFound = lazy(() => import("../../components/Common/NotFound"));
-
 const ObservationDetails = lazy(() => import("./ObservationDetails"));
 const ObservationDetailPage = lazy(() => import("./ObservationListPage"));
 const InitialUploadObservations = lazy(() => import("../Page/InitialUploadObservations"));

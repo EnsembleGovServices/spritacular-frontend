@@ -11,15 +11,6 @@ const ObservationListPage = (props) => {
         handleContinueEdit,
     } = props;
 
-    console.log(observationList,
-        isObservationDetailModal,
-        setSelectedObservationId,
-        setObservationDetailModal,
-        activeType,
-        handleContinueEdit);
-    // Masonry Options
-    // const masonryOptions = masonryConfig('.photo-list', 1, 0, false, 10);
-
     // Masonry Options
     const masonryOptions = {
         columnWidth: 1,

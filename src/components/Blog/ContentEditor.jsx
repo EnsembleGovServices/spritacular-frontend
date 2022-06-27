@@ -36,7 +36,6 @@ const ContentEditor = (props) => {
                         })
                             .then((res) => res.json())
                             .then((res) => {
-                                // console.log(res);
                                 setLoading(false);
                                 resolve({
                                     default: res.url
@@ -138,11 +137,6 @@ const ContentEditor = (props) => {
                     }}
                     onReady={editor => {
 
-                        // console.log('ready editor')
-                        // console.log(editor.config._config.plugins.map(item => item.pluginName))
-                        // console.log(Array.from(editor.ui.componentFactory.names()));
-                        // console.log('isReadOnly', editor.isReadOnly)
-                        // editor.ui.view.editable.element.style.minHeight = "180px"
                         const toolbarContainer = editor.ui.view.stickyPanel;
                         editor.isReadOnly = readMode ? readMode : readOnly;
 
@@ -154,7 +148,6 @@ const ContentEditor = (props) => {
                     }}
                     onChange={(event, editor) => {
                         setChangeData(false);
-                        // console.log('event', event)
                         const data = editor.getData();
 
                         editor.model.document.on('change:data', () => {
@@ -175,14 +168,6 @@ const ContentEditor = (props) => {
                             })
                         }
 
-                    }}
-                    onFocus={(event, editor) => {
-                        // console.log('focus')
-                        // editor.ui.view.editable.element.style.minHeight = "180px"
-                    }}
-                    onBlur={(event, editor) => {
-                        // editor.ui.view.editable.element.style.minHeight = "180px"
-                        // console.log('blurred')
                     }}
                 />
             </div>

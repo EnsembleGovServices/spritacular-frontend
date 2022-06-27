@@ -30,6 +30,7 @@ import {useLocation} from "react-router-dom";
 import useObservationsData from "../../hooks/useObservationsData";
 import Skeleton from "react-loading-skeleton";
 
+// To render a dynamic import as a regular component for showing loader till it loads.
 const BlurImageComp = lazy(() => import("../../components/Common/BlurImage"));
 const ObservationMoreDetails = lazy(() => import("../../components/Observation/ObservationDetails/ObservationMoreDetails"));
 const ObservationMoreEquipementDetails = lazy(() => import("../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails"));

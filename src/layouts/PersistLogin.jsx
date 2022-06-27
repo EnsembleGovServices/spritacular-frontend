@@ -3,6 +3,7 @@ import {useState, useEffect, createContext, lazy, Suspense} from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
 
+// To render a dynamic import as a regular component for showing loader till it loads.
 const Header = lazy(() => import('../components/Common/Header'))
 const Footer = lazy(() => import('../components/Common/Footer'))
 

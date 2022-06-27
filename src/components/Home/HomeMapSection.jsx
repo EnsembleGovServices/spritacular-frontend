@@ -2,8 +2,7 @@ import {Container} from 'reactstrap';
 import {cdn} from "../../helpers/url";
 import HomeObservationCard from "./HomeObservationCard";
 
-// const HomeObservationCard = lazy(() => import('./HomeObservationCard'))
-
+// To show map in home page behind the observation
 const HomeMapSection = (props) => {
     const {recent} = props;
     return (

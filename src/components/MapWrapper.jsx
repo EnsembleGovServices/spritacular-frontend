@@ -48,7 +48,6 @@ class Map extends Component {
                     country = this.getCountry(addressArray)['short_name'],
                     short_address = [city, state, this.getCountry(addressArray)['long_name']].filter(x => x !== undefined && x !== null).toString();
 
-                // console.log(short_address, 'ffdf');
                 this.setState({
                     address: (address) ? address : '',
                     area: (area) ? area : '',

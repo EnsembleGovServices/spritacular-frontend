@@ -8,7 +8,6 @@ import {registerServiceWorker} from "./serviceWorker";
 
 ReactDOM.render(
     <BrowserRouter>
-        {/*<ScrollToTop />*/}
         <AuthProvider>
             <Routes>
                 <Route path="/*" element={<App/>}/>
