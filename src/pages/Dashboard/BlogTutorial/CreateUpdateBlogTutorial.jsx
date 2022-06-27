@@ -237,7 +237,7 @@ const CreateUpdateBlogTutorial = (props) => {
             <div className="position-relative">
                 <div className="d-flex align-items-center justify-content-between">
                     <h2 className="mb-0 text-capitalize">{update ? "Update" : "Create"} {type}</h2>
-                    <Link to={`/${routeUrls.dashboard}/${type}`}
+                    <Link to={`${routeUrls.dashboard}/${type}`}
                           className="btn btn-primary px-4 text-capitalize">{type} lists</Link>
                 </div>
             </div>
