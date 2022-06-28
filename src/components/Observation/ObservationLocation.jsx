@@ -82,6 +82,7 @@ const ObservationLocation = (props) => {
     }, [observationImages?.selected_image_index]);
 
     const handleValue = (flag, value) => {
+        console.log(flag, value);
         if (!flag) {
             let address = { ...address1 };
             address.country_code = value[0];
@@ -114,6 +115,7 @@ const ObservationLocation = (props) => {
             }
         } else {
             setAddress(value);
+            console.log(observationImages, observationData);
             if (observationImages?.data) {
                 let observationAddress = { ...observationImages };
                 if (observationAddress?.data) {
@@ -136,6 +138,7 @@ const ObservationLocation = (props) => {
                             observationAddress.data[2]['country_code'] = value.country;
                         }
                     }
+                    console.log('Last: ', observationAddress);
                     setObservationImages(observationAddress);
                 }
             }
@@ -171,6 +174,7 @@ const ObservationLocation = (props) => {
         setIsLoaded(true);
         fref.current.handleChangeLatLng(address1.markerPosition.lat, e.target.value);
     }
+    
     useEffect(() => {
         let observationAddress = { ...observationImages };
         if (observationAddress?.data) {
@@ -191,6 +195,7 @@ const ObservationLocation = (props) => {
             setObservationImages(observationAddress);
         }
     }, [address1]);
+    
     useEffect(() => {
         let observationAddress = { ...observationImages };
         if (observationAddress?.data) {
@@ -207,6 +212,7 @@ const ObservationLocation = (props) => {
             setObservationImages(observationAddress);
         }
     }, [observationData?.image_type]);
+    
     const selectDirection = (index) => {
         const directionWrapper = document.querySelector('.compass-wrapper');
         const directionId = document.getElementById(`directionValue${index}`);
@@ -233,6 +239,7 @@ const ObservationLocation = (props) => {
         setObservationImages(observationArray);
     }
 
+    // To set similar data for other image
     const handleCopyData = (e, keys) => {
         if (observationImages) {
 
@@ -295,6 +302,9 @@ const ObservationLocation = (props) => {
             });
         }
     }, [observationImages?.data, obvType?.image_type, setObservationImages, step.active])
+
+
+    // console.log(observationImages?.data);
 
     return (
         <>
@@ -398,7 +408,7 @@ const ObservationLocation = (props) => {
                                         id="LAT"
                                         type="number"
                                         name="latitude"
-                                        placeholder="Edmon, OK, USA"
+                                        placeholder="Latitude"
                                         onChange={(e) => {
                                             handleImageInput(e);
                                             handleChangeLat(e);
@@ -417,7 +427,7 @@ const ObservationLocation = (props) => {
                                         id="LON"
                                         type="number"
                                         name="longitude"
-                                        placeholder="Edmon, OK, USA"
+                                        placeholder="Longitude"
                                         onChange={(e) => {
                                             handleImageInput(e);
                                             handleChangeLng(e);

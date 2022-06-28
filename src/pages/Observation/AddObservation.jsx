@@ -449,9 +449,7 @@ const AddObservation = () => {
                     return file;
                 })
                 .catch((error) =>
-                    console.log(
-                        `Error converting the CDN image to file object at index [${index}] [${error}]`
-                    )
+                    console.log(`Error converting the CDN image to file object at index [${index}] [${error}]`)
                 );
         });
     }, [draftData, setObservationImages]);

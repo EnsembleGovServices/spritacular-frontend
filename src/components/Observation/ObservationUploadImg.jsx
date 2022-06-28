@@ -1,19 +1,20 @@
-import {FormGroup, Input, Label} from "reactstrap";
+import { FormGroup, Input, Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
-import {Icon} from '@iconify/react';
-import {useEffect, useState} from "react";
-import {uploadImageDefaultState} from "../../helpers/observation";
+import { Icon } from '@iconify/react';
+import { useEffect, useState } from "react";
+import { uploadImageDefaultState } from "../../helpers/observation";
 import PropTypes from "prop-types";
 import useAuth from "../../hooks/useAuth";
-import {cameraSettingFields} from "../../helpers/url";
+import { cameraSettingFields } from "../../helpers/url";
 import UploadImageUI from "../Shared/UploadImageUI";
 
 const ObservationUploadImg = (props) => {
-    const {multiple, maxLimit, imageFormat, detectImage, mode, small} = props;
-    const {setObservationImages, observationImages, setCameraDetails} = useObservations();
+    const { multiple, maxLimit, imageFormat, detectImage, mode, small } = props;
+    console.log(mode);
+    const { setObservationImages, observationImages, setCameraDetails } = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const [userLocation, setUserLocation] = useState({
         latitude: (auth?.user?.location_metadata?.lat) ? auth?.user?.location_metadata?.lat : 18.5204303,
         longitude: (auth?.user?.location_metadata?.lng) ? auth?.user?.location_metadata?.lng : 73.8567437
@@ -37,9 +38,12 @@ const ObservationUploadImg = (props) => {
                 if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate && isValidImage) {
 
                     if (mode) {
+                        console.log('In Mode: ',mode);
                         // return 
                         setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
                     } else {
+                        console.log('In Else Mode: ',mode);
+
                         setImages(prevState => [
                             ...prevState,
                             uploadImageDefaultState(random, baseImage, item, userLocation)
@@ -94,7 +98,6 @@ const ObservationUploadImg = (props) => {
         })
     };
 
-
     useEffect(() => {
         let images = (observationImages?.data) ? [...observationImages?.data] : [];
         observationImages?.data?.map((item, index) => {
@@ -103,7 +106,6 @@ const ObservationUploadImg = (props) => {
         })
         setImages(images)
     }, [detectImage, mode, userLocation])
-
 
     useEffect(() => {
         if (images.length > 0) {
@@ -116,6 +118,8 @@ const ObservationUploadImg = (props) => {
             setCameraDetails(cameraSettingFields)
         }
     }, [images, setObservationImages, userLocation])
+
+    console.log(images);
 
     return (
         <>
