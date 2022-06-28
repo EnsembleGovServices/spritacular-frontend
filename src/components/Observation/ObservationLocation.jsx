@@ -82,7 +82,7 @@ const ObservationLocation = (props) => {
     }, [observationImages?.selected_image_index]);
 
     const handleValue = (flag, value) => {
-        console.log(flag, value);
+        console.log('value is', value);
         if (!flag) {
             let address = {...address1};
             address.country_code = value[0];
@@ -91,7 +91,7 @@ const ObservationLocation = (props) => {
                 country: value[0],
                 address: value[1],
                 lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : null),
-                lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude : null)
+                lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude : null),
             })
             setAddress(address);
             if (observationImages?.data) {
@@ -123,6 +123,7 @@ const ObservationLocation = (props) => {
                     observationAddress.data[observationAddress.selected_image_index]['longitude'] = value.markerPosition.lng;
                     observationAddress.data[observationAddress.selected_image_index]['location'] = value.short_address;
                     observationAddress.data[observationAddress.selected_image_index]['country_code'] = value.country;
+                    observationAddress.data[observationAddress.selected_image_index]['place_uid'] = value.place_uid;
 
                     if (observationData?.image_type === 3) {
                         if (observationAddress.data[1]) {
@@ -130,15 +131,17 @@ const ObservationLocation = (props) => {
                             observationAddress.data[1]['longitude'] = value.markerPosition.lng;
                             observationAddress.data[1]['location'] = value.short_address;
                             observationAddress.data[1]['country_code'] = value.country;
+                            observationAddress.data[1]['place_uid'] = value.place_uid;
                         }
                         if (observationAddress.data[2]) {
                             observationAddress.data[2]['latitude'] = value.markerPosition.lat;
                             observationAddress.data[2]['longitude'] = value.markerPosition.lng;
                             observationAddress.data[2]['location'] = value.short_address;
                             observationAddress.data[2]['country_code'] = value.country;
+                            observationAddress.data[2]['place_uid'] = value.place_uid;
                         }
                     }
-                    console.log('Last: ', observationAddress);
+                    // console.log('Last: ', observationAddress);
                     setObservationImages(observationAddress);
                 }
             }
