@@ -3,6 +3,7 @@ import {useState, useEffect, createContext, lazy, Suspense} from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
 
+// To render a dynamic import as a regular component for showing loader till it loads.
 const Header = lazy(() => import('../components/Common/Header'))
 const Footer = lazy(() => import('../components/Common/Footer'))
 
@@ -32,12 +33,11 @@ const PersistLogin = (props) => {
                     await refresh();
                 }
             } catch (err) {
-                if (err.response.status === 401) {
+                if (err?.response?.status === 401) {
                     localStorage.setItem('persist', false);
                     localStorage.removeItem('refresh');
                     setPersist(false);
                 }
-                console.error('err', err.response.status);
             } finally {
                 isMounted && setIsLoading(false);
             }

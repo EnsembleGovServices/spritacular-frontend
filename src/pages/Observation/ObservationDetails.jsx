@@ -30,6 +30,7 @@ import {useLocation} from "react-router-dom";
 import useObservationsData from "../../hooks/useObservationsData";
 import Skeleton from "react-loading-skeleton";
 
+// To render a dynamic import as a regular component for showing loader till it loads.
 const BlurImageComp = lazy(() => import("../../components/Common/BlurImage"));
 const ObservationMoreDetails = lazy(() => import("../../components/Observation/ObservationDetails/ObservationMoreDetails"));
 const ObservationMoreEquipementDetails = lazy(() => import("../../components/Observation/ObservationDetails/ObservationMoreEquipementDetails"));
@@ -182,15 +183,14 @@ const ObservationDetails = (props) => {
                             {activeType}
                         </Badge>
                     </div>
-                    {/*<h4>Data ID: {data?.id}</h4>*/}
 
                     {activeType === "draft" && (
                         <div>
                             <Button
                                 variant="primary"
-                                onClick={() =>
-                                    handleContinueEdit({id: data?.id, type: activeType})
-                                }
+                                    onClick={() =>
+                                        handleContinueEdit({id: data?.id, type: activeType})
+                                    }
                             >
                                 Continue Editing
                             </Button>

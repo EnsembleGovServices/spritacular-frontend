@@ -13,7 +13,6 @@ const UploadFeaturedImage = (props) => {
     const [reset, setReset] = useState(false);
     const [loaderLoading, setLoaderLoading] = useState(true);
 
-    // const progressBar = useRef(null);
     const handleLoaderLoading = (state) => {
         setLoaderLoading(state);
     };
@@ -46,7 +45,6 @@ const UploadFeaturedImage = (props) => {
         })
     }
 
-
     useLayoutEffect(() => {
         if (file && !reset) {
             previewImage();
@@ -63,19 +61,6 @@ const UploadFeaturedImage = (props) => {
             })
         }
     }, [file])
-
-
-    // useEffect(() => {
-    //     if (uploadProgress === "100%") {
-    //         progressBar.current.classList.add('fade-out');
-    //         setTimeout(function () {
-    //             progressBar.current.classList.add('fade-out');
-    //         }, 500);
-    //         setTimeout(function () {
-    //             progressBar.current.remove();
-    //         }, 1200);
-    //     }
-    // }, [uploadProgress])
 
     const getFileName = (url) => {
         return url.split(/[#?]/)[0].split("/").pop().trim();
@@ -138,11 +123,6 @@ const UploadFeaturedImage = (props) => {
                         </div>
                     </div>
                 }
-                {/*{uploadProgress > "1%" &&*/}
-                {/*    <div className="progressbar" ref={progressBar} style={{width: uploadProgress}}>*/}
-                {/*        {`${uploadProgress}`}*/}
-                {/*    </div>*/}
-                {/*}*/}
             </div>
         </FormGroup>
 

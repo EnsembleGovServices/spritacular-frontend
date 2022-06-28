@@ -4,8 +4,7 @@ import {useEffect, useState} from "react";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import PlacesAutocomplete from "../LocationSearchInput";
-import {addScriptTagToHead} from "../../helpers/addScriptTagToHead";
-
+import axiosPrivate from "../../api/axios";
 
 const UpdateProfile = (props) => {
     const {user} = props;
@@ -14,6 +13,7 @@ const UpdateProfile = (props) => {
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
 
+    // To store changed profile data in state
     const handleInput = (e) => {
         e.preventDefault();
         let name = e.target.name,
@@ -24,6 +24,7 @@ const UpdateProfile = (props) => {
         })
     }
 
+    // To store changed location in state 
     const handleLocations = (location) => {
         setUpdatedUser({
             ...updateUser,
@@ -37,11 +38,12 @@ const UpdateProfile = (props) => {
         });
     }
 
+    // Updates profile data to db
     const handleProfileUpdate = async (e) => {
         e.preventDefault();
         setSuccess('');
         setError('');
-        await axios.patch(baseURL.api + '/users/user_profile/' + user?.user?.id + '/', {
+        await axiosPrivate.patch(baseURL.api + '/users/user_profile/' + user?.user?.id + '/', {
             first_name: updateUser?.first_name,
             last_name: updateUser?.last_name,
             email: updateUser?.email,
@@ -53,12 +55,6 @@ const UpdateProfile = (props) => {
                 lng: updateUser?.location_metadata?.lng,
 
             }
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${user?.token?.access}`
-            },
-            withCredentials: true,
         }).then((success) => {
             setSuccess(success)
             setAuth(prev => {
@@ -76,11 +72,6 @@ const UpdateProfile = (props) => {
     useEffect(() => {
         setUpdatedUser(user?.user)
     }, [user?.user]);
-
-
-    // useEffect(() => {
-    //     addScriptTagToHead(true, 'https://maps.googleapis.com/maps/api/js?', 'key', `${baseURL.mapApiKey}&libraries=places`);
-    // }, [])
 
     return (
         <>

@@ -11,7 +11,7 @@ const ChangePassword = (props) => {
     const [updated, setUpdated] = useState(false);
     const [error, setError] = useState(null);
 
-
+    // To update changed password to db.
     const handleChangePassword = async (e) => {
         e.preventDefault();
         setError('')
@@ -30,6 +30,7 @@ const ChangePassword = (props) => {
         })
     }
 
+    // Store's changed password in state.
     const handleInput = (e) => {
         e.preventDefault();
         let name = e.target.name,
@@ -40,6 +41,7 @@ const ChangePassword = (props) => {
         })
     }
 
+    // To enable/disable button as per data entered.
     const passwordMatchCheck = () => {
         if (password?.confirm_password !== password?.new_password) {
             return true;

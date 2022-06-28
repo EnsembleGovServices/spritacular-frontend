@@ -1,14 +1,14 @@
-import {Button, Form, FormGroup, FormText, Input} from "reactstrap";
+import { Button, Form, FormGroup, FormText, Input } from "reactstrap";
 import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
-import {useEffect, useState} from "react";
+import { baseURL } from "../../helpers/url";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import {useNavigate} from "react-router-dom";
-import {routeUrls} from '../../helpers/url';
+import { useNavigate } from "react-router-dom";
+import { routeUrls } from '../../helpers/url';
 
 const Login = (props) => {
-    const {cp} = props;
-    const {setAuth, auth, persist, setPersist} = useAuth();
+    const { cp } = props;
+    const { setAuth, auth, persist, setPersist } = useAuth();
     const navigate = useNavigate();
 
     const [user, setUser] = useState({
@@ -45,17 +45,18 @@ const Login = (props) => {
                         user: response?.data
                     });
 
-                    setToken(response?.data)
+                    setToken(response?.data);
 
+                    localStorage.setItem('token', response?.data?.access);
                     localStorage.setItem('refresh', response?.data?.refresh);
                     localStorage.removeItem('camera');
 
                     fetchCategory(response?.data?.access).then(r => r);
 
                     if (superuser) {
-                        navigate(routeUrls.dashboard, {replace: true});
+                        navigate(routeUrls.dashboard, { replace: true });
                     } else {
-                        navigate(routeUrls.home, {replace: true});
+                        navigate(routeUrls.home, { replace: true });
                     }
                 }
             })

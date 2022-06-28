@@ -10,6 +10,7 @@ import UploadImageUI from "../Shared/UploadImageUI";
 
 const ObservationUploadImg = (props) => {
     const {multiple, maxLimit, imageFormat, detectImage, mode, small} = props;
+    console.log(mode);
     const {setObservationImages, observationImages, setCameraDetails} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
@@ -37,15 +38,18 @@ const ObservationUploadImg = (props) => {
                 if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate && isValidImage) {
 
                     if (mode) {
-                        return setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
+                        // console.log('In Mode: ',mode);
+                        // return 
+                        setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
                     } else {
+                        // console.log('In Else Mode: ',mode);
+
                         setImages(prevState => [
                             ...prevState,
                             uploadImageDefaultState(random, baseImage, item, userLocation)
                         ])
                     }
                 }
-
 
                 if (mode) {
                     setError((prev) => {
@@ -84,7 +88,7 @@ const ObservationUploadImg = (props) => {
                     setError((prev) => {
                         return {
                             ...prev,
-                            invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.)',
+                            invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.',
                         }
                     })
                 }
@@ -94,16 +98,16 @@ const ObservationUploadImg = (props) => {
         })
     };
 
-
     useEffect(() => {
         let images = (observationImages?.data) ? [...observationImages?.data] : [];
         observationImages?.data?.map((item, index) => {
-            return item.latitude = userLocation?.latitude,
-                item.longitude = userLocation?.longitude
+            const latitude = item.latitude ? item.latitude : userLocation?.latitude;
+            const longitude = item.longitude ? item.longitude : userLocation?.longitude;
+            return item.latitude = latitude,
+                item.longitude = longitude
         })
         setImages(images)
     }, [detectImage, mode, userLocation])
-
 
     useEffect(() => {
         if (images.length > 0) {
@@ -116,6 +120,8 @@ const ObservationUploadImg = (props) => {
             setCameraDetails(cameraSettingFields)
         }
     }, [images, setObservationImages, userLocation])
+
+    // console.log(images);
 
     return (
         <>

@@ -12,6 +12,7 @@ const HomeCounter = (props) => {
 
     const [internalLoading, setInternalLoading] = useState(loading);
 
+    // For showing pre-loader initially.
     useLayoutEffect(() => {
         return () => {
             if (loading) {
