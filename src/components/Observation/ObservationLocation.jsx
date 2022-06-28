@@ -516,7 +516,7 @@ const ObservationLocation = (props) => {
                                             name="obs_time"
                                             format="HH:mm"
                                             placeholder="Select Time"
-                                            value={observationImages?.data && (observationImages?.data[observationImages?.selected_image_index]?.obs_time)}
+                                            // value={observationImages?.data && (observationImages?.data[observationImages?.selected_image_index]?.obs_time)}
                                             onChange={(e) => handleImageInput({
                                                 target: {
                                                     name: "obs_time",
