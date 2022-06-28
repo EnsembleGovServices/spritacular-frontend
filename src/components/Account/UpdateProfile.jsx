@@ -13,7 +13,7 @@ const UpdateProfile = (props) => {
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
 
-    // Store in state changed profile data
+    // To store changed profile data in state
     const handleInput = (e) => {
         e.preventDefault();
         let name = e.target.name,
@@ -24,6 +24,7 @@ const UpdateProfile = (props) => {
         })
     }
 
+    // To store changed location in state 
     const handleLocations = (location) => {
         setUpdatedUser({
             ...updateUser,
@@ -37,6 +38,7 @@ const UpdateProfile = (props) => {
         });
     }
 
+    // Updates profile data to db
     const handleProfileUpdate = async (e) => {
         e.preventDefault();
         setSuccess('');

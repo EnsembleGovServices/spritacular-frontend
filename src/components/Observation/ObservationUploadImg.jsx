@@ -37,7 +37,8 @@ const ObservationUploadImg = (props) => {
                 if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate && isValidImage) {
 
                     if (mode) {
-                        return setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
+                        // return 
+                        setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
                     } else {
                         setImages(prevState => [
                             ...prevState,
@@ -45,7 +46,6 @@ const ObservationUploadImg = (props) => {
                         ])
                     }
                 }
-
 
                 if (mode) {
                     setError((prev) => {
