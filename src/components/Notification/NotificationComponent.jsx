@@ -50,7 +50,7 @@ const NotificationComponent = (props) => {
     useLayoutEffect(() => {
         return () => {
             onMessageListener().then(payload => {
-                console.log('payload here', payload);
+                // console.log('payload here', payload);
                 setShow(true);
                 setNotification(true);
                 setNotificationArray([...notificationArray, payload]);
