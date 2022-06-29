@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import PlacesAutocomplete from "../LocationSearchInput";
-import axiosPrivate from "../../api/axios";
 
 const UpdateProfile = (props) => {
     const {user} = props;
@@ -43,7 +42,7 @@ const UpdateProfile = (props) => {
         e.preventDefault();
         setSuccess('');
         setError('');
-        await axiosPrivate.patch(baseURL.api + '/users/user_profile/' + user?.user?.id + '/', {
+        await axios.patch(baseURL.api + '/users/user_profile/' + user?.user?.id + '/', {
             first_name: updateUser?.first_name,
             last_name: updateUser?.last_name,
             email: updateUser?.email,
@@ -55,6 +54,12 @@ const UpdateProfile = (props) => {
                 lng: updateUser?.location_metadata?.lng,
 
             }
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user?.token?.access}`
+            },
+            withCredentials: true,
         }).then((success) => {
             setSuccess(success)
             setAuth(prev => {
