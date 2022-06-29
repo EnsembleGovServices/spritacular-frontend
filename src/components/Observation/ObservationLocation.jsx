@@ -104,10 +104,12 @@ const ObservationLocation = (props) => {
                         if (observationAddress.data[1]) {
                             observationAddress.data[1]['location'] = value[1];
                             observationAddress.data[1]['country_code'] = value[0];
+                            observationAddress.data[1]['place_uid'] = value.place_uid;
                         }
                         if (observationAddress.data[2]) {
                             observationAddress.data[2]['location'] = value[1];
                             observationAddress.data[2]['country_code'] = value[0];
+                            observationAddress.data[1]['place_uid'] = value.place_uid;
                         }
                     }
                     setObservationImages(observationAddress);
@@ -180,19 +182,27 @@ const ObservationLocation = (props) => {
 
     useEffect(() => {
         let observationAddress = {...observationImages};
+        // console.log('observationAddress', observationAddress);
+
         if (observationAddress?.data) {
             let addressState = {...address1};
+
+            // console.log('addressState', addressState);
+
             observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.short_address;
             observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
+            observationAddress.data[observationAddress.selected_image_index]['place_uid'] = address1?.place_uid;
 
             if (observationData?.image_type === 3) {
                 if (observationAddress.data[1]) {
                     observationAddress.data[1]['location'] = address1?.short_address;
                     observationAddress.data[1]['country_code'] = address1?.country;
+                    observationAddress.data[1]['place_uid'] = address1?.place_uid;
                 }
                 if (observationAddress.data[2]) {
                     observationAddress.data[2]['location'] = address1?.short_address;
                     observationAddress.data[2]['country_code'] = address1?.country;
+                    observationAddress.data[2]['place_uid'] = address1?.place_uid;
                 }
             }
             setObservationImages(observationAddress);
@@ -206,15 +216,17 @@ const ObservationLocation = (props) => {
                 if (observationAddress.data[1]) {
                     observationAddress.data[1]['location'] = observationAddress.data[0]['location'];
                     observationAddress.data[1]['country_code'] = observationAddress.data[0]['country_code'];
+                    observationAddress.data[1]['place_uid'] = observationAddress.data[0]['place_uid'];
                 }
                 if (observationAddress.data[2]) {
                     observationAddress.data[2]['location'] = observationAddress.data[0]['location'];
                     observationAddress.data[2]['country_code'] = observationAddress.data[0]['country_code'];
+                    observationAddress.data[2]['place_uid'] = observationAddress.data[0]['place_uid'];
                 }
             }
             setObservationImages(observationAddress);
         }
-    }, [observationData?.image_type]);
+    }, [observationData?.image_type, observationImages?.data]);
 
     const selectDirection = (index) => {
         const directionWrapper = document.querySelector('.compass-wrapper');
@@ -247,11 +259,11 @@ const ObservationLocation = (props) => {
         if (observationImages) {
 
             let observationMap = {...observationImages};
-            if (keys.includes('location', 'latitude', 'longitude', 'country_code')) {
+            if (keys.includes('location', 'latitude', 'longitude', 'country_code', 'place_uid')) {
                 setSameAsMap(e);
                 observationMap.data[observationImages?.selected_image_index].sameAsFirstMap = e;
             }
-            if (keys.includes('obs_time', 'obs_date', 'timezone')) {
+            if (keys.includes('obs_time', 'obs_date', 'timezone', 'place_uid')) {
                 setSameAsDateTime(e);
                 observationMap.data[observationImages?.selected_image_index].sameAsFirstDate = e;
             }
@@ -266,11 +278,12 @@ const ObservationLocation = (props) => {
                     if (observationData?.image_type !== 3) {
 
                         copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
-                        if (keys.includes('location', 'latitude', 'longitude')) {
+                        if (keys.includes('location', 'latitude', 'longitude', 'place_uid')) {
                             copyImages.data[copyImages?.selected_image_index]['latitude'] = initialAddress.lat;
                             copyImages.data[copyImages?.selected_image_index]['longitude'] = initialAddress.lng;
                             copyImages.data[copyImages?.selected_image_index]['location'] = initialAddress.short_address;
                             copyImages.data[copyImages?.selected_image_index]['country_code'] = initialAddress.country;
+                            copyImages.data[copyImages?.selected_image_index]['place_uid'] = initialAddress.place_uid;
                         }
                     }
                 }

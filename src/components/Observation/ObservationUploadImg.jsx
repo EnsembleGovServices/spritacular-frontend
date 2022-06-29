@@ -1,6 +1,4 @@
-import {FormGroup, Input, Label} from "reactstrap";
 import useObservations from "../../hooks/useObservations";
-import {Icon} from '@iconify/react';
 import {useEffect, useState} from "react";
 import {uploadImageDefaultState} from "../../helpers/observation";
 import PropTypes from "prop-types";

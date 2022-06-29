@@ -52,6 +52,7 @@ export const uploadImageDefaultState = (random, baseImage, item, userLocation) =
         azimuth: 360,
         time_accuracy: '',
         is_precise_azimuth: 0,
+        place_uid: null,
         category_map: {
             category: [],
             is_other: false,
@@ -61,14 +62,14 @@ export const uploadImageDefaultState = (random, baseImage, item, userLocation) =
 }
 
 export const directionValue = [
-    { name: 'N', angle: 360, default: true },
-    { name: 'NE', angle: 45, default: false },
-    { name: 'E', angle: 90, default: false },
-    { name: 'SE', angle: 135, default: false },
-    { name: 'S', angle: 180, default: false },
-    { name: 'SW', angle: 235, default: false },
-    { name: 'W', angle: 270, default: false },
-    { name: 'NW', angle: 315, default: false },
+    {name: 'N', angle: 360, default: true},
+    {name: 'NE', angle: 45, default: false},
+    {name: 'E', angle: 90, default: false},
+    {name: 'SE', angle: 135, default: false},
+    {name: 'S', angle: 180, default: false},
+    {name: 'SW', angle: 235, default: false},
+    {name: 'W', angle: 270, default: false},
+    {name: 'NW', angle: 315, default: false},
 ]
 
 export const getdirectionDegree = (key) => {
