@@ -28,6 +28,7 @@ const Register = (props) => {
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
 
+    // To store user data 
     const handleInput = (e) => {
         let name = e.target.name,
             value = e.target.value;
@@ -37,6 +38,7 @@ const Register = (props) => {
         });
     };
 
+    // For storing location coords.
     const handleLocations = (location) => {
         setUserRegistration({
             ...userRegistration,
@@ -51,6 +53,7 @@ const Register = (props) => {
         });
     }
 
+    // For T&C checkbox
     const handleCheck = (e) => {
         setUserRegistration({
             ...userRegistration,
@@ -58,6 +61,7 @@ const Register = (props) => {
         });
     };
 
+    // To register new user and store in db
     const createNewUser = async (e) => {
         e.preventDefault();
         await axios
@@ -71,27 +75,28 @@ const Register = (props) => {
                     });
                     LoginUser();
                 } else {
-                    console.log(response?.statusText);
+                    process.env.NODE_ENV === "development" && console.log('NewUser Signup Res:',response?.statusText);
                 }
             })
             .catch((error) => {
                 setSuccess(null);
                 if (!error?.response) {
-                    console.log('Server error occurred')
+                    process.env.NODE_ENV === "development" && console.log('RegisterPage: Server error occurred')
                 } else {
                     setError({
                         status: error.response.status,
                         message: error.response.statusText,
                         data: error.response.data,
                     });
-                    console.log(error?.response?.statusText)
+                    process.env.NODE_ENV === "development" && console.log('RegisterPage status code:',error?.response?.statusText)
                 }
                 if (error) {
-                    console.log(error.response);
+                    process.env.NODE_ENV === "development" && console.log('RegisterPage response:',error.response);
                 }
             });
     };
 
+    // For storing login user and token context after successfully regiserted
     const LoginUser = async () => {
         await axios
             .post(baseURL.token, {
@@ -114,15 +119,16 @@ const Register = (props) => {
                 localStorage.setItem('refresh', response?.data?.refresh)
             })
             .catch((err) => {
-                console.log('Something went wrong')
+                process.env.NODE_ENV === "development" && console.log('Something went wrong', err)
             });
     };
 
+    // To toggle enable/disable for register modal.
     const handleDisabled = () => {
         return !(userRegistration?.agreeTerms && userRegistration?.password === userRegistration?.password_confirmation);
     }
 
-
+    // persists user 
     useEffect(() => {
         localStorage.setItem("persist", persist);
     }, [persist])

@@ -15,13 +15,13 @@ import {
     UncontrolledAlert,
 } from "reactstrap";
 import "../../assets/scss/component/uploadObservationImage.scss";
-import {useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
-import {baseURL, cameraSettingFields, routeUrls} from "../../helpers/url";
-import {Tabs} from "../../helpers/observation";
+import { baseURL, cameraSettingFields, routeUrls } from "../../helpers/url";
+import { Tabs } from "../../helpers/observation";
 
 import ObservationLocation from "../../components/Observation/ObservationLocation";
 import ObservationUploadedImg from "../../components/Observation/ObservationUploadedImg";
@@ -32,7 +32,7 @@ import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsF
 import Loader from "../../components/Shared/Loader";
 
 const AddObservation = () => {
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const {
         observationSteps,
@@ -130,11 +130,11 @@ const AddObservation = () => {
     };
 
     const handleImageInput = (e, address = null) => {
-        let observationArray = {...observationImages};
+        let observationArray = { ...observationImages };
         if (e === "address") {
             observationArray.data[observationImages?.selected_image_index][
                 "location"
-                ] = address;
+            ] = address;
             if (observationArray.data[1]) {
                 observationArray.data[1].category_map["location"] = address;
             }
@@ -161,11 +161,11 @@ const AddObservation = () => {
                 if (e.target.checked === false) {
                     observationArray.data[observationImages?.selected_image_index][
                         "azimuth"
-                        ] =
+                    ] =
                         observationArray && observationArray.data
                             ? observationArray.data[
-                                observationImages?.selected_image_index
-                                ]["azimuth"]
+                            observationImages?.selected_image_index
+                            ]["azimuth"]
                             : undefined;
                     if (observationData?.image_type === 3) {
                         if (observationArray.data[1]) {
@@ -247,7 +247,6 @@ const AddObservation = () => {
                     }, 500);
                 })
                 .catch((error) => {
-                    console.log(error.response);
                     setIsLoading(false);
                     setError({
                         data: error?.response?.data,
@@ -282,7 +281,6 @@ const AddObservation = () => {
                     }, 500);
                 })
                 .catch((error) => {
-                    console.log(error.response);
                     setIsLoading(false);
                     setError({
                         data: error?.response?.data,
@@ -306,7 +304,7 @@ const AddObservation = () => {
                     setCameraDetails(response?.data);
                 })
                 .catch((error) => {
-                    console.log(error.response);
+                    process.env.NODE_ENV === "development" && console.log(error.response);
                 });
         } else {
             setCameraDetails(cameraSettingFields);
@@ -413,7 +411,7 @@ const AddObservation = () => {
                 setUpdateMode(true);
             })
             .catch((error) => {
-                console.log(error);
+                process.env.NODE_ENV === "development" && console.log(error);
             });
     };
 
@@ -435,9 +433,9 @@ const AddObservation = () => {
                     const blob = await response
                         .blob()
                         .catch((error) => console.log("blob error", error));
-                    const file = new File([blob], fileName, {contentType});
+                    const file = new File([blob], fileName, { contentType });
                     const image = await toBase64(file).catch((error) =>
-                        console.log("base64 Error", error)
+                    process.env.NODE_ENV === "development" && console.log("base64 Error", error)
                     );
                     item.compressed_image = null;
                     setTimeout(function () {
@@ -449,9 +447,7 @@ const AddObservation = () => {
                     return file;
                 })
                 .catch((error) =>
-                    console.log(
-                        `Error converting the CDN image to file object at index [${index}] [${error}]`
-                    )
+                    process.env.NODE_ENV === "development" && (`Error converting the CDN image to file object at index [${index}] [${error}]`)
                 );
         });
     }, [draftData, setObservationImages]);
@@ -477,8 +473,8 @@ const AddObservation = () => {
     }, [location?.pathname, updateMode, observationSteps?.converted]);
 
     useEffect(() => {
-        let existingObvImageData = {...observationImages},
-            obvType = {...observationType};
+        let existingObvImageData = { ...observationImages },
+            obvType = { ...observationType };
 
         setObservationType({
             ...obvType,
@@ -518,7 +514,7 @@ const AddObservation = () => {
 
     return (
         <div className="position-relative">
-            {isLoading && <Loader fixContent={true}/>}
+            {isLoading && <Loader fixContent={true} />}
             {success && (
                 <UncontrolledAlert
                     color="success"
@@ -572,7 +568,7 @@ const AddObservation = () => {
                         <Row>
                             <Col md={3} sm={12}>
                                 <div className="observation-form-left-tab">
-                                    <ObservationProgress step={observationSteps}/>
+                                    <ObservationProgress step={observationSteps} />
                                     <Nav tabs className="flex-column">
                                         <NavItem>
                                             <NavLink
@@ -594,9 +590,8 @@ const AddObservation = () => {
                                         </NavItem>
                                         <NavItem>
                                             <NavLink
-                                                className={`${
-                                                    activeTab === Tabs.DateTimeLocation ? "active" : ""
-                                                } ${disabledLocationTab ? "" : "disabled"}`}
+                                                className={`${activeTab === Tabs.DateTimeLocation ? "active" : ""
+                                                    } ${disabledLocationTab ? "" : "disabled"}`}
                                                 onClick={() => {
                                                     if (disabledLocationTab) {
                                                         toggleTab(Tabs.DateTimeLocation);
@@ -608,9 +603,8 @@ const AddObservation = () => {
                                         </NavItem>
                                         <NavItem>
                                             <NavLink
-                                                className={`${
-                                                    activeTab === Tabs.EquipmentDetails ? "active" : ""
-                                                } ${disabledEquipmentTab ? "" : "disabled"}`}
+                                                className={`${activeTab === Tabs.EquipmentDetails ? "active" : ""
+                                                    } ${disabledEquipmentTab ? "" : "disabled"}`}
                                                 onClick={() => {
                                                     if (disabledEquipmentTab) {
                                                         toggleTab(Tabs.EquipmentDetails);
@@ -627,15 +621,15 @@ const AddObservation = () => {
                             <Col
                                 md={
                                     observationImages?.data?.length > 0 &&
-                                    next &&
-                                    !(activeTab === Tabs.EquipmentDetails)
+                                        next &&
+                                        !(activeTab === Tabs.EquipmentDetails)
                                         ? 7
                                         : 9
                                 }
                                 sm={
                                     observationImages?.data?.length > 0 &&
-                                    next &&
-                                    !(activeTab === Tabs.EquipmentDetails)
+                                        next &&
+                                        !(activeTab === Tabs.EquipmentDetails)
                                         ? 9
                                         : 12
                                 }
@@ -665,8 +659,7 @@ const AddObservation = () => {
                                                 />
                                             )}
                                         </TabPane>
-                                        <TabPane
-                                            tabId={Tabs.DateTimeLocation}
+                                        <TabPane tabId={Tabs.DateTimeLocation}
                                             className="observation_location"
                                         >
                                             {showUploadedPreview() && (
@@ -692,8 +685,7 @@ const AddObservation = () => {
                                                 />
                                             )}
                                         </TabPane>
-                                        <TabPane
-                                            tabId={Tabs.EquipmentDetails}
+                                        <TabPane tabId={Tabs.EquipmentDetails}
                                             className="observation_equipment"
                                         >
                                             {auth?.user?.camera && (

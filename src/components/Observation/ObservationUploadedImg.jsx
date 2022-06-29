@@ -23,7 +23,6 @@ const ObservationUploadedImg = (props) => {
         });
     };
 
-
     useLayoutEffect(()=> {
         setPreview(observationImages?.data);
         setActiveTab(activeTab);

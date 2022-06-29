@@ -10,6 +10,6 @@ export const registerServiceWorker = () => {
             });
     }
     else {
-        console.log('Service workers are not supported.');
+        process.env.NODE_ENV === "development" && console.log('Service workers are not supported.');
     }
 };

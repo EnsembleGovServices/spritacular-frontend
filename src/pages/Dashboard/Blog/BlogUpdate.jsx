@@ -1,7 +1,9 @@
 import "../../../assets/scss/component/blog.scss"
 import {Suspense, lazy} from "react";
 
-const CreateUpdateBlogTutorial = lazy(() => import('../BlogTutorial/CreateUpdateBlogTutorial'))
+// To render a dynamic import as a regular component for showing loader till it loads.
+const CreateUpdateBlogTutorial = lazy(() => import('../BlogTutorial/CreateUpdateBlogTutorial'));
+
 const BlogUpdate = () => {
     return (
         <>

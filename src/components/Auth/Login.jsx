@@ -16,7 +16,6 @@ const Login = (props) => {
         password: ""
     });
     const [error, setError] = useState('');
-    const [token, setToken] = useState();
 
     const handleInput = (e) => {
         e.preventDefault();
@@ -45,8 +44,6 @@ const Login = (props) => {
                         user: response?.data
                     });
 
-                    setToken(response?.data)
-
                     localStorage.setItem('refresh', response?.data?.refresh);
                     localStorage.removeItem('camera');
 
@@ -61,7 +58,6 @@ const Login = (props) => {
             })
             .catch((error) => {
                 if (!error?.response) {
-                    console.log(error?.message)
                     setError(prev => {
                         return {
                             ...prev,
@@ -75,9 +71,9 @@ const Login = (props) => {
                         'data': error.response.data
                     });
                 } else if (error?.response?.status === 401) {
-                    console.log('unauthorized')
+                    process.env.NODE_ENV === "development" && console.log('Unauthorized Login User');
                 } else {
-                    console.log(error?.response?.statusText)
+                    process.env.NODE_ENV === "development" && console.log('Login Error: ',error?.response?.statusText);
                 }
             });
     }
@@ -97,7 +93,7 @@ const Login = (props) => {
                 });
             })
             .catch((error) => {
-                console.log(error)
+                process.env.NODE_ENV === "development" && console.log("Login Fetch Category:",error)
             })
     }
 

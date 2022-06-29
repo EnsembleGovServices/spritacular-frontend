@@ -38,10 +38,9 @@ const ForgotPasswordPopup = (props) => {
           },3000)
         })
         .catch((error) => {
-          console.log(error);
           setError(error.response);
             if (!error?.response) {
-                console.log('server error occurred')
+              process.env.NODE_ENV === "development" && console.log('Forgot password: server error occurred')
             }
         })
 }

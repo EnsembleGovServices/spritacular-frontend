@@ -46,7 +46,7 @@ const useRefreshToken = () => {
                 });
             })
             .catch((error) => {
-                console.log(error)
+                process.env.NODE_ENV === "development" && console.log(error)
             })
 
         return response.data;

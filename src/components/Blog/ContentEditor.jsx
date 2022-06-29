@@ -18,7 +18,6 @@ const ContentEditor = (props) => {
 
     const [fakeLoading, setFakeLoading] = useState(true);
 
-
     function uploadAdapter(loader) {
         setChangeData(false);
         return {
@@ -36,7 +35,6 @@ const ContentEditor = (props) => {
                         })
                             .then((res) => res.json())
                             .then((res) => {
-                                // console.log(res);
                                 setLoading(false);
                                 resolve({
                                     default: res.url
@@ -55,12 +53,14 @@ const ContentEditor = (props) => {
         };
     }
 
+    // CkEditor plugin
     function uploadPlugin(editor) {
         editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
             return uploadAdapter(loader);
         };
     }
 
+    // To set menu and tools for editor
     const editorConfig = {
         toolbar: {
             items: [
@@ -81,6 +81,7 @@ const ContentEditor = (props) => {
         extraPlugins: [uploadPlugin],
     }
 
+    // Set image data in state.
     useEffect(() => {
         if (setData) {
             setData((prev) => {
@@ -89,6 +90,16 @@ const ContentEditor = (props) => {
                     image_ids: imageId
                 }
             })
+        }
+        return () => {
+            if (setData) {
+                setData((prev) => {
+                    return {
+                        ...prev,
+                        editorData
+                    }
+                })
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [imageId, editorImage])
@@ -115,6 +126,7 @@ const ContentEditor = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mode]);
 
+    // Show/hide fake Loading on image select in editor
     useEffect(() => {
         setTimeout(function () {
             setFakeLoading(false);
@@ -134,15 +146,10 @@ const ContentEditor = (props) => {
                     config={editorConfig}
                     data={data ? data : ""}
                     then={response => {
-                        console.log(response);
+                        process.env.NODE_ENV === "development" && console.log('ContentEditor: ',response);
                     }}
                     onReady={editor => {
 
-                        // console.log('ready editor')
-                        // console.log(editor.config._config.plugins.map(item => item.pluginName))
-                        // console.log(Array.from(editor.ui.componentFactory.names()));
-                        // console.log('isReadOnly', editor.isReadOnly)
-                        // editor.ui.view.editable.element.style.minHeight = "180px"
                         const toolbarContainer = editor.ui.view.stickyPanel;
                         editor.isReadOnly = readMode ? readMode : readOnly;
 
@@ -154,7 +161,6 @@ const ContentEditor = (props) => {
                     }}
                     onChange={(event, editor) => {
                         setChangeData(false);
-                        // console.log('event', event)
                         const data = editor.getData();
 
                         editor.model.document.on('change:data', () => {
@@ -175,14 +181,6 @@ const ContentEditor = (props) => {
                             })
                         }
 
-                    }}
-                    onFocus={(event, editor) => {
-                        // console.log('focus')
-                        // editor.ui.view.editable.element.style.minHeight = "180px"
-                    }}
-                    onBlur={(event, editor) => {
-                        // editor.ui.view.editable.element.style.minHeight = "180px"
-                        // console.log('blurred')
                     }}
                 />
             </div>

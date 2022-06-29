@@ -60,7 +60,6 @@ const ObservationLocation = (props) => {
     const [angleDegree, setAngleDegree] = useState(false);
     const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
     const [searchTimeZone, setSearchTimeZone] = useState("");
-    const [sameAsMap, setSameAsMap] = useState(false);
     const [sameAsDateTime, setSameAsDateTime] = useState(false);
 
     useEffect(() => {
@@ -72,8 +71,6 @@ const ObservationLocation = (props) => {
     }, [observationImages?.data?.[observationImages?.selected_image_index], observationImages?.selected_image_index]);
 
     useEffect(() => {
-        // setSameAsMap(false);
-        // setSameAsDateTime(false);
         if (observationImages?.data && observationImages?.selected_image_index !== 0) {
             handleCopyData(observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap, ['latitude', 'longitude', 'location', 'country_code']);
             handleCopyData(observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate, ['obs_date', 'obs_time', 'timezone']);
@@ -81,6 +78,7 @@ const ObservationLocation = (props) => {
         // eslint-disable-next-line
     }, [observationImages?.selected_image_index]);
 
+    // to store observation address data.
     const handleValue = (flag, value) => {
         if (!flag) {
             let address = {...address1};
@@ -90,7 +88,7 @@ const ObservationLocation = (props) => {
                 country: value[0],
                 address: value[1],
                 lat: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : null),
-                lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude : null)
+                lng: Number((observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude : null),
             })
             setAddress(address);
             if (observationImages?.data) {
@@ -103,10 +101,12 @@ const ObservationLocation = (props) => {
                         if (observationAddress.data[1]) {
                             observationAddress.data[1]['location'] = value[1];
                             observationAddress.data[1]['country_code'] = value[0];
+                            observationAddress.data[1]['place_uid'] = value.place_uid;
                         }
                         if (observationAddress.data[2]) {
                             observationAddress.data[2]['location'] = value[1];
                             observationAddress.data[2]['country_code'] = value[0];
+                            observationAddress.data[1]['place_uid'] = value.place_uid;
                         }
                     }
                     setObservationImages(observationAddress);
@@ -121,6 +121,7 @@ const ObservationLocation = (props) => {
                     observationAddress.data[observationAddress.selected_image_index]['longitude'] = value.markerPosition.lng;
                     observationAddress.data[observationAddress.selected_image_index]['location'] = value.short_address;
                     observationAddress.data[observationAddress.selected_image_index]['country_code'] = value.country;
+                    observationAddress.data[observationAddress.selected_image_index]['place_uid'] = value.place_uid;
 
                     if (observationData?.image_type === 3) {
                         if (observationAddress.data[1]) {
@@ -128,12 +129,14 @@ const ObservationLocation = (props) => {
                             observationAddress.data[1]['longitude'] = value.markerPosition.lng;
                             observationAddress.data[1]['location'] = value.short_address;
                             observationAddress.data[1]['country_code'] = value.country;
+                            observationAddress.data[1]['place_uid'] = value.place_uid;
                         }
                         if (observationAddress.data[2]) {
                             observationAddress.data[2]['latitude'] = value.markerPosition.lat;
                             observationAddress.data[2]['longitude'] = value.markerPosition.lng;
                             observationAddress.data[2]['location'] = value.short_address;
                             observationAddress.data[2]['country_code'] = value.country;
+                            observationAddress.data[2]['place_uid'] = value.place_uid;
                         }
                     }
                     setObservationImages(observationAddress);
@@ -143,26 +146,21 @@ const ObservationLocation = (props) => {
     }
     const observationArray = {...observationImages};
 
+    // Store latitue input value
     const handleChangeLat = (e) => {
         handleImageInput(e);
-        // let name = e.target.name,
         let value = Number(e.target.value);
         let addressState = {...address1};
         addressState.mapPosition.lat = value;
         addressState.markerPosition.lat = value;
         setAddress(addressState);
-        //  let imageArray = {...observationImages};
-        //  imageArray.images[0].lat = value;
-        //  setObservationImages(imageArray);
-        //  setTimeout(()=> {
         setIsLoaded(true);
-        //  },3000);
         fref.current.handleChangeLatLng(e.target.value, address1.markerPosition.lng);
     }
 
+    // Store longitude input value
     const handleChangeLng = (e) => {
         handleImageInput(e);
-        // let name = e.target.name,
         let value = Number(e.target.value);
         let addressState = {...address1};
         addressState.mapPosition.lng = value;
@@ -171,26 +169,31 @@ const ObservationLocation = (props) => {
         setIsLoaded(true);
         fref.current.handleChangeLatLng(address1.markerPosition.lat, e.target.value);
     }
+
+    // To append location and country_code in context data.
     useEffect(() => {
         let observationAddress = {...observationImages};
         if (observationAddress?.data) {
-            let addressState = {...address1};
             observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.short_address;
             observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
+            observationAddress.data[observationAddress.selected_image_index]['place_uid'] = address1?.place_uid;
 
             if (observationData?.image_type === 3) {
                 if (observationAddress.data[1]) {
                     observationAddress.data[1]['location'] = address1?.short_address;
                     observationAddress.data[1]['country_code'] = address1?.country;
+                    observationAddress.data[1]['place_uid'] = address1?.place_uid;
                 }
                 if (observationAddress.data[2]) {
                     observationAddress.data[2]['location'] = address1?.short_address;
                     observationAddress.data[2]['country_code'] = address1?.country;
+                    observationAddress.data[2]['place_uid'] = address1?.place_uid;
                 }
             }
             setObservationImages(observationAddress);
         }
     }, [address1]);
+
     useEffect(() => {
         let observationAddress = {...observationImages};
         if (observationAddress?.data) {
@@ -198,15 +201,19 @@ const ObservationLocation = (props) => {
                 if (observationAddress.data[1]) {
                     observationAddress.data[1]['location'] = observationAddress.data[0]['location'];
                     observationAddress.data[1]['country_code'] = observationAddress.data[0]['country_code'];
+                    observationAddress.data[1]['place_uid'] = observationAddress.data[0]['place_uid'];
                 }
                 if (observationAddress.data[2]) {
                     observationAddress.data[2]['location'] = observationAddress.data[0]['location'];
                     observationAddress.data[2]['country_code'] = observationAddress.data[0]['country_code'];
+                    observationAddress.data[2]['place_uid'] = observationAddress.data[0]['place_uid'];
                 }
             }
             setObservationImages(observationAddress);
         }
-    }, [observationData?.image_type]);
+    }, [observationData?.image_type, observationImages?.data]);
+
+    // To select degree direction
     const selectDirection = (index) => {
         const directionWrapper = document.querySelector('.compass-wrapper');
         const directionId = document.getElementById(`directionValue${index}`);
@@ -233,15 +240,15 @@ const ObservationLocation = (props) => {
         setObservationImages(observationArray);
     }
 
+    // To set similar data for other image
     const handleCopyData = (e, keys) => {
         if (observationImages) {
 
             let observationMap = {...observationImages};
-            if (keys.includes('location', 'latitude', 'longitude', 'country_code')) {
-                setSameAsMap(e);
+            if (keys.includes('location', 'latitude', 'longitude', 'country_code', 'place_uid')) {
                 observationMap.data[observationImages?.selected_image_index].sameAsFirstMap = e;
             }
-            if (keys.includes('obs_time', 'obs_date', 'timezone')) {
+            if (keys.includes('obs_time', 'obs_date', 'timezone', 'place_uid')) {
                 setSameAsDateTime(e);
                 observationMap.data[observationImages?.selected_image_index].sameAsFirstDate = e;
             }
@@ -250,17 +257,16 @@ const ObservationLocation = (props) => {
             keys.map((k) => {
                 if (e) {
                     copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
-                    // copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
-                    // copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
                 } else {
                     if (observationData?.image_type !== 3) {
 
                         copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
-                        if (keys.includes('location', 'latitude', 'longitude')) {
+                        if (keys.includes('location', 'latitude', 'longitude', 'place_uid')) {
                             copyImages.data[copyImages?.selected_image_index]['latitude'] = initialAddress.lat;
                             copyImages.data[copyImages?.selected_image_index]['longitude'] = initialAddress.lng;
                             copyImages.data[copyImages?.selected_image_index]['location'] = initialAddress.short_address;
                             copyImages.data[copyImages?.selected_image_index]['country_code'] = initialAddress.country;
+                            copyImages.data[copyImages?.selected_image_index]['place_uid'] = initialAddress.place_uid;
                         }
                     }
                 }
@@ -270,11 +276,13 @@ const ObservationLocation = (props) => {
         }
     }
 
+    // To store selected country timezone
     const findTimeZone = (e) => {
         let value = e.target.value.toLowerCase();
         setSearchTimeZone(value);
     }
 
+    // To clear timezone and set default
     useEffect(() => {
         if (isTimezoneOpen === false) {
             setSearchTimeZone("");
@@ -307,7 +315,7 @@ const ObservationLocation = (props) => {
                         {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 &&
                             <Col xxl={5} className="order-1 order-xxl-2 mb-2 mb-xxl-0">
                                 <FormGroup>
-                                    <Label check className="mb-0 justify-content-end">
+                                    <Label check className="mb-0 d-flex align-items-center justify-content-end">
                                         <Input
                                             type="checkbox"
                                             name="Same as the first image"
@@ -390,7 +398,7 @@ const ObservationLocation = (props) => {
                     <Row>
                         <Col md={6} lg={4}>
                             <FormGroup className="d-flex">
-                                <Label className="form-label text-uppercase me-1" htmlFor="LAT" sm={2}>LAT</Label>
+                                <Label className="form-label text-uppercase me-1" htmlFor="LAT" sm={2}>LATz</Label>
                                 <Col sm={10}>
                                     <Input
                                         // value={address1?.markerPosition?.lat}
@@ -398,7 +406,7 @@ const ObservationLocation = (props) => {
                                         id="LAT"
                                         type="number"
                                         name="latitude"
-                                        placeholder="Edmon, OK, USA"
+                                        placeholder="Latitude"
                                         onChange={(e) => {
                                             handleImageInput(e);
                                             handleChangeLat(e);
@@ -417,7 +425,7 @@ const ObservationLocation = (props) => {
                                         id="LON"
                                         type="number"
                                         name="longitude"
-                                        placeholder="Edmon, OK, USA"
+                                        placeholder="Longitude"
                                         onChange={(e) => {
                                             handleImageInput(e);
                                             handleChangeLng(e);
@@ -452,7 +460,7 @@ const ObservationLocation = (props) => {
                     {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 &&
                         <Col xxl={5} className="order-1 order-xxl-2 mb-2 mb-xxl-0">
                             <FormGroup>
-                                <Label check className="mb-0 justify-content-end">
+                                <Label check className="mb-0 d-flex align-items-center justify-content-end">
                                     <Input
                                         type="checkbox"
                                         name="Same as the first image"
@@ -516,6 +524,7 @@ const ObservationLocation = (props) => {
                                             name="obs_time"
                                             format="HH:mm"
                                             placeholder="Select Time"
+                                            // value={observationImages?.data && (observationImages?.data[observationImages?.selected_image_index]?.obs_time)}
                                             onChange={(e) => handleImageInput({
                                                 target: {
                                                     name: "obs_time",

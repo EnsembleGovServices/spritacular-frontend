@@ -24,7 +24,6 @@ const ResetPassword = (props) => {
             [name]:value
         })
     }
-
     
     useEffect(() => {
         setUser({
@@ -41,7 +40,7 @@ const ResetPassword = (props) => {
             })
             .catch((error) => {
                 if (!error?.response) {
-                    console.log('server error occurred')
+                    process.env.NODE_ENV === "development" && console.log('ResetPassword: Server error occurred')
                 }
                 else if (error?.response) {
                     setError({
@@ -51,7 +50,7 @@ const ResetPassword = (props) => {
                     });
                 }
                 else {
-                    console.log(error?.response?.statusText)
+                    process.env.NODE_ENV === "development" && console.log('ResetPassword Error:',error?.response?.statusText)
                 }
             })
     }

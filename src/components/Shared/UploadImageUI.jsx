@@ -1,6 +1,8 @@
 import "../../assets/scss/component/initialUploadobservations.scss";
 import {FormGroup, Input, Label} from "reactstrap";
 import {Icon} from "@iconify/react/dist/iconify";
+import {useEffect, useState} from "react";
+import useObservations from "../../hooks/useObservations";
 
 const UploadImageUI = (props) => {
     const {
@@ -14,6 +16,15 @@ const UploadImageUI = (props) => {
         defaultUploadBox,
         blogUpload
     } = props;
+
+    const {observationImages} = useObservations();
+    const [replaceErrors, setReplaceErrors] = useState(observationImages?.error);
+
+
+    useEffect(() => {
+        setReplaceErrors(observationImages?.error);
+    }, [observationImages?.error])
+
     return (
         <div className="position-relative">
             <div
@@ -57,6 +68,14 @@ const UploadImageUI = (props) => {
                 }
                 {error?.invalidImage &&
                     <span className="text-danger d-block small my-1 d-inline-block">{error?.invalidImage}</span>
+                }
+
+                {replaceErrors?.invalidImage &&
+                    <span className="text-danger d-block small my-1 d-inline-block">{replaceErrors?.invalidImage}</span>
+                }
+
+                {replaceErrors?.size &&
+                    <span className="text-danger d-block small my-1 d-inline-block">{replaceErrors?.size}</span>
                 }
             </div>
             {defaultUploadBox &&

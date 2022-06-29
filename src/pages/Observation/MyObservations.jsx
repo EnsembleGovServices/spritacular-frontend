@@ -1,32 +1,31 @@
 import "../../assets/scss/component/myObservation.scss";
-import {Col, Container, Row} from "reactstrap";
-import {Link, useLocation, useNavigate} from "react-router-dom";
-import {Icon} from "@iconify/react";
+import { Col, Container, Row } from "reactstrap";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
 import axios from "../../api/axios";
 
-import {lazy, Suspense, useEffect, useState} from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 import useAuth from "../../hooks/useAuth";
 import useObservationsData from "../../hooks/useObservationsData";
 import useObservations from "../../hooks/useObservations";
 
-import {LoadMore} from "../../components/Shared/LoadMore";
-import {obvType} from "../../helpers/observation";
-import {baseURL, routeUrls} from "../../helpers/url";
+import { LoadMore } from "../../components/Shared/LoadMore";
+import { obvType } from "../../helpers/observation";
+import { baseURL, routeUrls } from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
 
-
+// To render a dynamic import as a regular component for showing loader till it loads.
 const NotFound = lazy(() => import("../../components/Common/NotFound"));
-
 const ObservationDetails = lazy(() => import("./ObservationDetails"));
 const ObservationDetailPage = lazy(() => import("./ObservationListPage"));
 const InitialUploadObservations = lazy(() => import("../Page/InitialUploadObservations"));
 
 const MyObservations = () => {
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const navigate = useNavigate();
-    const {setObservationData, setObservationSteps, setObservationImages} = useObservations();
-    const {observationListData, setObservationListData} = useObservationsData();
+    const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
+    const { observationListData, setObservationListData } = useObservationsData();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [activeType, setActiveType] = useState("verified");
     const [selectedObservationId, setSelectedObservationId] = useState();
@@ -118,7 +117,7 @@ const MyObservations = () => {
 
         })
             .catch((error) => {
-                console.log(error.response);
+                process.env.NODE_ENV === "development" && console.log(error.response);
             });
     };
 
@@ -157,7 +156,7 @@ const MyObservations = () => {
 
 
 
-    useEffect(()=> {
+    useEffect(() => {
         setObservationListData((prev) => {
             return {
                 ...prev,
@@ -177,12 +176,9 @@ const MyObservations = () => {
                 }
             });
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-
-
-
 
     useEffect(() => {
         setLoading((prev) => {
@@ -217,80 +213,82 @@ const MyObservations = () => {
         <>
             <section className="my-observation-data">
                 {loadedState?.hasObservations &&
-                    <Container>
-                        <div className="filtered-data_wrapper">
-                            <Row>
-                                <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
-                                    <div
-                                        className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
-                                        <span
-                                            className={
-                                                activeType === obvType.verified
-                                                    ? "filter-link active"
-                                                    : "filter-link "
-                                            }
-                                            onClick={() => handleTypeOfObservation(obvType.verified)}
-                                        >
-                                            Verified ({observationListData?.count?.verified})
-                                        </span>
-                                        <span
-                                            className={
-                                                activeType === obvType.unverified
-                                                    ? "filter-link active"
-                                                    : "filter-link "
-                                            }
-                                            onClick={() => handleTypeOfObservation(obvType.unverified)}
-                                        >
-                                            Unverified ({observationListData?.count?.unverified})
-                                        </span>
-                                        <span
-                                            className={
-                                                activeType === obvType.denied
-                                                    ? "filter-link active"
-                                                    : "filter-link "
-                                            }
-                                            onClick={() => handleTypeOfObservation(obvType.denied)}
-                                        >
-                                            Denied ({observationListData?.count?.denied})
-                                        </span>
-                                        <span
-                                            className={
-                                                activeType === obvType.draft
-                                                    ? "filter-link active"
-                                                    : "filter-link "
-                                            }
-                                            onClick={() => handleTypeOfObservation(obvType.draft)}
-                                        >
-                                            Drafts ({observationListData?.count?.draft})
-                                        </span>
-                                    </div>
-                                </Col>
-                                <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
-                                    <div
-                                        className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mb-2 mb-md-0">
-                                        <Link
-                                            to={"/" + routeUrls.observationsAdd}
-                                            className="btn btn-secondary ms-2 ms-xl-4 shadow-none"
-                                        >
-                                            <Icon
-                                                icon="heroicons-outline:upload"
-                                                width="16"
-                                                height="20"
-                                            />
-                                            Upload Observations
-                                        </Link>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Container>
+                    <div className="observation-filter_wrapper">
+                        <Container>
+                            <div className="filtered-data_wrapper">
+                                <Row>
+                                    <Col sm={12} md={8} lg={6} className="order-2 order-md-1">
+                                        <div
+                                            className="d-flex align-items-center justify-content-start h-100 text-truncate overflow-auto mb-3 mb-md-0">
+                                            <span
+                                                className={
+                                                    activeType === obvType.verified
+                                                        ? "filter-link active"
+                                                        : "filter-link "
+                                                }
+                                                onClick={() => handleTypeOfObservation(obvType.verified)}
+                                            >
+                                                Verified ({observationListData?.count?.verified})
+                                            </span>
+                                            <span
+                                                className={
+                                                    activeType === obvType.unverified
+                                                        ? "filter-link active"
+                                                        : "filter-link "
+                                                }
+                                                onClick={() => handleTypeOfObservation(obvType.unverified)}
+                                            >
+                                                Unverified ({observationListData?.count?.unverified})
+                                            </span>
+                                            <span
+                                                className={
+                                                    activeType === obvType.denied
+                                                        ? "filter-link active"
+                                                        : "filter-link "
+                                                }
+                                                onClick={() => handleTypeOfObservation(obvType.denied)}
+                                            >
+                                                Denied ({observationListData?.count?.denied})
+                                            </span>
+                                            <span
+                                                className={
+                                                    activeType === obvType.draft
+                                                        ? "filter-link active"
+                                                        : "filter-link "
+                                                }
+                                                onClick={() => handleTypeOfObservation(obvType.draft)}
+                                            >
+                                                Drafts ({observationListData?.count?.draft})
+                                            </span>
+                                        </div>
+                                    </Col>
+                                    <Col sm={12} md={4} lg={6} className="text-end order-1 order-md-2">
+                                        <div
+                                            className="d-flex align-items-center justify-content-end h-100  flex-wrap flex-lg-nowrap mb-2 mb-md-0">
+                                            <Link
+                                                to={"/" + routeUrls.observationsAdd}
+                                                className="btn btn-secondary ms-2 ms-xl-4 shadow-none"
+                                            >
+                                                <Icon
+                                                    icon="heroicons-outline:upload"
+                                                    width="16"
+                                                    height="20"
+                                                />
+                                                Upload Observations
+                                            </Link>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Container>
+                    </div>
                 }
 
                 {/*Data block*/}
                 <Container>
                     {!loadedState?.hasObservations &&
                         <Suspense fallback={''}>
-                            <InitialUploadObservations count={loading?.count}/>
+                            <InitialUploadObservations count={loading?.count} />
                         </Suspense>
                     }
 
@@ -305,25 +303,26 @@ const MyObservations = () => {
                                         setObservationDetailModal={setObservationDetailModal}
                                         setSelectedObservationId={setSelectedObservationId}
                                         loadedState={loadedState}
-
+                                        handleContinueEdit={handleObservationEdit}
                                     />
                                     {(!loadedState?.loading && nextPageUrl && observationListData?.list?.length > 0) &&
-                                        <LoadMore handleLoadMore={handleLoadMore}/>
+                                        <LoadMore handleLoadMore={handleLoadMore} />
                                     }
                                 </Suspense>
-                            ) : !showNotFound && <Loader/>
+                            ) : !showNotFound && <Loader />
                     }
 
                     {(showNotFound && loadedState?.hasObservations && observationListData?.list?.length === 0 && !loadedState?.loading) &&
                         <Suspense fallback={''}>
-                            <NotFound/>
+                            <NotFound />
                         </Suspense>
                     }
                 </Container>
             </section>
 
-            {observationListData?.list?.length > 0 &&
-                <Suspense fallback={<Loader/>}>
+            {
+                observationListData?.list?.length > 0 &&
+                <Suspense fallback={<Loader />}>
                     <ObservationDetails
                         data={observationListData?.active}
                         activeType={activeType}

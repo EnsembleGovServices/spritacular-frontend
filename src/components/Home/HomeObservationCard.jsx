@@ -1,7 +1,7 @@
 import {Row, Col} from 'reactstrap';
 import ObservationCard from "../Shared/ObservationCard";
 
-
+// 
 const HomeObservationCard = (props) => {
     const {recent} = props;
     return (

@@ -26,6 +26,8 @@ const ObservationMoreDetails = (props) => {
     const newObvData = observationListData?.list;
     const formData = new FormData();
     const [selected, setSelected] = useState({});
+
+    // For like observations in detail page
     const handleLike = async (id) => {
         formData.set('is_like', like ? 0 : 1);
         let obvData = observationListData?.active,
@@ -66,12 +68,14 @@ const ObservationMoreDetails = (props) => {
                 }
             })
             .catch((error)=> {
-                console.log(error);
+                process.env.NODE_ENV === "development" && console.log('Like Obsv:',error);
             })
     }
+    // To close reject popup
     const handleCloseRejectPopup = () =>{
         setOpenRejectPopup(!openRejectPopup)
     }
+    // For user visit counter
     const handleWatchCounter = async (id) => {
         await axios.post(baseURL.api+'/observation/watch_count/'+id+'/', null, {
             headers: {
@@ -106,7 +110,7 @@ const ObservationMoreDetails = (props) => {
             });
         })
     };
-
+    // To send data to db on observation approval
     const submitApproval = async (id) => {
         setSuccess('');
         setError('');
@@ -126,16 +130,15 @@ const ObservationMoreDetails = (props) => {
                 }, 1200)
             })
             .catch(error => {
-                console.log(error?.response);
                 setError({
                     notAllowed: error?.response?.data?.detail
                 })
             })
     }
+    
     const handleApproveObservation = (id) => {
       submitApproval(id).then(r => r);
     }
-
 
     const handleVoteClick = (sr, id, index) => {
         setSelected({
@@ -186,10 +189,9 @@ const ObservationMoreDetails = (props) => {
             setError('');
         })
         .catch((error)=> {
-            console.log(error);
+            process.env.NODE_ENV === "development" && console.log('Vote: ',error);
         })
     }
-
 
     useEffect(()=> {
         let watched = !(observationListData?.active?.like_watch_count_data?.is_watch);

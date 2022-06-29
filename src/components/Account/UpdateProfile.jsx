@@ -4,8 +4,6 @@ import {useEffect, useState} from "react";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import PlacesAutocomplete from "../LocationSearchInput";
-import {addScriptTagToHead} from "../../helpers/addScriptTagToHead";
-
 
 const UpdateProfile = (props) => {
     const {user} = props;
@@ -14,6 +12,7 @@ const UpdateProfile = (props) => {
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
 
+    // To store changed profile data in state
     const handleInput = (e) => {
         e.preventDefault();
         let name = e.target.name,
@@ -24,6 +23,7 @@ const UpdateProfile = (props) => {
         })
     }
 
+    // To store changed location in state 
     const handleLocations = (location) => {
         setUpdatedUser({
             ...updateUser,
@@ -37,6 +37,7 @@ const UpdateProfile = (props) => {
         });
     }
 
+    // Updates profile data to db
     const handleProfileUpdate = async (e) => {
         e.preventDefault();
         setSuccess('');
@@ -68,7 +69,6 @@ const UpdateProfile = (props) => {
                 }
             });
         }).catch((error) => {
-            console.log(error.response);
             setError(error.response)
         })
     }
@@ -76,11 +76,6 @@ const UpdateProfile = (props) => {
     useEffect(() => {
         setUpdatedUser(user?.user)
     }, [user?.user]);
-
-
-    // useEffect(() => {
-    //     addScriptTagToHead(true, 'https://maps.googleapis.com/maps/api/js?', 'key', `${baseURL.mapApiKey}&libraries=places`);
-    // }, [])
 
     return (
         <>

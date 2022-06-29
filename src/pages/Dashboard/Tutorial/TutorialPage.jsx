@@ -23,11 +23,10 @@ const TutorialPage = () => {
                 "Content-Type": "application/json",
             },
         }).then(response => {
-            // console.log('response', response);
             setTutorials(response?.data?.data);
             setLoader(false);
         }).catch(error => {
-            console.log('error', error)
+            process.env.NODE_ENV === "development" && console.log('error', error)
         })
     }
 

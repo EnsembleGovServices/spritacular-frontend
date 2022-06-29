@@ -1,6 +1,4 @@
-import {FormGroup, Input, Label} from "reactstrap";
 import useObservations from "../../hooks/useObservations";
-import {Icon} from '@iconify/react';
 import {useEffect, useState} from "react";
 import {uploadImageDefaultState} from "../../helpers/observation";
 import PropTypes from "prop-types";
@@ -9,15 +7,17 @@ import {cameraSettingFields} from "../../helpers/url";
 import UploadImageUI from "../Shared/UploadImageUI";
 
 const ObservationUploadImg = (props) => {
-    const {multiple, maxLimit, imageFormat, detectImage, mode, small} = props;
-    const {setObservationImages, observationImages, setCameraDetails} = useObservations();
+    const { multiple, maxLimit, imageFormat, detectImage, mode, small } = props;
+    const { setObservationImages, observationImages, setCameraDetails } = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const [userLocation, setUserLocation] = useState({
         latitude: (auth?.user?.location_metadata?.lat) ? auth?.user?.location_metadata?.lat : 18.5204303,
         longitude: (auth?.user?.location_metadata?.lng) ? auth?.user?.location_metadata?.lng : 73.8567437
     });
+
+    // To validate and store image
     const handleUploadImage = (e) => {
         setError(null);
         const fileList = e.target.files;
@@ -35,17 +35,13 @@ const ObservationUploadImg = (props) => {
                 });
                 const duplicate = repeatCheck.includes(true);
                 if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate && isValidImage) {
-
-                    if (mode) {
-                        return setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
-                    } else {
+                    mode ?
+                        setImages([uploadImageDefaultState(random, baseImage, item, userLocation)]) :
                         setImages(prevState => [
                             ...prevState,
                             uploadImageDefaultState(random, baseImage, item, userLocation)
                         ])
-                    }
                 }
-
 
                 if (mode) {
                     setError((prev) => {
@@ -84,7 +80,7 @@ const ObservationUploadImg = (props) => {
                     setError((prev) => {
                         return {
                             ...prev,
-                            invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.)',
+                            invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.',
                         }
                     })
                 }
@@ -94,17 +90,19 @@ const ObservationUploadImg = (props) => {
         })
     };
 
-
+    // Stores image location
     useEffect(() => {
         let images = (observationImages?.data) ? [...observationImages?.data] : [];
         observationImages?.data?.map((item, index) => {
-            return item.latitude = userLocation?.latitude,
-                item.longitude = userLocation?.longitude
+            const latitude = item.latitude ? item.latitude : userLocation?.latitude;
+            const longitude = item.longitude ? item.longitude : userLocation?.longitude;
+            return item.latitude = latitude,
+                item.longitude = longitude
         })
         setImages(images)
     }, [detectImage, mode, userLocation])
 
-
+    // Update context with observations images data
     useEffect(() => {
         if (images.length > 0) {
             setObservationImages({

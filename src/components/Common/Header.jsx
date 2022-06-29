@@ -27,6 +27,7 @@ import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 import UserProfilePopup from "../Popup/UserProfilePopup";
 import NotificationComponent from "../Notification/NotificationComponent";
 
+// Navbar at top shows menu and user info.
 const Header = (props) => {
     const {auth, setAuth, persist, setPersist} = useAuth();
     const [user, setUser] = useState(auth?.user);
@@ -45,6 +46,7 @@ const Header = (props) => {
     const homeUrl = location.pathname === '/';
     const navigate = useNavigate();
 
+    // To logout user
     const Logout = () => {
         setAuth("");
         setPersist(false);
@@ -57,20 +59,17 @@ const Header = (props) => {
         setShowUserProfilePopup(true);
     };
 
+    // For changing bg-color for header on scroll bottom/top.
     useEffect(() => {
         document.addEventListener("scroll", () => {
             let scroll = window.pageYOffset || document.documentElement.scrollTop,
                 navbarEl = document.querySelector(".custom-header");
-            if (scroll > 80) {
-                navbarEl.classList.add("bg-color-menu");
-            } else {
-                navbarEl.classList.remove("bg-color-menu");
-            }
+            scroll > 80 ? navbarEl?.classList?.add("bg-color-menu") : navbarEl?.classList?.remove("bg-color-menu")
         });
         setUser(auth?.user);
-
     }, [auth?.user]);
 
+    // To toggle active tab select/unselect.
     useEffect(() => {
         setActive('');
         if (location.pathname) {
@@ -79,7 +78,7 @@ const Header = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname])
 
-
+    // Store notifications in state from database.
     useEffect(() => {
         if (auth?.user && auth?.token?.access) {
             axios.get(baseURL.api + '/notification/user_notification/', {
@@ -92,35 +91,37 @@ const Header = (props) => {
                     setNotificationArray(response.data.results.data);
                 })
                 .catch((error) => {
-                    console.log(error)
+                    process.env.NODE_ENV === "development" && console.log(error)
                 })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth])
+    }, [])
 
-
+    // Show/hide Login modal
     const handleLoginModal = () => {
         setIsLoginModal(!isLoginModal);
         setIsRegisterModal(false);
     };
-
+    // Show/hide Register modal
     const handleRegisterModal = () => {
         setIsRegisterModal(!isRegisterModal);
     };
+    // Show navigation drawer for mobile devices
     const menuToggle = () => {
         let getBody = document.querySelector('body');
-        getBody.classList.toggle("menu-open");
+        getBody?.classList?.toggle("menu-open");
         setShowMenu(!showMenu);
     };
+    // hide navigation drawer.
     const menuClose = () => {
         const getBody = document.querySelector('body');
-        getBody.classList.remove("menu-open");
+        getBody?.classList?.remove("menu-open");
         setShowMenu(false);
     };
+
     const handleUserMenuDropdown = () => {
         setShowUserMenu(!showUserMenu);
     };
-
     const handleChangePasswordModal = () => {
         setIsChangePasswordModal(!isChangePasswordModal);
     };
@@ -133,11 +134,11 @@ const Header = (props) => {
         trainee = auth?.user?.is_trained,
         normalUser = auth?.user?.is_user;
 
-
+    // To close drawer menu on url change.
     useEffect(() => {
         if (location) {
+            document.querySelector('body')?.classList?.remove("menu-open");
             setShowMenu(false);
-            document.querySelector('body').classList.remove("menu-open");
         }
     }, [location])
 
@@ -171,7 +172,7 @@ const Header = (props) => {
                     <Icon icon="eva:menu-outline"/>
                 </NavbarToggler>
                 <Collapse navbar isOpen={showMenu}>
-                    <div className="menu-logo  justify-content-between w-100 px-2 py-1 shadow-sm">
+                    <div className="menu-logo justify-content-between w-100 px-2 py-1 shadow-sm">
                         <Link to={routeUrls.home} className="navbar-brand" onClick={() => setActive('')}>
                             <img src={`${cdn.url}/black-logo.png`} alt="Spritacular"/>
                         </Link>

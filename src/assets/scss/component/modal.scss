@@ -41,6 +41,7 @@
         border: none;
         box-shadow: none;
         padding: 0;
+
         @include media-breakpoint-down(md) {
           right: 20px;
         }
@@ -209,11 +210,26 @@
   }
 }
 
+.custom-file-upload {
+  margin-bottom: 0 !important;
+}
+
 .file-upload-inners {
   .text-danger {
     position: absolute;
     margin-top: 4px;
   }
+
+  // .text-danger {
+  //   background: #ffffffc4;
+  //   padding: 6px;
+  //   width: 100%;
+  //   display: block;
+  //   color: red !important;
+  //   border-radius: 5px;
+  //   margin-top: 15px;
+  //   text-align: center;
+  // }
 }
 
 .user-profile-upload {
@@ -394,6 +410,7 @@
 .reject-modal {
   max-width: 420px;
   margin: 15px auto;
+
   @include media-breakpoint-down(sm) {
     margin: 15px;
   }

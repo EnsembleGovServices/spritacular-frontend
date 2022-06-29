@@ -12,6 +12,7 @@ const HomePage = () => {
     const [loading, setLoading] = useState(true);
     const [recent, setRecent] = useState(null);
 
+    // To get four latest observations for home page.
     const getHomeData = async () => {
         await axios.get(baseURL.api + '/observation/home/')
             .then((response) => {
@@ -19,10 +20,9 @@ const HomePage = () => {
                 setLoading(false);
             })
             .catch(error => {
-                console.log(error.message)
+                process.env.NODE_ENV === "development" && console.log('HomeData Error:',error.message)
             })
     }
-
     useEffect(() => {
         getHomeData().then(r => r)
     }, [])

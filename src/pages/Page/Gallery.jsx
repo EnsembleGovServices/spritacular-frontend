@@ -1,32 +1,25 @@
 import "../../assets/scss/component/myObservation.scss";
 import "../../assets/scss/component/gallery.scss";
-import {lazy, Suspense, useEffect, useState} from "react";
-import {Container, UncontrolledAlert} from "reactstrap";
-import {Link} from "react-router-dom";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { Container, UncontrolledAlert } from "reactstrap";
+import { Link } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
-import {baseURL, routeUrls} from "../../helpers/url";
-import {LoadMore} from "../../components/Shared/LoadMore";
+import { baseURL, routeUrls } from "../../helpers/url";
+import { LoadMore } from "../../components/Shared/LoadMore";
 import useObservationsData from "../../hooks/useObservationsData";
 import Loader from "../../components/Shared/Loader";
-import {dashboardHelper} from "../../helpers/dashboard";
+import { dashboardHelper } from "../../helpers/dashboard";
 
-const NotFound = lazy(() =>
-    import("../../components/Common/NotFound")
-);
-const ObservationDetails = lazy(() =>
-    import("../Observation/ObservationDetails")
-);
-const FilterSelectMenu = lazy(() =>
-    import("../../components/Shared/FilterSelectMenu")
-);
-const ObservationDetailPage = lazy(() =>
-    import("../Observation/ObservationListPage")
-);
+// To render a dynamic import as a regular component for showing loader till it loads.
+const NotFound = lazy(() => import("../../components/Common/NotFound"));
+const ObservationDetails = lazy(() => import("../Observation/ObservationDetails"));
+const FilterSelectMenu = lazy(() => import("../../components/Shared/FilterSelectMenu"));
+const ObservationDetailPage = lazy(() => import("../Observation/ObservationListPage"));
 
 const Gallery = () => {
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [selectedObservationId, setSelectedObservationId] = useState();
     const [searchCountry, setSearchCountry] = useState("");
@@ -36,12 +29,12 @@ const Gallery = () => {
         isStatusOpen: false,
     });
     const [selectedFilterHorizontal, setSelectedFilterHorizontal] = useState({
-        country: {name: "", code: ""},
+        country: { name: "", code: "" },
         type: "",
         status: "",
     });
-    const {observationListData, setObservationListData} = useObservationsData();
-    const [loadedState, setLoadedState] = useState({loading: true, hasData: true});
+    const { observationListData, setObservationListData } = useObservationsData();
+    const [loadedState, setLoadedState] = useState({ loading: true, hasData: true });
     const [showNoData, setShowNoData] = useState(false);
     const activeTypeData = observationListData?.active?.is_verified ? "verified" : observationListData?.active?.is_reject ? "denied" : observationListData?.active?.is_submit ? "unverified" : "draft"
 
@@ -89,7 +82,7 @@ const Gallery = () => {
             }
         });
 
-        await axios.get(url, {headers: headers}).then((success) => {
+        await axios.get(url, { headers: headers }).then((success) => {
             if (success?.data?.results?.data !== undefined) {
                 if (success?.data?.next) {
                     setNextPageUrl(success?.data?.next);
@@ -120,7 +113,7 @@ const Gallery = () => {
                 });
             } else {
                 setNextPageUrl(null);
-                setObservationListData({list: [], active: {}});
+                setObservationListData({ list: [], active: {} });
             }
         })
             .catch((error) => {
@@ -130,7 +123,7 @@ const Gallery = () => {
                         loading: false,
                     }
                 });
-                console.log(error.response);
+                process.env.NODE_ENV === "development" && console.log('ObsvType: ',error.response);
             });
     };
 
@@ -169,8 +162,10 @@ const Gallery = () => {
 
 
     const resetHorizontalFilter = () => {
-        setSelectedFilterHorizontal(dashboardHelper.horizontal);
-        getObservationType(true, "", "", "").then(r => r);
+        if (selectedFilterHorizontal.filtered) {
+            setSelectedFilterHorizontal(dashboardHelper.horizontal);
+            getObservationType(true, "", "", "").then(r => r);
+        }
     }
 
     useEffect(() => {
@@ -252,7 +247,7 @@ const Gallery = () => {
                                     />
                                 }
                                 {observationListData?.list?.length > 0 && nextPageUrl &&
-                                    <LoadMore handleLoadMore={handleLoadMoreData}/>
+                                    <LoadMore handleLoadMore={handleLoadMoreData} />
                                 }
                             </Suspense>
                         </div>
@@ -260,12 +255,12 @@ const Gallery = () => {
                 }
 
                 {loadedState?.loading &&
-                    <Loader fixContent={true}/>
+                    <Loader fixContent={true} />
                 }
 
                 {!showNoData &&
                     <Suspense fallback={''}>
-                        <NotFound/>
+                        <NotFound />
                     </Suspense>
                 }
 

@@ -19,11 +19,8 @@ const TutorialView = () => {
                 "Content-Type": "application/json"
             },
         }).then(response => {
-            // console.log(response);
             setTutorial(response?.data?.data);
-            // console.log(response?.data?.data);
         }).catch(error => {
-            // console.log(error);
             if (error?.response?.statusCode !== 200) {
                 navigate('/404', {replace: true});
             }

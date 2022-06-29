@@ -6,6 +6,7 @@ import {useState, Suspense, lazy, useEffect, useLayoutEffect,} from "react";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
+// To render a dynamic import as a regular component for showing loader till it loads.
 const ContentEditor = lazy(() => import('../../../components/Blog/ContentEditor'))
 const UploadFeaturedImage = lazy(() => import('../../../components/Blog/UploadFeaturedImage'))
 const BlogType = lazy(() => import('../Blog/BlogType'))
@@ -48,7 +49,7 @@ const CreateUpdateBlogTutorial = (props) => {
         }).then(response => {
             setCategory(response.data);
         }).catch(error => {
-            console.log('error', error)
+            process.env.NODE_ENV === "development" && console.log('Update TutBlog:', error)
         })
     };
 
@@ -117,8 +118,6 @@ const CreateUpdateBlogTutorial = (props) => {
                 }, 1000)
             }).catch(error => {
                 setLoading(false);
-                // console.log('error', error);
-                // setData('')
                 setError({
                     status: error.response.status,
                     message: error.response.data
@@ -150,8 +149,6 @@ const CreateUpdateBlogTutorial = (props) => {
                 }, 1000)
             }).catch(error => {
                 setLoading(false);
-                // console.log('error', error);
-                // setData('')
                 setError({
                     status: error.response.status,
                     message: error.response.data
@@ -190,14 +187,12 @@ const CreateUpdateBlogTutorial = (props) => {
     useEffect(() => {
         if (inputChange) {
             if (data && data?.article_type === "1") {
-                console.log('condition', data?.article_type)
                 navigate(`/dashboard/blog/${routeUrls.dashBlog.create}`, {replace: true})
             } else if (data && data?.article_type === "2") {
-                console.log('condition', data?.article_type)
                 navigate(`/dashboard/tutorial/${routeUrls.dashTutorial.create}`, {replace: true})
             }
         }
-// eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data?.article_type])
 
     const updateBlogTutorial = async () => {
@@ -208,9 +203,7 @@ const CreateUpdateBlogTutorial = (props) => {
                 Authorization: `Bearer ${auth?.token?.access}`,
             },
         }).then(response => {
-            // console.log(response);
             let data = response?.data?.data;
-            // console.log(response?.data?.data);
             setData((prev) => {
                 return {
                     ...prev,
@@ -218,7 +211,6 @@ const CreateUpdateBlogTutorial = (props) => {
                 }
             })
         }).catch(error => {
-            // console.log(error);
             if (error?.response?.statusCode !== 200) {
                 navigate('/404', {replace: true});
             }
@@ -237,7 +229,7 @@ const CreateUpdateBlogTutorial = (props) => {
             <div className="position-relative">
                 <div className="d-flex align-items-center justify-content-between">
                     <h2 className="mb-0 text-capitalize">{update ? "Update" : "Create"} {type}</h2>
-                    <Link to={`/${routeUrls.dashboard}/${type}`}
+                    <Link to={`${routeUrls.dashboard}/${type}`}
                           className="btn btn-primary px-4 text-capitalize">{type} lists</Link>
                 </div>
             </div>
@@ -247,8 +239,8 @@ const CreateUpdateBlogTutorial = (props) => {
                 {success &&
                     <div className="row">
                         <Col sm={12}>
-                            <UncontrolledAlert color="success">
-                                {success?.message}
+                            <UncontrolledAlert color="success" className="text-capitalize">
+                                {`${type} created successfully`}
                             </UncontrolledAlert>
                         </Col>
                     </div>

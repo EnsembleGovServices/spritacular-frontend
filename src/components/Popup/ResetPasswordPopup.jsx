@@ -32,20 +32,16 @@ import ShowErrorPopup from "./ShowErrorPopup";
         axios.post(baseURL.api+'/users/password_reset/validate_token/', {'token': token})
         .then((response) => {
           setSuccess(response);
-            // console.log(response);
             setIsOpenModal(true);
             
             })
         .catch((error) => {
             setIsOpenModal(false);
-            console.log(error);
             if (!error?.response) {
               setError('server error occurred');
-                console.log('server error occurred')
             }
             else {
               setError(error?.response?.statusText);
-                console.log(error?.response?.statusText)
             }
         })
     },[token]);

@@ -14,7 +14,7 @@ const ViewBlogTutorial = (props) => {
                     <Container>
                         <div className="position-relative">
                             <div className="">
-                                <Link to={'/' + routeUrls.dashboard + '/' + type}
+                                <Link to={`${routeUrls.dashboard}/${type}`}
                                       className="d-flex align-items-center justify-content-start mb-3">
                                     <Icon icon="ep:back"/>
                                     <span className="ms-2">
@@ -24,7 +24,7 @@ const ViewBlogTutorial = (props) => {
                                 <div className="d-flex align-items-center justify-content-between">
                                     <h2 className="mb-0">{content?.title}</h2>
                                     <Link
-                                        to={content ? `/${routeUrls.dashboard}/${type}/${slug}/edit` : ''}
+                                        to={content ? `${routeUrls.dashboard}/${type}/${slug}/edit` : ''}
                                         className="btn btn-primary px-4 btn-sm">
                                         Edit
                                     </Link>

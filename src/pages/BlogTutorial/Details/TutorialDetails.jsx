@@ -23,7 +23,7 @@ const TutorialDetails = () => {
         }).then(response => {
             setTutorial(response?.data?.data);
         }).catch(error => {
-            console.log('error', error)
+            process.env.NODE_ENV === "development" && console.log('GetTutorial: ', error)
         })
     }
 

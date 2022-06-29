@@ -12,25 +12,13 @@ import { dashboardHelper } from "../../helpers/dashboard";
 import { baseURL } from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
 
-
-const NotFound = lazy(() =>
-    import("../../components/Common/NotFound")
-);
-const FilterSelectMenu = lazy(() =>
-    import("../../components/Shared/FilterSelectMenu")
-);
-const AdvancedFilter = lazy(() =>
-    import("../../components/Shared/AdvancedFilter")
-);
-const ObservationDetailPage = lazy(() =>
-    import("../Observation/ObservationListPage")
-);
-const ObservationListView = lazy(() =>
-    import("../Observation/ObservationListView")
-);
-const ObservationDetails = lazy(() =>
-    import("../Observation/ObservationDetails")
-);
+// To render a dynamic import as a regular component for showing loader till it loads.
+const NotFound = lazy(() => import("../../components/Common/NotFound"));
+const FilterSelectMenu = lazy(() => import("../../components/Shared/FilterSelectMenu"));
+const AdvancedFilter = lazy(() => import("../../components/Shared/AdvancedFilter"));
+const ObservationDetailPage = lazy(() => import("../Observation/ObservationListPage"));
+const ObservationListView = lazy(() => import("../Observation/ObservationListView"));
+const ObservationDetails = lazy(() => import("../Observation/ObservationDetails"));
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -56,6 +44,7 @@ const Dashboard = () => {
     const [loadedState, setLoadedState] = useState({ loading: true, hasData: true });
     const [shouldFilter, setShouldFilter] = useState(false);
 
+    // To fetch and store all observations from db and handle loader/error's
     const getObservationData = async (
         reset = false,
         country = `${selectedFilterHorizontal?.country?.code}`,
@@ -135,17 +124,18 @@ const Dashboard = () => {
                     setNextPageUrl(null);
                     setObservationListData({ list: [], active: {} });
                 }
-                // setObservationList(success?.data?.results?.data)
             }).catch((error) => {
-                console.log(error.message);
+                process.env.NODE_ENV === "development" && console.log("Dashboard Error: ", error.message);
             });
         }
     };
 
+    // For load more
     const handleLoadMoreData = () => {
         getObservationData(false).then(r => r);
     };
 
+    //
     const handleObservationDetailModal = (id) => {
         setObservationDetailModal(!isObservationDetailModal);
         setSelectedObservationId(id);
@@ -193,7 +183,7 @@ const Dashboard = () => {
         setSearchCountry(value);
     };
 
-
+    //
     const handleFilterValue = (value, type) => {
         if (type === "status") {
             value = value.toLowerCase();
@@ -232,7 +222,6 @@ const Dashboard = () => {
 
     //  Handle Filtered Input
     const handleFilterInput = (e, name) => {
-        // console.log(e?.format().split(" ")[1])
         setSelectedFilterVertical((prev) => {
             return {
                 ...prev,
@@ -241,7 +230,6 @@ const Dashboard = () => {
             }
         });
     };
-
 
     //  Reset Filters
     const resetFilters = () => {

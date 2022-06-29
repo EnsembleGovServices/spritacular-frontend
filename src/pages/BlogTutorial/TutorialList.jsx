@@ -9,6 +9,7 @@ import Loader from "../../components/Shared/Loader";
 import {Link} from "react-router-dom";
 import NotFound from "../../components/Common/NotFound";
 
+// To render a dynamic import as a regular component for showing loader till it loads.
 const TutorialRestLists = lazy(() => import('./List/TutorialRestLists'))
 
 const TutorialList = () => {
@@ -23,7 +24,6 @@ const TutorialList = () => {
                 "Content-Type": "application/json",
             },
         }).then(response => {
-            // console.log(response?.data)
             if (response?.data?.data?.length > 0) {
                 setHasData(true);
             } else {
@@ -33,7 +33,7 @@ const TutorialList = () => {
                 list: response?.data?.data
             })
         }).catch(error => {
-            console.log('error', error)
+            process.env.NODE_ENV === "development" && console.log('Tutorial List: ', error)
         })
     }
 
@@ -53,7 +53,7 @@ const TutorialList = () => {
                             <h2 className="mb-0" id="user_tut">User Tutorials</h2>
                             {auth?.user && admin &&
                                 <Link
-                                    to={'/' + routeUrls.dashboard + '/' + routeUrls.dashTutorial.list + '/' + routeUrls.dashBlog.create}
+                                    to={`${routeUrls.dashboard}/${routeUrls.dashTutorial.list}/${routeUrls.dashBlog.create}`}
                                     className="btn btn-primary px-4">Create Tutorial</Link>
                             }
                         </div>

@@ -8,11 +8,8 @@ const ObservationListPage = (props) => {
         setSelectedObservationId,
         setObservationDetailModal,
         activeType,
+        handleContinueEdit,
     } = props;
-
-
-    // Masonry Options
-    // const masonryOptions = masonryConfig('.photo-list', 1, 0, false, 10);
 
     // Masonry Options
     const masonryOptions = {
@@ -37,10 +34,14 @@ const ObservationListPage = (props) => {
                 {observationList && observationList?.map((cardItems, index) => {
                     return (
                         <div key={index} className="photo-item mb-4">
-                            <ObservationCard cardItems={cardItems} cardData={cardItems?.images?.[0]} index={index}
-                                             userProfile={cardItems.user_data}
-                                             handleClick={handleObservationDetailModal}
-                                             activeType={activeType}/>
+                            <ObservationCard
+                                cardItems={cardItems}
+                                cardData={cardItems?.images?.[0]} index={index}
+                                userProfile={cardItems.user_data}
+                                handleClick={handleObservationDetailModal}
+                                activeType={activeType}
+                                handleContinueEdit={handleContinueEdit}
+                            />
                         </div>
                     )
                 })

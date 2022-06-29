@@ -120,7 +120,6 @@ const FilterSelectMenu = (props) => {
                         </div>
                         {
                             auth?.user &&
-
                             <div className='flex-fill'>
                                 <Row>
                                     <Col sm={12} lg={8} className='order-2 order-lg-1'>
