@@ -12,16 +12,16 @@ import {
     Label,
     Row
 } from "reactstrap";
-import { useEffect, useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import useObservations from "../../hooks/useObservations";
 import MapWrapper from '../MapWrapper';
 import ReactCountryFlags from '../ReactCountryFlag';
 import Images from "../../static/images";
-import { directionValue, Tabs } from "../../helpers/observation";
-import { timezone } from "../../helpers/timezone";
+import {directionValue, Tabs} from "../../helpers/observation";
+import {timezone} from "../../helpers/timezone";
 import ObservationCategory from "./ObservationCategory";
-import { Icon } from '@iconify/react';
-import { getdirectionDegree, getdirectionAngle } from "../../helpers/observation";
+import {Icon} from '@iconify/react';
+import {getdirectionDegree, getdirectionAngle} from "../../helpers/observation";
 
 // Date-time-picker 
 import DatePicker from "react-multi-date-picker";
@@ -30,7 +30,7 @@ import "react-multi-date-picker/styles/colors/red.css";
 
 
 const ObservationLocation = (props) => {
-    const { toggleTab, handleImageInput, error, step, obvType, disableNext } = props;
+    const {toggleTab, handleImageInput, error, step, obvType, disableNext} = props;
     const fref = useRef()
     const [address1, setAddress] = useState({
         address: '',
@@ -101,10 +101,12 @@ const ObservationLocation = (props) => {
                         if (observationAddress.data[1]) {
                             observationAddress.data[1]['location'] = value[1];
                             observationAddress.data[1]['country_code'] = value[0];
+                            observationAddress.data[1]['place_uid'] = value.place_uid;
                         }
                         if (observationAddress.data[2]) {
                             observationAddress.data[2]['location'] = value[1];
                             observationAddress.data[2]['country_code'] = value[0];
+                            observationAddress.data[1]['place_uid'] = value.place_uid;
                         }
                     }
                     setObservationImages(observationAddress);
@@ -174,15 +176,18 @@ const ObservationLocation = (props) => {
         if (observationAddress?.data) {
             observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.short_address;
             observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
+            observationAddress.data[observationAddress.selected_image_index]['place_uid'] = address1?.place_uid;
 
             if (observationData?.image_type === 3) {
                 if (observationAddress.data[1]) {
                     observationAddress.data[1]['location'] = address1?.short_address;
                     observationAddress.data[1]['country_code'] = address1?.country;
+                    observationAddress.data[1]['place_uid'] = address1?.place_uid;
                 }
                 if (observationAddress.data[2]) {
                     observationAddress.data[2]['location'] = address1?.short_address;
                     observationAddress.data[2]['country_code'] = address1?.country;
+                    observationAddress.data[2]['place_uid'] = address1?.place_uid;
                 }
             }
             setObservationImages(observationAddress);
@@ -196,15 +201,17 @@ const ObservationLocation = (props) => {
                 if (observationAddress.data[1]) {
                     observationAddress.data[1]['location'] = observationAddress.data[0]['location'];
                     observationAddress.data[1]['country_code'] = observationAddress.data[0]['country_code'];
+                    observationAddress.data[1]['place_uid'] = observationAddress.data[0]['place_uid'];
                 }
                 if (observationAddress.data[2]) {
                     observationAddress.data[2]['location'] = observationAddress.data[0]['location'];
                     observationAddress.data[2]['country_code'] = observationAddress.data[0]['country_code'];
+                    observationAddress.data[2]['place_uid'] = observationAddress.data[0]['place_uid'];
                 }
             }
             setObservationImages(observationAddress);
         }
-    }, [observationData?.image_type]);
+    }, [observationData?.image_type, observationImages?.data]);
 
     // To select degree direction
     const selectDirection = (index) => {
@@ -237,30 +244,30 @@ const ObservationLocation = (props) => {
     const handleCopyData = (e, keys) => {
         if (observationImages) {
 
-            let observationMap = { ...observationImages };
-            if (keys.includes('location', 'latitude', 'longitude', 'country_code')) {
+            let observationMap = {...observationImages};
+            if (keys.includes('location', 'latitude', 'longitude', 'country_code', 'place_uid')) {
+                setSameAsMap(e);
                 observationMap.data[observationImages?.selected_image_index].sameAsFirstMap = e;
             }
-            if (keys.includes('obs_time', 'obs_date', 'timezone')) {
+            if (keys.includes('obs_time', 'obs_date', 'timezone', 'place_uid')) {
                 setSameAsDateTime(e);
                 observationMap.data[observationImages?.selected_image_index].sameAsFirstDate = e;
             }
             setObservationImages(observationMap);
-            let copyImages = { ...observationImages };
+            let copyImages = {...observationImages};
             keys.map((k) => {
                 if (e) {
                     copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
-                    // copyImages.data[copyImages?.selected_image_index]['location'] = copyImages.data[0]['location'];
-                    // copyImages.data[copyImages?.selected_image_index]['country_code'] = copyImages.data[0]['country_code'];
                 } else {
                     if (observationData?.image_type !== 3) {
 
                         copyImages.data[copyImages?.selected_image_index][k] = (k === 'obs_time' || k === 'obs_date') ? null : '';
-                        if (keys.includes('location', 'latitude', 'longitude')) {
+                        if (keys.includes('location', 'latitude', 'longitude', 'place_uid')) {
                             copyImages.data[copyImages?.selected_image_index]['latitude'] = initialAddress.lat;
                             copyImages.data[copyImages?.selected_image_index]['longitude'] = initialAddress.lng;
                             copyImages.data[copyImages?.selected_image_index]['location'] = initialAddress.short_address;
                             copyImages.data[copyImages?.selected_image_index]['country_code'] = initialAddress.country;
+                            copyImages.data[copyImages?.selected_image_index]['place_uid'] = initialAddress.place_uid;
                         }
                     }
                 }
@@ -309,7 +316,7 @@ const ObservationLocation = (props) => {
                         {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 &&
                             <Col xxl={5} className="order-1 order-xxl-2 mb-2 mb-xxl-0">
                                 <FormGroup>
-                                    <Label check className="mb-0 justify-content-end">
+                                    <Label check className="mb-0 d-flex align-items-center justify-content-end">
                                         <Input
                                             type="checkbox"
                                             name="Same as the first image"
@@ -354,16 +361,16 @@ const ObservationLocation = (props) => {
                                             <div className="border-end w-auto">
                                                 <FormGroup className="form-group d-flex align-items-center">
                                                     <Label className="form-label text-uppercase mb-0 me-2"
-                                                        htmlFor="LAT">LAT</Label>
+                                                           htmlFor="LAT">LAT</Label>
                                                     <span
                                                         className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat
-                                                        }</span>
+                                                    }</span>
                                                 </FormGroup>
                                             </div>
                                             <div className="w-auto">
                                                 <FormGroup className="form-group d-flex align-items-center">
                                                     <Label className="form-label text-uppercase mb-0 me-2"
-                                                        htmlFor="LON">LON</Label>
+                                                           htmlFor="LON">LON</Label>
                                                     <span
                                                         className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude : address1?.markerPosition?.lng}</span>
                                                 </FormGroup>
@@ -374,7 +381,7 @@ const ObservationLocation = (props) => {
                                         <div
                                             className="selected-address d-block d-lg-flex align-items-center justify-content-start justify-content-lg-end mt-2 mt-lg-0">
                                             <ReactCountryFlags
-                                                country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code : address1?.country_code} />
+                                                country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code : address1?.country_code}/>
                                             <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                                         </div>
                                     </Col>
@@ -432,7 +439,7 @@ const ObservationLocation = (props) => {
                             <div
                                 className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
                                 <ReactCountryFlags
-                                    country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code : null} />
+                                    country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code : null}/>
                                 <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                             </div>
                         </Col>
@@ -441,7 +448,7 @@ const ObservationLocation = (props) => {
             }
             {observationData?.image_type === 3 &&
                 <Row className="mb-4">
-                    <ObservationCategory obvType={obvType} error={error} />
+                    <ObservationCategory obvType={obvType} error={error}/>
                 </Row>
             }
 
@@ -454,7 +461,7 @@ const ObservationLocation = (props) => {
                     {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 &&
                         <Col xxl={5} className="order-1 order-xxl-2 mb-2 mb-xxl-0">
                             <FormGroup>
-                                <Label check className="mb-0 justify-content-end">
+                                <Label check className="mb-0 d-flex align-items-center justify-content-end">
                                     <Input
                                         type="checkbox"
                                         name="Same as the first image"
@@ -527,7 +534,7 @@ const ObservationLocation = (props) => {
                                             })}
                                             editable={false}
                                             plugins={[
-                                                <TimePicker hideSeconds />,
+                                                <TimePicker hideSeconds/>,
                                             ]}
                                             scrollSensitive={false}
                                         />
@@ -546,25 +553,25 @@ const ObservationLocation = (props) => {
                                 <FormGroup>
                                     <Label className="text-uppercase" htmlFor="TIME ZONE">TIME ZONE</Label>
                                     <Dropdown className="dropdown-with-search"
-                                        toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
+                                              toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
                                         <DropdownToggle
                                             className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                                             {/*<span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>*/}
                                             <span
                                                 className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone}` : 'Select Time Zone'}</span>
-                                            <Icon icon="fe:arrow-down" className="down-arrow ms-1" />
+                                            <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                         </DropdownToggle>
                                         <DropdownMenu className="py-0 shadow">
-                                            <DropdownItem header className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white">
-                                                <Input type="text" className="p-2" onChange={(e) => findTimeZone(e)}
-                                                    placeholder="Search Timezone" />
-                                            </DropdownItem>
+                                            <DropdownItem header
+                                                          className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input
+                                                type="text" className="p-2" onChange={(e) => findTimeZone(e)}
+                                                placeholder="Search Timezone"/></DropdownItem>
                                             {timezone?.filter(item => {
                                                 return item.toLowerCase().indexOf(searchTimeZone.toLowerCase()) !== -1;
                                             }).map((item, index) => {
                                                 return <DropdownItem name="timezone" className="px-2 fw-normal"
-                                                    key={index} value={item}
-                                                    onClick={(e) => handleImageInput(e)}>{item}</DropdownItem>
+                                                                     key={index} value={item}
+                                                                     onClick={(e) => handleImageInput(e)}>{item}</DropdownItem>
                                             })}
                                         </DropdownMenu>
                                     </Dropdown>
@@ -587,7 +594,7 @@ const ObservationLocation = (props) => {
                                         <div className="border-end w-auto">
                                             <FormGroup className="form-group d-flex align-items-center">
                                                 <Label className="form-label text-uppercase mb-0 me-2"
-                                                    htmlFor="Date">Date</Label>
+                                                       htmlFor="Date">Date</Label>
                                                 <span
                                                     className="fw-bold text-truncate data-value">{(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}</span>
                                             </FormGroup>
@@ -595,7 +602,7 @@ const ObservationLocation = (props) => {
                                         <div className="w-auto">
                                             <FormGroup className="form-group d-flex align-items-center">
                                                 <Label className="form-label text-uppercase mb-0 me-2"
-                                                    htmlFor="Time">Time</Label>
+                                                       htmlFor="Time">Time</Label>
                                                 <span
                                                     className="fw-bold text-truncate data-value">{observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}</span>
                                             </FormGroup>
@@ -686,7 +693,7 @@ const ObservationLocation = (props) => {
                                     )
                                 })
                             }
-                            <div className="center-dot rounded-circle" />
+                            <div className="center-dot rounded-circle"/>
                             <div className="rotate-arrow-wrap">
                                 <div className="rotate-arrow-inner" style={{
                                     "--directionAngle": directionValue.filter((item) => item.name === getdirectionAngle(Number(observationArray.data[observationImages?.selected_image_index]['azimuth']))).map((dirData) => {
@@ -694,9 +701,9 @@ const ObservationLocation = (props) => {
                                     }) + 'deg'
                                 }}>
                                     <div className="rotate-arrow main"><img src={Images.compassArrow}
-                                        alt="Compass Arrow" /></div>
+                                                                            alt="Compass Arrow"/></div>
                                     <div className="rotate-arrow hidden"><img src={Images.compassArrow}
-                                        alt="Compass Arrow" /></div>
+                                                                              alt="Compass Arrow"/></div>
                                 </div>
                             </div>
                         </div>
@@ -720,9 +727,9 @@ const ObservationLocation = (props) => {
                 }
                 <FormGroup className="mt-5">
                     <Button className="gray-outline-btn me-2"
-                        onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
+                            onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
                     <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)}
-                        disabled={!disableNext}>Continue</Button>
+                            disabled={!disableNext}>Continue</Button>
                 </FormGroup>
             </Col>
         </>

@@ -1,9 +1,9 @@
 import useObservations from "../../hooks/useObservations";
-import { useEffect, useState } from "react";
-import { uploadImageDefaultState } from "../../helpers/observation";
+import {useEffect, useState} from "react";
+import {uploadImageDefaultState} from "../../helpers/observation";
 import PropTypes from "prop-types";
 import useAuth from "../../hooks/useAuth";
-import { cameraSettingFields } from "../../helpers/url";
+import {cameraSettingFields} from "../../helpers/url";
 import UploadImageUI from "../Shared/UploadImageUI";
 
 const ObservationUploadImg = (props) => {
