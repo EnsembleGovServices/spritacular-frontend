@@ -54,7 +54,7 @@ const TutorialList = () => {
                             <h2 className="mb-0" id="user_tut">User Tutorials</h2>
                             {auth?.user && admin &&
                                 <Link
-                                    to={'/' + routeUrls.dashboard + '/' + routeUrls.dashTutorial.list + '/' + routeUrls.dashBlog.create}
+                                    to={`${routeUrls.dashboard}/${routeUrls.dashTutorial.list}/${routeUrls.dashBlog.create}`}
                                     className="btn btn-primary px-4">Create Tutorial</Link>
                             }
                         </div>

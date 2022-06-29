@@ -61,7 +61,7 @@ const BlogList = () => {
                         <h2 className="mb-0">Spritacular Blog</h2>
                         {auth?.user && admin &&
                             <Link
-                                to={'/' + routeUrls.dashboard + '/' + routeUrls.dashBlog.list + '/' + routeUrls.dashBlog.create}
+                                to={`${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${routeUrls.dashBlog.create}`}
                                 className="btn btn-primary px-4">Create Article</Link>
                         }
                     </div>
