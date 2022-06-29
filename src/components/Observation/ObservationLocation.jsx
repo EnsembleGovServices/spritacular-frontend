@@ -333,7 +333,7 @@ const ObservationLocation = (props) => {
                         {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 &&
                             <Col xxl={5} className="order-1 order-xxl-2 mb-2 mb-xxl-0">
                                 <FormGroup>
-                                    <Label check className="mb-0 justify-content-end">
+                                    <Label check className="mb-0 d-flex align-items-center justify-content-end">
                                         <Input
                                             type="checkbox"
                                             name="Same as the first image"
@@ -478,7 +478,7 @@ const ObservationLocation = (props) => {
                     {observationImages?.selected_image_index !== 0 && observationData?.image_type === 2 &&
                         <Col xxl={5} className="order-1 order-xxl-2 mb-2 mb-xxl-0">
                             <FormGroup>
-                                <Label check className="mb-0 justify-content-end">
+                                <Label check className="mb-0 d-flex align-items-center justify-content-end">
                                     <Input
                                         type="checkbox"
                                         name="Same as the first image"
