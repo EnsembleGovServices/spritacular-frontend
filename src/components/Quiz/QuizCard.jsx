@@ -10,7 +10,7 @@ const QuizCard = (props) => {
         handleNextPrev,
         activeQuestion,
         handleTleCheck,
-        handleQuizSubmit,
+        handleSubmit,
         disable,
         loading,
         answers,
@@ -59,13 +59,13 @@ const QuizCard = (props) => {
                                 <div className="d-flex align-items-center justify-content-between">
                                     <button type="button" value="prev"
                                             disabled={disable?.prevBtn}
-                                            onClick={(e) => handleNextPrev(e.target.value)}
+                                            onClick={(e) => handleNextPrev('prev')}
                                             className="btn px-5 btn-outline-dark">Prev
                                     </button>
 
                                     {quizControl?.activeIndex === (quizControl.total - 1) ? (
-                                        <button type="submit"
-                                                onClick={handleQuizSubmit}
+                                        <button type="button"
+                                                onClick={handleSubmit}
                                                 disabled={disable?.nextBtn}
                                                 className="btn px-5 btn-primary">Submit
                                         </button>
@@ -73,7 +73,7 @@ const QuizCard = (props) => {
                                         <button type="button"
                                                 value="next"
                                                 disabled={disable?.nextBtn}
-                                                onClick={(e) => handleNextPrev(e.target.value)}
+                                                onClick={(e) => handleNextPrev('next')}
                                                 className="btn px-5 btn-primary">Next
                                         </button>
                                     )}
