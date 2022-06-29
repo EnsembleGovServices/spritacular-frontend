@@ -1,21 +1,23 @@
 import axios from 'axios';
-const API_URL = process.env.REACT_APP_API_URL;
 
-// A new instance of axios with a custom config.
+const API_URL = process.env.REACT_APP_API_URL;
+const instance = axios.create({
+    baseURL: API_URL
+});
+
 const axiosPrivate = axios.create({
     baseURL: API_URL,
-    headers: {
-        'Content-Type': 'application/json',
-        // 'Authorization': `Bearer ${auth?.token?.access}`
-    },
+    headers: {'Content-Type': 'application/json'},
     withCredentials: true
 });
 
-axiosPrivate.interceptors.request.use((config) => {
+axiosPrivate.interceptors.request.use(function (config) {
     // Do something before request is sent
-    const token = localStorage.getItem('token');
-    config.headers.Authorization = token ? `Bearer ${token}` : null;
+    // config.headers.Authorization = `Bearer ${auth?.token?.access}`;
     return config;
-}, (error) => Promise.reject(error)); // Do something with request error
+}, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+});
 
 export default axiosPrivate;
