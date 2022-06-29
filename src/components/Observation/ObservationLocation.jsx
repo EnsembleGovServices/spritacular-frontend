@@ -55,7 +55,7 @@ const ObservationLocation = (props) => {
         lng: null
     });
     const [isLoaded, setIsLoaded] = useState(false);
-    const { observationImages, setObservationImages, observationData } = useObservations();
+    const {observationImages, setObservationImages, observationData} = useObservations();
     const [isActiveDire, setActiveDire] = useState(null);
     const [angleDegree, setAngleDegree] = useState(false);
     const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
@@ -81,7 +81,7 @@ const ObservationLocation = (props) => {
     // to store observation address data.
     const handleValue = (flag, value) => {
         if (!flag) {
-            let address = { ...address1 };
+            let address = {...address1};
             address.country_code = value[0];
             address.short_address = value[1];
             setInitialAddress({
@@ -92,7 +92,7 @@ const ObservationLocation = (props) => {
             })
             setAddress(address);
             if (observationImages?.data) {
-                let observationAddress = { ...observationImages };
+                let observationAddress = {...observationImages};
                 if (observationAddress?.data) {
                     observationAddress.data[observationAddress.selected_image_index]['location'] = value[1];
                     observationAddress.data[observationAddress.selected_image_index]['country_code'] = value[0];
@@ -115,7 +115,7 @@ const ObservationLocation = (props) => {
         } else {
             setAddress(value);
             if (observationImages?.data) {
-                let observationAddress = { ...observationImages };
+                let observationAddress = {...observationImages};
                 if (observationAddress?.data) {
                     observationAddress.data[observationAddress.selected_image_index]['latitude'] = value.markerPosition.lat;
                     observationAddress.data[observationAddress.selected_image_index]['longitude'] = value.markerPosition.lng;
@@ -144,13 +144,13 @@ const ObservationLocation = (props) => {
             }
         }
     }
-    const observationArray = { ...observationImages };
+    const observationArray = {...observationImages};
 
     // Store latitue input value
     const handleChangeLat = (e) => {
         handleImageInput(e);
         let value = Number(e.target.value);
-        let addressState = { ...address1 };
+        let addressState = {...address1};
         addressState.mapPosition.lat = value;
         addressState.markerPosition.lat = value;
         setAddress(addressState);
@@ -162,7 +162,7 @@ const ObservationLocation = (props) => {
     const handleChangeLng = (e) => {
         handleImageInput(e);
         let value = Number(e.target.value);
-        let addressState = { ...address1 };
+        let addressState = {...address1};
         addressState.mapPosition.lng = value;
         addressState.markerPosition.lng = value;
         setAddress(addressState);
@@ -172,7 +172,7 @@ const ObservationLocation = (props) => {
 
     // To append location and country_code in context data.
     useEffect(() => {
-        let observationAddress = { ...observationImages };
+        let observationAddress = {...observationImages};
         if (observationAddress?.data) {
             observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.short_address;
             observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
@@ -195,7 +195,7 @@ const ObservationLocation = (props) => {
     }, [address1]);
 
     useEffect(() => {
-        let observationAddress = { ...observationImages };
+        let observationAddress = {...observationImages};
         if (observationAddress?.data) {
             if (observationData?.image_type === 3) {
                 if (observationAddress.data[1]) {
@@ -246,7 +246,6 @@ const ObservationLocation = (props) => {
 
             let observationMap = {...observationImages};
             if (keys.includes('location', 'latitude', 'longitude', 'country_code', 'place_uid')) {
-                setSameAsMap(e);
                 observationMap.data[observationImages?.selected_image_index].sameAsFirstMap = e;
             }
             if (keys.includes('obs_time', 'obs_date', 'timezone', 'place_uid')) {
