@@ -25,21 +25,20 @@ const NotificationComponent = (props) => {
 
     const notificationDropDownRef = useRef(null);
 
+    // To handle notification permission
     useEffect(() => {
         Notification.requestPermission().then(permission => {
             if (permission === "granted") {
-                // console.log('granted')
                 setTokenFound(true);
             } else {
                 setTokenFound(false);
-                // console.log('rejected')
             }
         }).catch(e => {
-            console.log(e)
+            process.env.NODE_ENV === "development" && console.log('Notification Permission Error:', e);
         });
     }, []);
 
-
+    // Notification token
     useEffect(() => {
         if (isTokenFound && auth?.user?.id) {
             getTokens(auth?.user?.id, auth?.token?.access, auth?.user).then(r => r);
@@ -47,18 +46,19 @@ const NotificationComponent = (props) => {
     }, [isTokenFound])
 
 
+    // Set notification before page get mounted
     useLayoutEffect(() => {
         return () => {
             onMessageListener().then(payload => {
-                // console.log('payload here', payload);
                 setShow(true);
                 setNotification(true);
                 setNotificationArray([...notificationArray, payload]);
                 setData([payload, ...data]);
-            }).catch(err => console.log('failed: ', err));
+            }).catch(err => process.env.NODE_ENV === "development" && console.log('Notification Failed: ', err));
         }
     }, [data, notificationArray, setNotificationArray, show])
 
+    // Store notifications id's in db
     const handleNotificationStatusUpdate = async (e, notificaitonIds) => {
         await axios.post(baseURL.api + '/notification/read_user_notification/', { 'notification_ids': notificaitonIds }, {
             headers: {
@@ -66,16 +66,16 @@ const NotificationComponent = (props) => {
                 'Authorization': `Bearer ${auth?.token?.access}`
             }
         }).then((response) => {
-            // console.log(response);
             setData([]);
             setTimeout(function () {
                 setNotificationArray([])
             }, 1000)
         }).catch((error) => {
-            console.log(error)
+            process.env.NODE_ENV === "development" && console.log('Update Notification Failed:',error);
         })
     }
 
+    // To clear notification list
     const handleMarkAsRead = (e) => {
         setNotification(false);
         const notificaitonIds = []

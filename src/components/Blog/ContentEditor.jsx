@@ -18,7 +18,6 @@ const ContentEditor = (props) => {
 
     const [fakeLoading, setFakeLoading] = useState(true);
 
-
     function uploadAdapter(loader) {
         setChangeData(false);
         return {
@@ -54,12 +53,14 @@ const ContentEditor = (props) => {
         };
     }
 
+    // CkEditor plugin
     function uploadPlugin(editor) {
         editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
             return uploadAdapter(loader);
         };
     }
 
+    // To set menu and tools for editor
     const editorConfig = {
         toolbar: {
             items: [
@@ -80,6 +81,7 @@ const ContentEditor = (props) => {
         extraPlugins: [uploadPlugin],
     }
 
+    // Set image data in state.
     useEffect(() => {
         if (setData) {
             setData((prev) => {
@@ -124,6 +126,7 @@ const ContentEditor = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mode]);
 
+    // Show/hide fake Loading on image select in editor
     useEffect(() => {
         setTimeout(function () {
             setFakeLoading(false);
@@ -143,7 +146,7 @@ const ContentEditor = (props) => {
                     config={editorConfig}
                     data={data ? data : ""}
                     then={response => {
-                        console.log(response);
+                        process.env.NODE_ENV === "development" && console.log('ContentEditor: ',response);
                     }}
                     onReady={editor => {
 

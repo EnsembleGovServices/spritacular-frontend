@@ -247,7 +247,6 @@ const AddObservation = () => {
                     }, 500);
                 })
                 .catch((error) => {
-                    console.log(error.response);
                     setIsLoading(false);
                     setError({
                         data: error?.response?.data,
@@ -282,7 +281,6 @@ const AddObservation = () => {
                     }, 500);
                 })
                 .catch((error) => {
-                    console.log(error.response);
                     setIsLoading(false);
                     setError({
                         data: error?.response?.data,
@@ -306,7 +304,7 @@ const AddObservation = () => {
                     setCameraDetails(response?.data);
                 })
                 .catch((error) => {
-                    console.log(error.response);
+                    process.env.NODE_ENV === "development" && console.log(error.response);
                 });
         } else {
             setCameraDetails(cameraSettingFields);
@@ -413,7 +411,7 @@ const AddObservation = () => {
                 setUpdateMode(true);
             })
             .catch((error) => {
-                console.log(error);
+                process.env.NODE_ENV === "development" && console.log(error);
             });
     };
 
@@ -437,7 +435,7 @@ const AddObservation = () => {
                         .catch((error) => console.log("blob error", error));
                     const file = new File([blob], fileName, { contentType });
                     const image = await toBase64(file).catch((error) =>
-                        console.log("base64 Error", error)
+                    process.env.NODE_ENV === "development" && console.log("base64 Error", error)
                     );
                     item.compressed_image = null;
                     setTimeout(function () {
@@ -449,7 +447,7 @@ const AddObservation = () => {
                     return file;
                 })
                 .catch((error) =>
-                    console.log(`Error converting the CDN image to file object at index [${index}] [${error}]`)
+                    process.env.NODE_ENV === "development" && (`Error converting the CDN image to file object at index [${index}] [${error}]`)
                 );
         });
     }, [draftData, setObservationImages]);

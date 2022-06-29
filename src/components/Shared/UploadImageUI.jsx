@@ -1,6 +1,6 @@
 import "../../assets/scss/component/initialUploadobservations.scss";
-import {FormGroup, Input, Label} from "reactstrap";
-import {Icon} from "@iconify/react/dist/iconify";
+import { FormGroup, Input, Label } from "reactstrap";
+import { Icon } from "@iconify/react/dist/iconify";
 
 const UploadImageUI = (props) => {
     const {
@@ -14,6 +14,7 @@ const UploadImageUI = (props) => {
         defaultUploadBox,
         blogUpload
     } = props;
+
     return (
         <div className="position-relative">
             <div
@@ -22,7 +23,7 @@ const UploadImageUI = (props) => {
                     <FormGroup>
                         <Label htmlFor="UploadFile">
                             <div className="upload-info">
-                                <Icon icon="bx:image-alt" color="#737e96" width="42" height="42"/>
+                                <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
                                 <p>{defaultUploadBox ? 'Upload your first observation' : 'Drag and drop images or click to upload'}</p>
                                 {maxLimit && <span className="text-black">Max. Image Size: 5MB</span>}
                                 {imageFormat &&
@@ -62,8 +63,8 @@ const UploadImageUI = (props) => {
             {defaultUploadBox &&
                 <div className={`${defaultUploadBox ? 'mark-center' : ''}`}>
                     <button onClick={(e) => handleObvAdd(e)}
-                            className={`btn btn-secondary`}>
-                        <Icon icon="heroicons-outline:upload" width="25" height="22"/>
+                        className={`btn btn-secondary`}>
+                        <Icon icon="heroicons-outline:upload" width="25" height="22" />
                         Upload Observation
                     </button>
                 </div>

@@ -64,7 +64,7 @@ const Header = (props) => {
         document.addEventListener("scroll", () => {
             let scroll = window.pageYOffset || document.documentElement.scrollTop,
                 navbarEl = document.querySelector(".custom-header");
-            scroll > 80 ? navbarEl.classList.add("bg-color-menu") : navbarEl.classList.remove("bg-color-menu")
+            scroll > 80 ? navbarEl?.classList?.add("bg-color-menu") : navbarEl?.classList?.remove("bg-color-menu")
         });
         setUser(auth?.user);
     }, [auth?.user]);
@@ -91,7 +91,7 @@ const Header = (props) => {
                     setNotificationArray(response.data.results.data);
                 })
                 .catch((error) => {
-                    console.log(error)
+                    process.env.NODE_ENV === "development" && console.log(error)
                 })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,13 +109,13 @@ const Header = (props) => {
     // Show navigation drawer for mobile devices
     const menuToggle = () => {
         let getBody = document.querySelector('body');
-        getBody.classList.toggle("menu-open");
+        getBody?.classList?.toggle("menu-open");
         setShowMenu(!showMenu);
     };
     // hide navigation drawer.
     const menuClose = () => {
         const getBody = document.querySelector('body');
-        getBody.classList.remove("menu-open");
+        getBody?.classList?.remove("menu-open");
         setShowMenu(false);
     };
 
@@ -137,8 +137,8 @@ const Header = (props) => {
     // To close drawer menu on url change.
     useEffect(() => {
         if (location) {
+            document.querySelector('body')?.classList?.remove("menu-open");
             setShowMenu(false);
-            document.querySelector('body').classList.remove("menu-open");
         }
     }, [location])
 

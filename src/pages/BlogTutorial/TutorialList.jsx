@@ -24,7 +24,6 @@ const TutorialList = () => {
                 "Content-Type": "application/json",
             },
         }).then(response => {
-            // console.log(response?.data)
             if (response?.data?.data?.length > 0) {
                 setHasData(true);
             } else {
@@ -34,7 +33,7 @@ const TutorialList = () => {
                 list: response?.data?.data
             })
         }).catch(error => {
-            console.log('error', error)
+            process.env.NODE_ENV === "development" && console.log('Tutorial List: ', error)
         })
     }
 

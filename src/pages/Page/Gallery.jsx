@@ -123,7 +123,7 @@ const Gallery = () => {
                         loading: false,
                     }
                 });
-                console.log(error.response);
+                process.env.NODE_ENV === "development" && console.log('ObsvType: ',error.response);
             });
     };
 

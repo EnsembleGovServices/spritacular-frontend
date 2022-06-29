@@ -20,7 +20,7 @@ const HomePage = () => {
                 setLoading(false);
             })
             .catch(error => {
-                console.log('Home Error:',error.message)
+                process.env.NODE_ENV === "development" && console.log('HomeData Error:',error.message)
             })
     }
     useEffect(() => {

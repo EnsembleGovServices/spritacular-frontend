@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 
 const ObservationUpdateUploadedImages = (item) => {
 
-    const {observationImages,setObservationImages} = useObservations();
-    const existingObvImageData = {...observationImages};
+    const { observationImages, setObservationImages } = useObservations();
+    const existingObvImageData = { ...observationImages };
 
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -16,14 +16,14 @@ const ObservationUpdateUploadedImages = (item) => {
 
     const handleUpdateImage = async (e) => {
         const fileList = e.target.files[0];
-        const image = await toBase64(fileList).catch(error => console.log(error));
-
-        existingObvImageData.data[observationImages?.selected_image_index]['item'] = fileList;
-        existingObvImageData.data[observationImages?.selected_image_index]['image'] = image;
-        existingObvImageData.data[observationImages?.selected_image_index]['name'] = fileList.name;
-        existingObvImageData.data[observationImages?.selected_image_index]['lastModified'] = fileList.lastModified;
-
-        setObservationImages(existingObvImageData);
+        if (fileList) {
+            const image = await toBase64(fileList).catch(error => process.env.NODE_ENV === "development" && console.log('Update Image Base64: ',error));
+            existingObvImageData.data[observationImages?.selected_image_index]['item'] = fileList;
+            existingObvImageData.data[observationImages?.selected_image_index]['image'] = image;
+            existingObvImageData.data[observationImages?.selected_image_index]['name'] = fileList.name;
+            existingObvImageData.data[observationImages?.selected_image_index]['lastModified'] = fileList.lastModified;
+            setObservationImages(existingObvImageData);
+        }
     }
 
     const markTabActive = (item) => {
@@ -31,11 +31,10 @@ const ObservationUpdateUploadedImages = (item) => {
             return {
                 ...prev,
                 selected_image_id: item?.item?.id,
-                selected_image_index:item?.index
+                selected_image_index: item?.index
             }
         });
     }
-
 
     return (
         <>
@@ -46,7 +45,7 @@ const ObservationUpdateUploadedImages = (item) => {
                     id="UploadFile1"
                     accept="image/jpg, image/jpeg, image/png"
                     onChange={(e) => handleUpdateImage(e)}
-                    onClick={()=> markTabActive(item)}
+                    onClick={() => markTabActive(item)}
                     className="position-absolute w-100 h-100 opacity-0 p-0"
                 />
                 <Icon icon="ion:sync-outline" />

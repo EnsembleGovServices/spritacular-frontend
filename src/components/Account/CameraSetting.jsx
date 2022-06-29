@@ -10,14 +10,17 @@ const CameraSetting = (props) => {
     const { cameraDetails, user, isDetailExist } = props;
     const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)
     const myRef = useRef(null);
+    
     //To scroll till ref element.
     const executeScroll = () => {
         scrollToRef(myRef);
     }
+
     const [updateSetting, setUpdateSetting] = useState(cameraSettingFields);
     const [updatedData, setUpdateData] = useState();
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
+   
     // To update camera settings
     const handleInput = (e) => {
         let name = e.target.name,
@@ -28,10 +31,12 @@ const CameraSetting = (props) => {
         })
     }
 
+    // To store updated camera setting in state.
     useEffect(() => {
         setUpdateSetting(cameraDetails)
     }, [cameraDetails])
 
+    // Reset camera details
     const resetToExistingCameraDetails = () => {
         setSuccess('');
         setError('');
@@ -47,10 +52,10 @@ const CameraSetting = (props) => {
                 status: 200
             });
         }
-
         executeScroll();
     }
 
+    // To update camera data to db.
     const handleCameraUpdate = async (e) => {
         e.preventDefault();
         setSuccess('');
@@ -107,6 +112,7 @@ const CameraSetting = (props) => {
         }
     }
 
+    // To append camera data into global context.
     useEffect(() => {
         setAuth((prev) => {
             return {

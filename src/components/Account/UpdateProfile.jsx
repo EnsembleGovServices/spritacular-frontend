@@ -69,7 +69,6 @@ const UpdateProfile = (props) => {
                 }
             });
         }).catch((error) => {
-            console.log(error.response);
             setError(error.response)
         })
     }

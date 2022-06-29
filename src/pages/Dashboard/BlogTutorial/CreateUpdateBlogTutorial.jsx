@@ -49,7 +49,7 @@ const CreateUpdateBlogTutorial = (props) => {
         }).then(response => {
             setCategory(response.data);
         }).catch(error => {
-            console.log('error', error)
+            process.env.NODE_ENV === "development" && console.log('Update TutBlog:', error)
         })
     };
 
@@ -118,8 +118,6 @@ const CreateUpdateBlogTutorial = (props) => {
                 }, 1000)
             }).catch(error => {
                 setLoading(false);
-                // console.log('error', error);
-                // setData('')
                 setError({
                     status: error.response.status,
                     message: error.response.data
@@ -151,8 +149,6 @@ const CreateUpdateBlogTutorial = (props) => {
                 }, 1000)
             }).catch(error => {
                 setLoading(false);
-                // console.log('error', error);
-                // setData('')
                 setError({
                     status: error.response.status,
                     message: error.response.data
@@ -191,14 +187,12 @@ const CreateUpdateBlogTutorial = (props) => {
     useEffect(() => {
         if (inputChange) {
             if (data && data?.article_type === "1") {
-                console.log('condition', data?.article_type)
                 navigate(`/dashboard/blog/${routeUrls.dashBlog.create}`, {replace: true})
             } else if (data && data?.article_type === "2") {
-                console.log('condition', data?.article_type)
                 navigate(`/dashboard/tutorial/${routeUrls.dashTutorial.create}`, {replace: true})
             }
         }
-// eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data?.article_type])
 
     const updateBlogTutorial = async () => {
@@ -209,9 +203,7 @@ const CreateUpdateBlogTutorial = (props) => {
                 Authorization: `Bearer ${auth?.token?.access}`,
             },
         }).then(response => {
-            // console.log(response);
             let data = response?.data?.data;
-            // console.log(response?.data?.data);
             setData((prev) => {
                 return {
                     ...prev,
@@ -219,7 +211,6 @@ const CreateUpdateBlogTutorial = (props) => {
                 }
             })
         }).catch(error => {
-            // console.log(error);
             if (error?.response?.statusCode !== 200) {
                 navigate('/404', {replace: true});
             }

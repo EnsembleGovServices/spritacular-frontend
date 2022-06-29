@@ -117,7 +117,7 @@ const MyObservations = () => {
 
         })
             .catch((error) => {
-                console.log(error.response);
+                process.env.NODE_ENV === "development" && console.log(error.response);
             });
     };
 

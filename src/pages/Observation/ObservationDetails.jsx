@@ -84,7 +84,7 @@ const ObservationDetails = (props) => {
                 setIsImageNull(response?.data?.data?.includes(null));
             })
             .catch((error) => {
-                console.log(error);
+                process.env.NODE_ENV === "development" && console.log('ObsvDetail:',error);
             });
     };
 
@@ -95,7 +95,6 @@ const ObservationDetails = (props) => {
 
     // Handle Full Screen
     const goFullScreenImage = (image) => {
-        // console.log(image);
         setFullImage(image);
         setFullScreen(true);
     }

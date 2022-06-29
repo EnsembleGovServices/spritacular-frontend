@@ -125,7 +125,7 @@ const Dashboard = () => {
                     setObservationListData({ list: [], active: {} });
                 }
             }).catch((error) => {
-                console.log("Dashboard Error: ", error.message);
+                process.env.NODE_ENV === "development" && console.log("Dashboard Error: ", error.message);
             });
         }
     };

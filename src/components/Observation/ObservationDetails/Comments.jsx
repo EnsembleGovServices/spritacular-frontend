@@ -34,7 +34,7 @@ const Comments = (props) => {
                 })
             })
             .catch((error) => {
-                console.log(error);
+                process.env.NODE_ENV === "development" && console.log('GetComment Error:',error);
             })
     };
 

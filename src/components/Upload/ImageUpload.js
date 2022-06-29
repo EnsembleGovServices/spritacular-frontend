@@ -15,55 +15,65 @@ const ImageUpload = (props) => {
   const [progress, setProgress] = useState("0");
   const [error, setError] = useState(null);
 
-  // To store file data on profile image upload.
+  // To store and validate file data on profile image upload.
   const handleChange = (e) => {
     // To remove all previous errors.
     setError('');
     isProfilePopup && setPopupError('');
     // To get file properties
-    const file = e.target.files[0];
-    setFile(file);
+    const file = e?.target?.files[0];
     setProgress('0');
 
-    // To get file size upto 2 decimals.
-    const fileSize = (file.size / (1024 * 1024)).toFixed(2);
-    // To verify file format is from listed(Array).
-    const imgType = ["image/png", "image/jpeg", "image/jpg"]
-    const isValidImage = imgType.includes(file.type);
+    if (file) {
+      setFile(file);
+      // To get file size upto 2 decimals.
+      const fileSize = (file.size / (1024 * 1024)).toFixed(2);
+      // To verify file format is from listed(Array).
+      const imgType = ["image/png", "image/jpeg", "image/jpg"]
+      const isValidImage = imgType.includes(file.type);
 
-    if (fileSize > 1) {
-      if (isProfilePopup) {
-        setPopupError((prev) => {
-          return {
-            ...prev,
-            size: 'File exceeds the maximum allowed size of (1MB)',
-          }
-        })
-      } else {
-        setError((prev) => {
-          return {
-            ...prev,
-            size: 'File exceeds the maximum allowed size of (1MB)',
-          }
-        });
+      if (fileSize > 1) {
+        if (isProfilePopup) {
+          setPopupError((prev) => {
+            return {
+              ...prev,
+              size: 'File exceeds the maximum allowed size of (1MB)',
+            }
+          })
+        } else {
+          setError((prev) => {
+            return {
+              ...prev,
+              size: 'File exceeds the maximum allowed size of (1MB)',
+            }
+          });
+        }
       }
-    }
-    if (!isValidImage) {
-      if (isProfilePopup) {
-        setPopupError((prev) => {
-          return {
-            ...prev,
-            invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.',
-          }
-        })
-      } else {
-        setError((prev) => {
-          return {
-            ...prev,
-            invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.',
-          }
-        })
+      if (!isValidImage) {
+        if (isProfilePopup) {
+          setPopupError((prev) => {
+            return {
+              ...prev,
+              invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.',
+            }
+          })
+        } else {
+          setError((prev) => {
+            return {
+              ...prev,
+              invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.',
+            }
+          })
+        }
       }
+    } else {
+      setError((prev) => {
+        return {
+          ...prev,
+          noFile: 'Select any image file',
+        }
+      });
+      process.env.NODE_ENV === "development" && console.log("Profile ImageUpload: No file selected");
     }
   };
 

@@ -14,18 +14,16 @@ const HomeCounter = (props) => {
 
     // For showing pre-loader initially.
     useLayoutEffect(() => {
-        return () => {
-            if (loading) {
-                setTimeout(function () {
-                    setInternalLoading(false);
-                }, 500)
-            }
+        if (loading) {
+            setTimeout(function () {
+                setInternalLoading(false);
+            }, 1000)
         }
-    }, [loading])
+    }, [loading]);
 
     return (
         <Container>
-            {(userCount && observationCount && countriesCount) && (<Row>
+            {(!loading && userCount && observationCount && countriesCount) && (<Row>
                 <Col md={4} sm={6}>
                     <div className="counter-inner">
                         {internalLoading &&
