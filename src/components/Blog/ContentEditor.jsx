@@ -89,6 +89,14 @@ const ContentEditor = (props) => {
                 }
             })
         }
+        return () => {
+            setData((prev) => {
+                return {
+                    ...prev,
+                    image_ids: imageId
+                }
+            })
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [imageId, editorImage])
 

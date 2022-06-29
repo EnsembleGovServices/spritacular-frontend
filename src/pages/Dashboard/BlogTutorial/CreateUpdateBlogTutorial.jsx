@@ -248,8 +248,8 @@ const CreateUpdateBlogTutorial = (props) => {
                 {success &&
                     <div className="row">
                         <Col sm={12}>
-                            <UncontrolledAlert color="success">
-                                {success?.message}
+                            <UncontrolledAlert color="success" className="text-capitalize">
+                                {`${type} created successfully`}
                             </UncontrolledAlert>
                         </Col>
                     </div>
