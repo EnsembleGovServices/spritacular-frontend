@@ -19,8 +19,7 @@ import {
 } from "reactstrap";
 import {Icon} from "@iconify/react";
 import {Link, useLocation} from "react-router-dom";
-import Images from './../../static/images';
-import {baseURL, routeUrls} from "../../helpers/url";
+import {baseURL, cdn, routeUrls} from "../../helpers/url";
 import {useEffect, useState} from "react";
 
 const FilterSelectMenu = (props) => {
@@ -112,7 +111,7 @@ const FilterSelectMenu = (props) => {
                                 className={`filter-btn m-0 d-flex align-items-center h-100 form-group p-0 ${filterShow ? 'filter-open' : ''}`}>
                                 <Button onClick={() => handleFilterOpen()}
                                         className="border-0 rounded-0 bg-transparent text-black shadow-none text-start w-auto w-md-100 d-flex align-items-center">
-                                    <img src={Images.Filter} alt="Filter"/> {filterShow &&
+                                    <img src={`${cdn.url}/filter.png`} alt="Filter"/> {filterShow &&
                                     <span className="ms-0 ms-md-3">Advanced Filter</span>}
                                 </Button>
                             </FormGroup>}

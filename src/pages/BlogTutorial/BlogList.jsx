@@ -42,7 +42,7 @@ const BlogList = () => {
             });
 
         }).catch(error => {
-            process.env.NODE_ENV === "development" && console.log('BlogList: ', error)
+            process.env.NODE_ENV === "development" && console.log('getArticle BlogListPage: ', error)
         })
     }
 

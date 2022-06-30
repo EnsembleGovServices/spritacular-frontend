@@ -26,7 +26,7 @@ const BlogPage = () => {
             setArticles(response?.data?.data);
             setLoader(false);
         }).catch(error => {
-            process.env.NODE_ENV === "development" && console.log('getArticle: ', error)
+            process.env.NODE_ENV === "development" && console.log('getArticle BlogPage: ', error)
         })
     }
 

@@ -53,7 +53,7 @@ const UploadFeaturedImage = (props) => {
                     noFile: 'Select any image file',
                 }
             });
-            console.log("FeaturedImage: No file selected");
+            process.env.NODE_ENV === "development" && console.log("FeaturedImage: No file selected");
         }
     }
 

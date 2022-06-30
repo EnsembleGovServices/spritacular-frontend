@@ -49,7 +49,7 @@ const CreateUpdateBlogTutorial = (props) => {
         }).then(response => {
             setCategory(response.data);
         }).catch(error => {
-            process.env.NODE_ENV === "development" && console.log('Update TutBlog:', error)
+            process.env.NODE_ENV === "development" && console.log('Update TutorialBlog:', error)
         })
     };
 

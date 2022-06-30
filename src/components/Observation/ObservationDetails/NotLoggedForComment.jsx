@@ -1,9 +1,8 @@
 import '../../../assets/scss/component/not-logged-for-comment.scss';
-import Images from "../../../static/images";
 import React, {useState} from "react";
-
 import LoginPopup from "../../Popup/LoginPopup";
 import RegisterPopup from "../../Popup/RegisterPopup";
+import { cdn } from '../../../helpers/url';
 
 const NotLoggedForComment = () => {
     const [isLoginModal, setIsLoginModal] = useState(false);
@@ -20,7 +19,7 @@ const NotLoggedForComment = () => {
         <>
             <div className="not-logged-for-comment">
                 <div className="nlfc-content">
-                    <img className="img-fluid" src={Images.notLoggedIn} alt="noComments"/>
+                    <img className="img-fluid" src={`${cdn.url}/non-logged.svg`} alt="noComments"/>
                     <h6 className="title">You need to be logged in for commenting on this observation</h6>
                     <div className="mt-4 btn-wrap">
                         <button onClick={() => handleLoginModal()} type="button"

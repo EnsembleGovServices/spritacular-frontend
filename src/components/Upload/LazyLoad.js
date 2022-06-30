@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import {placeholder} from "./placeholder";
 
 const LazyLoad = (props) => {
     const {src, alt, imageClass, converted} = props;
@@ -58,6 +57,8 @@ const LazyLoad = (props) => {
                 alt={alt}
                 onLoad={onLoad}
                 onError={onError}
+                width="32"
+                height="32"
             />
         </>
     )

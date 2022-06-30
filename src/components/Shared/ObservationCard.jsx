@@ -120,11 +120,11 @@ const ObservationCard = (props) => {
                                        content={userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}>
                                     <h6 className="pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</h6>
                                 </Tippy>
-                                <i className="profile-icon rounded-circle">
+                                {/* <i className="profile-icon rounded-circle"> */}
                                     <img
                                         src={userProfile?.profile_image ? userProfile?.profile_image : `${cdn.url}/profile.svg`}
-                                        width="100%" height="100%" alt="Profile" className="rounded-circle"/>
-                                </i>
+                                        width="32" height="32" alt="Profile" className="rounded-circle"/>
+                                {/* </i> */}
                             </div>
                         </Col>
                     </Row>

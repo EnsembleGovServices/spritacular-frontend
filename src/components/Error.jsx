@@ -1,15 +1,14 @@
 import {Button, Card, CardBody, Col, Container, Row} from "reactstrap";
 import '../assets/scss/component/error.scss';
 import {Link, NavLink, useNavigate} from "react-router-dom";
-import Images from "../static/images";
-import { routeUrls } from './../helpers/url';
+import { cdn, routeUrls } from './../helpers/url';
 
 const Error = () => {
   const navigate = useNavigate();
 
   return(
       <section className="error">
-        <i className="d-inline-block  error-bg"><img src={Images.ErrorBG} alt="Eroor bg" /></i>
+        <i className="d-inline-block  error-bg"><img src={`${cdn.url}/error_bg.svg`} alt="Error bg" width="1482" height="880" /></i>
         <Container>
           <Row className="align-items-center">
             <Col xs={{size: 12, order: 2}} md={{size: 6, order: 1}}>
@@ -28,7 +27,7 @@ const Error = () => {
             </Col>
             <Col xs={{size: 12, order: 1}} md={{size: 6, order: 2}} className="text-center text-md-end mb-3 mb-md-0">
               <Link to={routeUrls.home}>
-                <img className="error-img" src={Images.PageNotFound} alt="Page not found" width={'100%'}/>
+                <img className="error-img" src={`${cdn.url}/404-error.svg`} alt="Page not found" width="1132" height="800"/>
               </Link>
             </Col>
           </Row>

@@ -8,7 +8,6 @@ import {
   Row,
 } from "reactstrap";
 import "../assets/scss/component/tutorialdetail.scss";
-import Images from "../static/images";
 import { routeUrls } from './../helpers/url';
 
 const TutorialsDetail = () => {
@@ -34,7 +33,7 @@ const TutorialsDetail = () => {
           <Row>
             <Col md={12}>
               <div>
-                <img src={Images.TutorialDetail} alt="TutorialDetail" />
+                <img src={`${cdn.url}/Tutorial-Detail.png`} alt="TutorialDetail" />
               </div>
 
               <p className="mt-4">

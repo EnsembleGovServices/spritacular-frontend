@@ -1,18 +1,16 @@
-import {Col, FormGroup, PopoverBody, PopoverHeader, Collapse, Button, Row} from "reactstrap";
-import {useEffect, useRef, useState} from "react";
+import { Col, FormGroup, PopoverBody, PopoverHeader, Collapse, Button, Row } from "reactstrap";
+import { useEffect, useRef, useState } from "react";
 import useObservations from "../../hooks/useObservations";
-import {Icon} from "@iconify/react";
-// import axios from "../../api/axios";
-// import {baseURL} from "../../helpers/url";
+import { Icon } from "@iconify/react";
 import useAuth from "../../hooks/useAuth";
-import Images from "../../static/images";
-import {Swiper, SwiperSlide} from "swiper/react";
-import {Navigation} from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper";
 import Tippy from "@tippyjs/react";
+import { cdn } from "../../helpers/url";
 
 const ObservationCategory = (props) => {
-    const {error, obvType} = props;
-    const {auth} = useAuth();
+    const { error, obvType } = props;
+    const { auth } = useAuth();
     const {
         observationImages,
         setObservationImages,
@@ -24,14 +22,14 @@ const ObservationCategory = (props) => {
     const [oldCategory, setOldCategory] = useState([]);
     const [isChecked, setIsChecked] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('' || []);
-    const ObservationData = {...observationImages};
+    const ObservationData = { ...observationImages };
     const errorData = error ? Object.values(error?.data) : {};
     const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
     const tippyRef = useRef();
 
     const onCategoryChange = (e) => {
         const value = parseFloat(e.target.id);
-        setIsChecked({...isChecked, [e.target.name]: e.target.checked});
+        setIsChecked({ ...isChecked, [e.target.name]: e.target.checked });
         if (selectedCategory.includes(value)) {
             const filterValue = selectedCategory.filter((item) => item !== value)
             setSelectedCategory(filterValue);
@@ -59,17 +57,17 @@ const ObservationCategory = (props) => {
         });
     }
     const ImageCarousel = (props) => {
-        const {className} = props;
+        const { className } = props;
         const items = [
-            {src: Images.card1},
-            {src: Images.card2},
-            {src: Images.card3}
+            { src: `${cdn.url}/card1.jpeg` },
+            { src: `${cdn.url}/card2.jpeg` },
+            { src: `${cdn.url}/card3.jpeg` }
         ]
 
         const carouselContent = items.map((item, index) => {
             return (
                 <SwiperSlide key={index}>
-                    <img src={item.src} alt="carousel"/>
+                    <img src={item.src} alt="carousel" />
                 </SwiperSlide>
             );
         });
@@ -89,17 +87,17 @@ const ObservationCategory = (props) => {
                     {/*<button className="bg-transparent p-0 border-0 text-black shadow-none"><Icon icon="codicon:chrome-close" width="15" height="15" /></button>*/}
                 </PopoverHeader>
                 <PopoverBody className={'bg-white'}>
-                    <p style={{'--line-clamb': isPopoverContentOpen === true ? 'unset' : '2'}}>
+                    <p style={{ '--line-clamb': isPopoverContentOpen === true ? 'unset' : '2' }}>
                         Sprites or red sprites are large-scale electric discharges that occur high above thunderstorm
                         clouds, they appear as luminous reddish-orange flashes.
                     </p>
                     <Collapse
                         isOpen={isPopoverContentOpen}
                     >
-                        <ImageCarousel className="popover-carousel"/>
+                        <ImageCarousel className="popover-carousel" />
                     </Collapse>
                     <Button className="bg-transparent p-0 border-0 text-secondary shadow-none d-block"
-                            onClick={() => setIsPopoverContentOpen(!isPopoverContentOpen)}>
+                        onClick={() => setIsPopoverContentOpen(!isPopoverContentOpen)}>
                         {isPopoverContentOpen === true ? 'Show less' : 'Show more'}
                     </Button>
                 </PopoverBody>
@@ -126,12 +124,12 @@ const ObservationCategory = (props) => {
                                             onChange={(e) => onCategoryChange(e)}
                                         />
                                         <label htmlFor={imagItem.id}>
-                                            <img src={`${imagItem.image}`} alt={imagItem.name}/>
+                                            <img src={`${imagItem.image}`} alt={imagItem.name} />
                                             {imagItem.name}
                                             <div className="ms-2 text-dark ">
 
                                                 <Tippy
-                                                    content={<PopoverContent/>}
+                                                    content={<PopoverContent />}
                                                     interactive={true}
                                                     appendTo={document.body}
                                                     animation="perspective"
@@ -139,7 +137,7 @@ const ObservationCategory = (props) => {
                                                     reference={tippyRef}
                                                 >
                                                     <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2"
-                                                                               width="15" height="15"/></span>
+                                                        width="15" height="15" /></span>
                                                 </Tippy>
                                             </div>
 

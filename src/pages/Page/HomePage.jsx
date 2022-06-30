@@ -23,6 +23,8 @@ const HomePage = () => {
                 process.env.NODE_ENV === "development" && console.log('HomeData Error:',error.message)
             })
     }
+
+    // For getHomeData func call after mount
     useEffect(() => {
         getHomeData().then(r => r)
     }, [])

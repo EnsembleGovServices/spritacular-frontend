@@ -4,10 +4,10 @@ import {
   ModalBody,
   ModalHeader,
 } from "reactstrap";
-import Images from "../../static/images";
 import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
 import { Suspense, lazy } from 'react';
+import { cdn } from "../../helpers/url";
 
 const ChangePassword = lazy(()=> import('../Account/ChangePassword'))
 
@@ -26,7 +26,7 @@ const ChangePasswordPopup = (props) => {
       <ModalHeader className="text-center justify-content-center">
         Change Password
         <Button className="close-icon" onClick={() => handleClose()}>
-          <img src={Images.Modalcloseicon} alt="close-icon" />
+          <img src={`${cdn.url}/close-icon.svg`} alt="close-icon" />
         </Button>
       </ModalHeader>
       <ModalBody>

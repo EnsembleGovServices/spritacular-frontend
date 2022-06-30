@@ -304,7 +304,7 @@ const AddObservation = () => {
                     setCameraDetails(response?.data);
                 })
                 .catch((error) => {
-                    process.env.NODE_ENV === "development" && console.log(error.response);
+                    process.env.NODE_ENV === "development" && console.log('Get CameraDetail:',error.response);
                 });
         } else {
             setCameraDetails(cameraSettingFields);
@@ -407,11 +407,13 @@ const AddObservation = () => {
                     story: data.story,
                     map_data: data.images,
                 });
+
+                console.log('camera data', data?.camera_data);
                 setCameraDetails(data?.camera_data);
                 setUpdateMode(true);
             })
             .catch((error) => {
-                process.env.NODE_ENV === "development" && console.log(error);
+                process.env.NODE_ENV === "development" && console.log('Update Obsv Data:',error);
             });
     };
 

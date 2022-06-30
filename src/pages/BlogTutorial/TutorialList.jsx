@@ -39,7 +39,7 @@ const TutorialList = () => {
 
     useEffect(() => {
         document.getElementById("user_tut")?.scroll({top: 0, behavior: "smooth"});
-        getTutorials().then(r => r)
+        getTutorials().then(r => r);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

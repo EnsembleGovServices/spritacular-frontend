@@ -12,12 +12,10 @@ import {
   Alert
 } from "reactstrap";
 import {useState} from "react";
-
-import Images from "../../static/images";
 import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
 import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
+import {baseURL, cdn} from "../../helpers/url";
 
 const ForgotPasswordPopup = (props) => {
   const { open, handleClose, modalClass } = props;
@@ -57,7 +55,7 @@ const ForgotPasswordPopup = (props) => {
         <ModalHeader>
           Forgot Your Password
           <Button className="close-icon" onClick={() => handleClose()}>
-            <img src={Images.Modalcloseicon} alt="close-icon" />
+            <img src={`${cdn.url}/close-icon.svg`} alt="close-icon" />
           </Button>
           <p>
             Please enter the email address you'd like your password reset

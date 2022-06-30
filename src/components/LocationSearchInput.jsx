@@ -60,6 +60,7 @@ class LocationSearchInput extends React.Component {
               })}
               value={this.state.address ?? ''}
               invalid ={this.props.error?.data?.location}
+              required
             />
             <FormFeedback>{this.props.error?.data?.location}</FormFeedback>
             <div className="autocomplete-dropdown-container">

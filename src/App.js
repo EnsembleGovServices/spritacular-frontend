@@ -68,14 +68,6 @@ const App = () => {
         user: auth?.user?.is_user,
     }
 
-        // (function() {
-        //     if (auth) {
-        //         // axios.defaults.headers.common['Authorization'] = auth?.token?.access;
-        //     } else {
-        //         // axios.defaults.headers.common['Authorization'] = null;
-        //     }
-        // })();
-
     return (
         <>
             <Routes>

@@ -1,10 +1,10 @@
 import "../../assets/scss/component/observationCard.scss";
-import {Container, Row, Col} from "reactstrap";
-import {Link} from "react-router-dom";
-import {cdn, routeUrls} from "../../helpers/url";
+import { Container, Row, Col } from "reactstrap";
+import { Link } from "react-router-dom";
+import { cdn, routeUrls } from "../../helpers/url";
 import BlurImage from "../Common/BlurImage";
 import Skeleton from "react-loading-skeleton";
-import {useState} from "react";
+import { useState } from "react";
 
 const HomeHowItWorks = () => {
     const [loaderLoading, setLoaderLoading] = useState(true);
@@ -17,10 +17,10 @@ const HomeHowItWorks = () => {
         <>
             <div className="how-it-works-section">
                 <div className="top-polygone">
-                    <img src={`${cdn.url}/how-it-works-page.png`} alt="how it works"/>
+                    <img src={`${cdn.url}/how-it-works-page.png`} alt="how it works" />
                 </div>
                 <div className="bottom-polygone">
-                    <img src={`${cdn.url}/bottom-polygon.png`} alt="bottom-polygon"/>
+                    <img src={`${cdn.url}/bottom-polygon.png`} alt="bottom-polygon" />
                 </div>
                 <Container>
                     <h2>Get Started</h2>
@@ -34,7 +34,7 @@ const HomeHowItWorks = () => {
                                                 <span>1</span>
                                                 {loaderLoading &&
                                                     <div className="t-loader">
-                                                        <Skeleton circle width={55} height={55}/>
+                                                        <Skeleton circle width={55} height={55} />
                                                     </div>
                                                 }
                                             </div>
@@ -42,7 +42,7 @@ const HomeHowItWorks = () => {
                                                 <h3 className="d-block">Register</h3>
                                                 {loaderLoading &&
                                                     <div className="t-loader">
-                                                        <Skeleton/>
+                                                        <Skeleton />
                                                     </div>
                                                 }
                                             </div>
@@ -53,25 +53,24 @@ const HomeHowItWorks = () => {
                                     <p>Create an account to become a Spritacular Citizen Scientist.</p>
                                     {loaderLoading &&
                                         <div className="t-loader mt-3">
-                                            <Skeleton/>
+                                            <Skeleton />
                                         </div>
                                     }
                                 </div>
                                 <div className="register-polygon">
-                                    <img src={`${cdn.url}/register-polygon.png`} alt=""/>
+                                    <img src={`${cdn.url}/register-polygon.png`} alt="" />
                                 </div>
                             </div>
                         </Col>
                         <Col sm={6} xs={12} className="works-gap position-relative">
                             <BlurImage image={`${cdn.url}/Register.png`} preview={`${cdn.url}/Register.png`}
-                                       loaderLoading={handleLoaderLoading} alt="Register/SignUp demo"/>
+                                loaderLoading={handleLoaderLoading} alt="Register/SignUp demo" />
                         </Col>
                     </Row>
                     <Row>
                         <Col sm={6} xs={12} className="works-gap order-2 order-md-1 position-relative  ">
-                            <BlurImage className="w-100" image={`${cdn.url}/Howitworks_second.png`}
-                                       preview={`${cdn.url}/Howitworks_second.png`} loaderLoading={handleLoaderLoading}
-                                       alt="How it works under Register"/>
+                            <BlurImage image={`${cdn.url}/Howitworks_second.png`} preview={`${cdn.url}/Howitworks_second.png`}
+                                loaderLoading={handleLoaderLoading} alt="How it works under Register" />
                         </Col>
                         <Col sm={6} xs={12} className="works-gap order-1 order-md-2 position-relative">
                             <div className="how-it-work-text-info">
@@ -82,7 +81,7 @@ const HomeHowItWorks = () => {
                                                 <span>2</span>
                                                 {loaderLoading &&
                                                     <div className="t-loader">
-                                                        <Skeleton circle width={55} height={55}/>
+                                                        <Skeleton circle width={55} height={55} />
                                                     </div>
                                                 }
                                             </div>
@@ -90,7 +89,7 @@ const HomeHowItWorks = () => {
                                                 <h3 className="d-block">Learn & Observe</h3>
                                                 {loaderLoading &&
                                                     <div className="t-loader">
-                                                        <Skeleton/>
+                                                        <Skeleton />
                                                     </div>
                                                 }
                                             </div>
@@ -105,7 +104,7 @@ const HomeHowItWorks = () => {
                                     </p>
                                     {loaderLoading &&
                                         <div className="t-loader mt-3">
-                                            <Skeleton/>
+                                            <Skeleton />
                                         </div>
                                     }
                                 </div>
@@ -113,7 +112,7 @@ const HomeHowItWorks = () => {
                                 <Link to={`/${routeUrls.tutorials}`} className="view-tutorial">View Tutorial</Link>
                                 <div className="observe-polygon">
                                     <img src={`${cdn.url}/Learn-observe-polygon.png`} alt="Learn-observe-polygon"
-                                         className="w-100"/>
+                                        className="w-100" />
                                 </div>
                             </div>
                         </Col>
@@ -128,7 +127,7 @@ const HomeHowItWorks = () => {
                                                 <span>3</span>
                                                 {loaderLoading &&
                                                     <div className="t-loader">
-                                                        <Skeleton circle width={55} height={55}/>
+                                                        <Skeleton circle width={55} height={55} />
                                                     </div>
                                                 }
                                             </div>
@@ -136,7 +135,7 @@ const HomeHowItWorks = () => {
                                                 <h3 className="d-block">Share</h3>
                                                 {loaderLoading &&
                                                     <div className="t-loader">
-                                                        <Skeleton/>
+                                                        <Skeleton />
                                                     </div>
                                                 }
                                             </div>
@@ -152,19 +151,19 @@ const HomeHowItWorks = () => {
                                     </p>
                                     {loaderLoading &&
                                         <div className="t-loader mt-3">
-                                            <Skeleton/>
+                                            <Skeleton />
                                         </div>
                                     }
                                 </div>
                                 <div className="share-polygon">
-                                    <img src={`${cdn.url}/share-polygon.png`} alt="share-polygon"/>
+                                    <img src={`${cdn.url}/share-polygon.png`} alt="share-polygon" />
                                 </div>
                             </div>
                         </Col>
                         <Col sm={6} xs={12} className="works-gap position-relative">
                             <div className="shadow-lg shadow-sm p-3 bg-white rounded">
                                 <BlurImage image={`${cdn.url}/drag-drop.jpg`} preview={`${cdn.url}/drag-drop.jpg`}
-                                           loaderLoading={handleLoaderLoading} alt="Share"/>
+                                    loaderLoading={handleLoaderLoading} alt="Share" />
                             </div>
                         </Col>
                     </Row>
@@ -172,8 +171,8 @@ const HomeHowItWorks = () => {
                         <Col sm={6} xs={12} className="works-gap order-2 order-md-1 position-relative">
                             <div className="shadow-lg shadow-sm p-3 bg-white rounded">
                                 <BlurImage image={`${cdn.url}/jet.jpg`} preview={`${cdn.url}/jet.jpg`}
-                                           loaderLoading={handleLoaderLoading}
-                                           alt="Jet"/>
+                                    loaderLoading={handleLoaderLoading}
+                                    alt="Jet" />
                             </div>
                         </Col>
                         <Col sm={6} xs={12} className="works-gap order-1 order-md-2 position-relative">
@@ -185,7 +184,7 @@ const HomeHowItWorks = () => {
                                                 <span>4</span>
                                                 {loaderLoading &&
                                                     <div className="t-loader">
-                                                        <Skeleton circle width={55} height={55}/>
+                                                        <Skeleton circle width={55} height={55} />
                                                     </div>
                                                 }
                                             </div>
@@ -193,7 +192,7 @@ const HomeHowItWorks = () => {
                                                 <h3 className="d-block">Engage</h3>
                                                 {loaderLoading &&
                                                     <div className="t-loader">
-                                                        <Skeleton/>
+                                                        <Skeleton />
                                                     </div>
                                                 }
                                             </div>
@@ -207,12 +206,12 @@ const HomeHowItWorks = () => {
                                     </p>
                                     {loaderLoading &&
                                         <div className="t-loader mt-3">
-                                            <Skeleton/>
+                                            <Skeleton />
                                         </div>
                                     }
                                 </div>
                                 <div className="engage-polygon">
-                                    <img src={`${cdn.url}/engage-polygon.png`} alt="Share"/>
+                                    <img src={`${cdn.url}/engage-polygon.png`} alt="Share" />
                                 </div>
                             </div>
                         </Col>

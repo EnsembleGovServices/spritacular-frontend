@@ -1,4 +1,4 @@
-import {Button, Col, Container, Row} from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import "../../assets/scss/component/about.scss";
 
 const About = () => {
@@ -35,9 +35,9 @@ const About = () => {
                                         Spritacular is a community science project that aims to collect observations of
                                         sprites and other optical
                                         phenomena occurring above the thunderstorms - collectively known as <a
-                                        target="_blank" referrerPolicy="no-referrer"
-                                        href="https://www.nasa.gov/mission_pages/station/research/Once_Upon_a_Time_in_a_Thunderstorm">Transient
-                                        Luminous Events</a> (TLEs).
+                                            target="_blank" referrerPolicy="no-referrer" rel="noreferrer"
+                                            href="https://www.nasa.gov/mission_pages/station/research/Once_Upon_a_Time_in_a_Thunderstorm">Transient
+                                            Luminous Events</a> (TLEs).
                                         The database generated from these observations will lay the groundwork for
                                         first-ever event catalog of
                                         TLEs that will greatly contribute to advancement of scientific studies.

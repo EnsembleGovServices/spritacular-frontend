@@ -9,13 +9,11 @@ import BlurImage from "../../components/Common/BlurImage";
 import QuizCard from "../../components/Quiz/QuizCard";
 
 const QuizHome = (props) => {
-    const {roles} = props;
     const {auth} = useAuth();
     const [questions, setQuestions] = useState([]);
     const [options, setOptions] = useState([]);
     const [activeQuestion, setActiveQuestion] = useState({});
     const [quizControl, setQuizControl] = useState({active: 1, activeIndex: 0});
-    const [buttonType, setButtonType] = useState();
     const [singleAnswer, setSingleAnswer] = useState({que: null, ans: []});
     const [answers, setAnswers] = useState([]);
     const [result, setResult] = useState({
@@ -31,6 +29,7 @@ const QuizHome = (props) => {
     const [fullImage, setFullImage] = useState("");
     const score = result?.success?.score;
 
+    // Fetch quiz questions from db
     const getQuizQuestions = async () => {
         return axios.get(baseURL.quiz_question, {
             headers: {
@@ -45,13 +44,12 @@ const QuizHome = (props) => {
         })
     }
 
-
     const goNext = (quizControl.active < quizControl?.total ? quizControl.active + 1 : quizControl.active);
     const goPrev = (quizControl.active > 1 ? quizControl.active - 1 : quizControl.active);
 
+    // For prev/next button
     const handleNextPrev = (value) => {
         window.scrollTo(0, 0);
-        setButtonType(value);
         setQuizControl((prev) => {
             return {
                 ...prev,
@@ -59,7 +57,8 @@ const QuizHome = (props) => {
             }
         });
     };
-
+    
+    // For ans checkbox 
     const handleTleCheck = (id) => {
 
         if (singleAnswer?.ans.includes(id)) {
@@ -121,12 +120,12 @@ const QuizHome = (props) => {
         setFullImage(image);
         setFullScreen(true);
     }
-
     const closeFullScreen = () => {
         setFullScreen(false);
         setFullImage("");
     }
 
+    // For prev/next question
     useEffect(() => {
         setQuizControl((prev) => {
             return {
@@ -136,10 +135,13 @@ const QuizHome = (props) => {
         })
     }, [quizControl?.active])
 
+    // For quiz questions function call
     useEffect(() => {
         getQuizQuestions().then(r => r);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    // For current question
     useEffect(() => {
         setActiveQuestion(questions?.[quizControl.active - 1]);
         setQuizControl((prev) => {
@@ -148,24 +150,30 @@ const QuizHome = (props) => {
                 total: questions?.length
             }
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [questions]);
 
+    // For last question and submit
     useEffect(() => {
+        // eslint-disable-next-line
         let activeQuest = questions?.filter((item, index) => {
             if (index === quizControl?.active - 1) {
                 return item;
             }
-        }).map((item, index) => {
+        }).map((item) => {
             return item;
         });
         setActiveQuestion(activeQuest[0]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [quizControl?.active])
 
+    // To store ans of individual que
     useEffect(() => {
         setSingleAnswer({
             que: activeQuestion?.id,
             ans: answers[quizControl.activeIndex]?.ans ? answers[quizControl.activeIndex]?.ans : []
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeQuestion?.id])
 
     useEffect(() => {
@@ -177,6 +185,7 @@ const QuizHome = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [singleAnswer.ans])
 
+    // To disable/enable next button
     useEffect(() => {
         let current = answers?.[quizControl?.activeIndex]?.ans?.length > 0;
         if (current && singleAnswer?.ans?.length > 0) {

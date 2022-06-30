@@ -23,7 +23,7 @@ const BlogArticleDetails = () => {
         }).then(response => {
             setArticle(response?.data?.data);
         }).catch(error => {
-            process.env.NODE_ENV === "development" && console.log('BlogArt: ', error)
+            process.env.NODE_ENV === "development" && console.log('getArticle BlogArtPage: ', error)
         })
     }
 

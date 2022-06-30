@@ -8,13 +8,12 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-import Images from "../../static/images";
 import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
 import ImageUpload from "../Upload/ImageUpload";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { routeUrls } from './../../helpers/url';
+import { routeUrls, cdn } from './../../helpers/url';
 import ReactCountryFlags from "../ReactCountryFlag";
 
 const UserProfilePopup = (props) => {
@@ -37,7 +36,7 @@ const UserProfilePopup = (props) => {
       <ModalHeader className="text-center justify-content-center">
         Thank you!
         <Button className="close-icon" onClick={() => handleClose()}>
-          <img src={Images.Modalcloseicon} alt="close-icon" />
+          <img src={`${cdn.url}/close-icon.svg`} alt="close-icon" />
         </Button>
         <p>Welcome to the Community! It is great to have you here.</p>
       </ModalHeader>

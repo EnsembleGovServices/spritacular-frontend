@@ -1,24 +1,23 @@
-import {useEffect, useRef, useState} from "react";
-import {baseURL} from "../../../helpers/url";
+import { useEffect, useRef, useState } from "react";
+import { baseURL, cdn } from "../../../helpers/url";
 import axios from "../../../api/axios";
 import moment from "moment";
 import useAuth from "../../../hooks/useAuth";
-import {Button, FormGroup} from "reactstrap";
+import { Button, FormGroup } from "reactstrap";
 import "../../../assets/scss/component/comments.scss";
-import {Icon} from '@iconify/react';
+import { Icon } from '@iconify/react';
 import useObservationsData from "../../../hooks/useObservationsData";
-import Images from './../../../static/images';
 import NoComments from "./NoComments";
 import NotLoggedForComment from "./NotLoggedForComment";
 
 const Comments = (props) => {
-    const {auth} = useAuth();
-    const {obvId} = props;
+    const { auth } = useAuth();
+    const { obvId } = props;
     const [comments, setComments] = useState([]);
     const [message, setMessage] = useState();
     const [signal, setSignal] = useState(false);
     const commentBox = useRef(null);
-    const {observationComments, setObservationComments} = useObservationsData();
+    const { observationComments, setObservationComments } = useObservationsData();
     const user = auth?.user?.id;
     const isComment = observationComments?.comments?.length;
 
@@ -34,14 +33,14 @@ const Comments = (props) => {
                 })
             })
             .catch((error) => {
-                process.env.NODE_ENV === "development" && console.log('GetComment Error:',error);
+                process.env.NODE_ENV === "development" && console.log('GetComment Error:', error);
             })
     };
 
     const sendComment = async (e) => {
         e.preventDefault();
         setSignal(false);
-        await axios.post(baseURL.api + '/observation/comment/' + obvId + '/', {text: message}, {
+        await axios.post(baseURL.api + '/observation/comment/' + obvId + '/', { text: message }, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${auth?.token?.access}`
@@ -67,8 +66,8 @@ const Comments = (props) => {
             return (
                 <li key={index} className="d-flex align-items-center w-100">
                     <i className="profile-icon rounded-circle me-0"><img
-                        src={item?.user_data?.profile_image ? item?.user_data?.profile_image : Images.DefaultProfile}
-                        width='100%' height='100%' alt="Profile" className="rounded-circle"/></i>
+                        src={item?.user_data?.profile_image ? item?.user_data?.profile_image : `${cdn.url}/profile.svg`}
+                        width='100%' height='100%' alt="Profile" className="rounded-circle" /></i>
                     <div className="commentor_details d-flex justify-content-between align-items-start">
                         <div className="comment-profile_details">
                             <h6 className="mb-1 text-truncate text-black">{item?.user_data?.first_name} {item?.user_data?.last_name}</h6>
@@ -107,7 +106,7 @@ const Comments = (props) => {
             <div className={`comment-wrapper position-relative ${!user ? 'non-logged' : ''}`}>
                 {!user &&
                     <div className={`p-0 m-0 ${isComment ? 'hasComments' : 'hasNoComments'}`}>
-                        <NotLoggedForComment/>
+                        <NotLoggedForComment />
                     </div>
                 }
 
@@ -116,7 +115,7 @@ const Comments = (props) => {
                         {showMessages()}
                     </ul>
                 ) : (
-                    (!isComment && user ? <ul className="comment-area p-0 m-0"><NoComments/></ul> : '')
+                    (!isComment && user ? <ul className="comment-area p-0 m-0"><NoComments /></ul> : '')
                 )}
 
 
@@ -133,8 +132,8 @@ const Comments = (props) => {
                                 onChange={(e) => handleCommentText(e)}
                             />
                             <Button disabled={message?.length === 0}
-                                    className="send-btn shadow-none border-0 position-absolute end-0 pe-3"><Icon
-                                icon="bi:send" color={message?.length === 0 ? '#ccc' : '#900'}/></Button>
+                                className="send-btn shadow-none border-0 position-absolute end-0 pe-3"><Icon
+                                    icon="bi:send" color={message?.length === 0 ? '#ccc' : '#900'} /></Button>
                         </FormGroup>
                     </form>
                 }

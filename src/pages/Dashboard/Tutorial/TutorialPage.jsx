@@ -26,7 +26,7 @@ const TutorialPage = () => {
             setTutorials(response?.data?.data);
             setLoader(false);
         }).catch(error => {
-            process.env.NODE_ENV === "development" && console.log('error', error)
+            process.env.NODE_ENV === "development" && console.log('getTutorial TutorialPage:', error)
         })
     }
 

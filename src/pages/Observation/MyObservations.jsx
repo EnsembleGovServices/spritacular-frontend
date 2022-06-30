@@ -36,6 +36,7 @@ const MyObservations = () => {
     const [loadedState, setLoadedState] = useState({});
     const location = useLocation();
 
+    // To edit draft observation
     const handleObservationEdit = (data) => {
         cleaningUpObservationDataForDraftSaving(data).then((r) => r);
         setObservationDetailModal(false);
@@ -44,13 +45,15 @@ const MyObservations = () => {
         }, 100);
     };
 
-    const cleaningUpObservationDataForDraftSaving = async (data) => {
+    // To clean state when obsv is saved as draft
+    const cleaningUpObservationDataForDraftSaving = async(data) => {
         setObservationImages([]);
-        setObservationData([]);
-        await updateStateForDraft(data);
+        await setObservationData([]);
+        updateStateForDraft(data);
         return true;
     };
 
+    // To update state for draft
     const updateStateForDraft = (data) => {
         setObservationSteps((prev) => {
             return {
@@ -65,6 +68,7 @@ const MyObservations = () => {
         });
     };
 
+    // To fetch observation data categorywise
     const getObservationData = (reset = false, value = "verified") => {
         setActiveType(value);
         let url;
@@ -117,15 +121,17 @@ const MyObservations = () => {
 
         })
             .catch((error) => {
-                process.env.NODE_ENV === "development" && console.log(error.response);
+                process.env.NODE_ENV === "development" && console.log('Get Obsv Data:',error.response);
             });
     };
 
+    // To show/hide observation detail modal
     const handleObservationDetailModal = (id) => {
         setObservationDetailModal(!isObservationDetailModal);
         setSelectedObservationId(id);
     };
 
+    // To handle current type of observation for active/inactive tabs
     const handleTypeOfObservation = (type) => {
         setActiveType(type);
 
@@ -139,10 +145,12 @@ const MyObservations = () => {
         getObservationData(true, type);
     };
 
+    // To show more observation on click load more button
     const handleLoadMore = () => {
         getObservationData(false, activeType);
     };
 
+    // Append observation in state as per active type
     useEffect(() => {
         setObservationListData((prev) => {
             return {
@@ -154,8 +162,7 @@ const MyObservations = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isObservationDetailModal, activeType]);
 
-
-
+    // Clear observation data on routeUrl change
     useEffect(() => {
         setObservationListData((prev) => {
             return {
@@ -165,9 +172,10 @@ const MyObservations = () => {
         });
     }, [location])
 
-
+    // Get all observation on component mount
     useEffect(() => {
         getObservationData(true, "verified");
+        
         return () => {
             setObservationListData((prev) => {
                 return {
@@ -176,10 +184,10 @@ const MyObservations = () => {
                 }
             });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // For loading
     useEffect(() => {
         setLoading((prev) => {
             return {
@@ -188,6 +196,8 @@ const MyObservations = () => {
             }
         })
     }, [observationListData?.count]);
+
+    // For loader state as per types
     useEffect(() => {
         setLoadedState((prev) => {
             return {
@@ -201,13 +211,11 @@ const MyObservations = () => {
         })
     }, [loading?.count]);
 
-
     const showNotFound = activeType &&
         ((activeType === obvType.verified && !loadedState?.hasVerifiedData) ||
             (activeType === obvType.unverified && !loadedState?.hasUnverifiedData) ||
             (activeType === obvType.denied && !loadedState?.hasDeniedData) ||
             (activeType === obvType.draft && !loadedState?.hasDraftData))
-
 
     return (
         <>

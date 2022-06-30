@@ -5,23 +5,22 @@ import {
   ModalHeader,
 } from "reactstrap";
 import {useState} from "react";
-import Images from "../../static/images";
 import PropTypes from "prop-types";
 
 import Login from "../Auth/Login";
 import ForgotPasswordPopup from "./ForgotPasswordPopup";
+import { cdn } from "../../helpers/url";
 
 const LoginPopup = (props) => {
   const { open, handleClose, modalClass } = props;
   const [ isForgotPasswordModal, setIsForgotPasswordModal ] = useState(false);
   const [ loginPopup, setLoginPopup ] = useState(true);
 
-
+  // To show/hide modal
   const handleForgotPasswordModal = () => {
     setIsForgotPasswordModal(!isForgotPasswordModal);
     setLoginPopup(!loginPopup);
   };
-
 
   return (
       <>
@@ -36,7 +35,7 @@ const LoginPopup = (props) => {
           <ModalHeader>
             Login
             <Button className="close-icon" onClick={() => handleClose()}>
-              <img src={Images.Modalcloseicon} alt="close-icon" />
+              <img src={`${cdn.url}/close-icon.svg`} alt="close-icon" />
             </Button>
           </ModalHeader>
           <ModalBody>
