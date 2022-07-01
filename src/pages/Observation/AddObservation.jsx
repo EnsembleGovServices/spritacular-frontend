@@ -468,6 +468,18 @@ const AddObservation = () => {
                     converted: true,
                 };
             });
+        } else {
+            setUpdateMode(false);
+            setObservationSteps((prev) => {
+                return {
+                    ...prev,
+                    mode: {
+                        ...observationSteps?.mode,
+                        update: false,
+                        id: false,
+                    },
+                }
+            });
         }
 
         if (updateUrl && obvType !== "draft") {
