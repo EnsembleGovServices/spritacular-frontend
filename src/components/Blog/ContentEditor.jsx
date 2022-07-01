@@ -3,11 +3,11 @@ import {CKEditor} from "@ckeditor/ckeditor5-react";
 import FullEditor from "@blowstack/ckeditor5-full-free-build";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 
 const ContentEditor = (props) => {
-    const {data, setData, editorData, setLoading, setReadMode, readMode, readOnly} = props;
+    const {data, setData, editorData, setLoading, setReadMode, readMode, readOnly, dynamicPageProps} = props;
     const {auth} = useAuth();
     const [searchParams] = useSearchParams();
     const mode = searchParams.get('mode') !== "edit";
@@ -17,6 +17,8 @@ const ContentEditor = (props) => {
     const [editorImage, setEditorImage] = useState([]);
 
     const [fakeLoading, setFakeLoading] = useState(true);
+
+    const ckEditorContentRef = useRef(null);
 
     function uploadAdapter(loader) {
         setChangeData(false);
@@ -126,6 +128,21 @@ const ContentEditor = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mode]);
 
+
+    useEffect(() => {
+        const ckEditorDynamicPage = ckEditorContentRef.current.editor;
+        const toolbarContainer = ckEditorDynamicPage?.ui.view.stickyPanel;
+        if (ckEditorDynamicPage) {
+            ckEditorDynamicPage.isReadOnly = dynamicPageProps;
+            if (ckEditorDynamicPage.isReadOnly) {
+                ckEditorDynamicPage.ui.view.top.remove(toolbarContainer);
+            } else {
+                ckEditorDynamicPage.ui.view.top.add(toolbarContainer);
+            }
+        }
+    }, [dynamicPageProps])
+
+
     // Show/hide fake Loading on image select in editor
     useEffect(() => {
         setTimeout(function () {
@@ -142,21 +159,23 @@ const ContentEditor = (props) => {
             </div> : ''}
             <div className={fakeLoading ? 'd-none' : 'd-block'}>
                 <CKEditor
+                    ref={ckEditorContentRef}
                     editor={FullEditor}
                     config={editorConfig}
                     data={data ? data : ""}
                     then={response => {
-                        process.env.NODE_ENV === "development" && console.log('ContentEditor: ',response);
+                        process.env.NODE_ENV === "development" && console.log('ContentEditor: ', response);
                     }}
                     onReady={editor => {
+                        if (editor) {
+                            const toolbarContainer = editor.ui.view.stickyPanel;
+                            editor.isReadOnly = readMode ? readMode : (readOnly ? readOnly : dynamicPageProps);
 
-                        const toolbarContainer = editor.ui.view.stickyPanel;
-                        editor.isReadOnly = readMode ? readMode : readOnly;
-
-                        if (editor.isReadOnly) {
-                            editor.ui.view.top.remove(toolbarContainer);
-                            editor.ui.view.editable.element.classList.add('p-0');
-                            editor.ui.view.editable.element.classList.add('border-0');
+                            if (editor.isReadOnly) {
+                                editor.ui.view.top.remove(toolbarContainer);
+                                editor.ui.view.editable.element.classList.add('p-0');
+                                editor.ui.view.editable.element.classList.add('border-0');
+                            }
                         }
                     }}
                     onChange={(event, editor) => {

@@ -1,31 +1,32 @@
 import "../../assets/scss/component/blog.scss";
-import { Card, CardBody, Col, Row } from "reactstrap";
-import { useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+// import { Card, CardBody, Col, Row } from "reactstrap";
+import {useEffect, useRef} from "react";
+import {useSearchParams} from "react-router-dom";
 import DynamicPageEditor from "../../components/Static/DynamicPageEditor";
+
 const Policy = () => {
-  let searchParams, codeOfConduct, scrollToRef, executeScroll;
-  [searchParams] = useSearchParams();
-  codeOfConduct = useRef(null);
+    let searchParams, codeOfConduct, scrollToRef, executeScroll;
+    [searchParams] = useSearchParams();
+    codeOfConduct = useRef(null);
 
-  // To scroll till ref
-  scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop + 120);
-  executeScroll = () => {
-    scrollToRef(codeOfConduct);
-  };
-  // To scroll top till code-of-conduct ref
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    let code = searchParams.get('code');
-    if (code) {
-      setTimeout(function () {
-        executeScroll();
-      }, 10)
-    }
-  }, [searchParams])
+    // To scroll till ref
+    scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop + 120);
+    executeScroll = () => {
+        scrollToRef(codeOfConduct);
+    };
+    // To scroll top till code-of-conduct ref
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        let code = searchParams.get('code');
+        if (code) {
+            setTimeout(function () {
+                executeScroll();
+            }, 10)
+        }
+    }, [searchParams])
 
-  const desc = (
-    `<h4>User Agreement</h4>
+    const desc = (
+        `<h4>User Agreement</h4>
     <p>
       This document describes in detail how the project will use and protect your contributions.
       The terms outlined here are subject to modification without any direct prior notice to users. <br />
@@ -160,12 +161,12 @@ const Policy = () => {
         href="https://www.transhack.org/" rel="noreferrer" target="_blank" referrerPolicy="no-referrer">TransH4CK</a>. The user agreement on project contributions is developed following the best practices from
       <a href="https://www.aurorasaurus.org/" rel="noreferrer" target="_blank" referrerPolicy="no-referrer"> Aurorasaurus</a> project.
     </p>`
-  )
+    )
 
-  return (
-    <>
-      <DynamicPageEditor title="Spritacular Policy" pageContent={desc} />
-      {/* <div className="blog_page">
+    return (
+        <>
+            <DynamicPageEditor title="Spritacular Policy" pageContent={desc}/>
+            {/* <div className="blog_page">
         <div className="common-banner"></div>
         <section className="blog-main">
           <div className="container">
@@ -317,7 +318,7 @@ const Policy = () => {
           </div>
         </section>
       </div> */}
-    </>
-  )
+        </>
+    )
 }
 export default Policy;

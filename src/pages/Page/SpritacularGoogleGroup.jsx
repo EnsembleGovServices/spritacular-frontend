@@ -1,7 +1,7 @@
 import "../../assets/scss/component/blog.scss";
-import { Link } from "react-router-dom";
-import { Card, CardBody, Col, Row } from "reactstrap";
-import { routeUrls } from '../../helpers/url';
+// import { Link } from "react-router-dom";
+// import { Card, CardBody, Col, Row } from "reactstrap";
+import {routeUrls} from '../../helpers/url';
 import DynamicPageEditor from "../../components/Static/DynamicPageEditor";
 
 const SpritacularGoogleGroup = () => {

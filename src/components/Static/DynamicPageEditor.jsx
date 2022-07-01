@@ -1,21 +1,47 @@
 import "../../assets/scss/component/tutorialdetail.scss";
-import { Card, CardBody, Col, Container, Row } from "reactstrap";
-import { useEffect, useState } from "react";
-import ContentEditor from "../Blog/ContentEditor";
+
+import {lazy, Suspense} from "react";
+import {Card, CardBody, Col, Container, Row} from "reactstrap";
+import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth";
 import Loader from "../Shared/Loader";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
 
-const DynamicPageEditor = ({ title, pageContent }) => {
+const ContentEditor = lazy(() => import('../Blog/ContentEditor'))
+
+const DynamicPageEditor = ({title, pageContent}) => {
     const [loading, setLoading] = useState(false);
 
-    const [isReadOnly, setReadOnly] = useState(true);
+    const [readOnly, setReadOnly] = useState(true);
     const [data, setData] = useState({
         content: "",
     });
-    const { auth } = useAuth();
+    const {auth} = useAuth();
     const admin = auth?.user?.is_superuser;
 
-    console.log(isReadOnly);
+    const handleEditMode = () => {
+        setReadOnly(!readOnly);
+    }
+
+
+    const getPolicyData = async () => {
+        return await axios.get(baseURL.static_policy_api, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => {
+                console.log(response?.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    useEffect(() => {
+        getPolicyData().then(r => r)
+    }, [])
 
     useEffect(() => {
         setData((prev) => {
@@ -24,7 +50,7 @@ const DynamicPageEditor = ({ title, pageContent }) => {
                 content: pageContent
             }
         })
-    }, [isReadOnly])
+    }, [readOnly])
 
     return (
         <div className="blog_page">
@@ -34,32 +60,32 @@ const DynamicPageEditor = ({ title, pageContent }) => {
                     <div className="mb-4 mt-3 d-flex align-items-center justify-content-between">
                         <h2 className="mb-0 mx-auto">{title}</h2>
                         {admin &&
-                            <button className="btn btn-primary px-4 btn-sm" onClick={() => setReadOnly(!isReadOnly)} >
-                                {isReadOnly ? 'Edit' : 'Update'}
+                            <button className="btn btn-primary px-4 btn-sm" onClick={() => handleEditMode()}>
+                                Edit
                             </button>
                         }
                     </div>
-                    <Row>
-                        <Col md={12}>
-                            <Card className="card border-0 shadow-sm">
-                                <CardBody className="p-md-5 p-4">
-                                    {isReadOnly ? <ContentEditor data={pageContent} readOnly={isReadOnly} /> :
+                    <Suspense fallback=''>
+                        <Row>
+                            <Col md={12}>
+                                <Card className="card border-0 shadow-sm">
+                                    <CardBody className="p-md-5 p-4">
                                         <ContentEditor
                                             setLoading={setLoading}
                                             editorData={data}
                                             setData={setData}
                                             data={pageContent}
-                                            readOnly={isReadOnly}
-                                        />}
-
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>
+                                            dynamicPageProps={readOnly}
+                                        />
+                                    </CardBody>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Suspense>
                 </Container>
             </section>
             {loading &&
-                <Loader fixContent={true} />
+                <Loader fixContent={true}/>
             }
         </div>
     )
