@@ -1,5 +1,5 @@
 import { Col, FormGroup, PopoverBody, PopoverHeader, Collapse, Button, Row } from "reactstrap";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Fragment } from "react";
 import useObservations from "../../hooks/useObservations";
 import { Icon } from "@iconify/react";
 import useAuth from "../../hooks/useAuth";
@@ -27,6 +27,7 @@ const ObservationCategory = (props) => {
     const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
     const tippyRef = useRef();
 
+    // Category update on Check
     const onCategoryChange = (e) => {
         const value = parseFloat(e.target.id);
         setIsChecked({ ...isChecked, [e.target.name]: e.target.checked });
@@ -38,6 +39,8 @@ const ObservationCategory = (props) => {
         }
         setObservationImages(ObservationData);
     }
+
+    // Updates category to db
     const updatedCategory = () => {
         let newCategory = [];
         oldCategory?.map((item, index) => {
@@ -56,6 +59,8 @@ const ObservationCategory = (props) => {
             }
         });
     }
+
+    // Tooltip image slider
     const ImageCarousel = (props) => {
         const { className } = props;
         const items = [
@@ -80,20 +85,18 @@ const ObservationCategory = (props) => {
             </>
         )
     }
-    const PopoverContent = () => {
+
+    // Tooltip inner content
+    const PopoverContent = ({ catName }) => {
         return (
             <>
-                <PopoverHeader className={'bg-white'}>What is sprite?
-                    {/*<button className="bg-transparent p-0 border-0 text-black shadow-none"><Icon icon="codicon:chrome-close" width="15" height="15" /></button>*/}
-                </PopoverHeader>
+                <PopoverHeader className={'bg-white'}>What is {catName}?</PopoverHeader>
                 <PopoverBody className={'bg-white'}>
                     <p style={{ '--line-clamb': isPopoverContentOpen === true ? 'unset' : '2' }}>
                         Sprites or red sprites are large-scale electric discharges that occur high above thunderstorm
                         clouds, they appear as luminous reddish-orange flashes.
                     </p>
-                    <Collapse
-                        isOpen={isPopoverContentOpen}
-                    >
+                    <Collapse isOpen={isPopoverContentOpen}>
                         <ImageCarousel className="popover-carousel" />
                     </Collapse>
                     <Button className="bg-transparent p-0 border-0 text-secondary shadow-none d-block"
@@ -105,59 +108,66 @@ const ObservationCategory = (props) => {
         );
     };
 
+    // List out category
     const showCategory = () => {
         return observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
             return (
-                observationCategory?.data?.map((imagItem, index) => {
-                    return (
-                        <Col sm={6} key={index}>
-                            <FormGroup>
-                                <div className="checkbox-wrapper">
-                                    <div className="inputGroup">
-                                        <input
-                                            value={imagItem.name || ''}
-                                            name={imagItem.id}
-                                            id={imagItem.id}
-                                            type="checkbox"
-                                            checked={(item?.category_map?.category?.find(list => list === imagItem?.id) === imagItem?.id) ? 'checked' : ''}
-                                            hidden
-                                            onChange={(e) => onCategoryChange(e)}
-                                        />
-                                        <label htmlFor={imagItem.id}>
-                                            <img src={`${imagItem.image}`} alt={imagItem.name} />
-                                            {imagItem.name}
-                                            <div className="ms-2 text-dark ">
+                <Fragment key={index}>
+                    {
+                        Category?.length > 0 && observationCategory?.data?.map((imagItem, index) => {
+                            return (
+                                <Col sm={6} key={index}>
+                                    <FormGroup>
+                                        <div className="checkbox-wrapper">
+                                            <div className="inputGroup">
+                                                <input
+                                                    value={imagItem.name || ''}
+                                                    name={imagItem.id}
+                                                    id={imagItem.id}
+                                                    type="checkbox"
+                                                    checked={(item?.category_map?.category?.find(list => list === imagItem?.id) === imagItem?.id) ? 'checked' : ''}
+                                                    hidden
+                                                    onChange={(e) => onCategoryChange(e)}
+                                                />
+                                                <label htmlFor={imagItem.id}>
+                                                    <img src={`${imagItem.image}`} alt={imagItem.name} />
+                                                    {imagItem.name}
+                                                    <div className="ms-2 text-dark ">
 
-                                                <Tippy
-                                                    content={<PopoverContent />}
-                                                    interactive={true}
-                                                    appendTo={document.body}
-                                                    animation="perspective"
-                                                    theme="light-border"
-                                                    reference={tippyRef}
-                                                >
-                                                    <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2"
-                                                        width="15" height="15" /></span>
-                                                </Tippy>
+                                                        <Tippy
+                                                            content={<PopoverContent catName={imagItem?.name} />}
+                                                            interactive={true}
+                                                            appendTo={document.body}
+                                                            animation="perspective"
+                                                            theme="light-border"
+                                                            reference={tippyRef}
+                                                        >
+                                                            <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2"
+                                                                width="15" height="15" /></span>
+                                                        </Tippy>
+                                                    </div>
+
+                                                </label>
                                             </div>
-
-                                        </label>
-                                    </div>
-                                </div>
-                            </FormGroup>
-                        </Col>
-                    )
-                })
+                                        </div>
+                                    </FormGroup>
+                                </Col>
+                            )
+                        })
+                    }
+                </Fragment>
             )
         })
     }
 
     useEffect(() => {
         setOldCategory(auth?.categoryList)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         updatedCategory();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [oldCategory])
 
     useEffect(() => {
@@ -169,6 +179,7 @@ const ObservationCategory = (props) => {
         if (observationImages?.selected_image_index === []) {
             setSelectedCategory([])
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [observationImages?.selected_image_index])
 
     useEffect(() => {
@@ -179,6 +190,7 @@ const ObservationCategory = (props) => {
         } else {
             ObservationData.data[observationImages?.selected_image_index].category_map.category = selectedCategory;
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedCategory]);
 
     return (

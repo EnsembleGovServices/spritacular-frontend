@@ -14,13 +14,14 @@ const Comments = (props) => {
     const { auth } = useAuth();
     const { obvId } = props;
     const [comments, setComments] = useState([]);
-    const [message, setMessage] = useState();
+    const [message, setMessage] = useState("");
     const [signal, setSignal] = useState(false);
     const commentBox = useRef(null);
     const { observationComments, setObservationComments } = useObservationsData();
     const user = auth?.user?.id;
     const isComment = observationComments?.comments?.length;
 
+    // To fetch comments
     const getComments = async () => {
         await axios.get(baseURL.api + '/observation/comment/' + obvId + '/')
             .then((response) => {
@@ -37,6 +38,7 @@ const Comments = (props) => {
             })
     };
 
+    // For sending comments to db
     const sendComment = async (e) => {
         e.preventDefault();
         setSignal(false);
@@ -56,11 +58,13 @@ const Comments = (props) => {
             })
     }
 
+    // For storing comment in state
     const handleCommentText = (e) => {
         const value = e.target.value;
         setMessage(value);
     }
 
+    // To display comments list
     const showMessages = () => {
         return observationComments?.comments?.filter(item => item?.is_active).map((item, index) => {
             return (
@@ -80,13 +84,16 @@ const Comments = (props) => {
         })
     }
 
+    // To fetch comments on each comments added
     useEffect(() => {
         if (user) {
             commentBox.current.focus = true;
             getComments().then(r => r);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [signal])
 
+    // To set comments count in context on each comment added
     useEffect(() => {
         setObservationComments((prev) => {
             return {
@@ -94,11 +101,13 @@ const Comments = (props) => {
                 comment_count: comments?.data ? comments?.data?.length : 0
             }
         })
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [comments])
 
+    // For fetching comments initially
     useEffect(() => {
         getComments().then(r => r);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -118,7 +127,6 @@ const Comments = (props) => {
                     (!isComment && user ? <ul className="comment-area p-0 m-0"><NoComments /></ul> : '')
                 )}
 
-
                 {user &&
                     <form onSubmit={sendComment}>
                         <FormGroup
@@ -130,6 +138,7 @@ const Comments = (props) => {
                                 ref={commentBox}
                                 placeholder="Write here.."
                                 onChange={(e) => handleCommentText(e)}
+                                required
                             />
                             <Button disabled={message?.length === 0}
                                 className="send-btn shadow-none border-0 position-absolute end-0 pe-3"><Icon

@@ -2,7 +2,7 @@ import "../../assets/scss/component/advancedFilter.scss";
 import "../../assets/scss/styles/editors.css"
 import {cdn} from "../../helpers/url";
 import {Button, Card, CardBody, Col, Collapse, FormGroup, Label, Row} from "reactstrap";
-import {useRef, useState} from 'react';
+import {useState} from 'react';
 import {Icon} from '@iconify/react';
 import PropTypes from "prop-types";
 

@@ -105,12 +105,14 @@ const ImageUpload = (props) => {
     }).catch((error) => {
       setError(error.response);
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file]);
 
   useEffect(() => {
     if (file && !error && !popupError) {
       fileUpload().then(r => r);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file, fileUpload]);
 
 

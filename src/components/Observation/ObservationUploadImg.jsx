@@ -1,9 +1,9 @@
 import useObservations from "../../hooks/useObservations";
-import {useEffect, useState} from "react";
-import {uploadImageDefaultState} from "../../helpers/observation";
+import { useEffect, useState } from "react";
+import { uploadImageDefaultState } from "../../helpers/observation";
 import PropTypes from "prop-types";
 import useAuth from "../../hooks/useAuth";
-import {cameraSettingFields} from "../../helpers/url";
+import { cameraSettingFields } from "../../helpers/url";
 import UploadImageUI from "../Shared/UploadImageUI";
 
 const ObservationUploadImg = (props) => {
@@ -12,6 +12,7 @@ const ObservationUploadImg = (props) => {
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
     const { auth } = useAuth();
+    // eslint-disable-next-line
     const [userLocation, setUserLocation] = useState({
         latitude: (auth?.user?.location_metadata?.lat) ? auth?.user?.location_metadata?.lat : 18.5204303,
         longitude: (auth?.user?.location_metadata?.lng) ? auth?.user?.location_metadata?.lng : 73.8567437
@@ -96,10 +97,10 @@ const ObservationUploadImg = (props) => {
         observationImages?.data?.map((item, index) => {
             const latitude = item.latitude ? item.latitude : userLocation?.latitude;
             const longitude = item.longitude ? item.longitude : userLocation?.longitude;
-            return item.latitude = latitude,
-                item.longitude = longitude
+            return (item.latitude = latitude, item.longitude = longitude)
         })
         setImages(images)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [detectImage, mode, userLocation])
 
     // Update context with observations images data
@@ -113,6 +114,7 @@ const ObservationUploadImg = (props) => {
             });
             setCameraDetails(cameraSettingFields)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [images, setObservationImages, userLocation])
 
     return (

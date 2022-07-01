@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
-import { Link } from 'react-router-dom';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, FormGroup, Label } from 'reactstrap';
-import { routeUrls } from '../../helpers/url';
 const SortByFilter = (props) => {
     const { getObservationData } = props;
     const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);

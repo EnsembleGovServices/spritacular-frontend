@@ -2,7 +2,6 @@ import LazyLoad from 'react-lazy-load';
 import { Col, Row } from "reactstrap";
 import TutorialListCardContent from "../TutorialListCardContent";
 
-
 const TutorialRestLists = (props) => {
     const { articleItems } = props;
 

@@ -10,7 +10,7 @@ const CameraSetting = (props) => {
     const { cameraDetails, user, isDetailExist } = props;
     const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)
     const myRef = useRef(null);
-    
+
     //To scroll till ref element.
     const executeScroll = () => {
         scrollToRef(myRef);
@@ -20,7 +20,7 @@ const CameraSetting = (props) => {
     const [updatedData, setUpdateData] = useState();
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
-   
+
     // To update camera settings
     const handleInput = (e) => {
         let name = e.target.name,
@@ -122,6 +122,7 @@ const CameraSetting = (props) => {
                 }
             }
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updatedData])
 
     return (

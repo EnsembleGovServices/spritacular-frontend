@@ -36,6 +36,7 @@ const NotificationComponent = (props) => {
         }).catch(e => {
             process.env.NODE_ENV === "development" && console.log('Notification Permission Error:', e);
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Notification token
@@ -43,6 +44,7 @@ const NotificationComponent = (props) => {
         if (isTokenFound && auth?.user?.id) {
             getTokens(auth?.user?.id, auth?.token?.access, auth?.user).then(r => r);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isTokenFound])
 
 

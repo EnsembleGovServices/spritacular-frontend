@@ -1,8 +1,8 @@
-import {FormGroup, Input, Label} from "reactstrap";
-import {useLayoutEffect} from "react";
+import { FormGroup, Input, Label } from "reactstrap";
+import { useLayoutEffect } from "react";
 
 const BlogType = (props) => {
-    const {blogType, handleInput, type, update, setData} = props;
+    const { blogType, handleInput, type, update, setData } = props;
     const types = [
         {
             name: 'Blog',
@@ -22,6 +22,7 @@ const BlogType = (props) => {
                 }
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [update])
     return (
         <FormGroup>
@@ -41,7 +42,7 @@ const BlogType = (props) => {
                 {types?.map((item, index) => {
                     return (
                         <option key={index}
-                                value={item?.value}>{item?.name}</option>
+                            value={item?.value}>{item?.name}</option>
                     )
                 })}
             </Input>

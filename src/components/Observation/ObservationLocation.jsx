@@ -192,6 +192,7 @@ const ObservationLocation = (props) => {
             }
             setObservationImages(observationAddress);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [address1]);
 
     useEffect(() => {
@@ -211,6 +212,7 @@ const ObservationLocation = (props) => {
             }
             setObservationImages(observationAddress);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [observationData?.image_type, observationImages?.data]);
 
     // To select degree direction
@@ -475,8 +477,8 @@ const ObservationLocation = (props) => {
                 </Row>
 
                 {
-                    (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate === false
-                        || observationImages?.selected_image_index === 0) ?
+                    ((observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstDate === false)
+                        || (observationImages?.selected_image_index === 0)) ?
                         <Row>
                             <Col md={6} lg={4}>
                                 <FormGroup>
@@ -665,7 +667,7 @@ const ObservationLocation = (props) => {
                     </div>
                 </FormGroup>
 
-                {(angleDegree === false && (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0 || observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === false)) ?
+                {((angleDegree === false) && ((observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === 0) || (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.is_precise_azimuth === false))) ?
                     <FormGroup>
                         <Label className="justify-content-center mb-3 text-uppercase">Look Direction</Label>
 

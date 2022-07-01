@@ -9,6 +9,7 @@ const QuizProgressBar = (props) => {
     useEffect(() => {
         let percentage = quizControl?.active ? quizControl?.active * 100 / quizControl?.total : 6.67;
         setProgress(percentage);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [quizControl?.active, activeQuestion])
 
 

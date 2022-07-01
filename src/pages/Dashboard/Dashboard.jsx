@@ -129,23 +129,23 @@ const Dashboard = () => {
             });
         }
     };
-
     // For load more
     const handleLoadMoreData = () => {
         getObservationData(false).then(r => r);
     };
-
-    //
+    // To Show/hide observation detail modal
     const handleObservationDetailModal = (id) => {
         setObservationDetailModal(!isObservationDetailModal);
         setSelectedObservationId(id);
     };
+    // To Clear states for draft type observations
     const cleaningUpObservationDataForDraftSaving = (data) => {
         setObservationImages([]);
         setObservationData([]);
         updateStateForDraft(data);
         return true;
     };
+    // To Append and Update data in context for draft observations
     const updateStateForDraft = (data) => {
         setObservationSteps((prev) => {
             return {
@@ -159,7 +159,7 @@ const Dashboard = () => {
             };
         });
     };
-
+    // To Continue edit click event for draft type observations
     const handleObservationEdit = (data) => {
         cleaningUpObservationDataForDraftSaving(data).then((r) => r);
         setObservationDetailModal(false);
@@ -167,23 +167,26 @@ const Dashboard = () => {
             navigate("/observations/update");
         }, 100);
     };
+    // To Show/Hide vertical filter on dashboard
     const handleFilterOpen = () => {
         setFilterShow(!filterShow);
     };
+    // To Show/hide list view of observations
     const handleListView = () => {
         setListView(true);
         setGridView(false);
     };
+    // To Show/hide grid view of observations
     const handleGridView = () => {
         setGridView(true);
         setListView(false);
     };
+    // To Set state to search country for filter
     const findCountry = (e) => {
         let value = e.target.value.toLowerCase();
         setSearchCountry(value);
     };
-
-    //
+    // To filter observation as per horizontal selection
     const handleFilterValue = (value, type) => {
         if (type === "status") {
             value = value.toLowerCase();
@@ -219,8 +222,7 @@ const Dashboard = () => {
             ).then(r => r);
         }
     };
-
-    //  Handle Filtered Input
+    // To Set filter input data in state
     const handleFilterInput = (e, name) => {
         setSelectedFilterVertical((prev) => {
             return {
@@ -230,8 +232,7 @@ const Dashboard = () => {
             }
         });
     };
-
-    //  Reset Filters
+    // To reset filters
     const resetFilters = () => {
         if (selectedFilterHorizontal.filtered || selectedFilterVertical.filtered) {
             setFilterReset(true);
@@ -239,7 +240,6 @@ const Dashboard = () => {
             setSelectedFilterVertical(dashboardHelper.vertical);
         }
     };
-
 
     useEffect(() => {
         getObservationData(true, "", "", "").then(r => r);

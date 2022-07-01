@@ -24,7 +24,6 @@ import DeleteItemConfirmationPopup from "../Popup/DeleteItemConfirmationPopup";
 const ObservationAfterImageUpload = (props) => {
     const {
         toggleTab,
-        handleImageInput,
         error,
         disableNext,
         obvType,
@@ -46,7 +45,6 @@ const ObservationAfterImageUpload = (props) => {
     const [isOther] = useState(false);
     const [isConfirmPopUp, setIsConfirmPopUp] = useState(true);
     const [shouldShowConfirmation, setShouldShowConfirmation] = useState(false);
-
 
     // Toggle Tabs
     const toggleImageTab = (tab) => {
@@ -102,6 +100,7 @@ const ObservationAfterImageUpload = (props) => {
         if (isMultiple) {
             handleConfirmationPopUp();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMultiple])
 
 
@@ -150,6 +149,7 @@ const ObservationAfterImageUpload = (props) => {
             });
             setActiveImageTab(observationType?.image_type === 3 ? MultiImageTabs.ImageSequence : MultiImageTabs.MultipleImages);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeTab, isMultiple, isOther, setObservationCategory, setObservationType])
 
     return (

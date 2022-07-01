@@ -4,7 +4,6 @@ import LazyLoad from "../Upload/LazyLoad";
 import {useRef} from "react";
 import PropTypes from "prop-types";
 
-
 const ImagePreview = (props) =>{
     const {remove}=props;
     const imageDelete = useRef(null);

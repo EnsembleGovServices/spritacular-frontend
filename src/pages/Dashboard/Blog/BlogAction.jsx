@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {baseURL, routeUrls} from "../../../helpers/url";
+import {routeUrls} from "../../../helpers/url";
 
 const BlogAction = ({item, type}) => {
     return (
