@@ -7,11 +7,11 @@ import {cameraSettingFields} from "../../helpers/url";
 import UploadImageUI from "../Shared/UploadImageUI";
 
 const ObservationUploadImg = (props) => {
-    const { multiple, maxLimit, imageFormat, detectImage, mode, small } = props;
-    const { setObservationImages, observationImages, setCameraDetails } = useObservations();
+    const {multiple, maxLimit, imageFormat, detectImage, mode, small} = props;
+    const {setObservationImages, observationImages, setCameraDetails} = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
-    const { auth } = useAuth();
+    const {auth} = useAuth();
     const [userLocation, setUserLocation] = useState({
         latitude: (auth?.user?.location_metadata?.lat) ? auth?.user?.location_metadata?.lat : 18.5204303,
         longitude: (auth?.user?.location_metadata?.lng) ? auth?.user?.location_metadata?.lng : 73.8567437
@@ -111,7 +111,7 @@ const ObservationUploadImg = (props) => {
                 selected_image_id: images?.[0]?.id,
                 selected_image_index: 0
             });
-            setCameraDetails(cameraSettingFields)
+            // setCameraDetails(cameraSettingFields)
         }
     }, [images, setObservationImages, userLocation])
 

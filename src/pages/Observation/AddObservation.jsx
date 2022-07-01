@@ -15,13 +15,13 @@ import {
     UncontrolledAlert,
 } from "reactstrap";
 import "../../assets/scss/component/uploadObservationImage.scss";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
-import { baseURL, cameraSettingFields, routeUrls } from "../../helpers/url";
-import { Tabs } from "../../helpers/observation";
+import {baseURL, cameraSettingFields, routeUrls} from "../../helpers/url";
+import {Tabs} from "../../helpers/observation";
 
 import ObservationLocation from "../../components/Observation/ObservationLocation";
 import ObservationUploadedImg from "../../components/Observation/ObservationUploadedImg";
@@ -32,7 +32,7 @@ import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsF
 import Loader from "../../components/Shared/Loader";
 
 const AddObservation = () => {
-    const { auth } = useAuth();
+    const {auth} = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const {
         observationSteps,
@@ -130,11 +130,11 @@ const AddObservation = () => {
     };
 
     const handleImageInput = (e, address = null) => {
-        let observationArray = { ...observationImages };
+        let observationArray = {...observationImages};
         if (e === "address") {
             observationArray.data[observationImages?.selected_image_index][
                 "location"
-            ] = address;
+                ] = address;
             if (observationArray.data[1]) {
                 observationArray.data[1].category_map["location"] = address;
             }
@@ -161,11 +161,11 @@ const AddObservation = () => {
                 if (e.target.checked === false) {
                     observationArray.data[observationImages?.selected_image_index][
                         "azimuth"
-                    ] =
+                        ] =
                         observationArray && observationArray.data
                             ? observationArray.data[
-                            observationImages?.selected_image_index
-                            ]["azimuth"]
+                                observationImages?.selected_image_index
+                                ]["azimuth"]
                             : undefined;
                     if (observationData?.image_type === 3) {
                         if (observationArray.data[1]) {
@@ -304,7 +304,7 @@ const AddObservation = () => {
                     setCameraDetails(response?.data);
                 })
                 .catch((error) => {
-                    process.env.NODE_ENV === "development" && console.log('Get CameraDetail:',error.response);
+                    process.env.NODE_ENV === "development" && console.log('Get CameraDetail:', error.response);
                 });
         } else {
             setCameraDetails(cameraSettingFields);
@@ -322,12 +322,13 @@ const AddObservation = () => {
             total: 3,
             active: 1,
             mode: {
-                update: true,
+                update: false,
                 id: false,
             },
         });
         setObservationImages([]);
         setObservationData(null);
+        setCameraDetails({})
         console.clear();
     };
 
@@ -408,12 +409,12 @@ const AddObservation = () => {
                     map_data: data.images,
                 });
 
-                console.log('camera data', data?.camera_data);
+                // console.log('camera data', data?.camera_data);
                 setCameraDetails(data?.camera_data);
                 setUpdateMode(true);
             })
             .catch((error) => {
-                process.env.NODE_ENV === "development" && console.log('Update Obsv Data:',error);
+                process.env.NODE_ENV === "development" && console.log('Update Obsv Data:', error);
             });
     };
 
@@ -435,9 +436,9 @@ const AddObservation = () => {
                     const blob = await response
                         .blob()
                         .catch((error) => console.log("blob error", error));
-                    const file = new File([blob], fileName, { contentType });
+                    const file = new File([blob], fileName, {contentType});
                     const image = await toBase64(file).catch((error) =>
-                    process.env.NODE_ENV === "development" && console.log("base64 Error", error)
+                        process.env.NODE_ENV === "development" && console.log("base64 Error", error)
                     );
                     item.compressed_image = null;
                     setTimeout(function () {
@@ -472,11 +473,11 @@ const AddObservation = () => {
         if (updateUrl && obvType !== "draft") {
             return navigate("/observations");
         }
-    }, [location?.pathname, updateMode, observationSteps?.converted]);
+    }, [updateMode, observationSteps?.converted]);
 
     useEffect(() => {
-        let existingObvImageData = { ...observationImages },
-            obvType = { ...observationType };
+        let existingObvImageData = {...observationImages},
+            obvType = {...observationType};
 
         setObservationType({
             ...obvType,
@@ -516,7 +517,7 @@ const AddObservation = () => {
 
     return (
         <div className="position-relative">
-            {isLoading && <Loader fixContent={true} />}
+            {isLoading && <Loader fixContent={true}/>}
             {success && (
                 <UncontrolledAlert
                     color="success"
@@ -570,7 +571,7 @@ const AddObservation = () => {
                         <Row>
                             <Col md={3} sm={12}>
                                 <div className="observation-form-left-tab">
-                                    <ObservationProgress step={observationSteps} />
+                                    <ObservationProgress step={observationSteps}/>
                                     <Nav tabs className="flex-column">
                                         <NavItem>
                                             <NavLink
@@ -593,7 +594,7 @@ const AddObservation = () => {
                                         <NavItem>
                                             <NavLink
                                                 className={`${activeTab === Tabs.DateTimeLocation ? "active" : ""
-                                                    } ${disabledLocationTab ? "" : "disabled"}`}
+                                                } ${disabledLocationTab ? "" : "disabled"}`}
                                                 onClick={() => {
                                                     if (disabledLocationTab) {
                                                         toggleTab(Tabs.DateTimeLocation);
@@ -606,7 +607,7 @@ const AddObservation = () => {
                                         <NavItem>
                                             <NavLink
                                                 className={`${activeTab === Tabs.EquipmentDetails ? "active" : ""
-                                                    } ${disabledEquipmentTab ? "" : "disabled"}`}
+                                                } ${disabledEquipmentTab ? "" : "disabled"}`}
                                                 onClick={() => {
                                                     if (disabledEquipmentTab) {
                                                         toggleTab(Tabs.EquipmentDetails);
@@ -623,15 +624,15 @@ const AddObservation = () => {
                             <Col
                                 md={
                                     observationImages?.data?.length > 0 &&
-                                        next &&
-                                        !(activeTab === Tabs.EquipmentDetails)
+                                    next &&
+                                    !(activeTab === Tabs.EquipmentDetails)
                                         ? 7
                                         : 9
                                 }
                                 sm={
                                     observationImages?.data?.length > 0 &&
-                                        next &&
-                                        !(activeTab === Tabs.EquipmentDetails)
+                                    next &&
+                                    !(activeTab === Tabs.EquipmentDetails)
                                         ? 9
                                         : 12
                                 }
@@ -662,7 +663,7 @@ const AddObservation = () => {
                                             )}
                                         </TabPane>
                                         <TabPane tabId={Tabs.DateTimeLocation}
-                                            className="observation_location"
+                                                 className="observation_location"
                                         >
                                             {showUploadedPreview() && (
                                                 <div
@@ -688,7 +689,7 @@ const AddObservation = () => {
                                             )}
                                         </TabPane>
                                         <TabPane tabId={Tabs.EquipmentDetails}
-                                            className="observation_equipment"
+                                                 className="observation_equipment"
                                         >
                                             {auth?.user?.camera && (
                                                 <FormGroup
