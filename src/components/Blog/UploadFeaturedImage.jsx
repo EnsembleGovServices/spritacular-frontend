@@ -142,7 +142,7 @@ const UploadFeaturedImage = (props) => {
                     }, 500)
                     return file;
                 })
-                .catch((error) => process.env.NODE_ENV === "development" && console.log(`File converting delayed`));
+                .catch((error) => process.env.NODE_ENV === "development" && console.log('File converting delayed:', error.message));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [thumb])

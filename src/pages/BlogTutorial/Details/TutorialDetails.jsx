@@ -45,7 +45,7 @@ const TutorialDetails = () => {
                             <h2 className="mb-0">{tutorial?.title}</h2>
                             {admin &&
                                 <Link
-                                    to={tutorial ? `/${routeUrls.dashboard}/${routeUrls.dashTutorial.list}/${slug}/edit` : ''}
+                                    to={tutorial ? `${routeUrls.dashboard}/${routeUrls.dashTutorial.list}/${slug}/edit` : ''}
                                     className="btn btn-primary px-4 btn-sm">
                                     Edit
                                 </Link>
