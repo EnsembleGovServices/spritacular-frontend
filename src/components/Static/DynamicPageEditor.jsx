@@ -1,34 +1,34 @@
 import "../../assets/scss/component/tutorialdetail.scss";
 
-import {lazy, Suspense} from "react";
-import {Card, CardBody, Col, Container, Row} from "reactstrap";
-import {useEffect, useState} from "react";
+import { lazy, Suspense } from "react";
+import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Loader from "../Shared/Loader";
 import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
+import { baseURL } from "../../helpers/url";
 
 const ContentEditor = lazy(() => import('../Blog/ContentEditor'))
 
-const DynamicPageEditor = ({title, pageContent}) => {
+const DynamicPageEditor = ({ title, pageContent }) => {
     const [loading, setLoading] = useState(false);
 
     const [readOnly, setReadOnly] = useState(true);
     const [data, setData] = useState({
         content: "",
     });
-    const {auth} = useAuth();
+    const { auth } = useAuth();
     const admin = auth?.user?.is_superuser;
 
     const handleEditMode = () => {
         setReadOnly(!readOnly);
     }
 
-
     const getPolicyData = async () => {
         return await axios.get(baseURL.static_policy_api, {
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token?.access}`,
             },
         })
             .then((response) => {
@@ -61,7 +61,7 @@ const DynamicPageEditor = ({title, pageContent}) => {
                         <h2 className="mb-0 mx-auto">{title}</h2>
                         {admin &&
                             <button className="btn btn-primary px-4 btn-sm" onClick={() => handleEditMode()}>
-                                Edit
+                                {readOnly ? "Edit" : "Update"}
                             </button>
                         }
                     </div>
@@ -85,7 +85,7 @@ const DynamicPageEditor = ({title, pageContent}) => {
                 </Container>
             </section>
             {loading &&
-                <Loader fixContent={true}/>
+                <Loader fixContent={true} />
             }
         </div>
     )

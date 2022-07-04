@@ -1,14 +1,14 @@
 import "../../assets/scss/styles/editors.css";
-import {CKEditor} from "@ckeditor/ckeditor5-react";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
 import FullEditor from "@blowstack/ckeditor5-full-free-build";
-import {baseURL} from "../../helpers/url";
+import { baseURL } from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
-import {useEffect, useRef, useState} from "react";
-import {useSearchParams} from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const ContentEditor = (props) => {
-    const {data, setData, editorData, setLoading, setReadMode, readMode, readOnly, dynamicPageProps} = props;
-    const {auth} = useAuth();
+    const { data, setData, editorData, setLoading, setReadMode, readMode, readOnly, dynamicPageProps } = props;
+    const { auth } = useAuth();
     const [searchParams] = useSearchParams();
     const mode = searchParams.get('mode') !== "edit";
 
@@ -43,7 +43,7 @@ const ContentEditor = (props) => {
                                 });
                                 setImageID((prev) => [
                                     ...prev,
-                                    {id: res.image_id, url: res.url}
+                                    { id: res.image_id, url: res.url }
                                 ])
                             })
                             .catch((err) => {
@@ -134,7 +134,8 @@ const ContentEditor = (props) => {
         const toolbarContainer = ckEditorDynamicPage?.ui.view.stickyPanel;
         if (ckEditorDynamicPage) {
             ckEditorDynamicPage.isReadOnly = dynamicPageProps;
-            if (ckEditorDynamicPage.isReadOnly) {
+            // console.log(ckEditorDynamicPage.isReadOnly, ckEditorDynamicPage.ui.view.top?._items[0]?.element.className.length, ckEditorDynamicPage.ui.view.top?._items[0]?.element.className.length > 0);
+            if (ckEditorDynamicPage.isReadOnly || ckEditorDynamicPage.ui.view.top?._items[0]?.element.className.length > 0) {
                 ckEditorDynamicPage.ui.view.top.remove(toolbarContainer);
             } else {
                 ckEditorDynamicPage.ui.view.top.add(toolbarContainer);
