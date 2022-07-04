@@ -157,6 +157,17 @@ const CreateUpdateBlogTutorial = (props) => {
         }
     }
 
+    const handleReset = () => {
+        setData((prev) => {
+            return {
+                ...prev,
+                title: '',
+                description: '',
+                content: '',
+            }
+        })
+    }
+
     useEffect(() => {
         getBlogCategory().then(r => r)
         // console.clear();
@@ -332,7 +343,7 @@ const CreateUpdateBlogTutorial = (props) => {
                                     className={`btn px-4 py-2 px-sm-5 py-sm-2 ${handleDisable() ? 'btn-light text-light-dark' : 'btn-primary'}`}>
                                 {update ? "Update" : "Create"}
                             </button>
-                            <button type="reset"
+                            <button type="button" onClick={() => handleReset()}
                                     className="btn btn-dark px-4 py-2 px-sm-5 py-sm-2 ms-2">Reset
                             </button>
                         </div>
