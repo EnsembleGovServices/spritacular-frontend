@@ -3,7 +3,7 @@ import {CKEditor} from "@ckeditor/ckeditor5-react";
 import FullEditor from "@blowstack/ckeditor5-full-free-build";
 import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {useSearchParams} from "react-router-dom";
 
 const ContentEditor = (props) => {
@@ -55,6 +55,9 @@ const ContentEditor = (props) => {
         };
     }
 
+    // Button plugin
+
+
     // CkEditor plugin
     function uploadPlugin(editor) {
         editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
@@ -64,6 +67,23 @@ const ContentEditor = (props) => {
 
     // To set menu and tools for editor
     const editorConfig = {
+        heading: {
+            options: [
+                {model: 'heading1', view: 'h1', title: 'Heading 1', class: 'heading1'},
+                {model: 'heading2', view: 'h2', title: 'Heading 2', class: 'heading2'},
+                {model: 'heading3', view: 'h3', title: 'Heading 3', class: 'heading3'},
+                {model: 'heading4', view: 'h4', title: 'Heading 4', class: 'heading4'},
+                {model: 'heading5', view: 'h5', title: 'Heading 5', class: 'heading5'},
+                {model: 'paragraph', view: 'p', title: 'Paragraph', class: 'paragraph'},
+            ]
+        },
+        link: {
+            decorators: {
+                addTargetToExternalLinks: true,
+                defaultProtocol: 'https://',
+            }
+        },
+        placeholder: 'Type or paste your content here!',
         toolbar: {
             items: [
                 "undo", "redo",
@@ -72,13 +92,14 @@ const ContentEditor = (props) => {
                 "bold", "italic", "|", "link", "|",
                 "bulletedList", "numberedList",
                 "insertTable", "mergeTableCells", "|",
-                "insertImage", "mediaEmbed", "codeBlock", "|",
-                "code", "HorizontalLine",
+                "insertImage", "mediaEmbed", "|",
+                "HorizontalLine",
                 "ImageResize",
                 "pageBreak",
             ],
-            shouldNotGroupWhenFull: false
+            shouldNotGroupWhenFull: false,
         },
+
         removePlugins: ['Title'],
         extraPlugins: [uploadPlugin],
     }
@@ -129,7 +150,7 @@ const ContentEditor = (props) => {
     }, [mode]);
 
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const ckEditorDynamicPage = ckEditorContentRef.current.editor;
         const toolbarContainer = ckEditorDynamicPage?.ui.view.stickyPanel;
         if (ckEditorDynamicPage) {
