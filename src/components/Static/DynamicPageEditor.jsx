@@ -1,8 +1,8 @@
 import "../../assets/scss/component/tutorialdetail.scss";
 
-import {lazy, Suspense} from "react";
-import {Card, CardBody, Col, Container, Row} from "reactstrap";
-import {useEffect, useState} from "react";
+import { lazy, Suspense } from "react";
+import { Card, CardBody, Col, Container, Row } from "reactstrap";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Loader from "../Shared/Loader";
 import axios from "../../api/axios";
@@ -10,12 +10,12 @@ import NotFound from "../Common/NotFound";
 
 const ContentEditor = lazy(() => import('../Blog/ContentEditor'))
 
-const DynamicPageEditor = ({title, endpoint}) => {
+const DynamicPageEditor = ({ title, endpoint }) => {
     const [loading, setLoading] = useState(false);
     const [noData, setNoData] = useState(false);
     const [readOnly, setReadOnly] = useState(true);
-    const [data, setData] = useState({title: title, content: ''});
-    const {auth} = useAuth();
+    const [data, setData] = useState({ title: title, content: '' });
+    const { auth } = useAuth();
     const formData = new FormData();
     const admin = auth?.user?.is_superuser;
 
@@ -34,7 +34,6 @@ const DynamicPageEditor = ({title, endpoint}) => {
             })
                 .then((response) => {
                     if (!response?.data?.content) {
-                        console.log('no data found here');
                         setNoData(true);
                     } else {
                         setNoData(false);
@@ -51,7 +50,6 @@ const DynamicPageEditor = ({title, endpoint}) => {
                     }, 1000)
                 })
                 .catch((error) => {
-                    console.log(error)
                     setLoading(false)
                 })
         } else {
@@ -89,7 +87,8 @@ const DynamicPageEditor = ({title, endpoint}) => {
     }
 
     useEffect(() => {
-        getPolicyData().then(r => r)
+        getPolicyData().then(r => r);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
@@ -98,7 +97,8 @@ const DynamicPageEditor = ({title, endpoint}) => {
                 ...prev,
                 content: data?.content
             }
-        })
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loading])
 
     return (
@@ -124,7 +124,7 @@ const DynamicPageEditor = ({title, endpoint}) => {
                             <Col md={12}>
                                 <Card className="card border-0 shadow-sm">
                                     <CardBody className="p-md-5 p-4">
-                                        {noData && <NotFound/>}
+                                        {noData && <NotFound />}
                                         <div className="form-group">
                                             {!readOnly &&
                                                 <label htmlFor="content" className="col-form-label">Content</label>
@@ -145,7 +145,7 @@ const DynamicPageEditor = ({title, endpoint}) => {
                 </Container>
             </section>
             {loading &&
-                <Loader fixContent={true}/>
+                <Loader fixContent={true} />
             }
         </div>
     )

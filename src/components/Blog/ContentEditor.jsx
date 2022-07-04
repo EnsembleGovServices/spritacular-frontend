@@ -1,14 +1,14 @@
 import "../../assets/scss/styles/editors.css";
-import {CKEditor} from "@ckeditor/ckeditor5-react";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
 import FullEditor from "@blowstack/ckeditor5-full-free-build";
-import {baseURL} from "../../helpers/url";
+import { baseURL } from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
-import {useSearchParams} from "react-router-dom";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const ContentEditor = (props) => {
-    const {data, setData, editorData, setLoading, setReadMode, readMode, readOnly, dynamicPageProps} = props;
-    const {auth} = useAuth();
+    const { data, setData, editorData, setLoading, setReadMode, readMode, readOnly, dynamicPageProps } = props;
+    const { auth } = useAuth();
     const [searchParams] = useSearchParams();
     const mode = searchParams.get('mode') !== "edit";
 
@@ -43,7 +43,7 @@ const ContentEditor = (props) => {
                                 });
                                 setImageID((prev) => [
                                     ...prev,
-                                    {id: res.image_id, url: res.url}
+                                    { id: res.image_id, url: res.url }
                                 ])
                             })
                             .catch((err) => {
@@ -66,15 +66,16 @@ const ContentEditor = (props) => {
     const editorConfig = {
         heading: {
             options: [
-                {model: 'heading1', view: 'h1', title: 'Heading 1', class: 'heading1'},
-                {model: 'heading2', view: 'h2', title: 'Heading 2', class: 'heading2'},
-                {model: 'heading3', view: 'h3', title: 'Heading 3', class: 'heading3'},
-                {model: 'heading4', view: 'h4', title: 'Heading 4', class: 'heading4'},
-                {model: 'heading5', view: 'h5', title: 'Heading 5', class: 'heading5'},
-                {model: 'paragraph', view: 'p', title: 'Paragraph', class: 'paragraph'},
-                {model: 'addButton', view: 'div', title: 'Add Button', class: 'paragraph'},
+                { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'heading1' },
+                { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'heading2' },
+                { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'heading3' },
+                { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'heading4' },
+                { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'heading5' },
+                { model: 'paragraph', view: 'p', title: 'Paragraph', class: 'paragraph' },
+                { model: 'addButton', view: 'button', title: 'Add Button', class: 'paragraph' },
             ]
         },
+        // format_button: { element: 'button', attributes: { 'class': 'btn btn-primary' } },
         link: {
             decorators: {
                 addTargetToExternalLinks: true,
@@ -100,6 +101,7 @@ const ContentEditor = (props) => {
 
         removePlugins: ['Title'],
         extraPlugins: [uploadPlugin],
+        allowedContent: true
     }
 
     // Set image data in state.

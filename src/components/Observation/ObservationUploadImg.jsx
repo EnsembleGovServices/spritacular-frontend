@@ -6,8 +6,8 @@ import useAuth from "../../hooks/useAuth";
 import UploadImageUI from "../Shared/UploadImageUI";
 
 const ObservationUploadImg = (props) => {
-    const {multiple, maxLimit, imageFormat, detectImage, mode, small} = props;
-    const {setObservationImages, observationImages, setCameraDetails} = useObservations();
+    const { multiple, maxLimit, imageFormat, detectImage, mode, small } = props;
+    const { setObservationImages, observationImages } = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
     const { auth } = useAuth();
@@ -132,6 +132,5 @@ const ObservationUploadImg = (props) => {
 ObservationUploadImg.propTypes = {
     userLocation: PropTypes.object,
 };
-
 
 export default ObservationUploadImg;

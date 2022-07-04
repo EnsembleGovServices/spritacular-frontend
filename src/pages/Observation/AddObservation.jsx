@@ -52,7 +52,8 @@ const AddObservation = () => {
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
     const [updateMode, setUpdateMode] = useState(false);
-    const [reset, setReset] = useState(false);
+    
+    // const [reset, setReset] = useState(false);
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
     const [deletedImage, setDeletedImage] = useState(null);
@@ -317,7 +318,7 @@ const AddObservation = () => {
 
     const handleReset = (e) => {
         navigate("/observations");
-        setReset(true);
+        // setReset(true);
         setObservationSteps({
             total: 3,
             active: 1,
@@ -485,6 +486,7 @@ const AddObservation = () => {
         if (updateUrl && obvType !== "draft") {
             return navigate("/observations");
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updateMode, observationSteps?.converted]);
 
     useEffect(() => {
@@ -502,6 +504,7 @@ const AddObservation = () => {
             selected_image_index: 0,
             observation_count: draftData?.map_data.length,
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [draftData, setObservationImages]);
 
     // Set Progress Bar

@@ -38,6 +38,7 @@ const ObservationListRow = (props) => {
 
     useEffect(() => {
         getAllChecked(childInput.current);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allChecked, loadMore]);
 
     return (

@@ -120,13 +120,14 @@ const ObservationDetails = (props) => {
                 setIsImageNull(false);
             }, 1000)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data?.id, isImageNull, open, auth?.user]);
 
     useEffect(() => {
         if (!isImageNull && location.pathname === `/${routeUrls.myObservations}`) {
             refreshData(true, activeType);
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isImageNull, location]);
 
     useEffect(() => {
@@ -142,6 +143,7 @@ const ObservationDetails = (props) => {
                 })
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [observationListData.list])
 
     return (
