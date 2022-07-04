@@ -12,25 +12,25 @@ import {
     Label,
     Row
 } from "reactstrap";
-import { useEffect, useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import useObservations from "../../hooks/useObservations";
 import MapWrapper from '../MapWrapper';
 import ReactCountryFlags from '../ReactCountryFlag';
-import { directionValue, Tabs } from "../../helpers/observation";
-import { timezone } from "../../helpers/timezone";
+import {directionValue, Tabs} from "../../helpers/observation";
+import {timezone} from "../../helpers/timezone";
 import ObservationCategory from "./ObservationCategory";
-import { Icon } from '@iconify/react';
-import { getdirectionDegree, getdirectionAngle } from "../../helpers/observation";
+import {Icon} from '@iconify/react';
+import {getdirectionDegree, getdirectionAngle} from "../../helpers/observation";
 
 // Date-time-picker 
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import "react-multi-date-picker/styles/colors/red.css";
-import { cdn } from "../../helpers/url";
+import {cdn} from "../../helpers/url";
 
 
 const ObservationLocation = (props) => {
-    const { toggleTab, handleImageInput, error, step, obvType, disableNext } = props;
+    const {toggleTab, handleImageInput, error, step, obvType, disableNext} = props;
     const fref = useRef()
     const [address1, setAddress] = useState({
         address: '',
@@ -55,7 +55,7 @@ const ObservationLocation = (props) => {
         lng: null
     });
     const [isLoaded, setIsLoaded] = useState(false);
-    const { observationImages, setObservationImages, observationData } = useObservations();
+    const {observationImages, setObservationImages, observationData} = useObservations();
     const [isActiveDire, setActiveDire] = useState(null);
     const [angleDegree, setAngleDegree] = useState(false);
     const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
@@ -81,7 +81,7 @@ const ObservationLocation = (props) => {
     // to store observation address data.
     const handleValue = (flag, value) => {
         if (!flag) {
-            let address = { ...address1 };
+            let address = {...address1};
             address.country_code = value[0];
             address.short_address = value[1];
             setInitialAddress({
@@ -92,7 +92,7 @@ const ObservationLocation = (props) => {
             })
             setAddress(address);
             if (observationImages?.data) {
-                let observationAddress = { ...observationImages };
+                let observationAddress = {...observationImages};
                 if (observationAddress?.data) {
                     observationAddress.data[observationAddress.selected_image_index]['location'] = value[1];
                     observationAddress.data[observationAddress.selected_image_index]['country_code'] = value[0];
@@ -115,7 +115,7 @@ const ObservationLocation = (props) => {
         } else {
             setAddress(value);
             if (observationImages?.data) {
-                let observationAddress = { ...observationImages };
+                let observationAddress = {...observationImages};
                 if (observationAddress?.data) {
                     observationAddress.data[observationAddress.selected_image_index]['latitude'] = value.markerPosition.lat;
                     observationAddress.data[observationAddress.selected_image_index]['longitude'] = value.markerPosition.lng;
@@ -144,13 +144,13 @@ const ObservationLocation = (props) => {
             }
         }
     }
-    const observationArray = { ...observationImages };
+    const observationArray = {...observationImages};
 
     // Store latitue input value
     const handleChangeLat = (e) => {
         handleImageInput(e);
         let value = Number(e.target.value);
-        let addressState = { ...address1 };
+        let addressState = {...address1};
         addressState.mapPosition.lat = value;
         addressState.markerPosition.lat = value;
         setAddress(addressState);
@@ -162,7 +162,7 @@ const ObservationLocation = (props) => {
     const handleChangeLng = (e) => {
         handleImageInput(e);
         let value = Number(e.target.value);
-        let addressState = { ...address1 };
+        let addressState = {...address1};
         addressState.mapPosition.lng = value;
         addressState.markerPosition.lng = value;
         setAddress(addressState);
@@ -172,7 +172,7 @@ const ObservationLocation = (props) => {
 
     // To append location and country_code in context data.
     useEffect(() => {
-        let observationAddress = { ...observationImages };
+        let observationAddress = {...observationImages};
         if (observationAddress?.data) {
             observationAddress.data[observationAddress.selected_image_index]['location'] = address1?.short_address;
             observationAddress.data[observationAddress.selected_image_index]['country_code'] = address1?.country;
@@ -196,7 +196,7 @@ const ObservationLocation = (props) => {
     }, [address1]);
 
     useEffect(() => {
-        let observationAddress = { ...observationImages };
+        let observationAddress = {...observationImages};
         if (observationAddress?.data) {
             if (observationData?.image_type === 3) {
                 if (observationAddress.data[1]) {
@@ -246,7 +246,7 @@ const ObservationLocation = (props) => {
     const handleCopyData = (e, keys) => {
         if (observationImages) {
 
-            let observationMap = { ...observationImages };
+            let observationMap = {...observationImages};
             if (keys.includes('location', 'latitude', 'longitude', 'country_code', 'place_uid')) {
                 observationMap.data[observationImages?.selected_image_index].sameAsFirstMap = e;
             }
@@ -255,7 +255,7 @@ const ObservationLocation = (props) => {
                 observationMap.data[observationImages?.selected_image_index].sameAsFirstDate = e;
             }
             setObservationImages(observationMap);
-            let copyImages = { ...observationImages };
+            let copyImages = {...observationImages};
             keys.map((k) => {
                 if (e) {
                     copyImages.data[copyImages?.selected_image_index][k] = copyImages.data[0][k];
@@ -362,16 +362,16 @@ const ObservationLocation = (props) => {
                                             <div className="border-end w-auto">
                                                 <FormGroup className="form-group d-flex align-items-center">
                                                     <Label className="form-label text-uppercase mb-0 me-2"
-                                                        htmlFor="LAT">LAT</Label>
+                                                           htmlFor="LAT">LAT</Label>
                                                     <span
                                                         className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.latitude : address1?.markerPosition?.lat
-                                                        }</span>
+                                                    }</span>
                                                 </FormGroup>
                                             </div>
                                             <div className="w-auto">
                                                 <FormGroup className="form-group d-flex align-items-center">
                                                     <Label className="form-label text-uppercase mb-0 me-2"
-                                                        htmlFor="LON">LON</Label>
+                                                           htmlFor="LON">LON</Label>
                                                     <span
                                                         className="fw-bold text-truncate data-value">{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.longitude : address1?.markerPosition?.lng}</span>
                                                 </FormGroup>
@@ -382,7 +382,7 @@ const ObservationLocation = (props) => {
                                         <div
                                             className="selected-address d-block d-lg-flex align-items-center justify-content-start justify-content-lg-end mt-2 mt-lg-0">
                                             <ReactCountryFlags
-                                                country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code : address1?.country_code} />
+                                                country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code : address1?.country_code}/>
                                             <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                                         </div>
                                     </Col>
@@ -400,7 +400,7 @@ const ObservationLocation = (props) => {
                     <Row>
                         <Col md={6} lg={4}>
                             <FormGroup className="d-flex">
-                                <Label className="form-label text-uppercase me-1" htmlFor="LAT" sm={2}>LATz</Label>
+                                <Label className="form-label text-uppercase me-1" htmlFor="LAT" sm={2}>LAT</Label>
                                 <Col sm={10}>
                                     <Input
                                         // value={address1?.markerPosition?.lat}
@@ -440,7 +440,7 @@ const ObservationLocation = (props) => {
                             <div
                                 className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
                                 <ReactCountryFlags
-                                    country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code : null} />
+                                    country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code : null}/>
                                 <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                             </div>
                         </Col>
@@ -449,7 +449,7 @@ const ObservationLocation = (props) => {
             }
             {observationData?.image_type === 3 &&
                 <Row className="mb-4">
-                    <ObservationCategory obvType={obvType} error={error} />
+                    <ObservationCategory obvType={obvType} error={error}/>
                 </Row>
             }
 
@@ -535,7 +535,7 @@ const ObservationLocation = (props) => {
                                             })}
                                             editable={false}
                                             plugins={[
-                                                <TimePicker hideSeconds />,
+                                                <TimePicker hideSeconds/>,
                                             ]}
                                             scrollSensitive={false}
                                         />
@@ -554,25 +554,25 @@ const ObservationLocation = (props) => {
                                 <FormGroup>
                                     <Label className="text-uppercase" htmlFor="TIME ZONE">TIME ZONE</Label>
                                     <Dropdown className="dropdown-with-search"
-                                        toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
+                                              toggle={() => setIsTimezoneOpen(!isTimezoneOpen)} isOpen={isTimezoneOpen}>
                                         <DropdownToggle
                                             className="px-3 shadow-none border-0 text-black fw-normal text-start d-flex justify-content-between align-items-center w-100">
                                             {/*<span className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone.substring(0, 16)+'...'}` : ''}</span>*/}
                                             <span
                                                 className="text-truncate">{(observationImages?.data) ? `${observationImages?.data[observationImages?.selected_image_index]?.timezone}` : 'Select Time Zone'}</span>
-                                            <Icon icon="fe:arrow-down" className="down-arrow ms-1" />
+                                            <Icon icon="fe:arrow-down" className="down-arrow ms-1"/>
                                         </DropdownToggle>
                                         <DropdownMenu className="py-0 shadow">
                                             <DropdownItem header
-                                                className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input
-                                                    type="text" className="p-2" onChange={(e) => findTimeZone(e)}
-                                                    placeholder="Search Timezone" /></DropdownItem>
+                                                          className="mb-0 position-sticky start-0 top-0 end-0 p-2 bg-white"><Input
+                                                type="text" className="p-2" onChange={(e) => findTimeZone(e)}
+                                                placeholder="Search Timezone"/></DropdownItem>
                                             {timezone?.filter(item => {
                                                 return item.toLowerCase().indexOf(searchTimeZone.toLowerCase()) !== -1;
                                             }).map((item, index) => {
                                                 return <DropdownItem name="timezone" className="px-2 fw-normal"
-                                                    key={index} value={item}
-                                                    onClick={(e) => handleImageInput(e)}>{item}</DropdownItem>
+                                                                     key={index} value={item}
+                                                                     onClick={(e) => handleImageInput(e)}>{item}</DropdownItem>
                                             })}
                                         </DropdownMenu>
                                     </Dropdown>
@@ -595,7 +595,7 @@ const ObservationLocation = (props) => {
                                         <div className="border-end w-auto">
                                             <FormGroup className="form-group d-flex align-items-center">
                                                 <Label className="form-label text-uppercase mb-0 me-2"
-                                                    htmlFor="Date">Date</Label>
+                                                       htmlFor="Date">Date</Label>
                                                 <span
                                                     className="fw-bold text-truncate data-value">{(observationImages?.data) ? (observationImages?.data[observationImages?.selected_image_index]?.obs_date === null ? 'dd/mm/yyyy' : observationImages?.data[observationImages?.selected_image_index]?.obs_date) : 'dd/mm/yyyy'}</span>
                                             </FormGroup>
@@ -603,7 +603,7 @@ const ObservationLocation = (props) => {
                                         <div className="w-auto">
                                             <FormGroup className="form-group d-flex align-items-center">
                                                 <Label className="form-label text-uppercase mb-0 me-2"
-                                                    htmlFor="Time">Time</Label>
+                                                       htmlFor="Time">Time</Label>
                                                 <span
                                                     className="fw-bold text-truncate data-value">{observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}</span>
                                             </FormGroup>
@@ -694,7 +694,7 @@ const ObservationLocation = (props) => {
                                     )
                                 })
                             }
-                            <div className="center-dot rounded-circle" />
+                            <div className="center-dot rounded-circle"/>
                             <div className="rotate-arrow-wrap">
                                 <div className="rotate-arrow-inner" style={{
                                     "--directionAngle": directionValue.filter((item) => item.name === getdirectionAngle(Number(observationArray.data[observationImages?.selected_image_index]['azimuth']))).map((dirData) => {
@@ -702,9 +702,9 @@ const ObservationLocation = (props) => {
                                     }) + 'deg'
                                 }}>
                                     <div className="rotate-arrow main"><img src={`${cdn.url}/compass-arrow.svg`}
-                                        alt="Compass Arrow" /></div>
+                                                                            alt="Compass Arrow"/></div>
                                     <div className="rotate-arrow hidden"><img src={`${cdn.url}/compass-arrow.svg`}
-                                        alt="Compass Arrow" /></div>
+                                                                              alt="Compass Arrow"/></div>
                                 </div>
                             </div>
                         </div>
@@ -728,9 +728,9 @@ const ObservationLocation = (props) => {
                 }
                 <FormGroup className="mt-5">
                     <Button className="gray-outline-btn me-2"
-                        onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
+                            onClick={() => toggleTab(Tabs.ObservationImages)}>Back</Button>
                     <Button className="" onClick={() => toggleTab(Tabs.EquipmentDetails)}
-                        disabled={!disableNext}>Continue</Button>
+                            disabled={!disableNext}>Continue</Button>
                 </FormGroup>
             </Col>
         </>

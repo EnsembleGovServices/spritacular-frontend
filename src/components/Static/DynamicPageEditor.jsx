@@ -1,7 +1,7 @@
 import "../../assets/scss/component/tutorialdetail.scss";
 
 import {lazy, Suspense} from "react";
-import {Card, CardBody, Col, Container, Row, UncontrolledAlert} from "reactstrap";
+import {Card, CardBody, Col, Container, Row} from "reactstrap";
 import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth";
 import Loader from "../Shared/Loader";

@@ -97,7 +97,7 @@ const ObservationAfterImageUpload = (props) => {
     }
 
     useEffect(() => {
-        if (isMultiple) {
+        if (isMultiple && observationImages?.data?.length > 1) {
             handleConfirmationPopUp();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -240,7 +240,8 @@ const ObservationAfterImageUpload = (props) => {
                                 {isMultiple &&
                                     <Col sm={12}>
                                         <div className="small-upload_box mb-3">
-                                            <ObservationUploadImg small={true} detectImage={detectImage} imageFormat={false}
+                                            <ObservationUploadImg small={true} detectImage={detectImage}
+                                                                  imageFormat={false}
                                                                   maxLimit={false} multiple={false}/>
                                         </div>
                                     </Col>
