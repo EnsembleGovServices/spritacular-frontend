@@ -76,12 +76,13 @@ const DynamicPageEditor = ({title, endpoint}) => {
                 setData((prev) => {
                     return {
                         ...prev,
-                        title: response?.title,
+                        title: title,
                         content: response?.content
                     }
                 });
 
             }).catch((error) => {
+                process.env.NODE_ENV === "development" && console.log('Update DynamicPage:', error)
                 setLoading(false);
             })
         }
