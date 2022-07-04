@@ -55,9 +55,6 @@ const ContentEditor = (props) => {
         };
     }
 
-    // Button plugin
-
-
     // CkEditor plugin
     function uploadPlugin(editor) {
         editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
