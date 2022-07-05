@@ -56,6 +56,7 @@ const ObservationCard = (props) => {
                 {cardItems?.image_type === 3
                     ? <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick}
                                          handleIndex={index}
+                                         alt={userProfile?.location}
                                          loaderLoading={handleLoaderLoading}
                     />
                     : <BlurImage

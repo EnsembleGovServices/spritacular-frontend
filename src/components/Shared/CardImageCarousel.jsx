@@ -1,11 +1,11 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Navigation} from "swiper";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import BlurImage from "../Common/BlurImage";
 
 const CardImageCarousel = (props) => {
-    const { carouselData, handleClick, handleIndex, detail, loaderLoading, handleFullScreen } = props;
+    const {carouselData, handleClick, handleIndex, detail, loaderLoading, handleFullScreen, alt} = props;
 
     return (
         <>
@@ -13,7 +13,7 @@ const CardImageCarousel = (props) => {
                 {carouselData.length > 0 && carouselData.map((item, id) => {
                     return (
                         <SwiperSlide key={id}
-                            onClick={(e) => handleFullScreen ? handleFullScreen((detail) ? item?.image : (item.compressed_image) ? item.compressed_image : item?.image) : e.preventDefault()}>
+                                     onClick={(e) => handleFullScreen ? handleFullScreen((detail) ? item?.image : (item.compressed_image) ? item.compressed_image : item?.image) : e.preventDefault()}>
                             <BlurImage
                                 preview={(detail) ? item?.image : (item.compressed_image) ? item.compressed_image : item?.image}
                                 image={(detail) ? item?.image : (item.compressed_image) ? item.compressed_image : item?.image}
@@ -21,7 +21,7 @@ const CardImageCarousel = (props) => {
                                     handleClick ? handleClick(handleIndex) : e.preventDefault()
                                 }}
                                 loaderLoading={loaderLoading}
-                                alt={item?.name}
+                                alt={alt}
                             >
                             </BlurImage>
                         </SwiperSlide>
