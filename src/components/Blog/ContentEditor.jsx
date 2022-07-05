@@ -72,6 +72,16 @@ const ContentEditor = (props) => {
                 {model: 'heading4', view: 'h4', title: 'Heading 4', class: 'heading4'},
                 {model: 'heading5', view: 'h5', title: 'Heading 5', class: 'heading5'},
                 {model: 'paragraph', view: 'p', title: 'Paragraph', class: 'paragraph'},
+                {
+                    model: 'addButton',
+                    view: {
+                        name: 'p',
+                        classes: 'editor-btn'
+                    },
+                    title: 'Add Button',
+                    class: 'btn',
+                    converterPriority: 'high'
+                },
             ]
         },
 

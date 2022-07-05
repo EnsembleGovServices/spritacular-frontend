@@ -10,7 +10,7 @@ import NotFound from "../Common/NotFound";
 
 const ContentEditor = lazy(() => import('../Blog/ContentEditor'))
 
-const DynamicPageEditor = ({title, endpoint, gBtn = false}) => {
+const DynamicPageEditor = ({title, endpoint}) => {
     const [loading, setLoading] = useState(false);
     const [noData, setNoData] = useState(false);
     const [readOnly, setReadOnly] = useState(true);
@@ -143,15 +143,6 @@ const DynamicPageEditor = ({title, endpoint, gBtn = false}) => {
                                                     dynamicPageProps={readOnly}
                                                 />
                                             </div>
-
-                                            {readOnly && !loading && gBtn &&
-                                                <div className="text-center">
-                                                    <a href="https://groups.google.com/g/spritacular"
-                                                       className="btn btn-primary" target="_blank">Join
-                                                        Spritacular Google Group</a>
-                                                </div>
-                                            }
-
                                         </CardBody>
                                     </Card>
                                 </Col>
