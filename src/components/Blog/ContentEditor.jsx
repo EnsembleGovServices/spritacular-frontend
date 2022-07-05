@@ -89,16 +89,6 @@ const ContentEditor = (props) => {
             addTargetToExternalLinks: true,
             decorators: {
                 defaultProtocol: 'https://',
-                // addTargetToExternalLinks: {
-                //     mode: 'automatic',
-                //     callback: url => /^(https?:)?\/\//.test(url),
-                //     attributes: {
-                //         class: 'btn btn-secondary btn-lg px-md-5 px-3 get-start',
-                //         target: '_blank',
-                //         rel: 'noopener noreferrer'
-                //     }
-
-                // }
             }
         },
         placeholder: 'Type or paste your content here!',
