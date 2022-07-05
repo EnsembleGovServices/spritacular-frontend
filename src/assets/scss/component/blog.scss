@@ -12,6 +12,7 @@
 
 .blog-main {
   padding: 50px 0px 80px;
+
   @include media-breakpoint-down(md) {
     padding: 30px 0px 80px;
   }
@@ -24,9 +25,11 @@
   .main-blog {
     position: relative;
     height: 550px;
+
     @include media-breakpoint-down(lg) {
       height: 400px;
     }
+
     @include media-breakpoint-down(lg) {
       height: 320px;
     }
@@ -44,6 +47,7 @@
       left: 0;
       right: 0;
       padding: 0 15px 30px 30px;
+
       @include media-breakpoint-down(lg) {
         padding: 0 15px 20px 20px;
       }
@@ -83,6 +87,7 @@
       left: 0;
       right: 0;
       padding: 0 15px 30px 30px;
+
       @include media-breakpoint-down(lg) {
         padding: 0 15px 20px 20px;
       }
@@ -105,6 +110,7 @@
 
   .recommended-blog {
     margin: 110px 0px 110px;
+
     @include media-breakpoint-down(lg) {
       margin: 50px 0px 70px;
     }
@@ -125,6 +131,7 @@
 
     .blog-small {
       height: 380px;
+
       @include media-breakpoint-down(lg) {
         height: 250px;
       }
@@ -133,6 +140,40 @@
         @include sm-title;
       }
 
+    }
+  }
+
+  .ck-editor {
+    .editor-btn {
+      a {
+        //btn
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 25px;
+        color: #212529;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        padding: 0.375rem 0.75rem;
+        text-align: center;
+        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        vertical-align: middle;
+        //btn-secondary
+        @include buttonSecodary;
+        // btn-lg
+        border-radius: 99px;
+        font-size: 1.25rem;
+        padding: 0.5rem 1rem;
+
+        &.disabled {
+          @include disabled;
+        }
+      }
     }
   }
 }

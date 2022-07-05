@@ -19,12 +19,14 @@ const DynamicPageEditor = ({ title, endpoint }) => {
     const formData = new FormData();
     const admin = auth?.user?.is_superuser;
 
+    // Toggle Edit/Update button
     const handleEditMode = () => {
         setNoData(false);
         setReadOnly(!readOnly);
     }
 
-    const getPolicyData = async () => {
+    // Get dynamic data from db
+    const getDynamicData = async () => {
         setLoading(true)
         if (readOnly) {
             return await axios.get(endpoint, {
@@ -57,6 +59,7 @@ const DynamicPageEditor = ({ title, endpoint }) => {
         }
     }
 
+    // Update change data to db and page
     const updateData = async (e) => {
         setLoading(true);
         e.preventDefault();
@@ -86,11 +89,13 @@ const DynamicPageEditor = ({ title, endpoint }) => {
         }
     }
 
+    // Call getDynamicData function on component mount
     useEffect(() => {
-        getPolicyData().then(r => r);
+        getDynamicData().then(r => r);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    // Store data in state on refresh or update
     useEffect(() => {
         setData((prev) => {
             return {

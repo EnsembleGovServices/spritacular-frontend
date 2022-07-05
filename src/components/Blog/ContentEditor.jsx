@@ -72,14 +72,33 @@ const ContentEditor = (props) => {
                 { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'heading4' },
                 { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'heading5' },
                 { model: 'paragraph', view: 'p', title: 'Paragraph', class: 'paragraph' },
-                { model: 'addButton', view: 'button', title: 'Add Button', class: 'paragraph' },
+                {
+                    model: 'addButton', 
+                    view: {
+                        name: 'p',
+                        classes: 'editor-btn'
+                    }, 
+                    title: 'Add Button', 
+                    class: 'btn'
+                },
             ]
         },
-        // format_button: { element: 'button', attributes: { 'class': 'btn btn-primary' } },
+
         link: {
+            // Automatically add target="_blank" and rel="noopener noreferrer" to all external links.
+            addTargetToExternalLinks: true,
             decorators: {
-                addTargetToExternalLinks: true,
                 defaultProtocol: 'https://',
+                // addTargetToExternalLinks: {
+                //     mode: 'automatic',
+                //     callback: url => /^(https?:)?\/\//.test(url),
+                //     attributes: {
+                //         class: 'btn btn-secondary btn-lg px-md-5 px-3 get-start',
+                //         target: '_blank',
+                //         rel: 'noopener noreferrer'
+                //     }
+
+                // }
             }
         },
         placeholder: 'Type or paste your content here!',
@@ -103,6 +122,7 @@ const ContentEditor = (props) => {
         extraPlugins: [uploadPlugin],
         allowedContent: true
     }
+    editorConfig.format_h2 = { element: 'h2', attributes: { 'class': 'btn btn-primary' } }
 
     // Set image data in state.
     useEffect(() => {
