@@ -16,19 +16,21 @@ const Footer = () => {
                                 title="Spritacular"
                                 className="d-inline-block mb-3"
                             >
-                                <img src={`${cdn.url}/Spritacular-white.png`} alt="spritacular"/>
+                                <img width={150} height={40} src={`${cdn.url}/Spritacular-white.png`}
+                                     alt="spritacular"/>
                             </Link>
                         </Col>
                         <Col lg={4}>
                             <Row className="mb-2 mt-4 mb-md-5 align-items-center">
                                 <Col className="nasa-img col-12 col-sm-6">
                                     <div className="footer-brand">
-                                        <img src={`${cdn.url}/catholic.png`} alt="spritacular"/>
+                                        <img width={130} height={80} src={`${cdn.url}/catholic.png`}
+                                             alt="spritacular"/>
                                     </div>
                                 </Col>
                                 <Col className="col-12 col-sm-6">
                                     <div className="footer-brand">
-                                        <img src={`${cdn.url}/nasa.png`} alt="spritacular"/>
+                                        <img width={130} height={130} src={`${cdn.url}/nasa.png`} alt="spritacular"/>
                                     </div>
                                 </Col>
                             </Row>
@@ -172,7 +174,7 @@ const Footer = () => {
                         <Col sm={12}>
                             <a href="https://www.ensembleconsultancy.com/" target="_blank" rel="noreferrer"
                                className="d-inline-block w-100">
-                                Powered by <img alt="Ensemble" src={`${cdn.url}/ensemble.png`} width="120"
+                                Powered by <img alt="Ensemble" src={`${cdn.url}/ensemble.png`} width={100} height={20}
                                                 className="ms-2"/>
                             </a>
                         </Col>
