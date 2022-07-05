@@ -59,6 +59,7 @@ const ObservationCard = (props) => {
                                          loaderLoading={handleLoaderLoading}
                     />
                     : <BlurImage
+                        alt={userProfile?.location}
                         preview={(cardData?.compressed_image) ? cardData?.compressed_image : cardData?.image}
                         image={(cardData?.compressed_image) ? cardData?.compressed_image : cardData?.image}
                         handleClick={handleImageClick}
@@ -118,7 +119,8 @@ const ObservationCard = (props) => {
                             <div className="d-flex card-user_details align-items-center overflow-hidden">
                                 <Tippy animation="perspective"
                                        content={userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}>
-                                    <h6 className="pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</h6>
+                                    <div
+                                        className="name pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</div>
                                 </Tippy>
                                 <div className="profile-icon rounded-circle">
                                     <img
