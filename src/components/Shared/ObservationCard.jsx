@@ -83,12 +83,12 @@ const ObservationCard = (props) => {
                                                 />
                                             </div>
                                         }
-                                        <i className="rounded-circle bg-white me-1">
+                                        <div className="rounded-circle bg-white me-1">
                                             <Tippy animation="perspective" content={item?.name}>
                                                 <img width={22} height={22} src={image} alt={item?.name}
                                                      className="rounded-circle"/>
                                             </Tippy>
-                                        </i>
+                                        </div>
                                     </div>
                                 );
                             })
@@ -120,11 +120,11 @@ const ObservationCard = (props) => {
                                        content={userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}>
                                     <h6 className="pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</h6>
                                 </Tippy>
-                                {/* <i className="profile-icon rounded-circle"> */}
+                                <div className="profile-icon rounded-circle">
                                     <img
                                         src={userProfile?.profile_image ? userProfile?.profile_image : `${cdn.url}/profile.svg`}
-                                        width="32" height="32" alt="Profile" className="rounded-circle"/>
-                                {/* </i> */}
+                                        width="30" height="30" alt="Profile" className="rounded-circle"/>
+                                </div>
                             </div>
                         </Col>
                     </Row>

@@ -57,6 +57,8 @@ const BlurImage = (props) => {
                     }}
                     src={preview}
                     alt={alt}
+                    width={400}
+                    height={400}
                     ref={loadingImageRef}
                     className={`${homepage ? 'img-fluid isLoadingImg card-img no-cursor' : 'isLoadingImg img-fluid'}`}
                     onClick={handleClick}
