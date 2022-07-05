@@ -27,6 +27,7 @@ const HomePage = () => {
     // For getHomeData func call after mount
     useEffect(() => {
         getHomeData().then(r => r)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

@@ -19,8 +19,8 @@
     ],
     "development": [
       "last 30 chrome version",
-      "last 30 firefox version",
-      "last 30 safari version"
+      "last 40 firefox version",
+      "last 40 safari version"
     ]
   },
   "dependencies": {

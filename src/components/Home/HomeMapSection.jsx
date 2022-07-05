@@ -8,7 +8,7 @@ const HomeMapSection = (props) => {
     return (
         <section className="map_section bg-black">
             <div className="map_inner">
-                <img className="img-fluid" src={`${cdn.url}/map.png`} alt="map"/>
+                <img width={1200} height={600} className="img-fluid" src={`${cdn.url}/map.png`} alt="map"/>
             </div>
             <Container>
                 <div className="position-relative">

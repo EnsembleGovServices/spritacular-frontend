@@ -88,6 +88,7 @@ const UploadFeaturedImage = (props) => {
         if (file && !reset && !error) {
             previewImage();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file, preview])
 
     // To trigger parent function and store image data.
@@ -100,6 +101,7 @@ const UploadFeaturedImage = (props) => {
                 }
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file])
 
     // To extract filename from url
@@ -140,8 +142,9 @@ const UploadFeaturedImage = (props) => {
                     }, 500)
                     return file;
                 })
-                .catch((error) => process.env.NODE_ENV === "development" && console.log(`File converting delayed`));
+                .catch((error) => process.env.NODE_ENV === "development" && console.log('File converting delayed:', error.message));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [thumb])
 
     return (

@@ -24,7 +24,6 @@ import DeleteItemConfirmationPopup from "../Popup/DeleteItemConfirmationPopup";
 const ObservationAfterImageUpload = (props) => {
     const {
         toggleTab,
-        handleImageInput,
         error,
         disableNext,
         obvType,
@@ -46,7 +45,6 @@ const ObservationAfterImageUpload = (props) => {
     const [isOther] = useState(false);
     const [isConfirmPopUp, setIsConfirmPopUp] = useState(true);
     const [shouldShowConfirmation, setShouldShowConfirmation] = useState(false);
-
 
     // Toggle Tabs
     const toggleImageTab = (tab) => {
@@ -99,9 +97,10 @@ const ObservationAfterImageUpload = (props) => {
     }
 
     useEffect(() => {
-        if (isMultiple) {
+        if (isMultiple && observationImages?.data?.length > 1) {
             handleConfirmationPopUp();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMultiple])
 
 
@@ -150,6 +149,7 @@ const ObservationAfterImageUpload = (props) => {
             });
             setActiveImageTab(observationType?.image_type === 3 ? MultiImageTabs.ImageSequence : MultiImageTabs.MultipleImages);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeTab, isMultiple, isOther, setObservationCategory, setObservationType])
 
     return (
@@ -240,7 +240,8 @@ const ObservationAfterImageUpload = (props) => {
                                 {isMultiple &&
                                     <Col sm={12}>
                                         <div className="small-upload_box mb-3">
-                                            <ObservationUploadImg small={true} detectImage={detectImage} imageFormat={false}
+                                            <ObservationUploadImg small={true} detectImage={detectImage}
+                                                                  imageFormat={false}
                                                                   maxLimit={false} multiple={false}/>
                                         </div>
                                     </Col>

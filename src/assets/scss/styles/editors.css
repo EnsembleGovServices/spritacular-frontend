@@ -34,6 +34,12 @@
     border-left: solid 5px hsl(0, 0%, 80%);
 }
 
+.ck-placeholder {
+    font-size: 18px;
+    color: #f6f6f6;
+    opacity: 0.4;
+}
+
 /* ckeditor5-block-quote/theme/blockquote.css */
 .ck-content[dir="rtl"] blockquote {
     border-left: 0;

@@ -62,7 +62,7 @@ const BlogList = () => {
                         {auth?.user && admin &&
                             <Link
                                 to={`${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${routeUrls.dashBlog.create}`}
-                                className="btn btn-primary px-4">Create Article</Link>
+                                className="btn btn-primary px-4">Create Blog</Link>
                         }
                     </div>
 

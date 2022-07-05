@@ -5,6 +5,7 @@ import {useState} from "react";
 
 const ListContent = (props) => {
     const {item, type} = props;
+    // eslint-disable-next-line
     const [loaderLoading, setLoaderLoading] = useState(true);
 
     const handleLoaderLoading = (state) => {

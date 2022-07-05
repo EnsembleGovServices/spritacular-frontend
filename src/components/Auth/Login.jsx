@@ -8,7 +8,7 @@ import {routeUrls} from '../../helpers/url';
 
 const Login = (props) => {
     const {cp} = props;
-    const {setAuth, auth, persist, setPersist} = useAuth();
+    const {setAuth, persist, setPersist} = useAuth();
     const navigate = useNavigate();
 
     const [user, setUser] = useState({

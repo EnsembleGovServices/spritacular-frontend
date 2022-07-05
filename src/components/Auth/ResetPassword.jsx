@@ -26,10 +26,12 @@ const ResetPassword = (props) => {
 
     // To store token in state
     useEffect(() => {
+        const keyName = "token" // To remove warnings.
         setUser({
             ...user,
-            ['token']: token
+            [keyName]: token
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
 
     // To confirm reset password to db and login user

@@ -132,7 +132,7 @@
 
     .card-details {
       .card-user_details {
-        h6 {
+        .name {
           @include md-text;
           font-weight: 400;
           width: calc(100% - 30px);

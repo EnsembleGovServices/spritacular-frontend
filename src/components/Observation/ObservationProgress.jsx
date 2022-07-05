@@ -5,7 +5,6 @@ const ObservationProgress = (props) => {
     const {step} = props;
     const [progress, setProgress] = useState(100);
 
-
     useEffect(()=> {
         setProgress(
             step?.active * 100 / step?.total

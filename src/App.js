@@ -15,7 +15,6 @@ import InformativePage from './layouts/InformativePage';
 import Loader from "./components/Shared/Loader";
 import TutorialList from "./pages/BlogTutorial/TutorialList";
 import HomePage from "./pages/Page/HomePage";
-import axios from "axios";
 
 const About = lazy(() => import('./pages/Page/About'));
 const GetStarted = lazy(() => import('./pages/Page/GetStarted'));

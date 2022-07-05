@@ -14,7 +14,10 @@ export const baseURL = {
     blog_category: process.env.REACT_APP_API_BLOG_CATEGORY,
     blog_tut_update: process.env.REACT_APP_API_BLOG_TUT_UPDATE,
     quiz_question: process.env.REACT_APP_API_QUIZ_QUESTION,
-    quiz_submit: process.env.REACT_APP_API_SUBMIT_QUE_ANS
+    quiz_submit: process.env.REACT_APP_API_SUBMIT_QUE_ANS,
+    static_policy: process.env.REACT_APP_STATIC_API_POLICY,
+    static_ambassador: process.env.REACT_APP_STATIC_API_AMBASSADOR,
+    static_google_group: process.env.REACT_APP_STATIC_API_GOOGLE_GROUP
 }
 
 export const cameraSettingFields = {

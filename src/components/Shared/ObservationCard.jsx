@@ -56,9 +56,11 @@ const ObservationCard = (props) => {
                 {cardItems?.image_type === 3
                     ? <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick}
                                          handleIndex={index}
+                                         alt={userProfile?.location}
                                          loaderLoading={handleLoaderLoading}
                     />
                     : <BlurImage
+                        alt={userProfile?.location}
                         preview={(cardData?.compressed_image) ? cardData?.compressed_image : cardData?.image}
                         image={(cardData?.compressed_image) ? cardData?.compressed_image : cardData?.image}
                         handleClick={handleImageClick}
@@ -83,12 +85,12 @@ const ObservationCard = (props) => {
                                                 />
                                             </div>
                                         }
-                                        <i className="rounded-circle bg-white me-1">
+                                        <div className="rounded-circle bg-white me-1">
                                             <Tippy animation="perspective" content={item?.name}>
                                                 <img width={22} height={22} src={image} alt={item?.name}
                                                      className="rounded-circle"/>
                                             </Tippy>
-                                        </i>
+                                        </div>
                                     </div>
                                 );
                             })
@@ -118,13 +120,14 @@ const ObservationCard = (props) => {
                             <div className="d-flex card-user_details align-items-center overflow-hidden">
                                 <Tippy animation="perspective"
                                        content={userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}>
-                                    <h6 className="pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</h6>
+                                    <div
+                                        className="name pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</div>
                                 </Tippy>
-                                {/* <i className="profile-icon rounded-circle"> */}
+                                <div className="profile-icon rounded-circle">
                                     <img
                                         src={userProfile?.profile_image ? userProfile?.profile_image : `${cdn.url}/profile.svg`}
-                                        width="32" height="32" alt="Profile" className="rounded-circle"/>
-                                {/* </i> */}
+                                        width="30" height="30" alt="Profile" className="rounded-circle"/>
+                                </div>
                             </div>
                         </Col>
                     </Row>

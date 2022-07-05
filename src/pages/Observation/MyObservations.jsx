@@ -121,7 +121,7 @@ const MyObservations = () => {
 
         })
             .catch((error) => {
-                process.env.NODE_ENV === "development" && console.log('Get Obsv Data:',error.response);
+                process.env.NODE_ENV === "development" && console.log('Get Obsv Data:',error);
             });
     };
 
@@ -170,6 +170,7 @@ const MyObservations = () => {
                 list: []
             }
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
 
     // Get all observation on component mount

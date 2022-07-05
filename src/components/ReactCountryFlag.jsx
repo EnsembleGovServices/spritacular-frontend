@@ -2,7 +2,6 @@ import ReactCountryFlag from "react-country-flag";
 
 const ReactCountryFlags = ({country}) => {
     return(
-
         <ReactCountryFlag
             countryCode={country}
             svg

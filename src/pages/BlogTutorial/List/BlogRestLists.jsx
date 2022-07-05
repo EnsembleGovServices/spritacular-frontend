@@ -3,7 +3,6 @@ import {Col, Row} from "reactstrap";
 
 import BlogListCardContent from "../BlogListCardContent";
 
-
 const BlogRestLists = (props) => {
     const {articleItems} = props;
 
