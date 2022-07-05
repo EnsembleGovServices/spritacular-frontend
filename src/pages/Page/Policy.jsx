@@ -1,15 +1,18 @@
 import "../../assets/scss/component/blog.scss";
+import {lazy, Suspense} from "react";
 import {baseURL} from "../../helpers/url";
-import DynamicPageEditor from "../../components/Static/DynamicPageEditor";
 
+const DynamicPageEditor = lazy(() => import('../../components/Static/DynamicPageEditor'));
 
 const Policy = () => {
 
     return (
-        <DynamicPageEditor
-            title="Spritacular Policy"
-            endpoint={baseURL.static_policy}
-        />
+        <Suspense fallback={''}>
+            <DynamicPageEditor
+                title="Spritacular Policy"
+                endpoint={baseURL.static_policy}
+            />
+        </Suspense>
     )
 }
 export default Policy;
