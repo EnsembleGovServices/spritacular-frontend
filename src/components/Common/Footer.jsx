@@ -60,7 +60,7 @@ const Footer = () => {
                                         </li>
                                         <li>
                                             <Link
-                                                to={routeUrls.policy + '?code=true'}
+                                                to={routeUrls.policy}
                                                 className="d-inline-block mb-4"
                                                 title="Code of Conduct"
                                             >
