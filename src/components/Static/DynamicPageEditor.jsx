@@ -124,31 +124,29 @@ const DynamicPageEditor = ({title, endpoint}) => {
                             </button>
                         }
                     </div>
-                    {data?.content?.length > 1 &&
-                        <Suspense fallback=''>
-                            <Row>
-                                <Col md={12}>
-                                    <Card className="card border-0 shadow-sm">
-                                        <CardBody className="p-md-5 p-4">
-                                            {noData && <NotFound/>}
-                                            <div className="form-group">
-                                                {!readOnly &&
-                                                    <label htmlFor="content" className="col-form-label">Content</label>
-                                                }
-                                                <ContentEditor
-                                                    setLoading={setLoading}
-                                                    editorData={data?.content}
-                                                    data={data?.content}
-                                                    setData={setData}
-                                                    dynamicPageProps={readOnly}
-                                                />
-                                            </div>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </Suspense>
-                    }
+                    <Suspense fallback=''>
+                        <Row>
+                            <Col md={12}>
+                                <Card className="card border-0 shadow-sm">
+                                    <CardBody className="p-md-5 p-4">
+                                        {noData && <NotFound/>}
+                                        <div className="form-group">
+                                            {!readOnly &&
+                                                <label htmlFor="content" className="col-form-label">Content</label>
+                                            }
+                                            <ContentEditor
+                                                setLoading={setLoading}
+                                                editorData={data?.content}
+                                                data={data?.content}
+                                                setData={setData}
+                                                dynamicPageProps={readOnly}
+                                            />
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Suspense>
                 </Container>
             </section>
             {loading &&

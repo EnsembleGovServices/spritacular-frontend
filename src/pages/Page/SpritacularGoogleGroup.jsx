@@ -8,7 +8,6 @@ const SpritacularGoogleGroup = () => {
         <DynamicPageEditor
             title="Spritacular Google Group"
             endpoint={baseURL.static_google_group}
-            gBtn={true}
         />
     )
 }
