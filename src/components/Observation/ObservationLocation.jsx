@@ -441,7 +441,7 @@ const ObservationLocation = (props) => {
                                 className="selected-address pb-0 pb-lg-3 d-flex align-items-center justify-content-start justify-content-lg-end">
                                 <ReactCountryFlags
                                     country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code : null}/>
-                                <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
+                                <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location?.split(",").join(", ") : ''}</span>
                             </div>
                         </Col>
                     </Row>
@@ -629,12 +629,12 @@ const ObservationLocation = (props) => {
                         type="text"
                         name="time_accuracy"
                         value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.time_accuracy : ''}
-                        placeholder="e.g. +/- 3 sec  or  +/- 1 min"
+                        placeholder="e.g. 1 ms or 1 sec."
                         className="w-100 form-control"
                         maxLength={10}
                         onChange={(e) => handleImageInput(e)}
                     />
-                    <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b> +/- 3 sec  or  +/- 1 min</span>
+                    <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b> 1 ms or 1 sec.</span>
                 </FormGroup>
             </Col>
             <Col md={12} className="mb-5">
@@ -663,7 +663,7 @@ const ObservationLocation = (props) => {
                             className="switchbox"
                             htmlFor="checkbox2"
                         />
-                        <span>I know the precise azimuth angle in degrees</span>
+                        <span>I know the precise azimuth of the camera</span>
                     </div>
                 </FormGroup>
 

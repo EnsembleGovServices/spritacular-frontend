@@ -55,7 +55,7 @@ const ObservationUploadImg = (props) => {
                     setError((prev) => {
                         return {
                             ...prev,
-                            count: 'You have reached the limit, delete some image, maximum upload allowed is 3',
+                            count: 'You have reached the upload limit',
                         }
                     })
                 }

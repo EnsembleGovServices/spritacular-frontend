@@ -50,7 +50,7 @@ const HomeHowItWorks = () => {
                                     </span>
                                 </div>
                                 <div className="position-relative">
-                                    <p>Create an account to become a Spritacular Citizen Scientist.</p>
+                                    <p>Please create an account to become a part of our community.</p>
                                     {loaderLoading &&
                                         <div className="t-loader mt-3">
                                             <Skeleton />
@@ -98,9 +98,9 @@ const HomeHowItWorks = () => {
                                 </div>
                                 <div className={`${loaderLoading ? 'mb-3' : ''} position-relative`}>
                                     <p>
-                                        Complete the observation tutorial before starting to observe a
-                                        sprite. This is intended to make sure your observation aligns
-                                        with our standards.
+                                        Please check out our tutorials and blog to learn more.
+                                        These resources are intended to improve your
+                                        knowledge and help with the methods you can contribute to the project.
                                     </p>
                                     {loaderLoading &&
                                         <div className="t-loader mt-3">
@@ -109,7 +109,7 @@ const HomeHowItWorks = () => {
                                     }
                                 </div>
 
-                                <Link to={`/${routeUrls.tutorials}`} className="view-tutorial">View Tutorial</Link>
+                                {/* <Link to={`/${routeUrls.tutorials}`} className="view-tutorial">View Tutorial</Link> */}
                                 <div className="observe-polygon">
                                     <img src={`${cdn.url}/Learn-observe-polygon.png`} alt="Learn-observe-polygon"
                                         className="w-100" />
@@ -144,11 +144,7 @@ const HomeHowItWorks = () => {
                                 </div>
                                 <div className="position-relative">
 
-                                    <p>Upload your observation images and choose the appropriate
-                                        observation category(sprite, elve, gigantic jet, blue jet, or
-                                        other). You need to complete other details as well such as
-                                        location, date, time, and your camera details.
-                                    </p>
+                                    <p>Please submit your TLE observations following the steps in our observation submission system</p>
                                     {loaderLoading &&
                                         <div className="t-loader mt-3">
                                             <Skeleton />
@@ -201,8 +197,7 @@ const HomeHowItWorks = () => {
                                 </div>
                                 <div className=" position-relative">
                                     <p>
-                                        Review and left comment on other citizen scientist
-                                        observations.
+                                        Explore our gallery of observations and engage with our community!
                                     </p>
                                     {loaderLoading &&
                                         <div className="t-loader mt-3">

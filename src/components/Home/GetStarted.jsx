@@ -16,8 +16,7 @@ const GetStarted = () => {
                     <Col md={6} xs={12} className="works-gap">
                         <div className="how-it-work-text-info">
                             <h3>
-                                Join Our Global Community and Participate in Sprites
-                                Observations!
+                                Join our global community and contribute your observations!
                             </h3>
                         </div>
                     </Col>

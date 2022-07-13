@@ -82,7 +82,7 @@ const EquipmentDetails = (props) =>{
             </Col>
             <Col md={12}>
                 <FormGroup>
-                    <h6>Elevation angle of your camera in degrees</h6>
+                    <h6>Do you know the elevation angle of your camera [°]?</h6>
                     <Input
                         type="text"
                         name="name"

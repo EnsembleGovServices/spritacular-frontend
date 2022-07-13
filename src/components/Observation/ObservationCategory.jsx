@@ -132,8 +132,7 @@ const ObservationCategory = (props) => {
                                                 <label htmlFor={imagItem.id}>
                                                     <img src={`${imagItem.image}`} alt={imagItem.name} />
                                                     {imagItem.name}
-                                                    <div className="ms-2 text-dark ">
-
+                                                    {/* <div className="ms-2 text-dark ">
                                                         <Tippy
                                                             content={<PopoverContent catName={imagItem?.name} />}
                                                             interactive={true}
@@ -145,8 +144,7 @@ const ObservationCategory = (props) => {
                                                             <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2"
                                                                 width="15" height="15" /></span>
                                                         </Tippy>
-                                                    </div>
-
+                                                    </div> */}
                                                 </label>
                                             </div>
                                         </div>
@@ -205,7 +203,7 @@ const ObservationCategory = (props) => {
             })}
             <FormGroup className="mb-1">
                 <p className="fw-bold">
-                    Please choose the appropriate category
+                What do you see in the image? (Please choose all that applies)
                     <span className="required">Required</span>
                 </p>
             </FormGroup>
