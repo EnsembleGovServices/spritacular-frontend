@@ -44,7 +44,7 @@ const ObservationCategory = (props) => {
     const updatedCategory = () => {
         let newCategory = [];
         oldCategory?.map((item, index) => {
-            let image = `/assets/images/category/${item?.name.toLowerCase().replaceAll(" ", "")}.png`
+            let image = `${cdn.url}/category/${item?.name.toLowerCase().replaceAll(" ", "")}.png`
 
             item.image = image
             newCategory.push(item)

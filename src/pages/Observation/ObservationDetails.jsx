@@ -301,7 +301,7 @@ const ObservationDetails = (props) => {
                                                                         content={item?.name}
                                                                     >
                                                                         <img
-                                                                            src={`/assets/images/category/${item?.name
+                                                                            src={`${cdn.url}/category/${item?.name
                                                                                 ?.toLowerCase()
                                                                                 .replaceAll(" ", "")}.png`}
                                                                             alt={item?.name}

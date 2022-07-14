@@ -4,6 +4,7 @@ import moment from 'moment';
 import { createRef, useEffect } from "react";
 import CardImageCarousel from "../../components/Shared/CardImageCarousel";
 import ReactCountryFlags from "../../components/ReactCountryFlag";
+import { cdn } from "../../helpers/url";
 
 const ObservationListRow = (props) => {
     const { cardItems, cardData, allChecked, setCheckedIds, index, getAllChecked, checkedIds, handleClick, loadMore } = props;
@@ -77,7 +78,7 @@ const ObservationListRow = (props) => {
             <td valign="middle" className="observationType-box">
                 <div className="observation_type d-flex align-items-start justify-content-start flex-wrap flex-column">
                     {cardItems?.category_data?.map((item, index) => {
-                        let image = `/assets/images/category/${item?.name?.toLowerCase().replaceAll(" ", "")}.png`;
+                        let image = `${cdn.url}/category/${item?.name?.toLowerCase().replaceAll(" ", "")}.png`;
                         return (
                             <div key={index} className="mb-2">
                                 <i className="fst-normal rounded-circle me-2 d-inline-block">
