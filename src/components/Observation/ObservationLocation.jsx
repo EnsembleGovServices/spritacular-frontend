@@ -62,6 +62,10 @@ const ObservationLocation = (props) => {
     const [searchTimeZone, setSearchTimeZone] = useState("");
     const [sameAsDateTime, setSameAsDateTime] = useState(false);
 
+    const [timePickerVal, setTimePickerVal] = useState("00:00:00");
+
+    const obsTimePickerRef = useRef(null);
+
     useEffect(() => {
 
         if (observationImages?.data && observationImages?.data[observationImages?.selected_image_index]?.sameAsFirstMap === false) {
@@ -146,7 +150,7 @@ const ObservationLocation = (props) => {
     }
     const observationArray = {...observationImages};
 
-    // Store latitue input value
+    // Store latitude input value
     const handleChangeLat = (e) => {
         handleImageInput(e);
         let value = Number(e.target.value);
@@ -282,6 +286,11 @@ const ObservationLocation = (props) => {
     const findTimeZone = (e) => {
         let value = e.target.value.toLowerCase();
         setSearchTimeZone(value);
+    }
+
+    const handleTimePickerData = (data) => {
+        console.log('obsTimePickerRef', obsTimePickerRef.current.children[0].value)
+        setTimePickerVal(obsTimePickerRef.current.children[0].value)
     }
 
     // To clear timezone and set default
@@ -495,7 +504,7 @@ const ObservationLocation = (props) => {
                                             onOpenPickNewDate={false}
                                             editable={false}
                                             maxDate={new Date().setDate(new Date().getDate())}
-                                            value={(observationImages?.data) && (observationImages?.data[observationImages?.selected_image_index]?.obs_date)}
+                                            value={observationImages?.data && (observationImages?.data[observationImages?.selected_image_index]?.obs_date)}
                                             onChange={(e) => handleImageInput({
                                                 target: {
                                                     name: "obs_date",
@@ -519,14 +528,14 @@ const ObservationLocation = (props) => {
                                     <Label className="text-uppercase" htmlFor="Time">Time</Label>
                                     <div className="position-relative ">
                                         <DatePicker
-                                            containerClassName="w-100"
                                             disableDayPicker
+                                            format="HH:mm:ss"
+                                            containerClassName="w-100"
                                             className="red"
                                             inputClass="form-control"
                                             name="obs_time"
-                                            format="HH:mm"
                                             placeholder="Select Time"
-                                            // value={observationImages?.data && (observationImages?.data[observationImages?.selected_image_index]?.obs_time)}
+                                            // value={observationImages?.data[observationImages?.selected_image_index]?.obs_time}
                                             onChange={(e) => handleImageInput({
                                                 target: {
                                                     name: "obs_time",
@@ -534,9 +543,7 @@ const ObservationLocation = (props) => {
                                                 }
                                             })}
                                             editable={false}
-                                            plugins={[
-                                                <TimePicker hideSeconds/>,
-                                            ]}
+                                            plugins={[<TimePicker/>]}
                                             scrollSensitive={false}
                                         />
                                     </div>
