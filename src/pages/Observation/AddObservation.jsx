@@ -534,7 +534,6 @@ const AddObservation = () => {
                 is_draft: draft,
             };
         });
-        console.log('type of ', typeof draftData?.elevation_angle)
         setObservationData((prev) => {
             return {
                 ...prev,
