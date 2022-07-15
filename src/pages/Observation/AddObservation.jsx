@@ -52,7 +52,7 @@ const AddObservation = () => {
     const [next, setNext] = useState(false);
     const [isSwitchOn, setSwitchOn] = useState(false);
     const [updateMode, setUpdateMode] = useState(false);
-    
+
     // const [reset, setReset] = useState(false);
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
@@ -133,9 +133,7 @@ const AddObservation = () => {
     const handleImageInput = (e, address = null) => {
         let observationArray = {...observationImages};
         if (e === "address") {
-            observationArray.data[observationImages?.selected_image_index][
-                "location"
-                ] = address;
+            observationArray.data[observationImages?.selected_image_index]["location"] = address;
             if (observationArray.data[1]) {
                 observationArray.data[1].category_map["location"] = address;
             }
@@ -399,19 +397,26 @@ const AddObservation = () => {
             })
             .then((response) => {
                 let data = response?.data?.data;
+                console.log('response data', response?.data?.data);
                 setDraftData({
                     image_type: data.image_type,
                     elevation_angle: data.elevation_angle,
                     video_url: data.video_url,
                     camera: data.camera_data,
-                    question_field_one: data.question_field_one,
-                    question_field_two: data.question_field_two,
                     story: data.story,
                     map_data: data.images,
                 });
 
                 // console.log('camera data', data?.camera_data);
                 setCameraDetails(data?.camera_data);
+                setObservationData((prev) => {
+                    return {
+                        ...prev,
+                        elevation_angle: parseFloat(draftData?.elevation_angle).toFixed(2),
+                        video_url: data?.video_url,
+                        story: data?.story,
+                    }
+                })
                 setUpdateMode(true);
             })
             .catch((error) => {
@@ -454,7 +459,8 @@ const AddObservation = () => {
                     process.env.NODE_ENV === "development" && (`Error converting the CDN image to file object at index [${index}] [${error}]`)
                 );
         });
-    }, [draftData, setObservationImages]);
+
+    }, [draftData]);
 
     useEffect(() => {
         let id = observationSteps?.mode?.id,
@@ -528,6 +534,15 @@ const AddObservation = () => {
                 is_draft: draft,
             };
         });
+        console.log('type of ', typeof draftData?.elevation_angle)
+        setObservationData((prev) => {
+            return {
+                ...prev,
+                elevation_angle: parseFloat(draftData?.elevation_angle).toFixed(2),
+                video_url: draftData?.video_url,
+                story: draftData?.story,
+            }
+        })
     }, [activeTab, draft, observationImages, setObservationSteps]);
 
     return (
