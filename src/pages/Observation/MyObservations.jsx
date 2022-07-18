@@ -175,7 +175,7 @@ const MyObservations = () => {
             }
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location])
+    }, [location, currActiveType])
 
     // Get all observation on component mount
     useEffect(() => {
