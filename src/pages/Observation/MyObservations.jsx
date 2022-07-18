@@ -25,7 +25,7 @@ const MyObservations = () => {
     const {auth} = useAuth();
     const {observationListData, setObservationListData} = useObservationsData();
 
-    const currActiveType = observationListData?.activeType ? observationListData?.activeType : obvType.unverified;
+    const currActiveType = observationListData?.activeType ? observationListData?.activeType : obvType.verified;
 
     const navigate = useNavigate();
     const {setObservationData, setObservationSteps, setObservationImages} = useObservations();
