@@ -205,6 +205,13 @@ const AddObservation = () => {
         setIsLoading(true);
         setDraft(0);
         sendData(0).then((r) => r);
+        setObservationListData((prev) => {
+            return {
+                ...prev,
+                activeType: obvType.unverified
+            }
+        })
+
     };
 
     const sendData = async (draft) => {
@@ -219,11 +226,10 @@ const AddObservation = () => {
         if (draft === 1) {
             finalData.is_draft = draft;
         }
-        finalData.camera = cameraDetails
-            ? cameraDetails
-            : auth?.camera
-                ? auth?.camera?.id
-                : null;
+        finalData.camera = cameraDetails ? cameraDetails : auth?.camera ? auth?.camera?.id : null;
+        if (finalData.elevation_angle === "NaN") {
+            finalData.elevation_angle = null
+        }
         formData.append("data", JSON.stringify(finalData));
 
         if (!updateMode) {
@@ -248,7 +254,7 @@ const AddObservation = () => {
                         setObservationListData((prev) => {
                             return {
                                 ...prev,
-                                activeType: obvType.unverified
+                                activeType: draft === 1 ? obvType.draft : obvType.unverified
                             }
                         })
                     }, 500);
