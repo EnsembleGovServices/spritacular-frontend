@@ -230,6 +230,10 @@ const AddObservation = () => {
         if (finalData.elevation_angle === "NaN") {
             finalData.elevation_angle = null
         }
+        finalData.activeTab = {
+            tab: activeTab,
+            step: observationSteps?.active
+        };
         formData.append("data", JSON.stringify(finalData));
 
         if (!updateMode) {
@@ -442,6 +446,15 @@ const AddObservation = () => {
                     }
                 })
                 setUpdateMode(true);
+
+                console.log('data?.activeTab?.tab', data?.activeTab?.tab)
+                // setActiveTab(data?.activeTab?.tab);
+                // setObservationSteps((prev) => {
+                //     return {
+                //         ...prev,
+                //         active: data?.activeTab?.step
+                //     }
+                // });
             })
             .catch((error) => {
                 process.env.NODE_ENV === "development" && console.log('Update Obsv Data:', error);
