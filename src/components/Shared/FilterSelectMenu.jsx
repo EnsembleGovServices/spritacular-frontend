@@ -62,7 +62,7 @@ const FilterSelectMenu = (props) => {
                 'Authorization': `Bearer ${auth?.token?.access}`,
             },
         }).then(response => {
-            console.log(response);
+            // console.log(response);
             setObservationCSVId((prev) => {
                 return {
                     ...prev,

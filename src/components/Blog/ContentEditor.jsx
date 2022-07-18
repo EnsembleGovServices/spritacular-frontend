@@ -28,7 +28,7 @@ const ContentEditor = (props) => {
                     const body = new FormData();
                     setLoading(true);
                     loader.file.then((file) => {
-                        console.log(file);
+                        // console.log(file);
                         body.append("image", file);
                         let headers = new Headers();
                         headers.append("Authorization", `Bearer ${auth?.token?.access}`);
