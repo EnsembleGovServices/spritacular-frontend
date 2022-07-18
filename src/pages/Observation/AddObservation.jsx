@@ -229,6 +229,8 @@ const AddObservation = () => {
         finalData.camera = cameraDetails ? cameraDetails : auth?.camera ? auth?.camera?.id : null;
         if (finalData.elevation_angle === "NaN") {
             finalData.elevation_angle = null
+        } else {
+            finalData.elevation_angle = parseFloat(observationData?.elevation_angle)
         }
         finalData.active_tab = {
             tab: activeTab,
