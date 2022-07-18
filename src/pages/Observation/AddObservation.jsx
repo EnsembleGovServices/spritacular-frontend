@@ -447,14 +447,17 @@ const AddObservation = () => {
                 })
                 setUpdateMode(true);
 
-                console.log('data?.activeTab?.tab', data?.activeTab?.tab)
-                // setActiveTab(data?.activeTab?.tab);
-                // setObservationSteps((prev) => {
-                //     return {
-                //         ...prev,
-                //         active: data?.activeTab?.step
-                //     }
-                // });
+                console.log('data?.active_tab?.tab', data?.activeTab?.tab)
+                setActiveTab(data?.active_tab?.tab ? data?.active_tab?.tab : Tabs.ObservationImages);
+                setObservationSteps((prev) => {
+                    return {
+                        ...prev,
+                        active: data?.active_tab?.step ? data?.active_tab?.step : 1
+                    }
+                });
+                if (data?.active_tab?.step > 1) {
+                    setNext(true);
+                }
             })
             .catch((error) => {
                 process.env.NODE_ENV === "development" && console.log('Update Obsv Data:', error);
