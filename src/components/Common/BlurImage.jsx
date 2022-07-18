@@ -2,7 +2,16 @@ import {useEffect, useRef, useState} from 'react';
 import Skeleton from 'react-loading-skeleton'
 
 const BlurImage = (props) => {
-    const {preview, image, alt, bgColor = 'transparent', handleClick, homepage, loaderLoading} = props;
+    const {
+        preview,
+        image,
+        alt,
+        bgColor = 'transparent',
+        handleClick,
+        homepage,
+        loaderLoading,
+        adjustImage = null
+    } = props;
     const [loading, setLoading] = useState(true);
     const loadingImageRef = useRef(null);
 
@@ -51,7 +60,7 @@ const BlurImage = (props) => {
                     style={{
                         width: '100%',
                         background: bgColor,
-                        objectFit: 'cover',
+                        objectFit: adjustImage ? adjustImage : 'cover',
                         height: '100%',
                         minHeight: '217px'
                     }}
