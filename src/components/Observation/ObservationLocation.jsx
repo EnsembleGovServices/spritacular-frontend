@@ -527,24 +527,14 @@ const ObservationLocation = (props) => {
                                 <FormGroup>
                                     <Label className="text-uppercase" htmlFor="Time">Time</Label>
                                     <div className="position-relative ">
-                                        <DatePicker
-                                            disableDayPicker
-                                            format="HH:mm:ss"
-                                            containerClassName="w-100"
-                                            className="red"
-                                            inputClass="form-control"
+                                        <Input
+                                            id="Time"
+                                            type="time"
                                             name="obs_time"
-                                            placeholder="Select Time"
-                                            // value={observationImages?.data[observationImages?.selected_image_index]?.obs_time}
-                                            onChange={(e) => handleImageInput({
-                                                target: {
-                                                    name: "obs_time",
-                                                    value: e.format()
-                                                }
-                                            })}
-                                            editable={false}
-                                            plugins={[<TimePicker/>]}
-                                            scrollSensitive={false}
+                                            value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
+                                            className="w-100"
+                                            placeholder="10:21:00 am"
+                                            onChange={(e) => handleImageInput(e)}
                                         />
                                     </div>
                                     {error && errorData?.map((item, index) => {
