@@ -62,9 +62,6 @@ const ObservationLocation = (props) => {
     const [searchTimeZone, setSearchTimeZone] = useState("");
     const [sameAsDateTime, setSameAsDateTime] = useState(false);
 
-    const [timePickerVal, setTimePickerVal] = useState("00:00:00");
-
-    const obsTimePickerRef = useRef(null);
 
     useEffect(() => {
 
@@ -286,11 +283,6 @@ const ObservationLocation = (props) => {
     const findTimeZone = (e) => {
         let value = e.target.value.toLowerCase();
         setSearchTimeZone(value);
-    }
-
-    const handleTimePickerData = (data) => {
-        console.log('obsTimePickerRef', obsTimePickerRef.current.children[0].value)
-        setTimePickerVal(obsTimePickerRef.current.children[0].value)
     }
 
     // To clear timezone and set default
@@ -527,12 +519,13 @@ const ObservationLocation = (props) => {
                                 <FormGroup>
                                     <Label className="text-uppercase" htmlFor="Time">Time</Label>
                                     <div className="position-relative ">
-                                        <Input
+                                        <input
                                             id="Time"
                                             type="time"
                                             name="obs_time"
+                                            step="2"
                                             value={observationImages?.data ? (observationImages?.data[observationImages?.selected_image_index]?.obs_time === null ? '--:--' : observationImages?.data[observationImages?.selected_image_index]?.obs_time) : ''}
-                                            className="w-100"
+                                            className="w-100 form-control"
                                             placeholder="10:21:00 am"
                                             onChange={(e) => handleImageInput(e)}
                                         />

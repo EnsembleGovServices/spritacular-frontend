@@ -311,7 +311,7 @@ const AddObservation = () => {
     };
 
     const getCameraDetail = async (e) => {
-        if (e.target.checked === true) {
+        if (e?.target?.checked === true) {
             await axios
                 .get(baseURL.api + "/users/camera_setting/", {
                     headers: {
@@ -329,6 +329,10 @@ const AddObservation = () => {
             setCameraDetails(cameraSettingFields);
         }
     };
+
+    useEffect(() => {
+        getCameraDetail().then(r => r)
+    }, [])
 
     const handleContinue = () => {
         setNext(!next);
