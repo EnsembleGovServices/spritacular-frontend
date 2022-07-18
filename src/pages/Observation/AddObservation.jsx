@@ -230,7 +230,7 @@ const AddObservation = () => {
         if (finalData.elevation_angle === "NaN") {
             finalData.elevation_angle = null
         }
-        finalData.activeTab = {
+        finalData.active_tab = {
             tab: activeTab,
             step: observationSteps?.active
         };
