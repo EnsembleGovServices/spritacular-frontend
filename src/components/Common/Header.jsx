@@ -11,13 +11,13 @@ import {
     NavbarToggler,
     NavItem
 } from "reactstrap";
-import React, {useEffect, useState} from "react";
-import {Link, useNavigate, useLocation} from "react-router-dom";
-import {cdn, routeUrls} from '../../helpers/url';
-import {baseURL} from "../../helpers/url";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { cdn, routeUrls } from '../../helpers/url';
+import { baseURL } from "../../helpers/url";
 import axios from "../../api/axios";
 
-import {Icon} from "@iconify/react";
+import { Icon } from "@iconify/react";
 import LazyLoad from "../Upload/LazyLoad";
 
 import useAuth from "../../hooks/useAuth";
@@ -29,7 +29,7 @@ import NotificationComponent from "../Notification/NotificationComponent";
 
 // Navbar at top shows menu and user info.
 const Header = (props) => {
-    const {auth, setAuth, persist, setPersist} = useAuth();
+    const { auth, setAuth, persist, setPersist } = useAuth();
     const [user, setUser] = useState(auth?.user);
     const [isLoginModal, setIsLoginModal] = useState(false);
     const [isRegisterModal, setIsRegisterModal] = useState(false);
@@ -152,12 +152,12 @@ const Header = (props) => {
                 light
             >
                 <Link to={routeUrls.home} className="navbar-brand p-0 position-relative" title="Spritacular"
-                      onClick={() => setActive('')}>
+                    onClick={() => setActive('')}>
                     <img src={`${cdn.url}/logo.png`} alt="Spritacular"
-                         className="logo"/>
+                        className="logo" />
                     <img src={`${cdn.url}/black-logo.png`}
-                         alt="Spritacular"
-                         className="on-scroll-logo"/>
+                        alt="Spritacular"
+                        className="on-scroll-logo" />
                     {process.env.NODE_ENV === "development" &&
                         <div className="showUserTag">
                             {admin &&
@@ -173,15 +173,15 @@ const Header = (props) => {
                     }
                 </Link>
                 <NavbarToggler onClick={() => menuToggle()}>
-                    <Icon icon="eva:menu-outline"/>
+                    <Icon icon="eva:menu-outline" />
                 </NavbarToggler>
                 <Collapse navbar isOpen={showMenu}>
                     <div className="menu-logo justify-content-between w-100 px-2 py-1 shadow-sm">
                         <Link to={routeUrls.home} className="navbar-brand" onClick={() => setActive('')}>
-                            <img src={`${cdn.url}/black-logo.png`} alt="Spritacular"/>
+                            <img src={`${cdn.url}/black-logo.png`} alt="Spritacular" />
                         </Link>
                         <Button className="close-menu" onClick={() => menuClose()}>
-                            <Icon icon="ci:close-big" color="#000" width="25" height="25"/>
+                            <Icon icon="ci:close-big" color="#000" width="25" height="25" />
                         </Button>
                     </div>
 
@@ -217,7 +217,7 @@ const Header = (props) => {
                                 toggle={() => setAboutDropdown(!aboutDropdown)}
                             >
                                 <DropdownToggle className="p-0">
-                                    About <Icon icon="fe:arrow-down"/>
+                                    About <Icon icon="fe:arrow-down" />
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem className={active === 'about' ? 'active p-0' : 'p-0'}>
@@ -244,7 +244,7 @@ const Header = (props) => {
                         </NavItem>
                         <NavItem>
                             <Link to={routeUrls.gallery} title="Gallery"
-                                  className={active === 'gallery' ? "nav-link text-capitalize active" : 'nav-link text-capitalize'}>
+                                className={active === 'gallery' ? "nav-link text-capitalize active" : 'nav-link text-capitalize'}>
                                 Gallery
                             </Link>
                         </NavItem>
@@ -255,7 +255,7 @@ const Header = (props) => {
                                 toggle={() => setResourcesDropdown(!resourcesDropdown)}
                             >
                                 <DropdownToggle className="p-0">
-                                    Resources <Icon icon="fe:arrow-down"/>
+                                    Resources <Icon icon="fe:arrow-down" />
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem className={active === 'blog' ? 'active p-0' : 'p-0'}>
@@ -271,7 +271,7 @@ const Header = (props) => {
                                     {auth && auth?.user?.id &&
                                         <DropdownItem className={active === 'quiz' ? 'active p-0' : 'p-0'}>
                                             <Link className="px-3 py-1" to={routeUrls.quiz.home} title="Quiz">
-                                                Start Quiz
+                                                Get Trained
                                             </Link>
                                         </DropdownItem>
                                     }
@@ -285,25 +285,25 @@ const Header = (props) => {
                                 toggle={() => setCommunityDropdown(!communityDropdown)}
                             >
                                 <DropdownToggle className="p-0">
-                                    Community <Icon icon="fe:arrow-down"/>
+                                    Community <Icon icon="fe:arrow-down" />
                                 </DropdownToggle>
                                 <DropdownMenu>
                                     <DropdownItem className={active === 'meet-the-team' ? 'active p-0' : 'p-0'}>
                                         <Link className="px-3 py-1" to={routeUrls.pages.meetTheTeam}
-                                              title="Meet the Team">
+                                            title="Meet the Team">
                                             Meet the Team
                                         </Link>
                                     </DropdownItem>
                                     <DropdownItem className={active === 'become-an-ambassador' ? 'active p-0' : 'p-0'}>
                                         <Link className="px-3 py-1" to={routeUrls.pages.becomeAnAmbasador}
-                                              title="Become an ambassador">
-                                            Become an ambassador
+                                            title="Become an Ambassador">
+                                            Become an Ambassador
                                         </Link>
                                     </DropdownItem>
                                     <DropdownItem
                                         className={active === 'spritacular-google-group' ? 'active p-0' : 'p-0'}>
                                         <Link className="px-3 py-1" to={routeUrls.pages.spritacularGoogleGroup}
-                                              title="Spritacular Google Group">
+                                            title="Spritacular Google Group">
                                             Spritacular Google Group
                                         </Link>
                                     </DropdownItem>
@@ -352,7 +352,7 @@ const Header = (props) => {
                     <div className="after-login-right-menu">
                         {/* NotificationComponent Dropdown  */}
                         <NotificationComponent notificationArray={notificationArray}
-                                               setNotificationArray={setNotificationArray}/>
+                            setNotificationArray={setNotificationArray} />
                         {/* User Profile Dropdown  */}
                         <Dropdown
                             className="user-menu"
@@ -367,12 +367,12 @@ const Header = (props) => {
                                             alt={user?.first_name}
                                         />
                                     ) : (
-                                        <Icon icon="entypo:user"/>
+                                        <Icon icon="entypo:user" />
                                     )}
                                 </div>
                                 <span className="profile_text">
                                     <span>{user?.first_name} {user?.last_name}{" "}</span>
-                                    <Icon icon="fe:arrow-down"/>
+                                    <Icon icon="fe:arrow-down" />
                                 </span>
                             </DropdownToggle>
                             <DropdownMenu container="body">

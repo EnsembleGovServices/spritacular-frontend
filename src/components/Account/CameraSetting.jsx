@@ -21,7 +21,7 @@ const CameraSetting = (props) => {
     const [success, setSuccess] = useState();
     const [error, setError] = useState();
 
-    // To update camera settings
+    // To store update Equipment Details
     const handleInput = (e) => {
         let name = e.target.name,
             value = e.target.value;
@@ -31,7 +31,7 @@ const CameraSetting = (props) => {
         })
     }
 
-    // To store updated camera setting in state.
+    // To store updated Equipment Details in state.
     useEffect(() => {
         setUpdateSetting(cameraDetails)
     }, [cameraDetails])
@@ -71,7 +71,7 @@ const CameraSetting = (props) => {
             }).then((response) => {
                 setUpdateData(response.data);
                 setSuccess({
-                    updated: 'Camera settings updated successfully',
+                    updated: 'Equipment Details updated successfully',
                     status: response?.status
                 })
                 executeScroll();
@@ -93,7 +93,7 @@ const CameraSetting = (props) => {
                 setSuccess({
                     status: 201,
                     data: response.data,
-                    created: 'Camera settings added successfully.'
+                    created: 'Equipment Details added successfully.'
                 })
                 setAuth((prev) => {
                     return {

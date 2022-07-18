@@ -117,7 +117,7 @@ body.modal-open {
 
 .main-content {
   margin-top: 70px;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 150px);
 
   @include media-breakpoint-down(md) {
     margin-top: 64px;

@@ -1,16 +1,14 @@
-import {Col, FormGroup, PopoverBody, PopoverHeader, Collapse, Button, Row} from "reactstrap";
-import {useEffect, useRef, useState, Fragment} from "react";
+import {Col, FormGroup, Row} from "reactstrap";
+import {useEffect, useState, Fragment} from "react";
 import useObservations from "../../hooks/useObservations";
-// import { Icon } from "@iconify/react";
 import useAuth from "../../hooks/useAuth";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation} from "swiper";
-// import Tippy from "@tippyjs/react";
 import {cdn} from "../../helpers/url";
 
 const ObservationCategory = (props) => {
-    const {error, obvType} = props;
-    const {auth} = useAuth();
+    const { error, obvType } = props;
+    const { auth } = useAuth();
     const {
         observationImages,
         setObservationImages,
@@ -22,15 +20,15 @@ const ObservationCategory = (props) => {
     const [oldCategory, setOldCategory] = useState([]);
     const [isChecked, setIsChecked] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('' || []);
-    const ObservationData = {...observationImages};
+    const ObservationData = { ...observationImages };
     const errorData = error ? Object.values(error?.data) : {};
-    const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
-    const tippyRef = useRef();
+    // const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
+    // const tippyRef = useRef();
 
     // Category update on Check
     const onCategoryChange = (e) => {
         const value = parseFloat(e.target.id);
-        setIsChecked({...isChecked, [e.target.name]: e.target.checked});
+        setIsChecked({ ...isChecked, [e.target.name]: e.target.checked });
         if (selectedCategory.includes(value)) {
             const filterValue = selectedCategory.filter((item) => item !== value)
             setSelectedCategory(filterValue);
@@ -44,7 +42,7 @@ const ObservationCategory = (props) => {
     const updatedCategory = () => {
         let newCategory = [];
         oldCategory?.map((item, index) => {
-            let image = `/assets/images/category/${item?.name.toLowerCase().replaceAll(" ", "")}.png`
+            let image = `${cdn.url}/category/${item?.name.toLowerCase().replaceAll(" ", "")}.png`
 
             item.image = image
             newCategory.push(item)
@@ -62,17 +60,17 @@ const ObservationCategory = (props) => {
 
     // Tooltip image slider
     const ImageCarousel = (props) => {
-        const {className} = props;
+        const { className } = props;
         const items = [
-            {src: `${cdn.url}/card1.jpeg`},
-            {src: `${cdn.url}/card2.jpeg`},
-            {src: `${cdn.url}/card3.jpeg`}
+            { src: `${cdn.url}/card1.jpeg` },
+            { src: `${cdn.url}/card2.jpeg` },
+            { src: `${cdn.url}/card3.jpeg` }
         ]
 
         const carouselContent = items.map((item, index) => {
             return (
                 <SwiperSlide key={index}>
-                    <img src={item.src} alt="carousel"/>
+                    <img src={item.src} alt="carousel" />
                 </SwiperSlide>
             );
         });
@@ -130,22 +128,21 @@ const ObservationCategory = (props) => {
                                                     onChange={(e) => onCategoryChange(e)}
                                                 />
                                                 <label htmlFor={imagItem.id}>
-                                                    <img src={`${imagItem.image}`} alt={imagItem.name}/>
+                                                    <img src={`${imagItem.image}`} alt={imagItem.name} />
                                                     {imagItem.name}
-                                                    {/*<div className="ms-2 text-dark ">*/}
-                                                    {/*    <Tippy*/}
-                                                    {/*        content={<PopoverContent catName={imagItem?.name} />}*/}
-                                                    {/*        interactive={true}*/}
-                                                    {/*        appendTo={document.body}*/}
-                                                    {/*        animation="perspective"*/}
-                                                    {/*        theme="light-border"*/}
-                                                    {/*        reference={tippyRef}*/}
-                                                    {/*    >*/}
-                                                    {/*        <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2"*/}
-                                                    {/*            width="15" height="15" /></span>*/}
-                                                    {/*    </Tippy>*/}
-                                                    {/*</div>*/}
-
+                                                    {/* <div className="ms-2 text-dark ">
+                                                        <Tippy
+                                                            content={<PopoverContent catName={imagItem?.name} />}
+                                                            interactive={true}
+                                                            appendTo={document.body}
+                                                            animation="perspective"
+                                                            theme="light-border"
+                                                            reference={tippyRef}
+                                                        >
+                                                            <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2"
+                                                                width="15" height="15" /></span>
+                                                        </Tippy>
+                                                    </div> */}
                                                 </label>
                                             </div>
                                         </div>
@@ -204,7 +201,7 @@ const ObservationCategory = (props) => {
             })}
             <FormGroup className="mb-1">
                 <p className="fw-bold">
-                    Please choose the appropriate category
+                What do you see in the image? (Please choose all that applies)
                     <span className="required">Required</span>
                 </p>
             </FormGroup>
