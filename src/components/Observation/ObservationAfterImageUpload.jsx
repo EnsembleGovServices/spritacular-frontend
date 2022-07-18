@@ -31,7 +31,8 @@ const ObservationAfterImageUpload = (props) => {
         detectImage,
         step,
         showUploadedPreview,
-        mode
+        mode,
+        handleNextImage
     } = props;
     const {
         observationImages,
@@ -39,6 +40,7 @@ const ObservationAfterImageUpload = (props) => {
         observationType,
         setObservationCategory,
         setObservationType,
+        observationSteps
     } = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
@@ -232,6 +234,10 @@ const ObservationAfterImageUpload = (props) => {
                                 <Col sm={12}>
                                     <Button type="button" className="mt-3" disabled={!disableNext}
                                             onClick={() => toggleTab(Tabs.DateTimeLocation)}>Continue</Button>
+                                    {/*<Button type="button" outline={true}*/}
+                                    {/*        onClick={() => handleNextImage(observationSteps?.selected_image_index)}*/}
+                                    {/*        className="mt-3 ms-2 btn-dark px-4 py-2">Proceed Next*/}
+                                    {/*    Image</Button>*/}
                                 </Col>
                             </Row>
                         </TabPane>

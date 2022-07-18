@@ -298,7 +298,7 @@ const AddObservation = () => {
                         setObservationListData((prev) => {
                             return {
                                 ...prev,
-                                activeType: obvType.draft
+                                activeType: draft === 1 ? obvType.draft : obvType.unverified
                             }
                         })
                     }, 500);
@@ -333,10 +333,6 @@ const AddObservation = () => {
             setCameraDetails(cameraSettingFields);
         }
     };
-
-    useEffect(() => {
-        getCameraDetail().then(r => r)
-    }, [])
 
     const handleContinue = () => {
         setNext(!next);
@@ -584,6 +580,17 @@ const AddObservation = () => {
         })
     }, [activeTab, draft, observationImages, setObservationSteps]);
 
+    // Set Camera Details
+    useEffect(() => {
+        getCameraDetail().then(r => r)
+    }, [])
+
+
+    // Handle next
+    const handleNextImage = (currentActiveIndex) => {
+        console.log('currentActiveIndex', currentActiveIndex)
+    }
+
     return (
         <div className="position-relative">
             {isLoading && <Loader fixContent={true}/>}
@@ -720,6 +727,7 @@ const AddObservation = () => {
                                                     remove={removeItem}
                                                     toggleTab={toggleTab}
                                                     disableNext={disabledLocationTab}
+                                                    handleNextImage={handleNextImage}
                                                     handleImageInput={handleImageInput}
                                                 />
                                             ) : (
