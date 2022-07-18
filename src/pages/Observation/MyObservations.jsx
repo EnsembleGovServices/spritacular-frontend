@@ -163,7 +163,7 @@ const MyObservations = () => {
             };
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isObservationDetailModal, currActiveType]);
+    }, [isObservationDetailModal, activeType]);
 
     // Clear observation data on routeUrl change
     useEffect(() => {
@@ -190,7 +190,7 @@ const MyObservations = () => {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [currActiveType]);
 
     // For loading
     useEffect(() => {
