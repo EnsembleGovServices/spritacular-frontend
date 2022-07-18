@@ -40,7 +40,7 @@ const QuizHome = (props) => {
             setOptions(response?.data?.option_list)
             setQuestions(response?.data?.question_list)
         }).catch((error) => {
-            process.env.NODE_ENV === "development" && console.log('QuizQue:',error)
+            process.env.NODE_ENV === "development" && console.log('QuizQue:', error)
         })
     }
 
@@ -57,7 +57,7 @@ const QuizHome = (props) => {
             }
         });
     };
-    
+
     // For ans checkbox 
     const handleTleCheck = (id) => {
 
@@ -302,7 +302,11 @@ const QuizHome = (props) => {
                         <button className="close-icon" type="button" onClick={() => closeFullScreen()}>
                             <Icon color="#fff" width={30} height={30} icon="clarity:close-line"/>
                         </button>
-                        <BlurImage preview={fullImage} image={fullImage}/>
+                        <div className="fc-image-wrapper">
+                            <div className="fc-image-adjust">
+                                <BlurImage adjustImage="contain" preview={fullImage} image={fullImage}/>
+                            </div>
+                        </div>
                     </ModalBody>
                 </Modal>
             }
