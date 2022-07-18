@@ -423,7 +423,7 @@ const AddObservation = () => {
             })
             .then((response) => {
                 let data = response?.data?.data;
-                console.log('response data', response?.data?.data);
+                // console.log('response data', response?.data?.data);
                 setDraftData({
                     image_type: data.image_type,
                     elevation_angle: data.elevation_angle,
@@ -445,7 +445,7 @@ const AddObservation = () => {
                 })
                 setUpdateMode(true);
 
-                console.log('data?.active_tab?.tab', data?.activeTab?.tab)
+                // console.log('data?.active_tab?.tab', data?.activeTab?.tab)
                 setActiveTab(data?.active_tab?.tab ? data?.active_tab?.tab : Tabs.ObservationImages);
                 setObservationSteps((prev) => {
                     return {
