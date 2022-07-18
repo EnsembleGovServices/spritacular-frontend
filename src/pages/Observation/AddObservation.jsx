@@ -21,7 +21,7 @@ import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import {baseURL, cameraSettingFields, routeUrls} from "../../helpers/url";
-import {Tabs} from "../../helpers/observation";
+import {obvType, Tabs} from "../../helpers/observation";
 
 import ObservationLocation from "../../components/Observation/ObservationLocation";
 import ObservationUploadedImg from "../../components/Observation/ObservationUploadedImg";
@@ -30,6 +30,7 @@ import ObservationProgress from "../../components/Observation/ObservationProgres
 import ObservationAfterImageUpload from "../../components/Observation/ObservationAfterImageUpload";
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
 import Loader from "../../components/Shared/Loader";
+import useObservationsData from "../../hooks/useObservationsData";
 
 const AddObservation = () => {
     const {auth} = useAuth();
@@ -46,6 +47,7 @@ const AddObservation = () => {
         cameraDetails,
         setCameraDetails,
     } = useObservations();
+    const {setObservationListData} = useObservationsData();
     const location = useLocation();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState(Tabs.ObservationImages);
@@ -242,7 +244,13 @@ const AddObservation = () => {
                     setIsLoading(false);
                     window.scrollTo(0, 0);
                     setTimeout(function () {
-                        handleReset();
+                        handleReset(obvType.unverified);
+                        setObservationListData((prev) => {
+                            return {
+                                ...prev,
+                                activeType: obvType.unverified
+                            }
+                        })
                     }, 500);
                 })
                 .catch((error) => {
@@ -276,7 +284,13 @@ const AddObservation = () => {
                     setIsLoading(false);
                     window.scrollTo(0, 0);
                     setTimeout(function () {
-                        handleReset();
+                        handleReset(obvType.draft);
+                        setObservationListData((prev) => {
+                            return {
+                                ...prev,
+                                activeType: obvType.draft
+                            }
+                        })
                     }, 500);
                 })
                 .catch((error) => {

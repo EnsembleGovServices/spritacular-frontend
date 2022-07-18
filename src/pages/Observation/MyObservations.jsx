@@ -1,18 +1,18 @@
 import "../../assets/scss/component/myObservation.scss";
-import { Col, Container, Row } from "reactstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Icon } from "@iconify/react";
+import {Col, Container, Row} from "reactstrap";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Icon} from "@iconify/react";
 import axios from "../../api/axios";
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import {lazy, Suspense, useEffect, useState} from "react";
 
 import useAuth from "../../hooks/useAuth";
 import useObservationsData from "../../hooks/useObservationsData";
 import useObservations from "../../hooks/useObservations";
 
-import { LoadMore } from "../../components/Shared/LoadMore";
-import { obvType } from "../../helpers/observation";
-import { baseURL, routeUrls } from "../../helpers/url";
+import {LoadMore} from "../../components/Shared/LoadMore";
+import {obvType} from "../../helpers/observation";
+import {baseURL, routeUrls} from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
 
 // To render a dynamic import as a regular component for showing loader till it loads.
@@ -22,12 +22,15 @@ const ObservationDetailPage = lazy(() => import("./ObservationListPage"));
 const InitialUploadObservations = lazy(() => import("../Page/InitialUploadObservations"));
 
 const MyObservations = () => {
-    const { auth } = useAuth();
+    const {auth} = useAuth();
+    const {observationListData, setObservationListData} = useObservationsData();
+
+    const currActiveType = observationListData?.activeType ? observationListData?.activeType : obvType.unverified;
+
     const navigate = useNavigate();
-    const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
-    const { observationListData, setObservationListData } = useObservationsData();
+    const {setObservationData, setObservationSteps, setObservationImages} = useObservations();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
-    const [activeType, setActiveType] = useState("verified");
+    const [activeType, setActiveType] = useState(currActiveType);
     const [selectedObservationId, setSelectedObservationId] = useState();
     const [nextPageUrl, setNextPageUrl] = useState(
         "/observation/observation_collection/?type="
@@ -46,7 +49,7 @@ const MyObservations = () => {
     };
 
     // To clean state when obsv is saved as draft
-    const cleaningUpObservationDataForDraftSaving = async(data) => {
+    const cleaningUpObservationDataForDraftSaving = async (data) => {
         setObservationImages([]);
         await setObservationData([]);
         updateStateForDraft(data);
@@ -69,7 +72,7 @@ const MyObservations = () => {
     };
 
     // To fetch observation data categorywise
-    const getObservationData = (reset = false, value = "verified") => {
+    const getObservationData = (reset = false, value = currActiveType) => {
         setActiveType(value);
         let url;
         if (reset === true || !nextPageUrl) {
@@ -121,7 +124,7 @@ const MyObservations = () => {
 
         })
             .catch((error) => {
-                process.env.NODE_ENV === "development" && console.log('Get Obsv Data:',error);
+                process.env.NODE_ENV === "development" && console.log('Get Obsv Data:', error);
             });
     };
 
@@ -147,7 +150,7 @@ const MyObservations = () => {
 
     // To show more observation on click load more button
     const handleLoadMore = () => {
-        getObservationData(false, activeType);
+        getObservationData(false, currActiveType);
     };
 
     // Append observation in state as per active type
@@ -156,17 +159,18 @@ const MyObservations = () => {
             return {
                 ...prev,
                 active: observationListData?.list?.[selectedObservationId],
-                activeType: activeType
+                activeType: currActiveType
             };
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isObservationDetailModal, activeType]);
+    }, [isObservationDetailModal, currActiveType]);
 
     // Clear observation data on routeUrl change
     useEffect(() => {
         setObservationListData((prev) => {
             return {
                 ...prev,
+                activeType: currActiveType,
                 list: []
             }
         });
@@ -175,8 +179,8 @@ const MyObservations = () => {
 
     // Get all observation on component mount
     useEffect(() => {
-        getObservationData(true, "verified");
-        
+        getObservationData(true, currActiveType);
+
         return () => {
             setObservationListData((prev) => {
                 return {
@@ -297,7 +301,7 @@ const MyObservations = () => {
                 <Container>
                     {!loadedState?.hasObservations &&
                         <Suspense fallback={''}>
-                            <InitialUploadObservations count={loading?.count} />
+                            <InitialUploadObservations count={loading?.count}/>
                         </Suspense>
                     }
 
@@ -315,15 +319,15 @@ const MyObservations = () => {
                                         handleContinueEdit={handleObservationEdit}
                                     />
                                     {(!loadedState?.loading && nextPageUrl && observationListData?.list?.length > 0) &&
-                                        <LoadMore handleLoadMore={handleLoadMore} />
+                                        <LoadMore handleLoadMore={handleLoadMore}/>
                                     }
                                 </Suspense>
-                            ) : !showNotFound && <Loader />
+                            ) : !showNotFound && <Loader/>
                     }
 
                     {(showNotFound && loadedState?.hasObservations && observationListData?.list?.length === 0 && !loadedState?.loading) &&
                         <Suspense fallback={''}>
-                            <NotFound />
+                            <NotFound/>
                         </Suspense>
                     }
                 </Container>
@@ -331,7 +335,7 @@ const MyObservations = () => {
 
             {
                 observationListData?.list?.length > 0 &&
-                <Suspense fallback={<Loader />}>
+                <Suspense fallback={<Loader/>}>
                     <ObservationDetails
                         data={observationListData?.active}
                         activeType={activeType}
