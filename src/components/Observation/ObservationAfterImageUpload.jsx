@@ -32,7 +32,6 @@ const ObservationAfterImageUpload = (props) => {
         step,
         showUploadedPreview,
         mode,
-        handleNextImage
     } = props;
     const {
         observationImages,
@@ -40,7 +39,6 @@ const ObservationAfterImageUpload = (props) => {
         observationType,
         setObservationCategory,
         setObservationType,
-        observationSteps
     } = useObservations();
     const [isMultiple, setIsMultiple] = useState(false);
     const [activeTab, setActiveImageTab] = useState(MultiImageTabs.MultipleImages);
