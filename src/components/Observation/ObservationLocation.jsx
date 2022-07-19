@@ -24,7 +24,6 @@ import {getdirectionDegree, getdirectionAngle} from "../../helpers/observation";
 
 // Date-time-picker 
 import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/analog_time_picker";
 import "react-multi-date-picker/styles/colors/red.css";
 import {cdn} from "../../helpers/url";
 
@@ -624,7 +623,8 @@ const ObservationLocation = (props) => {
                         maxLength={10}
                         onChange={(e) => handleImageInput(e)}
                     />
-                    <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b> 1 ms or 1 sec.</span>
+                    <span className="d-block mt-1 opacity-75 ex-text"><b
+                        className="me-1">Example:</b> 1 ms or 1 sec.</span>
                 </FormGroup>
             </Col>
             <Col md={12} className="mb-5">

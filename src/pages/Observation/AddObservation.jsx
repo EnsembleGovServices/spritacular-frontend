@@ -580,17 +580,19 @@ const AddObservation = () => {
                 story: draftData?.story,
             }
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeTab, draft, observationImages, setObservationSteps]);
 
     // Set Camera Details
     useEffect(() => {
-        getCameraDetail().then(r => r)
+        getCameraDetail().then(r => r);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
     // Handle next
     const handleNextImage = (currentActiveIndex) => {
-        console.log('currentActiveIndex', currentActiveIndex)
+        // console.log('currentActiveIndex', currentActiveIndex)
     }
 
     return (
