@@ -9,6 +9,8 @@ const ObservationListPage = (props) => {
         setObservationDetailModal,
         activeType,
         handleContinueEdit,
+        handleDeleteCard,
+        isDeleted
     } = props;
 
     // Masonry Options
@@ -41,6 +43,8 @@ const ObservationListPage = (props) => {
                                 handleClick={handleObservationDetailModal}
                                 activeType={activeType}
                                 handleContinueEdit={handleContinueEdit}
+                                handleDeleteCard={handleDeleteCard}
+                                isDeleted={isDeleted}
                             />
                         </div>
                     )

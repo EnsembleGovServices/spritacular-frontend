@@ -23,11 +23,11 @@ const InitialUploadObservations = lazy(() => import("../Page/InitialUploadObserv
 
 const MyObservations = () => {
     const {auth} = useAuth();
-    const {observationListData, setObservationListData} = useObservationsData();
-
-    const currActiveType = observationListData?.activeType ? observationListData?.activeType : obvType.verified;
-
+    const location = useLocation();
     const navigate = useNavigate();
+
+    const {observationListData, setObservationListData} = useObservationsData();
+    const currActiveType = observationListData?.activeType ? observationListData?.activeType : obvType.verified;
     const {setObservationData, setObservationSteps, setObservationImages} = useObservations();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [activeType, setActiveType] = useState(currActiveType);
@@ -37,7 +37,14 @@ const MyObservations = () => {
     );
     const [loading, setLoading] = useState({});
     const [loadedState, setLoadedState] = useState({});
-    const location = useLocation();
+    const [isDeleted, setDeleted] = useState(false);
+
+    const showNotFound = activeType &&
+        ((activeType === obvType.verified && !loadedState?.hasVerifiedData) ||
+            (activeType === obvType.unverified && !loadedState?.hasUnverifiedData) ||
+            (activeType === obvType.denied && !loadedState?.hasDeniedData) ||
+            (activeType === obvType.draft && !loadedState?.hasDraftData));
+
 
     // To edit draft observation
     const handleObservationEdit = (data) => {
@@ -47,6 +54,28 @@ const MyObservations = () => {
             navigate("/observations/update");
         }, 100);
     };
+
+
+    // To delete an observation
+    const handleDeleteCard = async (obvCardData) => {
+        setDeleted(true);
+        await axios.delete(`${baseURL.draftUrl}${obvCardData?.id}/`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token?.access}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    getObservationData(true, obvCardData.type);
+                    setDeleted(false);
+                }
+            })
+            .catch((error) => {
+                console.log('error occurred at MyObservationCard')
+            })
+    }
+
 
     // To clean state when obsv is saved as draft
     const cleaningUpObservationDataForDraftSaving = async (data) => {
@@ -71,7 +100,7 @@ const MyObservations = () => {
         });
     };
 
-    // To fetch observation data categorywise
+    // To fetch observation data categorise
     const getObservationData = (reset = false, value = currActiveType) => {
         setActiveType(value);
         let url;
@@ -150,7 +179,7 @@ const MyObservations = () => {
 
     // To show more observation on click load more button
     const handleLoadMore = () => {
-        getObservationData(false, currActiveType);
+        getObservationData(false, activeType);
     };
 
     // Append observation in state as per active type
@@ -192,6 +221,7 @@ const MyObservations = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currActiveType]);
 
+
     // For loading
     useEffect(() => {
         setLoading((prev) => {
@@ -216,11 +246,6 @@ const MyObservations = () => {
         })
     }, [loading?.count]);
 
-    const showNotFound = activeType &&
-        ((activeType === obvType.verified && !loadedState?.hasVerifiedData) ||
-            (activeType === obvType.unverified && !loadedState?.hasUnverifiedData) ||
-            (activeType === obvType.denied && !loadedState?.hasDeniedData) ||
-            (activeType === obvType.draft && !loadedState?.hasDraftData))
 
     return (
         <>
@@ -316,6 +341,8 @@ const MyObservations = () => {
                                         setObservationDetailModal={setObservationDetailModal}
                                         setSelectedObservationId={setSelectedObservationId}
                                         loadedState={loadedState}
+                                        handleDeleteCard={handleDeleteCard}
+                                        isDeleted={isDeleted}
                                         handleContinueEdit={handleObservationEdit}
                                     />
                                     {(!loadedState?.loading && nextPageUrl && observationListData?.list?.length > 0) &&

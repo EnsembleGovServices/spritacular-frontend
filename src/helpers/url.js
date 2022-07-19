@@ -7,6 +7,7 @@ export const baseURL = {
     mapApiKey: process.env.REACT_APP_GOOGLE_MAP_KEY,
     user: process.env.REACT_APP_API_USER_URL,
     register: process.env.REACT_APP_API_REGISTER_URL,
+    draftUrl: process.env.REACT_APP_OBSERVATION_DRAFT_DELETE,
     create_blog: process.env.REACT_APP_API_CREATE_BLOG_URL,
     get_blog: process.env.REACT_APP_API_ALL_BLOG_URL,
     get_single_blog: process.env.REACT_APP_API_SINGLE_BLOG_URL,

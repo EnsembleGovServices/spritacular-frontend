@@ -1,5 +1,5 @@
 import "../../assets/scss/component/observationCard.scss";
-import {Card, CardBody, CardTitle, CardSubtitle, Row, Col, Badge, CardFooter, Button} from "reactstrap";
+import {Card, CardBody, CardTitle, CardSubtitle, Row, Col, Badge, CardFooter, Button, Spinner} from "reactstrap";
 import moment from "moment";
 import {Icon} from "@iconify/react";
 import ReactCountryFlags from "../ReactCountryFlag";
@@ -8,12 +8,25 @@ import CardImageCarousel from "./CardImageCarousel";
 import Tippy from "@tippyjs/react";
 import BlurImage from "../Common/BlurImage";
 import Skeleton from "react-loading-skeleton";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {cdn} from "../../helpers/url";
+import Loader from "./Loader";
 
 const ObservationCard = (props) => {
-    const {cardItems, handleClick, userProfile, cardData, index, activeType, homepage, handleContinueEdit} = props;
+    const {
+        cardItems,
+        handleClick,
+        userProfile,
+        cardData,
+        index,
+        activeType,
+        homepage,
+        handleContinueEdit,
+        handleDeleteCard,
+        isDeleted
+    } = props;
     const [loaderLoading, setLoaderLoading] = useState(true);
+    const [showDeleteInfo, setShowDeleteInfo] = useState(false);
 
     const handleImageClick = () => {
         return homepage ? null : userProfile && handleClick(index);
@@ -23,9 +36,38 @@ const ObservationCard = (props) => {
         setLoaderLoading(state);
     }
 
+    const showDeleteCard = () => {
+        setShowDeleteInfo(!showDeleteInfo);
+    }
+
+    useEffect(() => {
+        if (!isDeleted) {
+            setShowDeleteInfo(false);
+        }
+    }, [isDeleted])
+
     return (
         <Card
             className={`${homepage ? 'observation_card overflow-hidden homepage_observation_card' : 'observation_card overflow-hidden'}`}>
+            {showDeleteInfo && handleDeleteCard &&
+                <div className="delete-info">
+                    <button type="button"
+                            onClick={() => handleDeleteCard({id: cardItems?.id, type: activeType})}
+                            className="border-0 icon btn btn-danger d-flex align-items-center justify-content-center">
+                        <Icon icon="ep:delete"/>
+                        <span className="ms-2">yes</span>
+                    </button>
+                    <button type="button"
+                            onClick={() => showDeleteCard()}
+                            className="border-0 icon btn btn-success text-white d-flex align-items-center justify-content-center">
+                        <Icon icon="ep:check"/>
+                        <span className="ms-2">No</span>
+                    </button>
+                </div>
+            }
+            {isDeleted &&
+                <Loader fixContent={true}/>
+            }
             <div
                 className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start">
                 {!userProfile && (
@@ -42,12 +84,21 @@ const ObservationCard = (props) => {
                     </div>
                 )}
                 {userProfile && activeType === "draft" && (
-                    <Button className="multiple-image_icon border-0 edit-icon" onClick={() =>
-                        handleContinueEdit({id: cardItems?.id, type: activeType})
-                    }>
-                        <Icon icon="eva:edit-2-outline"/>
-                    </Button>
+                    <div className="top-right-action">
+                        <button type="button" className="border-0 icon" onClick={() =>
+                            handleContinueEdit({id: cardItems?.id, type: activeType})
+                        }>
+                            <Icon icon="eva:edit-2-outline"/>
+                        </button>
+                        <button type="button"
+                                onClick={() => showDeleteCard()}
+                                className="border-0 icon">
+                            <Icon icon="ep:delete"/>
+                        </button>
+                    </div>
                 )}
+
+
                 {cardItems?.is_verified && (
                     <div className="verify-card">
                         <Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13"/>
