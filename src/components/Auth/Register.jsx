@@ -40,6 +40,7 @@ const Register = (props) => {
 
     // For storing location coords.
     const handleLocations = (location) => {
+        console.log('location', location)
         setUserRegistration({
             ...userRegistration,
             location: location['address'],
@@ -75,7 +76,7 @@ const Register = (props) => {
                     });
                     LoginUser();
                 } else {
-                    process.env.NODE_ENV === "development" && console.log('NewUser Signup Res:',response?.statusText);
+                    process.env.NODE_ENV === "development" && console.log('NewUser Signup Res:', response?.statusText);
                 }
             })
             .catch((error) => {
@@ -88,10 +89,10 @@ const Register = (props) => {
                         message: error.response.statusText,
                         data: error.response.data,
                     });
-                    process.env.NODE_ENV === "development" && console.log('RegisterPage status code:',error?.response?.statusText)
+                    process.env.NODE_ENV === "development" && console.log('RegisterPage status code:', error?.response?.statusText)
                 }
                 if (error) {
-                    process.env.NODE_ENV === "development" && console.log('RegisterPage response:',error.response);
+                    process.env.NODE_ENV === "development" && console.log('RegisterPage response:', error.response);
                 }
             });
     };

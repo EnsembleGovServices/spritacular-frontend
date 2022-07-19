@@ -382,7 +382,8 @@ const ObservationLocation = (props) => {
                                         <div
                                             className="selected-address d-block d-lg-flex align-items-center justify-content-start justify-content-lg-end mt-2 mt-lg-0">
                                             <ReactCountryFlags
-                                                country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code : address1?.country_code}/>
+                                                country={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.country_code : address1?.country_code?.trim()}
+                                            />
                                             <span>{(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.location : ''}</span>
                                         </div>
                                     </Col>
