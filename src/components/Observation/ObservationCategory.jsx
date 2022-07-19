@@ -1,11 +1,7 @@
-import {Col, FormGroup, PopoverBody, PopoverHeader, Collapse, Button, Row} from "reactstrap";
-import {useEffect, useRef, useState, Fragment} from "react";
+import {Col, FormGroup, Row} from "reactstrap";
+import {useEffect, useState, Fragment} from "react";
 import useObservations from "../../hooks/useObservations";
-// import { Icon } from "@iconify/react";
 import useAuth from "../../hooks/useAuth";
-import {Swiper, SwiperSlide} from "swiper/react";
-import {Navigation} from "swiper";
-// import Tippy from "@tippyjs/react";
 import {cdn} from "../../helpers/url";
 
 const ObservationCategory = (props) => {
@@ -24,8 +20,8 @@ const ObservationCategory = (props) => {
     const [selectedCategory, setSelectedCategory] = useState('' || []);
     const ObservationData = {...observationImages};
     const errorData = error ? Object.values(error?.data) : {};
-    const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
-    const tippyRef = useRef();
+    // const [isPopoverContentOpen, setIsPopoverContentOpen] = useState(false);
+    // const tippyRef = useRef();
 
     // Category update on Check
     const onCategoryChange = (e) => {
@@ -61,30 +57,30 @@ const ObservationCategory = (props) => {
     }
 
     // Tooltip image slider
-    const ImageCarousel = (props) => {
-        const {className} = props;
-        const items = [
-            {src: `${cdn.url}/card1.jpeg`},
-            {src: `${cdn.url}/card2.jpeg`},
-            {src: `${cdn.url}/card3.jpeg`}
-        ]
-
-        const carouselContent = items.map((item, index) => {
-            return (
-                <SwiperSlide key={index}>
-                    <img src={item.src} alt="carousel"/>
-                </SwiperSlide>
-            );
-        });
-
-        return (
-            <>
-                <Swiper navigation={true} modules={[Navigation]} className={`className ${className ? className : ''}`}>
-                    {carouselContent}
-                </Swiper>
-            </>
-        )
-    }
+    // const ImageCarousel = (props) => {
+    //     const { className } = props;
+    //     const items = [
+    //         { src: `${cdn.url}/card1.jpeg` },
+    //         { src: `${cdn.url}/card2.jpeg` },
+    //         { src: `${cdn.url}/card3.jpeg` }
+    //     ]
+    //
+    //     const carouselContent = items.map((item, index) => {
+    //         return (
+    //             <SwiperSlide key={index}>
+    //                 <img src={item.src} alt="carousel" />
+    //             </SwiperSlide>
+    //         );
+    //     });
+    //
+    //     return (
+    //         <>
+    //             <Swiper navigation={true} modules={[Navigation]} className={`className ${className ? className : ''}`}>
+    //                 {carouselContent}
+    //             </Swiper>
+    //         </>
+    //     )
+    // }
 
     // Tooltip inner content
     // const PopoverContent = ({ catName }) => {
@@ -132,20 +128,19 @@ const ObservationCategory = (props) => {
                                                 <label htmlFor={imagItem.id}>
                                                     <img src={`${imagItem.image}`} alt={imagItem.name}/>
                                                     {imagItem.name}
-                                                    {/*<div className="ms-2 text-dark ">*/}
-                                                    {/*    <Tippy*/}
-                                                    {/*        content={<PopoverContent catName={imagItem?.name} />}*/}
-                                                    {/*        interactive={true}*/}
-                                                    {/*        appendTo={document.body}*/}
-                                                    {/*        animation="perspective"*/}
-                                                    {/*        theme="light-border"*/}
-                                                    {/*        reference={tippyRef}*/}
-                                                    {/*    >*/}
-                                                    {/*        <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2"*/}
-                                                    {/*            width="15" height="15" /></span>*/}
-                                                    {/*    </Tippy>*/}
-                                                    {/*</div>*/}
-
+                                                    {/* <div className="ms-2 text-dark ">
+                                                        <Tippy
+                                                            content={<PopoverContent catName={imagItem?.name} />}
+                                                            interactive={true}
+                                                            appendTo={document.body}
+                                                            animation="perspective"
+                                                            theme="light-border"
+                                                            reference={tippyRef}
+                                                        >
+                                                            <span ref={tippyRef}><Icon icon="charm:info" color="#adb4c2"
+                                                                width="15" height="15" /></span>
+                                                        </Tippy>
+                                                    </div> */}
                                                 </label>
                                             </div>
                                         </div>
@@ -204,7 +199,7 @@ const ObservationCategory = (props) => {
             })}
             <FormGroup className="mb-1">
                 <p className="fw-bold">
-                    Please choose the appropriate category
+                    What do you see in the image? (Please choose all that applies)
                     <span className="required">Required</span>
                 </p>
             </FormGroup>
