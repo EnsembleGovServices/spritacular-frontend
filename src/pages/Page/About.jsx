@@ -23,8 +23,7 @@ const About = () => {
                             <Row>
                                 <Col md={4}>
                                     <h3>
-                                        We Collect, Present, and Manage a Database of Sprites
-                                        Observations
+                                        We Collect, Present, and Manage a Database of TLE Observations
                                     </h3>
                                 </Col>
                                 <Col md={8}>
@@ -60,21 +59,55 @@ const About = () => {
                             </Row>
                             <div className="about-col">
                                 <Row>
+                                    <Col>
+                                        <h5>
+                                            If you have any questions or comments please email us at
+                                            <a className="mx-2" href="mailto:info.spritacular@gmail.com." target="_blank" rel="noreferrer">
+                                                info.spritacular@gmail.com.
+                                            </a>
+                                            Remember that your opinion matters and we would love to hear from you!
+                                        </h5>
+                                    </Col>
+
+                                </Row>
+                            </div>
+                            <div className="mt-5">
+                                <Row>
                                     <Col md={4}>
-                                        <h3>Sprites Observations</h3>
+                                        <h3>Why do we need a TLE database?</h3>
                                         <p>
-                                            Sprites or red sprites are large-scale electric discharges
-                                            that occur high above thunderstorm clouds, they appear as
-                                            luminous reddish-orange flashes.
+                                            With this project, we will build an event database of TLEs that will significantly
+                                            complement current and future science missions by providing ground-based
+                                            observational data. Not only that, scientific community will be presented and benefit
+                                            from the exceptional imagery of sprites/TLEs captured by our community. This
+                                            database will serve as an invaluable resource for researchers allowing them to find
+                                            interesting cases, perform studies in conjunction with other scientific data, and
+                                            conduct broad statistical studies.
                                         </p>
                                     </Col>
                                     <Col md={4}>
-                                        <h3>Citizen Scientists</h3>
+                                        <h3>What is citizen science?</h3>
                                         <p>
-                                            Storm chasers who take images and collect data on Sprite
-                                            events and other Transient Luminous Events (TLEs). They want
-                                            to share their work and be part of the broader scientific
-                                            community in collaboration with NASA.
+                                            NASA Science Mission Directorate (SMD)
+                                            <a className="mx-1" href="https://smd-prod.s3.amazonaws.com/science-red/s3fs-public/atoms/files/SPD%2033%20Citizen%20Science.pdf" target="_blank" rel="noreferrer">
+                                                Policy on Citizen Science
+                                            </a>
+                                            defines it as “a
+                                            form of open collaboration in which individuals or organizations participate
+                                            Notes to the Developer 14
+                                            voluntarily in the scientific process”. The database that we generate through Spritacular will not only lead to opportunities for
+                                            joint studies across many science disciplines, it will create paths for collaboration
+                                            among communities!
+                                        </p>
+                                    </Col>
+                                    <Col md={4}>
+                                        <h3>Are you interested in learning more about NASA citizen science projects?</h3>
+                                        <p>
+                                            Check out this
+                                            <a className="mx-1" href="https://science.nasa.gov/citizenscience" target="_blank" rel="noreferrer">
+                                                website
+                                            </a>
+                                            , there is a wealth of information on various exciting projects!
                                         </p>
                                     </Col>
                                 </Row>

@@ -35,8 +35,9 @@ const MeetTheTeam = () => {
                                                         </div>
                                                         <CardBody>
                                                             <CardTitle tag="h4" className="fs-5">{member.person_name}</CardTitle>
-                                                            <CardSubtitle className="mb-2 text-muted"
-                                                                tag="h6">{member.designation}</CardSubtitle>
+                                                            <CardSubtitle className="my-2 text-muted"
+                                                                tag="h6">{member.affiliations}</CardSubtitle>
+                                                            <CardText>{member.designation}</CardText>
                                                         </CardBody>
                                                     </Card>
                                                 </Col>
@@ -55,8 +56,7 @@ const MeetTheTeam = () => {
                                                         <CardImg className="w-75" alt="Ensemble Consultancy - 1" src={member.person_img} top />
                                                         <CardBody className="text-center">
                                                             <CardTitle tag="h4" className="fs-5">{member.person_name}</CardTitle>
-                                                            <CardSubtitle className="mb-2 text-muted" tag="h6">Ensemble
-                                                                Consultancy</CardSubtitle>
+                                                            <CardSubtitle className="my-2 text-muted" tag="h6">{member.affiliations}</CardSubtitle>
                                                             <CardText>{member.designation}</CardText>
                                                         </CardBody>
                                                     </Card>

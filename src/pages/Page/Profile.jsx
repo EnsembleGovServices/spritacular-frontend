@@ -102,7 +102,7 @@ const Profile = () => {
                                                     toggleTab("2");
                                                 }}
                                             >
-                                                Camera Settings
+                                                Equipment Details
                                             </NavLink>
                                         </NavItem>
                                         <NavItem>
@@ -137,7 +137,7 @@ const Profile = () => {
                                         <TabPane tabId="2">
                                             <Row>
                                                 <Col sm="12">
-                                                    <h4>Camera Settings</h4>
+                                                    <h4>Equipment Details</h4>
                                                 </Col>
                                                 <Col md="12">
                                                     <Suspense fallback={<div>Loading...</div>}>

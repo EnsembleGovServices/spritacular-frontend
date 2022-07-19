@@ -28,17 +28,17 @@ const EquipmentForm = (props) => {
             </Col>
             <Col md="6">
                 <FormGroup>
-                    <label>Focal Length<span className="required">Required</span></label>
+                    <label>Focal Length [mm]<span className="required">Required</span></label>
                     <Input
                         type="number"
                         maxLength={10}
                         name="focal_length"
                         value={updateSetting?.focal_length}
-                        placeholder="35 mm"
+                        placeholder="35"
                         // required
                         onChange={(e) => handleInput1(e)}
                     />
-                    <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>35 mm</span>
+                    <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>35</span>
                     {error?.data?.focal_length &&
                         <span className="text-danger small">{error?.data?.focal_length}</span>
                     }
@@ -82,7 +82,7 @@ const EquipmentForm = (props) => {
             </Col>
             <Col md="6">
                 <FormGroup>
-                    <label>Shutter Speed (exposure time)</label>
+                    <label>Shutter Speed [sec.]</label>
                     <Input
                         type="text"
                         name="shutter_speed"
@@ -96,7 +96,7 @@ const EquipmentForm = (props) => {
             </Col>
             <Col md="6">
                 <FormGroup>
-                    <label>Frame Rate (frames per second)</label>
+                    <label>Frame Rate [fps]</label>
                     <Input type="number" name="fps" value={updateSetting?.fps} placeholder="24"
                            onChange={(e) => handleInput1(e)}/>
                 </FormGroup>

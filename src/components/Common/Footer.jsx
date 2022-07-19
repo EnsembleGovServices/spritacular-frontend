@@ -1,8 +1,8 @@
 import "../../assets/scss/component/footer.scss";
-import {Link} from "react-router-dom";
-import {Col, Container, Row, List} from "reactstrap";
-import {cdn, routeUrls} from '../../helpers/url';
-import {Icon} from "@iconify/react";
+import { Link } from "react-router-dom";
+import { Col, Container, Row, List } from "reactstrap";
+import { cdn, routeUrls } from '../../helpers/url';
+import { Icon } from "@iconify/react";
 
 const Footer = () => {
     return (
@@ -17,7 +17,7 @@ const Footer = () => {
                                 className="d-inline-block mb-3"
                             >
                                 <img width={150} height={40} src={`${cdn.url}/Spritacular-white.png`}
-                                     alt="spritacular"/>
+                                    alt="spritacular" />
                             </Link>
                         </Col>
                         <Col lg={4}>
@@ -25,12 +25,12 @@ const Footer = () => {
                                 <Col className="nasa-img col-12 col-sm-6">
                                     <div className="footer-brand">
                                         <img width={130} height={80} src={`${cdn.url}/catholic.png`}
-                                             alt="spritacular"/>
+                                            alt="spritacular" />
                                     </div>
                                 </Col>
                                 <Col className="col-12 col-sm-6">
                                     <div className="footer-brand">
-                                        <img width={130} height={130} src={`${cdn.url}/nasa.png`} alt="spritacular"/>
+                                        <img width={130} height={130} src={`${cdn.url}/nasa.png`} alt="spritacular" />
                                     </div>
                                 </Col>
                             </Row>
@@ -165,13 +165,9 @@ const Footer = () => {
                                         className="d-flex m-0 footer-social-links"
                                     >
                                         <li>
-                                            <Link
-                                                to={routeUrls.home}
-                                                className="d-inline-block ms-3"
-                                                title="Twitter"
-                                            >
-                                                <Icon icon="arcticons:twitter" color="#fff" width="28" height="28"/>
-                                            </Link>
+                                            <a href="https://twitter.com/spritacular" target="_blank" rel="noreferrer" className="d-inline-block ms-3">
+                                                <Icon icon="logos:twitter" color="#fff" width="44" height="44" />
+                                            </a>
                                         </li>
                                     </List>
                                 </Col>
@@ -179,9 +175,9 @@ const Footer = () => {
                         </Col>
                         <Col sm={12}>
                             <a href="https://www.ensembleconsultancy.com/" target="_blank" rel="noreferrer"
-                               className="d-inline-block w-100">
+                                className="d-inline-block w-100">
                                 Powered by <img alt="Ensemble" src={`${cdn.url}/ensemble.png`} width={100} height={20}
-                                                className="ms-2"/>
+                                    className="ms-2" />
                             </a>
                         </Col>
                     </Row>
