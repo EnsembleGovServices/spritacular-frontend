@@ -7,7 +7,6 @@ import {
     Col,
     Modal,
     ModalBody,
-    ModalFooter,
     ModalHeader,
     Nav,
     NavItem,
@@ -29,7 +28,6 @@ import {useLocation} from "react-router-dom";
 import useObservationsData from "../../hooks/useObservationsData";
 import Skeleton from "react-loading-skeleton";
 import Loader from "../../components/Shared/Loader";
-import {async} from "@firebase/util";
 
 // To render a dynamic import as a regular component for showing loader till it loads.
 const BlurImageComp = lazy(() => import("../../components/Common/BlurImage"));
@@ -151,10 +149,6 @@ const ObservationDetails = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [observationListData.list]);
 
-    const deleteObservation = (...data) => {
-        handleClose();
-        handleDeleteCard(data)
-    }
 
     return (
         <>
