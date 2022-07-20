@@ -1,5 +1,5 @@
 import "../../assets/scss/component/observationCard.scss";
-import {Card, CardBody, CardTitle, CardSubtitle, Row, Col, Badge, CardFooter, Button, Spinner} from "reactstrap";
+import {Card, CardBody, CardTitle, CardSubtitle, Row, Col, Badge, CardFooter} from "reactstrap";
 import moment from "moment";
 import {Icon} from "@iconify/react";
 import ReactCountryFlags from "../ReactCountryFlag";
