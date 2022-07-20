@@ -1,6 +1,6 @@
 import "../../assets/scss/component/observationDetails.scss";
 import "../../assets/scss/component/quiz.scss";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import {lazy, Suspense, useEffect, useRef, useState} from "react";
 import {
     Badge,
     Button,
@@ -18,18 +18,18 @@ import {
     TabPane,
 } from "reactstrap";
 
-import { Icon } from "@iconify/react";
+import {Icon} from "@iconify/react";
 import Tippy from "@tippyjs/react";
-import { imageDetails } from "../../helpers/observation";
+import {imageDetails} from "../../helpers/observation";
 import axios from "../../api/axios";
-import { baseURL, cdn, routeUrls } from "../../helpers/url";
+import {baseURL, cdn, routeUrls} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
-import { PropTypes } from "prop-types";
-import { useLocation } from "react-router-dom";
+import {PropTypes} from "prop-types";
+import {useLocation} from "react-router-dom";
 import useObservationsData from "../../hooks/useObservationsData";
 import Skeleton from "react-loading-skeleton";
 import Loader from "../../components/Shared/Loader";
-import { async } from "@firebase/util";
+import {async} from "@firebase/util";
 
 // To render a dynamic import as a regular component for showing loader till it loads.
 const BlurImageComp = lazy(() => import("../../components/Common/BlurImage"));
@@ -39,7 +39,7 @@ const Comments = lazy(() => import("../../components/Observation/ObservationDeta
 const CardImageCarousel = lazy(() => import("../../components/Shared/CardImageCarousel"));
 
 const ObservationDetails = (props) => {
-    const { auth } = useAuth();
+    const {auth} = useAuth();
     const location = useLocation();
     const intervalRef = useRef();
     const {
@@ -56,7 +56,7 @@ const ObservationDetails = (props) => {
     } = props;
 
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
-    const { observationComments, setObservationListData, observationListData } = useObservationsData();
+    const {observationComments, setObservationListData, observationListData} = useObservationsData();
     const obvDetailsModal = useRef(null);
     const [isImageNull, setIsImageNull] = useState(true);
     const [loaderLoading, setLoaderLoading] = useState(true);
@@ -173,12 +173,12 @@ const ObservationDetails = (props) => {
                             className="close-icon bg-transparent rounded-0 border-0 shadow-none p-0 me-3"
                             onClick={() => handleClose()}
                         >
-                            <img src={`${cdn.url}/close-icon.svg`} alt="close-icon" />
+                            <img src={`${cdn.url}/close-icon.svg`} alt="close-icon"/>
                         </Button>
                         <h4 className="d-inline-block m-0">{data?.category_data?.[0] ? data?.category_data?.[0]?.name : null}</h4>
                         <Badge
                             className={`text-uppercase ${activeType === "verified" ? "badge-success" : ""
-                                }`}
+                            }`}
                         >
                             {activeType === "verified" && (
                                 <Icon
@@ -198,7 +198,7 @@ const ObservationDetails = (props) => {
                             <Button
                                 variant="primary"
                                 onClick={() =>
-                                    handleContinueEdit({ id: data?.id, type: activeType })
+                                    handleContinueEdit({id: data?.id, type: activeType})
                                 }
                             >
                                 Continue Editing
@@ -206,9 +206,9 @@ const ObservationDetails = (props) => {
                             <Button
                                 className="border-0 ms-2 icon"
                                 variant="primary"
-                                onClick={() => handleDeleteCard({ id: data?.id, type: activeType })}
+                                onClick={() => handleDeleteCard({id: data?.id, type: activeType, isPopUp: true})}
                             >
-                                <Icon icon="ep:delete" />
+                                <Icon icon="ep:delete"/>
                             </Button>
                         </div>
                     )}
@@ -227,7 +227,7 @@ const ObservationDetails = (props) => {
                                             />
                                         ) : !isImageNull ? (
                                             <div className="full-screen position-relative h-100"
-                                                onClick={() => goFullScreenImage(data?.images?.[0]?.image)}>
+                                                 onClick={() => goFullScreenImage(data?.images?.[0]?.image)}>
                                                 <Suspense fallback={<div></div>}>
                                                     <BlurImageComp
                                                         image={data?.images?.[0]?.image}
@@ -237,13 +237,13 @@ const ObservationDetails = (props) => {
                                                     />
                                                 </Suspense>
                                                 <div className="fc-icon">
-                                                    <Icon icon="octicon:screen-full-16" />
+                                                    <Icon icon="octicon:screen-full-16"/>
                                                 </div>
                                             </div>
                                         ) : (
                                             <div
                                                 className="d-flex flex-column h-100 align-items-center justify-content-center bg-gradient bg-light">
-                                                <Spinner color="primary" size="20px" />
+                                                <Spinner color="primary" size="20px"/>
                                                 <h5 className="mt-3">Processing image...</h5>
                                             </div>
                                         ))}
@@ -256,8 +256,8 @@ const ObservationDetails = (props) => {
                                                 handleFullScreen={goFullScreenImage}
                                             />
                                             <div className="fc-icon"
-                                                onClick={() => goFullScreenImage(data?.images?.[0]?.image)}>
-                                                <Icon icon="octicon:screen-full-16" />
+                                                 onClick={() => goFullScreenImage(data?.images?.[0]?.image)}>
+                                                <Icon icon="octicon:screen-full-16"/>
                                             </div>
                                         </div>
                                     )}
@@ -269,7 +269,7 @@ const ObservationDetails = (props) => {
                                     >
                                         {loaderLoading &&
                                             <div className="obv-user-cat-loader">
-                                                <Skeleton height={32} width="80%" />
+                                                <Skeleton height={32} width="80%"/>
                                             </div>
                                         }
                                         <div
@@ -305,7 +305,7 @@ const ObservationDetails = (props) => {
                                                         <div key={index} className="cat-loader m-0 gap">
                                                             {loaderLoading &&
                                                                 <div className="skeleton">
-                                                                    <Skeleton circle height={28} width={28} />
+                                                                    <Skeleton circle height={28} width={28}/>
                                                                 </div>
                                                             }
                                                             <div className="obv-cat-item mt-1">
@@ -399,7 +399,7 @@ const ObservationDetails = (props) => {
                                 </TabPane>
                                 <TabPane tabId={imageDetails.Comments}>
                                     <Suspense fallback={<div>please wait...</div>}>
-                                        <Comments obvId={data?.id} />
+                                        <Comments obvId={data?.id}/>
                                     </Suspense>
                                 </TabPane>
                             </TabContent>
@@ -418,7 +418,7 @@ const ObservationDetails = (props) => {
                 >
                     <ModalBody>
                         <button className="close-icon" type="button" onClick={() => closeFullScreen()}>
-                            <Icon color="#fff" width={30} height={30} icon="clarity:close-line" />
+                            <Icon color="#fff" width={30} height={30} icon="clarity:close-line"/>
                         </button>
                         <div className="fc-image-wrapper">
                             <div className="fc-image-adjust">
@@ -427,7 +427,7 @@ const ObservationDetails = (props) => {
                                         carouselData={data?.images}
                                         detail={true}
                                         loaderLoading={handleLoaderLoading}
-                                    /> : <BlurImageComp adjustImage="contain" preview={fullImage} image={fullImage} />
+                                    /> : <BlurImageComp adjustImage="contain" preview={fullImage} image={fullImage}/>
                                 }
                             </div>
                         </div>
@@ -435,7 +435,7 @@ const ObservationDetails = (props) => {
                 </Modal>
             }
             {isDeleted &&
-                <Loader fixContent={true} />
+                <Loader fixContent={true}/>
             }
         </>
     );

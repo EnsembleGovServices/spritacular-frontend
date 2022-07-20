@@ -19,8 +19,8 @@
     height: 100%;
     z-index: 4;
     padding: 20px;
-    @include vcenter;
     backdrop-filter: blur(5px);
+    @include vcenter;
 
     .btn {
       width: 100%;
@@ -92,8 +92,10 @@
   }
 
   .card-link {
-    &:hover .observation_country {
-      opacity: 1;
+    &:hover {
+      .observation_country, .top-right-action {
+        opacity: 1;
+      }
     }
 
     &:hover .edit-icon {
@@ -109,6 +111,8 @@
       background-color: transparentize($white, 0.2);
       border-radius: 0 0 0 10px;
       overflow: hidden;
+      opacity: 0;
+      @include transition();
 
       .icon {
         background-color: transparent;

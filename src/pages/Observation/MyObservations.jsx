@@ -1,18 +1,18 @@
 import "../../assets/scss/component/myObservation.scss";
-import { Col, Container, Row } from "reactstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Icon } from "@iconify/react";
+import {Col, Container, Row} from "reactstrap";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Icon} from "@iconify/react";
 import axios from "../../api/axios";
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import {lazy, Suspense, useEffect, useState} from "react";
 
 import useAuth from "../../hooks/useAuth";
 import useObservationsData from "../../hooks/useObservationsData";
 import useObservations from "../../hooks/useObservations";
 
-import { LoadMore } from "../../components/Shared/LoadMore";
-import { obvType } from "../../helpers/observation";
-import { baseURL, routeUrls } from "../../helpers/url";
+import {LoadMore} from "../../components/Shared/LoadMore";
+import {obvType} from "../../helpers/observation";
+import {baseURL, routeUrls} from "../../helpers/url";
 import Loader from "../../components/Shared/Loader";
 
 // To render a dynamic import as a regular component for showing loader till it loads.
@@ -22,13 +22,13 @@ const ObservationDetailPage = lazy(() => import("./ObservationListPage"));
 const InitialUploadObservations = lazy(() => import("../Page/InitialUploadObservations"));
 
 const MyObservations = () => {
-    const { auth } = useAuth();
+    const {auth} = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { observationListData, setObservationListData } = useObservationsData();
+    const {observationListData, setObservationListData} = useObservationsData();
     const currActiveType = observationListData?.activeType ? observationListData?.activeType : obvType.verified;
-    const { setObservationData, setObservationSteps, setObservationImages } = useObservations();
+    const {setObservationData, setObservationSteps, setObservationImages} = useObservations();
     const [isObservationDetailModal, setObservationDetailModal] = useState(false);
     const [activeType, setActiveType] = useState(currActiveType);
     const [selectedObservationId, setSelectedObservationId] = useState();
@@ -68,6 +68,9 @@ const MyObservations = () => {
             .then((response) => {
                 if (response.status === 200) {
                     getObservationData(true, obvCardData.type);
+                    if (obvCardData?.isPopUp) {
+                        setObservationDetailModal(false);
+                    }
                     setDeleted(false);
                 }
             })
@@ -326,7 +329,7 @@ const MyObservations = () => {
                 <Container>
                     {!loadedState?.hasObservations &&
                         <Suspense fallback={''}>
-                            <InitialUploadObservations count={loading?.count} />
+                            <InitialUploadObservations count={loading?.count}/>
                         </Suspense>
                     }
 
@@ -346,15 +349,15 @@ const MyObservations = () => {
                                         handleContinueEdit={handleObservationEdit}
                                     />
                                     {(!loadedState?.loading && nextPageUrl && observationListData?.list?.length > 0) &&
-                                        <LoadMore handleLoadMore={handleLoadMore} />
+                                        <LoadMore handleLoadMore={handleLoadMore}/>
                                     }
                                 </Suspense>
-                            ) : !showNotFound && <Loader />
+                            ) : !showNotFound && <Loader/>
                     }
 
                     {(showNotFound && loadedState?.hasObservations && observationListData?.list?.length === 0 && !loadedState?.loading) &&
                         <Suspense fallback={''}>
-                            <NotFound />
+                            <NotFound/>
                         </Suspense>
                     }
                 </Container>
@@ -362,7 +365,7 @@ const MyObservations = () => {
 
             {
                 observationListData?.list?.length > 0 &&
-                <Suspense fallback={<Loader />}>
+                <Suspense fallback={<Loader/>}>
                     <ObservationDetails
                         data={observationListData?.active}
                         activeType={activeType}
