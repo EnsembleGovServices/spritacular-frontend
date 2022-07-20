@@ -64,7 +64,6 @@ const ObservationCategory = (props) => {
     //         { src: `${cdn.url}/card2.jpeg` },
     //         { src: `${cdn.url}/card3.jpeg` }
     //     ]
-    //
     //     const carouselContent = items.map((item, index) => {
     //         return (
     //             <SwiperSlide key={index}>
@@ -72,7 +71,6 @@ const ObservationCategory = (props) => {
     //             </SwiperSlide>
     //         );
     //     });
-    //
     //     return (
     //         <>
     //             <Swiper navigation={true} modules={[Navigation]} className={`className ${className ? className : ''}`}>
@@ -105,6 +103,7 @@ const ObservationCategory = (props) => {
     // };
 
     // List out category
+    
     const showCategory = () => {
         return observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
             return (

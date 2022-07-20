@@ -27,7 +27,6 @@ import DatePicker from "react-multi-date-picker";
 import "react-multi-date-picker/styles/colors/red.css";
 import {cdn} from "../../helpers/url";
 
-
 const ObservationLocation = (props) => {
     const {toggleTab, handleImageInput, error, step, obvType, disableNext} = props;
     const fref = useRef()

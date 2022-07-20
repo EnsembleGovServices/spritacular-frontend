@@ -1,6 +1,6 @@
 import "../../assets/scss/component/observationCard.scss";
-import {Container, Row, Col} from "reactstrap";
-import {cdn} from "../../helpers/url";
+import { Container, Row, Col } from "reactstrap";
+import { cdn } from "../../helpers/url";
 import BlurImage from "../Common/BlurImage";
 import Skeleton from "react-loading-skeleton";
 import {useState} from "react";
@@ -68,9 +68,8 @@ const HomeHowItWorks = () => {
                     </Row>
                     <Row>
                         <Col sm={6} xs={12} className="works-gap order-2 order-md-1 position-relative  ">
-                            <BlurImage image={`${cdn.url}/Howitworks_second.png`}
-                                       preview={`${cdn.url}/Howitworks_second.png`}
-                                       loaderLoading={handleLoaderLoading} alt="How it works under Register"/>
+                            <BlurImage image={`${cdn.url}/Howitworks_second.png`} preview={`${cdn.url}/night_sky_new.jpg`}
+                                loaderLoading={handleLoaderLoading} alt="How it works under Register" />
                         </Col>
                         <Col sm={6} xs={12} className="works-gap order-1 order-md-2 position-relative">
                             <div className="how-it-work-text-info">

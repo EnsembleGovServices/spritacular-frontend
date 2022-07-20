@@ -7,6 +7,7 @@ import {
     Col,
     Modal,
     ModalBody,
+    ModalFooter,
     ModalHeader,
     Nav,
     NavItem,
@@ -27,6 +28,8 @@ import {PropTypes} from "prop-types";
 import {useLocation} from "react-router-dom";
 import useObservationsData from "../../hooks/useObservationsData";
 import Skeleton from "react-loading-skeleton";
+import Loader from "../../components/Shared/Loader";
+import {async} from "@firebase/util";
 
 // To render a dynamic import as a regular component for showing loader till it loads.
 const BlurImageComp = lazy(() => import("../../components/Common/BlurImage"));
@@ -47,7 +50,9 @@ const ObservationDetails = (props) => {
         activeType,
         handleContinueEdit,
         handleApproveRejectEvent,
-        refreshData
+        refreshData,
+        handleDeleteCard,
+        isDeleted
     } = props;
 
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
@@ -144,7 +149,12 @@ const ObservationDetails = (props) => {
             })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [observationListData.list])
+    }, [observationListData.list]);
+
+    const deleteObservation = (...data) => {
+        handleClose();
+        handleDeleteCard(data)
+    }
 
     return (
         <>
@@ -192,6 +202,13 @@ const ObservationDetails = (props) => {
                                 }
                             >
                                 Continue Editing
+                            </Button>
+                            <Button
+                                className="border-0 ms-2 icon"
+                                variant="primary"
+                                onClick={() => handleDeleteCard({id: data?.id, type: activeType, isPopUp: true})}
+                            >
+                                <Icon icon="ep:delete"/>
                             </Button>
                         </div>
                     )}
@@ -416,6 +433,9 @@ const ObservationDetails = (props) => {
                         </div>
                     </ModalBody>
                 </Modal>
+            }
+            {isDeleted &&
+                <Loader fixContent={true}/>
             }
         </>
     );

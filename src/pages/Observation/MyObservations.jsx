@@ -68,6 +68,9 @@ const MyObservations = () => {
             .then((response) => {
                 if (response.status === 200) {
                     getObservationData(true, obvCardData.type);
+                    if (obvCardData?.isPopUp) {
+                        setObservationDetailModal(false);
+                    }
                     setDeleted(false);
                 }
             })
@@ -372,6 +375,8 @@ const MyObservations = () => {
                         handleContinueEdit={handleObservationEdit}
                         handleApproveRejectEvent={getObservationData}
                         refreshData={getObservationData}
+                        handleDeleteCard={handleDeleteCard}
+                        isDeleted={isDeleted}
                     />
                 </Suspense>
             }

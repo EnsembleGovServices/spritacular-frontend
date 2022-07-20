@@ -88,13 +88,14 @@ const About = () => {
                                     <Col md={4}>
                                         <h3>What is citizen science?</h3>
                                         <p>
+                                            Simply put, it is science for all! <br />
                                             NASA Science Mission Directorate (SMD)
                                             <a className="mx-1" href="https://smd-prod.s3.amazonaws.com/science-red/s3fs-public/atoms/files/SPD%2033%20Citizen%20Science.pdf" target="_blank" rel="noreferrer">
                                                 Policy on Citizen Science
                                             </a>
                                             defines it as “a
                                             form of open collaboration in which individuals or organizations participate
-                                            Notes to the Developer 14
+
                                             voluntarily in the scientific process”. The database that we generate through Spritacular will not only lead to opportunities for
                                             joint studies across many science disciplines, it will create paths for collaboration
                                             among communities!
