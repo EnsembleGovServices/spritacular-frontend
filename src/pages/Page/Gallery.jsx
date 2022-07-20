@@ -1,3 +1,4 @@
+
 import "../../assets/scss/component/myObservation.scss";
 import "../../assets/scss/component/gallery.scss";
 import { lazy, Suspense, useEffect, useState } from "react";
@@ -42,6 +43,7 @@ const Gallery = () => {
         `${baseURL.api}/observation/gallery/?country=&category=&status=`
     );
     const normalUser = auth?.user?.is_user;
+    const trainedUser = auth?.user?.is_trained;
 
     const findCountry = (e) => {
         let value = e.target.value.toLowerCase();
@@ -198,6 +200,8 @@ const Gallery = () => {
         setShowNoData(loadedState?.hasData);
     }, [loadedState?.hasData]);
 
+    console.log();
+
     return (
         <>
             <Suspense fallback={<div></div>}>
@@ -230,6 +234,15 @@ const Gallery = () => {
                         >
                             Get Trained
                         </Link>
+                    </UncontrolledAlert>
+                )}
+                {trainedUser && (
+                    <UncontrolledAlert
+                        data-dismiss="alert"
+                        dismissible="true"
+                        className="text-center mb-5"
+                    >
+                        Congratulations, as a trained user you can now vote to verify observations.
                     </UncontrolledAlert>
                 )}
 

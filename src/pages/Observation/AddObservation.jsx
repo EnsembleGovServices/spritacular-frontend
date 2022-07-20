@@ -585,10 +585,9 @@ const AddObservation = () => {
 
     // Set Camera Details
     useEffect(() => {
-        getCameraDetail().then(r => r);
+        getCameraDetail().then(r => r)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
 
     // Handle next
     const handleNextImage = (currentActiveIndex) => {

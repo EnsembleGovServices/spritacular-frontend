@@ -1,15 +1,15 @@
 import "../../assets/scss/component/observationCard.scss";
-import {Card, CardBody, CardTitle, CardSubtitle, Row, Col, Badge, CardFooter, Button, Spinner} from "reactstrap";
+import { Card, CardBody, CardTitle, CardSubtitle, Row, Col, Badge, CardFooter } from "reactstrap";
 import moment from "moment";
-import {Icon} from "@iconify/react";
+import { Icon } from "@iconify/react";
 import ReactCountryFlags from "../ReactCountryFlag";
-import {getdirectionDegree} from "../../helpers/observation";
+import { getdirectionDegree } from "../../helpers/observation";
 import CardImageCarousel from "./CardImageCarousel";
 import Tippy from "@tippyjs/react";
 import BlurImage from "../Common/BlurImage";
 import Skeleton from "react-loading-skeleton";
-import {useEffect, useState} from "react";
-import {cdn} from "../../helpers/url";
+import { useEffect, useState } from "react";
+import { cdn } from "../../helpers/url";
 import Loader from "./Loader";
 
 const ObservationCard = (props) => {
@@ -52,48 +52,48 @@ const ObservationCard = (props) => {
             {showDeleteInfo && handleDeleteCard &&
                 <div className="delete-info">
                     <button type="button"
-                            onClick={() => handleDeleteCard({id: cardItems?.id, type: activeType})}
-                            className="border-0 icon btn btn-danger d-flex align-items-center justify-content-center">
-                        <Icon icon="ep:delete"/>
+                        onClick={() => handleDeleteCard({ id: cardItems?.id, type: activeType })}
+                        className="border-0 icon btn btn-danger d-flex align-items-center justify-content-center">
+                        <Icon icon="ep:delete" />
                         <span className="ms-2">yes</span>
                     </button>
                     <button type="button"
-                            onClick={() => showDeleteCard()}
-                            className="border-0 icon btn btn-success text-white d-flex align-items-center justify-content-center">
-                        <Icon icon="ep:check"/>
+                        onClick={() => showDeleteCard()}
+                        className="border-0 icon btn btn-success text-white d-flex align-items-center justify-content-center">
+                        <Icon icon="ep:check" />
                         <span className="ms-2">No</span>
                     </button>
                 </div>
             }
             {isDeleted &&
-                <Loader fixContent={true}/>
+                <Loader fixContent={true} />
             }
             <div
                 className="text-black card-link d-inline-block shadow-none bg-transparent rounded-0 border-0 p-0 text-start">
                 {!userProfile && (
                     <div className="observation_country">
                         <Badge className="bg-black text-white">
-                            <ReactCountryFlags country={cardData?.country_code}/>
+                            <ReactCountryFlags country={cardData?.country_code} />
                             {cardData?.location}
                         </Badge>
                     </div>
                 )}
                 {userProfile && cardItems?.image_type === 3 && (
                     <div className="multiple-image_icon">
-                        <Icon icon="codicon:list-filter" color="black"/>
+                        <Icon icon="codicon:list-filter" color="black" />
                     </div>
                 )}
                 {userProfile && activeType === "draft" && (
                     <div className="top-right-action">
                         <button type="button" className="border-0 icon" onClick={() =>
-                            handleContinueEdit({id: cardItems?.id, type: activeType})
+                            handleContinueEdit({ id: cardItems?.id, type: activeType })
                         }>
-                            <Icon icon="eva:edit-2-outline"/>
+                            <Icon icon="eva:edit-2-outline" />
                         </button>
                         <button type="button"
-                                onClick={() => showDeleteCard()}
-                                className="border-0 icon">
-                            <Icon icon="ep:delete"/>
+                            onClick={() => showDeleteCard()}
+                            className="border-0 icon">
+                            <Icon icon="ep:delete" />
                         </button>
                     </div>
                 )}
@@ -101,14 +101,16 @@ const ObservationCard = (props) => {
 
                 {cardItems?.is_verified && (
                     <div className="verify-card">
-                        <Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13"/>
+                        <Icon icon="mdi:check-decagram" color="#27ae60" width="13" height="13" />
                     </div>
                 )}
                 {cardItems?.image_type === 3
-                    ? <CardImageCarousel carouselData={cardItems?.images} handleClick={handleClick}
-                                         handleIndex={index}
-                                         alt={userProfile?.location}
-                                         loaderLoading={handleLoaderLoading}
+                    ? <CardImageCarousel
+                        carouselData={cardItems?.images}
+                        handleClick={handleClick}
+                        handleIndex={index}
+                        alt={userProfile?.location}
+                        loaderLoading={handleLoaderLoading}
                     />
                     : <BlurImage
                         alt={userProfile?.location}
@@ -139,7 +141,7 @@ const ObservationCard = (props) => {
                                         <div className="cat-img rounded-circle bg-white me-1">
                                             <Tippy animation="perspective" content={item?.name}>
                                                 <img width={32} height={32} src={image} alt={item?.name}
-                                                     className="rounded-circle"/>
+                                                    className="rounded-circle" />
                                             </Tippy>
                                         </div>
                                     </div>
@@ -150,7 +152,7 @@ const ObservationCard = (props) => {
                     {loaderLoading &&
                         <div className="body-loader">
                             <div className="skeleton">
-                                <Skeleton count={3} height={15}/>
+                                <Skeleton count={3} height={15} />
                             </div>
                         </div>
                     }
@@ -170,14 +172,14 @@ const ObservationCard = (props) => {
                         <Col xs={6} lg={6} className=" justify-content-end d-flex">
                             <div className="d-flex card-user_details align-items-center overflow-hidden">
                                 <Tippy animation="perspective"
-                                       content={userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}>
+                                    content={userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}>
                                     <div
                                         className="name pe-2 mb-0 text-truncate">{userProfile ? userProfile?.first_name + " " + userProfile?.last_name : cardData.username}</div>
                                 </Tippy>
                                 <div className="profile-icon rounded-circle">
                                     <img
                                         src={userProfile?.profile_image ? userProfile?.profile_image : `${cdn.url}/profile.svg`}
-                                        width="30" height="30" alt="Profile" className="rounded-circle"/>
+                                        width="30" height="30" alt="Profile" className="rounded-circle" />
                                 </div>
                             </div>
                         </Col>
@@ -189,7 +191,7 @@ const ObservationCard = (props) => {
                         {loaderLoading &&
                             <div className="footer-loader">
                                 <div className="skeleton">
-                                    <Skeleton count={1} height={22}/>
+                                    <Skeleton count={1} height={22} />
                                 </div>
                             </div>
                         }
@@ -198,7 +200,7 @@ const ObservationCard = (props) => {
                         </div>
                         <div className="direction-details">
                             <div className="card-user_location"
-                                 style={{"--card-location-angle": `${getdirectionDegree(cardData?.azimuth)}deg`}}>
+                                style={{ "--card-location-angle": `${getdirectionDegree(cardData?.azimuth)}deg` }}>
                                 <h6 className="me-1 mb-0">
                                     {cardData?.azimuth}
                                     {Number(cardData?.azimuth) ? "°" : ""}
@@ -206,7 +208,7 @@ const ObservationCard = (props) => {
                                 {cardData?.azimuth &&
                                     <span
                                         className="card-direction rounded-circle position-relative d-flex justify-content-center align-items-start">
-                                        <span className="direction-dot"/>
+                                        <span className="direction-dot" />
                                     </span>}
                             </div>
                         </div>
