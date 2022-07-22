@@ -7,12 +7,15 @@ import {baseURL, routeUrls} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
 import SimpleBreadcrumb from "../../../components/Blog/SimpleBreadcrumb";
 import ContentEditor from "../../../components/Blog/ContentEditor";
+import useObservationsData from "../../../hooks/useObservationsData";
 
 const TutorialDetails = () => {
-    const [tutorial, setTutorial] = useState();
+    // const [tutorial, setTutorial] = useState();
     const {slug} = useParams();
     const {auth} = useAuth();
+    const {setATDetails, atDetails} = useObservationsData();
     const admin = auth?.user?.is_superuser;
+    const tutorial = atDetails?.tutorial;
 
 
     const getTutorial = async () => {
@@ -21,7 +24,12 @@ const TutorialDetails = () => {
                 "Content-Type": "application/json",
             },
         }).then(response => {
-            setTutorial(response?.data?.data);
+            setATDetails((prev) => {
+                return {
+                    ...prev,
+                    tutorial: response?.data?.data
+                }
+            })
         }).catch(error => {
             process.env.NODE_ENV === "development" && console.log('GetTutorial DetailPage: ', error)
         })
@@ -55,6 +63,10 @@ const TutorialDetails = () => {
                             <Col md={12}>
                                 <div className="card border-0 shadow-sm">
                                     <div className="card-body p-5">
+                                        <span className="text-light-dark">Description</span>
+                                        <p className="card-text">
+                                            {tutorial?.description}
+                                        </p>
                                         <ContentEditor data={tutorial?.content} readOnly={true}/>
                                     </div>
                                 </div>

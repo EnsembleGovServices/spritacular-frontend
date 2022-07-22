@@ -1,18 +1,21 @@
 import "../../../assets/scss/component/tutorialdetail.scss";
-import { Col, Container, Row } from "reactstrap";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import {Col, Container, Row} from "reactstrap";
+import {useEffect, useState} from "react";
+import {Link, useParams} from "react-router-dom";
 import axios from "../../../api/axios";
-import { baseURL, routeUrls } from "../../../helpers/url";
+import {baseURL, routeUrls} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
 import SimpleBreadcrumb from "../../../components/Blog/SimpleBreadcrumb";
 import ContentEditor from "../../../components/Blog/ContentEditor";
+import useObservationsData from "../../../hooks/useObservationsData";
 
 const BlogArticleDetails = () => {
-    const [article, setArticle] = useState();
-    const { slug } = useParams();
-    const { auth } = useAuth();
+    // const [article, setArticle] = useState();
+    const {setATDetails, atDetails} = useObservationsData();
+    const {slug} = useParams();
+    const {auth} = useAuth();
     const admin = auth?.user?.is_superuser;
+    const article = atDetails?.article;
 
     const getArticle = async () => {
         await axios.get(`${baseURL.get_single_blog}${slug}/`, {
@@ -20,11 +23,18 @@ const BlogArticleDetails = () => {
                 "Content-Type": "application/json",
             },
         }).then(response => {
-            setArticle(response?.data?.data);
+            setATDetails((prev) => {
+                return {
+                    ...prev,
+                    article: response?.data?.data
+                }
+            })
+
         }).catch(error => {
             process.env.NODE_ENV === "development" && console.log('getArticle BlogArtPage: ', error)
         })
     }
+
 
     useEffect(() => {
         getArticle().then(r => r)
@@ -38,7 +48,8 @@ const BlogArticleDetails = () => {
                 <section className="tutorial-detail-main">
                     <Container>
                         <div className="breadcrumb-main">
-                            <SimpleBreadcrumb page="Blog" title={article?.title.split(" ").length > 6 ? `${article?.title.split(" ", 6).join(" ")}...` : article?.title} />
+                            <SimpleBreadcrumb page="Blog"
+                                              title={article?.title.split(" ").length > 6 ? `${article?.title.split(" ", 6).join(" ")}...` : article?.title}/>
                         </div>
                         <div className="mb-4 mt-3 d-flex align-items-center justify-content-between">
                             <h2 className="mb-0">{article?.title}</h2>
@@ -54,7 +65,13 @@ const BlogArticleDetails = () => {
                             <Col md={12}>
                                 <div className="card border-0 shadow-sm">
                                     <div className="card-body p-5">
-                                        <ContentEditor data={article?.content} readOnly={true} />
+                                        <span className="text-light-dark">Description</span>
+                                        <p className="card-text">
+                                            {article?.description}
+                                        </p>
+                                        <ContentEditor data={article?.content}
+                                                       readMode={true}
+                                        />
                                     </div>
                                 </div>
                             </Col>

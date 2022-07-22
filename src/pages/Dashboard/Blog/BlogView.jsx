@@ -6,12 +6,13 @@ import {useEffect, useState} from "react";
 import useAuth from "../../../hooks/useAuth";
 
 import ViewBlogTutorial from "../BlogTutorial/ViewBlogTutorial";
+import useObservationsData from "../../../hooks/useObservationsData";
 
 const BlogView = () => {
     const {slug} = useParams();
     const {auth} = useAuth();
+    const {setATDetails, atDetails} = useObservationsData();
     const navigate = useNavigate();
-    const [article, setArticle] = useState();
     const [readMode, setReadMode] = useState(false);
 
     const getArticleDetails = async () => {
@@ -21,7 +22,12 @@ const BlogView = () => {
                 Authorization: `Bearer ${auth?.token?.access}`,
             },
         }).then(response => {
-            setArticle(response?.data?.data);
+            setATDetails((prev) => {
+                return {
+                    ...prev,
+                    article: response?.data?.data
+                }
+            })
         }).catch(error => {
             if (error?.response?.statusCode !== 200) {
                 navigate('/404', {replace: true});
@@ -37,7 +43,7 @@ const BlogView = () => {
     return (
         <ViewBlogTutorial setReadMode={setReadMode}
                           readMode={readMode}
-                          content={article}
+                          content={atDetails?.article}
                           slug={slug}
                           type="blog"
         />

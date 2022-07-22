@@ -6,12 +6,14 @@ import axios from "../../../api/axios";
 import {baseURL} from "../../../helpers/url";
 
 import ViewBlogTutorial from "../BlogTutorial/ViewBlogTutorial";
+import useObservationsData from "../../../hooks/useObservationsData";
 
 const TutorialView = () => {
     const {slug} = useParams();
     const navigate = useNavigate();
-    const [tutorial, setTutorial] = useState();
+    const {setATDetails, atDetails} = useObservationsData();
     const [readMode, setReadMode] = useState(false);
+    const tutorial = atDetails?.tutorial;
 
     const getTutorialDetails = async () => {
         await axios.get(`${baseURL.get_single_blog}${slug}/`, {
@@ -19,7 +21,12 @@ const TutorialView = () => {
                 "Content-Type": "application/json"
             },
         }).then(response => {
-            setTutorial(response?.data?.data);
+            setATDetails((prev) => {
+                return {
+                    ...prev,
+                    tutorial: response?.data?.data
+                }
+            })
         }).catch(error => {
             if (error?.response?.statusCode !== 200) {
                 navigate('/404', {replace: true});
