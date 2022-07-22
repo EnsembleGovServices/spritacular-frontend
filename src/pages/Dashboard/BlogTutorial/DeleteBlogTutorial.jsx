@@ -1,15 +1,17 @@
 import axios from "../../../api/axios";
-import {baseURL} from "../../../helpers/url";
+import {baseURL, routeUrls} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
 import useObservationsData from "../../../hooks/useObservationsData";
 import Loader from "../../../components/Shared/Loader";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
-const DeleteBlogTutorial = ({slug}) => {
+const DeleteBlogTutorial = ({slug, type}) => {
     const {auth} = useAuth();
     const {setTriggerEvents} = useObservationsData();
     const superUser = auth?.user?.is_superuser;
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
 
     const deleteBlogTutTrigger = async () => {
@@ -34,7 +36,8 @@ const DeleteBlogTutorial = ({slug}) => {
                             ...prev,
                             deleted: true
                         }
-                    })
+                    });
+                    navigate(`${routeUrls.dashboard}/${type}`, {replace: true});
                 }
 
             }).catch((error) => {

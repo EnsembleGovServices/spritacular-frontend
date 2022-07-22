@@ -12,7 +12,7 @@ const BlogAction = ({item, type}) => {
                   to={`${routeUrls.dashboard}/${type}/${item?.slug}/edit`}>Edit</Link>
 
             <div className="ms-2">
-                <DeleteBlogTutorial slug={item?.slug}/>
+                <DeleteBlogTutorial type={type} slug={item?.slug}/>
             </div>
 
         </div>
