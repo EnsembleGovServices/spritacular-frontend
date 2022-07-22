@@ -1,7 +1,7 @@
 @import "../global/config.scss";
 
-.tutorial-details_page{
-  .common-banner{
+.tutorial-details_page {
+  .common-banner {
     position: absolute;
     left: 0;
     top: 0;
@@ -9,44 +9,53 @@
     z-index: -1;
   }
 }
+
 .tutorial-detail-main {
   padding: 40px 0px 120px;
+
   h2 {
     color: $black;
     @include lg-title;
     font-weight: 700;
     margin-bottom: 20px;
   }
+
   img {
     width: 100%;
     border-radius: $border-radius;
   }
+
   h3 {
     margin-top: 40px;
     color: $black;
     font-weight: 700;
   }
+
   h4 {
     color: $grey;
     @include lg-text;
     font-weight: 700;
     margin-bottom: 0px;
   }
+
   ol {
     margin-bottom: 0px;
+
     li {
       color: $grey;
       @include lg-text;
-      
+
     }
   }
+
   p {
     color: $grey;
     @include lg-text;
-    display: flex;
+    display: block;
     align-items: center;
   }
-  .badge-required{
+
+  .badge-required {
     font-size: 11px;
     font-weight: 500;
     margin-left: 5px;
