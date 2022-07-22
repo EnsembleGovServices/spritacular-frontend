@@ -6,9 +6,10 @@ import {baseURL} from "../../../helpers/url";
 import axios from "../../../api/axios";
 
 import ListBlogTutorial from "../BlogTutorial/ListBlogTutorial";
+import useObservationsData from "../../../hooks/useObservationsData";
 
 const TutorialPage = () => {
-    const [tutorials, setTutorials] = useState();
+    const {tutorials, setTutorials, triggerEvents} = useObservationsData();
     const [loader, setLoader] = useState(true);
 
     const thead = [
@@ -34,6 +35,13 @@ const TutorialPage = () => {
         getTutorials().then(r => r)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    useEffect(() => {
+        if (triggerEvents) {
+            getTutorials().then(r => r)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [triggerEvents])
 
     return (
         <ListBlogTutorial content={tutorials}
