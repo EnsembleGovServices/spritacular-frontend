@@ -1,4 +1,4 @@
-import {Col, FormGroup, Row} from "reactstrap";
+import {Col, FormGroup, Label, Row} from "reactstrap";
 import {useEffect, useState, Fragment} from "react";
 import useObservations from "../../hooks/useObservations";
 import useAuth from "../../hooks/useAuth";
@@ -12,7 +12,9 @@ const ObservationCategory = (props) => {
         setObservationImages,
         observationSteps,
         observationCategory,
-        setObservationCategory
+        setObservationCategory,
+        observationData,
+        setObservationData
     } = useObservations();
     const [Category, setCategory] = useState([]);
     const [oldCategory, setOldCategory] = useState([]);
@@ -103,7 +105,7 @@ const ObservationCategory = (props) => {
     // };
 
     // List out category
-    
+
     const showCategory = () => {
         return observationImages?.data?.filter((item) => item.id === observationImages?.selected_image_id).map((item, index) => {
             return (
@@ -150,6 +152,22 @@ const ObservationCategory = (props) => {
                     }
                 </Fragment>
             )
+        })
+    }
+
+    const handleUrlInput = (e) => {
+        e.preventDefault();
+        console.log();
+        let name = e.target.name,
+            value = e.target.value;
+
+        console.log('name', name);
+        console.log('value', value);
+        setObservationData((prev) => {
+            return {
+                ...prev,
+                [name]: value
+            }
         })
     }
 
@@ -204,6 +222,19 @@ const ObservationCategory = (props) => {
             </FormGroup>
             <Row>
                 {showCategory()}
+            </Row>
+            <Row>
+                <Col sm={12}>
+                    <FormGroup className="mb-1 mt-3">
+                        <Label htmlFor="media_file_url" className="fw-bold">
+                            Do you have more images or video files from the event? If yes, please enter a shareable
+                            media file link (Dropbox, Google Drive, OneDrive)
+                        </Label>
+                        <input value={observationData?.media_file_url} id="media_file_url" name="media_file_url"
+                               onChange={(e) => handleUrlInput(e)} type="text"
+                               className="form-control" placeholder="eg: https://spritacular.org"/>
+                    </FormGroup>
+                </Col>
             </Row>
         </>
     )

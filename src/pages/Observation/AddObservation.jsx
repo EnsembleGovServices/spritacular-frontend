@@ -226,7 +226,7 @@ const AddObservation = () => {
         if (draft === 1) {
             finalData.is_draft = draft;
         }
-        finalData.camera = cameraDetails ? cameraDetails : auth?.camera ? auth?.camera?.id : null;
+        finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id : null);
         if (finalData.elevation_angle === "NaN") {
             finalData.elevation_angle = null
         } else {
@@ -445,6 +445,7 @@ const AddObservation = () => {
                         elevation_angle: parseFloat(draftData?.elevation_angle).toFixed(2),
                         video_url: data?.video_url,
                         story: data?.story,
+                        media_file_url: data?.media_file_url
                     }
                 })
                 setUpdateMode(true);
