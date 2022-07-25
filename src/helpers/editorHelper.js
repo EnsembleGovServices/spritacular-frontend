@@ -1,6 +1,6 @@
 export const editorCustomConfig = {
     toolbar: {
-        items: [
+        normal: [
             "undo", "redo",
             "fontsize", "fontColor", "fontBackgroundColor", "|",
             "heading", "|", "alignment", "|",
@@ -12,6 +12,16 @@ export const editorCustomConfig = {
             "SpecialCharacters", "ImageResize",
             "pageBreak",
         ],
-        shouldNotGroupWhenFull: false
+        dynPages: [
+            "undo", "redo",
+            "fontsize", "fontColor", "fontBackgroundColor", "|",
+            "heading", "|", "alignment", "|",
+            "bold", "italic", "|", "link", "|",
+            "bulletedList", "numberedList",
+            "insertTable", "mergeTableCells", "|",
+            "HorizontalLine",
+            "pageBreak",
+        ],
+
     },
 }
