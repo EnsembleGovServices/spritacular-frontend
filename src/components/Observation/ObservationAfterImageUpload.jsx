@@ -173,7 +173,7 @@ const ObservationAfterImageUpload = (props) => {
                                 />
                                 <label className="switchbox" htmlFor="toggleMultiple"/>
                                 {/*<span>Multiple Observations (limit to 3)</span>*/}
-                                <span>Image Sequence (limit to 3)</span>
+                                <span>I have multiple images of the same event (limit to 3)</span>
                             </div>
                         </FormGroup>
                     </Col>
