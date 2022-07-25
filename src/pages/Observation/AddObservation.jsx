@@ -414,16 +414,20 @@ const AddObservation = () => {
     };
 
     const getObservationDataForUpdate = async (obvId) => {
+
         await axios
             .get(baseURL.api + `/observation/get_draft_data/${obvId}/`, {
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json; charset=utf-8",
                     Authorization: `Bearer ${auth?.token?.access}`,
                 },
             })
             .then((response) => {
-                let data = response?.data?.data;
-                // console.log('response data', response?.data?.data);
+                const data = response?.data?.data;
+
+                console.log('var data data', data.images);
+
+
                 setDraftData({
                     image_type: data.image_type,
                     elevation_angle: data.elevation_angle,
@@ -507,12 +511,14 @@ const AddObservation = () => {
 
         if (updateUrl && obvType === "draft") {
             getObservationDataForUpdate(id).then((r) => r);
-            setObservationSteps((prev) => {
-                return {
-                    ...prev,
-                    converted: true,
-                };
-            });
+            setTimeout(() => {
+                setObservationSteps((prev) => {
+                    return {
+                        ...prev,
+                        converted: true,
+                    };
+                });
+            }, 500)
         } else {
             setUpdateMode(false);
             setObservationSteps((prev) => {
