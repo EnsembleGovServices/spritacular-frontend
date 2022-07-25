@@ -1,12 +1,8 @@
 import {MultiImageTabs, Tabs} from "../../helpers/observation";
-import {Icon} from "@iconify/react/dist/iconify";
 import {
     Button,
     Col,
     FormGroup,
-    Nav,
-    NavItem,
-    NavLink,
     Row,
     TabContent,
     TabPane
@@ -47,11 +43,11 @@ const ObservationAfterImageUpload = (props) => {
     const [shouldShowConfirmation, setShouldShowConfirmation] = useState(false);
 
     // Toggle Tabs
-    const toggleImageTab = (tab) => {
-        if (activeTab !== tab) {
-            setActiveImageTab(tab);
-        }
-    };
+    // const toggleImageTab = (tab) => {
+    //     if (activeTab !== tab) {
+    //         setActiveImageTab(tab);
+    //     }
+    // };
 
     const handleMultipleCheck = (e) => {
         if (isMultiple) {
