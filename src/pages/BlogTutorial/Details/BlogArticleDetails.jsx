@@ -1,6 +1,6 @@
 import "../../../assets/scss/component/tutorialdetail.scss";
 import {Col, Container, Row} from "reactstrap";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
 import axios from "../../../api/axios";
 import {baseURL, routeUrls} from "../../../helpers/url";
@@ -8,9 +8,9 @@ import useAuth from "../../../hooks/useAuth";
 import SimpleBreadcrumb from "../../../components/Blog/SimpleBreadcrumb";
 import ContentEditor from "../../../components/Blog/ContentEditor";
 import useObservationsData from "../../../hooks/useObservationsData";
+import PageMeta from "../../../meta/PageMeta";
 
 const BlogArticleDetails = () => {
-    // const [article, setArticle] = useState();
     const {setATDetails, atDetails} = useObservationsData();
     const {slug} = useParams();
     const {auth} = useAuth();
@@ -36,6 +36,10 @@ const BlogArticleDetails = () => {
     }
 
 
+    String.prototype.Capitalize = function () {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
+
     useEffect(() => {
         getArticle().then(r => r)
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,6 +47,11 @@ const BlogArticleDetails = () => {
 
     return (
         <>
+            <PageMeta
+                title={article?.title.Capitalize()?.substring(0, 60)}
+                description={article?.description?.substring(0, 150) + '...'}
+                imageLink={article?.thumbnail_image}
+            />
             <div className="tutorial-details_page position-relative">
                 <div className="common-banner"></div>
                 <section className="tutorial-detail-main">

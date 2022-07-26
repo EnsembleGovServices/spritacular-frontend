@@ -1,4 +1,5 @@
 export const baseURL = {
+    appName: process.env.REACT_APP_BASE_NAME,
     base: process.env.REACT_APP_BASE_URL,
     remote: process.env.REACT_APP_BASE_REMOTE,
     api: process.env.REACT_APP_API_URL,

@@ -8,6 +8,7 @@ import useAuth from "../../hooks/useAuth";
 import Loader from "../../components/Shared/Loader";
 import {Link} from "react-router-dom";
 import NotFound from "../../components/Common/NotFound";
+import PageMeta from "../../meta/PageMeta";
 
 // To render a dynamic import as a regular component for showing loader till it loads.
 const TutorialRestLists = lazy(() => import('./List/TutorialRestLists'))
@@ -45,6 +46,10 @@ const TutorialList = () => {
 
     return (
         <>
+            <PageMeta
+                title="Tutorial"
+                description="Read Blogs about TLE Observations on spritacular. Discover more about the elusive phenomena in the space"
+            />
             <div className="tutorial_page position-relative">
                 <div className="common-banner"></div>
                 <section className="tutorial-main">

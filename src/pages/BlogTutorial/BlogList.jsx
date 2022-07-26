@@ -8,6 +8,7 @@ import useAuth from "../../hooks/useAuth";
 import Loader from "../../components/Shared/Loader";
 import {Link} from "react-router-dom";
 import NotFound from "../../components/Common/NotFound";
+import PageMeta from "../../meta/PageMeta";
 
 // To render a dynamic import as a regular component for showing loader till it loads.
 const BlogFeatured = lazy(() => import('./Featured/BlogFeatured'))
@@ -53,47 +54,54 @@ const BlogList = () => {
 
 
     return (
-        <div className="blog_page position-relative">
-            <div className="common-banner"></div>
-            <section className="blog-main">
-                <Container>
-                    <div className="mb-5 d-flex align-items-center justify-content-between">
-                        <h2 className="mb-0">Spritacular Blog</h2>
-                        {auth?.user && admin &&
-                            <Link
-                                to={`${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${routeUrls.dashBlog.create}`}
-                                className="btn btn-primary px-4">Create Blog</Link>
-                        }
-                    </div>
+        <>
+            <PageMeta
+                title="Blog"
+                description="Read Blogs about TLE Observations on spritacular. Discover more about the elusive phenomena in the space"
+            />
+            <div className="blog_page position-relative">
+                <div className="common-banner"></div>
+                <section className="blog-main">
+                    <Container>
+                        <div className="mb-5 d-flex align-items-center justify-content-between">
+                            <h2 className="mb-0">Spritacular Blog</h2>
+                            {auth?.user && admin &&
+                                <Link
+                                    to={`${routeUrls.dashboard}/${routeUrls.dashBlog.list}/${routeUrls.dashBlog.create}`}
+                                    className="btn btn-primary px-4">Create Blog</Link>
+                            }
+                        </div>
 
-                    {hasData ? (
-                        <>
-                            <Row className="g-4">
-                                <Col md={6}>
+                        {hasData ? (
+                            <>
+                                <Row className="g-4">
+                                    <Col md={6}>
+                                        <Suspense fallback={<Loader fixContent={true}/>}>
+                                            <BlogFeatured articleItems={articles?.featured}/>
+                                        </Suspense>
+                                    </Col>
+                                    <Col md={6}>
+                                        <Suspense fallback={<Loader fixContent={true}/>}>
+                                            <BlogGrid4 articleItems={articles?.grid4}/>
+                                        </Suspense>
+                                    </Col>
+                                </Row>
+                                <div className="mt-4">
                                     <Suspense fallback={<Loader fixContent={true}/>}>
-                                        <BlogFeatured articleItems={articles?.featured}/>
+                                        <BlogRestLists articleItems={articles?.list}/>
                                     </Suspense>
-                                </Col>
-                                <Col md={6}>
-                                    <Suspense fallback={<Loader fixContent={true}/>}>
-                                        <BlogGrid4 articleItems={articles?.grid4}/>
-                                    </Suspense>
-                                </Col>
-                            </Row>
-                            <div className="mt-4">
-                                <Suspense fallback={<Loader fixContent={true}/>}>
-                                    <BlogRestLists articleItems={articles?.list}/>
-                                </Suspense>
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <NotFound/>
-                        </>
-                    )}
-                </Container>
-            </section>
-        </div>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <NotFound/>
+                            </>
+                        )}
+                    </Container>
+                </section>
+            </div>
+        </>
+
     )
 }
 export default BlogList;
