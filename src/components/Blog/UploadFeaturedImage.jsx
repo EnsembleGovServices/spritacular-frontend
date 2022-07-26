@@ -1,13 +1,13 @@
 import "../../assets/scss/component/initialUploadobservations.scss";
 import "../../assets/scss/component/uploadFeatureBlog.scss";
 import UploadImageUI from "../Shared/UploadImageUI";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { Icon } from '@iconify/react';
+import {useEffect, useLayoutEffect, useState} from "react";
+import {Icon} from '@iconify/react';
 import BlurImage from "../Common/BlurImage";
-import { FormGroup, Label } from "reactstrap";
+import {FormGroup, Label} from "reactstrap";
 
 const UploadFeaturedImage = (props) => {
-    const { setData, thumb } = props;
+    const {setData, thumb} = props;
     const [file, setFile] = useState();
     const [preview, setPreview] = useState();
     const [reset, setReset] = useState(false);
@@ -126,7 +126,7 @@ const UploadFeaturedImage = (props) => {
                         .blob()
                         .catch((error) => process.env.NODE_ENV === "development" && console.log("blob error", error));
                     let fileName = getFileName(thumb);
-                    const file = new File([blob], fileName, { contentType });
+                    const file = new File([blob], fileName, {contentType});
                     const image = await toBase64(file).catch((error) =>
                         process.env.NODE_ENV === "development" && console.log("base64 Error", error)
                     );
@@ -152,15 +152,15 @@ const UploadFeaturedImage = (props) => {
             <Label for="title">
                 Upload Thumbnail
             </Label>
-            <div className="position-relative overflow-hidden">
-                <UploadImageUI blogUpload={true} handleUploadImage={handleFileInput} error={error} />
+            <div className="position-relative overflow-hidden upload-f-image">
+                <UploadImageUI blogUpload={true} handleUploadImage={handleFileInput} error={error}/>
                 {preview &&
-                    <div className={'img_wrapper position-absolute w-100 left-0 right-0 top-0 bottom-0'}>
+                    <div className={'img_wrapper position-absolute w-100 h-100 left-0 right-0 top-0 bottom-0'}>
                         <button className="remove-btn" onClick={(e) => removePreviewAndClearImageData(e)}>
-                            <Icon icon="clarity:window-close-line" width={20} height={20} />
+                            <Icon icon="clarity:window-close-line" width={20} height={20}/>
                         </button>
                         <div className={'img-preview_wrapper'}>
-                            <BlurImage image={preview} preview={preview} />
+                            <BlurImage image={preview} preview={preview}/>
                         </div>
                     </div>
                 }

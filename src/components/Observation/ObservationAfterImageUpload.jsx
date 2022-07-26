@@ -1,19 +1,15 @@
 import {MultiImageTabs, Tabs} from "../../helpers/observation";
-import {Icon} from "@iconify/react/dist/iconify";
 import {
     Button,
     Col,
     FormGroup,
-    Nav,
-    NavItem,
-    NavLink,
     Row,
     TabContent,
     TabPane
 } from "reactstrap";
 import PropTypes from "prop-types";
 import ObservationUploadImg from "./ObservationUploadImg";
-import {useEffect, useState} from "react";
+import {useEffect, useLayoutEffect, useState} from "react";
 import useObservations from "../../hooks/useObservations";
 import ObservationCategory from "./ObservationCategory";
 import ImagePreview from "./ImagePreview";
@@ -47,11 +43,11 @@ const ObservationAfterImageUpload = (props) => {
     const [shouldShowConfirmation, setShouldShowConfirmation] = useState(false);
 
     // Toggle Tabs
-    const toggleImageTab = (tab) => {
-        if (activeTab !== tab) {
-            setActiveImageTab(tab);
-        }
-    };
+    // const toggleImageTab = (tab) => {
+    //     if (activeTab !== tab) {
+    //         setActiveImageTab(tab);
+    //     }
+    // };
 
     const handleMultipleCheck = (e) => {
         if (isMultiple) {
@@ -105,7 +101,8 @@ const ObservationAfterImageUpload = (props) => {
 
 
     useEffect(() => {
-        setIsMultiple(observationImages?.data?.length > 1)
+        setIsMultiple(observationImages?.data?.length > 1);
+
     }, [observationImages?.data?.length])
 
 
@@ -122,7 +119,7 @@ const ObservationAfterImageUpload = (props) => {
                 setObservationType((prev) => {
                     return {
                         ...prev,
-                        image_type: 2
+                        image_type: 3
                     }
                 })
             } else if (!isMultiple) {
@@ -144,13 +141,16 @@ const ObservationAfterImageUpload = (props) => {
             setObservationType((prev) => {
                 return {
                     ...prev,
-                    image_type: observationType?.image_type === 3 ? 3 : 2
+                    image_type: observationType?.image_type === 3 ? 3 : 1
                 }
             });
-            setActiveImageTab(observationType?.image_type === 3 ? MultiImageTabs.ImageSequence : MultiImageTabs.MultipleImages);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeTab, isMultiple, isOther, setObservationCategory, setObservationType])
+    }, [activeTab, isMultiple, isOther, setObservationCategory, setObservationType]);
+
+    useLayoutEffect(() => {
+        setActiveImageTab(observationType?.image_type === 3 ? MultiImageTabs.ImageSequence : MultiImageTabs.MultipleImages);
+    }, [observationType?.image_type])
 
     return (
         <>
@@ -168,43 +168,44 @@ const ObservationAfterImageUpload = (props) => {
                                     onChange={(e) => setIsMultiple(true)}
                                 />
                                 <label className="switchbox" htmlFor="toggleMultiple"/>
-                                <span>Multiple Observations (limit to 3)</span>
+                                {/*<span>Multiple Observations (limit to 3)</span>*/}
+                                <span>I have multiple images of the same event (limit to 3)</span>
                             </div>
                         </FormGroup>
                     </Col>
                 }
-                {isMultiple && !mode &&
-                    <Col sm={12}>
-                        <Nav tabs>
-                            <NavItem>
-                                <NavLink
-                                    className={activeTab === MultiImageTabs.MultipleImages ? 'active' : ''}
-                                    onClick={() => {
-                                        toggleImageTab(MultiImageTabs.MultipleImages);
-                                    }}
-                                >
-                                    <Icon icon="fluent:square-multiple-20-regular" color="black" width={24}
-                                          className="me-3"/>
-                                    Multiple images
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink
-                                    className={activeTab === MultiImageTabs.ImageSequence ? 'active' : ''}
-                                    onClick={() => {
-                                        toggleImageTab(MultiImageTabs.ImageSequence);
-                                    }}
-                                >
-                                    <Icon icon="codicon:list-filter" color="black" width={24} className="me-3"/>
-                                    <div>
-                                        Image Sequence
-                                        <p className="mb-0">Images sequence extracted from a video</p>
-                                    </div>
-                                </NavLink>
-                            </NavItem>
-                        </Nav>
-                    </Col>
-                }
+                {/*{isMultiple && !mode &&*/}
+                {/*    <Col sm={12}>*/}
+                {/*        <Nav tabs>*/}
+                {/*            <NavItem>*/}
+                {/*                <NavLink*/}
+                {/*                    className={activeTab === MultiImageTabs.MultipleImages ? 'active' : ''}*/}
+                {/*                    onClick={() => {*/}
+                {/*                        toggleImageTab(MultiImageTabs.MultipleImages);*/}
+                {/*                    }}*/}
+                {/*                >*/}
+                {/*                    <Icon icon="fluent:square-multiple-20-regular" color="black" width={24}*/}
+                {/*                          className="me-3"/>*/}
+                {/*                    Multiple images*/}
+                {/*                </NavLink>*/}
+                {/*            </NavItem>*/}
+                {/*            <NavItem>*/}
+                {/*                <NavLink*/}
+                {/*                    className={activeTab === MultiImageTabs.ImageSequence ? 'active' : ''}*/}
+                {/*                    onClick={() => {*/}
+                {/*                        toggleImageTab(MultiImageTabs.ImageSequence);*/}
+                {/*                    }}*/}
+                {/*                >*/}
+                {/*                    <Icon icon="codicon:list-filter" color="black" width={24} className="me-3"/>*/}
+                {/*                    <div>*/}
+                {/*                        Image Sequence*/}
+                {/*                        <p className="mb-0">Images sequence extracted from a video</p>*/}
+                {/*                    </div>*/}
+                {/*                </NavLink>*/}
+                {/*            </NavItem>*/}
+                {/*        </Nav>*/}
+                {/*    </Col>*/}
+                {/*}*/}
                 <Col sm={12}>
                     <TabContent activeTab={activeTab}>
                         <TabPane tabId={MultiImageTabs.MultipleImages}>

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 
 const ChangePassword = (props) => {
-    const { user } = props;
+    const {user} = props;
     const [password, setPassword] = useState(null);
     const [updated, setUpdated] = useState(false);
     const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ const ChangePassword = (props) => {
         e.preventDefault();
         setError('')
         setUpdated('')
-        await axios.put(baseURL.api+'/users/change-password/'+user?.user?.id+'/', password, {
+        await axios.put(baseURL.api + '/users/change-password/', password, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user?.token?.access}`
@@ -37,7 +37,7 @@ const ChangePassword = (props) => {
             value = e.target.value;
         setPassword({
             ...password,
-            [name]:value,
+            [name]: value,
         })
     }
 
@@ -51,7 +51,7 @@ const ChangePassword = (props) => {
         return false;
     }
 
-    return(
+    return (
         <>
             <Form onSubmit={handleChangePassword}>
                 <Row>
@@ -65,7 +65,7 @@ const ChangePassword = (props) => {
                             <Alert color="danger">
                                 <ul className="small mb-0 ps-2">
                                     {error?.details.map((item, i) => {
-                                        return(
+                                        return (
                                             <li key={i}>{item}</li>
                                         )
                                     })}
@@ -86,7 +86,7 @@ const ChangePassword = (props) => {
                                 name="old_password"
                                 placeholder="Old Password"
                                 required
-                                onChange={(e)=>handleInput(e)}
+                                onChange={(e) => handleInput(e)}
                             />
                         </FormGroup>
                     </Col>
@@ -97,7 +97,7 @@ const ChangePassword = (props) => {
                                 name="new_password"
                                 placeholder="New Password"
                                 required
-                                onChange={(e)=>handleInput(e)}
+                                onChange={(e) => handleInput(e)}
                             />
                         </FormGroup>
                     </Col>
@@ -108,12 +108,12 @@ const ChangePassword = (props) => {
                                 name="confirm_password"
                                 placeholder="Confirm New Password"
                                 required
-                                onChange={(e)=>handleInput(e)}
+                                onChange={(e) => handleInput(e)}
                             />
                             {error?.new_password &&
                                 <span className="text-danger small mt-2 d-block">
-                                  {error?.new_password?.map((item, i)=> {
-                                      return(
+                                  {error?.new_password?.map((item, i) => {
+                                      return (
                                           <div key={i}>
                                               <span>{item}</span><br/>
                                           </div>

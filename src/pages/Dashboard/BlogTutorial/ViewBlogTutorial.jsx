@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {routeUrls} from "../../../helpers/url";
 import {Icon} from "@iconify/react/dist/iconify";
 import ContentEditor from "../../../components/Blog/ContentEditor";
+import DeleteBlogTutorial from "./DeleteBlogTutorial";
 
 const ViewBlogTutorial = (props) => {
     const {slug, content, setReadMode, readMode, type} = props;
@@ -23,11 +24,19 @@ const ViewBlogTutorial = (props) => {
                                 </Link>
                                 <div className="d-flex align-items-center justify-content-between">
                                     <h2 className="mb-0">{content?.title}</h2>
-                                    <Link
-                                        to={content ? `${routeUrls.dashboard}/${type}/${slug}/edit` : ''}
-                                        className="btn btn-primary px-4 btn-sm">
-                                        Edit
-                                    </Link>
+                                    <div className="d-flex align-items-center justify-content-end">
+                                        <Link
+                                            to={content ? `${routeUrls.dashboard}/${type}/${slug}/edit` : ''}
+                                            className="btn btn-outline-primary px-4 btn-sm">
+                                            Edit
+                                        </Link>
+                                        <div className="ms-1">
+                                            <DeleteBlogTutorial
+                                                type={type}
+                                                slug={slug}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

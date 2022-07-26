@@ -2,6 +2,8 @@ import {Outlet} from "react-router-dom";
 import {useState, useEffect, createContext, lazy, Suspense} from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
+import PageMeta from "../meta/PageMeta";
+import {baseURL} from "../helpers/url";
 
 // To render a dynamic import as a regular component for showing loader till it loads.
 const Header = lazy(() => import('../components/Common/Header'))
@@ -24,6 +26,10 @@ const PersistLogin = (props) => {
     });
     const [observationCSVId, setObservationCSVId] = useState({});
     const [recentObservation, setRecentObservation] = useState({});
+    const [articles, setArticles] = useState([]);
+    const [tutorials, setTutorials] = useState([]);
+    const [atDetails, setATDetails] = useState({});
+    const [triggerEvents, setTriggerEvents] = useState({});
 
     useEffect(() => {
         let isMounted = true;
@@ -49,6 +55,10 @@ const PersistLogin = (props) => {
 
     return (
         <>
+            <PageMeta
+                title={baseURL.appName}
+                description=""
+            />
             <observationViewContext.Provider value={
                 {
                     recentObservation,
@@ -61,6 +71,14 @@ const PersistLogin = (props) => {
                     setCategoryList,
                     observationCSVId,
                     setObservationCSVId,
+                    articles,
+                    setArticles,
+                    tutorials,
+                    setTutorials,
+                    atDetails,
+                    setATDetails,
+                    triggerEvents,
+                    setTriggerEvents
                 }
             }>
                 {!persist ? (

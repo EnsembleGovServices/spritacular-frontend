@@ -1,18 +1,21 @@
 import "../../../assets/scss/component/tutorialdetail.scss";
 import {Col, Container, Row} from "reactstrap";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
 import axios from "../../../api/axios";
 import {baseURL, routeUrls} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
 import SimpleBreadcrumb from "../../../components/Blog/SimpleBreadcrumb";
 import ContentEditor from "../../../components/Blog/ContentEditor";
+import useObservationsData from "../../../hooks/useObservationsData";
+import PageMeta from "../../../meta/PageMeta";
 
 const TutorialDetails = () => {
-    const [tutorial, setTutorial] = useState();
     const {slug} = useParams();
     const {auth} = useAuth();
+    const {setATDetails, atDetails} = useObservationsData();
     const admin = auth?.user?.is_superuser;
+    const tutorial = atDetails?.tutorial;
 
 
     const getTutorial = async () => {
@@ -21,7 +24,12 @@ const TutorialDetails = () => {
                 "Content-Type": "application/json",
             },
         }).then(response => {
-            setTutorial(response?.data?.data);
+            setATDetails((prev) => {
+                return {
+                    ...prev,
+                    tutorial: response?.data?.data
+                }
+            })
         }).catch(error => {
             process.env.NODE_ENV === "development" && console.log('GetTutorial DetailPage: ', error)
         })
@@ -34,6 +42,11 @@ const TutorialDetails = () => {
 
     return (
         <>
+            <PageMeta
+                title={tutorial?.title.Capitalize()?.substring(0, 60)}
+                description={tutorial?.description?.substring(0, 150) + '...'}
+                imageLink={tutorial?.thumbnail_image}
+            />
             <div className="tutorial-details_page position-relative">
                 <div className="common-banner"></div>
                 <section className="tutorial-detail-main">
@@ -55,6 +68,10 @@ const TutorialDetails = () => {
                             <Col md={12}>
                                 <div className="card border-0 shadow-sm">
                                     <div className="card-body p-5">
+                                        <span className="text-light-dark">Description</span>
+                                        <p className="card-text">
+                                            {tutorial?.description}
+                                        </p>
                                         <ContentEditor data={tutorial?.content} readOnly={true}/>
                                     </div>
                                 </div>

@@ -1,8 +1,8 @@
-
 import "../../assets/scss/component/blog.scss";
-import { Card, CardBody, CardGroup, CardImg, CardSubtitle, CardText, CardTitle, Col, Row } from "reactstrap";
-import { meetTheTeamData } from "../../helpers/frontPage";
-import { useEffect } from "react";
+import {Card, CardBody, CardGroup, CardImg, CardSubtitle, CardText, CardTitle, Col, Row} from "reactstrap";
+import {meetTheTeamData} from "../../helpers/frontPage";
+import {useEffect} from "react";
+import PageMeta from "../../meta/PageMeta";
 
 const MeetTheTeam = () => {
 
@@ -14,6 +14,10 @@ const MeetTheTeam = () => {
 
     return (
         <div className="blog_page">
+            <PageMeta
+                title="Meet The Team"
+                description="Spritacular project is developed and managed by a dedicated team!"
+            />
             <div className="common-banner"></div>
             <section className="blog-main">
                 <div className="container">
@@ -31,12 +35,14 @@ const MeetTheTeam = () => {
                                                 <Col xl="2" md="4" sm="6" key={team_index}>
                                                     <Card className="align-items-center border-0 p-3">
                                                         <div className=" align-middle">
-                                                            <CardImg className="w-75" alt={member.designation} src={member.person_img} top />
+                                                            <CardImg className="w-75" alt={member.designation}
+                                                                     src={member.person_img} top/>
                                                         </div>
                                                         <CardBody>
-                                                            <CardTitle tag="h4" className="fs-5">{member.person_name}</CardTitle>
+                                                            <CardTitle tag="h4"
+                                                                       className="fs-5">{member.person_name}</CardTitle>
                                                             <CardSubtitle className="my-2 text-muted"
-                                                                tag="h6">{member.affiliations}</CardSubtitle>
+                                                                          tag="h6">{member.affiliations}</CardSubtitle>
                                                             <CardText>{member.designation}</CardText>
                                                         </CardBody>
                                                     </Card>
@@ -53,10 +59,13 @@ const MeetTheTeam = () => {
                                             (
                                                 <Col xl="2" md="4" sm="6" key={team_index}>
                                                     <Card className="align-items-center border-0 p-3">
-                                                        <CardImg className="w-75" alt="Ensemble Consultancy - 1" src={member.person_img} top />
+                                                        <CardImg className="w-75" alt="Ensemble Consultancy - 1"
+                                                                 src={member.person_img} top/>
                                                         <CardBody className="text-center">
-                                                            <CardTitle tag="h4" className="fs-5">{member.person_name}</CardTitle>
-                                                            <CardSubtitle className="my-2 text-muted" tag="h6">{member.affiliations}</CardSubtitle>
+                                                            <CardTitle tag="h4"
+                                                                       className="fs-5">{member.person_name}</CardTitle>
+                                                            <CardSubtitle className="my-2 text-muted"
+                                                                          tag="h6">{member.affiliations}</CardSubtitle>
                                                             <CardText>{member.designation}</CardText>
                                                         </CardBody>
                                                     </Card>

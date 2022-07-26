@@ -1,7 +1,8 @@
 import {useEffect} from 'react';
 import {useLocation, Navigate, Outlet, useNavigate} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import {routeUrls} from '../helpers/url';
+import {baseURL, routeUrls} from '../helpers/url';
+import PageMeta from "../meta/PageMeta";
 
 const RequireAuth = (props) => {
     const {persist, auth} = useAuth();
@@ -23,7 +24,10 @@ const RequireAuth = (props) => {
 
 
     return (
-        persist && auth ? <Outlet/> : <Navigate to={routeUrls.login} state={{from: location}} replace/>
+        persist && auth ? <>
+            <PageMeta title={baseURL.appName} description="Authorized users only!" noIndex={true}/>
+            <Outlet/>
+        </> : <Navigate to={routeUrls.login} state={{from: location}} replace/>
     );
 }
 

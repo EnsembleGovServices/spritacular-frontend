@@ -7,6 +7,7 @@ import {baseURL, cdn} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import BlurImage from "../../components/Common/BlurImage";
 import QuizCard from "../../components/Quiz/QuizCard";
+import PageMeta from "../../meta/PageMeta";
 
 const QuizHome = (props) => {
     const {auth} = useAuth();
@@ -207,6 +208,10 @@ const QuizHome = (props) => {
 
     return (
         <>
+            <PageMeta
+                title="Get Trained"
+                description="Take part in quiz and get an opportunity to validate observations."
+            />
             <section className="quiz-main">
                 <Container>
                     <form onSubmit={submitFinalAnswers}>

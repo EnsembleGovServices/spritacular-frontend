@@ -226,7 +226,7 @@ const AddObservation = () => {
         if (draft === 1) {
             finalData.is_draft = draft;
         }
-        finalData.camera = cameraDetails ? cameraDetails : auth?.camera ? auth?.camera?.id : null;
+        finalData.camera = cameraDetails ? cameraDetails : (auth?.camera ? auth?.camera?.id : null);
         if (finalData.elevation_angle === "NaN") {
             finalData.elevation_angle = null
         } else {
@@ -414,16 +414,20 @@ const AddObservation = () => {
     };
 
     const getObservationDataForUpdate = async (obvId) => {
+
         await axios
             .get(baseURL.api + `/observation/get_draft_data/${obvId}/`, {
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json; charset=utf-8",
                     Authorization: `Bearer ${auth?.token?.access}`,
                 },
             })
             .then((response) => {
-                let data = response?.data?.data;
-                // console.log('response data', response?.data?.data);
+                const data = response?.data?.data;
+
+                console.log('var data data', data.images);
+
+
                 setDraftData({
                     image_type: data.image_type,
                     elevation_angle: data.elevation_angle,
@@ -441,6 +445,7 @@ const AddObservation = () => {
                         elevation_angle: parseFloat(draftData?.elevation_angle).toFixed(2),
                         video_url: data?.video_url,
                         story: data?.story,
+                        media_file_url: data?.media_file_url
                     }
                 })
                 setUpdateMode(true);
@@ -507,12 +512,14 @@ const AddObservation = () => {
 
         if (updateUrl && obvType === "draft") {
             getObservationDataForUpdate(id).then((r) => r);
-            setObservationSteps((prev) => {
-                return {
-                    ...prev,
-                    converted: true,
-                };
-            });
+            setTimeout(() => {
+                setObservationSteps((prev) => {
+                    return {
+                        ...prev,
+                        converted: true,
+                    };
+                });
+            }, 500)
         } else {
             setUpdateMode(false);
             setObservationSteps((prev) => {

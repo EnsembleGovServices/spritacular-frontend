@@ -6,9 +6,11 @@ import {baseURL} from "../../../helpers/url";
 import axios from "../../../api/axios";
 
 import ListBlogTutorial from "../BlogTutorial/ListBlogTutorial";
+import useObservationsData from "../../../hooks/useObservationsData";
 
 const BlogPage = () => {
-    const [articles, setArticles] = useState();
+    // const [articles, setArticles] = useState();
+    const {setArticles, articles, triggerEvents} = useObservationsData();
     const [loader, setLoader] = useState(true);
 
     const thead = [
@@ -31,9 +33,17 @@ const BlogPage = () => {
     }
 
     useEffect(() => {
-        getArticle().then(r => r)
+        getArticle().then(r => r);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (triggerEvents) {
+            getArticle().then(r => r);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [triggerEvents]);
+
 
     return (
         <ListBlogTutorial content={articles}

@@ -5,6 +5,7 @@ import {baseURL} from "../../helpers/url";
 import useAuth from "../../hooks/useAuth";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {useSearchParams} from "react-router-dom";
+import {editorCustomConfig} from "../../helpers/editorHelper";
 
 const ContentEditor = (props) => {
     const {data, setData, editorData, setLoading, setReadMode, readMode, readOnly, dynamicPageProps} = props;
@@ -95,18 +96,7 @@ const ContentEditor = (props) => {
         },
         placeholder: 'Type or paste your content here!',
         toolbar: {
-            items: [
-                "undo", "redo",
-                "fontFamily", "fontsize", "fontColor", "fontBackgroundColor", "|",
-                "heading", "|", "alignment", "|",
-                "bold", "italic", "|", "link", "|",
-                "bulletedList", "numberedList",
-                "insertTable", "mergeTableCells", "|",
-                "insertImage", "mediaEmbed", "|",
-                "HorizontalLine",
-                "ImageResize",
-                "pageBreak",
-            ],
+            items: dynamicPageProps ? editorCustomConfig.toolbar.dynPages : editorCustomConfig.toolbar.normal,
             shouldNotGroupWhenFull: false,
         },
 

@@ -1,4 +1,5 @@
 export const baseURL = {
+    appName: process.env.REACT_APP_BASE_NAME,
     base: process.env.REACT_APP_BASE_URL,
     remote: process.env.REACT_APP_BASE_REMOTE,
     api: process.env.REACT_APP_API_URL,
@@ -14,6 +15,7 @@ export const baseURL = {
     blog_image_upload: process.env.REACT_APP_API_BLOG_IMAGE_UPLOAD,
     blog_category: process.env.REACT_APP_API_BLOG_CATEGORY,
     blog_tut_update: process.env.REACT_APP_API_BLOG_TUT_UPDATE,
+    blog_tut_delete: process.env.REACT_APP_API_BLOG_TUT_DELETE,
     quiz_question: process.env.REACT_APP_API_QUIZ_QUESTION,
     quiz_submit: process.env.REACT_APP_API_SUBMIT_QUE_ANS,
     static_policy: process.env.REACT_APP_STATIC_API_POLICY,
