@@ -36,10 +36,6 @@ const BlogArticleDetails = () => {
     }
 
 
-    String.prototype.Capitalize = function () {
-        return this.charAt(0).toUpperCase() + this.slice(1);
-    }
-
     useEffect(() => {
         getArticle().then(r => r)
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,7 +44,7 @@ const BlogArticleDetails = () => {
     return (
         <>
             <PageMeta
-                title={article?.title.Capitalize()?.substring(0, 60)}
+                title={article?.title?.substring(0, 60)}
                 description={article?.description?.substring(0, 150) + '...'}
                 imageLink={article?.thumbnail_image}
             />
