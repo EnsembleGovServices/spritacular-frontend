@@ -10,7 +10,8 @@ const BlurImage = (props) => {
         handleClick,
         homepage,
         loaderLoading,
-        adjustImage = null
+        adjustImage = null,
+        minHeight = "217px"
     } = props;
     const [loading, setLoading] = useState(true);
     const loadingImageRef = useRef(null);
@@ -43,7 +44,7 @@ const BlurImage = (props) => {
     }, [image]);
 
     const style = {
-        minHeight: "217px",
+        minHeight: minHeight,
         overflow: "hidden",
         cursor: `${homepage ? 'auto' : 'pointer'}`
     }
@@ -62,7 +63,7 @@ const BlurImage = (props) => {
                         background: bgColor,
                         objectFit: adjustImage ? adjustImage : 'cover',
                         height: '100%',
-                        minHeight: '217px'
+                        minHeight: minHeight
                     }}
                     src={preview}
                     alt={alt}

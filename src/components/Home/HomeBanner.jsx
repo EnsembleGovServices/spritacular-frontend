@@ -1,17 +1,17 @@
-import { Container } from 'reactstrap';
-import { cdn, routeUrls } from "../../helpers/url";
-import { Link } from "react-router-dom";
+import {Container} from 'reactstrap';
+import {cdn, routeUrls} from "../../helpers/url";
+import {Link} from "react-router-dom";
 
 const HomeBanner = () => {
     return (
         <section className="hero-banner">
             <div className="bg-img">
-                <img src={`${cdn.url}/homePage.png`} alt="homepage" />
+                <img src={`${cdn.url}/homePage.png`} alt="homepage"/>
             </div>
             <Container>
                 <div className="hero-banner-inner">
                     <div className="banner-text">
-                        <h2>Explore Observations</h2>
+                        <h2>Become a Spritacular Citizen Scientist</h2>
                         <p>
                             Join the chase of Transient Luminous
                             Events (TLEs) from the ground, engage with a global community of

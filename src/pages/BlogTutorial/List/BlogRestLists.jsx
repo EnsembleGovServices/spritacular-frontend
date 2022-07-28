@@ -7,18 +7,11 @@ const BlogRestLists = (props) => {
     const {articleItems} = props;
 
     return (
-        <Row className="g-4">
+        <Row>
             {articleItems?.map((item, index) => {
                 return (
-                    <Col key={index} sm={6} md={4} xl={4}>
-                        <div className="position-relative">
-                            <LazyLoad
-                                height={263}
-                                offsetTop={100}
-                            >
-                                <BlogListCardContent item={item}/>
-                            </LazyLoad>
-                        </div>
+                    <Col key={index} sm={6} md={4} xl={3}>
+                        <BlogListCardContent item={item}/>
                     </Col>
                 )
             })}

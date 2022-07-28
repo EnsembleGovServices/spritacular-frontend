@@ -11,25 +11,31 @@ const BlogListCardContent = (props) => {
     };
 
     return (
-        <div className="position-relative">
-            <Link
-                to={`${item?.slug ? item?.slug : ""}`}
-                className={`${large ? "main-blog" : "blog-small"} d-block`}
-            >
-                <BlurImage
-                    loaderLoading={handleLoaderLoading}
-                    image={item?.thumbnail_image}
-                    preview={item?.thumbnail_image}
-                    alt={item?.title}
-                />
-                {!loaderLoading && (
-                    <div className="blog-text">
-                        <p className="text-uppercase">{item?.category_name}</p>
-                        <h3>{item?.title?.length > 80 ? item?.title?.substring(0, 80) + "..." : item?.title}</h3>
-                        <p>{item?.description?.length > 150 ? item?.description?.substring(0, 150) + "..." : item?.description}</p>
+        <div className="card h-100">
+            <div className="card-body">
+                <div className="dash-inner-card-list">
+                    <BlurImage
+                        loaderLoading={handleLoaderLoading}
+                        image={item?.thumbnail_image}
+                        preview={item?.thumbnail_image}
+                        alt={item?.title}
+                    />
+                    <p className="badge-category">{item?.category_name}</p>
+                </div>
+                {!loaderLoading &&
+                    <div className="content pt-3">
+                        <h5 className="card-title">
+                            <Link
+                                to={`${item?.slug ? item?.slug : ""}`}
+                                className={`${large ? "main-blog" : "blog-small"} d-block stretched-link`}
+                            >
+                                {item?.title?.length > 55 ? item?.title?.substring(0, 55) + "..." : item?.title}
+                            </Link>
+                        </h5>
+                        <p className="mb-0">{item?.description?.length > 70 ? item?.description?.substring(0, 70) + "..." : item?.description}</p>
                     </div>
-                )}
-            </Link>
+                }
+            </div>
         </div>
     );
 };

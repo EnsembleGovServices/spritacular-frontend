@@ -22,18 +22,22 @@ const ListContent = (props) => {
                                        image={item?.thumbnail_image}
                                        alt={item?.title}/>
                         </div>
-                        <div>
-                            <h5 className="card-title">{item?.title.substring(0, 40) + '...'}</h5>
-                        </div>
-                        <div>
-                            {item?.description.substring(0, 80) + '...'}
-                        </div>
+                        {!loaderLoading &&
+                            <div className="mt-3">
+                                <h5 className="card-title">{item?.title.substring(0, 40) + '...'}</h5>
+                                <p className="mb-0">
+                                    {item?.description.substring(0, 80) + '...'}
+                                </p>
+                            </div>
+                        }
                     </div>
-                    <div className="card-footer">
-                        <div>
-                            <BlogAction type={type} item={item}/>
+                    {!loaderLoading &&
+                        <div className="card-footer">
+                            <div>
+                                <BlogAction type={type} item={item}/>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
             </Col>
         )

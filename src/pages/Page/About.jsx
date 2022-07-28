@@ -78,56 +78,86 @@ const About = () => {
                                 </Row>
                             </div>
                             <div className="mt-5">
-                                <Row>
-                                    <Col md={4}>
-                                        <h3>Why do we need a TLE database?</h3>
-                                        <p>
-                                            With this project, we will build an event database of TLEs that will
-                                            significantly
-                                            complement current and future science missions by providing ground-based
-                                            observational data. Not only that, scientific community will be presented
-                                            and benefit
-                                            from the exceptional imagery of sprites/TLEs captured by our community. This
-                                            database will serve as an invaluable resource for researchers allowing them
-                                            to find
-                                            interesting cases, perform studies in conjunction with other scientific
-                                            data, and
-                                            conduct broad statistical studies.
-                                        </p>
-                                    </Col>
-                                    <Col md={4}>
-                                        <h3>What is citizen science?</h3>
-                                        <p>
-                                            Simply put, it is science for all! <br/>
-                                            NASA Science Mission Directorate (SMD)
-                                            <a className="mx-1"
-                                               href="https://smd-prod.s3.amazonaws.com/science-red/s3fs-public/atoms/files/SPD%2033%20Citizen%20Science.pdf"
-                                               target="_blank" rel="noreferrer">
-                                                Policy on Citizen Science
-                                            </a>
-                                            defines it as “a
-                                            form of open collaboration in which individuals or organizations participate
+                                <div className="row c-h-card">
+                                    <div className="col-sm-12 col-md-4">
+                                        <div className="card">
+                                            <div className="card-header border-bottom-0">
+                                                <h3 className="mb-0">Why do we need a TLE database?</h3>
+                                            </div>
+                                            <div className="card-body">
+                                                <p className="card-text">
+                                                    With this project, we will build an event database of TLEs that
+                                                    will
+                                                    significantly
+                                                    complement current and future science missions by providing
+                                                    ground-based
+                                                    observational data. Not only that, scientific community will be
+                                                    presented
+                                                    and benefit
+                                                    from the exceptional imagery of sprites/TLEs captured by our
+                                                    community. This
+                                                    database will serve as an invaluable resource for researchers
+                                                    allowing them
+                                                    to find
+                                                    interesting cases, perform studies in conjunction with other
+                                                    scientific
+                                                    data, and
+                                                    conduct broad statistical studies.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-12 col-md-4">
+                                        <div className="card">
+                                            <div className="card-header border-bottom-0">
+                                                <h3 className="mb-0">What is citizen science?</h3>
+                                            </div>
+                                            <div className="card-body">
+                                                <p className="card-text">
+                                                    Simply put, it is science for all! <br/>
+                                                    NASA Science Mission Directorate (SMD)
+                                                    <a className="mx-1"
+                                                       href="https://smd-prod.s3.amazonaws.com/science-red/s3fs-public/atoms/files/SPD%2033%20Citizen%20Science.pdf"
+                                                       target="_blank" rel="noreferrer">
+                                                        Policy on Citizen Science
+                                                    </a>
+                                                    defines it as “a
+                                                    form of open collaboration in which individuals or organizations
+                                                    participate
 
-                                            voluntarily in the scientific process”. The database that we generate
-                                            through Spritacular will not only lead to opportunities for
-                                            joint studies across many science disciplines, it will create paths for
-                                            collaboration
-                                            among communities!
-                                        </p>
-                                    </Col>
-                                    <Col md={4}>
-                                        <h3>Are you interested in learning more about NASA citizen science
-                                            projects?</h3>
-                                        <p>
-                                            Check out this
-                                            <a className="mx-1" href="https://science.nasa.gov/citizenscience"
-                                               target="_blank" rel="noreferrer">
-                                                website
-                                            </a>
-                                            , there is a wealth of information on various exciting projects!
-                                        </p>
-                                    </Col>
-                                </Row>
+                                                    voluntarily in the scientific process”. The database that we
+                                                    generate
+                                                    through Spritacular will not only lead to opportunities for
+                                                    joint studies across many science disciplines, it will create
+                                                    paths
+                                                    for
+                                                    collaboration
+                                                    among communities!
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-12 col-md-4">
+                                        <div className="card">
+                                            <div className="card-header border-bottom-0">
+                                                <h3 className="mb-0">Are you interested in learning more about NASA
+                                                    citizen science
+                                                    projects?</h3>
+                                            </div>
+                                            <div className="card-body">
+                                                <p className="card-text">
+                                                    Check out this
+                                                    <a className="mx-1"
+                                                       href="https://science.nasa.gov/citizenscience"
+                                                       target="_blank" rel="noreferrer">
+                                                        website
+                                                    </a>
+                                                    , there is a wealth of information on various exciting projects!
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </Container>

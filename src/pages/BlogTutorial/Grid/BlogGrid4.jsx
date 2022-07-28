@@ -4,10 +4,10 @@ import BlogListCardContent from "../BlogListCardContent";
 const BlogGrid4 = (props) => {
     const {articleItems} = props;
     return (
-        <Row className="g-4">
+        <Row>
             {articleItems?.map((item, index) => {
                 return (
-                    <Col key={index} sm={6}>
+                    <Col key={index} sm={6} md={3}>
                         <BlogListCardContent item={item}/>
                     </Col>
                 )

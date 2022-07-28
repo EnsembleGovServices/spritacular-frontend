@@ -226,7 +226,7 @@ const ObservationCategory = (props) => {
             <Row>
                 <Col sm={12}>
                     <FormGroup className="mb-1 mt-3">
-                        <Label htmlFor="media_file_url" className="fw-bold">
+                        <Label htmlFor="media_file_url" className="fw-bold fs-5">
                             Do you have more images or video files from the event? If yes, please enter a shareable
                             media file link (Dropbox, Google Drive, OneDrive)
                         </Label>

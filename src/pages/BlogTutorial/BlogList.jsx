@@ -1,5 +1,5 @@
 import "../../assets/scss/component/blog.scss";
-import {Col, Container, Row} from "reactstrap"
+import {Container} from "reactstrap"
 import {useEffect, useState, lazy, Suspense} from "react";
 import {baseURL, routeUrls} from "../../helpers/url";
 import axios from "../../api/axios";
@@ -11,7 +11,7 @@ import NotFound from "../../components/Common/NotFound";
 import PageMeta from "../../meta/PageMeta";
 
 // To render a dynamic import as a regular component for showing loader till it loads.
-const BlogFeatured = lazy(() => import('./Featured/BlogFeatured'))
+// const BlogFeatured = lazy(() => import('./Featured/BlogFeatured'))
 const BlogGrid4 = lazy(() => import('./Grid/BlogGrid4'))
 const BlogRestLists = lazy(() => import('./List/BlogRestLists'))
 
@@ -36,9 +36,9 @@ const BlogList = () => {
             }
 
             setArticles({
-                featured: response?.data?.data[0] ? response?.data?.data[0] : null,
-                grid4: response?.data?.data?.slice(1, 5),
-                list: response?.data?.data?.slice(5),
+                // featured: response?.data?.data[0] ? response?.data?.data[0] : null,
+                grid4: response?.data?.data?.slice(0, 4),
+                list: response?.data?.data?.slice(4),
                 all: response?.data?.data
             });
 
@@ -74,18 +74,9 @@ const BlogList = () => {
 
                         {hasData ? (
                             <>
-                                <Row className="g-4">
-                                    <Col md={6}>
-                                        <Suspense fallback={<Loader fixContent={true}/>}>
-                                            <BlogFeatured articleItems={articles?.featured}/>
-                                        </Suspense>
-                                    </Col>
-                                    <Col md={6}>
-                                        <Suspense fallback={<Loader fixContent={true}/>}>
-                                            <BlogGrid4 articleItems={articles?.grid4}/>
-                                        </Suspense>
-                                    </Col>
-                                </Row>
+                                <Suspense fallback={<Loader fixContent={true}/>}>
+                                    <BlogGrid4 articleItems={articles?.grid4}/>
+                                </Suspense>
                                 <div className="mt-4">
                                     <Suspense fallback={<Loader fixContent={true}/>}>
                                         <BlogRestLists articleItems={articles?.list}/>
