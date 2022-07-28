@@ -321,14 +321,23 @@
 }
 
 .question-box {
-  background: #FDF2F4;
-  border: 1px solid #F09EAD;
-  border-radius: 6px;
-  padding: 16px;
+  .content {
+    background: #FDF2F4;
+    border: 1px solid #F09EAD;
+    border-radius: 6px;
+    padding: 16px;
+  }
 
-  h5 {
-    font-weight: 400;
-    @include md-text;
+  .haveChosen {
+    font-size: 14px;
+    padding: 5px 10px;
+    border-left: 3px solid $primary;
+
+    span {
+      &:last-child {
+        font-weight: bold;
+      }
+    }
   }
 
   button {

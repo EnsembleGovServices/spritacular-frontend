@@ -1,21 +1,21 @@
-import { Badge, Button, Col, Form, Row, UncontrolledAlert } from "reactstrap";
-import { Icon } from '@iconify/react';
+import {Badge, Button, Col, Form, Row, UncontrolledAlert} from "reactstrap";
+import {Icon} from '@iconify/react';
 import ReactCountryFlags from "../../../components/ReactCountryFlag";
 import moment from 'moment';
-import { getdirectionDegree } from "../../../helpers/observation";
-import { useState, useEffect } from "react";
+import {getdirectionDegree} from "../../../helpers/observation";
+import {useState, useEffect} from "react";
 import axios from "../../../api/axios";
-import { baseURL } from "../../../helpers/url";
+import {baseURL} from "../../../helpers/url";
 import useAuth from "../../../hooks/useAuth";
 import useObservationsData from "../../../hooks/useObservationsData";
 import RejectObvservationPopup from "../../Popup/RejectObvservationPopup";
 import ObservationLikeViewCounter from "./ObservationLikeViewCounter";
-import { useLocation } from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 const ObservationMoreDetails = (props) => {
-    const { auth } = useAuth();
-    const { data, obvCommentCount, handlePopup, approveRejectEvent, activeType } = props;
-    const { observationListData, setObservationListData } = useObservationsData();
+    const {auth} = useAuth();
+    const {data, obvCommentCount, handlePopup, approveRejectEvent, activeType} = props;
+    const {observationListData, setObservationListData} = useObservationsData();
     const [like, setLike] = useState(observationListData.active?.like_watch_count_data?.is_like);
     const [openRejectPopup, setOpenRejectPopup] = useState(false);
     const [error, setError] = useState();
@@ -116,7 +116,7 @@ const ObservationMoreDetails = (props) => {
     const submitApproval = async (id) => {
         setSuccess('');
         setError('');
-        await axios.post(`${baseURL.api}/observation/verify_observation/${id}/`, { name: "APPROVE", reason: "" }, {
+        await axios.post(`${baseURL.api}/observation/verify_observation/${id}/`, {name: "APPROVE", reason: ""}, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -160,7 +160,7 @@ const ObservationMoreDetails = (props) => {
 
             votes.push(selected[key]);
         }
-        await axios.post(baseURL.api + '/observation/vote/' + data?.id + '/', { 'votes': votes }, {
+        await axios.post(baseURL.api + '/observation/vote/' + data?.id + '/', {'votes': votes}, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${auth?.token?.access}`
@@ -188,7 +188,7 @@ const ObservationMoreDetails = (props) => {
                 setTimeout(function () {
                     handlePopup(true);
                 }, 1200)
-                setSuccess({ message: response?.data?.success });
+                setSuccess({message: response?.data?.success});
                 setError('');
             })
             .catch((error) => {
@@ -215,8 +215,8 @@ const ObservationMoreDetails = (props) => {
                         <Col sm={9} className="text-end">
                             <p className="selected_direction rounded-circle mb-0 d-inline-flex align-items-center justify-content-center fw-bold">
                                 <span>{data?.images[0]?.azimuth}</span>
-                                <i style={{ '--selected-angle': `${getdirectionDegree(data?.images[0]?.azimuth)}deg` }}
-                                    className="direction_arrow d-flex align-items-center justify-content-center position-absolute left-0 right-0 top-0 bottom-0"></i>
+                                <i style={{'--selected-angle': `${getdirectionDegree(data?.images[0]?.azimuth)}deg`}}
+                                   className="direction_arrow d-flex align-items-center justify-content-center position-absolute left-0 right-0 top-0 bottom-0"></i>
                             </p>
                         </Col>
                     </Row>
@@ -242,7 +242,7 @@ const ObservationMoreDetails = (props) => {
                         </Col>
                         <Col sm={9}>
                             <p className="mb-0 h-100 d-flex align-items-center justify-content-end fw-bold text-end">
-                                <ReactCountryFlags country={data?.images[0]?.country_code} />
+                                <ReactCountryFlags country={data?.images[0]?.country_code}/>
                                 <span className="ms-1">{data?.images[0]?.location}</span></p>
                         </Col>
                     </Row>
@@ -254,21 +254,21 @@ const ObservationMoreDetails = (props) => {
                                     className={`btn btn-${like ? '' : 'outline-'}primary like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3`}
                                     onClick={() => handleLike(data?.id)} disabled={like}>
                                     <Icon icon={`heroicons-${like ? 'solid' : 'outline'}:thumb-up`} width="25"
-                                        height="25" className="me-2" />
+                                          height="25" className="me-2"/>
                                     <span>{like ? 'Liked' : 'Like'}</span>
                                 </button>
                             </Col>
                         }
                         {success && success?.message &&
                             <UncontrolledAlert color="success" data-dismiss="alert" dismissible="true"
-                                className="text-left">
+                                               className="text-left">
                                 {success?.message}
                             </UncontrolledAlert>
                         }
 
                         {error?.notAllowed &&
                             <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true"
-                                className="text-left">
+                                               className="text-left">
                                 {error?.notAllowed}
                             </UncontrolledAlert>
                         }
@@ -278,20 +278,20 @@ const ObservationMoreDetails = (props) => {
                                 <div
                                     className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
                                     <Button color="success" onClick={() => handleApproveObservation(data?.id)}
-                                        className="me-2 text-uppercase fw-bold px-5"><Icon
-                                            icon="ci:circle-check-outline" className='me-1' />Approve</Button>
+                                            className="me-2 text-uppercase fw-bold px-5"><Icon
+                                        icon="ci:circle-check-outline" className='me-1'/>Approve</Button>
                                     <Button color="primary" className='text-uppercase fw-bold px-4' onClick={() => {
                                         handleCloseRejectPopup()
-                                    }} outline><Icon icon="zondicons:close-outline" className='me-1' />Reject</Button>
+                                    }} outline><Icon icon="zondicons:close-outline" className='me-1'/>Reject</Button>
                                 </div>
                             </Col>
                         }
                         <Col sm={12}>
                             <ObservationLikeViewCounter likeView={observationListData?.active?.like_watch_count_data}
-                                commentCount={obvCommentCount} />
+                                                        commentCount={obvCommentCount}/>
                         </Col>
                     </Row>
-                    <div className="border-line my-4" />
+                    <div className="border-line my-4"/>
                     {data?.user_data?.is_can_vote && !(data?.is_verified || data?.is_reject) && !data?.user_data?.is_voted && !isDashboard && !user?.is_user &&
                         <Form onSubmit={handleVote}>
                             <h4 className="mt-3">Vote for observation</h4>
@@ -299,25 +299,32 @@ const ObservationMoreDetails = (props) => {
                                 return (
                                     <div key={index} className="question-box mt-3 d-inline-block w-100">
 
-                                        {!selected?.[item?.id] ? <>
-                                            <h5 className="mb-3 fw-normal text-black">Is this a {item.name}?</h5>
-                                            <div className="d-flex">
-                                                <Button className="gray-outline-btn me-2 px-3"
-                                                    onClick={() => handleVoteClick('no' + index, item?.id, index)}>No</Button>
-                                                <Button className="px-3"
-                                                    onClick={() => handleVoteClick('yes' + index, item?.id, index)}>Yes</Button>
-                                            </div>
-                                        </> :
-                                            <h5 className={'mb-0'}> You have voted
-                                                for {item?.name} to {(selected?.[item?.id].vote) ? 'Yes' : 'No'}</h5>}
+                                        {!selected?.[item?.id] ? <div className="content">
+                                                <h5 className="mb-3 fw-normal text-black">Do you see <b>{item.name}</b> in
+                                                    this image?</h5>
+                                                <div className="d-flex">
+                                                    <Button className="gray-outline-btn me-2 px-3"
+                                                            onClick={() => handleVoteClick('no' + index, item?.id, index)}>No</Button>
+                                                    <Button className="gray-outline-btn px-3"
+                                                            onClick={() => handleVoteClick('yes' + index, item?.id, index)}>Yes</Button>
+                                                </div>
+                                            </div> :
+                                            <>
+                                                <h6 className={'haveChosen mb-0'}>
+                                                <span
+                                                    className="me-1">It's {(selected?.[item?.id].vote) ? '' : 'not'}</span>
+                                                    <span>{item?.name}</span>
+                                                </h6>
+                                            </>
+                                        }
                                     </div>
                                 )
                             })}
                             <Button
                                 disabled={(!(selected !== undefined && (Object.keys(selected)?.length === data?.category_data?.length)))}
                                 className="like-btn mt-4 w-100 d-flex align-items-center justify-content-center py-2 mb-3">
-                                <Icon icon="heroicons-solid:thumb-up" width="25" height="25" className="me-2" />
-                                <span>Vote this observation</span>
+                                <Icon icon="heroicons-solid:thumb-up" width="25" height="25" className="me-2"/>
+                                <span>Submit vote</span>
                             </Button>
 
                         </Form>
