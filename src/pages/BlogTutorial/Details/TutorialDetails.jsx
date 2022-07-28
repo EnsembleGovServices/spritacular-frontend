@@ -43,7 +43,7 @@ const TutorialDetails = () => {
     return (
         <>
             <PageMeta
-                title={tutorial?.title.Capitalize()?.substring(0, 60)}
+                title={tutorial?.title?.substring(0, 60)}
                 description={tutorial?.description?.substring(0, 150) + '...'}
                 imageLink={tutorial?.thumbnail_image}
             />
