@@ -2,6 +2,7 @@ import {Helmet} from "react-helmet";
 import {meta} from "../helpers/meta";
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {baseURL} from "../helpers/url";
 
 const GlobalMeta = () => {
     const currentRoute = window.location.href;
@@ -20,6 +21,7 @@ const GlobalMeta = () => {
         <>
             <Helmet>
                 <meta charSet="utf-8"/>
+                <meta content="width=device-width, initial-scale=1" name="viewport"/>
                 <meta name="theme-color" content={meta.themeColor}/>
                 <meta name='language' content={meta.language}/>
                 <meta name='distribution' content={meta.distribution}/>
@@ -36,7 +38,6 @@ const GlobalMeta = () => {
                 <meta name='og:site_name' content={meta.appName}/>
                 <meta name='og:country-name' content={meta.country}/>
 
-
                 <meta name='apple-mobile-web-app-capable' content='yes'/>
                 <meta name='apple-touch-fullscreen' content='yes'/>
                 <meta name='apple-mobile-web-app-status-bar-style' content='white'/>
@@ -49,7 +50,8 @@ const GlobalMeta = () => {
                 <meta http-equiv='x-dns-prefetch-control' content='on'/>
 
                 <link rel="canonical" href={currentLocation}/>
-
+                <meta name="google-site-verification" content="uDbTtX7fyRm7gzkwCo170FDnYRLouDPvZC7ixuDM2NM"/>
+                <link href={`${baseURL.base}/favicon.ico`} rel="icon"/>
             </Helmet>
         </>
     )
