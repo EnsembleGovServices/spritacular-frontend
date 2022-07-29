@@ -8,9 +8,9 @@ import {
     Row,
     Col,
 } from "reactstrap";
-import { Suspense, lazy, useEffect } from 'react';
+import {Suspense, lazy, useEffect} from 'react';
 import classnames from "classnames";
-import { useState } from "react";
+import {useState} from "react";
 import useAuth from "../../hooks/useAuth";
 import "../../assets/scss/component/camerasettings.scss";
 import ImageUpload from "../../components/Upload/ImageUpload";
@@ -24,7 +24,7 @@ const ChangePassword = lazy(() => import('../../components/Account/ChangePasswor
 
 
 const Profile = () => {
-    const { auth } = useAuth();
+    const {auth} = useAuth();
     const [user, setUser] = useState(auth?.user);
     const [activeTab, setActiveTab] = useState("1");
     const {
@@ -62,7 +62,7 @@ const Profile = () => {
         <>
             <section className="common-banner">
                 <Container>
-                    <div className="banner-inner" />
+                    <div className="banner-inner"/>
                 </Container>
             </section>
             <section className="setting-main">
@@ -73,13 +73,14 @@ const Profile = () => {
                                 <div className="profile-left-tab">
                                     <div className="profile-info">
                                         <div className="profile-img">
-                                            <ImageUpload user={user} token={auth?.token?.access} isProfilePopup={false} popupError={null} />
+                                            <ImageUpload user={user} token={auth?.token?.access} isProfilePopup={false}
+                                                         popupError={null}/>
                                         </div>
                                         <div className="profile-data text-center">
                                             <h5>{user?.first_name} {user?.last_name}</h5>
                                             <p>{user?.email}</p>
                                             <div className="d-flex align-items-center justify-content-center">
-                                                <ReactCountryFlags country={user?.country_code} />
+                                                <ReactCountryFlags country={user?.country_code}/>
                                                 <span>{user?.location}</span>
                                             </div>
                                         </div>
@@ -87,7 +88,7 @@ const Profile = () => {
                                     <Nav tabs className="flex-column">
                                         <NavItem>
                                             <NavLink
-                                                className={classnames({ active: activeTab === "1" })}
+                                                className={classnames({active: activeTab === "1"})}
                                                 onClick={() => {
                                                     toggleTab("1");
                                                 }}
@@ -97,7 +98,7 @@ const Profile = () => {
                                         </NavItem>
                                         <NavItem>
                                             <NavLink
-                                                className={classnames({ active: activeTab === "2" })}
+                                                className={classnames({active: activeTab === "2"})}
                                                 onClick={() => {
                                                     toggleTab("2");
                                                 }}
@@ -107,7 +108,7 @@ const Profile = () => {
                                         </NavItem>
                                         <NavItem>
                                             <NavLink
-                                                className={classnames({ active: activeTab === "3" })}
+                                                className={classnames({active: activeTab === "3"})}
                                                 onClick={() => {
                                                     toggleTab("3");
                                                 }}
@@ -129,7 +130,7 @@ const Profile = () => {
 
                                                 <Col md="12">
                                                     <Suspense fallback={<div>Loading...</div>}>
-                                                        <UpdateProfile user={auth} />
+                                                        <UpdateProfile user={auth}/>
                                                     </Suspense>
                                                 </Col>
                                             </Row>
@@ -142,23 +143,16 @@ const Profile = () => {
                                                 <Col md="12">
                                                     <Suspense fallback={<div>Loading...</div>}>
                                                         <CameraSetting cameraDetails={cameraDetails} user={auth}
-                                                            isDetailExist={isDetailExist} />
+                                                                       isDetailExist={isDetailExist}/>
                                                     </Suspense>
                                                 </Col>
                                             </Row>
 
                                         </TabPane>
                                         <TabPane tabId="3">
-                                            <Row>
-                                                <Col sm="12">
-                                                    <h4>Change Password</h4>
-                                                </Col>
-                                                <Col md="12">
-                                                    <Suspense fallback={<div>Loading...</div>}>
-                                                        <ChangePassword user={auth} />
-                                                    </Suspense>
-                                                </Col>
-                                            </Row>
+                                            <Suspense fallback={<div>Loading...</div>}>
+                                                <ChangePassword tab={activeTab} user={auth}/>
+                                            </Suspense>
                                         </TabPane>
                                     </TabContent>
                                 </div>
