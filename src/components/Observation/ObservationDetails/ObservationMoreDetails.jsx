@@ -278,11 +278,13 @@ const ObservationMoreDetails = (props) => {
                                 <div
                                     className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
                                     <Button color="success" onClick={() => handleApproveObservation(data?.id)}
-                                            className="me-2 text-uppercase fw-bold px-5"><Icon
+                                            className="me-1 text-uppercase fw-bold px-4 w-50"><Icon
                                         icon="ci:circle-check-outline" className='me-1'/>Approve</Button>
-                                    <Button color="primary" className='text-uppercase fw-bold px-4' onClick={() => {
-                                        handleCloseRejectPopup()
-                                    }} outline><Icon icon="zondicons:close-outline" className='me-1'/>Reject</Button>
+                                    <Button color="primary" className=' w-50 text-uppercase fw-bold px-4'
+                                            onClick={() => {
+                                                handleCloseRejectPopup()
+                                            }} outline><Icon icon="zondicons:close-outline"
+                                                             className='me-1'/>Reject</Button>
                                 </div>
                             </Col>
                         }
