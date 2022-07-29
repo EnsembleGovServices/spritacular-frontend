@@ -299,7 +299,7 @@ const ObservationMoreDetails = (props) => {
                             <h4 className="mt-3">Vote for observation</h4>
                             {data?.category_data?.map((item, index) => {
                                 return (
-                                    <div key={index} className="question-box mt-3 d-inline-block w-100">
+                                    <div key={index} className="question-box mt-2 d-inline-block w-100">
 
                                         {!selected?.[item?.id] ? <div className="content">
                                                 <h5 className="mb-3 fw-normal text-black">Do you see <b>{item.name}</b> in
@@ -312,7 +312,7 @@ const ObservationMoreDetails = (props) => {
                                                 </div>
                                             </div> :
                                             <>
-                                                <h6 className={'haveChosen mb-0'}>
+                                                <h6 className={`haveChosen mb-0 ${(selected?.[item?.id].vote) ? 'yes' : 'no'}`}>
                                                 <span
                                                     className="me-1">It's {(selected?.[item?.id].vote) ? '' : 'not'}</span>
                                                     <span>{item?.name}</span>

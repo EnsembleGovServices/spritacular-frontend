@@ -15,5 +15,10 @@ ReactDOM.render(
     </BrowserRouter>,
     document.getElementById("root")
 );
+const worker = navigator;
 
-registerServiceWorker();
+if (worker.serviceWorker !== undefined) {
+    registerServiceWorker().then(r => r);
+} else {
+    console.log('service worker is not supported in browser')
+}

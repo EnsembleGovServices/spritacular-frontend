@@ -22,43 +22,9 @@ const NotificationComponent = (props) => {
     const [isTokenFound, setTokenFound] = useState(false);
     const [notificationDropdown, setNotificationDropdown] = useState(false);
     const [data, setData] = useState([]);
-
     const notificationDropDownRef = useRef(null);
+    // const [detailsPopup, setDetailsPopup] = useState(false);
 
-    // To handle notification permission
-    useEffect(() => {
-        Notification.requestPermission().then(permission => {
-            if (permission === "granted") {
-                setTokenFound(true);
-            } else {
-                setTokenFound(false);
-            }
-        }).catch(e => {
-            process.env.NODE_ENV === "development" && console.log('Notification Permission Error:', e);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    // Notification token
-    useEffect(() => {
-        if (isTokenFound && auth?.user?.id) {
-            getTokens(auth?.user?.id, auth?.token?.access, auth?.user).then(r => r);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isTokenFound])
-
-
-    // Set notification before page get mounted
-    useLayoutEffect(() => {
-        return () => {
-            onMessageListener().then(payload => {
-                setShow(true);
-                setNotification(true);
-                setNotificationArray([...notificationArray, payload]);
-                setData([payload, ...data]);
-            }).catch(err => process.env.NODE_ENV === "development" && console.log('Notification Failed: ', err));
-        }
-    }, [data, notificationArray, setNotificationArray, show])
 
     // Store notifications id's in db
     const handleNotificationStatusUpdate = async (e, notificaitonIds) => {
@@ -93,42 +59,101 @@ const NotificationComponent = (props) => {
         setNotificationDropdown(!notificationDropdown);
     }
 
-    return (
-        <Dropdown className="notify_menu"
-                  isOpen={notificationDropdown}
-                  toggle={() => setNotificationDropdown(!notificationDropdown)}
-        >
-            <DropdownToggle className="notification" aria-label="notification bell">
-                <Icon icon="ic:baseline-notifications"/>
-                {notification && <span className="notify"/>}
-            </DropdownToggle>
-            <DropdownMenu ref={notificationDropDownRef} container="body" className="notify-open_menu">
-                <DropdownItem key={0} header>
-                    {notificationArray?.length > 0 ?
-                        <div className="d-flex align-items-center justify-content-between w-100">
-                            <div className="title">
-                                Notifications
-                                <span className="custom-badge">{notificationArray?.length}</span>
-                            </div>
-                            <Tippy content="Mark as read" placement="left" interactive={true}
-                                   interactiveBorder={20}
-                                   delay={100}>
-                                <button className="btn p-0 m-0"
-                                        onClick={event => handleMarkAsRead(event)}>
-                                    <Icon icon="fa6-solid:envelope-open" color="#188038" width="22" height="20"/>
-                                </button>
-                            </Tippy>
+    // Show notification details
+    // const handleDetailedNotification = (body, e) => {
+    //     e.preventDefault();
+    //     console.log(body);
+    //     setDetailsPopup(true);
+    // }
 
-                        </div> : <div className="title">Notifications</div>
-                    }
-                </DropdownItem>
-                {/*<DropdownItem divider />*/}
-                <div className={'dropdown-body'}>
-                    {notificationArray?.length > 0 ? (
-                        notificationArray?.map((item, index) => {
-                            return (
-                                <div key={index} className="drp-c">
-                                    <DropdownItem key={index}>
+    // Hide Notification details popup
+    // const closeDetailsPopup = () => {
+    //     setDetailsPopup(false);
+    // }
+
+    const isSupported = navigator && navigator.serviceWorker !== undefined;
+
+    // To handle notification permission
+    useEffect(() => {
+        if (isSupported) {
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    setTokenFound(true);
+                } else {
+                    setTokenFound(false);
+                }
+            }).catch(e => {
+                process.env.NODE_ENV === "development" && console.log('Notification Permission Error:', e);
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Notification token
+    useEffect(() => {
+        if (isSupported) {
+            if (isTokenFound && auth?.user?.id) {
+                getTokens(auth?.user?.id, auth?.token?.access, auth?.user).then(r => r);
+            }
+        } else {
+            console.log('Worker is not supported in this browser')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isTokenFound])
+
+    // Set notification before page get mounted
+    useLayoutEffect(() => {
+        onMessageListener().then(payload => {
+            setShow(true);
+            setNotification(true);
+            setNotificationArray([...notificationArray, payload]);
+            setData([payload, ...data]);
+        }).catch(err => process.env.NODE_ENV === "development" && console.log('Notification Failed: ', err));
+        return () => {
+            onMessageListener().then(payload => {
+                setShow(true);
+                setNotification(true);
+                setNotificationArray([...notificationArray, payload]);
+                setData([payload, ...data]);
+            }).catch(err => process.env.NODE_ENV === "development" && console.log('Notification Failed: ', err));
+        }
+    }, [data, notificationArray, setNotificationArray, show])
+
+    return (
+        <>
+            <Dropdown className="notify_menu"
+                      isOpen={notificationDropdown}
+                      toggle={() => setNotificationDropdown(!notificationDropdown)}
+            >
+                <DropdownToggle className="notification" aria-label="notification bell">
+                    <Icon icon="ic:baseline-notifications"/>
+                    {notification && <span className="notify"/>}
+                </DropdownToggle>
+                <DropdownMenu ref={notificationDropDownRef} container="body" className="notify-open_menu">
+                    <DropdownItem key={0} header>
+                        {notificationArray?.length > 0 ?
+                            <div className="d-flex align-items-center justify-content-between w-100">
+                                <div className="title">
+                                    Notifications
+                                    <span className="custom-badge">{notificationArray?.length}</span>
+                                </div>
+                                <Tippy content="Mark as read" placement="left" interactive={true}
+                                       interactiveBorder={20}
+                                       delay={100}>
+                                    <button className="btn p-0 m-0"
+                                            onClick={event => handleMarkAsRead(event)}>
+                                        <Icon icon="fa6-solid:envelope-open" color="#188038" width="22" height="20"/>
+                                    </button>
+                                </Tippy>
+
+                            </div> : <div className="title">Notifications</div>
+                        }
+                    </DropdownItem>
+                    <div className={'dropdown-body'}>
+                        {notificationArray?.length > 0 ? (
+                            notificationArray?.map((item, index) => {
+                                return (
+                                    <DropdownItem toggle={false} tag="div" className="drp-c" key={index}>
                                         <div className="notify_wrapper">
                                             <Tippy animation="perspective" content={item.data?.from_user}>
                                                 {item.notification?.image ?
@@ -143,31 +168,49 @@ const NotificationComponent = (props) => {
                                                 }
                                             </Tippy>
                                             <div className="comment_wrapper">
-                                                <div className="comment_details">
+                                                <div>
                                                     <h4>{item.notification.title}</h4>
-                                                    <p>{item.notification.body}</p>
+                                                    <span>{moment(item.data?.sent_at).fromNow(true)}</span>
                                                 </div>
-                                                <span>{moment(item.data?.sent_at).fromNow(true)}</span>
+                                                <p>{item.notification.body}</p>
                                             </div>
                                         </div>
                                     </DropdownItem>
-                                    <DropdownItem divider/>
-                                </div>
-                            )
-                        }).reverse()
-                    ) : (
-                        <div className="d-flex align-items-center flex-column justify-content-center"
-                             style={{height: "190px"}}>
-                            <img className="img-fluid mb-3"
-                                 src={`${cdn.url}/success.svg`}
-                                 alt="no notification"/>
-                            <h6>All caught up!</h6>
-                        </div>
-                    )}
-                </div>
-            </DropdownMenu>
-        </Dropdown>
+                                )
+                            }).reverse()
+                        ) : (
+                            <div className="d-flex align-items-center flex-column justify-content-center"
+                                 style={{height: "190px"}}>
+                                <img className="img-fluid mb-3"
+                                     src={`${cdn.url}/success.svg`}
+                                     alt="no notification"/>
+                                <h6>All caught up!</h6>
+                            </div>
+                        )}
+                    </div>
+                </DropdownMenu>
+            </Dropdown>
 
+            {/* Details modal */}
+
+            {/*<Modal*/}
+            {/*    className={"notify-modal"}*/}
+            {/*    isOpen={detailsPopup}*/}
+            {/*    toggle={closeDetailsPopup}*/}
+            {/*    centered*/}
+            {/*    backdrop={true}*/}
+            {/*    keyboard={false}*/}
+            {/*>*/}
+            {/*    <ModalHeader>*/}
+            {/*        <span>Notification Details</span>*/}
+            {/*        <Icon onClick={closeDetailsPopup} width={30} icon="clarity:close-line"/>*/}
+            {/*    </ModalHeader>*/}
+            {/*    <ModalBody>*/}
+            {/*        here sir*/}
+            {/*    </ModalBody>*/}
+            {/*</Modal>*/}
+
+        </>
     );
 }
 

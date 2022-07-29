@@ -17,25 +17,31 @@ export const onMessageListener = () =>
 
 
 export const getTokens = async (userId, token, auth) => {
-    return getToken(messaging, {vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY}).then((currentToken) => {
-        if (currentToken && auth) {
-            axios.post(baseURL.api + '/devices/', {"user": userId, "registration_id": currentToken, "type": "web"}, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            }).then((response) => {
-                // process.env.NODE_ENV === "development" && console.log('found response', response);
-            }).catch((error) => {
-                // process.env.NODE_ENV === "development" && console.log('NotificationComponent error, Request permission to generate one.');
-            })
+    if (navigator.serviceWorker !== undefined) {
+        return getToken(messaging, {vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY}).then((currentToken) => {
+            if (currentToken && auth) {
+                axios.post(baseURL.api + '/devices/', {
+                    "user": userId,
+                    "registration_id": currentToken,
+                    "type": "web"
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then((response) => {
+                    // process.env.NODE_ENV === "development" && console.log('found response', response);
+                }).catch((error) => {
+                    // process.env.NODE_ENV === "development" && console.log('NotificationComponent error, Request permission to generate one.');
+                })
 
-        }
-    }).catch((err) => {
-        // shows on the UI that permission is required 
-        // process.env.NODE_ENV === "development" && console.log('NotificationComponent permission denied. Request permission to generate one.');
-        // process.env.NODE_ENV === "development" && console.log('An error occurred while retrieving token. ', err);
-        // catch error while creating client token
-    });
-
+            }
+        }).catch((err) => {
+            // shows on the UI that permission is required
+            // process.env.NODE_ENV === "development" && console.log('NotificationComponent permission denied. Request permission to generate one.');
+            // process.env.NODE_ENV === "development" && console.log('An error occurred while retrieving token. ', err);
+            // catch error while creating client token
+        });
+    }
+    return false;
 }

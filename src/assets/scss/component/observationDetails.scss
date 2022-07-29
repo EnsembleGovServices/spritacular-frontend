@@ -330,8 +330,18 @@
 
   .haveChosen {
     font-size: 14px;
-    padding: 5px 10px;
-    border-left: 3px solid $primary;
+    padding: 10px;
+    border: 1px solid $gray-200;
+
+    &.yes {
+      border-left: 3px solid $success;
+      background-color: lighten($success, 35%);
+    }
+
+    &.no {
+      border-left: 3px solid $danger;
+      background-color: lighten($danger, 44%);
+    }
 
     span {
       &:last-child {
