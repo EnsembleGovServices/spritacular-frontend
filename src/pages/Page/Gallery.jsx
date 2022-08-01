@@ -67,8 +67,10 @@ const Gallery = () => {
         let url;
         if (reset === true || !nextPageUrl) {
             url = `${baseURL.api}/observation/gallery/?country=${country}&category=${category}&status=${status}&page=1`;
+            console.log('getting primary urls')
         } else {
             url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
+             console.log('getting urls')
         }
 
         const headers = {};
