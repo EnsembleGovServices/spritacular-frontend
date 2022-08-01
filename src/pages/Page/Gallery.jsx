@@ -201,6 +201,12 @@ const Gallery = () => {
         if (observationListData?.isVerified) {
             getObservationType(true, selectedFilterHorizontal?.country?.code, selectedFilterHorizontal?.type, selectedFilterHorizontal?.status).then(r => r);
         }
+        setObservationListData((prev) => {
+            return {
+                ...prev,
+                isVerified: false
+            }
+        })
     }, [observationListData?.isVerified])
 
     useEffect(() => {
