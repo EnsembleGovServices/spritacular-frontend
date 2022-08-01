@@ -68,7 +68,7 @@ const Gallery = () => {
         if (reset === true || !nextPageUrl) {
             url = `${baseURL.api}/observation/gallery/?country=${country}&category=${category}&status=${status}&page=1`;
         } else {
-            url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
+            url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl;
         }
 
         const headers = {};
@@ -207,6 +207,7 @@ const Gallery = () => {
                 isVerified: false
             }
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [observationListData?.isVerified])
 
     useEffect(() => {

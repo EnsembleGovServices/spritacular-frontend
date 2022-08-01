@@ -1,4 +1,3 @@
-import LazyLoad from 'react-lazy-load';
 import {Col, Row} from "reactstrap";
 
 import BlogListCardContent from "../BlogListCardContent";
