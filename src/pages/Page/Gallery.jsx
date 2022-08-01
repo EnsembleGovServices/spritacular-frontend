@@ -101,6 +101,7 @@ const Gallery = () => {
                     prevData = [...observationListData?.list];
                     prevData = [...prevData, ...records];
                 } else if (reset === false && hasDataChanged) {
+                    // prevData = [...observationListData?.list];
                     prevData = [...records];
                 } else {
                     prevData = success?.data?.results?.data;
@@ -199,14 +200,13 @@ const Gallery = () => {
                 list: []
             }
         })
-        getObservationType(false, selectedFilterHorizontal?.country, "", "").then(r => r);
+        getObservationType(true, "", "", "").then(r => r);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         if (observationListData?.isVerified) {
-            getObservationType(true, selectedFilterHorizontal?.country?.code, selectedFilterHorizontal?.type, selectedFilterHorizontal?.status, true).then(r => r);
-
+            getObservationType(false, selectedFilterHorizontal.country, selectedFilterHorizontal.type.category, selectedFilterHorizontal.status, true).then(r => r);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [observationListData?.isVerified])
