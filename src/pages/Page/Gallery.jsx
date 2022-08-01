@@ -68,7 +68,9 @@ const Gallery = () => {
         let url;
         if (reset === true || !nextPageUrl) {
             url = `${baseURL.api}/observation/gallery/?country=${country}&category=${category}&status=${status}&page=1`;
+            console.log('url without next page')
         } else {
+            console.log('url with next page')
             url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
         }
 
