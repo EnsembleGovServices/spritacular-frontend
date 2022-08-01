@@ -79,7 +79,7 @@ const About = () => {
                             </div>
                             <div className="mt-5">
                                 <div className="row c-h-card">
-                                    <div className="col-sm-12 col-md-4">
+                                    <div className="col-sm-12 col-md-6 col-lg-4">
                                         <div className="card">
                                             <div className="card-header border-bottom-0">
                                                 <h3 className="mb-0">Why do we need a TLE database?</h3>
@@ -107,7 +107,7 @@ const About = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-sm-12 col-md-4">
+                                    <div className="col-sm-12 col-md-6 col-lg-4">
                                         <div className="card">
                                             <div className="card-header border-bottom-0">
                                                 <h3 className="mb-0">What is citizen science?</h3>
@@ -137,7 +137,9 @@ const About = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-sm-12 col-md-4">
+                                </div>
+                                <div className="row c-h-card mt-4">
+                                    <div className="col-sm-12">
                                         <div className="card">
                                             <div className="card-header border-bottom-0">
                                                 <h3 className="mb-0">Are you interested in learning more about NASA
