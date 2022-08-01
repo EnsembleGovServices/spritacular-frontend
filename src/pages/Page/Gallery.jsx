@@ -55,20 +55,21 @@ const Gallery = () => {
             false,
             selectedFilterHorizontal.country?.code,
             selectedFilterHorizontal.type,
-            selectedFilterHorizontal.status
+            selectedFilterHorizontal.status,
         ).then(r => r);
     };
     const getObservationType = async (
         reset = false,
         country = `${selectedFilterHorizontal.country?.code}`,
         category = `${selectedFilterHorizontal.type}`,
-        status = `${selectedFilterHorizontal.status}`
+        status = `${selectedFilterHorizontal.status}`,
+        hasDataChanged = false
     ) => {
         let url;
         if (reset === true || !nextPageUrl) {
             url = `${baseURL.api}/observation/gallery/?country=${country}&category=${category}&status=${status}&page=1`;
         } else {
-            url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl;
+            url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
         }
 
         const headers = {};
@@ -94,9 +95,11 @@ const Gallery = () => {
                 let records = success?.data?.results?.data;
                 let prevData;
 
-                if (observationListData?.list?.length > 0 && reset === false) {
+                if (observationListData?.list?.length > 0 && reset === false && !hasDataChanged) {
                     prevData = [...observationListData?.list];
                     prevData = [...prevData, ...records];
+                } else if (reset === false && hasDataChanged) {
+                    prevData = [...records];
                 } else {
                     prevData = success?.data?.results?.data;
                 }
@@ -104,6 +107,7 @@ const Gallery = () => {
                     return {
                         ...prev,
                         list: prevData,
+                        isVerified: false
                     };
                 });
                 setLoadedState((prev) => {
@@ -115,7 +119,7 @@ const Gallery = () => {
                 });
             } else {
                 setNextPageUrl(null);
-                setObservationListData({list: [], active: {}});
+                setObservationListData({list: [], active: {}, isVerified: false});
             }
         })
             .catch((error) => {
@@ -193,20 +197,15 @@ const Gallery = () => {
                 list: []
             }
         })
-        getObservationType(false, "", "", "").then(r => r);
+        getObservationType(false, selectedFilterHorizontal?.country, "", "").then(r => r);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (observationListData?.isVerified) {
-            getObservationType(true, selectedFilterHorizontal?.country?.code, selectedFilterHorizontal?.type, selectedFilterHorizontal?.status).then(r => r);
+            getObservationType(true, selectedFilterHorizontal?.country?.code, selectedFilterHorizontal?.type, selectedFilterHorizontal?.status, true).then(r => r);
+
         }
-        setObservationListData((prev) => {
-            return {
-                ...prev,
-                isVerified: false
-            }
-        })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [observationListData?.isVerified])
 
