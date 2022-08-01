@@ -167,7 +167,6 @@ const ObservationMoreDetails = (props) => {
             }
         })
             .then((response) => {
-                console.log('response?.data?.is_verified', response?.data)
                 let obvData = observationListData?.active;
                 newObvData?.filter(openedItem => {
                     return openedItem?.id === data?.id;
