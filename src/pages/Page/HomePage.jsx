@@ -36,7 +36,7 @@ const HomePage = () => {
             <PageMeta
                 title="Explore Observations"
                 description="Join the chase of Transient Luminous Events (TLEs) from the ground, engage with a global community of observers, and contribute your observations of TLEs for NASA Science!"
-                imageLink={recent?.latest_observation[0].images[0].image}
+                imageLink={recent?.latest_observation[0]?.images[0]?.image}
             />
             <HomeBanner/>
             <section className="counter-main">

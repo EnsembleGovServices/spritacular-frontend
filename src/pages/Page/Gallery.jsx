@@ -68,9 +68,9 @@ const Gallery = () => {
         let url;
         if (reset === true || !nextPageUrl) {
             url = `${baseURL.api}/observation/gallery/?country=${country}&category=${category}&status=${status}&page=1`;
-            console.log('url without next page')
+            // console.log('url without next page')
         } else {
-            console.log('url with next page')
+            // console.log('url with next page')
             url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
         }
 
@@ -100,7 +100,7 @@ const Gallery = () => {
                 if (observationListData?.list?.length > 0 && reset === false && !hasDataChanged) {
                     prevData = [...observationListData?.list];
                     prevData = [...prevData, ...records];
-                } else if (reset === false && hasDataChanged) {
+                } else if (reset && hasDataChanged) {
                     // prevData = [...observationListData?.list];
                     prevData = [...records];
                 } else {
@@ -205,9 +205,7 @@ const Gallery = () => {
     }, []);
 
     useEffect(() => {
-        if (observationListData?.isVerified) {
-            getObservationType(false, selectedFilterHorizontal.country, selectedFilterHorizontal.type.category, selectedFilterHorizontal.status, true).then(r => r);
-        }
+        getObservationType(true, "", "", "", true).then(r => r);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [observationListData?.isVerified])
 
