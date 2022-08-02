@@ -177,7 +177,7 @@ const NotificationComponent = (props) => {
                                         </div>
                                     </DropdownItem>
                                 )
-                            }).reverse()
+                            })
                         ) : (
                             <div className="d-flex align-items-center flex-column justify-content-center"
                                  style={{height: "190px"}}>
