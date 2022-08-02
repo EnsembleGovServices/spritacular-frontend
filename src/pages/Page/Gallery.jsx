@@ -207,7 +207,7 @@ const Gallery = () => {
     useEffect(() => {
         getObservationType(true, "", "", "", true).then(r => r);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [observationListData?.isVerified])
+    }, [observationListData?.isVerified === true])
 
     useEffect(() => {
         setShowNoData(loadedState?.hasData);
