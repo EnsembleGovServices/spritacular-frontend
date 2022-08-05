@@ -259,12 +259,7 @@ const ObservationMoreDetails = (props) => {
                                 </button>
                             </Col>
                         }
-                        {success && success?.message &&
-                            <UncontrolledAlert color="success" data-dismiss="alert" dismissible="true"
-                                               className="text-left">
-                                {success?.message}
-                            </UncontrolledAlert>
-                        }
+
 
                         {error?.notAllowed &&
                             <UncontrolledAlert color="danger" data-dismiss="alert" dismissible="true"
@@ -294,6 +289,14 @@ const ObservationMoreDetails = (props) => {
                         </Col>
                     </Row>
                     <div className="border-line my-4"/>
+
+                    {success && success?.message &&
+                        <UncontrolledAlert color="success" data-dismiss="alert" dismissible="true"
+                                           className="text-center">
+                            {success?.message}
+                        </UncontrolledAlert>
+                    }
+                    
                     {data?.user_data?.is_can_vote && !(data?.is_verified || data?.is_reject) && !data?.user_data?.is_voted && !isDashboard && !user?.is_user &&
                         <Form onSubmit={handleVote}>
                             <h4 className="mt-3">Vote for observation</h4>
