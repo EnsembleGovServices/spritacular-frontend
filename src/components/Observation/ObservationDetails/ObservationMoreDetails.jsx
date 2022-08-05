@@ -317,7 +317,7 @@ const ObservationMoreDetails = (props) => {
                                                     className="me-1">You voted <span
                                                     className="fw-bold">' {(selected?.[item?.id].vote) ? 'yes' : 'no'} '</span> , {item?.name.toLowerCase() === "elve" ? 'an ' : (item?.name.toLowerCase() === "other" ? 'an ' : 'a ')}
                                                     <span
-                                                        className="text-lowercase fw-bold">{item?.name}</span> {(selected?.[item?.id].vote) ? 'was' : 'was not'} in the image</span>
+                                                        className="text-lowercase fw-bold">{item?.name}</span> {(selected?.[item?.id].vote) ? 'was' : 'was not'} in the image.</span>
                                                 </h6>
                                             </>
                                         }
