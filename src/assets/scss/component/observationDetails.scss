@@ -343,11 +343,6 @@
       background-color: lighten($danger, 44%);
     }
 
-    span {
-      &:last-child {
-        font-weight: bold;
-      }
-    }
   }
 
   button {

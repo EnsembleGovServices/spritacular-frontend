@@ -314,8 +314,10 @@ const ObservationMoreDetails = (props) => {
                                             <>
                                                 <h6 className={`haveChosen mb-0 ${(selected?.[item?.id].vote) ? 'yes' : 'no'}`}>
                                                 <span
-                                                    className="me-1">It's {(selected?.[item?.id].vote) ? '' : 'not'}</span>
-                                                    <span>{item?.name}</span>
+                                                    className="me-1">You voted <span
+                                                    className="fw-bold">' {(selected?.[item?.id].vote) ? 'yes' : 'no'} '</span> , {item?.name.toLowerCase() === "elve" ? 'an ' : (item?.name.toLowerCase() === "other" ? 'an ' : 'a ')}
+                                                    <span
+                                                        className="text-lowercase fw-bold">{item?.name}</span> {(selected?.[item?.id].vote) ? 'was' : 'was not'} in the image</span>
                                                 </h6>
                                             </>
                                         }
@@ -324,9 +326,8 @@ const ObservationMoreDetails = (props) => {
                             })}
                             <Button
                                 disabled={(!(selected !== undefined && (Object.keys(selected)?.length === data?.category_data?.length)))}
-                                className="like-btn mt-4 w-100 d-flex align-items-center justify-content-center py-2 mb-3">
-                                <Icon icon="heroicons-solid:thumb-up" width="25" height="25" className="me-2"/>
-                                <span>Submit vote</span>
+                                className="w-100 mt-4 d-block">
+                                <span>Confirm your vote</span>
                             </Button>
 
                         </Form>
