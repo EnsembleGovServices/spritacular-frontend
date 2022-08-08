@@ -296,7 +296,7 @@ const ObservationMoreDetails = (props) => {
                             {success?.message}
                         </UncontrolledAlert>
                     }
-                    
+
                     {data?.user_data?.is_can_vote && !(data?.is_verified || data?.is_reject) && !data?.user_data?.is_voted && !isDashboard && !user?.is_user &&
                         <Form onSubmit={handleVote}>
                             <h4 className="mt-3">Vote for observation</h4>
@@ -305,7 +305,9 @@ const ObservationMoreDetails = (props) => {
                                     <div key={index} className="question-box mt-2 d-inline-block w-100">
 
                                         {!selected?.[item?.id] ? <div className="content">
-                                                <h5 className="mb-3 fw-normal text-black">Do you see <b>{item.name}</b> in
+                                                <h5 className="mb-3 fw-normal text-black">Do you
+                                                    see {item?.name.toLowerCase() === "elve" ? 'an ' : (item?.name.toLowerCase() === "other" ? 'an ' : 'a ')}
+                                                    <b>{item.name}</b> in
                                                     this image?</h5>
                                                 <div className="d-flex">
                                                     <Button className="gray-outline-btn me-2 px-3"
