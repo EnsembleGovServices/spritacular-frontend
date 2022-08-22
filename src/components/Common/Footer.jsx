@@ -133,18 +133,18 @@ const Footer = () => {
                                                 <Link
                                                     to={routeUrls.pages.becomeAnAmbasador}
                                                     className="d-inline-block mb-3"
-                                                    title="Become an Ambassador"
+                                                    title="Get Involved"
                                                 >
-                                                    Become an Ambassador
+                                                    Get Involved
                                                 </Link>
                                             </li>
                                             <li>
                                                 <Link
                                                     to={routeUrls.pages.spritacularGoogleGroup}
                                                     className="d-inline-block mb-3"
-                                                    title="Spritacular Google Group"
+                                                    title="News & Announcements"
                                                 >
-                                                    Spritacular Google Group
+                                                    News & Announcements
                                                 </Link>
                                             </li>
                                         </List>
