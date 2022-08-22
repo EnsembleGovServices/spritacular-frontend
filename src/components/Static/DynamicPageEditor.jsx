@@ -1,6 +1,6 @@
 import "../../assets/scss/component/tutorialdetail.scss";
 
-import {lazy, Suspense} from "react";
+import {lazy, Suspense, useCallback} from "react";
 import {Card, CardBody, Col, Container, Row} from "reactstrap";
 import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth";
@@ -10,11 +10,11 @@ import NotFound from "../Common/NotFound";
 
 const ContentEditor = lazy(() => import('../Blog/ContentEditor'))
 
-const DynamicPageEditor = ({title, endpoint}) => {
+const DynamicPageEditor = ({endpoint, setPageTitle}) => {
     const [loading, setLoading] = useState(false);
     const [noData, setNoData] = useState(false);
     const [readOnly, setReadOnly] = useState(true);
-    const [data, setData] = useState({title: title, content: ''});
+    const [data, setData] = useState({title: '', content: ''});
     const {auth} = useAuth();
     const formData = new FormData();
     const admin = auth?.user?.is_superuser;
@@ -23,7 +23,7 @@ const DynamicPageEditor = ({title, endpoint}) => {
     const handleEditMode = () => {
         setNoData(false);
         setReadOnly(!readOnly);
-    }
+    };
 
     // Get dynamic data from db
     const getDynamicData = async () => {
@@ -64,7 +64,7 @@ const DynamicPageEditor = ({title, endpoint}) => {
         setLoading(true);
         e.preventDefault();
         setReadOnly(!readOnly);
-        formData.append("title", title);
+        formData.append("title", data?.title);
         formData.append("content", data?.content);
         if (admin && !readOnly) {
             return await axios.post(endpoint, formData, {
@@ -77,7 +77,7 @@ const DynamicPageEditor = ({title, endpoint}) => {
                 setData((prev) => {
                     return {
                         ...prev,
-                        title: title,
+                        title: response?.title,
                         content: response?.content
                     }
                 });
@@ -95,16 +95,33 @@ const DynamicPageEditor = ({title, endpoint}) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const handleTitle = (e) => {
+        let name = e.target.name,
+            value = e.target.value;
+
+        setData((prev) => {
+            return {
+                ...prev,
+                [name]: value
+            }
+        });
+    }
+
     // Store data in state on refresh or update
     useEffect(() => {
         setData((prev) => {
             return {
                 ...prev,
+                title: data?.title,
                 content: data?.content
             }
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loading])
+    }, [loading]);
+
+    useEffect(() => {
+        setPageTitle(data?.title);
+    }, [data?.title])
 
     return (
         <div className="blog_page">
@@ -112,7 +129,7 @@ const DynamicPageEditor = ({title, endpoint}) => {
             <section className="blog-main">
                 <Container>
                     <div className="mb-4 mt-3 d-flex align-items-center justify-content-between">
-                        <h2 className="mb-0 mx-auto">{title}</h2>
+                        <h2 className="mb-0 mx-auto">{data?.title}</h2>
                         {admin && readOnly &&
                             <button className="btn btn-primary px-4 btn-sm" onClick={() => handleEditMode()}>
                                 {noData ? 'Add Data' : 'Edit'}
@@ -130,17 +147,33 @@ const DynamicPageEditor = ({title, endpoint}) => {
                                 <Card className="card border-0 shadow-sm">
                                     <CardBody className="p-md-5 p-4">
                                         {noData && <NotFound/>}
+                                        {!readOnly &&
+                                            <div className="form-group">
+                                                <label htmlFor="title">Title</label>
+                                                <input type="text" id="title" name="title" className="form-control"
+                                                       value={data?.title} onChange={(e) => handleTitle(e)}/>
+                                            </div>
+                                        }
                                         <div className="form-group">
                                             {!readOnly &&
                                                 <label htmlFor="content" className="col-form-label">Content</label>
                                             }
-                                            <ContentEditor
-                                                setLoading={setLoading}
-                                                editorData={data?.content}
-                                                data={data?.content}
-                                                setData={setData}
-                                                dynamicPageProps={readOnly}
-                                            />
+                                            {readOnly ? (
+                                                <ContentEditor
+                                                    setLoading={setLoading}
+                                                    data={data?.content}
+                                                    setData={setData}
+                                                    dynamicPageProps={readOnly}
+                                                />
+                                            ) : (
+                                                <ContentEditor
+                                                    setLoading={setLoading}
+                                                    editorData={data?.content}
+                                                    data={data?.content}
+                                                    setData={setData}
+                                                    dynamicPageProps={readOnly}
+                                                />
+                                            )}
                                         </div>
                                     </CardBody>
                                 </Card>

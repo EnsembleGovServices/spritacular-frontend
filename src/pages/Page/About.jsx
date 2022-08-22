@@ -7,7 +7,7 @@ const About = () => {
         <>
             <PageMeta
                 title="About us"
-                description="community science project that aims to collect observations of sprites and other optical phenomena occurring above the thunderstorms - collectively known as Transient Luminous Events (TLEs)."
+                description="citizen science project that aims to collect observations of sprites and other optical phenomena occurring above the thunderstorms - collectively known as Transient Luminous Events (TLEs)."
             />
             <div className="about_page position-relative">
                 <div className="common-banner about-common-banner"></div>
@@ -36,7 +36,7 @@ const About = () => {
                                         What is Spritacular?
                                     </h4>
                                     <p className="mb-3">
-                                        Spritacular is a community science project that aims to collect observations of
+                                        Spritacular is a citizen science project that aims to collect observations of
                                         sprites and other optical
                                         phenomena occurring above the thunderstorms - collectively known as <a
                                         target="_blank" referrerPolicy="no-referrer" rel="noreferrer"
@@ -79,12 +79,12 @@ const About = () => {
                             </div>
                             <div className="mt-5">
                                 <div className="row c-h-card">
-                                    <div className="col-sm-12 col-md-6 col-lg-4">
+                                    <div className="mb-4 col-sm-12">
                                         <div className="card">
                                             <div className="card-header border-bottom-0">
                                                 <h3 className="mb-0">Why do we need a TLE database?</h3>
                                             </div>
-                                            <div className="card-body">
+                                            <div className="pt-0 card-body">
                                                 <p className="card-text">
                                                     With this project, we will build an event database of TLEs that
                                                     will
@@ -107,12 +107,12 @@ const About = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-sm-12 col-md-6 col-lg-4">
+                                    <div className="mb-4 col-sm-12">
                                         <div className="card">
                                             <div className="card-header border-bottom-0">
                                                 <h3 className="mb-0">What is citizen science?</h3>
                                             </div>
-                                            <div className="card-body">
+                                            <div className="pt-0 card-body">
                                                 <p className="card-text">
                                                     Simply put, it is science for all! <br/>
                                                     NASA Science Mission Directorate (SMD)
@@ -137,8 +137,6 @@ const About = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row c-h-card mt-4">
                                     <div className="col-sm-12">
                                         <div className="card">
                                             <div className="card-header border-bottom-0">
@@ -146,7 +144,7 @@ const About = () => {
                                                     citizen science
                                                     projects?</h3>
                                             </div>
-                                            <div className="card-body">
+                                            <div className="pt-0 card-body">
                                                 <p className="card-text">
                                                     Check out this
                                                     <a className="mx-1"
@@ -160,6 +158,7 @@ const About = () => {
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </Container>

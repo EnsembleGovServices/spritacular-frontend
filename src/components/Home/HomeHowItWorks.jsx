@@ -1,9 +1,10 @@
 import "../../assets/scss/component/observationCard.scss";
-import { Container, Row, Col } from "reactstrap";
-import { cdn } from "../../helpers/url";
+import {Container, Row, Col} from "reactstrap";
+import {cdn, routeUrls} from "../../helpers/url";
 import BlurImage from "../Common/BlurImage";
 import Skeleton from "react-loading-skeleton";
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 const HomeHowItWorks = () => {
     const [loaderLoading, setLoaderLoading] = useState(true);
@@ -68,8 +69,9 @@ const HomeHowItWorks = () => {
                     </Row>
                     <Row>
                         <Col sm={6} xs={12} className="works-gap order-2 order-md-1 position-relative  ">
-                            <BlurImage image={`${cdn.url}/Howitworks_second.png`} preview={`${cdn.url}/night_sky_new.jpg`}
-                                loaderLoading={handleLoaderLoading} alt="How it works under Register" />
+                            <BlurImage image={`${cdn.url}/Howitworks_second.png`}
+                                       preview={`${cdn.url}/night_sky_new.jpg`}
+                                       loaderLoading={handleLoaderLoading} alt="How it works under Register"/>
                         </Col>
                         <Col sm={6} xs={12} className="works-gap order-1 order-md-2 position-relative">
                             <div className="how-it-work-text-info">
@@ -97,7 +99,9 @@ const HomeHowItWorks = () => {
                                 </div>
                                 <div className={`${loaderLoading ? 'mb-3' : ''} position-relative`}>
                                     <p>
-                                        Please check out our tutorials and blog to learn more.
+                                        Please check
+                                        out our <Link to={`/${routeUrls.tutorials}`}>tutorials</Link> and <Link
+                                        to={`/${routeUrls.blog}`}>blog</Link> under the “Resources” tab.
                                         These resources are intended to improve your
                                         knowledge and help with the methods you can contribute to the project.
                                     </p>
