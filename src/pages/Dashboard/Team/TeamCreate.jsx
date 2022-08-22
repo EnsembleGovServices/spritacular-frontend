@@ -2,17 +2,17 @@ import "../../../assets/scss/component/blog.scss"
 import {Suspense, lazy} from "react";
 
 // To render a dynamic import as a regular component for showing loader till it loads.
-const CreateUpdateBlogTutorial = lazy(() => import('../BlogTutorial/CreateUpdateBlogTutorial'))
+const CreateUpdateTeam = lazy(() => import('./CreateUpdateTeam'))
 
-const TutorialCreate = () => {
+const TeamCreate = () => {
     return (
         <div className="blog_page position-relative">
             <div className="common-banner"></div>
             <section className="blog-main">
                 <div className="container">
                     <Suspense fallback={<div>Please wait...</div>}>
-                        <CreateUpdateBlogTutorial
-                            type="tutorial"
+                        <CreateUpdateTeam
+                            type="team"
                         />
                     </Suspense>
                 </div>
@@ -20,4 +20,4 @@ const TutorialCreate = () => {
         </div>
     )
 }
-export default TutorialCreate;
+export default TeamCreate;

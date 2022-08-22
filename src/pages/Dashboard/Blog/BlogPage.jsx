@@ -9,16 +9,10 @@ import ListBlogTutorial from "../BlogTutorial/ListBlogTutorial";
 import useObservationsData from "../../../hooks/useObservationsData";
 
 const BlogPage = () => {
-    // const [articles, setArticles] = useState();
     const {setArticles, articles, triggerEvents} = useObservationsData();
     const [loader, setLoader] = useState(true);
 
-    const thead = [
-        {name: 'ID'},
-        {name: 'Title'},
-        {name: 'Description'},
-        {name: 'Action'}
-    ]
+
     const getArticle = async () => {
         await axios.get(`${baseURL.get_blog}1`, {
             headers: {
@@ -47,7 +41,6 @@ const BlogPage = () => {
 
     return (
         <ListBlogTutorial content={articles}
-                          thead={thead}
                           type="blog"
                           isLoading={loader}
         />

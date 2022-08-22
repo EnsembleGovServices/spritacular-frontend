@@ -14,6 +14,7 @@ const GlobalMeta = () => {
         return () => {
             setCurrentLocation(currentRoute)
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
 
 

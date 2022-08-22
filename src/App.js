@@ -54,6 +54,14 @@ const TutorialView = lazy(() => import('./pages/Dashboard/Tutorial/TutorialView'
 const TutorialCreate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialCreate'));
 const TutorialUpdate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialUpdate'));
 
+//Team Page dashboard
+
+const TeamPage = lazy(() => import('./pages/Dashboard/Team/TeamPage'));
+const TeamCreate = lazy(() => import('./pages/Dashboard/Team/TeamCreate'));
+const TeamViewDetails = lazy(() => import('./pages/Dashboard/Team/TeamViewDetails'));
+const TeamUserUpdate = lazy(() => import('./pages/Dashboard/Team/TeamUserUpdate'));
+
+
 const App = () => {
 
     const [persistValue, setPersistValue] = useState(false);
@@ -197,6 +205,17 @@ const App = () => {
                                            element={<Suspense fallback={<Loader/>}><TutorialView/></Suspense>}/>
                                     <Route path={routeUrls.dashTutorial.edit}
                                            element={<Suspense fallback={<Loader/>}><TutorialUpdate/></Suspense>}/>
+                                </Route>
+
+                                {/*Dashboard Team*/}
+                                <Route path={routeUrls.dashTeams.list}>
+                                    <Route index element={<TeamPage/>}/>
+                                    <Route path={routeUrls.dashTeams.create}
+                                           element={<Suspense fallback={<Loader/>}><TeamCreate/></Suspense>}/>
+                                    <Route path={routeUrls.dashTeams.view}
+                                           element={<Suspense fallback={<Loader/>}><TeamViewDetails/></Suspense>}/>
+                                    <Route path={routeUrls.dashTeams.edit}
+                                           element={<Suspense fallback={<Loader/>}><TeamUserUpdate/></Suspense>}/>
                                 </Route>
                             </Route>
 

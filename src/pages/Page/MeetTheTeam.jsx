@@ -1,10 +1,38 @@
 import "../../assets/scss/component/blog.scss";
-import {Card, CardBody, CardGroup, CardImg, CardSubtitle, CardText, CardTitle, Col, Row} from "reactstrap";
-import {meetTheTeamData} from "../../helpers/frontPage";
-import {useEffect} from "react";
+import {Card, Col, Row} from "reactstrap";
+import {useEffect, useState} from "react";
 import PageMeta from "../../meta/PageMeta";
+import useObservationsData from "../../hooks/useObservationsData";
+import axios from "../../api/axios";
+import {baseURL} from "../../helpers/url";
+import Loader from "../../components/Shared/Loader";
+import NotFound from "../../components/Common/NotFound";
+import TeamList from "./TeamList";
 
 const MeetTheTeam = () => {
+
+    const {setTeam, team} = useObservationsData();
+    const [loader, setLoader] = useState(true);
+
+    const getTeam = async () => {
+        setLoader(true);
+        await axios.get(`${baseURL.team_list}`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(response => {
+            setTeam(response?.data);
+            setLoader(false);
+        }).catch(error => {
+            setLoader(false);
+            process.env.NODE_ENV === "development" && console.log('TeamPage: ', error)
+        })
+    }
+
+    useEffect(() => {
+        getTeam().then(r => r);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -26,53 +54,14 @@ const MeetTheTeam = () => {
                         team!</p>
                     <Row className="g-4">
                         <Col md={12}>
-                            <Card className="border-0 shadow-sm p-md-5 p-4 team-card-box">
-                                <CardGroup className="mt-4 text-center mb-3">
-                                    <Row className="g-0 justify-content-center w-100">
-                                        {meetTheTeamData && meetTheTeamData.map((member, team_index) => (
-                                            team_index < 5 &&
-                                            (
-                                                <Col xl="2" md="4" sm="6" key={team_index}>
-                                                    <Card className="align-items-center border-0 p-3">
-                                                        <div className=" align-middle">
-                                                            <CardImg className="w-75" alt={member.designation}
-                                                                     src={member.person_img} top/>
-                                                        </div>
-                                                        <CardBody>
-                                                            <CardTitle tag="h4"
-                                                                       className="fs-5">{member.person_name}</CardTitle>
-                                                            <CardSubtitle className="my-2 text-muted"
-                                                                          tag="h6">{member.affiliations}</CardSubtitle>
-                                                            <CardText>{member.designation}</CardText>
-                                                        </CardBody>
-                                                    </Card>
-                                                </Col>
-                                            )))}
-                                    </Row>
-                                </CardGroup>
-
-                                {/* Ensemble Consultancies */}
-                                <CardGroup className="mt-5 text-center">
-                                    <Row className="g-0 justify-content-evenly w-100">
-                                        {meetTheTeamData && meetTheTeamData.map((member, team_index) => (
-                                            team_index >= 5 &&
-                                            (
-                                                <Col xl="2" md="4" sm="6" key={team_index}>
-                                                    <Card className="align-items-center border-0 p-3">
-                                                        <CardImg className="w-75" alt="Ensemble Consultancy - 1"
-                                                                 src={member.person_img} top/>
-                                                        <CardBody className="text-center">
-                                                            <CardTitle tag="h4"
-                                                                       className="fs-5">{member.person_name}</CardTitle>
-                                                            <CardSubtitle className="my-2 text-muted"
-                                                                          tag="h6">{member.affiliations}</CardSubtitle>
-                                                            <CardText>{member.designation}</CardText>
-                                                        </CardBody>
-                                                    </Card>
-                                                </Col>
-                                            )))}
-                                    </Row>
-                                </CardGroup>
+                            <Card className="team-card-box">
+                                {
+                                    team?.length > 0 ? (
+                                        <TeamList teams={team}/>
+                                    ) : loader ? (
+                                        <Loader loaderClass="h-100 position-relative"/>
+                                    ) : <NotFound/>
+                                }
                             </Card>
                         </Col>
                     </Row>

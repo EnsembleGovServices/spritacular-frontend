@@ -18,7 +18,6 @@ import MapWrapper from '../MapWrapper';
 import ReactCountryFlags from '../ReactCountryFlag';
 import {directionValue, Tabs} from "../../helpers/observation";
 import {timezone} from "../../helpers/timezone";
-import ObservationCategory from "./ObservationCategory";
 import {Icon} from '@iconify/react';
 import {getdirectionDegree, getdirectionAngle} from "../../helpers/observation";
 

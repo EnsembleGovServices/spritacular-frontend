@@ -30,6 +30,8 @@ const PersistLogin = (props) => {
     const [articles, setArticles] = useState([]);
     const [tutorials, setTutorials] = useState([]);
     const [atDetails, setATDetails] = useState({});
+    const [team, setTeam] = useState([]);
+    const [teamDetails, setTeamDetails] = useState({});
     const [triggerEvents, setTriggerEvents] = useState({});
 
     useEffect(() => {
@@ -78,6 +80,10 @@ const PersistLogin = (props) => {
                     setTutorials,
                     atDetails,
                     setATDetails,
+                    team,
+                    setTeam,
+                    teamDetails,
+                    setTeamDetails,
                     triggerEvents,
                     setTriggerEvents
                 }

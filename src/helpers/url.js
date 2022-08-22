@@ -20,7 +20,11 @@ export const baseURL = {
     quiz_submit: process.env.REACT_APP_API_SUBMIT_QUE_ANS,
     static_policy: process.env.REACT_APP_STATIC_API_POLICY,
     static_ambassador: process.env.REACT_APP_STATIC_API_AMBASSADOR,
-    static_google_group: process.env.REACT_APP_STATIC_API_GOOGLE_GROUP
+    team_list: process.env.REACT_APP_TEAM_LIST_API,
+    team_view: process.env.REACT_APP_TEAM_VIEW_API,
+    team_add: process.env.REACT_APP_TEAM_ADD_API,
+    team_update: process.env.REACT_APP_TEAM_UPDATE_API,
+    team_delete: process.env.REACT_APP_TEAM_DELETE_API,
 }
 
 export const cameraSettingFields = {
@@ -66,11 +70,18 @@ export const routeUrls = {
         view: ':slug',
         edit: ':slug/edit'
     },
+    dashTeams: {
+        list: 'team',
+        create: 'create',
+        view: ':id',
+        edit: ':id/edit'
+    },
     pages: {
         meetTheTeam: 'meet-the-team',
         becomeAnAmbasador: 'become-an-ambassador',
         spritacularGoogleGroup: 'spritacular-google-group'
-    }
+    },
+
 }
 
 

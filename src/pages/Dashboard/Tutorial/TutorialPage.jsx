@@ -12,12 +12,6 @@ const TutorialPage = () => {
     const {tutorials, setTutorials, triggerEvents} = useObservationsData();
     const [loader, setLoader] = useState(true);
 
-    const thead = [
-        {name: 'ID'},
-        {name: 'Title'},
-        {name: 'Description'},
-        {name: 'Action'}
-    ]
     const getTutorials = async () => {
         await axios.get(`${baseURL.get_blog}2`, {
             headers: {
@@ -45,7 +39,6 @@ const TutorialPage = () => {
 
     return (
         <ListBlogTutorial content={tutorials}
-                          thead={thead}
                           type="tutorial"
                           isLoading={loader}
         />

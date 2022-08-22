@@ -135,3 +135,38 @@
     }
   }
 }
+
+.dash-inner-card-team-list {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto;
+  overflow: hidden;
+
+  .shadow-sm {
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.create-update-team {
+  .img_wrapper {
+    background: $white;
+    border: 2px dashed $gray-200;
+  }
+
+  .shadow-sm {
+    box-shadow: none !important;
+  }
+
+  .img-preview_wrapper {
+    img {
+      object-fit: contain !important;
+    }
+  }
+}

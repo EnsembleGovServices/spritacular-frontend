@@ -24,9 +24,9 @@ const ListContent = (props) => {
                         </div>
                         {!loaderLoading &&
                             <div className="mt-3">
-                                <h5 className="card-title">{item?.title.substring(0, 40) + '...'}</h5>
+                                <h5 className="card-title">{item?.title?.substring(0, 40) + '...'}</h5>
                                 <p className="mb-0">
-                                    {item?.description.substring(0, 80) + '...'}
+                                    {item?.description?.substring(0, 80) + '...'}
                                 </p>
                             </div>
                         }

@@ -1,6 +1,6 @@
 import "../../assets/scss/component/myObservation.scss";
 import "../../assets/scss/component/gallery.scss";
-import {lazy, Suspense, useEffect, useLayoutEffect, useState} from "react";
+import {lazy, Suspense, useEffect, useState} from "react";
 import {Container, UncontrolledAlert} from "reactstrap";
 import {Link} from "react-router-dom";
 
