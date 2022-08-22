@@ -1,6 +1,6 @@
 import "../../assets/scss/component/tutorialdetail.scss";
 
-import {lazy, Suspense, useCallback} from "react";
+import {lazy, Suspense} from "react";
 import {Card, CardBody, Col, Container, Row} from "reactstrap";
 import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth";
@@ -121,6 +121,7 @@ const DynamicPageEditor = ({endpoint, setPageTitle}) => {
 
     useEffect(() => {
         setPageTitle(data?.title);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data?.title])
 
     return (
