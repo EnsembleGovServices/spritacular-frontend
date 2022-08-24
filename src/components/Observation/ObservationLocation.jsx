@@ -704,8 +704,8 @@ const ObservationLocation = (props) => {
                         <Input
                             id="Azimuth"
                             type="number"
-                            min={0}
                             max={360}
+                            step="0.01"
                             name="azimuth"
                             value={(observationImages?.data) ? observationImages?.data[observationImages?.selected_image_index]?.azimuth : ''}
                             placeholder="120°"
