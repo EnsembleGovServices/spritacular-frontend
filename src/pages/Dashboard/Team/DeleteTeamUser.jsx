@@ -29,7 +29,7 @@ const DeleteTeamUser = ({id}) => {
                     Authorization: `Bearer ${auth?.token?.access}`,
                 },
             }).then((response) => {
-                if (response?.status === 200) {
+                if (response?.status === 204) {
                     setLoading(false);
                     setTriggerEvents((prev) => {
                         return {

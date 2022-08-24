@@ -129,11 +129,19 @@
 .team-card-box {
   position: relative;
 
+  &:hover {
+    .edit {
+      opacity: 1;
+    }
+  }
+
   .edit {
     position: absolute;
     top: -20px;
     right: 20px;
     z-index: 1;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
   }
 
   &.card {
@@ -171,12 +179,14 @@
 
           h3 {
             font-size: 20px;
+            color: $black;
 
             a {
               display: block;
               margin-top: 20px;
               margin-bottom: 10px;
               text-decoration: underline;
+              color: $primary;
             }
           }
 

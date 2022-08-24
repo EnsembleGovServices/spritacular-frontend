@@ -25,7 +25,8 @@ const TeamList = (props) => {
                             </div>
                             <div className="info">
                                 <h3>
-                                    <a href={item?.url} target="_blank" rel="noreferrer">{item?.title}</a>
+                                    {item?.url ? <a href={item?.url} target="_blank"
+                                                    rel="noreferrer">{item?.title}</a> : item?.title}
                                 </h3>
                                 <p className="card-text">{item?.role}</p>
                                 <p className="card-text">{item?.organization}</p>

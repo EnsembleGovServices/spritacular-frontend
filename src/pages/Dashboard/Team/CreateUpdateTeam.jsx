@@ -1,6 +1,6 @@
 import "../../../assets/scss/component/blog.scss"
 import axios from "../../../api/axios";
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {baseURL, routeUrls} from "../../../helpers/url";
 import {Col, Form, FormGroup, Input, Label, Row, UncontrolledAlert} from "reactstrap";
 import Loader from "../../../components/Shared/Loader";
@@ -31,10 +31,9 @@ const CreateUpdateTeam = (props) => {
     const [inputChange, setInputChange] = useState();
     const formData = new FormData();
     const navigate = useNavigate();
-    const location = useLocation();
 
     const handleDisable = () => {
-        return !(data?.thumbnail_image !== undefined && data?.title && data?.url && data?.organization && data.role && data.content && data.thumbnail_image);
+        return !(data?.thumbnail_image !== undefined && data?.title && data?.organization && data.role && data.content && data.thumbnail_image);
     }
     const handleInput = (e) => {
         setInputChange(e.target.value);
@@ -62,7 +61,7 @@ const CreateUpdateTeam = (props) => {
         formData.append("title", data?.title);
         formData.append("organization", data?.organization);
         formData.append("role", data?.role);
-        formData.append("url", data?.url);
+        formData.append("url", data?.url?.length > 0 ? data?.url : null);
         formData.append("content", data?.content);
 
         if (!update) {
@@ -250,7 +249,6 @@ const CreateUpdateTeam = (props) => {
                                         placeholder="Enter URL"
                                         autoComplete="off"
                                         value={data ? data?.url : ""}
-                                        required
                                         onChange={(e) => handleInput(e)}
                                     />
                                 </FormGroup>
