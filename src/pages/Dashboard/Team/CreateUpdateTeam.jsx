@@ -61,7 +61,7 @@ const CreateUpdateTeam = (props) => {
         formData.append("title", data?.title);
         formData.append("organization", data?.organization);
         formData.append("role", data?.role);
-        formData.append("url", data?.url?.length > 0 ? data?.url : null);
+        formData.append("url", data?.url?.length > 0 ? data?.url : "");
         formData.append("content", data?.content);
 
         if (!update) {
