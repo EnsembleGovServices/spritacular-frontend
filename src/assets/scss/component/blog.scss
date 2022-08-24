@@ -121,16 +121,70 @@
   }
 }
 
-.team-card-box {
-  .card-group {
-    .card {
-      @include transition();
+.meet-team-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
 
-      &:hover {
-        z-index: 12;
-        border-radius: 5px;
-        transform: scale(1.01);
-        @include box-shadow($box-shadow-md);
+.team-card-box {
+  position: relative;
+
+  .edit {
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    z-index: 1;
+  }
+
+  &.card {
+    margin-bottom: 30px;
+
+    .card-body {
+      display: flex;
+
+      .u-info {
+        width: 250px;
+        text-align: center;
+
+        .img {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          margin: 0 auto;
+          @include box-shadow($box-shadow-sm);
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+
+        .info {
+
+          h3 {
+            font-size: 20px;
+
+            a {
+              display: block;
+              margin-top: 20px;
+              margin-bottom: 10px;
+              text-decoration: underline;
+            }
+          }
+
+          .card-text {
+            font-size: 16px;
+            color: $light-grey;
+            font-style: italic;
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .content {
+        width: calc(100% - 250px);
+        margin-left: 30px;
       }
     }
   }

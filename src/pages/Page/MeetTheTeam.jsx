@@ -54,7 +54,7 @@ const MeetTheTeam = () => {
                         team!</p>
                     <Row className="g-4">
                         <Col md={12}>
-                            <Card className="team-card-box">
+                            <div className="meet-team-container">
                                 {
                                     team?.length > 0 ? (
                                         <TeamList teams={team}/>
@@ -62,7 +62,7 @@ const MeetTheTeam = () => {
                                         <Loader loaderClass="h-100 position-relative"/>
                                     ) : <NotFound/>
                                 }
-                            </Card>
+                            </div>
                         </Col>
                     </Row>
                 </div>
