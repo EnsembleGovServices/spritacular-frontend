@@ -9,7 +9,6 @@ const TeamList = (props) => {
     const admin = auth?.user?.is_superuser;
     return (
         teams?.map((item, index) => {
-            console.log('item', item)
             return (
                 <div className="team-card-box card" key={index}>
                     {admin &&

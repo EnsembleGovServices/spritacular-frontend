@@ -116,6 +116,15 @@ const DynamicPageEditor = ({endpoint, setPageTitle}) => {
                 content: data?.content
             }
         });
+        return () => {
+            setData((prev) => {
+                return {
+                    ...prev,
+                    title: '',
+                    content: ''
+                }
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loading]);
 
