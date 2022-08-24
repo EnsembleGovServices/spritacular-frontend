@@ -70,7 +70,6 @@ const BlogArticleDetails = () => {
                             <Col md={12}>
                                 <div className="card border-0 shadow-sm">
                                     <div className="card-body p-5">
-                                        <span className="text-light-dark">Description</span>
                                         <p className="card-text">
                                             {article?.description}
                                         </p>

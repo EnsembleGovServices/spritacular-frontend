@@ -60,15 +60,7 @@ const ChangePassword = (props) => {
 
     return (
         <Form onSubmit={handleChangePassword}>
-            {!updated &&
-                <Row>
-                    {!updated &&
-                        <Col sm="12">
-                            <h4 className="mb-4">Change Password</h4>
-                        </Col>
-                    }
-                </Row>
-            }
+            
             {error &&
                 <Row>
                     <Col sm={12}>
