@@ -79,8 +79,8 @@ export const routeUrls = {
     },
     pages: {
         meetTheTeam: 'meet-the-team',
-        becomeAnAmbasador: 'become-an-ambassador',
-        spritacularGoogleGroup: 'spritacular-google-group'
+        getInvolved: 'get-involved',
+        spritacularGoogleGroup: 'news-and-announcements'
     },
 
 }

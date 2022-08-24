@@ -227,7 +227,7 @@ const Header = (props) => {
                                     </DropdownItem>
                                     <DropdownItem className={active === 'policy' ? 'active p-0' : 'p-0'}>
                                         <Link className="px-3 py-1" to={routeUrls.policy} title="Policy">
-                                            Policy
+                                            Spritacular Community Policy
                                         </Link>
                                     </DropdownItem>
                                 </DropdownMenu>
@@ -294,17 +294,17 @@ const Header = (props) => {
                                             Meet the Team
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active === 'become-an-ambassador' ? 'active p-0' : 'p-0'}>
-                                        <Link className="px-3 py-1" to={routeUrls.pages.becomeAnAmbasador}
-                                              title="Become an Ambassador">
-                                            Become an Ambassador
+                                    <DropdownItem className={active === 'get-involved' ? 'active p-0' : 'p-0'}>
+                                        <Link className="px-3 py-1" to={routeUrls.pages.getInvolved}
+                                              title="Get Involved">
+                                            Get Involved
                                         </Link>
                                     </DropdownItem>
                                     <DropdownItem
-                                        className={active === 'spritacular-google-group' ? 'active p-0' : 'p-0'}>
+                                        className={active === 'News & Announcements' ? 'active p-0' : 'p-0'}>
                                         <Link className="px-3 py-1" to={routeUrls.pages.spritacularGoogleGroup}
-                                              title="Spritacular Google Group">
-                                            Spritacular Google Group
+                                              title="News and Announcements">
+                                            News & Announcements
                                         </Link>
                                     </DropdownItem>
                                 </DropdownMenu>

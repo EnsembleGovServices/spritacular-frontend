@@ -165,13 +165,13 @@
           width: 150px;
           height: 150px;
           border-radius: 50%;
-          margin: 0 auto;
+          margin: 0 auto 20px;
           @include box-shadow($box-shadow-sm);
 
           img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
           }
         }
 

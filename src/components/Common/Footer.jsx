@@ -131,7 +131,7 @@ const Footer = () => {
                                             </li>
                                             <li>
                                                 <Link
-                                                    to={routeUrls.pages.becomeAnAmbasador}
+                                                    to={routeUrls.pages.getInvolved}
                                                     className="d-inline-block mb-3"
                                                     title="Get Involved"
                                                 >

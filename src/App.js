@@ -137,7 +137,7 @@ const App = () => {
                                 <MeetTheTeam/>
                             </Suspense>
                         }/>
-                        <Route exact path={routeUrls.pages.becomeAnAmbasador} element={
+                        <Route exact path={routeUrls.pages.getInvolved} element={
                             <Suspense fallback={<Loader/>}>
                                 <BecomeAnAmbassador/>
                             </Suspense>
