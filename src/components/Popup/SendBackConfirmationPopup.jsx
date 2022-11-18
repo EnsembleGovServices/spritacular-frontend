@@ -9,8 +9,10 @@ const SendBackConfirmationPopup = (props) => {
     const initialState = {isSent: false, message: ""}
     const {token, open, handleClose, id, handleDetailPopup, handleSendBackEvent} = props;
     const [success, setSuccess] = useState(initialState);
+    const [loading, setLoading] = useState(false);
 
     const handleSendBack = async (id, e) => {
+        setLoading(true);
         e.preventDefault();
         await axios.put(`${baseURL.api}/observation/observation_push_back/${id}/`, null, {
             headers: {
@@ -28,6 +30,7 @@ const SendBackConfirmationPopup = (props) => {
         }).catch((error) => {
             console.log('error', error)
         }).finally(() => {
+            setLoading(false);
             console.log('finished sending back');
             setTimeout(() => {
                 handleClose(id)
@@ -64,7 +67,7 @@ const SendBackConfirmationPopup = (props) => {
                             <p className="text mb-4">Do you want to send back this observation to the user ?</p>
                             <button onClick={(e) => handleSendBack(id, e)} type="button"
                                     className="me-2 btn btn-primary text-white px-5">
-                                Yes
+                                {loading ? 'Sending back...' : 'Yes'}
                             </button>
                             <button type="button" className="px-5 btn btn-dark"
                                     onClick={() => handleClose(id)}>No
