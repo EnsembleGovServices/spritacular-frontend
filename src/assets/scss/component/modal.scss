@@ -403,7 +403,25 @@
       }
     }
   }
+}
 
+.send-confirm_modal {
+  .content {
+    padding: 30px;
+
+    .success {
+
+      .icon {
+        margin-bottom: 20px;
+        color: $success;
+        @include vcenter;
+
+        .iconify {
+          font-size: 60px;
+        }
+      }
+    }
+  }
 }
 
 //Reject Modal Css

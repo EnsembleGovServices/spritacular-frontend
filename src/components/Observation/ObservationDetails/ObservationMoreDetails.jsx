@@ -11,10 +11,11 @@ import useObservationsData from "../../../hooks/useObservationsData";
 import RejectObvservationPopup from "../../Popup/RejectObvservationPopup";
 import ObservationLikeViewCounter from "./ObservationLikeViewCounter";
 import {useLocation} from "react-router-dom";
+import SendBackConfirmationPopup from "../../Popup/SendBackConfirmationPopup";
 
 const ObservationMoreDetails = (props) => {
     const {auth} = useAuth();
-    const {data, obvCommentCount, handlePopup, approveRejectEvent, activeType} = props;
+    const {data, obvCommentCount, handlePopup, approveRejectEvent, activeType, handleSendBackEvent} = props;
     const {observationListData, setObservationListData} = useObservationsData();
     const [like, setLike] = useState(observationListData.active?.like_watch_count_data?.is_like);
     const [openRejectPopup, setOpenRejectPopup] = useState(false);
@@ -28,6 +29,8 @@ const ObservationMoreDetails = (props) => {
     const [selected, setSelected] = useState({});
     const location = useLocation();
     const isDashboard = location.pathname === "/dashboard";
+
+    const [sendBackToUser, setSendBackToUser] = useState({id: 0, popup: false})
 
     // For like observations in detail page
     const handleLike = async (id) => {
@@ -141,6 +144,18 @@ const ObservationMoreDetails = (props) => {
     const handleApproveObservation = (id) => {
         submitApproval(id).then(r => r);
     }
+
+    const handleSendBackToUser = (id) => {
+        setSendBackToUser((prev) => {
+            return {
+                ...prev,
+                id: id,
+                popup: !sendBackToUser.popup
+            }
+        })
+    }
+
+
     // Like button click event
     const handleVoteClick = (sr, id, index) => {
         setSelected({
@@ -251,7 +266,7 @@ const ObservationMoreDetails = (props) => {
                         {user &&
                             <Col sm={12}>
                                 <button
-                                    className={`btn btn-${like ? '' : 'outline-'}primary like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3`}
+                                    className={`btn btn-${like ? '' : 'outline-'}primary like-btn w-100 d-flex align-items-center justify-content-center py-2 mb-3 fw-bolder`}
                                     onClick={() => handleLike(data?.id)} disabled={like}>
                                     <Icon icon={`heroicons-${like ? 'solid' : 'outline'}:thumb-up`} width="25"
                                           height="25" className="me-2"/>
@@ -269,17 +284,30 @@ const ObservationMoreDetails = (props) => {
                         }
 
                         {superuser && isDashboard && activeType === 'unverified' &&
-                            <Col sm={12}>
+                            <Col sm={12} className="mb-4">
                                 <div
-                                    className='w-100 d-flex justify-content-between align-items-center verify-btns mb-4'>
+                                    className='w-100 d-flex justify-content-between align-items-center verify-btns'>
                                     <Button color="success" onClick={() => handleApproveObservation(data?.id)}
-                                            className="me-1 text-uppercase fw-bold px-4 w-50"><Icon
-                                        icon="ci:circle-check-outline" className='me-1'/>Approve</Button>
-                                    <Button color="primary" className=' w-50 text-uppercase fw-bold px-4'
+                                            className="me-1 text-uppercase fw-bold px-4 w-50 d-flex align-items-center justify-content-center"><Icon
+                                        icon="material-symbols:check-circle-outline-rounded" className='me-1'
+                                        width={24}/>Approve</Button>
+                                    <Button color="primary"
+                                            className=' w-50 text-uppercase fw-bold px-4 d-flex align-items-center justify-content-center'
                                             onClick={() => {
                                                 handleCloseRejectPopup()
-                                            }} outline><Icon icon="zondicons:close-outline"
+                                            }} outline><Icon icon="zondicons:close-outline" width={20}
                                                              className='me-1'/>Reject</Button>
+                                </div>
+                                <div className="verify-btns mt-3">
+                                    <Button color="primary" onClick={() => handleSendBackToUser(data?.id)}
+                                            className="text-uppercase fw-bold px-4 d-flex align-items-center justify-content-center w-100 gap-2">
+                                        <span className="d-flex align-items-center justify-content-center">
+                                            <Icon icon="ion:arrow-undo-outline" width={24}/>
+                                        </span>
+                                        <span className="d-flex align-items-center justify-content-center">
+                                            Send back to user
+                                        </span>
+                                    </Button>
                                 </div>
                             </Col>
                         }
@@ -349,6 +377,16 @@ const ObservationMoreDetails = (props) => {
                 handleDetailPopup={handlePopup}
                 approveReject={approveRejectEvent}
             />
+
+            <SendBackConfirmationPopup
+                id={sendBackToUser.id}
+                open={sendBackToUser.popup}
+                token={token}
+                handleClose={handleSendBackToUser}
+                handleSendBackEvent={handleSendBackEvent}
+                handleDetailPopup={handlePopup}
+            />
+
 
         </div>
     )

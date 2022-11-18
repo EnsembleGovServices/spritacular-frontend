@@ -50,7 +50,8 @@ const ObservationDetails = (props) => {
         handleApproveRejectEvent,
         refreshData,
         handleDeleteCard,
-        isDeleted
+        isDeleted,
+        handleSendBackEvent
     } = props;
 
     const [activeTab, setActiveImageTab] = useState(imageDetails.Details);
@@ -188,7 +189,7 @@ const ObservationDetails = (props) => {
                     </div>
 
                     {activeType === "draft" && (
-                        <div>
+                        <div className="d-flex align-items-center gap-3">
                             <Button
                                 variant="primary"
                                 onClick={() =>
@@ -198,7 +199,7 @@ const ObservationDetails = (props) => {
                                 Continue Editing
                             </Button>
                             <Button
-                                className="border-0 ms-2 icon"
+                                className="border-0 icon"
                                 variant="primary"
                                 onClick={() => handleDeleteCard({id: data?.id, type: activeType, isPopUp: true})}
                             >
@@ -377,6 +378,7 @@ const ObservationDetails = (props) => {
                                         <ObservationMoreDetails
                                             handlePopup={handleClose}
                                             approveRejectEvent={handleApproveRejectEvent}
+                                            handleSendBackEvent={handleSendBackEvent}
                                             obvCommentCount={observationComments?.comment_count}
                                             data={data}
                                             activeType={activeType}
