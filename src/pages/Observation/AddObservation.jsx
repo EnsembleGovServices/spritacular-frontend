@@ -31,6 +31,7 @@ import ObservationAfterImageUpload from "../../components/Observation/Observatio
 import EquipmentDetailsForm from "../../components/Observation/EquipmentDetailsForm";
 import Loader from "../../components/Shared/Loader";
 import useObservationsData from "../../hooks/useObservationsData";
+import SubmitConfirmationPopup from "../../components/Popup/SubmitConfirmationPopup";
 
 const AddObservation = () => {
     const {auth} = useAuth();
@@ -61,6 +62,8 @@ const AddObservation = () => {
     const [deletedImage, setDeletedImage] = useState(null);
     const [draft, setDraft] = useState(true);
     const [draftData, setDraftData] = useState();
+
+    const [shouldSubmit, setShouldSubmit] = useState(false);
 
     let disabledLocation = false;
     for (let index = 0; index < observationData?.map_data?.length; index++) {
@@ -200,6 +203,13 @@ const AddObservation = () => {
         sendData(1).then((r) => r);
     };
 
+
+    const handleSubmitConfirmation = (e) => {
+        e.preventDefault();
+        setShouldSubmit(!shouldSubmit)
+    }
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -272,7 +282,9 @@ const AddObservation = () => {
                         status: error?.response?.status,
                         message: error?.message,
                     });
-                });
+                }).finally(() => {
+                    setShouldSubmit(false);
+                })
         } else {
             await axios
                 .put(
@@ -312,7 +324,9 @@ const AddObservation = () => {
                         status: error?.response?.status,
                         message: error?.message,
                     });
-                });
+                }).finally(() => {
+                    setShouldSubmit(false);
+                })
         }
     };
 
@@ -637,7 +651,8 @@ const AddObservation = () => {
                                     Save as draft
                                 </Button>
                                 <Button
-                                    type="submit"
+                                    type="button"
+                                    onClick={(e) => handleSubmitConfirmation(e)}
                                     disabled={
                                         !(
                                             cameraDetails?.camera_type &&
@@ -832,6 +847,11 @@ const AddObservation = () => {
                         </Row>
                     </Container>
                 </section>
+
+                <SubmitConfirmationPopup open={shouldSubmit} handleClose={handleSubmitConfirmation}
+                                         handleSubmit={handleSubmit}/>
+
+
             </Form>
         </div>
     );
