@@ -12,6 +12,7 @@ const EquipmentForm = (props) => {
                         name="camera_type"
                         placeholder="Canon"
                         // required
+                        maxLength={30}
                         value={updateSetting?.camera_type}
                         onChange={(e) => handleInput1(e)}/>
                     <span className="d-block mt-1 opacity-75 ex-text"><b className="me-1">Example:</b>Canon</span>
