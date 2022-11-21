@@ -19,7 +19,7 @@ const SendBackConfirmationPopup = (props) => {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
-            console.log('response', response);
+            // console.log('response', response);
             setSuccess((prev) => {
                 return {
                     ...prev,
@@ -27,17 +27,17 @@ const SendBackConfirmationPopup = (props) => {
                     message: response.data.success
                 }
             })
-        }).catch((error) => {
-            console.log('error', error)
+        }).catch(() => {
+            // console.log('error', error)
         }).finally(() => {
             setLoading(false);
-            console.log('finished sending back');
+            // console.log('finished sending back');
             setTimeout(() => {
                 handleClose(id)
             }, 1500);
             setTimeout(() => {
                 setSuccess(initialState);
-                handleSendBackEvent();
+                handleSendBackEvent(true);
             }, 1800)
             setTimeout(() => {
                 handleDetailPopup(open);
