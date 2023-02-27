@@ -4,32 +4,33 @@ import {
   ModalBody,
   ModalHeader,
 } from "reactstrap";
-import Images from "../../static/images";
 import PropTypes from "prop-types";
 import "../../assets/scss/component/modal.scss";
 import Register from "../Auth/Register";
+import { cdn } from "../../helpers/url";
 
 const RegisterPopup = (props) => {
-  const { open, handleClose, handleLoginModal, modalClass } = props;
+  const {open, handleClose, handleLoginModal, modalClass} = props;
+
   return (
-    <Modal
-      className={`common-modal ${ modalClass ? modalClass : '' }`}
-      isOpen={open}
-      toggle={handleClose}
-      backdrop={true}
-      keyboard={true}
-      centered
-    >
-      <ModalHeader>
-        <span>Sign Up</span>
-        <Button className="close-icon" onClick={() => handleClose()}>
-          <img src={Images.Modalcloseicon} alt="close-icon" />
-        </Button>
-      </ModalHeader>
-      <ModalBody>
-        <Register  handleLogin={handleLoginModal} />
-      </ModalBody>
-    </Modal>
+      <Modal
+          className={`common-modal ${modalClass ? modalClass : ''}`}
+          isOpen={open}
+          toggle={handleClose}
+          backdrop={true}
+          keyboard={true}
+          centered
+      >
+        <ModalHeader>
+          <span>Sign Up</span>
+          <Button className="close-icon" onClick={() => handleClose()}>
+            <img src={`${cdn.url}/close-icon.svg`} alt="close-icon"/>
+          </Button>
+        </ModalHeader>
+        <ModalBody>
+          <Register handleLogin={handleLoginModal}/>
+        </ModalBody>
+      </Modal>
   );
 };
 

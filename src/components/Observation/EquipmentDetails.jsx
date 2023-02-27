@@ -1,9 +1,9 @@
-import { Row, Col, FormGroup, Input, Button } from "reactstrap"
+import {Row, Col, FormGroup, Input, Button} from "reactstrap"
 import {Tabs} from "../../helpers/observation";
 import "../../assets/scss/component/observationEquipment.scss";
 
-const EquipmentDetails = (props) =>{
-    const {toggleTab,cameraDetails } = props;
+const EquipmentDetails = (props) => {
+    const {toggleTab, cameraDetails} = props;
     return (
         <Row className="mt-4">
             <Col md={12}>
@@ -72,7 +72,8 @@ const EquipmentDetails = (props) =>{
                 <div className="border-line my-2"/>
                 <Row>
                     <Col md={6}>
-                        <h6 className="m-0">Do you use any special equipment attached to your camera (such as a filter)?</h6>
+                        <h6 className="m-0">Do you use any special equipment attached to your camera (such as a
+                            filter)?</h6>
                     </Col>
                     <Col md={6}>
                         <p className="mb-0 h-100 d-flex align-items-center">{cameraDetails?.question_field_two}</p>
@@ -82,7 +83,7 @@ const EquipmentDetails = (props) =>{
             </Col>
             <Col md={12}>
                 <FormGroup>
-                    <h6>Elevation angle of your camera in degrees</h6>
+                    <h6>Do you know the elevation angle of your camera [°]?</h6>
                     <Input
                         type="text"
                         name="name"
@@ -112,8 +113,9 @@ const EquipmentDetails = (props) =>{
                 </FormGroup>
             </Col>
             <Col md={12}>
-                <Button className="gray-outline-btn me-2"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
-                <Button type="submit" disabled={(!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture)) }>Submit</Button>
+                <Button className="gray-outline-btn me-2" onClick={() => toggleTab(Tabs.DateTimeLocation)}>Back</Button>
+                <Button type="submit"
+                        disabled={(!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture))}>Submit</Button>
             </Col>
         </Row>
     )

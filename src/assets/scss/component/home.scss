@@ -1,50 +1,74 @@
 @import "../global/config.scss";
+
 .hero-banner {
-  background-image: url(../../images/homePage.png);
-  background-size: cover;
-  background-position: center center;
-  height: 530px;
-  background-repeat: no-repeat;
-  transform: skew(0deg, 0deg);
-  margin-top: -70px;
+  //background-image: url(../../images/homePage.png);
+  //background-size: cover;
+  //background-position: center center;
+  height: 600px;
+  //background-repeat: no-repeat;
+  //transform: skew(0deg, 0deg);
+  //margin-top: -70px;
   position: relative;
-  @media (max-width: 580px) {
-    height: 420px;
+
+  .bg-img {
+    position: absolute;
+    inset: -70px 0 0 0;
+    width: 100%;
+    height: 100%;
+    background-color: #61282a;
+
+    img {
+      width: 100%;
+      height: 100%;
+
+      @include media-breakpoint-down(md) {
+        object-fit: cover;
+      }
+    }
   }
+
   &::before {
     content: "";
     width: 100%;
     height: 100%;
     position: absolute;
-    bottom: 0;
+    bottom: 70px;
     left: 0;
     right: 0;
     background-color: $white;
     clip-path: polygon(100% 80%, 0% 100%, 100% 100%);
+    z-index: 1;
   }
+
   .container {
     position: relative;
+    height: 100%;
   }
+
   .hero-banner-inner {
-    padding: 160px 0px 60px;
-    @media (max-width: 575px) {
-      padding: 80px 0px 60px;
-    }
+    position: relative;
+    height: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    @include vcenter;
+
     .banner-text {
-      max-width: 645px;
-      margin: 0 auto;
-      text-align: center;
+      position: relative;
+      top: -100px;
+
       h2 {
-        @include xl-title;
         color: $white;
         font-weight: 700;
-        margin: 0px;
+        @include xl-title;
       }
+
       p {
         @include xl-text;
         color: $white;
-        margin: 20px 0px 0px 0px;
+        margin: 20px 0 40px 0;
       }
+
       .explore-btn {
         padding: 12px 25px;
         @include xl-text;
@@ -52,45 +76,60 @@
         max-width: 161px;
         display: block;
         margin: 0 auto;
-        margin-top: 70px;
         transition: $transition;
         font-weight: 600;
         @include buttonOutlineSecodary;
-        @media (max-width: 1023px) {
-          margin-top: 40px;
-        }
-        @include media-breakpoint-down(md) {
-          margin-top: 30px;
-        }
       }
     }
   }
 }
 
 .counter-main {
-  padding-bottom: 270px;
-  @include media-breakpoint-down(xl) {
-    padding-bottom: 222px;
+  padding: 0;
+  min-height: 200px;
+  position: relative;
+
+  @include media-breakpoint-down(md) {
+    min-height: 300px;
   }
+
   @include media-breakpoint-down(sm) {
-    padding-bottom: 170px;
+    min-height: 345px;
   }
+
   .counter-inner {
     display: flex;
     align-items: center;
-    padding-top: 25px;
+    min-height: 85px;
+    position: relative;
+
+    .counter-loader {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      height: 100%;
+      width: 100%;
+
+      .react-loading-skeleton {
+        line-height: 1.4;
+      }
+    }
+
     .left-image {
       img {
         max-width: 48px;
       }
     }
+
     .right-counter {
       margin-left: 20px;
+
       h3 {
         margin: 0;
         font-weight: 900;
         @include lg-title;
       }
+
       p {
         @include lg-text;
         margin: 0px;
@@ -99,34 +138,39 @@
     }
   }
 }
+
 .how-it-works-section {
   padding: 110px 0px 140px;
   position: relative;
+
   &::before {
     content: "";
     position: absolute;
-    background-image: url(../../images/left-dot.png);
+    background-image: url(https://d1kndubu51u47k.cloudfront.net/assets/left-dot.png);
     background-repeat: no-repeat;
     width: 240px;
     height: 140px;
-    position: absolute;
-    left: 0px;
+    left: 0;
     top: 8%;
+
     @media (max-width: 1023px) {
       width: 140px;
       height: 80px;
       background-size: 100%;
     }
   }
+
   img {
     z-index: -1;
     position: relative;
   }
+
   .shadow-lg {
     img {
       z-index: 1;
     }
   }
+
   h2 {
     text-align: center;
     margin-bottom: 75px;
@@ -134,44 +178,53 @@
     @include xl-title;
     color: #181818;
   }
+
   .top-polygone {
     img {
       position: absolute;
       right: 0px;
       top: 0px;
+
       @media (max-width: 1150px) {
         width: 40%;
       }
     }
   }
+
   .bottom-polygone {
     img {
       position: absolute;
       left: 0px;
       bottom: 0px;
+
       @media (max-width: 1450px) {
         width: 40%;
         z-index: -9;
       }
     }
   }
+
   .works-gap {
     margin-bottom: 90px;
+
     @media (max-width: 1023px) {
       margin-bottom: 35px;
     }
   }
+
   .how-it-work-text-info {
     position: relative;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     h3 {
       @include lg-title;
       color: #000000;
       font-weight: 700;
-      margin: 0px;
+      margin: 2px;
+      margin-bottom: 0px;
       display: flex;
       align-items: center;
 
@@ -186,6 +239,7 @@
         color: #fff;
         text-align: center;
         margin-right: 18px;
+
         @media (max-width: 1023px) {
           height: 35px;
           width: 35px;
@@ -193,50 +247,62 @@
         }
       }
     }
+
     p {
       color: #666;
       @include xl-text;
       margin: 24px 0px 0px 0px;
     }
+
     .register-polygon {
       right: 20%;
       bottom: 5%;
       position: absolute;
+
       @include media-breakpoint-down(lg) {
         display: none;
       }
     }
+
     .observe-polygon {
       right: 0px;
       bottom: 0px;
       height: 130px;
       width: 130px;
       position: absolute;
+
       @include media-breakpoint-down(lg) {
         display: none;
       }
     }
+
     .share-polygon {
       left: -50%;
       width: 100px;
       height: 100px;
       position: absolute;
       top: -90px;
+
       @media (max-width: 1820px) {
         left: -40%;
       }
+
       @media (max-width: 1700px) {
         left: -30%;
       }
+
       @media (max-width: 1600px) {
         left: -18%;
       }
+
       @media (max-width: 1500px) {
         left: -17%;
       }
+
       @media (max-width: 1380px) {
         left: -26%;
       }
+
       @media (max-width: 1280px) {
         left: -15%;
       }
@@ -245,16 +311,19 @@
         display: none;
       }
     }
+
     .engage-polygon {
       right: 50%;
       height: 100px;
       width: 100px;
       bottom: -35px;
       position: absolute;
+
       @include media-breakpoint-down(lg) {
         display: none;
       }
     }
+
     .view-tutorial {
       margin-top: 24px;
       padding: 11px 26px;
@@ -264,6 +333,7 @@
       font-weight: 500;
       max-width: fit-content;
       border-radius: 99px;
+
       &:hover {
         background-color: $secondary;
         color: $white;
@@ -275,28 +345,16 @@
 // Map section css start
 .map_section {
   position: relative;
+  margin-top: 100px;
+  min-height: 780px;
+  padding: 100px 0;
+
   .map_inner {
-    background: url("../../images/map.png") no-repeat center;
-    background-size: 63%;
-    height: 690px;
-    @media (max-width: 1600px) {
-      background-size: 80%;
-    }
-    @include media-breakpoint-down(xl) {
-      height: 560px;
-    }
-    @include media-breakpoint-down(lg) {
-      height: 400px;
-      background-size: 60%;
-    }
-    @include media-breakpoint-down(md) {
-      height: auto;
-      padding: 0 0;
-    }
+    position: absolute;
+    inset: 0;
+    @include vcenter;
   }
-  img {
-    width: 100%;
-  }
+
   &::before {
     content: "";
     display: block;
@@ -304,62 +362,83 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    top: -9.5%;
-    -webkit-clip-path: polygon(0 0, 100% 9%, 100% 10%, 0 10%);
+    top: -9%;
     clip-path: polygon(0 0, 100% 9%, 100% 10%, 0 10%);
     z-index: 10;
   }
+
+  .container {
+    .swiper {
+      .swiper-wrapper {
+        .swiper-slide {
+          img {
+            max-height: 260px !important;
+          }
+        }
+      }
+    }
+
+    .loader-wrap-img {
+      max-height: 217px !important;
+      //Extra css to fit image in homepage card section.
+      // img{
+      //   height: 180px !important;
+      // }
+    }
+  }
+
   &::after {
-        content: "";
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        right: 0;
-        background-color: #fff;
-        -webkit-clip-path: polygon(100% 90%, 0% 100%, 100% 100%);
-        clip-path: polygon(100% 90%, 0% 100%, 100% 100%);
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    clip-path: polygon(100% 90%, 0% 100%, 100% 100%);
   }
 }
+
 .obervation-card_wrapper {
   position: relative;
-  top: -210px;
+  top: -270px;
   left: 0;
   right: 0;
   z-index: 11;
-  @include media-breakpoint-down(xl) {
-    top: -150px;
-  }
-  @include media-breakpoint-down(md) {
-    top: -90px;
-  }
+
   .observation_card {
     .card-img {
       height: 180px;
       object-fit: cover;
       object-position: center;
+
       @media (max-width: 1024px) {
         height: 130px;
       }
+
       @include media-breakpoint-down(lg) {
         height: 120px;
       }
+
       @include media-breakpoint-down(md) {
         height: 160px;
       }
+
       @media (max-width: 474px) {
         height: 100px;
       }
     }
   }
 }
+
 // Map section css end
 
 .get-started-section {
   padding: 110px 0px 150px;
   position: relative;
   overflow: hidden;
+
   .top-polygone {
     img {
       position: absolute;
@@ -367,17 +446,20 @@
       bottom: -29px;
       width: 14%;
       transform: rotate(90deg);
-      @media(max-width:767px){
+
+      @media(max-width: 767px) {
         display: none;
       }
     }
   }
+
   h3 {
     @include slg-title;
     margin-bottom: 18px;
     font-weight: 700;
     color: $black;
   }
+
   .get-start {
     padding: 15px 45px;
     box-shadow: $box-shadow-button;
@@ -385,6 +467,7 @@
     @include buttonSecodary;
     @include xl-text;
   }
+
   .top-text-polygon {
     img {
       position: absolute;
@@ -394,6 +477,7 @@
       z-index: -1;
     }
   }
+
   .bottom-text-polygon {
     img {
       position: absolute;

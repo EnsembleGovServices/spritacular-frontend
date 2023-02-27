@@ -57,7 +57,6 @@ const RejectObservationPopUp = (props) => {
                     })
                 })
                 .catch(error => {
-                    console.log(error);
                     setError({
                         notAllowed: error?.response?.data?.detail
                     })

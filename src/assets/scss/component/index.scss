@@ -1,26 +1,29 @@
 // common banner css
-.common-banner{
-    background-color: $banner-bg;
-    width: 100%;
+.common-banner {
+  background-color: $banner-bg;
+  width: 100%;
+  height: 280px;
+  position: relative;
+  opacity: 0.64;
+  @media(max-width: 767px) {
     height: 280px;
-    position: relative;
-    opacity: 0.64;
-    @media(max-width:767px){
-        height: 280px;
+  }
+
+  .banner-inner {
+    padding: 100px 0px 60px;
+    @media(max-width: 767px) {
+      padding: 100px 0px 50px;
+
     }
-    .banner-inner{
-        padding: 100px 0px 60px;
-        @media(max-width:767px){
-            padding: 100px 0px 50px; 
-            
-        }
-        h2{
-            font-weight: bold;
-            @include xl-title;
-            color: #181818;
-        }
+
+    h2 {
+      font-weight: bold;
+      @include xl-title;
+      color: #181818;
     }
-    &:before{
+  }
+
+  &:before {
     content: "";
     width: 100%;
     height: 100%;
@@ -31,175 +34,203 @@
     background-color: #fff;
     -webkit-clip-path: polygon(100% 80%, 0% 100%, 100% 100%);
     clip-path: polygon(100% 65%, 0% 100%, 100% 100%);
-    }
-    
+  }
+
+  &.about-common-banner {
+    background: linear-gradient(128.5deg, #c01e37 0%, #f052c1 154.21%);
+    opacity: 1;
+  }
 }
+
+
 // comman banner css end
 
 // comman breadcrumb css start
-.breadcrumb-main{
-    .breadcrumb{
-        .breadcrumb-item{
-            a{
-                color: $grey;
-                font-weight: 700;
-                @include md-text
-            }
-            &.active{
-                color: $grey;
-                font-weight: 400;
-                @include md-text;
-                line-height: 24px;
-            }
-        }
+.breadcrumb-main {
+  .breadcrumb {
+    .breadcrumb-item {
+      a {
+        color: $grey;
+        font-weight: 700;
+        @include md-text
+      }
+
+      &.active {
+        color: $grey;
+        font-weight: 400;
+        @include md-text;
+        line-height: 24px;
+      }
     }
+  }
 }
+
 // comman breadcrumb css end
 // Dropdown Css Start
-.dropdown-menu{
-    &.show{
-        background: #FFFFFF;
-        border: 1px solid $light-grey1;
-        box-sizing: border-box;
-        box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.32);
-        border-radius: $border-radius;
-    }
+.dropdown-menu {
+  &.show {
+    background: #FFFFFF;
+    border: 1px solid $light-grey1;
+    box-sizing: border-box;
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.32);
+    border-radius: $border-radius;
+  }
 }
+
 // Dropdown Css End
 
 // Custom Switch Css Start 
 .custom-switch {
-    display: flex;
-    align-items: center;
-    .switchbox {
-        background: rgba(0, 0, 0, 0.4);
-        border: 0;
-        border-radius: 20px;
-        cursor: pointer;
-        display: inline-block;
-        height: 20px;
-        overflow: hidden;
-        position: relative;
-        width: 32px;
-        margin: 0 10px 0 0;
-        span{
-            @include lg-text;
-        }
-        &:after {
-            background-color: #fff;
-            border-radius: 20px;
-            content: ' ';
-            display: block;
-            height: 14px;
-            width: 14px;
-            position: absolute;
-            right: 44%;
-            transition: all .1s linear;
-            top: 3px;
-        }
+  display: flex;
+  align-items: center;
+
+  .switchbox {
+    background: rgba(0, 0, 0, 0.4);
+    border: 0;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    overflow: hidden;
+    position: relative;
+    width: 32px;
+    margin: 0 10px 0 0;
+
+    span {
+      @include lg-text;
     }
-    input[type="checkbox"]:checked {
-        & + .switchbox {
-            background-color:$primary;
-            &:after {
-                right: 8%;
-            }
-        }
+
+    &:after {
+      background-color: #fff;
+      border-radius: 20px;
+      content: ' ';
+      display: block;
+      height: 14px;
+      width: 14px;
+      position: absolute;
+      right: 44%;
+      transition: all .1s linear;
+      top: 3px;
     }
-    .hidden{
-        position: absolute;
-        left: 0;
-        opacity: 0;
-    } 
-    span{
-        @include lg-text;
-        color: #000;
-        width: calc(100% - 32px);
+  }
+
+  input[type="checkbox"]:checked {
+    & + .switchbox {
+      background-color: $primary;
+
+      &:after {
+        right: 8%;
+      }
     }
+  }
+
+  .hidden {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+  }
+
+  span {
+    @include lg-text;
+    color: #000;
+    width: calc(100% - 32px);
+  }
 }
-// Custom Switch Css End 
+
+// Custom Switch Css End
 
 
 // Custom Checkbox Css Start
-.form-check{
-    .form-check-input{
-        background-color: $white;
-        border: 1px solid #C7C7C7;
-        box-sizing: border-box;
-        border-radius: 2px;
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
-        position: relative;
-        top: -2px;
-        cursor: pointer;
-        &:checked{
-            background-color: $secondary;
-            border-color: $secondary;
-            background-image: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="30" height="30" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"%3E%3Cpath fill="white" d="m9.525 17.657l-4.95-4.95l1.414-1.414l3.537 3.534l-.001.001l8.485-8.485l1.414 1.414l-8.485 8.486l-1.413 1.413l-.001.001Z"%2F%3E%3C%2Fsvg%3E');
-            background-size: 24px;
-        }
-        &:focus{
-            box-shadow: none;
-        }
+.form-check {
+  .form-check-input {
+    background-color: $white;
+    border: 1px solid #C7C7C7;
+    box-sizing: border-box;
+    border-radius: 2px;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    position: relative;
+    top: -2px;
+    cursor: pointer;
+
+    &:checked {
+      background-color: $secondary;
+      border-color: $secondary;
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="30" height="30" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"%3E%3Cpath fill="white" d="m9.525 17.657l-4.95-4.95l1.414-1.414l3.537 3.534l-.001.001l8.485-8.485l1.414 1.414l-8.485 8.486l-1.413 1.413l-.001.001Z"%2F%3E%3C%2Fsvg%3E');
+      background-size: 24px;
     }
-    .form-check-label{
+
+    &:focus {
+      box-shadow: none;
     }
+  }
+
+  .form-check-label {
+  }
 }
-// Custom Checkbox Css End 
+
+// Custom Checkbox Css End
 
 // Auto complete search box Css Start 
 .autocomplete-dropdown-container {
-    position: absolute;
-    left: 0;
-    right: 0;
-    max-height: 150px;
-    overflow-y: auto;
-    background: #fff;
-    border-radius: $border-radius;
-    z-index: 99;
-    box-shadow: 0px 12px 24px rgb(0 0 0 / 32%);
-    .suggestion-item{
-        margin: 10px 0;
-        padding: 2px 15px;
-    }
+  position: absolute;
+  left: 0;
+  right: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: $border-radius;
+  z-index: 99;
+  box-shadow: 0px 12px 24px rgb(0 0 0 / 32%);
+
+  .suggestion-item {
+    margin: 10px 0;
+    padding: 2px 15px;
+  }
 }
-// Auto complete search box Css End 
+
+// Auto complete search box Css End
 
 // Popover Design Start
-.popover-header{
-    background: $white;
-    font-style: normal;
-    font-weight: 600;
-    @include lg-text;
-    color: $black;
-    @include vspace;
-    border: 0;
-    padding: 15px 20px 6px;
-    border-radius: 8px;
+.popover-header {
+  background: $white;
+  font-style: normal;
+  font-weight: 600;
+  @include lg-text;
+  color: $black;
+  @include vspace;
+  border: 0;
+  padding: 15px 20px 6px;
+  border-radius: 8px;
 }
-.tippy-content{
-    border-radius: 8px;
+
+.tippy-content {
+  border-radius: 8px;
 }
-.popover-body{
-    padding: 6px 20px 20px;
-    p{
-        color: $gray3;
-        @include md-text;
-        margin-bottom: 8px;
-        display: -webkit-box;
-        -webkit-line-clamp: var(--line-clamb);
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    .btn-secondary{
-        font-weight: 500;
-        @include md-text;
-    }
+
+.popover-body {
+  padding: 6px 20px 20px;
+
+  p {
+    color: $gray3;
+    @include md-text;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--line-clamb);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .btn-secondary {
+    font-weight: 500;
+    @include md-text;
+  }
 }
-.tippy-box{
-    box-shadow: 0px 24px 48px rgb(0 0 0 / 6%);
-    border-radius: 8px;
+
+.tippy-box {
+  box-shadow: 0px 24px 48px rgb(0 0 0 / 6%);
+  border-radius: 8px;
 }
 
 // Popover Design End
@@ -207,88 +238,151 @@
 
 // Data not found Css Start
 .data-not-found {
-    max-width: 250px;
+  max-width: 850px;
+  width: 100%;
+  margin: 80px auto 0;
+  text-align: center;
+
+  img {
     width: 100%;
-    margin: 100px auto 0;
-    text-align: center;
-    img{
-        width: 100%;
-    }
+  }
 }
+
 // Data not found Css End
 
 // Dropdown with search box css Start
-.dropdown-with-search{
-    .btn{
-        background-color: $input-bg;
-        padding: 12px;
-        border-radius: 6px;
-        @include lg-text;
-        span{
-            width: calc(100% - 18px);
+.dropdown-with-search {
+  .btn {
+    background-color: $input-bg;
+    padding: 12px;
+    border-radius: 6px;
+    @include lg-text;
+
+    span {
+      width: calc(100% - 18px);
+    }
+
+    svg {
+      font-size: 16px;
+      line-height: 26px;
+
+      &.iconify--fe {
+        transform: rotate(0deg);
+        transition: $transition;
+      }
+    }
+  }
+
+  &.show {
+    .btn-secondary {
+      svg {
+        &.iconify--fe {
+          transform: rotate(-180deg);
+          transition: $transition;
         }
-        svg{
-            font-size: 16px;
-            line-height: 26px;
-            &.iconify--fe{
-                transform: rotate(0deg);
-                transition: $transition;
-            }
-        }
+      }
     }
-    &.show{
-        .btn-secondary{
-            svg{
-                &.iconify--fe{
-                    transform: rotate(-180deg);
-                    transition: $transition;
-                }
-            }
-        }
-    }
-    .dropdown-item{
-        font-weight: 400;
-        padding: 10px 0;
-        word-break: break-word;
-        width: 100%;
-        white-space: normal;
-        @include md-text;
-    }
-    .dropdown-menu{
-        max-height: 300px;
-        overflow-y: auto;
-        width: 100%;
-        @include customScrollBar;
-    }
+  }
+
+  .dropdown-item {
+    font-weight: 400;
+    padding: 10px 0;
+    word-break: break-word;
+    width: 100%;
+    white-space: normal;
+    @include md-text;
+  }
+
+  .dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
+    width: 100%;
+    @include customScrollBar;
+  }
 }
+
 // Dropdown with search box css End
 
 // Masonary View Css Start 
 .photo-list {
-    list-style-type: none;
-    .photo-item {
-        width: 19.95%;
-        padding: 0 12px;
-        @include media-breakpoint-down(xxl){
-            width: 25%;
-        }
-        @include media-breakpoint-down(lg){
-            width: 33%;
-        }
-        @include media-breakpoint-down(md){
-            width: 50%;
-        }
-        @include media-breakpoint-down(sm){
-            width: 100%;
-        }
+  list-style-type: none;
+
+  .photo-item {
+    width: 19.95%;
+    padding: 0 12px;
+    @include media-breakpoint-down(xxl) {
+      width: 25%;
     }
+    @include media-breakpoint-down(lg) {
+      width: 33%;
+    }
+    @include media-breakpoint-down(md) {
+      width: 50%;
+    }
+    @include media-breakpoint-down(sm) {
+      width: 100%;
+    }
+  }
 }
+
 // Masonary View Css End
 
-.table-responsive{
-    @include customScrollBar;
-    &::-webkit-scrollbar{
-        height: 7px;
-        width: 7px;
+.table-responsive {
+  @include customScrollBar;
+
+  &::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+  }
+}
+
+
+//CK Editor Design
+.ck-editor {
+  &.ck-rounded-corners {
+    .ck.ck-editor__top {
+      .ck-sticky-panel {
+        .ck-toolbar {
+          border-radius: 6px 6px 0 0;
+        }
+      }
     }
+  }
+
+  .ck-focused {
+    outline: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .ck.ck-editor__top {
+    .ck-sticky-panel {
+      .ck-toolbar {
+        border: 0;
+        background: #e9e9e9;
+      }
+    }
+  }
+
+  .ck-editor__main {
+    border-radius: 6px;
+
+    .ck-content {
+      border: 0;
+    }
+  }
+}
+
+.ck {
+  &.ck-editor__main > .ck-editor__editable {
+    &.ck-editor__editable_inline {
+      border-radius: 6px !important;
+      background: #f4f5f6;
+    }
+
+    &.ck-read-only {
+      border-radius: 0 !important;
+      background: $white;
+    }
+  }
 }

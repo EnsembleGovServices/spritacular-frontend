@@ -1,40 +1,58 @@
-import Images from "../static/images";
-
 export const Tabs = {
-    ObservationImages : "ObservationImages",
-    DateTimeLocation : "DateTimeLocation",
-    EquipmentDetails : "EquipmentDetails",
+    ObservationImages: "ObservationImages",
+    DateTimeLocation: "DateTimeLocation",
+    EquipmentDetails: "EquipmentDetails",
 }
+
 export const MultiImageTabs = {
     MultipleImages: "MultipleImages",
     ImageSequence: "ImageSequence"
 }
 
 export const imageDetails = {
-    Details : "Details",
-    Equipment : "Equipment",
-    Comments : "Comments",
+    Details: "Details",
+    Equipment: "Equipment",
+    Comments: "Comments",
+}
+
+export const obvType = {
+    default: "verified",
+    verified: "verified",
+    unverified: "unverified",
+    denied: "denied",
+    draft: "draft"
+}
+
+export const masonryConfig = (selector, width, gutter, fit = false, transition) => {
+    return {
+        columnWidth: width,
+        gutter: gutter,
+        itemSelector: selector,
+        fitWidth: false,
+        transitionDuration: transition,
+    }
 }
 
 export const uploadImageDefaultState = (random, baseImage, item, userLocation) => {
     return {
-        id : random,
+        id: random,
         sameAsFirstMap: false,
         sameAsFirstDate: false,
-        image : baseImage,
+        image: baseImage,
         lastModified: item?.lastModified,
         name: item?.name,
         item: item,
-        latitude: userLocation ? userLocation.latitude : 28.5204,
-        longitude: userLocation ? userLocation.longitude : 25.8567,
-        location: 'Pune, Maharashtra, India',
+        latitude: userLocation ? userLocation.latitude : 18.5204303,
+        longitude: userLocation ? userLocation.longitude : 73.8567437,
+        location: 'Pune,Maharashtra,India',
         country_code: 'IN',
         obs_date: null,
         obs_time: null,
-        timezone: 'Africa/Abidjan',
+        timezone: 'Asia/Kolkata',
         azimuth: 360,
-        time_accuracy:'',
-        is_precise_azimuth:0,
+        time_accuracy: '',
+        is_precise_azimuth: 0,
+        place_uid: null,
         category_map: {
             category: [],
             is_other: false,
@@ -43,53 +61,19 @@ export const uploadImageDefaultState = (random, baseImage, item, userLocation) =
     }
 }
 
-export const CategoryList = [
-    {
-        id: 1,
-        name: 'Sprite',
-        image: Images.SpriteOb
-    },
-    {
-        id: 2,
-        name: 'Blue jet',
-        image: Images.Bluejet
-    },
-    {
-        id: 3,
-        name: 'Elve',
-        image: Images.Elev
-    },
-    {
-        id: 4,
-        name: 'Halo',
-        image: Images.Halo
-    },
-    {
-        id: 5,
-        name: 'Gigantic Jet',
-        image: Images.GiganticJet
-    },
-    {
-        id: 6,
-        name: 'Secondary Jet',
-        image: Images.SecondaryJet
-    },
-
-]
-
 export const directionValue = [
-    {name: 'N', angle: 360, default : true},
-    {name: 'NE', angle: 45, default : false},
-    {name: 'E', angle: 90, default : false},
-    {name: 'SE', angle: 135, default : false},
-    {name: 'S', angle: 180, default : false},
-    {name: 'SW', angle: 235, default : false},
-    {name: 'W', angle: 270, default : false},
-    {name: 'NW', angle: 315, default : false},
+    {name: 'N', angle: 360, default: true},
+    {name: 'NE', angle: 45, default: false},
+    {name: 'E', angle: 90, default: false},
+    {name: 'SE', angle: 135, default: false},
+    {name: 'S', angle: 180, default: false},
+    {name: 'SW', angle: 235, default: false},
+    {name: 'W', angle: 270, default: false},
+    {name: 'NW', angle: 315, default: false},
 ]
 
 export const getdirectionDegree = (key) => {
-    
+
     let degree;
     switch (key) {
         case 'N':
@@ -116,7 +100,7 @@ export const getdirectionDegree = (key) => {
         case 'NW':
             degree = 315;
             break;
-    
+
         default:
             degree = key;
             break;
@@ -125,7 +109,7 @@ export const getdirectionDegree = (key) => {
 }
 
 export const getdirectionAngle = (key) => {
-    
+
     let angle;
     switch (key) {
         case 360:
@@ -152,7 +136,7 @@ export const getdirectionAngle = (key) => {
         case 315:
             angle = 'NW';
             break;
-    
+
         default:
             angle = 'N';
             break;

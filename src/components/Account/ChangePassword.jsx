@@ -1,22 +1,22 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Alert, Button, Col, Form, FormGroup, Input, Row} from "reactstrap";
 import axios from "axios";
-import {baseURL} from "../../helpers/url";
+import {baseURL, cdn} from "../../helpers/url";
 import PropTypes from "prop-types";
 import ChangePasswordPopup from "../Popup/ChangePasswordPopup";
 
 const ChangePassword = (props) => {
-    const { user } = props;
+    const {tab, user} = props;
     const [password, setPassword] = useState(null);
     const [updated, setUpdated] = useState(false);
     const [error, setError] = useState(null);
 
-
+    // To update changed password to db.
     const handleChangePassword = async (e) => {
         e.preventDefault();
         setError('')
         setUpdated('')
-        await axios.put(baseURL.api+'/users/change-password/'+user?.user?.id+'/', password, {
+        await axios.put(baseURL.api + '/users/change-password/', password, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user?.token?.access}`
@@ -30,16 +30,18 @@ const ChangePassword = (props) => {
         })
     }
 
+    // Store's changed password in state.
     const handleInput = (e) => {
         e.preventDefault();
         let name = e.target.name,
             value = e.target.value;
         setPassword({
             ...password,
-            [name]:value,
+            [name]: value,
         })
     }
 
+    // To enable/disable button as per data entered.
     const passwordMatchCheck = () => {
         if (password?.confirm_password !== password?.new_password) {
             return true;
@@ -49,9 +51,17 @@ const ChangePassword = (props) => {
         return false;
     }
 
-    return(
-        <>
-            <Form onSubmit={handleChangePassword}>
+    // Clear state on mount
+    useEffect(() => {
+        setUpdated(null);
+        setError(null)
+    }, [tab]);
+
+
+    return (
+        <Form onSubmit={handleChangePassword}>
+            
+            {error &&
                 <Row>
                     <Col sm={12}>
                         {error?.detail &&
@@ -63,20 +73,31 @@ const ChangePassword = (props) => {
                             <Alert color="danger">
                                 <ul className="small mb-0 ps-2">
                                     {error?.details.map((item, i) => {
-                                        return(
+                                        return (
                                             <li key={i}>{item}</li>
                                         )
                                     })}
                                 </ul>
                             </Alert>
                         }
-
-                        {updated &&
-                            <Alert color={"success"}>
-                                {updated?.message}
-                            </Alert>
-                        }
                     </Col>
+                </Row>
+            }
+            {updated &&
+                <Row>
+                    <Col md={12}>
+                        <div className="text-center d-flex align-items-center flex-column justify-content-center"
+                             style={{height: '260px'}}>
+                            <img className="img-fluid"
+                                 src={`${cdn.url}/success.svg`}
+                                 alt="success"/>
+                            <h5 className="mb-0 mt-3">{updated?.message}</h5>
+                        </div>
+                    </Col>
+                </Row>
+            }
+            {!updated &&
+                <Row>
                     <Col md={12}>
                         <FormGroup>
                             <Input
@@ -84,7 +105,7 @@ const ChangePassword = (props) => {
                                 name="old_password"
                                 placeholder="Old Password"
                                 required
-                                onChange={(e)=>handleInput(e)}
+                                onChange={(e) => handleInput(e)}
                             />
                         </FormGroup>
                     </Col>
@@ -95,7 +116,7 @@ const ChangePassword = (props) => {
                                 name="new_password"
                                 placeholder="New Password"
                                 required
-                                onChange={(e)=>handleInput(e)}
+                                onChange={(e) => handleInput(e)}
                             />
                         </FormGroup>
                     </Col>
@@ -106,12 +127,12 @@ const ChangePassword = (props) => {
                                 name="confirm_password"
                                 placeholder="Confirm New Password"
                                 required
-                                onChange={(e)=>handleInput(e)}
+                                onChange={(e) => handleInput(e)}
                             />
                             {error?.new_password &&
                                 <span className="text-danger small mt-2 d-block">
-                                  {error?.new_password?.map((item, i)=> {
-                                      return(
+                                  {error?.new_password?.map((item, i) => {
+                                      return (
                                           <div key={i}>
                                               <span>{item}</span><br/>
                                           </div>
@@ -122,13 +143,13 @@ const ChangePassword = (props) => {
                         </FormGroup>
                     </Col>
                     <Col md={12}>
-                        <Button type="submit" className="modal-btn mb-3" disabled={passwordMatchCheck()}>
+                        <Button type="submit" className="modal-btn mt-3" disabled={passwordMatchCheck()}>
                             Update Password
                         </Button>
                     </Col>
                 </Row>
-            </Form>
-        </>
+            }
+        </Form>
     )
 }
 

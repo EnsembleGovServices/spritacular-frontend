@@ -1,47 +1,50 @@
-import {Button, Form, FormGroup, FormFeedback, Input} from "reactstrap";
+import { Button, Form, FormGroup, FormFeedback, Input } from "reactstrap";
 import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { baseURL } from "../../helpers/url";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ResetPassword = (props) => {
-    const {token} = props;
-
+    const { token } = props;
     const navigate = useNavigate();
-
     const [user, setUser] = useState({
         token: "",
         password: ""
     });
     const [error, setError] = useState('');
 
+    // To store changed password in state
     const handleInput = (e) => {
         e.preventDefault();
         let name = e.target.name,
             value = e.target.value;
         setUser({
             ...user,
-            [name]:value
+            [name]: value
         })
     }
 
-    
+    // To store token in state
     useEffect(() => {
+        const keyName = "token" // To remove warnings.
         setUser({
             ...user,
-            ['token']:token
+            [keyName]: token
         })
-    },[token]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [token]);
+
+    // To confirm reset password to db and login user
     const handleLogin = async (e) => {
         e.preventDefault();
-        await axios.post(baseURL.api+'/users/password_reset/confirm/', user)
+        await axios.post(baseURL.api + '/users/password_reset/confirm/', user)
             .then((response) => {
                 setError('');
                 navigate('/');
             })
             .catch((error) => {
                 if (!error?.response) {
-                    console.log('server error occurred')
+                    process.env.NODE_ENV === "development" && console.log('ResetPassword: Server error occurred')
                 }
                 else if (error?.response) {
                     setError({
@@ -51,11 +54,12 @@ const ResetPassword = (props) => {
                     });
                 }
                 else {
-                    console.log(error?.response?.statusText)
+                    process.env.NODE_ENV === "development" && console.log('ResetPassword Error:', error?.response?.statusText)
                 }
             })
     }
-    return(
+    
+    return (
         <>
             {error?.data &&
                 <p className="text-danger small mb-4 fw-bolder">{error?.data?.detail}</p>
@@ -67,7 +71,7 @@ const ResetPassword = (props) => {
                         name="password"
                         placeholder=" New Password"
                         required
-                        onChange={(e)=>handleInput(e)}
+                        onChange={(e) => handleInput(e)}
                         invalid={!!error?.data?.password}
                     />
                     <FormFeedback>{error?.data?.password}</FormFeedback>

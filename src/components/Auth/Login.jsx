@@ -3,17 +3,13 @@ import axios from "../../api/axios";
 import {baseURL} from "../../helpers/url";
 import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth";
-import {useLocation, useNavigate} from "react-router-dom";
-import { routeUrls } from './../../helpers/url';
-import useObservationsData from "../../hooks/useObservationsData";
+import {useNavigate} from "react-router-dom";
+import {routeUrls} from '../../helpers/url';
 
 const Login = (props) => {
     const {cp} = props;
-    const { setAuth, persist, setPersist } = useAuth();
+    const {setAuth, persist, setPersist} = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || routeUrls.home;
-    const { categoryList, setCategoryList } = useObservationsData();
 
     const [user, setUser] = useState({
         email: "",
@@ -27,7 +23,7 @@ const Login = (props) => {
             value = e.target.value;
         setUser({
             ...user,
-            [name]:value
+            [name]: value
         })
     }
 
@@ -35,76 +31,77 @@ const Login = (props) => {
         e.preventDefault();
         await axios.post(baseURL.token, user)
             .then((response) => {
-                let superuser = response?.data?.is_superuser,
-                    user = response?.data?.is_user;
-                setPersist(prev => !prev);
-                setError('');
-                setAuth({
-                    token: {
-                        access: response?.data?.access,
-                        refresh: response?.data?.refresh,
-                    },
-                    user: response?.data
-                })
-                fetchCategory(response?.data?.access).then(r => r);
-                if (superuser) {
-                    navigate(routeUrls.dashboard, { replace: true });
-                } else if (user)  {
-                    navigate(routeUrls.home, { replace: true });
-                }
+                if (response.status === 200) {
+                    const superuser = response?.data?.is_superuser
+                    setPersist(prev => !prev);
 
-                // toast.success('Logged in successfully', toastConfig());
-                localStorage.setItem('refresh', response?.data?.refresh);
-                localStorage.removeItem('camera');
+                    setError('');
+                    setAuth({
+                        token: {
+                            access: response?.data?.access,
+                            refresh: response?.data?.refresh,
+                        },
+                        user: response?.data
+                    });
+
+                    localStorage.setItem('refresh', response?.data?.refresh);
+                    localStorage.removeItem('camera');
+
+                    fetchCategory(response?.data?.access).then(r => r);
+
+                    if (superuser) {
+                        navigate(routeUrls.dashboard, {replace: true});
+                    } else {
+                        navigate(routeUrls.home, {replace: true});
+                    }
+                }
             })
             .catch((error) => {
                 if (!error?.response) {
-                    console.log(error?.message)
                     setError(prev => {
                         return {
                             ...prev,
                             server: error?.message
                         }
                     });
-                }
-                else if (error?.response) {
+                } else if (error?.response) {
                     setError({
                         'status': error.response.status,
                         'message': error.response.statusText,
                         'data': error.response.data
                     });
+                } else if (error?.response?.status === 401) {
+                    process.env.NODE_ENV === "development" && console.log('Unauthorized Login User');
+                } else {
+                    process.env.NODE_ENV === "development" && console.log('Login Error: ',error?.response?.statusText);
                 }
-                else if (error?.response?.status === 401) {
-                    console.log('unauthorized')
-                }
-                else {
-                    console.log(error?.response?.statusText)
-                }
-            })
+            });
     }
 
     const fetchCategory = async (token) => {
-        await axios.get(baseURL.api+'/observation/get_category_list/', {
+        await axios.get(baseURL.api + '/observation/get_category_list/', {
             headers: {
                 'Content-Type': 'application/json',
             }
         })
-        .then((response)=> {
-            setAuth(prev => {
-                return {
-                    ...prev,
-                    categoryList: response?.data
-                }
-            });
-        })
-        .catch((error)=> {console.log(error)})
+            .then((response) => {
+                setAuth(prev => {
+                    return {
+                        ...prev,
+                        categoryList: response?.data
+                    }
+                });
+            })
+            .catch((error) => {
+                process.env.NODE_ENV === "development" && console.log("Login Fetch Category:",error)
+            })
     }
 
     useEffect(() => {
         localStorage.setItem("persist", persist);
     }, [persist])
 
-    return(
+    return (
         <>
             {error?.data &&
                 <p className="text-danger small mb-4 fw-bolder">{error?.data?.detail}</p>
@@ -120,7 +117,7 @@ const Login = (props) => {
                         placeholder="Email address"
                         autoComplete="off"
                         required
-                        onChange={(e)=>handleInput(e)}
+                        onChange={(e) => handleInput(e)}
                     />
                 </FormGroup>
                 <FormGroup>
@@ -129,11 +126,11 @@ const Login = (props) => {
                         name="password"
                         placeholder="Password"
                         required
-                        onChange={(e)=>handleInput(e)}
+                        onChange={(e) => handleInput(e)}
                     />
                 </FormGroup>
                 <FormText className="forgot-password">
-                    <Button type="button" onClick={()=> cp()}>Forgot Password?</Button>
+                    <Button type="button" onClick={() => cp()}>Forgot Password?</Button>
                 </FormText>
                 <FormGroup>
                     <Button type="submit" className="modal-btn" disabled={!(user?.email && user?.password)}>

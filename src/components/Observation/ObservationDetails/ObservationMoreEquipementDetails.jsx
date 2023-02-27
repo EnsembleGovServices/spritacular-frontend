@@ -1,10 +1,8 @@
 import { Col, Row } from "reactstrap";
 import ObservationLikeViewCounter from "./ObservationLikeViewCounter";
 import useObservationsData from "../../../hooks/useObservationsData";
-import useAuth from "../../../hooks/useAuth";
 
 const ObservationMoreEquipementDetails = (props) => {
-    const {auth} = useAuth();
     const {data, obvCommentCount} = props;
     const { observationListData } = useObservationsData();
     return (

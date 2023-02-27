@@ -1,9 +1,8 @@
 export const registerServiceWorker = () => {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-            .register('./firebase-messaging-sw.js')
+        navigator?.serviceWorker
+            .register('/firebase-messaging-sw.js')
             .then(function (registration) {
-                // console.log('[SW]: SCOPE: ', registration.scope);
                 return registration.scope;
             })
             .catch(function (err) {
@@ -11,6 +10,6 @@ export const registerServiceWorker = () => {
             });
     }
     else {
-        console.log('Service workers are not supported.');
+        process.env.NODE_ENV === "development" && console.log('Service workers are not supported.');
     }
 };

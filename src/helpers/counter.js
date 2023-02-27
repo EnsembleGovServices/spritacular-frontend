@@ -1,7 +1,7 @@
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 const Counter = (props) => {
-    const {start=0, end=0, duration=1, speed=1, suffix=''} = props;
+    const { start = 0, end = 0, duration = 1, speed = 1, suffix = '' } = props;
 
     useEffect(() => {
         setTimeout(function () {
@@ -20,7 +20,6 @@ const Counter = (props) => {
                 } else if (i.innerHTML !== "") {
                     data.format = i.innerHTML
                 }
-                // console.log(data.format)
                 if (data.start == null) {
                     throw new Error('start is required')
                 }
@@ -42,9 +41,10 @@ const Counter = (props) => {
                 }, data.delay)
             })
         }, 500)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    return(
-        <span className="counter" data-counter data-start={start} data-end={end} data-delay={duration} data-speed={speed} data-format={`{}${suffix}`}/>
+    return (
+        <span className="counter" data-counter data-start={start} data-end={end} data-delay={duration} data-speed={speed} data-format={`{}${suffix}`} />
     )
 }
 export default Counter;

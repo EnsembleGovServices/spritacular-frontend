@@ -1,29 +1,33 @@
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import {useLocation, Navigate, Outlet, useNavigate} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { routeUrls } from '../helpers/url';
+import {baseURL, routeUrls} from '../helpers/url';
+import PageMeta from "../meta/PageMeta";
 
-const RequireAuth = (props ) => {
-    const { persist } = useAuth();
+const RequireAuth = (props) => {
+    const {persist, auth} = useAuth();
     const {setAuthValue, allowedRoles} = props;
     const location = useLocation();
     const navigate = useNavigate();
     const route = location.pathname.replace('/', '').toLowerCase();
 
-    useEffect(()=>{
+    useEffect(() => {
         setAuthValue(false);
     }, [setAuthValue])
 
-    useEffect(()=> {
+    useEffect(() => {
         if (route === 'dashboard' && !(allowedRoles.superuser)) {
-           navigate('/unauthorized', {replace: true});
-           return true;
+            navigate('/unauthorized', {replace: true});
+            return true;
         }
     }, [allowedRoles, navigate, route])
 
 
     return (
-        persist ? <Outlet /> : <Navigate to={routeUrls.home} state={{ from: location }} replace />
+        persist && auth ? <>
+            <PageMeta title={baseURL.appName} description="Authorized users only!" noIndex={true}/>
+            <Outlet/>
+        </> : <Navigate to={routeUrls.login} state={{from: location}} replace/>
     );
 }
 

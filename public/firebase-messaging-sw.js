@@ -22,8 +22,8 @@ firebase.initializeApp(firebaseConfig);
 // eslint-disable-next-line no-undef
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function(payload) {
-    console.log('Received background message ', payload);
+messaging.onBackgroundMessage(function (payload) {
+    // console.log('Received background message ', payload);
 
     const notificationTitle = payload.notification.title;
     const notificationOptions = {

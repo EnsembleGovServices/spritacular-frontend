@@ -1,33 +1,39 @@
-import { Outlet } from "react-router-dom";
-import {useState, useEffect, createContext} from "react";
+import {Outlet} from "react-router-dom";
+import {useState, useEffect, createContext, lazy, Suspense} from "react";
 import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
-import Header from "../components/Common/Header";
-import Footer from "../components/Common/Footer";
-import Loader from "../components/Shared/Loader";
+import PageMeta from "../meta/PageMeta";
+import {baseURL} from "../helpers/url";
 
-// const Header = lazy(()=> import('../components/Common/Header'))
-// const Footer = lazy(()=> import('../components/Common/Footer'))
-// const Loader = lazy(()=> import('../components/Shared/Loader'))
+// To render a dynamic import as a regular component for showing loader till it loads.
+const Header = lazy(() => import('../components/Common/Header'))
+const Footer = lazy(() => import('../components/Common/Footer'))
 
 export const observationViewContext = createContext({});
 
 const PersistLogin = (props) => {
+    const {persistValue} = props;
     const [categoryList, setCategoryList] = useState([]);
     const refresh = useRefreshToken();
-    const { auth, persist } = useAuth();
-    const { persistValue } = props;
+    const {auth, persist, setPersist} = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [observationListData, setObservationListData] = useState({
         active: {},
-        activeType: ''
+        activeType: '',
+        isVerified: false
     });
     const [observationComments, setObservationComments] = useState({
         comment_count: 0
     });
     const [observationCSVId, setObservationCSVId] = useState({});
     const [recentObservation, setRecentObservation] = useState({});
-    
+    const [articles, setArticles] = useState([]);
+    const [tutorials, setTutorials] = useState([]);
+    const [atDetails, setATDetails] = useState({});
+    const [team, setTeam] = useState([]);
+    const [teamDetails, setTeamDetails] = useState({});
+    const [triggerEvents, setTriggerEvents] = useState({});
+
     useEffect(() => {
         let isMounted = true;
         const verifyRefreshToken = async () => {
@@ -35,26 +41,27 @@ const PersistLogin = (props) => {
                 if (persist && localStorage.getItem('refresh')) {
                     await refresh();
                 }
-            }
-            catch (err) {
-                console.error(err);
-            }
-            finally {
+            } catch (err) {
+                if (err?.response?.status === 401) {
+                    localStorage.setItem('persist', false);
+                    localStorage.removeItem('refresh');
+                    setPersist(false);
+                }
+            } finally {
                 isMounted && setIsLoading(false);
             }
         }
         !auth?.token?.access ? verifyRefreshToken() : setIsLoading(false);
         return () => isMounted = false;
-    }, [auth, auth?.token?.access, persist, refresh])
-
-    useEffect(() => {
-        // console.log(`isLoading: ${isLoading}`)
-        // console.log(`aT: ${JSON.stringify(auth?.token?.access)}`)
-        // console.log(`rT: ${JSON.stringify(auth?.token?.refresh)}`)
-    }, [auth?.token?.access, auth?.token?.refresh, isLoading])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [auth?.token?.access]);
 
     return (
         <>
+            <PageMeta
+                title={baseURL.appName}
+                description=""
+            />
             <observationViewContext.Provider value={
                 {
                     recentObservation,
@@ -66,28 +73,47 @@ const PersistLogin = (props) => {
                     categoryList,
                     setCategoryList,
                     observationCSVId,
-                    setObservationCSVId
+                    setObservationCSVId,
+                    articles,
+                    setArticles,
+                    tutorials,
+                    setTutorials,
+                    atDetails,
+                    setATDetails,
+                    team,
+                    setTeam,
+                    teamDetails,
+                    setTeamDetails,
+                    triggerEvents,
+                    setTriggerEvents
                 }
             }>
-            {!persist ? (
-                <>
-                    <Header />
-                    <div className="main-content">
-                        <Outlet />
-                    </div>
-                    <Footer />
-                </>
-            ) : isLoading ? <Loader fixContent={true} /> : (
-                <>
-                        <Header />
-                        <div className="main-content">
-                            <Outlet />
+                {!persist ? (
+                    <>
+                        <Suspense fallback={<div></div>}>
+                            <Header/>
+                        </Suspense>
+                        <div className="main-content" id="main-content">
+                            <Outlet/>
                         </div>
-                    {persistValue && <Footer />}
-
-                </>
-            )}
-                </observationViewContext.Provider>
+                        <Suspense fallback={<div></div>}>
+                            <Footer/>
+                        </Suspense>
+                    </>
+                ) : isLoading ? <div/> : (
+                    <>
+                        <Suspense fallback={<div></div>}>
+                            <Header/>
+                        </Suspense>
+                        <div className="main-content" id="main-content">
+                            <Outlet/>
+                        </div>
+                        <Suspense fallback={<div></div>}>
+                            {persistValue && <Footer/>}
+                        </Suspense>
+                    </>
+                )}
+            </observationViewContext.Provider>
         </>
     )
 }

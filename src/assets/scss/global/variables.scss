@@ -5,9 +5,10 @@ $link-decoration: none;
 // Colors
 $dark: #0f0f0f;
 $grey: #181818;
-$primary:#C11E37;
-$secondary : #990000;
-$input-bg : #F4F5F6;
+$primary: #C11E37;
+$secondary: #990000;
+$violet: #ac5780;
+$input-bg: #F4F5F6;
 $modal-btn: #E2E4E9;
 $banner-bg: #E8EAEE;
 $light-grey: #666666;
@@ -40,6 +41,7 @@ $modal-scale-transform: scale(1.02);
 $modal-content-box-shadow-sm-up: $box-shadow-popup;
 $modal-backdrop-bg: transparentize($dark, 0.1);
 $modal-content-border-width: 0;
+$modal-content-border-radius: 0;
 
 $border-radius: 6px;
 
@@ -55,3 +57,9 @@ $transition: all 0.3s ease;
 
 // filter size
 $filter-size: 300px;
+
+
+// Obv modal
+$observationModalHeaderHeight: 55px;
+
+$footerTopImage: "https://d1kndubu51u47k.cloudfront.net/assets/footer-line.png"

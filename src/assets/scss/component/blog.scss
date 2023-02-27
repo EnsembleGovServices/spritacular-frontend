@@ -1,122 +1,247 @@
 @import "../global/config.scss";
 
-.blog_page{
-    .common-banner{
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        z-index: -1;
-    }
+.blog_page {
+  .common-banner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: -1;
+  }
 }
-.blog-main{
-    padding: 50px 0px 80px;
-    @include media-breakpoint-down(md){
-        padding: 30px 0px 80px;
-    }
-    h2{
-        @include lg-title;
-        margin-bottom: 30px;
-    }
-    .main-blog{
-        position: relative;
-        height: 550px;
-        @include  media-breakpoint-down(lg){
-            height: 400px;
-        }
-        @include  media-breakpoint-down(lg){
-            height: 320px;
-        }
-        img{
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
-            border-radius: 5px;
-        }
-        .blog-text{
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 0 15px 30px 30px;
-            @include media-breakpoint-down(lg){
-                padding: 0 15px 20px 20px;
-            }
-            P{
-                color: $white;
-                font-size: 11px;
-                margin-bottom: 0px;
-            }
-            h3{
-                @include md-title;
-                color: $white;
-                margin: 15px 0px;
-                font-weight: 700;
-            }
 
-        }
-    }
-    .blog-small{
-        position: relative;
-        height: 263px;
-        @include  media-breakpoint-down(lg){
-            height: 188px;
-        }
-        img{
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
-            border-radius: 5px;
-        }
-        .blog-text{
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 0 15px 30px 30px;
-            @include media-breakpoint-down(lg){
-                padding: 0 15px 20px 20px;
-            }
-            P{
-                color: $white;
-                font-size: 11px;
-                margin-bottom: 0px;
-            }
-            h3{
-                @include sm-title;
-                color: $white;
-                margin: 15px 0px;
-                font-weight: 700;
-            }
+.blog-main {
+  padding: 50px 0px 80px;
 
-        }
+  @include media-breakpoint-down(md) {
+    padding: 30px 0px 80px;
+  }
+
+  .card {
+    .card-title {
+      a {
+        color: $dark;
+      }
     }
-    .recommended-blog{
-        margin: 110px 0px 110px;
-        @include media-breakpoint-down(lg){
-            margin: 50px 0px 70px;
+  }
+
+  .ck-editor {
+    .editor-btn {
+      a {
+        //btn
+        background-color: transparent;
+        border: 1px solid transparent;
+        color: #212529;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: center;
+        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        vertical-align: middle;
+        //btn-secondary
+        @include buttonSecodary;
+        // btn-lg
+        border-radius: 99px;
+        padding: 10px 40px;
+        font-size: 16px;
+
+        &.disabled {
+          @include disabled;
         }
-        h3{
-            @include slg-title;
-            margin-bottom: 18px;
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            .view-all{
-                color: $secondary;
-                @include md-text;
-            }
-        }
-        .blog-small{
-            height: 380px;
-            @include  media-breakpoint-down(lg){
-                height: 250px;
-            }
-            h3{
-                @include sm-title;
-            }
-            
-        }
+      }
     }
+  }
+}
+
+.main-blog {
+  position: relative;
+
+  .card {
+    img {
+      border-radius: 5px;
+      max-height: 150px !important;
+    }
+
+    .content {
+      P {
+        color: $dark;
+        font-size: 14px;
+        margin-bottom: 0px;
+      }
+
+      h5 {
+        color: $dark;
+        margin: 10px 0 10px 0;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 1.4;
+      }
+
+    }
+
+    .blog-text {
+      padding: 0 15px 30px 30px;
+
+      @include media-breakpoint-down(lg) {
+        padding: 0 15px 20px 20px;
+      }
+
+      P {
+        color: $white;
+        font-size: 14px;
+        margin-bottom: 0px;
+      }
+
+      h3 {
+        color: $white;
+        margin: 15px 0px;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 1.4;
+      }
+
+    }
+  }
+}
+
+.blog_page {
+  .listing-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .text-light-dark {
+    color: #c1c1c1;
+    font-size: 13px;
+  }
+}
+
+.meet-team-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.team-card-box {
+  position: relative;
+
+  &:hover {
+    .edit {
+      opacity: 1;
+    }
+  }
+
+  .edit {
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    z-index: 1;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &.card {
+    margin-bottom: 30px;
+
+    .card-body {
+      display: flex;
+      @include media-breakpoint-down(md) {
+        display: block;
+      }
+
+      .u-info {
+        width: 250px;
+        text-align: center;
+        @include media-breakpoint-down(md) {
+          width: 100%;
+          margin-bottom: 20px;
+        }
+
+        .img {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          margin: 0 auto 20px;
+          @include box-shadow($box-shadow-sm);
+
+          img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+          }
+        }
+
+        .info {
+
+          h3 {
+            font-size: 20px;
+            color: $black;
+
+            a {
+              display: block;
+              margin-top: 20px;
+              margin-bottom: 10px;
+              text-decoration: underline;
+              color: $primary;
+            }
+          }
+
+          .card-text {
+            font-size: 16px;
+            color: $light-grey;
+            font-style: italic;
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .content {
+        width: calc(100% - 250px);
+        margin-left: 30px;
+        @include media-breakpoint-down(md) {
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}
+
+.dash-inner-card-team-list {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto;
+  overflow: hidden;
+
+  .shadow-sm {
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.create-update-team {
+  .img_wrapper {
+    background: $white;
+    border: 2px dashed $gray-200;
+  }
+
+  .shadow-sm {
+    box-shadow: none !important;
+  }
+
+  .img-preview_wrapper {
+    img {
+      object-fit: contain !important;
+    }
+  }
 }

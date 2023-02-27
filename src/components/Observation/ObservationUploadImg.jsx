@@ -1,49 +1,47 @@
-import { FormGroup, Input,Label } from "reactstrap";
 import useObservations from "../../hooks/useObservations";
-import { Icon } from '@iconify/react';
-import {useEffect, useState} from "react";
-import {uploadImageDefaultState} from "../../helpers/observation";
+import { useEffect, useState } from "react";
+import { uploadImageDefaultState } from "../../helpers/observation";
 import PropTypes from "prop-types";
 import useAuth from "../../hooks/useAuth";
-import { cameraSettingFields } from "../../helpers/url";
+import UploadImageUI from "../Shared/UploadImageUI";
 
-const ObservationUploadImg = (props) =>{
-    const {multiple, maxLimit, imageFormat, detectImage, mode}=props;
-    const {setObservationImages, observationImages,setCameraDetails} = useObservations();
+const ObservationUploadImg = (props) => {
+    const { multiple, maxLimit, imageFormat, detectImage, mode, small } = props;
+    const { setObservationImages, observationImages } = useObservations();
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
     const { auth } = useAuth();
+    // eslint-disable-next-line
     const [userLocation, setUserLocation] = useState({
         latitude: (auth?.user?.location_metadata?.lat) ? auth?.user?.location_metadata?.lat : 18.5204303,
         longitude: (auth?.user?.location_metadata?.lng) ? auth?.user?.location_metadata?.lng : 73.8567437
     });
+
+    // To validate and store image
     const handleUploadImage = (e) => {
         setError(null);
         const fileList = e.target.files;
-        Array.from(fileList).forEach((item,id) => {
+        const imgType = ["image/png", "image/jpeg", "image/jpg"]
+        Array.from(fileList).forEach((item, id) => {
             const reader = new FileReader();
             reader.onloadend = () => {
+                const isValidImage = imgType.includes(item.type);
                 const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
                 const baseImage = `data:image/png;base64,${base64String}`;
                 const random = (Math.random() + 1).toString(36).substring(7) + (Math.random() + 1).toString(36).substring(20);
-                const fileSize = (item.size / (1024*1024)).toFixed(2);
+                const fileSize = (item.size / (1024 * 1024)).toFixed(2);
                 const repeatCheck = images?.map((image, index) => {
                     return image?.lastModified === item?.lastModified && image?.name === item?.name;
                 });
                 const duplicate = repeatCheck.includes(true);
-                if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate) {
-
-                    if (mode) {
-                       return setImages([uploadImageDefaultState(random, baseImage, item, userLocation)])
-                    } else {
+                if (images?.length <= (mode ? 1 : 2) && fileSize < 5 && !duplicate && isValidImage) {
+                    mode ?
+                        setImages([uploadImageDefaultState(random, baseImage, item, userLocation)]) :
                         setImages(prevState => [
                             ...prevState,
                             uploadImageDefaultState(random, baseImage, item, userLocation)
                         ])
-                    }
                 }
-
-
 
                 if (mode) {
                     setError((prev) => {
@@ -57,7 +55,7 @@ const ObservationUploadImg = (props) =>{
                     setError((prev) => {
                         return {
                             ...prev,
-                            count: 'You have reached the limit, delete some image, maximum upload allowed is 3',
+                            count: 'You have reached the upload limit',
                         }
                     })
                 }
@@ -78,81 +76,55 @@ const ObservationUploadImg = (props) =>{
                     })
                 }
 
+                if (!isValidImage) {
+                    setError((prev) => {
+                        return {
+                            ...prev,
+                            invalidImage: 'Allowed formats are "JPEG or JPG, PNG" only.',
+                        }
+                    })
+                }
+
             };
             reader.readAsDataURL(item)
         })
     };
 
-
-
+    // Stores image location
     useEffect(() => {
         let images = (observationImages?.data) ? [...observationImages?.data] : [];
         observationImages?.data?.map((item, index) => {
-            return item.latitude = userLocation?.latitude,
-                item.longitude = userLocation?.longitude
+            const latitude = item.latitude ? item.latitude : userLocation?.latitude;
+            const longitude = item.longitude ? item.longitude : userLocation?.longitude;
+            return (item.latitude = latitude, item.longitude = longitude)
         })
         setImages(images)
-   },[detectImage, mode, userLocation])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [detectImage, mode, userLocation])
 
-
-    useEffect(()=> {
+    // Update context with observations images data
+    useEffect(() => {
         if (images.length > 0) {
             setObservationImages({
                 data: images,
                 observation_count: images.length,
                 selected_image_id: images?.[0]?.id,
-                selected_image_index:0
+                selected_image_index: 0
             });
-            setCameraDetails(cameraSettingFields)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [images, setObservationImages, userLocation])
 
     return (
         <>
-            <div className="upload-observation-main">
-                <div className="upload-ob-inner">
-                    <FormGroup>
-                        <Label htmlFor="UploadFile">
-                            <div className="upload-info">
-                                <Icon icon="bx:image-alt" color="#737e96" width="42" height="42" />
-                                <p>Drag and drop images or click to upload</p>
-                                { maxLimit === true && 
-                                    <span className="text-black">Max. Image Size: 5MB</span> 
-                                }
-                                {imageFormat === true &&
-                                    <ul>
-                                        <li>
-                                            Common Image File Formats (JPEG or
-                                            JPG, PNG)
-                                        </li>
-                                    </ul>
-                                }
-
-                            </div>
-                        </Label>
-                        <Input
-                            type="file"
-                            name="file"
-                            id="UploadFile"
-                            accept="image/jpg, image/jpeg, image/png"
-                            multiple={multiple}
-                            onChange={(e)=> handleUploadImage(e)}
-                        />
-                    </FormGroup>
-                    {/* <div className="progress-bar_wrapper" style={{ "--uploadProgress": 65 + '%' }}>
-                        <p className="image-progree_bar"><b>65%</b> uploading..</p>
-                    </div> */}
-                </div>
-                {error?.count &&
-                    <span className="text-danger d-block small my-1 d-inline-block">{error?.count} </span>
-                }
-                {error?.size &&
-                    <span className="text-danger d-block small my-1 d-inline-block">{error?.size}</span>
-                }
-                {error?.duplicate &&
-                    <span className="text-info d-block small my-1 d-inline-block">{error?.duplicate}</span>
-                }
-            </div>
+            <UploadImageUI
+                maxLimit={maxLimit}
+                imageFormat={imageFormat}
+                multiple={multiple}
+                handleUploadImage={handleUploadImage}
+                error={error}
+                small={small}
+            />
         </>
     )
 }
@@ -160,6 +132,5 @@ const ObservationUploadImg = (props) =>{
 ObservationUploadImg.propTypes = {
     userLocation: PropTypes.object,
 };
-
 
 export default ObservationUploadImg;

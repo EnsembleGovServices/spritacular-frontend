@@ -3,27 +3,34 @@
 .about-content {
   .about-content-inner {
     padding: 100px 0px 80px;
+
     @include media-breakpoint-down(md) {
       padding: 120px 0px 80px;
     }
+
     h3 {
       @include slg-title;
       font-weight: 900;
       margin-bottom: 18px;
       color: $black;
     }
+
     p {
       @include lg-text;
       color: $black;
     }
+
     .about-col {
       margin-top: 80px;
+
       @include media-breakpoint-down(md) {
         margin-top: 30px;
       }
+
       P {
         max-width: 286px;
         width: 100%;
+
         @include media-breakpoint-down(md) {
           max-width: 100%;
         }
@@ -31,57 +38,91 @@
     }
   }
 }
-.about_page{
-  .common-banner{
+
+.about_page {
+
+  p {
+    text-align: justify;
+  }
+
+  .common-banner {
     position: absolute;
     left: 0;
     top: 0;
     right: 0;
     z-index: -1;
   }
-  .banner-inner{
+
+  .banner-inner {
     padding: 100px 0px 90px;
-    @media(max-width:767px){
+
+    @media(max-width: 767px) {
       padding: 100px 0px 50px;
 
     }
   }
-  h2{
+
+  h2 {
     font-weight: bold;
     @include xl-title;
     color: #181818;
   }
-  .about-card {
-            background: linear-gradient(128.5deg, #c01e37 0%, #f052c1 154.21%);
-            border-radius: $border-radius;
-            padding: 24px;
-            max-width: 406px;
-            z-index: 9;
-            position: absolute;
-            right: 0px;
-            bottom: -50px;
-            @media(max-width:767px){
-                position: relative;
-            }
-            h3 {
-              font-size: 22px;
-              color: $white;
-              margin-bottom: 20px;
-            }
-            p {
-              @include lg-text;
-              color: $white;
-            }
-            .contact-btn {
-              @include lg-text;
-              margin-top: 35px;
-              padding: 12px 35px;
-              font-weight: 500;
-              box-shadow: none;
-              @include buttonOutlineSecodary;
-              border-color: $white;
-              box-shadow: 0px 6px 10px rgba(153, 0, 0, 0.16);
-            }
-          }
-}
 
+  .c-h-card {
+    .card {
+      border: 0;
+      display: flex;
+      height: 100%;
+      margin-bottom: 30px;
+
+      .card-header {
+        background-color: transparent;
+        padding: 0;
+        margin-bottom: 20px;
+      }
+
+      .card-body {
+        height: 100%;
+        display: flex;
+        padding: 0;
+      }
+    }
+  }
+
+  .about-card {
+    background: linear-gradient(128.5deg, #c01e37 0%, #f052c1 154.21%);
+    border-radius: $border-radius;
+    padding: 24px;
+    max-width: 406px;
+    z-index: 9;
+    position: absolute;
+    right: 0px;
+    bottom: -50px;
+
+    @media(max-width: 767px) {
+      position: relative;
+    }
+
+    h3 {
+      font-size: 22px;
+      color: $white;
+      margin-bottom: 20px;
+    }
+
+    p {
+      @include lg-text;
+      color: $white;
+    }
+
+    .contact-btn {
+      @include lg-text;
+      margin-top: 35px;
+      padding: 12px 35px;
+      font-weight: 500;
+      box-shadow: none;
+      @include buttonOutlineSecodary;
+      border-color: $white;
+      box-shadow: 0px 6px 10px rgba(153, 0, 0, 0.16);
+    }
+  }
+}
