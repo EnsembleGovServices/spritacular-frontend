@@ -6,7 +6,7 @@ import {baseURL} from "../../helpers/url";
 import {firebaseConfig} from "../../helpers/firebase";
 
 const firebaseApp = initializeApp(firebaseConfig);
-const messaging = getMessaging(firebaseApp);
+const messaging = navigator && navigator?.serviceWorker !== undefined && getMessaging(firebaseApp);
 
 export const onMessageListener = () =>
     new Promise((resolve) => {
@@ -17,7 +17,7 @@ export const onMessageListener = () =>
 
 
 export const getTokens = async (userId, token, auth) => {
-    if (navigator.serviceWorker !== undefined) {
+    if (navigator?.serviceWorker !== undefined) {
         return getToken(messaging, {vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY}).then((currentToken) => {
             if (currentToken && auth) {
                 axios.post(baseURL.api + '/devices/', {
