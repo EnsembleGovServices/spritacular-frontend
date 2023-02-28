@@ -110,7 +110,8 @@ const MyObservations = () => {
         if (reset === true || !nextPageUrl) {
             url = `${baseURL.api}/observation/observation_collection/?type=${value}&page=1`;
         } else {
-            url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
+            // url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
+            url = nextPageUrl
         }
         axios.get(`${url}`, {
             headers: {

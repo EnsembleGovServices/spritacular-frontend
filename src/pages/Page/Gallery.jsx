@@ -71,9 +71,9 @@ const Gallery = () => {
             // console.log('url without next page')
         } else {
             // console.log('url with next page')
-            url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
+            // url = process.env.NODE_ENV === "development" ? nextPageUrl : nextPageUrl.replace('http', 'https');
+            url = nextPageUrl
         }
-
         const headers = {};
         headers["Content-Type"] = "application/json";
         if (auth?.user) {
