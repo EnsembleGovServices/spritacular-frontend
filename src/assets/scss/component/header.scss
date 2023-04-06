@@ -1,5 +1,18 @@
 @import "../global/config.scss";
 
+.notice-alert {
+  border-radius: 0;
+  padding: 5px 20px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  text-align: center;
+  border: 0;
+  font-size: 14px;
+}
+
 .custom-header {
   padding: 10px 0px;
   position: fixed;
@@ -7,7 +20,9 @@
   width: 100%;
   z-index: 999;
   @include transition();
-
+  &.notice {
+    margin-top: 31px;
+  }
   .on-scroll-logo {
     display: none;
   }

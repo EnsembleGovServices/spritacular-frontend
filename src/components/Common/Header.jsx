@@ -1,5 +1,6 @@
 import "../../assets/scss/component/header.scss";
 import {
+    Alert,
     Button,
     Collapse,
     Dropdown,
@@ -145,10 +146,11 @@ const Header = (props) => {
 
     return (
         <>
+            <Alert className="m-0 notice-alert" color="danger">{process.env.REACT_APP_NOTICE_MESSAGE}</Alert>
             <Navbar
                 container
                 expand="md"
-                className={homeUrl ? "custom-header" : "custom-header bg-not-home"}
+                className={homeUrl ? "custom-header notice" : "custom-header notice bg-not-home"}
                 light
             >
                 <Link to={routeUrls.home} className="navbar-brand p-0 position-relative" title="Spritacular"
