@@ -24,7 +24,7 @@ const BlogList = () => {
 
 
     const getArticles = async () => {
-        await axios.get(`${baseURL.get_blog}1`, {
+        await axios.get(`${baseURL.get_blog}`, {
             headers: {
                 "Content-Type": "application/json",
             },
