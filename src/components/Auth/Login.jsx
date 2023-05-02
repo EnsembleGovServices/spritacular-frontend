@@ -1,10 +1,9 @@
 import {Button, Form, FormGroup, FormText, Input} from "reactstrap";
 import axios from "../../api/axios";
-import {baseURL} from "../../helpers/url";
+import {baseURL, routeUrls} from "../../helpers/url";
 import {useEffect, useState} from "react";
 import useAuth from "../../hooks/useAuth";
 import {useNavigate} from "react-router-dom";
-import {routeUrls} from '../../helpers/url';
 
 const Login = (props) => {
     const {cp} = props;
@@ -33,6 +32,7 @@ const Login = (props) => {
             .then((response) => {
                 if (response.status === 200) {
                     const superuser = response?.data?.is_superuser
+                    localStorage.setItem('persist', 'true');
                     setPersist(prev => !prev);
 
                     setError('');

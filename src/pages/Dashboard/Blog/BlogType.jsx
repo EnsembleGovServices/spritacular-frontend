@@ -36,7 +36,8 @@ const BlogType = (props) => {
                 type="select"
                 title={update ? "Disabled in update mode" : "Select Type"}
                 value={blogType === "1" || type === "blog" ? 1 : 2}
-                disabled={!!update}
+                // disabled={!!update}
+                disabled
                 onChange={(e) => handleInput(e)}
             >
                 {types?.map((item, index) => {

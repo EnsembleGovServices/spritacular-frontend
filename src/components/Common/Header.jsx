@@ -146,11 +146,10 @@ const Header = (props) => {
 
     return (
         <>
-            <Alert className="m-0 notice-alert" color="danger">{process.env.REACT_APP_NOTICE_MESSAGE}</Alert>
             <Navbar
                 container
                 expand="md"
-                className={homeUrl ? "custom-header notice" : "custom-header notice bg-not-home"}
+                className={homeUrl ? "custom-header" : "custom-header bg-not-home"}
                 light
             >
                 <Link to={routeUrls.home} className="navbar-brand p-0 position-relative" title="Spritacular"
@@ -265,11 +264,11 @@ const Header = (props) => {
                                             Blog
                                         </Link>
                                     </DropdownItem>
-                                    <DropdownItem className={active === 'tutorials' ? 'active p-0' : 'p-0'}>
-                                        <Link className="px-3 py-1" to={routeUrls.tutorials} title="Tutorials">
-                                            Tutorials
-                                        </Link>
-                                    </DropdownItem>
+                                    {/*<DropdownItem className={active === 'tutorials' ? 'active p-0' : 'p-0'}>*/}
+                                    {/*    <Link className="px-3 py-1" to={routeUrls.tutorials} title="Tutorials">*/}
+                                    {/*        Tutorials*/}
+                                    {/*    </Link>*/}
+                                    {/*</DropdownItem>*/}
                                     {auth && auth?.user?.id &&
                                         <DropdownItem className={active === 'quiz' ? 'active p-0' : 'p-0'}>
                                             <Link className="px-3 py-1" to={routeUrls.quiz.home} title="Quiz">
@@ -390,13 +389,13 @@ const Header = (props) => {
                                                 Manage Articles
                                             </Link>
                                         </DropdownItem>
-                                        <DropdownItem className="p-0">
-                                            <Link
-                                                className="px-3 py-1"
-                                                to={`${routeUrls.dashboard}/${routeUrls.dashTutorial.list}`}>
-                                                Manage Tutorials
-                                            </Link>
-                                        </DropdownItem>
+                                        {/*<DropdownItem className="p-0">*/}
+                                        {/*    <Link*/}
+                                        {/*        className="px-3 py-1"*/}
+                                        {/*        to={`${routeUrls.dashboard}/${routeUrls.dashTutorial.list}`}>*/}
+                                        {/*        Manage Tutorials*/}
+                                        {/*    </Link>*/}
+                                        {/*</DropdownItem>*/}
                                         <DropdownItem className="p-0">
                                             <Link
                                                 className="px-3 py-1"

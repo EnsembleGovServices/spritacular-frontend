@@ -13,7 +13,7 @@ import Error from "./components/Error";
 import ResetPasswordPopup from "./components/Popup/ResetPasswordPopup";
 import InformativePage from './layouts/InformativePage';
 import Loader from "./components/Shared/Loader";
-import TutorialList from "./pages/BlogTutorial/TutorialList";
+// import TutorialList from "./pages/BlogTutorial/TutorialList";
 import HomePage from "./pages/Page/HomePage";
 import GlobalMeta from "./meta/GlobalMeta";
 
@@ -30,7 +30,7 @@ const SpritacularGoogleGroup = lazy(() => import('./pages/Page/SpritacularGoogle
 //Blog Pages
 const BlogList = lazy(() => import('./pages/BlogTutorial/BlogList'));
 const BlogArticleDetails = lazy(() => import('./pages/BlogTutorial/Details/BlogArticleDetails'));
-const TutorialDetails = lazy(() => import('./pages/BlogTutorial/Details/TutorialDetails'));
+// const TutorialDetails = lazy(() => import('./pages/BlogTutorial/Details/TutorialDetails'));
 
 // Quiz Page
 const QuizHome = lazy(() => import('./pages/Quiz/QuizHome'));
@@ -49,10 +49,10 @@ const BlogView = lazy(() => import('./pages/Dashboard/Blog/BlogView'));
 const BlogUpdate = lazy(() => import('./pages/Dashboard/Blog/BlogUpdate'));
 
 //Tutorial Page dashboard
-const TutorialPage = lazy(() => import('./pages/Dashboard/Tutorial/TutorialPage'));
-const TutorialView = lazy(() => import('./pages/Dashboard/Tutorial/TutorialView'));
-const TutorialCreate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialCreate'));
-const TutorialUpdate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialUpdate'));
+// const TutorialPage = lazy(() => import('./pages/Dashboard/Tutorial/TutorialPage'));
+// const TutorialView = lazy(() => import('./pages/Dashboard/Tutorial/TutorialView'));
+// const TutorialCreate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialCreate'));
+// const TutorialUpdate = lazy(() => import('./pages/Dashboard/Tutorial/TutorialUpdate'));
 
 //Team Page dashboard
 
@@ -119,11 +119,11 @@ const App = () => {
                                    element={<Suspense fallback={''}><BlogArticleDetails/></Suspense>}/>
                         </Route>
 
-                        <Route path={routeUrls.tutorials}>
-                            <Route index element={<Suspense fallback={''}><TutorialList/></Suspense>}/>
-                            <Route path={routeUrls.tutorialsDetail}
-                                   element={<Suspense fallback={''}><TutorialDetails/></Suspense>}/>
-                        </Route>
+                        {/*<Route path={routeUrls.tutorials}>*/}
+                        {/*    <Route index element={<Suspense fallback={''}><TutorialList/></Suspense>}/>*/}
+                        {/*    <Route path={routeUrls.tutorialsDetail}*/}
+                        {/*           element={<Suspense fallback={''}><TutorialDetails/></Suspense>}/>*/}
+                        {/*</Route>*/}
 
                         <Route exact path={routeUrls.policy} element={<Suspense fallback=""><Policy/></Suspense>}/>
                         <Route exact path={routeUrls.login} element={
@@ -197,15 +197,15 @@ const App = () => {
                                 </Route>
 
                                 {/*Dashboard Tutorial*/}
-                                <Route path={routeUrls.dashTutorial.list}>
-                                    <Route index element={<TutorialPage/>}/>
-                                    <Route path={routeUrls.dashTutorial.create}
-                                           element={<Suspense fallback={<Loader/>}><TutorialCreate/></Suspense>}/>
-                                    <Route path={routeUrls.dashTutorial.view}
-                                           element={<Suspense fallback={<Loader/>}><TutorialView/></Suspense>}/>
-                                    <Route path={routeUrls.dashTutorial.edit}
-                                           element={<Suspense fallback={<Loader/>}><TutorialUpdate/></Suspense>}/>
-                                </Route>
+                                {/*<Route path={routeUrls.dashTutorial.list}>*/}
+                                {/*    <Route index element={<TutorialPage/>}/>*/}
+                                {/*    <Route path={routeUrls.dashTutorial.create}*/}
+                                {/*           element={<Suspense fallback={<Loader/>}><TutorialCreate/></Suspense>}/>*/}
+                                {/*    <Route path={routeUrls.dashTutorial.view}*/}
+                                {/*           element={<Suspense fallback={<Loader/>}><TutorialView/></Suspense>}/>*/}
+                                {/*    <Route path={routeUrls.dashTutorial.edit}*/}
+                                {/*           element={<Suspense fallback={<Loader/>}><TutorialUpdate/></Suspense>}/>*/}
+                                {/*</Route>*/}
 
                                 {/*Dashboard Team*/}
                                 <Route path={routeUrls.dashTeams.list}>
