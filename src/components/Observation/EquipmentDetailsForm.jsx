@@ -6,7 +6,7 @@ import EquipmentForm from '../Shared/EquipmentForm';
 import useObservations from "../../hooks/useObservations";
 
 const EquipmentDetailsForm = (props) =>{
-    const {toggleTab,handleInput,handleOtherCamera,cameraDetails, error, step, isSwitchOn } = props;
+    const {toggleTab,handleInput,handleOtherCamera,cameraDetails, error, step, isSwitchOn, handleSubmitConfirmation } = props;
     const {
         observationData
     } = useObservations();
@@ -57,7 +57,7 @@ const EquipmentDetailsForm = (props) =>{
             </Col>
             <Col md={12}>
                 <Button className="gray-outline-btn me-2"  onClick={() =>toggleTab(Tabs.DateTimeLocation)}>Back</Button>
-                <Button type="submit" disabled={(!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture)) }>Submit</Button>
+                <Button type="button" onClick={(e) => handleSubmitConfirmation(e)} disabled={(!(cameraDetails?.camera_type && cameraDetails?.focal_length && cameraDetails?.aperture)) }>Submit</Button>
             </Col>
         </Row>
         </>

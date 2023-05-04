@@ -822,6 +822,7 @@ const AddObservation = () => {
                                                 cameraDetails={cameraDetails}
                                                 handleOtherCamera={handleOtherCamera}
                                                 getCameraDetail={getCameraDetail}
+                                                handleSubmitConfirmation={handleSubmitConfirmation}
                                             />
                                         </TabPane>
                                     </TabContent>
