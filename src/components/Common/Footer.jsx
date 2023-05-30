@@ -104,15 +104,6 @@ const Footer = () => {
                                                     Blog
                                                 </Link>
                                             </li>
-                                            <li>
-                                                <Link
-                                                    to={routeUrls.tutorials}
-                                                    className="d-inline-block mb-3"
-                                                    title="Tutorials"
-                                                >
-                                                    Tutorials
-                                                </Link>
-                                            </li>
                                         </List>
                                     </div>
                                 </Col>

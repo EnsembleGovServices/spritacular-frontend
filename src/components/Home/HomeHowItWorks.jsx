@@ -100,7 +100,7 @@ const HomeHowItWorks = () => {
                                 <div className={`${loaderLoading ? 'mb-3' : ''} position-relative`}>
                                     <p>
                                         Please check
-                                        out our <Link to={`/${routeUrls.tutorials}`}>tutorials</Link> and <Link
+                                        out our <Link
                                         to={`/${routeUrls.blog}`}>blog</Link> under the “Resources” tab.
                                         These resources are intended to improve your
                                         knowledge and help with the methods you can contribute to the project.
